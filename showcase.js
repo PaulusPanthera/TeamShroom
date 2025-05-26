@@ -114,13 +114,43 @@ const teamMembers = [
   { name: "ZiaStitch", shinies: 8 }
 ];
 
-// Placeholder sprite for all members
-const placeholderSprite = "examplesprite.gif";
+// Load teamShowcase from the separate teamshowcase.js file
+// Make sure to include <script src="teamshowcase.js"></script> before this script in your HTML
 
-// For demo, fake shiny list (replace with real data when available)
+// Helper to generate the correct shiny gif url
+function shinyGifUrl(name) {
+  // Normalize name for the URL
+  let urlName = name
+    .toLowerCase()
+    .replace(/[\s.]/g, "-") // spaces/dots to dash
+    .replace(/-f$/, "-f")   // female/male forms
+    .replace(/-m$/, "-m");
+  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${urlName}.gif`;
+}
+
+// Get the actual shinies for a member using teamShowcase
 function getMemberShinies(member) {
-  // Returns an array of 1...n "shiny" placeholder gifs per member
-  return Array.from({ length: member.shinies }, () => placeholderSprite);
+  if (!window.teamShowcase) {
+    // Fallback in case teamShowcase is not loaded
+    return Array.from({ length: member.shinies }, () => ({
+      name: "Placeholder",
+      url: "examplesprite.gif",
+      lost: false
+    }));
+  }
+  const showcaseEntry = teamShowcase.find(m => m.name === member.name);
+  if (!showcaseEntry) {
+    return Array.from({ length: member.shinies }, () => ({
+      name: "Placeholder",
+      url: "examplesprite.gif",
+      lost: false
+    }));
+  }
+  return showcaseEntry.shinies.map(mon => ({
+    name: mon.name,
+    url: shinyGifUrl(mon.name),
+    lost: !!mon.lost
+  }));
 }
 
 // Main gallery rendering
@@ -136,11 +166,13 @@ function renderShowcaseGallery(members) {
   gallery.style.gap = "1.5rem";
 
   members.forEach(member => {
+    const actualShinies = getMemberShinies(member);
+    const spriteUrl = actualShinies.length > 0 ? actualShinies[0].url : "examplesprite.gif";
     const entry = document.createElement("div");
     entry.className = "showcase-entry";
     entry.innerHTML = `
       <div class="showcase-name">${member.name}</div>
-      <img src="${placeholderSprite}" class="showcase-sprite" style="width:64px; height:64px; cursor:pointer;" alt="${member.name}" data-member="${member.name}">
+      <img src="${spriteUrl}" class="showcase-sprite" style="width:64px; height:64px; cursor:pointer;" alt="${member.name}" data-member="${member.name}">
       <div class="showcase-shiny-count">Shinies: ${member.shinies}</div>
     `;
     // Clickable sprite links to member-specific showcase
@@ -154,13 +186,14 @@ function renderShowcaseGallery(members) {
 // Individual member's shiny showcase
 function renderMemberShowcase(member) {
   const content = document.getElementById('page-content');
+  const shinies = getMemberShinies(member);
   content.innerHTML = `
     <button onclick="history.back()" style="margin-bottom:1em">← Back</button>
     <h1>${member.name}'s Shiny Showcase</h1>
-    <div>Shinies: ${member.shinies}</div>
+    <div>Shinies: ${shinies.length}</div>
     <div class="showcase-shinies" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:1em;">
-      ${getMemberShinies(member).map(gif =>
-        `<img src="${gif}" alt="shiny" class="showcase-shiny-img" style="width:48px;height:48px;image-rendering:pixelated;">`
+      ${shinies.map(mon =>
+        `<img src="${mon.url}" alt="${mon.name}${mon.lost ? ' (lost)' : ''}" class="showcase-shiny-img${mon.lost ? ' lost' : ''}" style="width:48px;height:48px;image-rendering:pixelated;${mon.lost ? 'opacity:0.5;' : ''}" title="${mon.name}${mon.lost ? ' (lost)' : ''}">`
       ).join("")}
     </div>
   `;
