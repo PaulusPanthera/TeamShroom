@@ -204,8 +204,8 @@ main {
 }
 
 .showcase-sprite {
-  width: 80px;
-  height: 80px;
+  width: 150px;
+  height: 150px;
   cursor: pointer;
   margin-bottom: 0.2em;
   border-radius: 8px;
