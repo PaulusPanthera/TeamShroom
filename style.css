@@ -3,6 +3,8 @@
   --card: #23273a;
   --accent: #5a72f7;
   --success: #a0e3b8;
+  --claimed: #5a72f7;
+  --unclaimed: #c0392b;
   --text-main: #f5f5f5;
   --text-muted: #adb5bd;
 }
@@ -38,27 +40,90 @@ main {
 
 #shiny-dex-container {
   width: 100%;
-  max-width: 600px;
+  max-width: 1200px;
   margin: 2rem auto;
+  padding: 1rem;
+}
+
+.region-section {
+  margin-bottom: 3rem;
+}
+
+.region-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1.2rem;
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.3rem;
+  letter-spacing: 1px;
 }
 
 .dex-entry {
   background: var(--card);
-  margin: 0.5rem 0;
-  padding: 1rem;
+  margin: 0.7rem 0.5rem;
+  padding: 0.7rem 1.2rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px #16181f33;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  transition: background 0.2s, box-shadow 0.2s;
 }
 
-.dex-entry.caught {
-  border-left: 6px solid var(--success);
-  opacity: 0.7;
+.dex-entry.claimed {
+  border-left: 6px solid var(--claimed);
+  opacity: 0.95;
 }
 
-.dex-entry .dex-name {
+.dex-entry.unclaimed {
+  border-left: 6px solid var(--unclaimed);
+  opacity: 1;
+}
+
+.pokemon-gif {
+  width: 56px;
+  height: 56px;
+  margin-right: 1.2rem;
+  background: #222;
+  border-radius: 7px;
+  object-fit: contain;
+  border: 2px solid #333;
+  box-shadow: 0 1px 6px #0006;
+}
+
+.dex-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.dex-name {
   font-weight: bold;
-  letter-spacing: 1px;
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+  color: var(--text-main);
+}
+
+.dex-claimed {
+  font-size: 1rem;
+  color: var(--unclaimed);
+  font-weight: 500;
+}
+.dex-entry.claimed .dex-claimed {
+  color: var(--claimed);
+}
+
+@media (max-width: 700px) {
+  #shiny-dex-container {
+    padding: 0.4rem;
+  }
+  .dex-entry {
+    padding: 0.5rem 0.7rem;
+  }
+  .pokemon-gif {
+    width: 40px;
+    height: 40px;
+    margin-right: 0.7rem;
+  }
+  .region-section h2 {
+    font-size: 1.35rem;
+  }
 }
