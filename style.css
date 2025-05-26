@@ -136,3 +136,113 @@ main {
 .dex-entry.claimed .dex-claimed {
   color: var(--claimed);
 }
+
+/* === SHINY SHOWCASE GALLERY, ALPHABETICAL, AND MEMBER PAGES === */
+
+.showcase-alphabetical {
+  width: 100%;
+  max-width: 1400px;
+  margin: 2rem auto 1rem auto;
+  padding: 0;
+}
+
+.showcase-letter-section {
+  margin-bottom: 2.5rem;
+}
+
+.showcase-letter-section h2 {
+  color: var(--accent);
+  margin-top: 2rem;
+  margin-bottom: 0.9rem;
+  font-size: 1.5em;
+  letter-spacing: 2px;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 0.2em;
+  text-shadow: 0 0 7px #5a72f799;
+}
+
+.showcase-gallery {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.3rem;
+}
+
+@media (max-width: 1200px) {
+  .showcase-gallery { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 700px) {
+  .showcase-gallery { grid-template-columns: repeat(2, 1fr); }
+}
+
+.showcase-entry {
+  background: var(--card);
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  box-shadow: 0 2px 10px #5a72f766;
+  padding: 1.2em 0.7em 1em 0.7em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 160px;
+  position: relative;
+}
+
+.showcase-name {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: var(--accent);
+  text-shadow: 0 0 7px #5a72f7aa;
+  margin-bottom: 0.5em;
+}
+
+.showcase-shiny-count {
+  color: var(--text-main);
+  font-size: 0.97em;
+  margin-bottom: 0.6em;
+}
+
+.showcase-sprite {
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  margin-bottom: 0.2em;
+  border-radius: 8px;
+  background: #222;
+  box-shadow: 0 1px 8px #0007;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.showcase-shinies {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.3em;
+  gap: 12px;
+}
+
+.showcase-shiny-img {
+  width: 120px;
+  height: 120px;
+  image-rendering: pixelated;
+  background: #23243b;
+  border-radius: 7px;
+  margin: 0 3px 4px 3px;
+  box-shadow: 0 1px 12px #3335;
+  object-fit: contain;
+  transition: transform 0.12s, box-shadow 0.12s, opacity 0.12s;
+}
+.showcase-shiny-img.lost {
+  opacity: 0.5;
+  filter: grayscale(0.5);
+  border: 2px dashed #a22;
+}
+.showcase-shiny-img:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 24px var(--accent), 0 0 8px #181b2460;
+  z-index: 2;
+  position: relative;
+}
