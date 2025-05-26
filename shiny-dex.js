@@ -625,16 +625,17 @@ const shinyDex = {
 function getPokemonGif(name) {
   let urlName = name
     .toLowerCase()
-    .replace(/\u2640/g, "f")   // ♀ -> f
-    .replace(/\u2642/g, "m")   // ♂ -> m
-    .replace(/[\s.'’]/g, "")   // remove spaces, dots, apostrophes
-    .replace("mr.mime", "mr-mime")
-    .replace("mimejr", "mime-jr")
-    .replace("farfetchd", "farfetchd")
-    .replace("type:null", "type-null")
-    .replace("jangmoo", "jangmo-o")
-    .replace("hakamoo", "hakamo-o")
-    .replace("kommoo", "kommo-o");
+    .replace(/\u2640/g, "-f")   // ♀ -> -f
+    .replace(/\u2642/g, "-m")   // ♂ -> -m
+    .replace(/[\s.'’]/g, "")    // remove spaces, dots, apostrophes
+
+  // Special cases
+  if (urlName === "nidoran-f") urlName = "nidoran-f";
+  if (urlName === "nidoran-m") urlName = "nidoran-m";
+  if (urlName === "mr.mime") urlName = "mr-mime";
+
+  // Add more special cases here if needed
+
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${urlName}.gif`;
 }
 
