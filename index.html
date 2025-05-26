@@ -3,64 +3,127 @@
 <head>
   <meta charset="UTF-8">
   <title>Team Shroom Shiny Pages</title>
+  <!-- Retro Game Boy Pixel Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
+    body {
+      background: #181c13;
+      color: #9bbc0f;
+      font-family: 'Press Start 2P', 'VT323', 'Consolas', 'monospace', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
     .nav {
       display: flex;
       gap: 1rem;
-      background: #222;
-      color: #fff;
+      background: #0f380f;
       padding: 1rem;
+      border-bottom: 3px solid #8bac0f;
     }
     .nav a {
-      color: #fff;
+      color: #9bbc0f;
       text-decoration: none;
       font-weight: bold;
+      font-family: inherit;
+      background: #306230;
       padding: 0.5rem 1rem;
-      border-radius: 5px;
-      transition: background 0.2s;
+      border-radius: 3px;
+      border: 2px solid #8bac0f;
+      letter-spacing: 1px;
+      font-size: 0.9em;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px #0f380f;
     }
     .nav a.active, .nav a:hover {
-      background: #4caf50;
+      background: #8bac0f;
+      color: #0f380f;
+      box-shadow: 0 2px #9bbc0f;
     }
+
     #page-content {
       margin: 2rem 0;
+      padding: 0 1rem;
     }
+
     .region-section {
       margin-bottom: 2rem;
     }
+
+    .region-section h2 {
+      color: #8bac0f;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      font-size: 1.2em;
+      border-bottom: 2px solid #4e7504;
+      padding-bottom: 0.2em;
+    }
+
     .dex-grid {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
       gap: 1rem;
     }
+
     .dex-entry {
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 0.5rem;
-      width: 110px;
+      border: 2px solid #8bac0f;
+      border-radius: 4px;
+      padding: 0.5rem 0.2rem 0.2rem 0.2rem;
+      background: linear-gradient(145deg, #222d12 80%, #0f380f 100%);
+      color: #9bbc0f;
       text-align: center;
-      background: #fafafa;
+      font-family: inherit;
+      font-size: 0.85em;
+      box-shadow: 0 4px #0f380f;
+      transition: transform 0.15s, box-shadow 0.15s;
     }
     .dex-entry.claimed {
-      background: #e6ffe6;
-      border-color: #4caf50;
+      background: linear-gradient(135deg, #8bac0f 70%, #306230 100%);
+      color: #0f380f;
+      font-weight: bold;
+      box-shadow: 0 0 14px #8bac0f77;
     }
     .dex-entry.unclaimed {
-      background: #ffeaea;
-      border-color: #ff4c4c;
+      background: linear-gradient(135deg, #222d12 70%, #181c13 100%);
+      color: #9bbc0f;
+      opacity: 0.7;
     }
+    .dex-entry:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 16px #e4ff7a99;
+      z-index: 3;
+      position: relative;
+    }
+
     .pokemon-gif {
-      width: 64px;
-      height: 64px;
+      width: 48px;
+      height: 48px;
       image-rendering: pixelated;
+      filter: grayscale(0.4) contrast(1.5) brightness(0.7) drop-shadow(0 0 2px #8bac0f);
+      margin-bottom: 0.2em;
+      background: #0f380f;
+      border-radius: 2px;
     }
+
     .dex-name {
-      font-weight: bold;
-      margin-top: 0.5rem;
-    }
-    .dex-claimed {
+      font-family: inherit;
       font-size: 0.9em;
-      color: #555;
+      margin-top: 0.4em;
+      margin-bottom: 0.1em;
+      letter-spacing: 1px;
+    }
+
+    .dex-claimed {
+      font-size: 0.7em;
+      color: #4e7504;
+      margin-top: 0.2em;
+    }
+
+    @media (max-width: 1400px) {
+      .dex-grid { grid-template-columns: repeat(6, 1fr);}
+    }
+    @media (max-width: 900px) {
+      .dex-grid { grid-template-columns: repeat(3, 1fr);}
     }
   </style>
 </head>
@@ -70,7 +133,7 @@
     <a href="#hitlist" id="nav-hitlist">Shiny Dex Hitlist</a>
   </div>
   <div id="page-content"></div>
-  <script src="shiny-dex.js"></script>
+  <script src="shinydex.js"></script>
   <script>
     function renderPage() {
       const page = window.location.hash.replace("#", "") || "showcase";
@@ -83,7 +146,7 @@
         content.innerHTML = "<h1>Shiny Showcase</h1><p>Show off your best shinies here!</p>";
       } else if (page === "hitlist") {
         content.innerHTML = "<h1>Shiny Dex Hitlist</h1><div id='shiny-dex-container'></div>";
-        // Wait for DOM update, then render
+        // Ensure the container exists before rendering
         setTimeout(() => renderShinyDex(shinyDex), 0);
       } else {
         content.innerHTML = "<h1>Page not found.</h1>";
