@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Team Shroom Shiny Pages</title>
   <style>
-    /* Simple styling for navigation and content */
     .nav {
       display: flex;
       gap: 1rem;
@@ -73,7 +72,6 @@
   <div id="page-content"></div>
   <script src="shinydex.js"></script>
   <script>
-    // Simple hash-based router
     function renderPage() {
       const page = window.location.hash.replace("#", "") || "showcase";
       document.querySelectorAll('.nav a').forEach(a => {
@@ -83,11 +81,10 @@
       const content = document.getElementById('page-content');
       if (page === "showcase") {
         content.innerHTML = "<h1>Shiny Showcase</h1><p>Show off your best shinies here!</p>";
-        // TODO: Render your showcase content here.
       } else if (page === "hitlist") {
         content.innerHTML = "<h1>Shiny Dex Hitlist</h1><div id='shiny-dex-container'></div>";
-        // Make sure to call renderShinyDex AFTER adding the container
-        renderShinyDex(shinyDex);
+        // Wait for DOM update, then render
+        setTimeout(() => renderShinyDex(shinyDex), 0);
       } else {
         content.innerHTML = "<h1>Page not found.</h1>";
       }
