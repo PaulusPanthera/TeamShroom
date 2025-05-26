@@ -194,7 +194,7 @@ function renderShowcaseGallery(members) {
       entry.className = "showcase-entry";
       entry.innerHTML = `
         <div class="showcase-name">${member.name}</div>
-        <img src="${spriteUrl}" class="showcase-sprite" style="width:64px; height:64px; cursor:pointer;" alt="${member.name}" data-member="${member.name}">
+        <img src="${spriteUrl}" class="showcase-sprite" alt="${member.name}" data-member="${member.name}">
         <div class="showcase-shiny-count">Shinies: ${member.shinies}</div>
       `;
       entry.querySelector(".showcase-sprite").onclick = e => {
@@ -216,7 +216,9 @@ function renderMemberShowcase(member) {
     <div>Shinies: ${shinies.length}</div>
     <div class="showcase-shinies" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:1em;">
       ${shinies.map(mon =>
-        `<img src="${mon.url}" alt="${mon.name}${mon.lost ? ' (lost)' : ''}" class="showcase-shiny-img${mon.lost ? ' lost' : ''}" style="width:120px;height:120px;image-rendering:pixelated;${mon.lost ? 'opacity:0.5;' : ''}" title="${mon.name}${mon.lost ? ' (lost)' : ''}">`
+        `<div class="showcase-shiny-img-wrapper${mon.lost ? ' lost' : ''}">
+          <img src="${mon.url}" alt="${mon.name}${mon.lost ? ' (lost)' : ''}" class="showcase-shiny-img${mon.lost ? ' lost' : ''}" style="width:120px;height:120px;image-rendering:pixelated;" title="${mon.name}${mon.lost ? ' (lost)' : ''}">
+        </div>`
       ).join("")}
     </div>
   `;
