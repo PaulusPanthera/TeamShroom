@@ -2,8 +2,8 @@
   --bg: #181b24;
   --card: #23273a;
   --accent: #5a72f7;
-  --success: #29e35a; /* Changed this to a green shade */
-  --claimed: #29e35a; /* Claimed is now green instead of blue */
+  --success: #29e35a;
+  --claimed: #29e35a;
   --unclaimed: #c0392b;
   --text-main: #f5f5f5;
   --text-muted: #adb5bd;
@@ -58,7 +58,6 @@ main {
   letter-spacing: 1px;
 }
 
-/* Grid for Pokemon */
 .dex-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -83,7 +82,6 @@ main {
   }
 }
 
-/* Individual Entry */
 .dex-entry {
   background: var(--card);
   padding: 0.5rem;
@@ -204,8 +202,8 @@ main {
 }
 
 .showcase-sprite {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   cursor: pointer;
   margin-bottom: 0.2em;
   border-radius: 8px;
@@ -224,6 +222,26 @@ main {
   gap: 12px;
 }
 
+.showcase-shiny-img-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.showcase-shiny-img-wrapper.lost::after {
+  content: "✖";
+  color: #ff2222;
+  font-size: 3.8em;
+  font-weight: bold;
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -52%) rotate(-18deg);
+  pointer-events: none;
+  text-shadow: 0 0 12px #a22a, 0 0 6px #fff;
+  z-index: 2;
+  opacity: 0.85;
+  font-family: Arial, sans-serif;
+}
+
 .showcase-shiny-img {
   width: 120px;
   height: 120px;
@@ -234,28 +252,12 @@ main {
   box-shadow: 0 1px 12px #3335;
   object-fit: contain;
   transition: transform 0.12s, box-shadow 0.12s, opacity 0.12s;
+  display: block;
 }
 .showcase-shiny-img.lost {
   opacity: 0.07;
   filter: grayscale(1) brightness(0.23) contrast(0.5) blur(2px);
   border: 2px dashed #a22;
-  position: relative;
-  z-index: 1;
-}
-
-.showcase-shiny-img.lost::after {
-  content: "✖";
-  color: #ff2222;
-  font-size: 3.5em;
-  font-weight: bold;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -60%) rotate(-20deg);
-  pointer-events: none;
-  text-shadow: 0 0 12px #a22, 0 0 6px #fff;
-  z-index: 2;
-  opacity: 0.75;
 }
 .showcase-shiny-img:hover {
   transform: scale(1.08);
