@@ -166,8 +166,8 @@ function renderShowcaseGallery(members) {
   gallery.style.gap = "1.5rem";
 
   members.forEach(member => {
-    const actualShinies = getMemberShinies(member);
-    const spriteUrl = actualShinies.length > 0 ? actualShinies[0].url : "examplesprite.gif";
+    // Always use the placeholder for the main gallery!
+    const spriteUrl = "examplesprite.gif";
     const entry = document.createElement("div");
     entry.className = "showcase-entry";
     entry.innerHTML = `
