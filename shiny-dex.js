@@ -172,7 +172,7 @@ const shinyDex = {
     { name: "Crobat", claimed: "WillyPS" },
     { name: "Chinchou", claimed: "LordGangis" },
     { name: "Lanturn", claimed: "JulieJewel" },
-    { name: "Pichu", claimed: false },
+    { name: "Pichu", claimed: "MELVZZY" },
     { name: "Cleffa", claimed: false },
     { name: "Igglybuff", claimed: false },
     { name: "Togepi", claimed: false },
