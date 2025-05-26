@@ -624,21 +624,18 @@ const shinyDex = {
 
 // Helper function to create the image URL from the Pokémon name
 function getPokemonGif(name) {
-  // Convert name to correct format for URL
-  // Lowercase, remove spaces, replace special chars (very basic, can be expanded)
   let urlName = name
     .toLowerCase()
     .replace(/\u2640/g, "f")   // ♀ -> f
     .replace(/\u2642/g, "m")   // ♂ -> m
     .replace(/[\s.'’]/g, "")   // remove spaces, dots, apostrophes
-    .replace("farfetchd", "farfetchd") // already correct in URL
     .replace("mr.mime", "mr-mime")
     .replace("mimejr", "mime-jr")
+    .replace("farfetchd", "farfetchd")
     .replace("type:null", "type-null")
     .replace("jangmoo", "jangmo-o")
     .replace("hakamoo", "hakamo-o")
     .replace("kommoo", "kommo-o");
-
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${urlName}.gif`;
 }
 
@@ -649,18 +646,21 @@ function renderShinyDex(regions) {
     const regionDiv = document.createElement('div');
     regionDiv.className = 'region-section';
     regionDiv.innerHTML = `<h2>${region}</h2>`;
+    
+    const grid = document.createElement('div');
+    grid.className = 'dex-grid';
+    
     regions[region].forEach(entry => {
       const div = document.createElement('div');
       div.className = 'dex-entry' + (entry.claimed ? ' claimed' : ' unclaimed');
       div.innerHTML = `
         <img src="${getPokemonGif(entry.name)}" alt="${entry.name}" class="pokemon-gif" />
-        <div class="dex-info">
-          <div class="dex-name">${entry.name}</div>
-          <div class="dex-claimed">${entry.claimed ? entry.claimed : "Unclaimed"}</div>
-        </div>
+        <div class="dex-name">${entry.name}</div>
+        <div class="dex-claimed">${entry.claimed ? entry.claimed : "Unclaimed"}</div>
       `;
-      regionDiv.appendChild(div);
+      grid.appendChild(div);
     });
+    regionDiv.appendChild(grid);
     container.appendChild(regionDiv);
   });
 }
