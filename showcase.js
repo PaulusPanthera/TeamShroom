@@ -206,7 +206,7 @@ function renderShowcaseGallery(members) {
   });
 }
 
-// Individual member's shiny showcase
+// Individual member's shiny showcase with wrapper for lost overlay X
 function renderMemberShowcase(member) {
   const content = document.getElementById('page-content');
   const shinies = getMemberShinies(member);
@@ -216,7 +216,7 @@ function renderMemberShowcase(member) {
     <div>Shinies: ${shinies.length}</div>
     <div class="showcase-shinies" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:1em;">
       ${shinies.map(mon =>
-        `<div class="showcase-shiny-img-wrapper${mon.lost ? ' lost' : ''}">
+        `<div class="showcase-shiny-img-wrapper${mon.lost ? ' lost' : ''}" style="width:120px;height:120px;">
           <img src="${mon.url}" alt="${mon.name}${mon.lost ? ' (lost)' : ''}" class="showcase-shiny-img${mon.lost ? ' lost' : ''}" style="width:120px;height:120px;image-rendering:pixelated;" title="${mon.name}${mon.lost ? ' (lost)' : ''}">
         </div>`
       ).join("")}
