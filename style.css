@@ -225,21 +225,24 @@ main {
 .showcase-shiny-img-wrapper {
   position: relative;
   display: inline-block;
+  width: 120px;
+  height: 120px;
 }
 .showcase-shiny-img-wrapper.lost::after {
   content: "✖";
   color: #ff2222;
-  font-size: 3.8em;
+  font-size: 4.2em;
   font-weight: bold;
   position: absolute;
-  top: 44%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -52%) rotate(-18deg);
   pointer-events: none;
-  text-shadow: 0 0 12px #a22a, 0 0 6px #fff;
+  text-shadow: 0 0 14px #a22a, 0 0 8px #fff;
   z-index: 2;
-  opacity: 0.85;
+  opacity: 0.98;
   font-family: Arial, sans-serif;
+  line-height: 1;
 }
 
 .showcase-shiny-img {
@@ -255,8 +258,8 @@ main {
   display: block;
 }
 .showcase-shiny-img.lost {
-  opacity: 0.07;
-  filter: grayscale(1) brightness(0.23) contrast(0.5) blur(2px);
+  opacity: 0.04;
+  filter: grayscale(1) brightness(0.20) contrast(0.4) blur(2.2px);
   border: 2px dashed #a22;
 }
 .showcase-shiny-img:hover {
