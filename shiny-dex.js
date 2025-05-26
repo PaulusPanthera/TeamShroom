@@ -628,7 +628,7 @@ function getPokemonGif(name) {
   if (name === "Mime Jr.") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mime-jr.gif";
   if (name === "Nidoran♀") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-f.gif";
   if (name === "Nidoran♂") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-m.gif";
-  
+
   // Generic formatting
   let urlName = name
     .toLowerCase()
@@ -641,15 +641,16 @@ function getPokemonGif(name) {
 
 function renderShinyDex(regions) {
   const container = document.getElementById('shiny-dex-container');
+  if (!container) return;
   container.innerHTML = '';
   Object.keys(regions).forEach(region => {
     const regionDiv = document.createElement('div');
     regionDiv.className = 'region-section';
     regionDiv.innerHTML = `<h2>${region}</h2>`;
-    
+
     const grid = document.createElement('div');
     grid.className = 'dex-grid';
-    
+
     regions[region].forEach(entry => {
       const div = document.createElement('div');
       div.className = 'dex-entry' + (entry.claimed ? ' claimed' : ' unclaimed');
@@ -664,5 +665,3 @@ function renderShinyDex(regions) {
     container.appendChild(regionDiv);
   });
 }
-
-document.addEventListener('DOMContentLoaded', () => renderShinyDex(shinyDex));
