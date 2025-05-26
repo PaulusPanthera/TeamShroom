@@ -236,8 +236,8 @@ main {
   transition: transform 0.12s, box-shadow 0.12s, opacity 0.12s;
 }
 .showcase-shiny-img.lost {
-  opacity: 0.5;
-  filter: grayscale(0.5);
+  opacity: 0.33;
+  filter: grayscale(1) brightness(0.6) contrast(0.8);
   border: 2px dashed #a22;
 }
 .showcase-shiny-img:hover {
