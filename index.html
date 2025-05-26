@@ -18,12 +18,50 @@
       font-weight: bold;
       padding: 0.5rem 1rem;
       border-radius: 5px;
+      transition: background 0.2s;
     }
     .nav a.active, .nav a:hover {
       background: #4caf50;
     }
     #page-content {
       margin: 2rem 0;
+    }
+    .region-section {
+      margin-bottom: 2rem;
+    }
+    .dex-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .dex-entry {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 0.5rem;
+      width: 110px;
+      text-align: center;
+      background: #fafafa;
+    }
+    .dex-entry.claimed {
+      background: #e6ffe6;
+      border-color: #4caf50;
+    }
+    .dex-entry.unclaimed {
+      background: #ffeaea;
+      border-color: #ff4c4c;
+    }
+    .pokemon-gif {
+      width: 64px;
+      height: 64px;
+      image-rendering: pixelated;
+    }
+    .dex-name {
+      font-weight: bold;
+      margin-top: 0.5rem;
+    }
+    .dex-claimed {
+      font-size: 0.9em;
+      color: #555;
     }
   </style>
 </head>
@@ -48,7 +86,7 @@
         // TODO: Render your showcase content here.
       } else if (page === "hitlist") {
         content.innerHTML = "<h1>Shiny Dex Hitlist</h1><div id='shiny-dex-container'></div>";
-        // Render your shiny dex hitlist
+        // Make sure to call renderShinyDex AFTER adding the container
         renderShinyDex(shinyDex);
       } else {
         content.innerHTML = "<h1>Page not found.</h1>";
