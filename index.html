@@ -72,9 +72,13 @@
     }
 
     .dex-entry {
+      aspect-ratio: 1 / 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       border: 2px solid #23243b;
       border-radius: 6px;
-      padding: 0.5rem 0.1rem 0.2rem 0.1rem;
       background: linear-gradient(135deg, #222431 85%, #23243b 100%);
       color: #e0e0e0;
       text-align: center;
@@ -82,6 +86,10 @@
       font-size: 0.95em;
       box-shadow: 0 4px 18px #000c;
       transition: transform 0.15s, box-shadow 0.15s;
+      padding: 0.5rem 0.2rem 0.2rem 0.2rem;
+      box-sizing: border-box;
+      min-width: 0;
+      min-height: 0;
     }
     .dex-entry.claimed {
       background: linear-gradient(135deg, #0f1c2e 80%, #00fff733 100%);
@@ -111,6 +119,7 @@
       margin-bottom: 0.2em;
       background: #23243b;
       border-radius: 3px;
+      flex-shrink: 0;
     }
 
     .dex-name {
@@ -121,6 +130,7 @@
       letter-spacing: 0.5px;
       word-break: break-word;
       text-shadow: 0 0 4px #000a;
+      flex-shrink: 0;
     }
 
     .dex-claimed {
@@ -128,6 +138,7 @@
       color: #00fff7bb;
       margin-top: 0.2em;
       text-shadow: 0 0 6px #14151a99;
+      flex-shrink: 0;
     }
 
     @media (max-width: 1400px) {
