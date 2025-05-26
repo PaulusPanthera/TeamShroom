@@ -109,10 +109,10 @@ main {
 }
 
 .pokemon-gif {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   background: #222;
-  border-radius: 12px;
+  border-radius: 15px;
   object-fit: contain;
   border: 2px solid #333;
   margin-bottom: 0.2rem;
