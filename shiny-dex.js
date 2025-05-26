@@ -475,7 +475,6 @@ const shinyDex = {
     { name: "Shaymin", claimed: false }
   ],
   Unova: [
-    { name: "Victini", claimed: false },
     { name: "Snivy", claimed: false },
     { name: "Servine", claimed: false },
     { name: "Serperior", claimed: false },
