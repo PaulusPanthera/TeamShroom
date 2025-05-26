@@ -1,0 +1,64 @@
+:root {
+  --bg: #181b24;
+  --card: #23273a;
+  --accent: #5a72f7;
+  --success: #a0e3b8;
+  --text-main: #f5f5f5;
+  --text-muted: #adb5bd;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-main);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+header, footer {
+  text-align: center;
+  padding: 2rem 1rem 1rem 1rem;
+}
+
+h1 {
+  background: linear-gradient(90deg, #5a72f7 30%, #61e786 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 60vh;
+}
+
+#shiny-dex-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.dex-entry {
+  background: var(--card);
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #16181f33;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dex-entry.caught {
+  border-left: 6px solid var(--success);
+  opacity: 0.7;
+}
+
+.dex-entry .dex-name {
+  font-weight: bold;
+  letter-spacing: 1px;
+}
