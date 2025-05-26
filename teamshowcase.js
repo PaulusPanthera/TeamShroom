@@ -381,5 +381,5 @@ const teamShowcase = [
     { name: "gyarados" }, { name: "swablu" }, { name: "rapidash" }, { name: "rhydon" }, { name: "politoed" }, { name: "accelgor" }, { name: "graveler" }, { name: "zigzagoon" }
   ] }
 ];
-// If you want to use as a module:
-export { teamShowcase };
+// Make globally available for browser scripts
+window.teamShowcase = teamShowcase;
