@@ -165,3 +165,17 @@ function renderMemberShowcase(member) {
     </div>
   `;
 }
+
+// Routing logic (hash-based navigation)
+window.onhashchange = function () {
+  if (location.hash.startsWith("#showcase-")) {
+    const name = decodeURIComponent(location.hash.replace("#showcase-", ""));
+    const member = teamMembers.find(m => m.name === name);
+    if (member) renderMemberShowcase(member);
+  } else {
+    renderShowcaseGallery(teamMembers);
+  }
+};
+
+// Initial render
+window.onload = () => renderShowcaseGallery(teamMembers);
