@@ -623,17 +623,15 @@ const shinyDex = {
 
 // Helper function to create the image URL from the Pokémon name
 function getPokemonGif(name) {
-  // Handle special cases first
   if (name === "Mr. Mime") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr-mime.gif";
   if (name === "Mime Jr.") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mime-jr.gif";
   if (name === "Nidoran♀") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-f.gif";
   if (name === "Nidoran♂") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-m.gif";
 
-  // Generic formatting
   let urlName = name
     .toLowerCase()
-    .replace(/\u2640/g, "f")   // ♀ -> f
-    .replace(/\u2642/g, "m")   // ♂ -> m
+    .replace(/\u2640/g, "f")
+    .replace(/\u2642/g, "m")
     .replace(/[\s.'’]/g, "");
 
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${urlName}.gif`;
