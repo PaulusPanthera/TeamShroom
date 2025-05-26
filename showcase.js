@@ -193,7 +193,7 @@ function renderMemberShowcase(member) {
     <div>Shinies: ${shinies.length}</div>
     <div class="showcase-shinies" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:1em;">
       ${shinies.map(mon =>
-        `<img src="${mon.url}" alt="${mon.name}${mon.lost ? ' (lost)' : ''}" class="showcase-shiny-img${mon.lost ? ' lost' : ''}" style="width:48px;height:48px;image-rendering:pixelated;${mon.lost ? 'opacity:0.5;' : ''}" title="${mon.name}${mon.lost ? ' (lost)' : ''}">`
+        `<img src="${mon.url}" alt="${mon.name}${mon.lost ? ' (lost)' : ''}" class="showcase-shiny-img${mon.lost ? ' lost' : ''}" style="width:120px;height:120px;image-rendering:pixelated;${mon.lost ? 'opacity:0.5;' : ''}" title="${mon.name}${mon.lost ? ' (lost)' : ''}">`
       ).join("")}
     </div>
   `;
