@@ -58,15 +58,44 @@ main {
   letter-spacing: 1px;
 }
 
+/* Grid for Pokemon */
+.dex-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 1100px) {
+  .dex-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 700px) {
+  .dex-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  #shiny-dex-container {
+    padding: 0.4rem;
+  }
+  .region-section h2 {
+    font-size: 1.35rem;
+  }
+}
+
+/* Individual Entry */
 .dex-entry {
   background: var(--card);
-  margin: 0.7rem 0.5rem;
-  padding: 0.7rem 1.2rem;
+  padding: 0.5rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px #16181f33;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  transition: background 0.2s, box-shadow 0.2s;
+  justify-content: flex-start;
+  border-left: 6px solid transparent;
+  min-height: 125px;
+  height: 100%;
 }
 
 .dex-entry.claimed {
@@ -80,50 +109,30 @@ main {
 }
 
 .pokemon-gif {
-  width: 56px;
-  height: 56px;
-  margin-right: 1.2rem;
+  width: 46px;
+  height: 46px;
   background: #222;
   border-radius: 7px;
   object-fit: contain;
   border: 2px solid #333;
+  margin-bottom: 0.2rem;
   box-shadow: 0 1px 6px #0006;
-}
-
-.dex-info {
-  display: flex;
-  flex-direction: column;
 }
 
 .dex-name {
   font-weight: bold;
-  font-size: 1.1rem;
-  margin-bottom: 0.2rem;
+  font-size: 1rem;
+  margin-bottom: 0.15rem;
   color: var(--text-main);
+  text-align: center;
 }
 
 .dex-claimed {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--unclaimed);
   font-weight: 500;
+  text-align: center;
 }
 .dex-entry.claimed .dex-claimed {
   color: var(--claimed);
-}
-
-@media (max-width: 700px) {
-  #shiny-dex-container {
-    padding: 0.4rem;
-  }
-  .dex-entry {
-    padding: 0.5rem 0.7rem;
-  }
-  .pokemon-gif {
-    width: 40px;
-    height: 40px;
-    margin-right: 0.7rem;
-  }
-  .region-section h2 {
-    font-size: 1.35rem;
-  }
 }
