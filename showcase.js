@@ -114,9 +114,6 @@ const teamMembers = [
   { name: "ZiaStitch", shinies: 8 }
 ];
 
-// Load teamShowcase from the separate teamshowcase.js file
-// Make sure to include <script src="teamshowcase.js"></script> before this script in your HTML
-
 // Helper to generate the correct shiny gif url
 function shinyGifUrl(name) {
   // Normalize name for the URL
@@ -153,33 +150,59 @@ function getMemberShinies(member) {
   }));
 }
 
-// Main gallery rendering
+// Group members alphabetically
+function groupMembersAlphabetically(members) {
+  const grouped = {};
+  members.forEach(member => {
+    const firstLetter = member.name[0].toUpperCase();
+    if (!grouped[firstLetter]) grouped[firstLetter] = [];
+    grouped[firstLetter].push(member);
+  });
+  // Sort group keys and each group alphabetically
+  return Object.keys(grouped).sort().map(letter => ({
+    letter,
+    members: grouped[letter].sort((a, b) => a.name.localeCompare(b.name))
+  }));
+}
+
+// Main gallery rendering (6 columns, alphabetically grouped)
 function renderShowcaseGallery(members) {
   const content = document.getElementById('page-content');
   content.innerHTML = `<h1>Shiny Showcase</h1>
-    <div class="showcase-gallery"></div>
+    <div class="showcase-alphabetical"></div>
   `;
 
-  const gallery = content.querySelector(".showcase-gallery");
-  gallery.style.display = "grid";
-  gallery.style.gridTemplateColumns = "repeat(auto-fit, minmax(180px, 1fr))";
-  gallery.style.gap = "1.5rem";
+  const alphaContainer = content.querySelector(".showcase-alphabetical");
+  const grouped = groupMembersAlphabetically(members);
 
-  members.forEach(member => {
-    // Always use the placeholder for the main gallery!
-    const spriteUrl = "examplesprite.gif";
-    const entry = document.createElement("div");
-    entry.className = "showcase-entry";
-    entry.innerHTML = `
-      <div class="showcase-name">${member.name}</div>
-      <img src="${spriteUrl}" class="showcase-sprite" style="width:64px; height:64px; cursor:pointer;" alt="${member.name}" data-member="${member.name}">
-      <div class="showcase-shiny-count">Shinies: ${member.shinies}</div>
+  grouped.forEach(group => {
+    // Section header
+    const section = document.createElement("section");
+    section.className = "showcase-letter-section";
+    section.innerHTML = `<h2>${group.letter}</h2>
+      <div class="showcase-gallery"></div>
     `;
-    // Clickable sprite links to member-specific showcase
-    entry.querySelector(".showcase-sprite").onclick = e => {
-      location.hash = "#showcase-" + member.name;
-    };
-    gallery.appendChild(entry);
+    const gallery = section.querySelector(".showcase-gallery");
+    gallery.style.display = "grid";
+    gallery.style.gridTemplateColumns = "repeat(6, 1fr)";
+    gallery.style.gap = "1.5rem";
+
+    group.members.forEach(member => {
+      // Always use the placeholder for the main gallery!
+      const spriteUrl = "examplesprite.gif";
+      const entry = document.createElement("div");
+      entry.className = "showcase-entry";
+      entry.innerHTML = `
+        <div class="showcase-name">${member.name}</div>
+        <img src="${spriteUrl}" class="showcase-sprite" style="width:64px; height:64px; cursor:pointer;" alt="${member.name}" data-member="${member.name}">
+        <div class="showcase-shiny-count">Shinies: ${member.shinies}</div>
+      `;
+      entry.querySelector(".showcase-sprite").onclick = e => {
+        location.hash = "#showcase-" + member.name;
+      };
+      gallery.appendChild(entry);
+    });
+    alphaContainer.appendChild(section);
   });
 }
 
