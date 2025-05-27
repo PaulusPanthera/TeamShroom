@@ -1,13 +1,7 @@
 (function(){
   window.setupShowcaseSearchAndSort = function(teamMembers, renderShowcaseGallery) {
-    // --- Create UI controls ---
-    const controls = document.createElement('div');
-    controls.className = "showcase-search-controls";
-    // Optionally remove debug styles:
-    // controls.style.background = "#222";
-    // controls.style.border = "2px solid #f00";
-    // controls.style.padding = "12px";
-    // controls.style.marginBottom = "18px";
+    const controls = document.querySelector('.showcase-search-controls');
+    controls.innerHTML = ""; // Clear previous controls, but do not remove node
 
     // Search input
     const searchInput = document.createElement('input');
@@ -39,13 +33,6 @@
     const resultCount = document.createElement('span');
     controls.appendChild(resultCount);
 
-    // Insert controls at the top of #page-content (replace any existing)
-    const content = document.getElementById('page-content');
-    if (content.firstChild && content.firstChild.classList && content.firstChild.classList.contains('showcase-search-controls')) {
-      content.removeChild(content.firstChild);
-    }
-    content.insertBefore(controls, content.firstChild);
-
     // --- State
     let sortMode = 'alphabetical';
     let searchValue = '';
@@ -69,14 +56,8 @@
     function updateResults() {
       const filtered = getFilteredAndSortedMembers();
       resultCount.textContent = `${filtered.length} result${filtered.length === 1 ? '' : 's'}`;
-      renderShowcaseGallery(filtered);
-      // Re-initialize the search/sort bar after gallery re-render
-      setTimeout(() => {
-        window.setupShowcaseSearchAndSort(filtered, renderShowcaseGallery);
-        // Restore previous state
-        document.querySelector('.showcase-search-controls input[type="text"]').value = searchValue;
-        document.querySelector(`.showcase-search-controls input[type="radio"][value="${sortMode}"]`).checked = true;
-      }, 0);
+      const galleryContainer = document.getElementById('showcase-gallery-container');
+      renderShowcaseGallery(filtered, galleryContainer);
     }
 
     // --- Event listeners ---
@@ -93,6 +74,6 @@
     });
 
     // --- Initial render ---
-    resultCount.textContent = `${teamMembers.length} result${teamMembers.length === 1 ? '' : 's'}`;
+    updateResults();
   };
 })();
