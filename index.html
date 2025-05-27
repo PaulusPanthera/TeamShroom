@@ -5,8 +5,11 @@
   <title>Team Shroom Shiny Pages</title>
   <!-- Retro Pixel Font -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    /* Paste your full CSS from style.css here! */
+    /* (See next code block) */
+  </style>
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="nav">
@@ -20,7 +23,6 @@
   <script src="shinydexsearch.js"></script>
   <script src="showcasesearch.js"></script>
   <script>
-    // Routing: supports #showcase, #showcase-<member>, #hitlist
     function renderPage() {
       const hash = window.location.hash.replace("#", "");
       document.querySelectorAll('.nav a').forEach(a => {
@@ -31,71 +33,6 @@
       if (hash === "showcase" || hash === "") {
         renderShowcaseGallery(teamMembers);
         setTimeout(() => {
-          // Add the Showcase search/sort only on the main showcase page
-          if (typeof setupShowcaseSearchAndSort === 'function') {
-            setupShowcaseSearchAndSort(teamMembers, renderShowcaseGallery);
-          }
-        }, 0);
-      } else if (hash.startsWith("showcase-")) {
-        const memberName = hash.replace("showcase-", "");
-        const member = teamMembers.find(m => m.name === memberName);
-        if (member) {
-          renderMemberShowcase(member);
-        } else {
-          content.innerHTML = "<h1>Member not found.</h1>";
-        }
-      } else if (hash === "hitlist") {
-        content.innerHTML = "<h1>Shiny Dex Hitlist</h1><div id='shiny-dex-container'></div>";
-        setTimeout(() => {
-          renderShinyDex(shinyDex);
-          setTimeout(() => {
-            if (typeof setupShinyDexHitlistSearch === 'function') {
-              setupShinyDexHitlistSearch(shinyDex);
-            }
-          }, 50);
-        }, 0);
-      } else {
-        content.innerHTML = "<h1>Page not found.</h1>";
-      }
-    }
-    window.addEventListener('hashchange', renderPage);
-    document.addEventListener('DOMContentLoaded', renderPage);
-  </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Team Shroom Shiny Pages</title>
-  <!-- Retro Pixel Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="nav">
-    <a href="#showcase" id="nav-showcase">Shiny Showcase</a>
-    <a href="#hitlist" id="nav-hitlist">Shiny Dex Hitlist</a>
-  </div>
-  <div id="page-content"></div>
-  <script src="teamshowcase.js"></script>
-  <script src="shinydex.js"></script>
-  <script src="showcase.js"></script>
-  <script src="shinydexsearch.js"></script>
-  <script src="showcasesearch.js"></script>
-  <script>
-    // Routing: supports #showcase, #showcase-<member>, #hitlist
-    function renderPage() {
-      const hash = window.location.hash.replace("#", "");
-      document.querySelectorAll('.nav a').forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + (hash.split("-")[0] || "showcase"));
-      });
-
-      const content = document.getElementById('page-content');
-      if (hash === "showcase" || hash === "") {
-        renderShowcaseGallery(teamMembers);
-        setTimeout(() => {
-          // Add the Showcase search/sort only on the main showcase page
           if (typeof setupShowcaseSearchAndSort === 'function') {
             setupShowcaseSearchAndSort(teamMembers, renderShowcaseGallery);
           }
