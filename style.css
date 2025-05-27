@@ -12,10 +12,12 @@
 body {
   background: var(--bg);
   color: var(--text-main);
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family: 'Press Start 2P', 'Consolas', 'monospace';
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  font-size: 14px;
+  letter-spacing: 0.5px;
 }
 
 header, footer {
@@ -184,8 +186,8 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between; /* Even vertical spacing */
-  gap: 0.7em; /* Consistent vertical gaps */
+  justify-content: space-between;
+  gap: 0.7em;
   text-align: center;
 }
 .showcase-name {
@@ -196,8 +198,8 @@ main {
   margin-bottom: 0.2em;
 }
 .showcase-sprite {
-  width: 100px !important;
-  height: 100px !important;
+  width: 120px;
+  height: 120px;
   object-fit: contain;
   margin: 0.3em 0;
   display: block;
@@ -246,8 +248,8 @@ main {
 }
 
 .showcase-shiny-img {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   image-rendering: pixelated;
   background: #23243b;
   border-radius: 7px;
@@ -325,4 +327,16 @@ main {
   color: var(--text-muted, #adb5bd);
   font-size: 1.07em;
   font-weight: bold;
+}
+
+@media (max-width: 1400px) {
+  .dex-grid { grid-template-columns: repeat(6, 1fr);}
+}
+@media (max-width: 900px) {
+  .dex-grid { grid-template-columns: repeat(3, 1fr);}
+}
+@media (max-width: 600px) {
+  body { font-size: 12px; }
+  .dex-grid { grid-template-columns: repeat(2, 1fr);}
+  .nav { padding: 1rem 0.3rem; }
 }
