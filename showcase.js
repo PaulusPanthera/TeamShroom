@@ -122,30 +122,7 @@ function shinyGifUrl(name) {
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${urlName}.gif`;
 }
 
-function getMemberShinies(member) {
-  if (!window.teamShowcase) {
-    return Array.from({ length: member.shinies }, () => ({
-      name: "Placeholder",
-      url: "examplesprite.gif",
-      lost: false
-    }));
-  }
-  const showcaseEntry = teamShowcase.find(m => m.name === member.name);
-  if (!showcaseEntry) {
-    return Array.from({ length: member.shinies }, () => ({
-      name: "Placeholder",
-      url: "examplesprite.gif",
-      lost: false
-    }));
-  }
-  return showcaseEntry.shinies.map(mon => ({
-    name: mon.name,
-    url: shinyGifUrl(mon.name),
-    lost: !!mon.lost
-  }));
-}
-
-// Group members alphabetically
+// Group by first letter (A-Z)
 function groupMembersAlphabetically(members) {
   const grouped = {};
   members.forEach(member => {
@@ -154,22 +131,45 @@ function groupMembersAlphabetically(members) {
     grouped[firstLetter].push(member);
   });
   return Object.keys(grouped).sort().map(letter => ({
-    letter,
+    header: letter,
     members: grouped[letter].sort((a, b) => a.name.localeCompare(b.name))
   }));
 }
 
-// Main gallery rendering (accepts a container to render into)
-function renderShowcaseGallery(members, container) {
+// Group by shiny count (descending)
+function groupMembersByShinies(members) {
+  const grouped = {};
+  members.forEach(member => {
+    const count = member.shinies || 0;
+    if (!grouped[count]) grouped[count] = [];
+    grouped[count].push(member);
+  });
+  // Descending order of shiny count
+  return Object.keys(grouped)
+    .map(Number)
+    .sort((a, b) => b - a)
+    .map(count => ({
+      header: count,
+      members: grouped[count].sort((a, b) => a.name.localeCompare(b.name))
+    }));
+}
+
+// Main gallery rendering (accepts groupMode: "alphabetical" or "shinies")
+function renderShowcaseGallery(members, container, groupMode) {
   if (!container) container = document.getElementById('showcase-gallery-container');
   container.innerHTML = "";
 
-  const grouped = groupMembersAlphabetically(members);
+  let grouped;
+  if (groupMode === "shinies") {
+    grouped = groupMembersByShinies(members);
+  } else {
+    grouped = groupMembersAlphabetically(members);
+  }
 
   grouped.forEach(group => {
     const section = document.createElement("section");
     section.className = "showcase-letter-section";
-    section.innerHTML = `<h2>${group.letter}</h2>
+    section.innerHTML = `<h2>${group.header}</h2>
       <div class="showcase-gallery"></div>
     `;
     const gallery = section.querySelector(".showcase-gallery");
@@ -178,7 +178,7 @@ function renderShowcaseGallery(members, container) {
     gallery.style.gap = "1.5rem";
 
     group.members.forEach(member => {
-      const spriteUrl = "examplesprite.gif";
+      const spriteUrl = "examplesprite.gif"; // Replace with shinyGifUrl(member.name) if you want real sprites
       const entry = document.createElement("div");
       entry.className = "showcase-entry";
       entry.innerHTML = `
@@ -191,6 +191,7 @@ function renderShowcaseGallery(members, container) {
       };
       gallery.appendChild(entry);
     });
+
     container.appendChild(section);
   });
 }
