@@ -196,8 +196,8 @@ main {
   margin-bottom: 0.2em;
 }
 .showcase-sprite {
-  width: 120px !important;
-  height: 120px !important;
+  width: 100px !important;
+  height: 100px !important;
   object-fit: contain;
   margin: 0.3em 0;
   display: block;
