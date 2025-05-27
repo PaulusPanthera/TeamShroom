@@ -35,7 +35,7 @@
     searchInput.style.fontSize = '1em';
     controls.appendChild(searchInput);
 
-    // Toggle (All / Poke / Member)
+    // Toggle (All / Pokemon / Member)
     const toggleDiv = document.createElement('div');
     toggleDiv.style.display = 'flex';
     toggleDiv.style.gap = '0.4em';
@@ -106,18 +106,23 @@
     container.parentNode.insertBefore(controls, container);
 
     // --- Search/filter logic ---
-    let filterMode = 'all'; // all | poke | member
+    let filterMode = 'all'; // all | pokemon | member
     let searchValue = '';
     let matches = [];
     let activeMatchIdx = 0;
 
     function getFilteredDex() {
-      // Filter by region, then by search
       const input = searchValue.trim().toLowerCase();
       let filtered = flattened;
 
+      // Special case: Show all unclaimed if "unclaimed" is typed
+      if (input === "unclaimed") {
+        filtered = filtered.filter(e => !e.claimed);
+        return filtered;
+      }
+
       // Apply toggle filter
-      if (filterMode === 'poke') {
+      if (filterMode === 'pokemon') {
         filtered = filtered.filter(e => e.name.toLowerCase().includes(input));
       } else if (filterMode === 'member') {
         filtered = filtered.filter(e => typeof e.claimed === 'string' && e.claimed.toLowerCase().includes(input));
@@ -144,7 +149,6 @@
       // Highlight the currently "active" match (if any)
       if (matches.length > 0) {
         const allEntries = container.querySelectorAll('.dex-entry');
-        // Find the nth occurrence in the DOM, as rendered by grouped order
         let count = 0;
         let found = false;
         for (let i = 0; i < allEntries.length; ++i) {
