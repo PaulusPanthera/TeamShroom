@@ -471,7 +471,7 @@ const shinyDex = {
     { name: "Dusknoir", claimed: "jaspn" },
     { name: "Froslass", claimed: false },
     { name: "Rotom", claimed: false },
-    { name: "Heatran", claimed: ["MechanicalHippo"] },
+    { name: "Heatran", claimed: false },
     { name: "Shaymin", claimed: false }
   ],
   Unova: [
