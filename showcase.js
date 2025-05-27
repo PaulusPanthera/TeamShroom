@@ -198,9 +198,12 @@ function renderShowcaseGallery(members, container, groupMode) {
       <div class="showcase-gallery"></div>
     `;
     const gallery = section.querySelector(".showcase-gallery");
+    gallery.style.display = "grid";
+    gallery.style.gridTemplateColumns = "repeat(6, 1fr)";
+    gallery.style.gap = "1.5rem";
 
     group.members.forEach(member => {
-      const spriteUrl = shinyGifUrl(member.name); // Use actual member sprite
+      const spriteUrl = "examplesprite.gif"; // Replace with shinyGifUrl(member.name) if you want real sprites
       const entry = document.createElement("div");
       entry.className = "showcase-entry";
       entry.innerHTML = `
@@ -226,10 +229,10 @@ function renderMemberShowcase(member) {
     <button onclick="history.back()" style="margin-bottom:1em">← Back</button>
     <h1>${member.name}'s Shiny Showcase</h1>
     <div>Shinies: ${shinies.length}</div>
-    <div class="showcase-shinies">
+    <div class="showcase-shinies" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:1em;">
       ${shinies.map(mon =>
-        `<div class="showcase-shiny-img-wrapper${mon.lost ? ' lost' : ''}">
-          <img src="${mon.url}" alt="${mon.name}${mon.lost ? ' (lost)' : ''}" class="showcase-shiny-img${mon.lost ? ' lost' : ''}" title="${mon.name}${mon.lost ? ' (lost)' : ''}">
+        `<div class="showcase-shiny-img-wrapper${mon.lost ? ' lost' : ''}" style="width:120px;height:120px;">
+          <img src="${mon.url}" alt="${mon.name}${mon.lost ? ' (lost)' : ''}" class="showcase-shiny-img${mon.lost ? ' lost' : ''}" style="width:120px;height:120px;image-rendering:pixelated;" title="${mon.name}${mon.lost ? ' (lost)' : ''}">
         </div>`
       ).join("")}
     </div>
