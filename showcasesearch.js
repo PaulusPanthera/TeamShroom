@@ -56,9 +56,9 @@
     resultCount.style.fontWeight = "bold";
     controls.appendChild(resultCount);
 
-    // Insert controls before the .showcase-gallery or its container
+    // Insert controls at the top of #page-content
     const content = document.getElementById('page-content');
-    content.insertBefore(controls, content.querySelector('.showcase-gallery') || content.firstChild);
+    content.insertBefore(controls, content.firstChild);
 
     // --- Search/sort logic ---
     let sortMode = 'alphabetical';
