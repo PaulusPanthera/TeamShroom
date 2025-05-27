@@ -52,7 +52,12 @@
       if (sortMode === 'alphabetical') {
         filtered.sort((a, b) => a.name.localeCompare(b.name));
       } else if (sortMode === 'shinies') {
-        filtered.sort((a, b) => (b.shinies || 0) - (a.shinies || 0));
+        // Sort descending by shinies, then A-Z for ties
+        filtered.sort((a, b) => {
+          const diff = (b.shinies || 0) - (a.shinies || 0);
+          if (diff !== 0) return diff;
+          return a.name.localeCompare(b.name);
+        });
       }
       return filtered;
     }
