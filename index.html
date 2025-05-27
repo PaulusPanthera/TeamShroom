@@ -253,7 +253,6 @@
       .nav { padding: 1rem 0.3rem; }
     }
   </style>
-  <!-- Favicon fix to avoid 404 -->
   <link rel="icon" href="data:,">
 </head>
 <body>
@@ -278,12 +277,13 @@
 
       const content = document.getElementById('page-content');
       if (hash === "showcase" || hash === "") {
-        renderShowcaseGallery(teamMembers);
-        setTimeout(() => {
-          if (typeof setupShowcaseSearchAndSort === 'function') {
-            setupShowcaseSearchAndSort(teamMembers, renderShowcaseGallery);
-          }
-        }, 0);
+        content.innerHTML = `
+          <h1>Shiny Showcase</h1>
+          <div class="showcase-search-controls"></div>
+          <div id="showcase-gallery-container"></div>
+        `;
+        // The search/sort bar will always be visible and never overwritten!
+        setupShowcaseSearchAndSort(teamMembers, renderShowcaseGallery);
       } else if (hash.startsWith("showcase-")) {
         const memberName = hash.replace("showcase-", "");
         const member = teamMembers.find(m => m.name === memberName);
