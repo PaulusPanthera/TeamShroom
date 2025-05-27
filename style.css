@@ -9,6 +9,7 @@
   --text-muted: #adb5bd;
 }
 
+/* === GENERAL LAYOUT === */
 body {
   background: var(--bg);
   color: var(--text-main);
@@ -18,7 +19,8 @@ body {
   min-height: 100vh;
 }
 
-header, footer {
+header,
+footer {
   text-align: center;
   padding: 2rem 1rem 1rem 1rem;
 }
@@ -38,6 +40,7 @@ main {
   min-height: 60vh;
 }
 
+/* === DEX CONTAINER AND REGIONS === */
 #shiny-dex-container {
   width: 100%;
   max-width: 1200px;
@@ -58,6 +61,7 @@ main {
   letter-spacing: 1px;
 }
 
+/* === DEX GRID === */
 .dex-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -82,6 +86,7 @@ main {
   }
 }
 
+/* === DEX ENTRY === */
 .dex-entry {
   background: var(--card);
   padding: 0.5rem;
@@ -131,12 +136,12 @@ main {
   font-weight: 500;
   text-align: center;
 }
+
 .dex-entry.claimed .dex-claimed {
   color: var(--claimed);
 }
 
-/* === SHINY SHOWCASE GALLERY, ALPHABETICAL, AND MEMBER PAGES === */
-
+/* === SHOWCASE GALLERY, ALPHABETICAL, AND MEMBER PAGES === */
 .showcase-alphabetical {
   width: 100%;
   max-width: 1400px;
@@ -167,10 +172,14 @@ main {
 }
 
 @media (max-width: 1200px) {
-  .showcase-gallery { grid-template-columns: repeat(4, 1fr); }
+  .showcase-gallery {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 @media (max-width: 700px) {
-  .showcase-gallery { grid-template-columns: repeat(2, 1fr); }
+  .showcase-gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .showcase-entry {
@@ -184,10 +193,11 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between; /* Even vertical spacing */
-  gap: 0.7em; /* Consistent vertical gaps */
+  justify-content: space-between;
+  gap: 0.7em;
   text-align: center;
 }
+
 .showcase-name {
   font-size: 1.1em;
   font-weight: bold;
@@ -195,6 +205,7 @@ main {
   text-shadow: 0 0 7px #00fff7aa;
   margin-bottom: 0.2em;
 }
+
 .showcase-sprite {
   width: 120px !important;
   height: 120px !important;
@@ -207,6 +218,7 @@ main {
   background: #23243b;
   border-radius: 3px;
 }
+
 .showcase-shiny-count {
   color: #e0e0e0;
   font-size: 0.95em;
@@ -228,22 +240,6 @@ main {
   width: 120px;
   height: 120px;
 }
-/* Remove the X overlay for lost shinies */
-.showcase-shiny-img-wrapper.lost::after {
-  content: none;
-}
-
-/* Skull overlay for lost shinies */
-.lost-overlay-skull {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  object-fit: contain;
-  pointer-events: none;
-  z-index: 10;
-  opacity: 0.9; /* Adjust for desired transparency */
-  filter: drop-shadow(0px 0px 8px #000);
-}
 
 .showcase-shiny-img {
   width: 120px;
@@ -257,11 +253,14 @@ main {
   transition: transform 0.12s, box-shadow 0.12s, opacity 0.12s;
   display: block;
 }
+
+/* Faded/greyed lost shiny */
 .showcase-shiny-img.lost {
-  opacity: 0.04;
-  filter: grayscale(1) brightness(0.20) contrast(0.4) blur(2.2px);
+  opacity: 0.16;
+  filter: grayscale(1) brightness(0.5) contrast(0.7);
   border: 2px dashed #a22;
 }
+
 .showcase-shiny-img:hover {
   transform: scale(1.08);
   box-shadow: 0 4px 24px var(--accent), 0 0 8px #181b2460;
@@ -278,6 +277,7 @@ main {
   margin-bottom: 1.7rem;
   flex-wrap: wrap;
 }
+
 .showcase-search-controls input[type="text"],
 .search-controls input[type="text"] {
   padding: 0.6em;
@@ -290,6 +290,7 @@ main {
   margin-right: 0.3em;
   box-shadow: 0 1px 6px #16181f22;
 }
+
 .showcase-search-controls label,
 .search-controls label {
   color: var(--accent, #5a72f7);
@@ -297,10 +298,12 @@ main {
   margin-right: 0.7em;
   font-size: 1em;
 }
+
 .showcase-search-controls input[type="radio"],
 .search-controls input[type="radio"] {
   accent-color: var(--accent, #5a72f7);
 }
+
 .showcase-search-controls button,
 .search-controls button {
   background: var(--accent, #5a72f7);
@@ -315,11 +318,13 @@ main {
   cursor: pointer;
   transition: background 0.18s, color 0.18s, opacity 0.18s;
 }
+
 .showcase-search-controls button:disabled,
 .search-controls button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
 .showcase-search-controls span,
 .search-controls span {
   color: var(--text-muted, #adb5bd);
