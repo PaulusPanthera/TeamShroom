@@ -1,9 +1,15 @@
+console.log("showcasesearch.js loaded");
+
 (function(){
-  // Accepts: teamMembers (array), renderShowcaseGallery (function)
   window.setupShowcaseSearchAndSort = function(teamMembers, renderShowcaseGallery) {
+    console.log("setupShowcaseSearchAndSort CALLED");
     // --- Create UI controls ---
     const controls = document.createElement('div');
     controls.className = "showcase-search-controls";
+    controls.style.background = "#222"; // for debugging: make it visible
+    controls.style.border = "2px solid #f00"; // for debugging: make it visible
+    controls.style.padding = "12px";
+    controls.style.marginBottom = "18px";
 
     // Search input
     const searchInput = document.createElement('input');
@@ -37,10 +43,19 @@
 
     // Insert controls at the top of #page-content (replace any existing)
     const content = document.getElementById('page-content');
+    console.log("Found #page-content:", content);
+
+    if (!content) {
+      console.error("No #page-content found in DOM!");
+      return;
+    }
+
     if (content.firstChild && content.firstChild.classList && content.firstChild.classList.contains('showcase-search-controls')) {
+      console.log("Removing existing search bar");
       content.removeChild(content.firstChild);
     }
     content.insertBefore(controls, content.firstChild);
+    console.log("Showcase search bar inserted!");
 
     // --- Search/sort logic ---
     let sortMode = 'alphabetical';
@@ -52,7 +67,6 @@
       if (sortMode === 'alphabetical') {
         filtered.sort((a, b) => a.name.localeCompare(b.name));
       } else if (sortMode === 'shinies') {
-        // Sort descending by shinies, then A-Z for ties
         filtered.sort((a, b) => {
           const diff = (b.shinies || 0) - (a.shinies || 0);
           if (diff !== 0) return diff;
@@ -66,6 +80,11 @@
       const filtered = getFilteredAndSortedMembers();
       resultCount.textContent = `${filtered.length} result${filtered.length === 1 ? '' : 's'}`;
       renderShowcaseGallery(filtered);
+      // After rendering, re-insert the controls!
+      // This ensures that the search bar is always visible after gallery re-render
+      if (content.firstChild !== controls) {
+        content.insertBefore(controls, content.firstChild);
+      }
     }
 
     // --- Event listeners ---
