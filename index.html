@@ -184,6 +184,63 @@
       cursor: pointer;
       margin-bottom: 0.2em;
     }
+    /* --- Search/sort bar for showcase & dex --- */
+    .showcase-search-controls,
+    .search-controls {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1.7rem;
+      flex-wrap: wrap;
+    }
+    .showcase-search-controls input[type="text"],
+    .search-controls input[type="text"] {
+      padding: 0.6em;
+      border-radius: 8px;
+      border: 1.5px solid #00fff7;
+      background: #23243b;
+      color: #00fff7;
+      font-size: 1.08em;
+      font-family: inherit;
+      margin-right: 0.3em;
+      box-shadow: 0 1px 6px #16181f22;
+    }
+    .showcase-search-controls label,
+    .search-controls label {
+      color: #00fff7;
+      font-weight: 600;
+      margin-right: 0.7em;
+      font-size: 1em;
+    }
+    .showcase-search-controls input[type="radio"],
+    .search-controls input[type="radio"] {
+      accent-color: #00fff7;
+    }
+    .showcase-search-controls button,
+    .search-controls button {
+      background: #00fff7;
+      color: #23243b;
+      border: none;
+      border-radius: 8px;
+      padding: 0.3em 0.9em;
+      font-family: inherit;
+      font-size: 1em;
+      font-weight: bold;
+      box-shadow: 0 1px 6px #16181f22;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, opacity 0.18s;
+    }
+    .showcase-search-controls button:disabled,
+    .search-controls button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .showcase-search-controls span,
+    .search-controls span {
+      color: #adb5bd;
+      font-size: 1.07em;
+      font-weight: bold;
+    }
     @media (max-width: 1400px) {
       .dex-grid { grid-template-columns: repeat(6, 1fr);}
     }
@@ -209,6 +266,8 @@
   <script src="teamshowcase.js"></script>
   <script src="shinydex.js"></script>
   <script src="showcase.js"></script>
+  <script src="shinydexsearch.js"></script>
+  <script src="showcasesearch.js"></script>
   <script>
     // Routing: supports #showcase, #showcase-<member>, #hitlist
     function renderPage() {
@@ -220,6 +279,11 @@
       const content = document.getElementById('page-content');
       if (hash === "showcase" || hash === "") {
         renderShowcaseGallery(teamMembers);
+        setTimeout(() => {
+          if (typeof setupShowcaseSearchAndSort === 'function') {
+            setupShowcaseSearchAndSort(teamMembers, renderShowcaseGallery);
+          }
+        }, 0);
       } else if (hash.startsWith("showcase-")) {
         const memberName = hash.replace("showcase-", "");
         const member = teamMembers.find(m => m.name === memberName);
@@ -230,7 +294,14 @@
         }
       } else if (hash === "hitlist") {
         content.innerHTML = "<h1>Shiny Dex Hitlist</h1><div id='shiny-dex-container'></div>";
-        setTimeout(() => renderShinyDex(shinyDex), 0);
+        setTimeout(() => {
+          renderShinyDex(shinyDex);
+          setTimeout(() => {
+            if (typeof setupShinyDexHitlistSearch === 'function') {
+              setupShinyDexHitlistSearch(shinyDex);
+            }
+          }, 0);
+        }, 0);
       } else {
         content.innerHTML = "<h1>Page not found.</h1>";
       }
