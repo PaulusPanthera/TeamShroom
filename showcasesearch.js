@@ -1,15 +1,13 @@
 (function(){
   window.setupShowcaseSearchAndSort = function(teamMembers, renderShowcaseGallery) {
     const controls = document.querySelector('.showcase-search-controls');
-    controls.innerHTML = ""; // Clear previous controls, but do not remove node
+    controls.innerHTML = "";
 
-    // Search input
     const searchInput = document.createElement('input');
     searchInput.type = 'text';
     searchInput.placeholder = 'Search Member';
     controls.appendChild(searchInput);
 
-    // Sort controls (radio)
     const sortDiv = document.createElement('div');
     sortDiv.style.display = 'flex';
     sortDiv.style.gap = '0.8em';
@@ -29,15 +27,12 @@
     });
     controls.appendChild(sortDiv);
 
-    // Results count
     const resultCount = document.createElement('span');
     controls.appendChild(resultCount);
 
-    // --- State
     let sortMode = 'alphabetical';
     let searchValue = '';
 
-    // --- Search/sort logic ---
     function getFilteredAndSortedMembers() {
       const input = searchValue.trim().toLowerCase();
       let filtered = teamMembers.filter(m => m.name.toLowerCase().includes(input));
@@ -57,10 +52,9 @@
       const filtered = getFilteredAndSortedMembers();
       resultCount.textContent = `${filtered.length} result${filtered.length === 1 ? '' : 's'}`;
       const galleryContainer = document.getElementById('showcase-gallery-container');
-      renderShowcaseGallery(filtered, galleryContainer);
+      renderShowcaseGallery(filtered, galleryContainer, sortMode);
     }
 
-    // --- Event listeners ---
     searchInput.addEventListener('input', e => {
       searchValue = e.target.value;
       updateResults();
@@ -73,7 +67,6 @@
       });
     });
 
-    // --- Initial render ---
     updateResults();
   };
 })();
