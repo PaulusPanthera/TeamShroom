@@ -5,7 +5,256 @@
   <title>Team Shroom Shiny Pages</title>
   <!-- Retro Pixel Font -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: #181a20;
+      color: #e0e0e0;
+      font-family: 'Press Start 2P', 'Consolas', 'monospace';
+      margin: 0;
+      padding: 0;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+    .nav {
+      display: flex;
+      gap: 1rem;
+      background: #14151a;
+      padding: 1.2rem 2rem;
+      border-bottom: 3px solid #00fff7;
+      box-shadow: 0 2px 10px #000a;
+    }
+    .nav a {
+      color: #00fff7;
+      text-decoration: none;
+      font-weight: bold;
+      font-family: inherit;
+      background: #23243b;
+      padding: 0.7rem 1.3rem;
+      border-radius: 5px;
+      border: 2px solid #00fff7;
+      font-size: 1em;
+      transition: background 0.2s, box-shadow 0.2s, color 0.15s;
+      box-shadow: 0 2px #00fff722;
+      letter-spacing: 1px;
+    }
+    .nav a.active, .nav a:hover {
+      background: #00fff7;
+      color: #14151a;
+      box-shadow: 0 2px #00fff7;
+      text-shadow: 0 0 5px #00fff7, 0 0 10px #00fff7aa;
+    }
+    #page-content {
+      margin: 2rem 0;
+      padding: 0 1.5rem;
+      min-height: 70vh;
+    }
+    .region-section {
+      margin-bottom: 2.5rem;
+    }
+    .region-section h2 {
+      color: #00fff7;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      font-size: 1.2em;
+      border-bottom: 2px solid #23243b;
+      padding-bottom: 0.25em;
+      text-shadow: 0 0 5px #00fff799;
+    }
+    .dex-grid {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 1rem;
+    }
+    .dex-entry {
+      aspect-ratio: 1 / 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid #23243b;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #222431 85%, #23243b 100%);
+      color: #e0e0e0;
+      text-align: center;
+      font-family: inherit;
+      font-size: 0.95em;
+      box-shadow: 0 4px 18px #000c;
+      transition: transform 0.15s, box-shadow 0.15s;
+      padding: 0.5rem 0.2rem 0.2rem 0.2rem;
+      box-sizing: border-box;
+      min-width: 0;
+      min-height: 0;
+    }
+    .dex-entry.claimed {
+      background: linear-gradient(135deg, #0f1c2e 80%, #00fff733 100%);
+      color: #00fff7;
+      font-weight: bold;
+      border-color: #00fff7;
+      box-shadow: 0 0 16px #00fff766;
+    }
+    .dex-entry.unclaimed {
+      opacity: 0.77;
+      background: linear-gradient(135deg, #23243b 70%, #181a20 100%);
+      color: #e0e0e0;
+      border-color: #23243b;
+    }
+    .dex-entry:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 24px #00fff799, 0 0 8px #191c34;
+      z-index: 3;
+      position: relative;
+    }
+    .pokemon-gif {
+      width: 72px;
+      height: 72px;
+      image-rendering: pixelated;
+      filter: contrast(1.3) brightness(0.9) drop-shadow(0 0 2px #00fff7aa);
+      margin-bottom: 0.2em;
+      background: #23243b;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .dex-name {
+      font-family: inherit;
+      font-size: 0.95em;
+      margin-top: 0.4em;
+      margin-bottom: 0.1em;
+      letter-spacing: 0.5px;
+      word-break: break-word;
+      text-shadow: 0 0 4px #000a;
+      flex-shrink: 0;
+    }
+    .dex-claimed {
+      font-size: 0.7em;
+      color: #00fff7bb;
+      margin-top: 0.2em;
+      text-shadow: 0 0 6px #14151a99;
+      flex-shrink: 0;
+    }
+    .showcase-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .showcase-entry {
+      background: #23243b;
+      border: 2px solid #00fff7;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px #00fff766;
+      padding: 1em 0.7em 1em 0.7em;
+      min-height: 220px;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between; /* Even vertical spacing */
+      gap: 0.7em; /* Consistent vertical gaps */
+      text-align: center;
+    }
+    .showcase-name {
+      font-size: 1.1em;
+      font-weight: bold;
+      color: #00fff7;
+      text-shadow: 0 0 7px #00fff7aa;
+      margin-bottom: 0.2em;
+    }
+    .showcase-sprite {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin: 0.3em 0;
+      display: block;
+      cursor: pointer;
+    }
+    .showcase-shiny-count {
+      color: #e0e0e0;
+      font-size: 0.95em;
+      margin-top: 0.2em;
+    }
+    .showcase-shinies {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-top: 0.3em;
+      gap: 8px;
+    }
+    .showcase-shiny-img, .showcase-sprite {
+      image-rendering: pixelated;
+      filter: contrast(1.3) brightness(0.9) drop-shadow(0 0 2px #00fff7aa);
+      background: #23243b;
+      border-radius: 3px;
+    }
+    /* --- Search/sort bar for showcase & dex --- */
+    .showcase-search-controls,
+    .search-controls {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1.7rem;
+      flex-wrap: wrap;
+    }
+    .showcase-search-controls input[type="text"],
+    .search-controls input[type="text"] {
+      padding: 0.6em;
+      border-radius: 8px;
+      border: 1.5px solid #00fff7;
+      background: #23243b;
+      color: #00fff7;
+      font-size: 1.08em;
+      font-family: inherit;
+      margin-right: 0.3em;
+      box-shadow: 0 1px 6px #16181f22;
+    }
+    .showcase-search-controls label,
+    .search-controls label {
+      color: #00fff7;
+      font-weight: 600;
+      margin-right: 0.7em;
+      font-size: 1em;
+    }
+    .showcase-search-controls input[type="radio"],
+    .search-controls input[type="radio"] {
+      accent-color: #00fff7;
+    }
+    .showcase-search-controls button,
+    .search-controls button {
+      background: #00fff7;
+      color: #23243b;
+      border: none;
+      border-radius: 8px;
+      padding: 0.3em 0.9em;
+      font-family: inherit;
+      font-size: 1em;
+      font-weight: bold;
+      box-shadow: 0 1px 6px #16181f22;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, opacity 0.18s;
+    }
+    .showcase-search-controls button:disabled,
+    .search-controls button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .showcase-search-controls span,
+    .search-controls span {
+      color: #adb5bd;
+      font-size: 1.07em;
+      font-weight: bold;
+    }
+    @media (max-width: 1400px) {
+      .dex-grid { grid-template-columns: repeat(6, 1fr);}
+    }
+    @media (max-width: 900px) {
+      .dex-grid { grid-template-columns: repeat(3, 1fr);}
+    }
+    @media (max-width: 600px) {
+      body { font-size: 12px; }
+      .dex-grid { grid-template-columns: repeat(2, 1fr);}
+      .nav { padding: 1rem 0.3rem; }
+    }
+  </style>
   <link rel="icon" href="data:,">
 </head>
 <body>
