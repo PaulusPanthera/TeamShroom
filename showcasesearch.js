@@ -1,5 +1,5 @@
 (function(){
-  // Expects: teamMembers (array), renderShowcaseGallery (function)
+  // Accepts: teamMembers (array), renderShowcaseGallery (function)
   window.setupShowcaseSearchAndSort = function(teamMembers, renderShowcaseGallery) {
     // --- Create UI controls ---
     const controls = document.createElement('div');
@@ -35,10 +35,10 @@
     const resultCount = document.createElement('span');
     controls.appendChild(resultCount);
 
-    // Insert controls at the top of #page-content
+    // Insert controls at the top of #page-content (replace any existing)
     const content = document.getElementById('page-content');
     if (content.firstChild && content.firstChild.classList && content.firstChild.classList.contains('showcase-search-controls')) {
-      content.removeChild(content.firstChild); // Remove any existing search controls
+      content.removeChild(content.firstChild);
     }
     content.insertBefore(controls, content.firstChild);
 
@@ -52,7 +52,7 @@
       if (sortMode === 'alphabetical') {
         filtered.sort((a, b) => a.name.localeCompare(b.name));
       } else if (sortMode === 'shinies') {
-        filtered.sort((a, b) => (b.shinies?.length || 0) - (a.shinies?.length || 0));
+        filtered.sort((a, b) => (b.shinies || 0) - (a.shinies || 0));
       }
       return filtered;
     }
