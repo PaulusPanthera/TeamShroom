@@ -186,6 +186,50 @@
       background: #23243b;
       border-radius: 3px;
     }
+    .showcase-shiny-img-wrapper {
+      position: relative;
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+    }
+    /* Remove the X overlay for lost shinies */
+    .showcase-shiny-img-wrapper.lost::after {
+      content: none;
+    }
+    /* Skull overlay for lost shinies */
+    .lost-overlay-skull {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0.9;
+      filter: drop-shadow(0px 0px 8px #000);
+    }
+    .showcase-shiny-img {
+      width: 100px;
+      height: 100px;
+      image-rendering: pixelated;
+      background: #23243b;
+      border-radius: 7px;
+      margin: 0 3px 4px 3px;
+      box-shadow: 0 1px 12px #3335;
+      object-fit: contain;
+      transition: transform 0.12s, box-shadow 0.12s, opacity 0.12s;
+      display: block;
+    }
+    .showcase-shiny-img.lost {
+      opacity: 0.04;
+      filter: grayscale(1) brightness(0.20) contrast(0.4) blur(2.2px);
+      border: 2px dashed #a22;
+    }
+    .showcase-shiny-img:hover {
+      transform: scale(1.08);
+      box-shadow: 0 4px 24px #00fff7, 0 0 8px #181b2460;
+      z-index: 2;
+      position: relative;
+    }
     /* --- Search/sort bar for showcase & dex --- */
     .showcase-search-controls,
     .search-controls {
