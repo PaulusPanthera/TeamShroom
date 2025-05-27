@@ -2,22 +2,17 @@
   window.setupShowcaseSearchAndSort = function(teamMembers, renderShowcaseGallery) {
     // --- Create UI controls ---
     const controls = document.createElement('div');
-    controls.style.display = 'flex';
-    controls.style.alignItems = 'center';
-    controls.style.gap = '1rem';
-    controls.style.marginBottom = '1.5rem';
+    controls.className = "showcase-search-controls"; // Theme class for CSS
+    // (You can remove the inline style code below if you want CSS-only styling)
+    // controls.style.display = 'flex';
+    // controls.style.alignItems = 'center';
+    // controls.style.gap = '1rem';
+    // controls.style.marginBottom = '1.5rem';
 
     // Search input
     const searchInput = document.createElement('input');
     searchInput.type = 'text';
     searchInput.placeholder = 'Search Member';
-    searchInput.style.padding = '0.5em';
-    searchInput.style.borderRadius = '6px';
-    searchInput.style.border = '1px solid #363b4a';
-    searchInput.style.background = '#23243b';
-    searchInput.style.color = '#00fff7';
-    searchInput.style.fontFamily = "'Press Start 2P', 'Consolas', 'monospace'";
-    searchInput.style.fontSize = '1em';
     controls.appendChild(searchInput);
 
     // Sort toggle (Alphabetical / Total Shinies)
@@ -30,17 +25,17 @@
     ];
     sortOptions.forEach(([labelText, value]) => {
       const label = document.createElement('label');
-      label.style.cursor = 'pointer';
-      label.style.fontWeight = 'bold';
-      label.style.color = '#00fff7';
-      label.style.marginRight = '0.5em';
+      // label.style.cursor = 'pointer';
+      // label.style.fontWeight = 'bold';
+      // label.style.color = '#00fff7';
+      // label.style.marginRight = '0.5em';
 
       const radio = document.createElement('input');
       radio.type = 'radio';
       radio.name = 'sort-toggle';
       radio.value = value;
       if (value === 'alphabetical') radio.checked = true;
-      radio.style.accentColor = '#00fff7';
+      // radio.style.accentColor = '#00fff7';
 
       label.appendChild(radio);
       label.appendChild(document.createTextNode(' ' + labelText));
@@ -50,10 +45,10 @@
 
     // Results count (optional)
     const resultCount = document.createElement('span');
-    resultCount.style.minWidth = '68px';
-    resultCount.style.textAlign = 'center';
-    resultCount.style.color = '#00fff7bb';
-    resultCount.style.fontWeight = "bold";
+    // resultCount.style.minWidth = '68px';
+    // resultCount.style.textAlign = 'center';
+    // resultCount.style.color = '#00fff7bb';
+    // resultCount.style.fontWeight = "bold";
     controls.appendChild(resultCount);
 
     // Insert controls at the top of #page-content
