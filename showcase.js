@@ -1,5 +1,3 @@
-// showcase.js
-
 // Team Shroom members and their shiny counts
 const teamMembers = [
   { name: "ANNlLlATION", shinies: 1 },
@@ -171,6 +169,13 @@ function renderShowcaseGallery(members) {
   content.innerHTML = `<h1>Shiny Showcase</h1>
     <div class="showcase-alphabetical"></div>
   `;
+
+  // Insert search/sort controls if available (prevents duplicates)
+  setTimeout(() => {
+    if (typeof setupShowcaseSearchAndSort === 'function') {
+      setupShowcaseSearchAndSort(teamMembers, renderShowcaseGallery);
+    }
+  }, 0);
 
   const alphaContainer = content.querySelector(".showcase-alphabetical");
   const grouped = groupMembersAlphabetically(members);
