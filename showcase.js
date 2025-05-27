@@ -114,19 +114,16 @@ const teamMembers = [
 
 // Helper to generate the correct shiny gif url
 function shinyGifUrl(name) {
-  // Normalize name for the URL
   let urlName = name
     .toLowerCase()
-    .replace(/[\s.]/g, "-") // spaces/dots to dash
-    .replace(/-f$/, "-f")   // female/male forms
+    .replace(/[\s.]/g, "-")
+    .replace(/-f$/, "-f")
     .replace(/-m$/, "-m");
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${urlName}.gif`;
 }
 
-// Get the actual shinies for a member using teamShowcase
 function getMemberShinies(member) {
   if (!window.teamShowcase) {
-    // Fallback in case teamShowcase is not loaded
     return Array.from({ length: member.shinies }, () => ({
       name: "Placeholder",
       url: "examplesprite.gif",
@@ -156,25 +153,20 @@ function groupMembersAlphabetically(members) {
     if (!grouped[firstLetter]) grouped[firstLetter] = [];
     grouped[firstLetter].push(member);
   });
-  // Sort group keys and each group alphabetically
   return Object.keys(grouped).sort().map(letter => ({
     letter,
     members: grouped[letter].sort((a, b) => a.name.localeCompare(b.name))
   }));
 }
 
-// Main gallery rendering (6 columns, alphabetically grouped)
-function renderShowcaseGallery(members) {
-  const content = document.getElementById('page-content');
-  content.innerHTML = `<h1>Shiny Showcase</h1>
-    <div class="showcase-alphabetical"></div>
-  `;
+// Main gallery rendering (accepts a container to render into)
+function renderShowcaseGallery(members, container) {
+  if (!container) container = document.getElementById('showcase-gallery-container');
+  container.innerHTML = "";
 
-  const alphaContainer = content.querySelector(".showcase-alphabetical");
   const grouped = groupMembersAlphabetically(members);
 
   grouped.forEach(group => {
-    // Section header
     const section = document.createElement("section");
     section.className = "showcase-letter-section";
     section.innerHTML = `<h2>${group.letter}</h2>
@@ -186,7 +178,6 @@ function renderShowcaseGallery(members) {
     gallery.style.gap = "1.5rem";
 
     group.members.forEach(member => {
-      // Always use the placeholder for the main gallery!
       const spriteUrl = "examplesprite.gif";
       const entry = document.createElement("div");
       entry.className = "showcase-entry";
@@ -200,11 +191,10 @@ function renderShowcaseGallery(members) {
       };
       gallery.appendChild(entry);
     });
-    alphaContainer.appendChild(section);
+    container.appendChild(section);
   });
 }
 
-// Individual member's shiny showcase with wrapper for lost overlay X
 function renderMemberShowcase(member) {
   const content = document.getElementById('page-content');
   const shinies = getMemberShinies(member);
@@ -221,18 +211,6 @@ function renderMemberShowcase(member) {
     </div>
   `;
 }
-
-// Routing logic (hash-based navigation)
-// Do NOT call setupShowcaseSearchAndSort here, to avoid duplicate bars; it's handled by the router in your HTML.
-window.onhashchange = function () {
-  if (location.hash.startsWith("#showcase-")) {
-    const name = decodeURIComponent(location.hash.replace("#showcase-", ""));
-    const member = teamMembers.find(m => m.name === name);
-    if (member) renderMemberShowcase(member);
-  } else {
-    renderShowcaseGallery(teamMembers);
-  }
-};
 
 // Initial render
 window.onload = () => renderShowcaseGallery(teamMembers);
