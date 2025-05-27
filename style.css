@@ -9,18 +9,13 @@
   --text-muted: #adb5bd;
 }
 
-/* =======================
-   GLOBAL & PAGE STRUCTURE
-   ======================= */
 body {
   background: var(--bg);
   color: var(--text-main);
-  font-family: 'Press Start 2P', 'Consolas', 'monospace';
+  font-family: 'Segoe UI', Arial, sans-serif;
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  font-size: 14px;
-  letter-spacing: 0.5px;
 }
 
 header, footer {
@@ -28,10 +23,12 @@ header, footer {
   padding: 2rem 1rem 1rem 1rem;
 }
 
-#page-content {
-  margin: 2rem 0;
-  padding: 0 1.5rem;
-  min-height: 70vh;
+h1 {
+  background: linear-gradient(90deg, #5a72f7 30%, #61e786 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
 }
 
 main {
@@ -41,83 +38,50 @@ main {
   min-height: 60vh;
 }
 
-/* =======================
-   NAVIGATION
-   ======================= */
-.nav {
-  display: flex;
-  gap: 1rem;
-  background: #14151a;
-  padding: 1.2rem 2rem;
-  border-bottom: 3px solid #00fff7;
-  box-shadow: 0 2px 10px #000a;
-}
-.nav a {
-  color: #00fff7;
-  text-decoration: none;
-  font-weight: bold;
-  font-family: inherit;
-  background: #23243b;
-  padding: 0.7rem 1.3rem;
-  border-radius: 5px;
-  border: 2px solid #00fff7;
-  font-size: 1em;
-  transition: background 0.2s, box-shadow 0.2s, color 0.15s;
-  box-shadow: 0 2px #00fff722;
-  letter-spacing: 1px;
-}
-.nav a.active, .nav a:hover {
-  background: #00fff7;
-  color: #14151a;
-  box-shadow: 0 2px #00fff7;
-  text-shadow: 0 0 5px #00fff7, 0 0 10px #00fff7aa;
-}
-
-/* =======================
-   HEADINGS
-   ======================= */
-h1 {
-  background: linear-gradient(90deg, #5a72f7 30%, #61e786 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-}
-.region-section h2,
-.showcase-letter-section h2 {
-  color: var(--accent);
-  border-bottom: 2px solid var(--accent);
-  padding-bottom: 0.3rem;
-  letter-spacing: 1px;
-  font-size: 2rem;
-  margin-bottom: 1.2rem;
-}
-.showcase-letter-section h2 {
-  margin-top: 2rem;
-  margin-bottom: 0.9rem;
-  font-size: 1.5em;
-  border-bottom: 1px solid var(--accent);
-  padding-bottom: 0.2em;
-  text-shadow: 0 0 7px #5a72f799;
-}
-
-/* =======================
-   DEX/HITLIST STYLES
-   ======================= */
 #shiny-dex-container {
   width: 100%;
   max-width: 1200px;
   margin: 2rem auto;
   padding: 1rem;
 }
+
 .region-section {
   margin-bottom: 3rem;
 }
+
+.region-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1.2rem;
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.3rem;
+  letter-spacing: 1px;
+}
+
 .dex-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 1rem;
 }
+
+@media (max-width: 1100px) {
+  .dex-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 700px) {
+  .dex-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  #shiny-dex-container {
+    padding: 0.4rem;
+  }
+  .region-section h2 {
+    font-size: 1.35rem;
+  }
+}
+
 .dex-entry {
   background: var(--card);
   padding: 0.5rem;
@@ -131,14 +95,17 @@ h1 {
   min-height: 125px;
   height: 100%;
 }
+
 .dex-entry.claimed {
   border-left: 6px solid var(--claimed);
   opacity: 0.95;
 }
+
 .dex-entry.unclaimed {
   border-left: 6px solid var(--unclaimed);
   opacity: 1;
 }
+
 .pokemon-gif {
   width: 100px;
   height: 100px;
@@ -149,6 +116,7 @@ h1 {
   margin-bottom: 0.2rem;
   box-shadow: 0 1px 6px #0006;
 }
+
 .dex-name {
   font-weight: bold;
   font-size: 1rem;
@@ -156,6 +124,7 @@ h1 {
   color: var(--text-main);
   text-align: center;
 }
+
 .dex-claimed {
   font-size: 0.95rem;
   color: var(--unclaimed);
@@ -166,24 +135,44 @@ h1 {
   color: var(--claimed);
 }
 
-/* =======================
-   SHOWCASE GALLERY STYLES
-   ======================= */
+/* === SHINY SHOWCASE GALLERY, ALPHABETICAL, AND MEMBER PAGES === */
+
 .showcase-alphabetical {
   width: 100%;
   max-width: 1400px;
   margin: 2rem auto 1rem auto;
   padding: 0;
 }
+
 .showcase-letter-section {
   margin-bottom: 2.5rem;
 }
+
+.showcase-letter-section h2 {
+  color: var(--accent);
+  margin-top: 2rem;
+  margin-bottom: 0.9rem;
+  font-size: 1.5em;
+  letter-spacing: 2px;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 0.2em;
+  text-shadow: 0 0 7px #5a72f799;
+}
+
 .showcase-gallery {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 1.5rem;
   margin-top: 1.3rem;
 }
+
+@media (max-width: 1200px) {
+  .showcase-gallery { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 700px) {
+  .showcase-gallery { grid-template-columns: repeat(2, 1fr); }
+}
+
 .showcase-entry {
   background: #23243b;
   border: 2px solid #00fff7;
@@ -195,8 +184,8 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.7em;
+  justify-content: space-between; /* Even vertical spacing */
+  gap: 0.7em; /* Consistent vertical gaps */
   text-align: center;
 }
 .showcase-name {
@@ -207,8 +196,8 @@ h1 {
   margin-bottom: 0.2em;
 }
 .showcase-sprite {
-  width: 120px;
-  height: 120px;
+  width: 120px !important;
+  height: 120px !important;
   object-fit: contain;
   margin: 0.3em 0;
   display: block;
@@ -232,6 +221,7 @@ h1 {
   margin-top: 0.3em;
   gap: 12px;
 }
+
 .showcase-shiny-img-wrapper {
   position: relative;
   display: inline-block;
@@ -254,6 +244,7 @@ h1 {
   font-family: Arial, sans-serif;
   line-height: 1;
 }
+
 .showcase-shiny-img {
   width: 120px;
   height: 120px;
@@ -278,9 +269,7 @@ h1 {
   position: relative;
 }
 
-/* =======================
-   SEARCH & SORT CONTROLS
-   ======================= */
+/* === SEARCH/SORT CONTROLS FOR SHOWCASE & DEX (THEME MATCHING) === */
 .showcase-search-controls,
 .search-controls {
   display: flex;
@@ -336,27 +325,4 @@ h1 {
   color: var(--text-muted, #adb5bd);
   font-size: 1.07em;
   font-weight: bold;
-}
-
-/* =======================
-   RESPONSIVE DESIGN
-   ======================= */
-@media (max-width: 1400px) {
-  .dex-grid { grid-template-columns: repeat(6, 1fr);}
-}
-@media (max-width: 1200px) {
-  .showcase-gallery { grid-template-columns: repeat(4, 1fr); }
-}
-@media (max-width: 900px) {
-  .dex-grid { grid-template-columns: repeat(3, 1fr);}
-}
-@media (max-width: 700px) {
-  .dex-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
-  #shiny-dex-container { padding: 0.4rem; }
-  .region-section h2 { font-size: 1.35rem; }
-  .showcase-gallery { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 600px) {
-  body { font-size: 12px; }
-  .nav { padding: 1rem 0.3rem; }
 }
