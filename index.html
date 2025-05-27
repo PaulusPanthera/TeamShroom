@@ -209,6 +209,7 @@
   <script src="teamshowcase.js"></script>
   <script src="shinydex.js"></script>
   <script src="showcase.js"></script>
+  <script src="shinydexsearch.js"></script>
   <script>
     // Routing: supports #showcase, #showcase-<member>, #hitlist
     function renderPage() {
@@ -230,7 +231,15 @@
         }
       } else if (hash === "hitlist") {
         content.innerHTML = "<h1>Shiny Dex Hitlist</h1><div id='shiny-dex-container'></div>";
-        setTimeout(() => renderShinyDex(shinyDex), 0);
+        setTimeout(() => {
+          renderShinyDex(shinyDex);
+          // Wait for DOM, then add search controls
+          setTimeout(() => {
+            if (typeof setupShinyDexHitlistSearch === 'function') {
+              setupShinyDexHitlistSearch(shinyDex);
+            }
+          }, 50);
+        }, 0);
       } else {
         content.innerHTML = "<h1>Page not found.</h1>";
       }
