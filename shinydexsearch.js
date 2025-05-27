@@ -17,22 +17,12 @@
 
     // --- Create UI controls ---
     const controls = document.createElement('div');
-    controls.style.display = 'flex';
-    controls.style.alignItems = 'center';
-    controls.style.gap = '1rem';
-    controls.style.marginBottom = '1.5rem';
+    controls.className = 'search-controls'; // Use CSS class for consistent styling
 
     // Search input
     const searchInput = document.createElement('input');
     searchInput.type = 'text';
     searchInput.placeholder = 'Search';
-    searchInput.style.padding = '0.5em';
-    searchInput.style.borderRadius = '6px';
-    searchInput.style.border = '1px solid #363b4a';
-    searchInput.style.background = '#23243b';
-    searchInput.style.color = '#00fff7';
-    searchInput.style.fontFamily = "'Press Start 2P', 'Consolas', 'monospace'";
-    searchInput.style.fontSize = '1em';
     controls.appendChild(searchInput);
 
     // Toggle (All / Pokemon / Member)
@@ -46,18 +36,11 @@
     ];
     toggleNames.forEach(([labelText, value]) => {
       const label = document.createElement('label');
-      label.style.cursor = 'pointer';
-      label.style.fontWeight = 'bold';
-      label.style.color = '#00fff7';
-      label.style.marginRight = '0.5em';
-
       const radio = document.createElement('input');
       radio.type = 'radio';
       radio.name = 'search-toggle';
       radio.value = value;
       if (value === 'all') radio.checked = true;
-      radio.style.accentColor = '#00fff7';
-
       label.appendChild(radio);
       label.appendChild(document.createTextNode(' ' + labelText));
       toggleDiv.appendChild(label);
@@ -72,31 +55,11 @@
 
     const upBtn = document.createElement('button');
     upBtn.textContent = '▲';
-    upBtn.style.borderRadius = '6px';
-    upBtn.style.padding = '0.2em 0.6em';
-    upBtn.style.background = '#00fff7';
-    upBtn.style.color = '#14151a';
-    upBtn.style.border = 'none';
-    upBtn.style.cursor = 'pointer';
-    upBtn.style.fontFamily = "'Press Start 2P', 'Consolas', 'monospace'";
-    upBtn.style.fontWeight = "bold";
 
     const downBtn = document.createElement('button');
     downBtn.textContent = '▼';
-    downBtn.style.borderRadius = '6px';
-    downBtn.style.padding = '0.2em 0.6em';
-    downBtn.style.background = '#00fff7';
-    downBtn.style.color = '#14151a';
-    downBtn.style.border = 'none';
-    downBtn.style.cursor = 'pointer';
-    downBtn.style.fontFamily = "'Press Start 2P', 'Consolas', 'monospace'";
-    downBtn.style.fontWeight = "bold";
 
     const resultCount = document.createElement('span');
-    resultCount.style.minWidth = '68px';
-    resultCount.style.textAlign = 'center';
-    resultCount.style.color = '#00fff7bb';
-    resultCount.style.fontWeight = "bold";
     navDiv.append(upBtn, resultCount, downBtn);
     controls.appendChild(navDiv);
 
@@ -153,7 +116,7 @@
         let found = false;
         for (let i = 0; i < allEntries.length; ++i) {
           if (count === activeMatchIdx && !found) {
-            allEntries[i].style.boxShadow = '0 0 0 4px #00fff7, 0 0 18px #00fff7cc, 0 2px 8px #000a';
+            allEntries[i].style.boxShadow = '0 0 0 4px var(--accent, #5a72f7), 0 0 18px var(--accent, #5a72f7cc), 0 2px 8px #000a';
             allEntries[i].style.zIndex = 10;
             allEntries[i].scrollIntoView({ block: 'center', behavior: 'smooth' });
             found = true;
