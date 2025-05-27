@@ -25,7 +25,7 @@
     // Search input
     const searchInput = document.createElement('input');
     searchInput.type = 'text';
-    searchInput.placeholder = 'Search Pokémon or member...';
+    searchInput.placeholder = 'Search';
     searchInput.style.padding = '0.5em';
     searchInput.style.borderRadius = '6px';
     searchInput.style.border = '1px solid #363b4a';
@@ -41,7 +41,7 @@
     toggleDiv.style.gap = '0.4em';
     const toggleNames = [
       ["All", "all"],
-      ["Poke", "poke"],
+      ["Pokemon", "pokemon"],
       ["Member", "member"]
     ];
     toggleNames.forEach(([labelText, value]) => {
