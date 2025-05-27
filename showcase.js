@@ -122,6 +122,31 @@ function shinyGifUrl(name) {
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${urlName}.gif`;
 }
 
+// Helper to get a member's shinies (make sure teamShowcase is loaded!)
+function getMemberShinies(member) {
+  if (!window.teamShowcase) {
+    // fallback: create placeholder shinies if data missing
+    return Array.from({ length: member.shinies }, () => ({
+      name: "Placeholder",
+      url: "examplesprite.gif",
+      lost: false
+    }));
+  }
+  const showcaseEntry = teamShowcase.find(m => m.name === member.name);
+  if (!showcaseEntry || !Array.isArray(showcaseEntry.shinies)) {
+    return Array.from({ length: member.shinies }, () => ({
+      name: "Placeholder",
+      url: "examplesprite.gif",
+      lost: false
+    }));
+  }
+  return showcaseEntry.shinies.map(mon => ({
+    name: mon.name,
+    url: shinyGifUrl(mon.name),
+    lost: !!mon.lost
+  }));
+}
+
 // Group by first letter (A-Z)
 function groupMembersAlphabetically(members) {
   const grouped = {};
@@ -196,6 +221,7 @@ function renderShowcaseGallery(members, container, groupMode) {
   });
 }
 
+// Show a single member's full shiny showcase
 function renderMemberShowcase(member) {
   const content = document.getElementById('page-content');
   const shinies = getMemberShinies(member);
@@ -212,6 +238,3 @@ function renderMemberShowcase(member) {
     </div>
   `;
 }
-
-// Initial render
-window.onload = () => renderShowcaseGallery(teamMembers);
