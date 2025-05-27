@@ -170,13 +170,6 @@ function renderShowcaseGallery(members) {
     <div class="showcase-alphabetical"></div>
   `;
 
-  // Insert search/sort controls if available (prevents duplicates)
-  setTimeout(() => {
-    if (typeof setupShowcaseSearchAndSort === 'function') {
-      setupShowcaseSearchAndSort(teamMembers, renderShowcaseGallery);
-    }
-  }, 0);
-
   const alphaContainer = content.querySelector(".showcase-alphabetical");
   const grouped = groupMembersAlphabetically(members);
 
@@ -230,6 +223,7 @@ function renderMemberShowcase(member) {
 }
 
 // Routing logic (hash-based navigation)
+// Do NOT call setupShowcaseSearchAndSort here, to avoid duplicate bars; it's handled by the router in your HTML.
 window.onhashchange = function () {
   if (location.hash.startsWith("#showcase-")) {
     const name = decodeURIComponent(location.hash.replace("#showcase-", ""));
