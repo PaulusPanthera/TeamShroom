@@ -268,3 +268,56 @@ main {
   z-index: 2;
   position: relative;
 }
+
+/* === SEARCH/SORT CONTROLS (SHOWCASE & DEX) === */
+.showcase-search-controls,
+#shiny-dex-container .search-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 1.7rem;
+  flex-wrap: wrap;
+}
+.showcase-search-controls input[type="text"],
+#shiny-dex-container .search-controls input[type="text"] {
+  padding: 0.6em;
+  border-radius: 8px;
+  border: 1.5px solid var(--accent);
+  background: var(--card);
+  color: var(--accent);
+  font-size: 1.08em;
+  font-family: inherit;
+  margin-right: 0.3em;
+  box-shadow: 0 1px 6px #16181f22;
+}
+
+.showcase-search-controls label,
+#shiny-dex-container .search-controls label {
+  color: var(--accent);
+  font-weight: 600;
+  margin-right: 0.7em;
+  font-size: 1em;
+}
+.showcase-search-controls input[type="radio"],
+#shiny-dex-container .search-controls input[type="radio"] {
+  accent-color: var(--accent);
+}
+.showcase-search-controls button,
+#shiny-dex-container .search-controls button {
+  background: var(--accent);
+  color: var(--card);
+  border: none;
+  border-radius: 8px;
+  padding: 0.3em 0.9em;
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: bold;
+  box-shadow: 0 1px 6px #16181f22;
+  cursor: pointer;
+}
+.showcase-search-controls span,
+#shiny-dex-container .search-controls span {
+  color: var(--text-muted);
+  font-size: 1.07em;
+  font-weight: bold;
+}
