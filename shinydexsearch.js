@@ -23,8 +23,8 @@
     return memberMap;
   }
 
-  // --- Helper: Render scoreboard leaderboard ---
-  function renderScoreboard(flattened, memberFilter = "") {
+  // --- Helper: Render scoreboard leaderboard (with .dex-entry grid style) ---
+  function renderScoreboard(flattened, memberFilter = "", claimFilter = "all") {
     const container = document.getElementById('shiny-dex-container');
     if (!container) return;
     container.innerHTML = '';
@@ -48,6 +48,12 @@
       return a.member.localeCompare(b.member);
     });
 
+    // If filtering by "unclaimed", there are no members with 0 claims, so show "No members found."
+    if (claimFilter === "unclaimed") {
+      container.innerHTML = `<div style="color:#e0e0e0;font-size:1.2em;">No members found.</div>`;
+      return;
+    }
+
     // Build the leaderboard
     members.forEach(({ member, pokes }, idx) => {
       const section = document.createElement('section');
@@ -56,22 +62,19 @@
       section.innerHTML = `<h2 style="color:#00fff7;letter-spacing:1.2px;margin-bottom:0.6em;">
         #${idx+1} ${member} <span style="font-size:0.7em;font-weight:normal;color:#e0e0e0;">(${pokes.length} claim${pokes.length!==1?'s':''})</span>
       </h2>
-      <div class="scoreboard-member-claims" style="display:flex;flex-wrap:wrap;gap:10px 15px;"></div>
+      <div class="dex-grid"></div>
       `;
-      const claimsDiv = section.querySelector('.scoreboard-member-claims');
+      const grid = section.querySelector('.dex-grid');
       pokes.sort((a, b) => a.name.localeCompare(b.name));
       pokes.forEach(entry => {
         const div = document.createElement('div');
-        div.className = 'scoreboard-claim-entry';
-        div.style.display = "flex";
-        div.style.flexDirection = "column";
-        div.style.alignItems = "center";
-        div.style.maxWidth = "90px";
+        div.className = 'dex-entry claimed';
         div.innerHTML = `
-          <img src="${getPokemonGif(entry.name)}" alt="${entry.name}" style="width:64px;height:64px;image-rendering:pixelated;margin-bottom:0.2em;background:#23243b;border-radius:4px;">
-          <div style="font-size:0.85em;text-align:center;">${entry.name}</div>
+          <img src="${getPokemonGif(entry.name)}" alt="${entry.name}" class="pokemon-gif" />
+          <div class="dex-name">${entry.name}</div>
+          <div class="dex-claimed">${entry.claimed}</div>
         `;
-        claimsDiv.appendChild(div);
+        grid.appendChild(div);
       });
       container.appendChild(section);
     });
@@ -89,6 +92,12 @@
     // --- Create UI controls ---
     const controls = document.createElement('div');
     controls.className = 'search-controls';
+
+    // Search input (left)
+    const searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.placeholder = 'Search';
+    controls.appendChild(searchInput);
 
     // Toggle (Region / Scoreboard)
     const toggleDiv = document.createElement('div');
@@ -110,13 +119,7 @@
     });
     controls.appendChild(toggleDiv);
 
-    // Search input
-    const searchInput = document.createElement('input');
-    searchInput.type = 'text';
-    searchInput.placeholder = 'Search';
-    controls.appendChild(searchInput);
-
-    // Results count (for scoreboard)
+    // Results count (right)
     const resultCount = document.createElement('span');
     controls.appendChild(resultCount);
 
@@ -129,17 +132,36 @@
     let viewMode = 'region'; // region | scoreboard
     let searchValue = '';
 
+    function getClaimFilter(s) {
+      const lower = s.toLowerCase();
+      if (lower.includes("unclaimed")) return "unclaimed";
+      if (lower.includes("claimed")) return "claimed";
+      return "all";
+    }
+
     function updateResults() {
+      const claimFilter = getClaimFilter(searchValue);
+
       if (viewMode === 'region') {
-        // Filter as in old version
         const input = searchValue.trim().toLowerCase();
         let filtered = flattened;
-        if (input) {
+
+        // Handle "claimed" and "unclaimed" keywords
+        if (claimFilter === "claimed") {
+          filtered = filtered.filter(e => typeof e.claimed === 'string' && e.claimed);
+        } else if (claimFilter === "unclaimed") {
+          filtered = filtered.filter(e => !e.claimed);
+        }
+
+        // Further filter by name/member (but ignore "claimed"/"unclaimed" in search)
+        let realSearch = input.replace(/claimed|unclaimed/g, '').trim();
+        if (realSearch) {
           filtered = filtered.filter(e =>
-            e.name.toLowerCase().includes(input) ||
-            (typeof e.claimed === 'string' && e.claimed.toLowerCase().includes(input))
+            e.name.toLowerCase().includes(realSearch) ||
+            (typeof e.claimed === 'string' && e.claimed.toLowerCase().includes(realSearch))
           );
         }
+
         // Group by region
         const grouped = {};
         filtered.forEach(e => {
@@ -150,11 +172,15 @@
         resultCount.textContent = `${filtered.length} result${filtered.length === 1 ? '' : 's'}`;
       } else if (viewMode === 'scoreboard') {
         // Scoreboard view
-        renderScoreboard(flattened, searchValue);
+        // Only "claimed" and "all" make sense in scoreboard
+        let filter = searchValue.trim();
+        // Remove claimed/unclaimed for member search
+        let memberSearch = filter.replace(/claimed|unclaimed/gi, '').trim();
+        renderScoreboard(flattened, memberSearch, claimFilter);
         // Count number of members matching filter
         const memberMap = getMemberClaims(flattened);
-        const total = Object.keys(memberMap).filter(m => m.toLowerCase().includes(searchValue.trim().toLowerCase())).length;
-        resultCount.textContent = `${total} member${total === 1 ? '' : 's'}`;
+        const filteredNames = Object.keys(memberMap).filter(m => m.toLowerCase().includes(memberSearch.toLowerCase()));
+        resultCount.textContent = `${claimFilter === 'unclaimed' ? 0 : filteredNames.length} member${filteredNames.length === 1 ? '' : 's'}`;
       }
     }
 
