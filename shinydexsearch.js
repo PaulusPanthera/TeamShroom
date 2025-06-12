@@ -1,4 +1,4 @@
-// === Search Controls & Navigation for Shiny Dex Hitlist ===
+// === Search Controls & Navigation for Shiny Dex Hitlist (Region/Scoreboard modes) ===
 // Call this AFTER renderShinyDex(shinyDex) is called and #shiny-dex-container exists.
 
 (function(){
@@ -11,13 +11,104 @@
     return result;
   }
 
+  // --- Helper: Map of member -> [pokemon, ...] claimed ---
+  function getMemberClaims(flattened) {
+    const memberMap = {};
+    flattened.forEach(e => {
+      if (typeof e.claimed === 'string' && e.claimed) {
+        if (!memberMap[e.claimed]) memberMap[e.claimed] = [];
+        memberMap[e.claimed].push(e);
+      }
+    });
+    return memberMap;
+  }
+
+  // --- Helper: Render scoreboard leaderboard ---
+  function renderScoreboard(flattened, memberFilter = "") {
+    const container = document.getElementById('shiny-dex-container');
+    if (!container) return;
+    container.innerHTML = '';
+
+    const memberMap = getMemberClaims(flattened);
+    let members = Object.entries(memberMap)
+      .map(([member, pokes]) => ({
+        member,
+        pokes
+      }));
+
+    // Filter by member name (case-insensitive, partial)
+    if (memberFilter.trim()) {
+      const search = memberFilter.trim().toLowerCase();
+      members = members.filter(m => m.member.toLowerCase().includes(search));
+    }
+
+    // Sort by claim count descending, then alpha
+    members.sort((a, b) => {
+      if (b.pokes.length !== a.pokes.length) return b.pokes.length - a.pokes.length;
+      return a.member.localeCompare(b.member);
+    });
+
+    // Build the leaderboard
+    members.forEach(({ member, pokes }, idx) => {
+      const section = document.createElement('section');
+      section.className = 'scoreboard-member-section';
+      section.style.marginBottom = "2em";
+      section.innerHTML = `<h2 style="color:#00fff7;letter-spacing:1.2px;margin-bottom:0.6em;">
+        #${idx+1} ${member} <span style="font-size:0.7em;font-weight:normal;color:#e0e0e0;">(${pokes.length} claim${pokes.length!==1?'s':''})</span>
+      </h2>
+      <div class="scoreboard-member-claims" style="display:flex;flex-wrap:wrap;gap:10px 15px;"></div>
+      `;
+      const claimsDiv = section.querySelector('.scoreboard-member-claims');
+      pokes.sort((a, b) => a.name.localeCompare(b.name));
+      pokes.forEach(entry => {
+        const div = document.createElement('div');
+        div.className = 'scoreboard-claim-entry';
+        div.style.display = "flex";
+        div.style.flexDirection = "column";
+        div.style.alignItems = "center";
+        div.style.maxWidth = "90px";
+        div.innerHTML = `
+          <img src="${getPokemonGif(entry.name)}" alt="${entry.name}" style="width:64px;height:64px;image-rendering:pixelated;margin-bottom:0.2em;background:#23243b;border-radius:4px;">
+          <div style="font-size:0.85em;text-align:center;">${entry.name}</div>
+        `;
+        claimsDiv.appendChild(div);
+      });
+      container.appendChild(section);
+    });
+
+    // If none found
+    if (members.length === 0) {
+      container.innerHTML = `<div style="color:#e0e0e0;font-size:1.2em;">No members found.</div>`;
+    }
+  }
+
   // --- Main search setup, called after the hitlist is rendered ---
   window.setupShinyDexHitlistSearch = function(shinyDex) {
     const flattened = flattenDexData(shinyDex);
 
     // --- Create UI controls ---
     const controls = document.createElement('div');
-    controls.className = 'search-controls'; // Use CSS class for consistent styling
+    controls.className = 'search-controls';
+
+    // Toggle (Region / Scoreboard)
+    const toggleDiv = document.createElement('div');
+    toggleDiv.style.display = 'flex';
+    toggleDiv.style.gap = '0.8em';
+    [
+      ["Region", "region"],
+      ["Scoreboard", "scoreboard"]
+    ].forEach(([labelText, value]) => {
+      const label = document.createElement('label');
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = 'view-toggle';
+      radio.value = value;
+      if (value === 'region') radio.checked = true;
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(' ' + labelText));
+      toggleDiv.appendChild(label);
+    });
+    controls.appendChild(toggleDiv);
 
     // Search input
     const searchInput = document.createElement('input');
@@ -25,151 +116,59 @@
     searchInput.placeholder = 'Search';
     controls.appendChild(searchInput);
 
-    // Toggle (All / Pokemon / Member)
-    const toggleDiv = document.createElement('div');
-    toggleDiv.style.display = 'flex';
-    toggleDiv.style.gap = '0.4em';
-    const toggleNames = [
-      ["All", "all"],
-      ["Pokemon", "pokemon"],
-      ["Member", "member"]
-    ];
-    toggleNames.forEach(([labelText, value]) => {
-      const label = document.createElement('label');
-      const radio = document.createElement('input');
-      radio.type = 'radio';
-      radio.name = 'search-toggle';
-      radio.value = value;
-      if (value === 'all') radio.checked = true;
-      label.appendChild(radio);
-      label.appendChild(document.createTextNode(' ' + labelText));
-      toggleDiv.appendChild(label);
-    });
-    controls.appendChild(toggleDiv);
-
-    // Results count and navigation
-    const navDiv = document.createElement('div');
-    navDiv.style.display = 'flex';
-    navDiv.style.alignItems = 'center';
-    navDiv.style.gap = '0.4em';
-
-    const upBtn = document.createElement('button');
-    upBtn.textContent = '▲';
-
-    const downBtn = document.createElement('button');
-    downBtn.textContent = '▼';
-
+    // Results count (for scoreboard)
     const resultCount = document.createElement('span');
-    navDiv.append(upBtn, resultCount, downBtn);
-    controls.appendChild(navDiv);
+    controls.appendChild(resultCount);
 
     // Insert controls before the #shiny-dex-container
     const container = document.getElementById('shiny-dex-container');
     if (!container) return;
     container.parentNode.insertBefore(controls, container);
 
-    // --- Search/filter logic ---
-    let filterMode = 'all'; // all | pokemon | member
+    // --- State ---
+    let viewMode = 'region'; // region | scoreboard
     let searchValue = '';
-    let matches = [];
-    let activeMatchIdx = 0;
-
-    function getFilteredDex() {
-      const input = searchValue.trim().toLowerCase();
-      let filtered = flattened;
-
-      // Special case: Show all unclaimed if "unclaimed" is typed
-      if (input === "unclaimed") {
-        filtered = filtered.filter(e => !e.claimed);
-        return filtered;
-      }
-
-      // Apply toggle filter
-      if (filterMode === 'pokemon') {
-        filtered = filtered.filter(e => e.name.toLowerCase().includes(input));
-      } else if (filterMode === 'member') {
-        filtered = filtered.filter(e => typeof e.claimed === 'string' && e.claimed.toLowerCase().includes(input));
-      } else if (filterMode === 'all') {
-        filtered = filtered.filter(e =>
-          e.name.toLowerCase().includes(input) ||
-          (typeof e.claimed === 'string' && e.claimed.toLowerCase().includes(input))
-        );
-      }
-      return filtered;
-    }
 
     function updateResults() {
-      const filtered = getFilteredDex();
-      matches = filtered;
-      // For navigation: group by region and render in same format as original
-      const grouped = {};
-      matches.forEach(e => {
-        if (!grouped[e.region]) grouped[e.region] = [];
-        grouped[e.region].push({...e});
-      });
-      renderShinyDex(grouped);
-
-      // Highlight the currently "active" match (if any)
-      if (matches.length > 0) {
-        const allEntries = container.querySelectorAll('.dex-entry');
-        let count = 0;
-        let found = false;
-        for (let i = 0; i < allEntries.length; ++i) {
-          if (count === activeMatchIdx && !found) {
-            allEntries[i].style.boxShadow = '0 0 0 4px var(--accent, #5a72f7), 0 0 18px var(--accent, #5a72f7cc), 0 2px 8px #000a';
-            allEntries[i].style.zIndex = 10;
-            allEntries[i].scrollIntoView({ block: 'center', behavior: 'smooth' });
-            found = true;
-          } else {
-            allEntries[i].style.boxShadow = '';
-            allEntries[i].style.zIndex = '';
-          }
-          count++;
+      if (viewMode === 'region') {
+        // Filter as in old version
+        const input = searchValue.trim().toLowerCase();
+        let filtered = flattened;
+        if (input) {
+          filtered = filtered.filter(e =>
+            e.name.toLowerCase().includes(input) ||
+            (typeof e.claimed === 'string' && e.claimed.toLowerCase().includes(input))
+          );
         }
-      }
-
-      // Update navigation
-      if (matches.length > 0) {
-        resultCount.textContent = `${activeMatchIdx + 1} / ${matches.length}`;
-        upBtn.disabled = activeMatchIdx === 0;
-        downBtn.disabled = activeMatchIdx === matches.length - 1;
-        upBtn.style.opacity = upBtn.disabled ? 0.5 : 1;
-        downBtn.style.opacity = downBtn.disabled ? 0.5 : 1;
-      } else {
-        resultCount.textContent = '0 results';
-        upBtn.disabled = true;
-        downBtn.disabled = true;
-        upBtn.style.opacity = 0.5;
-        downBtn.style.opacity = 0.5;
+        // Group by region
+        const grouped = {};
+        filtered.forEach(e => {
+          if (!grouped[e.region]) grouped[e.region] = [];
+          grouped[e.region].push({...e});
+        });
+        renderShinyDex(grouped);
+        resultCount.textContent = `${filtered.length} result${filtered.length === 1 ? '' : 's'}`;
+      } else if (viewMode === 'scoreboard') {
+        // Scoreboard view
+        renderScoreboard(flattened, searchValue);
+        // Count number of members matching filter
+        const memberMap = getMemberClaims(flattened);
+        const total = Object.keys(memberMap).filter(m => m.toLowerCase().includes(searchValue.trim().toLowerCase())).length;
+        resultCount.textContent = `${total} member${total === 1 ? '' : 's'}`;
       }
     }
 
     // --- Event listeners ---
     searchInput.addEventListener('input', e => {
       searchValue = e.target.value;
-      activeMatchIdx = 0;
       updateResults();
     });
 
     toggleDiv.querySelectorAll('input[type=radio]').forEach(radio => {
       radio.addEventListener('change', e => {
-        filterMode = e.target.value;
-        activeMatchIdx = 0;
+        viewMode = e.target.value;
         updateResults();
       });
-    });
-
-    upBtn.addEventListener('click', () => {
-      if (activeMatchIdx > 0) {
-        activeMatchIdx--;
-        updateResults();
-      }
-    });
-    downBtn.addEventListener('click', () => {
-      if (activeMatchIdx < matches.length - 1) {
-        activeMatchIdx++;
-        updateResults();
-      }
     });
 
     // --- Initial render ---
