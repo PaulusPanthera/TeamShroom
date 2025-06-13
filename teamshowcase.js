@@ -118,7 +118,6 @@ const teamShowcase = [
     { name: "chandelure" }, { name: "haxorus" }, { name: "wurmple" }, { name: "deino" }, { name: "treecko" },
     { name: "poliwhirl" }, { name: "girafarig" }
   ] },
-  { name: "Jennling", shinies: [ { name: "loudred" }, { name: "shellos" } ] },
   { name: "JGrenade", shinies: [ { name: "crobat" }, { name: "rapidash" }, { name: "tentacruel" }, { name: "wailord" } ] },
   { name: "Johnerrr", shinies: [
     { name: "victreebel" }, { name: "gyarados" }, { name: "ditto" }, { name: "rapidash" }, { name: "loudred" },
