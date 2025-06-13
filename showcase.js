@@ -36,7 +36,6 @@ const teamMembers = [
   { name: "Jaspn", shinies: 16 },
   { name: "Jayyxxi", shinies: 2 },
   { name: "Jeakama", shinies: 7 },
-  { name: "Jennling", shinies: 2 },
   { name: "JGrenade", shinies: 4 },
   { name: "Johnerrr", shinies: 12 },
   { name: "JulieJewel", shinies: 13 },
