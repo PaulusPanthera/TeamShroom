@@ -370,7 +370,7 @@ const shinyDex = {
     { name: "Gorebyss", claimed: false },
     { name: "Relicanth", claimed: false },
     { name: "Luvdisc", claimed: false },
-    { name: "Bagon", claimed: false },
+    { name: "Bagon", claimed: "maknaez" },
     { name: "Shelgon", claimed: "LunaLost" },
     { name: "Salamence", claimed: false },
     { name: "Beldum", claimed: "maknaez" },
