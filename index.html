@@ -48,13 +48,11 @@
         } else {
           content.innerHTML = "<h1>Member not found.</h1>";
         }
-      } else if (hash === "showcase" || hash === "") {
+      } else if (hash.startsWith("showcase") || hash === "") {
         // Also check for sort mode in hash
         let sortMode = "alphabetical";
-        if (window.location.hash.includes("?sort=")) {
-          const m = window.location.hash.match(/sort=(\w+)/);
-          if (m) sortMode = m[1];
-        }
+        const m = window.location.hash.match(/sort=(\w+)/);
+        if (m) sortMode = m[1];
         content.innerHTML = `
           <h1>Shiny Showcase</h1>
           <div class="showcase-search-controls"></div>
