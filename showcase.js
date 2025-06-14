@@ -218,12 +218,17 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
     <button class="back-btn" onclick="window.location.hash='#showcase?sort=${sortMode}'">← Back</button>
     <h1>${member.name}'s Shiny Showcase</h1>
     <div>Shinies: ${shinies.filter(mon => !mon.lost).length} | Points: ${points}</div>
-    <div class="showcase-shinies" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:1em;">
-      ${shinies.map(mon =>
-        `<div class="showcase-shiny-img-wrapper${mon.lost ? ' lost' : ''}" style="width:120px;height:120px;">
-          <img src="${mon.url}" alt="${mon.name}${mon.lost ? ' (lost)' : ''}" class="showcase-shiny-img${mon.lost ? ' lost' : ''}" style="width:120px;height:120px;image-rendering:pixelated;" title="${mon.name}${mon.lost ? ' (lost)' : ''}">
-        </div>`
-      ).join("")}
+    <div class="showcase-shinies" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:1em;">
+      ${shinies.map(mon => {
+        const monPoints = getPointsForPokemon(mon.name);
+        return `
+        <div class="showcase-shiny-img-wrapper${mon.lost ? ' lost' : ''}" style="width:120px;height:150px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;">
+          <img src="${mon.url}" alt="${mon.name}${mon.lost ? ' (lost)' : ''}" class="showcase-shiny-img${mon.lost ? ' lost' : ''}" style="width:100px;height:100px;image-rendering:pixelated;" title="${mon.name}${mon.lost ? ' (lost)' : ''}">
+          <div class="dex-name" style="margin-top:3px;font-size:.85em">${mon.name}</div>
+          <div class="dex-claimed" style="font-size:.75em;color:var(--text-muted)">${mon.lost ? 'Lost' : monPoints + ' Points'}</div>
+        </div>
+        `;
+      }).join("")}
     </div>
   `;
 }
