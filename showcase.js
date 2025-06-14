@@ -43,6 +43,16 @@ function getMemberShinies(member) {
   }));
 }
 
+// Helper to get the custom sprite path for a member (tries png, jpg, gif in /membersprites/)
+function getMemberSpriteUrls(memberName) {
+  const base = memberName.toLowerCase().replace(/\s+/g, '');
+  return [
+    `membersprites/${base}sprite.png`,
+    `membersprites/${base}sprite.jpg`,
+    `membersprites/${base}sprite.gif`
+  ];
+}
+
 // Group by first letter (A-Z)
 function groupMembersAlphabetically(members) {
   const grouped = {};
@@ -116,15 +126,30 @@ function renderShowcaseGallery(members, container, groupMode) {
     gallery.style.gap = "1.5rem";
 
     group.members.forEach(member => {
-      const spriteUrl = "examplesprite.gif"; // Replace with shinyGifUrl(member.name) if you want real sprites
+      const spriteUrls = getMemberSpriteUrls(member.name);
       const entry = document.createElement("div");
       entry.className = "showcase-entry";
+      // Start with the first url (png)
       entry.innerHTML = `
         <div class="showcase-name">${member.name}</div>
-        <img src="${spriteUrl}" class="showcase-sprite" alt="${member.name}" data-member="${member.name}">
+        <img src="${spriteUrls[0]}" class="showcase-sprite" alt="${member.name}" data-member="${member.name}">
         <div class="showcase-shiny-count">Shinies: ${member.shinies}</div>
       `;
-      entry.querySelector(".showcase-sprite").onclick = e => {
+
+      // Fallback chain: try png, then jpg, then gif, then placeholder
+      const img = entry.querySelector(".showcase-sprite");
+      img.onerror = function onErr() {
+        if (!this._srcIndex) this._srcIndex = 1;
+        else this._srcIndex++;
+        if (this._srcIndex < spriteUrls.length) {
+          this.src = spriteUrls[this._srcIndex];
+        } else {
+          this.onerror = null;
+          this.src = "examplesprite.gif";
+        }
+      };
+
+      img.onclick = e => {
         // Get current sort mode from radio input
         const sortModeEl = document.querySelector('input[name="showcase-sort"]:checked');
         const sortMode = sortModeEl ? sortModeEl.value : 'alphabetical';
