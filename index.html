@@ -27,27 +27,40 @@
   <script>
     // Routing: supports #showcase, #showcase-<member>, #hitlist
     function renderPage() {
-      const hash = window.location.hash.replace("#", "");
+      let hash = window.location.hash.replace("#", "");
       document.querySelectorAll('.nav a').forEach(a => {
         a.classList.toggle('active', a.getAttribute('href') === '#' + (hash.split("-")[0] || "showcase"));
       });
 
       const content = document.getElementById('page-content');
-      if (hash === "showcase" || hash === "") {
+      if (hash.startsWith("showcase-")) {
+        // Split hash for name and sort
+        const [namePart, queryPart] = hash.replace("showcase-", "").split("?");
+        const memberName = namePart;
+        let sortMode = "alphabetical";
+        if (queryPart) {
+          const m = queryPart.match(/sort=(\w+)/);
+          if (m) sortMode = m[1];
+        }
+        const member = teamMembers.find(m => m.name === memberName);
+        if (member) {
+          renderMemberShowcase(member, sortMode);
+        } else {
+          content.innerHTML = "<h1>Member not found.</h1>";
+        }
+      } else if (hash === "showcase" || hash === "") {
+        // Also check for sort mode in hash
+        let sortMode = "alphabetical";
+        if (window.location.hash.includes("?sort=")) {
+          const m = window.location.hash.match(/sort=(\w+)/);
+          if (m) sortMode = m[1];
+        }
         content.innerHTML = `
           <h1>Shiny Showcase</h1>
           <div class="showcase-search-controls"></div>
           <div id="showcase-gallery-container"></div>
         `;
-        setupShowcaseSearchAndSort(teamMembers, renderShowcaseGallery);
-      } else if (hash.startsWith("showcase-")) {
-        const memberName = hash.replace("showcase-", "");
-        const member = teamMembers.find(m => m.name === memberName);
-        if (member) {
-          renderMemberShowcase(member);
-        } else {
-          content.innerHTML = "<h1>Member not found.</h1>";
-        }
+        setupShowcaseSearchAndSort(teamMembers, renderShowcaseGallery, sortMode);
       } else if (hash === "hitlist") {
         content.innerHTML = "<h1>Shiny Pokedex</h1><div id='shiny-dex-container'></div>";
         setTimeout(() => {
