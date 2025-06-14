@@ -277,14 +277,14 @@
           grouped[e.region].push({...e});
         });
         renderShinyDex(grouped);
-        resultCount.textContent = `${filtered.length} result${filtered.length === 1 ? '' : 's'}`;
+        resultCount.textContent = `${filtered.length} Results`;
       } else if (viewMode === 'scoreboard') {
         let filter = searchValue.trim();
         let memberSearch = filter.replace(/claimed|unclaimed/gi, '').trim();
         renderScoreboard(flattened, memberSearch, claimFilter);
         const memberMap = getMemberClaims(flattened);
         const filteredNames = Object.keys(memberMap).filter(m => m.toLowerCase().includes(memberSearch.toLowerCase()));
-        resultCount.textContent = `${claimFilter === 'unclaimed' ? 0 : filteredNames.length} member${filteredNames.length === 1 ? '' : 's'}`;
+        resultCount.textContent = `${claimFilter === 'unclaimed' ? 0 : filteredNames.length} Member${filteredNames.length === 1 ? '' : 's'}`;
       } else if (viewMode === 'livingdex') {
         let search = searchValue.trim().toLowerCase();
         let showFamily = false;
@@ -315,7 +315,7 @@
           }
         });
         renderLivingDex(filteredDex, teamShowcase, null, null, searchValue);
-        resultCount.textContent = `${count} result${count === 1 ? '' : 's'}`;
+        resultCount.textContent = `${count} Results`;
       }
     }
 
