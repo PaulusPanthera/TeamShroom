@@ -1,5 +1,4 @@
-// === Search Controls & Navigation for Shiny Dex Hitlist (Region/Scoreboard modes) ===
-// Call this AFTER renderShinyDex(shinyDex) is called and #shiny-dex-container exists.
+// === Search Controls & Navigation for Shiny Dex Pokedex (Region/Scoreboard/Living Dex) ===
 
 (function(){
   // --- Helper: Flatten all entries with region info for easy searching ---
@@ -21,6 +20,57 @@
       }
     });
     return memberMap;
+  }
+
+  // --- Helper: Living Shiny Dex counts ---
+  function buildLivingDexCounts(teamShowcase) {
+    const counts = {};
+    teamShowcase.forEach(member => {
+      if (!member.shinies) return;
+      member.shinies.forEach(shiny => {
+        if (shiny.lost) return;
+        let name = (shiny.name || "").trim().toLowerCase().replace(/[\s.'’♀♂-]/g, "");
+        counts[name] = (counts[name] || 0) + 1;
+      });
+    });
+    return counts;
+  }
+  function normalizeDexName(name) {
+    return name.toLowerCase().replace(/[\s.'’♀♂-]/g, "");
+  }
+
+  // --- Living Dex rendering (just like region grid, but shows count badge) ---
+  function renderLivingDex(shinyDex, teamShowcase, filterRegions = null, filterNames = null) {
+    const container = document.getElementById('shiny-dex-container');
+    if (!container) return;
+    container.innerHTML = '';
+    const counts = buildLivingDexCounts(teamShowcase);
+
+    Object.keys(shinyDex).forEach(region => {
+      if (filterRegions && !filterRegions.includes(region)) return;
+      const regionDiv = document.createElement('div');
+      regionDiv.className = 'region-section';
+      regionDiv.innerHTML = `<h2>${region}</h2>`;
+
+      const grid = document.createElement('div');
+      grid.className = 'dex-grid';
+
+      shinyDex[region].forEach(entry => {
+        if (filterNames && !filterNames.includes(entry.name.toLowerCase())) return;
+        const nName = normalizeDexName(entry.name);
+        const count = counts[nName] || 0;
+        const div = document.createElement('div');
+        div.className = 'dex-entry' + (count > 0 ? ' claimed' : ' unclaimed');
+        div.innerHTML = `
+          <img src="${getPokemonGif(entry.name)}" alt="${entry.name}" class="pokemon-gif" />
+          <div class="dex-name">${entry.name}</div>
+          <div class="dex-claimed">${count > 0 ? `<span class="livingdex-count">${count}</span>` : "0"}</div>
+        `;
+        grid.appendChild(div);
+      });
+      regionDiv.appendChild(grid);
+      container.appendChild(regionDiv);
+    });
   }
 
   // --- Helper: Render scoreboard leaderboard (with .dex-entry grid style) ---
@@ -86,7 +136,8 @@
   }
 
   // --- Main search setup, called after the hitlist is rendered ---
-  window.setupShinyDexHitlistSearch = function(shinyDex) {
+  // Accepts shinyDex, teamShowcase (for Living Dex)
+  window.setupShinyDexHitlistSearch = function(shinyDex, teamShowcase) {
     const flattened = flattenDexData(shinyDex);
 
     // --- Create UI controls ---
@@ -99,13 +150,14 @@
     searchInput.placeholder = 'Search';
     controls.appendChild(searchInput);
 
-    // Toggle (Region / Scoreboard)
+    // Toggle (Shiny Dex Hitlist / Scoreboard / Living Shiny Dex)
     const toggleDiv = document.createElement('div');
     toggleDiv.style.display = 'flex';
     toggleDiv.style.gap = '0.8em';
     [
-      ["Region", "region"],
-      ["Scoreboard", "scoreboard"]
+      ["Shiny Dex Hitlist", "region"],
+      ["Scoreboard", "scoreboard"],
+      ["Living Shiny Dex", "livingdex"]
     ].forEach(([labelText, value]) => {
       const label = document.createElement('label');
       const radio = document.createElement('input');
@@ -129,7 +181,7 @@
     container.parentNode.insertBefore(controls, container);
 
     // --- State ---
-    let viewMode = 'region'; // region | scoreboard
+    let viewMode = 'region'; // region | scoreboard | livingdex
     let searchValue = '';
 
     function getClaimFilter(s) {
@@ -181,6 +233,25 @@
         const memberMap = getMemberClaims(flattened);
         const filteredNames = Object.keys(memberMap).filter(m => m.toLowerCase().includes(memberSearch.toLowerCase()));
         resultCount.textContent = `${claimFilter === 'unclaimed' ? 0 : filteredNames.length} member${filteredNames.length === 1 ? '' : 's'}`;
+      } else if (viewMode === 'livingdex') {
+        // Living Shiny Dex
+        const input = searchValue.trim().toLowerCase();
+        let filteredRegions = null;
+        let filteredNames = null;
+        if (input) {
+          const allNames = [];
+          Object.values(shinyDex).forEach(list => list.forEach(e => allNames.push(e.name)));
+          filteredNames = allNames.filter(n => n.toLowerCase().includes(input));
+        }
+        renderLivingDex(shinyDex, teamShowcase, filteredRegions, filteredNames);
+        // For result count, count how many entries matched filter
+        let count = 0;
+        Object.values(shinyDex).forEach(list => {
+          list.forEach(e => {
+            if (!filteredNames || filteredNames.includes(e.name.toLowerCase())) count++;
+          });
+        });
+        resultCount.textContent = `${count} result${count === 1 ? '' : 's'}`;
       }
     }
 
