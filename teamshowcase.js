@@ -46,7 +46,7 @@ const teamShowcase = [
     { name: "pidgeot" }, { name: "koffing" }, { name: "tangela" }, { name: "ditto" }, { name: "swablu" },
     { name: "ekans" }, { name: "ferroseed" }, { name: "basculin-red-striped" }, { name: "mareep" }, { name: "poliwhirl" },
     { name: "bouffalant" }, { name: "nidoran-m" }, { name: "slowbro" }, { name: "ducklett" }, { name: "vanilluxe" },
-    { name: "raticate" }, { name: "noctowl" }, { name: "miltank" }, { name: "wooper" }, { name: "zigzagoon" }, { name: "pikachu" }
+    { name: "raticate" }, { name: "noctowl" }, { name: "miltank" }, { name: "wooper" }, { name: "zigzagoon" }, { name: "pikachu" }, { name: "marill" }
   ] },
   { name: "DamoNll", shinies: [
     { name: "tentacruel" }, { name: "ditto" }, { name: "rapidash" }, { name: "ponyta" }, { name: "rapidash" }, { name: "beautifly" }, { name: "zigzagoon" }
