@@ -22,7 +22,6 @@
     return memberMap;
   }
 
-  // --- FIXED: Use proper normalization to differentiate Nidoran♂ and Nidoran♀ ---
   function normalizeDexName(name) {
     return (
       name
@@ -52,7 +51,7 @@
   }
 
   function getPointsForPokemon(name) {
-    if (!window.POKEMON_POINTS) return 1; // fallback
+    if (!window.POKEMON_POINTS) return 1;
     let normName = name
       .toLowerCase()
       .replace(/♀/g, "-f")
@@ -96,8 +95,10 @@
     });
   }
 
-  // --- SCOREBOARD WITH POINTS ---
   function renderScoreboard(flattened, memberFilter = "", claimFilter = "all") {
+    // Build points after everything is loaded, if not present
+    if (!window.POKEMON_POINTS && window.buildPokemonPoints) window.buildPokemonPoints();
+
     const container = document.getElementById('shiny-dex-container');
     if (!container) return;
     container.innerHTML = '';
@@ -115,7 +116,6 @@
       members = members.filter(m => m.member.toLowerCase().includes(search));
     }
 
-    // Sort by points, then by claim count, then by name
     members.sort((a, b) => {
       if (b.points !== a.points) return b.points - a.points;
       if (b.pokes.length !== a.pokes.length) return b.pokes.length - a.pokes.length;
@@ -157,12 +157,10 @@
     }
   }
 
-  // Updated: use pokemonFamilies.js for canonical family search
   function getFamilyForName(search) {
     search = search.toLowerCase().trim();
     if (typeof window.pokemonFamilies === 'object') {
       if (pokemonFamilies[search]) return pokemonFamilies[search];
-      // Try to find first partial match
       for (const key in pokemonFamilies) {
         if (key.startsWith(search)) return pokemonFamilies[key];
       }
@@ -174,7 +172,6 @@
     return [search];
   }
 
-  // Helper to normalize both family and dex names for robust comparison
   function norm(name) {
     return name
       .toLowerCase()
@@ -184,6 +181,9 @@
   }
 
   window.setupShinyDexHitlistSearch = function(shinyDex, teamShowcase) {
+    // Ensure points are built
+    if (window.buildPokemonPoints) window.buildPokemonPoints();
+
     const flattened = flattenDexData(shinyDex);
 
     const controls = document.createElement('div');
@@ -276,7 +276,6 @@
         const filteredNames = Object.keys(memberMap).filter(m => m.toLowerCase().includes(memberSearch.toLowerCase()));
         resultCount.textContent = `${claimFilter === 'unclaimed' ? 0 : filteredNames.length} member${filteredNames.length === 1 ? '' : 's'}`;
       } else if (viewMode === 'livingdex') {
-        // Shiny Living Dex search with + for family
         let search = searchValue.trim().toLowerCase();
         let showFamily = false;
         if (search.endsWith('+')) {
