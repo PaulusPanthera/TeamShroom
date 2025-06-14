@@ -123,9 +123,15 @@ function groupMembersByPoints(members) {
 }
 
 // === AUTO CROP SPRITE FUNCTION ===
-function autoCropSprite(img, targetW, targetH) {
+function autoCropSprite(img, targetW, targetH, callback) {
   if (!img.complete) {
-    img.onload = () => autoCropSprite(img, targetW, targetH);
+    img.onload = () => autoCropSprite(img, targetW, targetH, callback);
+    return;
+  }
+  // Only crop if static image (PNG/JPG). For GIF, skip cropping.
+  const src = img.src || "";
+  if (src.match(/\.gif($|\?)/i)) {
+    if (callback) callback(null); // No cropping for GIF
     return;
   }
   // Already a canvas? Don't re-crop.
@@ -172,11 +178,16 @@ function autoCropSprite(img, targetW, targetH) {
       offsetX, offsetY, drawW, drawH
     );
   }
-  canvas.className = img.className;
-  canvas.style.cssText = img.style.cssText;
-  canvas.title = img.title;
-  if (img.parentNode) img.parentNode.replaceChild(canvas, img);
+  // For overlay: position absolute, parent must be relative
+  canvas.className = img.className + " cropped-canvas";
+  canvas.style.cssText = img.style.cssText + ";position:absolute;top:0;left:0;pointer-events:none;z-index:1;";
+  if (callback) callback(canvas);
   return canvas;
+}
+
+// Helper to check if a URL is a static image (png/jpg/jpeg)
+function isStaticSprite(url) {
+  return url && url.match(/\.(png|jpg|jpeg)($|\?)/i);
 }
 
 // Main gallery rendering (accepts groupMode: "alphabetical", "shinies", or "scoreboard")
@@ -225,6 +236,7 @@ function renderShowcaseGallery(members, container, groupMode) {
       const spriteUrls = getMemberSpriteUrls(member.name);
       const entry = document.createElement("div");
       entry.className = "showcase-entry";
+      entry.style.position = "relative"; // for overlay
 
       // Provide shiny count and point count
       let countStr = `Shinies: ${member.shinies}`;
@@ -233,14 +245,21 @@ function renderShowcaseGallery(members, container, groupMode) {
         countStr = `Points: ${pts}`;
       }
 
+      // Find the first static url, fallback to gif if none found
+      let spriteUrl = spriteUrls.find(isStaticSprite) || spriteUrls.find(url => url.endsWith('.gif')) || spriteUrls[0];
+
       entry.innerHTML = `
         <div class="showcase-name">${member.name}</div>
-        <img src="${spriteUrls[0]}" class="showcase-sprite" alt="${member.name}" data-member="${member.name}">
+        <div class="sprite-overlay-container" style="position:relative;width:100px;height:100px;margin:0 auto;">
+          <img src="${spriteUrl}" class="showcase-sprite" alt="${member.name}" data-member="${member.name}" style="width:100px;height:100px;object-fit:contain;position:relative;z-index:2;">
+        </div>
         <div class="showcase-shiny-count">${countStr}</div>
       `;
 
+      const overlayContainer = entry.querySelector('.sprite-overlay-container');
+      const img = overlayContainer.querySelector(".showcase-sprite");
+
       // Fallback chain: try png, then jpg, then gif, then placeholder
-      const img = entry.querySelector(".showcase-sprite");
       img.onerror = function onErr() {
         if (!this._srcIndex) this._srcIndex = 1;
         else this._srcIndex++;
@@ -252,12 +271,22 @@ function renderShowcaseGallery(members, container, groupMode) {
         }
       };
 
-      img.onload = function () {
-        autoCropSprite(this, 100, 100);
-      };
-
-      // For browsers that cache images and don't call onload again
-      if (img.complete) setTimeout(() => autoCropSprite(img, 100, 100), 10);
+      // Only crop if static
+      if (isStaticSprite(img.src)) {
+        img.onload = function () {
+          autoCropSprite(this, 100, 100, function(canvas) {
+            if (canvas && overlayContainer && !overlayContainer.querySelector('canvas')) {
+              overlayContainer.insertBefore(canvas, img);
+            }
+          });
+        };
+        // For browsers that cache images and don't call onload again
+        if (img.complete) setTimeout(() => autoCropSprite(img, 100, 100, function(canvas) {
+          if (canvas && overlayContainer && !overlayContainer.querySelector('canvas')) {
+            overlayContainer.insertBefore(canvas, img);
+          }
+        }), 10);
+      }
 
       img.onclick = e => {
         // Get current sort mode from radio input
@@ -285,11 +314,13 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
     <div class="showcase-shinies" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:1em;">
       ${shinies.map((mon, idx) => {
         const monPoints = getPointsForPokemon(mon.name);
-        // Use a unique id for each img so we can crop it after DOM insert
         const imgId = `showcase-shiny-img-${member.name.replace(/\W/g, '')}-${idx}`;
+        // Always use GIF for shinies (no cropping needed), but you could add cropping for your custom static images if you want.
         return `
-        <div class="showcase-shiny-img-wrapper${mon.lost ? ' lost' : ''}" style="width:120px;height:150px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;">
-          <img id="${imgId}" src="${mon.url}" alt="${mon.name}${mon.lost ? ' (lost)' : ''}" class="showcase-shiny-img${mon.lost ? ' lost' : ''}" style="width:100px;height:100px;image-rendering:pixelated;" title="${mon.name}${mon.lost ? ' (lost)' : ''}">
+        <div class="showcase-shiny-img-wrapper${mon.lost ? ' lost' : ''}" style="width:120px;height:150px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;position:relative;">
+          <div class="sprite-overlay-container" style="position:relative;width:100px;height:100px;">
+            <img id="${imgId}" src="${mon.url}" alt="${mon.name}${mon.lost ? ' (lost)' : ''}" class="showcase-shiny-img${mon.lost ? ' lost' : ''}" style="width:100px;height:100px;image-rendering:pixelated;position:relative;z-index:2;" title="${mon.name}${mon.lost ? ' (lost)' : ''}">
+          </div>
           <div class="dex-name" style="margin-top:3px;font-size:.85em">${mon.name}</div>
           <div class="dex-claimed" style="font-size:.75em;color:var(--text-muted)">${mon.lost ? 'Lost' : monPoints + ' Points'}</div>
         </div>
@@ -297,10 +328,17 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
       }).join("")}
     </div>
   `;
-  // After DOM insert, crop all images
+  // After DOM insert, selectively crop static images only
   setTimeout(() => {
     content.querySelectorAll('.showcase-shiny-img').forEach(img => {
-      autoCropSprite(img, 100, 100);
+      if (isStaticSprite(img.src)) {
+        const overlayContainer = img.parentNode;
+        autoCropSprite(img, 100, 100, function(canvas) {
+          if (canvas && overlayContainer && !overlayContainer.querySelector('canvas')) {
+            overlayContainer.insertBefore(canvas, img);
+          }
+        });
+      }
     });
   }, 30);
 }
@@ -374,10 +412,17 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
       resultCount.textContent = `${filtered.length} Member${filtered.length === 1 ? '' : 's'}`;
       const galleryContainer = document.getElementById('showcase-gallery-container');
       renderShowcaseGallery(filtered, galleryContainer, sortMode);
-      // After DOM insert, crop all visible member sprites
+      // After DOM insert, selectively crop static images only
       setTimeout(() => {
         document.querySelectorAll('.showcase-sprite').forEach(img => {
-          autoCropSprite(img, 100, 100);
+          if (isStaticSprite(img.src)) {
+            const overlayContainer = img.parentNode;
+            autoCropSprite(img, 100, 100, function(canvas) {
+              if (canvas && overlayContainer && !overlayContainer.querySelector('canvas')) {
+                overlayContainer.insertBefore(canvas, img);
+              }
+            });
+          }
         });
       }, 30);
     }
