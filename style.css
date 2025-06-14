@@ -305,3 +305,14 @@ body.darkmode {
   .dex-grid { grid-template-columns: repeat(2, 1fr);}
   .nav { padding: 1rem 0.3rem; }
 }
+
+/* Scoreboard member header style matches region headings */
+.scoreboard-member-section h2 {
+  color: var(--accent);
+  font-size: 1.2em;
+  letter-spacing: 2px;
+  border-bottom: 2px solid var(--success);
+  padding-bottom: 0.25em;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 5px #f2593788;
+}
