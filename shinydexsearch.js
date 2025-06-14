@@ -130,37 +130,25 @@
   }
 
   // Updated: use pokemonFamilies.js for canonical family search
-  function getFamilyForName(search, shinyDex) {
+  function getFamilyForName(search) {
     search = search.toLowerCase().trim();
     if (typeof window.pokemonFamilies === 'object') {
-      // Try exact match first
       if (pokemonFamilies[search]) return pokemonFamilies[search];
       // Try to find first partial match
       for (const key in pokemonFamilies) {
         if (key.startsWith(search)) return pokemonFamilies[key];
       }
-      // If not found, try partial includes
       for (const key in pokemonFamilies) {
         if (key.includes(search)) return pokemonFamilies[key];
       }
-      // If still not found, return just the search
       return [search];
-    } else {
-      // fallback: legacy logic (should never be used)
-      for (let region in shinyDex) {
-        let arr = shinyDex[region];
-        for (let i = 0; i < arr.length; ++i) {
-          if (arr[i].name.toLowerCase().includes(search)) {
-            let start = i;
-            while (start > 0 && arr[start-1].name.split(/[ -]/)[0].toLowerCase() === arr[i].name.split(/[ -]/)[0].toLowerCase()) start--;
-            let end = i;
-            while (end < arr.length-1 && arr[end+1].name.split(/[ -]/)[0].toLowerCase() === arr[i].name.split(/[ -]/)[0].toLowerCase()) end++;
-            return arr.slice(start, end+1).map(e => e.name.toLowerCase());
-          }
-        }
-      }
-      return [];
     }
+    return [search];
+  }
+
+  // Helper to normalize both family and dex names for robust comparison
+  function norm(name) {
+    return name.toLowerCase().replace(/[\s.'’♀♂-]/g, "");
   }
 
   window.setupShinyDexHitlistSearch = function(shinyDex, teamShowcase) {
@@ -223,11 +211,23 @@
           filtered = filtered.filter(e => !e.claimed);
         }
         let realSearch = input.replace(/claimed|unclaimed/g, '').trim();
+        let showFamily = false;
+        if (realSearch.endsWith('+')) {
+          showFamily = true;
+          realSearch = realSearch.slice(0, -1).trim();
+        }
         if (realSearch) {
-          filtered = filtered.filter(e =>
-            e.name.toLowerCase().includes(realSearch) ||
-            (typeof e.claimed === 'string' && e.claimed.toLowerCase().includes(realSearch))
-          );
+          if (showFamily) {
+            const familyNames = getFamilyForName(realSearch).map(norm);
+            filtered = filtered.filter(e =>
+              familyNames.includes(norm(e.name))
+            );
+          } else {
+            filtered = filtered.filter(e =>
+              e.name.toLowerCase().includes(realSearch) ||
+              (typeof e.claimed === 'string' && e.claimed.toLowerCase().includes(realSearch))
+            );
+          }
         }
         const grouped = {};
         filtered.forEach(e => {
@@ -258,9 +258,9 @@
           if (!search) {
             filteredEntries = entries;
           } else if (showFamily && search) {
-            let familyNames = getFamilyForName(search, shinyDex);
+            let familyNames = getFamilyForName(search).map(norm);
             filteredEntries = entries.filter(e =>
-              familyNames.includes(e.name.toLowerCase())
+              familyNames.includes(norm(e.name))
             );
           } else {
             filteredEntries = entries.filter(e =>
