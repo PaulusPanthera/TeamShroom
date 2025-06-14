@@ -140,7 +140,7 @@ const teamShowcase = [
     { name: "koffing" }, { name: "geodude" }, { name: "dodrio" }
   ] },
   { name: "kitsucupid", shinies: [
-    { name: "vulpix" }, { name: "munna" }, { name: "magikarp" }, { name: "poliway" }, { name: "smeargle" }
+    { name: "vulpix" }, { name: "munna" }, { name: "magikarp" }, { name: "poliwag" }, { name: "smeargle" }
   ] },
   { name: "KrikaDoce", shinies: [
     { name: "marill" }, { name: "dodrio" }, { name: "dodrio" }, { name: "paras" }, { name: "mudkip" }, { name: "banette" }
