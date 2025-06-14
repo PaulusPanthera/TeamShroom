@@ -104,35 +104,45 @@
     container.innerHTML = '';
 
     const memberMap = getMemberClaims(flattened);
-    let members = Object.entries(memberMap)
+
+    // Build full member list with points and assign rank
+    let allMembers = Object.entries(memberMap)
       .map(([member, pokes]) => ({
         member,
         pokes,
         points: pokes.reduce((sum, entry) => sum + getPointsForPokemon(entry.name), 0)
       }));
 
-    if (memberFilter.trim()) {
-      const search = memberFilter.trim().toLowerCase();
-      members = members.filter(m => m.member.toLowerCase().includes(search));
-    }
-
-    members.sort((a, b) => {
+    allMembers.sort((a, b) => {
       if (b.points !== a.points) return b.points - a.points;
       if (b.pokes.length !== a.pokes.length) return b.pokes.length - a.pokes.length;
       return a.member.localeCompare(b.member);
     });
+
+    // Assign rank to each member (1-based)
+    const memberRank = {};
+    allMembers.forEach((m, idx) => {
+      memberRank[m.member] = idx + 1;
+    });
+
+    // Filtering for search
+    let members = allMembers;
+    if (memberFilter.trim()) {
+      const search = memberFilter.trim().toLowerCase();
+      members = members.filter(m => m.member.toLowerCase().includes(search));
+    }
 
     if (claimFilter === "unclaimed") {
       container.innerHTML = `<div style="color:#e0e0e0;font-size:1.2em;">No members found.</div>`;
       return;
     }
 
-    members.forEach(({ member, pokes, points }, idx) => {
+    members.forEach(({ member, pokes, points }) => {
       const section = document.createElement('section');
       section.className = 'scoreboard-member-section';
       section.style.marginBottom = "2em";
       section.innerHTML = `<h2>
-  #${idx+1} ${member} <span style="font-size:0.7em;font-weight:normal;color:var(--text-main);">(${pokes.length} Claims ${points} Points)</span>
+#${memberRank[member]} ${member} <span style="font-size:0.7em;font-weight:normal;color:var(--text-main);">(${pokes.length} Claims ${points} Points)</span>
 </h2>
 <div class="dex-grid"></div>
       `;
