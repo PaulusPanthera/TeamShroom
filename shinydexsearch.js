@@ -104,10 +104,10 @@
       const section = document.createElement('section');
       section.className = 'scoreboard-member-section';
       section.style.marginBottom = "2em";
-      section.innerHTML = `<h2 style="color:var(--accent);letter-spacing:1.2px;margin-bottom:0.6em;">
-        #${idx+1} ${member} <span style="font-size:0.7em;font-weight:normal;color:var(--text-main);">(${pokes.length} claim${pokes.length!==1?'s':''})</span>
-      </h2>
-      <div class="dex-grid"></div>
+      section.innerHTML = `<h2>
+  #${idx+1} ${member} <span style="font-size:0.7em;font-weight:normal;color:var(--text-main);">(${pokes.length} claim${pokes.length!==1?'s':''})</span>
+</h2>
+<div class="dex-grid"></div>
       `;
       const grid = section.querySelector('.dex-grid');
       pokes.sort((a, b) => a.name.localeCompare(b.name));
