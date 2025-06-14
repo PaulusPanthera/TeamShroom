@@ -180,7 +180,7 @@ const teamShowcase = [
     { name: "weezing" }, { name: "poliwhirl" }, { name: "floatzel", lost: true }, { name: "floatzel" }, { name: "floatzel" }, { name: "floatzel" },
     { name: "gabite" }, { name: "onix" }, { name: "steelix-f" }, { name: "kingdra" }, { name: "spinda" }, { name: "haunter" }, { name: "bibarel" },
     { name: "poliwhirl" }, { name: "onix" }, { name: "magikarp" }, { name: "dragonair" }, { name: "onix" }, { name: "onix" }, { name: "rapidash" },
-    { name: "solrock" }, { name: "dugtrio" }, { name: "onix" }, { name: "larvitar" }, { name: "shellgon" }
+    { name: "solrock" }, { name: "dugtrio" }, { name: "onix" }, { name: "larvitar" }, { name: "shelgon" }
   ] },
   { name: "mbarren", shinies: [
     { name: "fearow" }, { name: "rapidash" }, { name: "rattata" }, { name: "nidorina" }, { name: "nidorina" }, { name: "ducklett" },
