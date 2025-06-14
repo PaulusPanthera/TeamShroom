@@ -22,20 +22,34 @@
     return memberMap;
   }
 
+  // --- FIXED: Use proper normalization to differentiate Nidoran♂ and Nidoran♀ ---
+
+  function normalizeDexName(name) {
+    return (
+      name
+        .toLowerCase()
+        .replace(/♀/g, "-f")
+        .replace(/♂/g, "-m")
+        .replace(/[\s.'’]/g, "")
+    );
+  }
+
   function buildLivingDexCounts(teamShowcase) {
     const counts = {};
     teamShowcase.forEach(member => {
       if (!member.shinies) return;
       member.shinies.forEach(shiny => {
         if (shiny.lost) return;
-        let name = (shiny.name || "").trim().toLowerCase().replace(/[\s.'’♀♂-]/g, "");
+        let name = (shiny.name || "")
+          .trim()
+          .toLowerCase()
+          .replace(/♀/g, "-f")
+          .replace(/♂/g, "-m")
+          .replace(/[\s.'’]/g, "");
         counts[name] = (counts[name] || 0) + 1;
       });
     });
     return counts;
-  }
-  function normalizeDexName(name) {
-    return name.toLowerCase().replace(/[\s.'’♀♂-]/g, "");
   }
 
   function renderLivingDex(shinyDex, teamShowcase, filterRegions = null, filterNames = null, searchTerm = '') {
@@ -148,7 +162,11 @@
 
   // Helper to normalize both family and dex names for robust comparison
   function norm(name) {
-    return name.toLowerCase().replace(/[\s.'’♀♂-]/g, "");
+    return name
+      .toLowerCase()
+      .replace(/♀/g, "-f")
+      .replace(/♂/g, "-m")
+      .replace(/[\s.'’]/g, "");
   }
 
   window.setupShinyDexHitlistSearch = function(shinyDex, teamShowcase) {
