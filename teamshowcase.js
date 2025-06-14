@@ -315,8 +315,8 @@ const teamShowcase = [
   { name: "tardigreat", shinies: [
     { name: "lotad" }, { name: "seedot" }
   ] },
-  { name: "TerminusDT", shinies: [
-    { name: "mankey" }, { name: "jigglypuff" }, { name: "rattata" }, { name: "mareep" }, { name: "pikachu" }, { name: "slugma" }, { name: "mareep" }
+  { name: "Terminus", shinies: [
+    { name: "mankey" }, { name: "jigglypuff" }, { name: "rattata" }, { name: "mareep" }, { name: "pikachu" }, { name: "slugma" }, { name: "mareep" }, { name: "pichu" }
   ] },
   { name: "TheJuanNonly", shinies: [
     { name: "beldum" }, { name: "tentacool" }, { name: "deino" }, { name: "nidoran-f" }, { name: "woobat" }, { name: "growlithe" }, { name: "vulpix" }, { name: "axew" }, { name: "duskull" }, { name: "sneasel" }, { name: "misdreavus" }
