@@ -122,6 +122,63 @@ function groupMembersByPoints(members) {
     }));
 }
 
+// === AUTO CROP SPRITE FUNCTION ===
+function autoCropSprite(img, targetW, targetH) {
+  if (!img.complete) {
+    img.onload = () => autoCropSprite(img, targetW, targetH);
+    return;
+  }
+  // Already a canvas? Don't re-crop.
+  if (img.tagName === "CANVAS") return img;
+  // Create canvas
+  const canvas = document.createElement('canvas');
+  canvas.width = targetW;
+  canvas.height = targetH;
+  const ctx = canvas.getContext('2d');
+  // Draw image to temp canvas for pixel access
+  const tmp = document.createElement('canvas');
+  tmp.width = img.naturalWidth;
+  tmp.height = img.naturalHeight;
+  const tmpCtx = tmp.getContext('2d');
+  tmpCtx.drawImage(img, 0, 0);
+  const { data, width, height } = tmpCtx.getImageData(0, 0, tmp.width, tmp.height);
+  let minX = width, minY = height, maxX = 0, maxY = 0;
+  let found = false;
+  for (let y = 0; y < height; ++y) {
+    for (let x = 0; x < width; ++x) {
+      const alpha = data[(y * width + x) * 4 + 3];
+      if (alpha > 16) {
+        minX = Math.min(minX, x);
+        minY = Math.min(minY, y);
+        maxX = Math.max(maxX, x);
+        maxY = Math.max(maxY, y);
+        found = true;
+      }
+    }
+  }
+  if (!found) {
+    ctx.drawImage(img, 0, 0, targetW, targetH);
+  } else {
+    const cropW = maxX - minX + 1;
+    const cropH = maxY - minY + 1;
+    const scale = Math.min(targetW / cropW, targetH / cropH);
+    const drawW = cropW * scale;
+    const drawH = cropH * scale;
+    const offsetX = (targetW - drawW) / 2;
+    const offsetY = (targetH - drawH) / 2;
+    ctx.drawImage(
+      img,
+      minX, minY, cropW, cropH,
+      offsetX, offsetY, drawW, drawH
+    );
+  }
+  canvas.className = img.className;
+  canvas.style.cssText = img.style.cssText;
+  canvas.title = img.title;
+  if (img.parentNode) img.parentNode.replaceChild(canvas, img);
+  return canvas;
+}
+
 // Main gallery rendering (accepts groupMode: "alphabetical", "shinies", or "scoreboard")
 function renderShowcaseGallery(members, container, groupMode) {
   if (!container) container = document.getElementById('showcase-gallery-container');
@@ -195,6 +252,13 @@ function renderShowcaseGallery(members, container, groupMode) {
         }
       };
 
+      img.onload = function () {
+        autoCropSprite(this, 100, 100);
+      };
+
+      // For browsers that cache images and don't call onload again
+      if (img.complete) setTimeout(() => autoCropSprite(img, 100, 100), 10);
+
       img.onclick = e => {
         // Get current sort mode from radio input
         const sortModeEl = document.querySelector('input[name="showcase-sort"]:checked');
@@ -219,11 +283,13 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
     <h1>${member.name}'s Shiny Showcase</h1>
     <div>Shinies: ${shinies.filter(mon => !mon.lost).length} | Points: ${points}</div>
     <div class="showcase-shinies" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:1em;">
-      ${shinies.map(mon => {
+      ${shinies.map((mon, idx) => {
         const monPoints = getPointsForPokemon(mon.name);
+        // Use a unique id for each img so we can crop it after DOM insert
+        const imgId = `showcase-shiny-img-${member.name.replace(/\W/g, '')}-${idx}`;
         return `
         <div class="showcase-shiny-img-wrapper${mon.lost ? ' lost' : ''}" style="width:120px;height:150px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;">
-          <img src="${mon.url}" alt="${mon.name}${mon.lost ? ' (lost)' : ''}" class="showcase-shiny-img${mon.lost ? ' lost' : ''}" style="width:100px;height:100px;image-rendering:pixelated;" title="${mon.name}${mon.lost ? ' (lost)' : ''}">
+          <img id="${imgId}" src="${mon.url}" alt="${mon.name}${mon.lost ? ' (lost)' : ''}" class="showcase-shiny-img${mon.lost ? ' lost' : ''}" style="width:100px;height:100px;image-rendering:pixelated;" title="${mon.name}${mon.lost ? ' (lost)' : ''}">
           <div class="dex-name" style="margin-top:3px;font-size:.85em">${mon.name}</div>
           <div class="dex-claimed" style="font-size:.75em;color:var(--text-muted)">${mon.lost ? 'Lost' : monPoints + ' Points'}</div>
         </div>
@@ -231,6 +297,12 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
       }).join("")}
     </div>
   `;
+  // After DOM insert, crop all images
+  setTimeout(() => {
+    content.querySelectorAll('.showcase-shiny-img').forEach(img => {
+      autoCropSprite(img, 100, 100);
+    });
+  }, 30);
 }
 
 // --- SEARCH AND SORT SETUP ---
@@ -302,6 +374,12 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
       resultCount.textContent = `${filtered.length} Member${filtered.length === 1 ? '' : 's'}`;
       const galleryContainer = document.getElementById('showcase-gallery-container');
       renderShowcaseGallery(filtered, galleryContainer, sortMode);
+      // After DOM insert, crop all visible member sprites
+      setTimeout(() => {
+        document.querySelectorAll('.showcase-sprite').forEach(img => {
+          autoCropSprite(img, 100, 100);
+        });
+      }, 30);
     }
 
     searchInput.addEventListener('input', e => {
