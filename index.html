@@ -25,6 +25,10 @@
   <script src="showcase.js"></script>
   <script src="shinydexsearch.js"></script>
   <script src="showcasesearch.js"></script>
+  <!-- THIS LINE ENSURES FAMILY POINTS LOGIC WORKS -->
+  <script>
+    if (window.buildPokemonPoints) window.buildPokemonPoints();
+  </script>
   <script>
     // Routing: supports #showcase, #showcase-<member>, #hitlist
     function renderPage() {
