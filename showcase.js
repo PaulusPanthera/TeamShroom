@@ -1,5 +1,5 @@
 // Team Shroom members and their shiny counts
-// This version AUTOMATICALLY counts shinies from teamShowcase.js, EXCLUDING lost shinies.
+// This version AUTOMATICALLY counts shinies from teamShowcase.js, EXCLUDING lost shinies, and displays a total shinies counter.
 
 const teamMembers = (window.teamShowcase || []).map(entry => ({
   name: entry.name,
@@ -79,6 +79,23 @@ function groupMembersByShinies(members) {
 function renderShowcaseGallery(members, container, groupMode) {
   if (!container) container = document.getElementById('showcase-gallery-container');
   container.innerHTML = "";
+
+  // --- Total shinies count (across all members, excluding lost) ---
+  let total = 0;
+  if (window.teamShowcase) {
+    window.teamShowcase.forEach(entry => {
+      if (Array.isArray(entry.shinies)) {
+        total += entry.shinies.filter(mon => !mon.lost).length;
+      }
+    });
+  }
+
+  // Insert total at the top
+  const totalDiv = document.createElement("div");
+  totalDiv.className = "total-shinies-count";
+  totalDiv.style = "font-size: 1.25em; font-weight: bold; color: var(--accent); margin-bottom: 1.5em; text-align:center;";
+  totalDiv.textContent = `Total Shinies: ${total}`;
+  container.appendChild(totalDiv);
 
   let grouped;
   if (groupMode === "shinies") {
