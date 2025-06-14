@@ -1,10 +1,12 @@
-// === Search Controls & Navigation for Shiny Dex Pokedex (Region/Scoreboard/Living Dex) ===
+// === Search Controls & Navigation for Shiny Dex Pokedex (Region/Scoreboard/Shiny Living Dex) ===
 
 (function(){
   function flattenDexData(shinyDex) {
     const result = [];
     Object.entries(shinyDex).forEach(([region, entries]) => {
-      entries.forEach(entry => result.push({...entry, region}));
+      entries.forEach((entry, idx, arr) => {
+        result.push({...entry, region, familyIndex: idx, familyArr: arr});
+      });
     });
     return result;
   }
@@ -144,7 +146,7 @@
     [
       ["Shiny Dex Hitlist", "region"],
       ["Scoreboard", "scoreboard"],
-      ["Living Shiny Dex", "livingdex"]
+      ["Shiny Living Dex", "livingdex"]
     ].forEach(([labelText, value]) => {
       const label = document.createElement('label');
       const radio = document.createElement('input');
@@ -173,6 +175,33 @@
       if (lower.includes("unclaimed")) return "unclaimed";
       if (lower.includes("claimed")) return "claimed";
       return "all";
+    }
+
+    function getFamilyForName(search, shinyDex) {
+      // Return array of all names in the same family as the first match for `search`
+      search = search.toLowerCase();
+      for (let region in shinyDex) {
+        let arr = shinyDex[region];
+        for (let i = 0; i < arr.length; ++i) {
+          if (arr[i].name.toLowerCase().includes(search)) {
+            // walk family (previous and next with similar roots)
+            // Find the span of family: look for continuous block sharing a root.
+            // We assume families are grouped together in the region array.
+
+            // Find family start
+            let start = i;
+            while (start > 0 && arr[start-1].name.split(/[ -]/)[0].toLowerCase() === arr[i].name.split(/[ -]/)[0].toLowerCase()) start--;
+
+            // Find family end
+            let end = i;
+            while (end < arr.length-1 && arr[end+1].name.split(/[ -]/)[0].toLowerCase() === arr[i].name.split(/[ -]/)[0].toLowerCase()) end++;
+
+            // Gather names (all in this family block)
+            return arr.slice(start, end+1).map(e => e.name.toLowerCase());
+          }
+        }
+      }
+      return [];
     }
 
     function updateResults() {
@@ -208,16 +237,31 @@
         const filteredNames = Object.keys(memberMap).filter(m => m.toLowerCase().includes(memberSearch.toLowerCase()));
         resultCount.textContent = `${claimFilter === 'unclaimed' ? 0 : filteredNames.length} member${filteredNames.length === 1 ? '' : 's'}`;
       } else if (viewMode === 'livingdex') {
-        // --- FIXED Living Shiny Dex search ---
-        const search = searchValue.trim().toLowerCase();
+        // --- FIXED Shiny Living Dex search with + for family ---
+        let search = searchValue.trim().toLowerCase();
+        let showFamily = false;
+        if (search.endsWith('+')) {
+          showFamily = true;
+          search = search.slice(0, -1).trim();
+        }
         const filteredDex = {};
         let count = 0;
         Object.entries(shinyDex).forEach(([region, entries]) => {
-          const filteredEntries = entries.filter(e =>
-            !search ||
-            e.name.toLowerCase().includes(search) ||
-            region.toLowerCase().includes(search)
-          );
+          let filteredEntries;
+          if (!search) {
+            filteredEntries = entries;
+          } else if (showFamily && search) {
+            // Find all names in the family
+            let names = getFamilyForName(search, shinyDex);
+            filteredEntries = entries.filter(e =>
+              names.includes(e.name.toLowerCase())
+            );
+          } else {
+            filteredEntries = entries.filter(e =>
+              e.name.toLowerCase().includes(search) ||
+              region.toLowerCase().includes(search)
+            );
+          }
           if (filteredEntries.length > 0) {
             filteredDex[region] = filteredEntries;
             count += filteredEntries.length;
