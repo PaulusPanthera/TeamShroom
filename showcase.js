@@ -125,7 +125,10 @@ function renderShowcaseGallery(members, container, groupMode) {
         <div class="showcase-shiny-count">Shinies: ${member.shinies}</div>
       `;
       entry.querySelector(".showcase-sprite").onclick = e => {
-        location.hash = "#showcase-" + member.name;
+        // Get current sort mode from radio input
+        const sortModeEl = document.querySelector('input[name="showcase-sort"]:checked');
+        const sortMode = sortModeEl ? sortModeEl.value : 'alphabetical';
+        location.hash = `#showcase-${member.name}?sort=${sortMode}`;
       };
       gallery.appendChild(entry);
     });
@@ -135,11 +138,11 @@ function renderShowcaseGallery(members, container, groupMode) {
 }
 
 // Show a single member's full shiny showcase
-function renderMemberShowcase(member) {
+function renderMemberShowcase(member, sortMode = "alphabetical") {
   const content = document.getElementById('page-content');
   const shinies = getMemberShinies(member);
   content.innerHTML = `
-    <button onclick="history.back()" style="margin-bottom:1em">← Back</button>
+    <button onclick="window.location.hash='#showcase?sort=${sortMode}'" style="margin-bottom:1em">← Back</button>
     <h1>${member.name}'s Shiny Showcase</h1>
     <div>Shinies: ${shinies.filter(mon => !mon.lost).length}</div>
     <div class="showcase-shinies" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:1em;">
