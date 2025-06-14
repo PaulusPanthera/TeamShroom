@@ -1,5 +1,5 @@
 (function(){
-  window.setupShowcaseSearchAndSort = function(teamMembers, renderShowcaseGallery) {
+  window.setupShowcaseSearchAndSort = function(teamMembers, renderShowcaseGallery, initialSortMode) {
     const controls = document.querySelector('.showcase-search-controls');
     controls.innerHTML = "";
 
@@ -30,7 +30,12 @@
     const resultCount = document.createElement('span');
     controls.appendChild(resultCount);
 
-    let sortMode = 'alphabetical';
+    let sortMode = initialSortMode || 'alphabetical';
+    // Set checked based on initialSortMode
+    sortDiv.querySelectorAll('input[name="showcase-sort"]').forEach(radio => {
+      radio.checked = radio.value === sortMode;
+    });
+
     let searchValue = '';
 
     function getFilteredAndSortedMembers() {
@@ -60,7 +65,7 @@
       updateResults();
     });
 
-    sortDiv.querySelectorAll('input[type=radio]').forEach(radio => {
+    sortDiv.querySelectorAll('input[name="showcase-sort"]').forEach(radio => {
       radio.addEventListener('change', e => {
         sortMode = e.target.value;
         updateResults();
