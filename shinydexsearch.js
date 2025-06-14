@@ -40,14 +40,31 @@
   }
 
   // --- Living Dex rendering (just like region grid, but shows count badge) ---
-  function renderLivingDex(shinyDex, teamShowcase, filterRegions = null, filterNames = null) {
+  function renderLivingDex(shinyDex, teamShowcase, filterRegions = null, filterNames = null, searchTerm = '') {
     const container = document.getElementById('shiny-dex-container');
     if (!container) return;
     container.innerHTML = '';
     const counts = buildLivingDexCounts(teamShowcase);
 
+    // Lowercase search term for comparison
+    const search = (searchTerm || '').toLowerCase();
+
     Object.keys(shinyDex).forEach(region => {
       if (filterRegions && !filterRegions.includes(region)) return;
+
+      // Filter entries in this region
+      const filteredEntries = shinyDex[region].filter(entry => {
+        if (filterNames && !filterNames.includes(entry.name.toLowerCase())) return false;
+        if (search) {
+          // Also allow searching by region name
+          return entry.name.toLowerCase().includes(search) || region.toLowerCase().includes(search);
+        }
+        return true;
+      });
+
+      // Only render region if there are filtered entries
+      if (filteredEntries.length === 0) return;
+
       const regionDiv = document.createElement('div');
       regionDiv.className = 'region-section';
       regionDiv.innerHTML = `<h2>${region}</h2>`;
@@ -55,8 +72,7 @@
       const grid = document.createElement('div');
       grid.className = 'dex-grid';
 
-      shinyDex[region].forEach(entry => {
-        if (filterNames && !filterNames.includes(entry.name.toLowerCase())) return;
+      filteredEntries.forEach(entry => {
         const nName = normalizeDexName(entry.name);
         const count = counts[nName] || 0;
         const div = document.createElement('div');
@@ -68,6 +84,7 @@
         `;
         grid.appendChild(div);
       });
+
       regionDiv.appendChild(grid);
       container.appendChild(regionDiv);
     });
@@ -243,7 +260,7 @@
           Object.values(shinyDex).forEach(list => list.forEach(e => allNames.push(e.name)));
           filteredNames = allNames.filter(n => n.toLowerCase().includes(input));
         }
-        renderLivingDex(shinyDex, teamShowcase, filteredRegions, filteredNames);
+        renderLivingDex(shinyDex, teamShowcase, filteredRegions, filteredNames, searchValue);
         // For result count, count how many entries matched filter
         let count = 0;
         Object.values(shinyDex).forEach(list => {
