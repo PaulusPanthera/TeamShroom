@@ -23,7 +23,6 @@
   }
 
   // --- FIXED: Use proper normalization to differentiate Nidoran♂ and Nidoran♀ ---
-
   function normalizeDexName(name) {
     return (
       name
@@ -50,6 +49,16 @@
       });
     });
     return counts;
+  }
+
+  function getPointsForPokemon(name) {
+    if (!window.POKEMON_POINTS) return 1; // fallback
+    let normName = name
+      .toLowerCase()
+      .replace(/♀/g, "-f")
+      .replace(/♂/g, "-m")
+      .replace(/[\s.'’]/g, "");
+    return window.POKEMON_POINTS[normName] || 1;
   }
 
   function renderLivingDex(shinyDex, teamShowcase, filterRegions = null, filterNames = null, searchTerm = '') {
@@ -87,6 +96,7 @@
     });
   }
 
+  // --- SCOREBOARD WITH POINTS ---
   function renderScoreboard(flattened, memberFilter = "", claimFilter = "all") {
     const container = document.getElementById('shiny-dex-container');
     if (!container) return;
@@ -96,7 +106,8 @@
     let members = Object.entries(memberMap)
       .map(([member, pokes]) => ({
         member,
-        pokes
+        pokes,
+        points: pokes.reduce((sum, entry) => sum + getPointsForPokemon(entry.name), 0)
       }));
 
     if (memberFilter.trim()) {
@@ -104,7 +115,9 @@
       members = members.filter(m => m.member.toLowerCase().includes(search));
     }
 
+    // Sort by points, then by claim count, then by name
     members.sort((a, b) => {
+      if (b.points !== a.points) return b.points - a.points;
       if (b.pokes.length !== a.pokes.length) return b.pokes.length - a.pokes.length;
       return a.member.localeCompare(b.member);
     });
@@ -114,24 +127,25 @@
       return;
     }
 
-    members.forEach(({ member, pokes }, idx) => {
+    members.forEach(({ member, pokes, points }, idx) => {
       const section = document.createElement('section');
       section.className = 'scoreboard-member-section';
       section.style.marginBottom = "2em";
       section.innerHTML = `<h2>
-  #${idx+1} ${member} <span style="font-size:0.7em;font-weight:normal;color:var(--text-main);">(${pokes.length} claim${pokes.length!==1?'s':''})</span>
+  #${idx+1} ${member} <span style="font-size:0.7em;font-weight:normal;color:var(--text-main);">(${pokes.length} Claims ${points} Points)</span>
 </h2>
 <div class="dex-grid"></div>
       `;
       const grid = section.querySelector('.dex-grid');
       pokes.sort((a, b) => a.name.localeCompare(b.name));
       pokes.forEach(entry => {
+        const p = getPointsForPokemon(entry.name);
         const div = document.createElement('div');
         div.className = 'dex-entry claimed';
         div.innerHTML = `
           <img src="${getPokemonGif(entry.name)}" alt="${entry.name}" class="pokemon-gif" />
           <div class="dex-name">${entry.name}</div>
-          <div class="dex-claimed">${entry.claimed}</div>
+          <div class="dex-claimed">${p} Points</div>
         `;
         grid.appendChild(div);
       });
