@@ -11,7 +11,7 @@
 <body>
   <div class="nav">
     <a href="#showcase" id="nav-showcase">Shiny Showcase</a>
-    <a href="#hitlist" id="nav-hitlist">Shiny Dex Hitlist</a>
+    <a href="#hitlist" id="nav-hitlist">Shiny Pokedex</a>
   </div>
   <button id="darkmode-toggle" style="position: absolute; top: 1rem; right: 1.5rem; z-index: 1000; background: var(--card); color: var(--accent); border: 2px solid var(--accent); border-radius: 8px; font-family: 'Press Start 2P', monospace; font-size: 1em; padding: 0.4em 1em; cursor: pointer; box-shadow: 0 2px 10px #000a; transition: background 0.2s, color 0.2s;">
     🌙 Dark Mode
@@ -38,7 +38,6 @@
           <div class="showcase-search-controls"></div>
           <div id="showcase-gallery-container"></div>
         `;
-        // The search/sort bar will always be visible and never overwritten!
         setupShowcaseSearchAndSort(teamMembers, renderShowcaseGallery);
       } else if (hash.startsWith("showcase-")) {
         const memberName = hash.replace("showcase-", "");
@@ -49,12 +48,12 @@
           content.innerHTML = "<h1>Member not found.</h1>";
         }
       } else if (hash === "hitlist") {
-        content.innerHTML = "<h1>Shiny Dex Hitlist</h1><div id='shiny-dex-container'></div>";
+        content.innerHTML = "<h1>Shiny Pokedex</h1><div id='shiny-dex-container'></div>";
         setTimeout(() => {
           renderShinyDex(shinyDex);
           setTimeout(() => {
             if (typeof setupShinyDexHitlistSearch === 'function') {
-              setupShinyDexHitlistSearch(shinyDex);
+              setupShinyDexHitlistSearch(shinyDex, teamShowcase);
             }
           }, 0);
         }, 0);
