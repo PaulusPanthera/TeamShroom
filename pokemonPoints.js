@@ -14,7 +14,7 @@ const TIER_POINTS = {
 
 const TIER_FAMILIES = {
   "Tier 6": [
-    "Abra","Aron","Baltoy","Basculin [Red-Striped Form]","Bidoof","Blitzle","Bouffalant","Bronzor",
+    "Abra","Aron","Baltoy","Basculin","Bidoof","Blitzle","Bouffalant","Bronzor",
     "Buizel","Chinchou","Clamperl","Cubchoo","Cubone","Deerling","Diglett","Drowzee","Druddigon",
     "Dunsparce","Durant","Duskull","Dwebble","Elgyem","Foongus","Frillish","Gastly","Geodude",
     "Goldeen","Golett","Gothita","Grimer","Heatmor","Hoppip","Horsea","Jigglypuff","Jynx",
@@ -52,7 +52,7 @@ const TIER_FAMILIES = {
     "Scyther","Shieldon","Skarmory","Skitty","Slakoth","Snorlax","Sudowoodo","Tirtouga"
   ],
   "Tier 0": [
-    "Alomomola","Audino","Basculin [Blue-Striped Form]","Bulbasaur","Charmander","Chikorita","Chimchar","Cyndaquil",
+    "Alomomola","Audino","Bulbasaur","Charmander","Chikorita","Chimchar","Cyndaquil",
     "Drilbur","Ducklett","Emolga","Mudkip","Oshawott","Piplup","Porygon","Riolu","Rotom","Shedinja","Snivy",
     "Spiritomb","Squirtle","Tepig","Togepi","Torchic","Totodile","Treecko","Turtwig","Tyrogue"
   ]
