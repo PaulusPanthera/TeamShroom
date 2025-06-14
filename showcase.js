@@ -1,9 +1,11 @@
 // Team Shroom members and their shiny counts
-// This version AUTOMATICALLY counts shinies from teamShowcase.js and does NOT require manual updates.
+// This version AUTOMATICALLY counts shinies from teamShowcase.js, EXCLUDING lost shinies.
 
 const teamMembers = (window.teamShowcase || []).map(entry => ({
   name: entry.name,
-  shinies: Array.isArray(entry.shinies) ? entry.shinies.length : 0
+  shinies: Array.isArray(entry.shinies)
+    ? entry.shinies.filter(mon => !mon.lost).length
+    : 0
 }));
 
 // Helper to generate the correct shiny gif url
@@ -122,7 +124,7 @@ function renderMemberShowcase(member) {
   content.innerHTML = `
     <button onclick="history.back()" style="margin-bottom:1em">← Back</button>
     <h1>${member.name}'s Shiny Showcase</h1>
-    <div>Shinies: ${shinies.length}</div>
+    <div>Shinies: ${shinies.filter(mon => !mon.lost).length}</div>
     <div class="showcase-shinies" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:1em;">
       ${shinies.map(mon =>
         `<div class="showcase-shiny-img-wrapper${mon.lost ? ' lost' : ''}" style="width:120px;height:120px;">
