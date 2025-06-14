@@ -134,7 +134,7 @@ const teamShowcase = [
     { name: "lanturn" }, { name: "swellow" }, { name: "butterfree" }, { name: "golurk" }, { name: "marill" },
     { name: "slowbro" }, { name: "sealeo" }, { name: "quagsire" }, { name: "golbat" }, { name: "lillipup" },
     { name: "parasect" }, { name: "wingull" }, { name: "poochyena" }, { name: "watchog" }, { name: "magikarp" },
-    { name: "machamp" }, { name: "beautifly" }, { name: "venipede" }, { name: "jigglypuff" }
+    { name: "machamp" }, { name: "beautifly" }, { name: "venipede" }, { name: "jigglypuff" }, { name: "starmie" }, { name: "clefairy" }, { name: "camerupt" }
   ] },
    { name: "KBritoBM", shinies: [
     { name: "koffing" }, { name: "geodude" }, { name: "dodrio" }
