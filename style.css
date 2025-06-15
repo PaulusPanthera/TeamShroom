@@ -158,12 +158,16 @@ body.darkmode {
   z-index: 5;
 }
 
-/* Red name + shadow */
+/* Red name + pixel-outline for retro sharpness */
 .unified-name {
   font-size: 1.13em;
   font-weight: bold;
   color: var(--accent);
-  text-shadow: 0 0 7px #f25937aa, 0 -2px 8px #fffbe1, 0 2px 0 #fffbe1;
+  text-shadow:
+    2px 0 #fffbe1,
+   -2px 0 #fffbe1,
+    0 2px #fffbe1,
+    0 -2px #fffbe1;
   margin-bottom: 0.22em;
   margin-top: 0.05em;
 }
