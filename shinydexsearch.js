@@ -62,6 +62,36 @@
     return window.POKEMON_POINTS[normName] || 1;
   }
 
+  // Unified card renderer (same as in shinydex.js)
+  function renderUnifiedCard(opts) {
+    // opts: { name, img, info, lost }
+    return `
+      <div class="unified-card${opts.lost ? ' lost' : ''}">
+        <div class="unified-name">${opts.name}</div>
+        <img src="${opts.img}" alt="${opts.name}" class="unified-img"${opts.lost ? ' style="opacity:0.6;filter:grayscale(1);"' : ""}>
+        <div class="unified-info${opts.lost ? ' lost' : ''}">${opts.info}</div>
+      </div>
+    `;
+  }
+
+  // Helper for Pokémon gif
+  function getPokemonGif(name) {
+    if (name === "Mr. Mime") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr-mime.gif";
+    if (name === "Mime Jr.") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mime-jr.gif";
+    if (name === "Nidoran♀") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-f.gif";
+    if (name === "Nidoran♂") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-m.gif";
+
+    let urlName = name
+      .toLowerCase()
+      .replace(/\u2640/g, "f")
+      .replace(/\u2642/g, "m")
+      .replace(/[\s.'’]/g, "");
+
+    return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${urlName}.gif`;
+  }
+
+  // --- Renders ---
+
   function renderShinyDex(regions) {
     const container = document.getElementById('shiny-dex-container');
     if (!container) return;
@@ -75,14 +105,14 @@
       grid.className = 'dex-grid';
 
       regions[region].forEach(entry => {
-        const div = document.createElement('div');
-        div.className = 'dex-entry' + (entry.claimed ? ' claimed' : ' unclaimed');
-        div.innerHTML = `
-          <img src="${getPokemonGif(entry.name)}" alt="${entry.name}" class="pokemon-gif" />
-          <div class="dex-name">${entry.name}</div>
-          <div class="dex-claimed">${entry.claimed ? entry.claimed : "Unclaimed"}</div>
-        `;
-        grid.appendChild(div);
+        let info = entry.claimed
+          ? `Claimed by ${entry.claimed}`
+          : "Unclaimed";
+        grid.innerHTML += renderUnifiedCard({
+          name: entry.name,
+          img: getPokemonGif(entry.name),
+          info
+        });
       });
       regionDiv.appendChild(grid);
       container.appendChild(regionDiv);
@@ -131,14 +161,11 @@
       pokes.sort((a, b) => a.name.localeCompare(b.name));
       pokes.forEach(entry => {
         const p = getPointsForPokemon(entry.name);
-        const div = document.createElement('div');
-        div.className = 'dex-entry claimed';
-        div.innerHTML = `
-          <img src="${getPokemonGif(entry.name)}" alt="${entry.name}" class="pokemon-gif" />
-          <div class="dex-name">${entry.name}</div>
-          <div class="dex-claimed">${p} Points</div>
-        `;
-        grid.appendChild(div);
+        grid.innerHTML += renderUnifiedCard({
+          name: entry.name,
+          img: getPokemonGif(entry.name),
+          info: `${p} Points`
+        });
       });
       container.appendChild(section);
     });
@@ -176,14 +203,11 @@
       const grid = document.createElement('div');
       grid.className = 'dex-grid';
       allEntries.forEach(entry => {
-        const div = document.createElement('div');
-        div.className = 'dex-entry' + (entry.count > 0 ? ' claimed' : ' unclaimed');
-        div.innerHTML = `
-          <img src="${getPokemonGif(entry.name)}" alt="${entry.name}" class="pokemon-gif" />
-          <div class="dex-name">${entry.name}</div>
-          <div class="dex-claimed">${entry.count > 0 ? `<span class="livingdex-count">${entry.count}</span>` : "0"}</div>
-        `;
-        grid.appendChild(div);
+        grid.innerHTML += renderUnifiedCard({
+          name: entry.name,
+          img: getPokemonGif(entry.name),
+          info: entry.count > 0 ? `<span class="livingdex-count">${entry.count}</span>` : "0"
+        });
       });
       regionDiv.appendChild(grid);
       container.appendChild(regionDiv);
@@ -200,14 +224,11 @@
         shinyDex[region].forEach(entry => {
           const nName = normalizeDexName(entry.name);
           const count = counts[nName] || 0;
-          const div = document.createElement('div');
-          div.className = 'dex-entry' + (count > 0 ? ' claimed' : ' unclaimed');
-          div.innerHTML = `
-            <img src="${getPokemonGif(entry.name)}" alt="${entry.name}" class="pokemon-gif" />
-            <div class="dex-name">${entry.name}</div>
-            <div class="dex-claimed">${count > 0 ? `<span class="livingdex-count">${count}</span>` : "0"}</div>
-          `;
-          grid.appendChild(div);
+          grid.innerHTML += renderUnifiedCard({
+            name: entry.name,
+            img: getPokemonGif(entry.name),
+            info: count > 0 ? `<span class="livingdex-count">${count}</span>` : "0"
+          });
         });
 
         regionDiv.appendChild(grid);
