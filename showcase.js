@@ -113,7 +113,7 @@ function renderShowcaseGallery(members, container, groupMode) {
     grouped = groupMembersAlphabetically(members);
   }
 
-  // For each group, render a header and a grid of member cards
+  // For each group, render a header and a grid of member cards for that group.
   grouped.forEach(group => {
     // Header
     const header = document.createElement('div');
@@ -136,15 +136,38 @@ function renderShowcaseGallery(members, container, groupMode) {
       gallery.innerHTML += renderUnifiedCard({
         name: member.name,
         img: spriteUrl,
-        info
+        info,
+        cardType: "member"
       });
     });
 
     container.appendChild(gallery);
   });
 
-  // Add fallback/error/click handler for images
+  // Add fallback/error/click handler for images and cards
   setTimeout(() => {
+    // Entire card clickable (for both member and Pokémon cards in the future)
+    container.querySelectorAll('.unified-card').forEach(card => {
+      card.style.cursor = 'pointer';
+      card.onclick = function (e) {
+        // Don't trigger if user is selecting text
+        if (window.getSelection && window.getSelection().toString()) return;
+        const cardType = card.getAttribute('data-card-type');
+        const cardName = card.getAttribute('data-name');
+        if (cardType === "member") {
+          // Use the current sort mode
+          const sortSelect = document.querySelector('.showcase-search-controls select');
+          const sortMode = (sortSelect && sortSelect.value) || "alphabetical";
+          location.hash = `#showcase-${cardName}?sort=${sortMode}`;
+        } else if (cardType === "pokemon") {
+          // Future: open Pokédex view, etc.
+          // Example:
+          // location.hash = `#pokedex-${cardName}`;
+        }
+      };
+    });
+
+    // Keep the existing image fallback handler for broken images
     container.querySelectorAll('.unified-img').forEach(img => {
       img.onerror = function() {
         if (!this._srcIndex) this._srcIndex = 1;
@@ -161,11 +184,6 @@ function renderShowcaseGallery(members, container, groupMode) {
           this.onerror = null;
           this.src = "examplesprite.png";
         }
-      };
-      img.onclick = function() {
-        const sortSelect = document.querySelector('.showcase-search-controls select');
-        const sortMode = (sortSelect && sortSelect.value) || "alphabetical";
-        location.hash = `#showcase-${this.getAttribute('alt')}?sort=${sortMode}`;
       };
     });
   }, 0);
@@ -233,7 +251,8 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
           name: name,
           img: mon.url,
           info: mon.lost ? "Lost" : `${monPoints} Points`,
-          lost: mon.lost
+          lost: mon.lost,
+          cardType: "pokemon"
         });
       }).join("")}
     </div>
