@@ -326,7 +326,8 @@ body.darkmode .unified-info {
 }
 
 /* --- FIXED GRID: uniform and even spacing everywhere --- */
-.showcase-gallery {
+.showcase-gallery,
+.dex-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   gap: 2rem;
