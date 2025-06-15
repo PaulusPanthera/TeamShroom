@@ -15,7 +15,10 @@
 }
 
 body {
-  background: var(--bg), url('https://www.transparenttextures.com/patterns/square-bg.png');
+  background-color: var(--bg);
+  background-image: url('https://www.transparenttextures.com/patterns/square-bg.png');
+  background-size: 120px 120px;
+  background-attachment: fixed;
   color: var(--text-main);
   font-family: 'Press Start 2P', 'Consolas', 'monospace';
   margin: 0;
@@ -23,7 +26,6 @@ body {
   font-size: 14px;
   letter-spacing: 0.5px;
   transition: background 0.4s, color 0.4s;
-  background-size: 120px 120px;
 }
 
 body.darkmode {
@@ -37,8 +39,10 @@ body.darkmode {
   --unclaimed: #f25937;
   --text-main: #ffe595;
   --text-muted: #679a56;
-  background: var(--bg), url('https://www.transparenttextures.com/patterns/square-bg.png');
+  background-color: var(--bg);
+  background-image: url('https://www.transparenttextures.com/patterns/square-bg.png');
   background-size: 120px 120px;
+  background-attachment: fixed;
 }
 
 /* NAVIGATION BAR */
@@ -132,9 +136,11 @@ body.darkmode {
   border-radius: 18px;
   box-shadow: var(--shadow-main);
   padding: 1.2em 0.8em 1.2em 0.8em;
-  min-height: 220px;
+  min-height: 180px;
   min-width: 0;
-  height: 320px;
+  max-width: 210px;
+  width: 100%;
+  height: 210px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -164,8 +170,8 @@ body.darkmode {
 
 /* Centered image */
 .unified-img {
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   object-fit: contain;
   display: block;
   margin: 0.3em 0;
@@ -205,6 +211,7 @@ body.darkmode .unified-info {
   gap: 1.5rem;
   margin-top: 1.2rem;
   align-content: start;
+  place-items: start;
 }
 
 /* --- Search/sort bar for showcase & dex --- */
