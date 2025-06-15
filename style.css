@@ -219,6 +219,20 @@ body.darkmode .unified-info {
   place-items: center;
 }
 
+/* --- Supergrid for categories/sections side by side --- */
+.showcase-supergrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+  margin-bottom: 2em;
+  align-items: start;
+}
+.showcase-supergrid > section {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 /* --- Search/sort bar for showcase & dex --- */
 .showcase-search-controls,
 .search-controls {
@@ -365,12 +379,18 @@ body.darkmode .unified-info {
 @media (max-width: 1400px) {
   .showcase-gallery,
   .dex-grid { grid-template-columns: repeat(6, 1fr);}
+  .showcase-supergrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 @media (max-width: 900px) {
   .showcase-gallery,
   .dex-grid { grid-template-columns: repeat(3, 1fr);}
   .region-section { padding: 1.7rem 0.4rem 1.3rem 0.4rem; }
   .scoreboard-member-section { padding: 1.7rem 0.4rem 1.3rem 0.4rem; }
+  .showcase-supergrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 @media (max-width: 600px) {
   body { font-size: 12px; }
@@ -379,4 +399,7 @@ body.darkmode .unified-info {
   .nav { padding: 1rem 0.3rem; }
   .region-section, .scoreboard-member-section { padding: 1.2rem 0.2rem 1rem 0.2rem; }
   .showcase-search-controls, .search-controls { padding: 0.5em 0.5em; }
+  .showcase-supergrid {
+    grid-template-columns: 1fr;
+  }
 }
