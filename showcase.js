@@ -122,6 +122,19 @@ function groupMembersByPoints(members) {
     }));
 }
 
+// Utility to clean up Pokémon names
+function cleanPokemonName(name) {
+  // Remove gender/family/variant suffixes
+  let cleaned = name
+    .replace(/-(f|m|red-striped|blue-striped|east|west|galar|alola|hisui|paldea|mega|gigantamax|therian|origin|sky|dawn|midnight|midday|school|solo|rainy|sunny|snowy|attack|defense|speed|wash|heat|fan|frost|mow|midnight|midday|dusk|baile|pom-pom|pa'u|sensu|starter|battle-bond|ash|crowned|eternamax|gmax|complete|single-strike|rapid-strike)[^a-z0-9]*$/i, '')
+    .replace(/-/g, ' ')
+    .replace(/\s+/, ' ')
+    .trim();
+  // Capitalize first letter of each word
+  cleaned = cleaned.replace(/\b\w/g, l => l.toUpperCase());
+  return cleaned;
+}
+
 // Main gallery rendering (accepts groupMode: "alphabetical", "shinies", or "scoreboard")
 function renderShowcaseGallery(members, container, groupMode) {
   if (!container) container = document.getElementById('showcase-gallery-container');
@@ -213,21 +226,22 @@ function renderShowcaseGallery(members, container, groupMode) {
 function renderMemberShowcase(member, sortMode = "alphabetical") {
   const content = document.getElementById('page-content');
   const shinies = getMemberShinies(member);
-  // Show both shiny count and points
   const points = getMemberScoreboardPoints(member);
+
   content.innerHTML = `
     <button class="back-btn" onclick="window.location.hash='#showcase?sort=${sortMode}'">← Back</button>
     <h1>${member.name}'s Shiny Showcase</h1>
     <div>Shinies: ${shinies.filter(mon => !mon.lost).length} | Points: ${points}</div>
-    <div class="showcase-shinies" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:1em;">
-      ${shinies.map((mon, idx) => {
+    <div class="showcase-shinies dex-grid" style="margin-top:1em;">
+      ${shinies.map(mon => {
         const monPoints = getPointsForPokemon(mon.name);
+        const name = cleanPokemonName(mon.name);
         return `
-        <div class="showcase-shiny-img-wrapper${mon.lost ? ' lost' : ''}" style="width:120px;height:150px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;">
-          <img src="${mon.url}" alt="${mon.name}${mon.lost ? ' (lost)' : ''}" class="showcase-shiny-img${mon.lost ? ' lost' : ''}" style="width:100px;height:100px;image-rendering:pixelated;" title="${mon.name}${mon.lost ? ' (lost)' : ''}">
-          <div class="dex-name" style="margin-top:3px;font-size:.85em">${mon.name}</div>
-          <div class="dex-claimed" style="font-size:.75em;color:var(--text-muted)">${mon.lost ? 'Lost' : monPoints + ' Points'}</div>
-        </div>
+          <div class="dex-entry${mon.lost ? ' lost' : ' claimed'}" style="aspect-ratio:1/1;">
+            <img src="${mon.url}" alt="${name}${mon.lost ? ' (lost)' : ''}" class="pokemon-gif showcase-shiny-img${mon.lost ? ' lost' : ''}">
+            <div class="dex-name">${name}</div>
+            <div class="dex-claimed" style="color:var(--success);">${mon.lost ? 'Lost' : monPoints + ' Points'}</div>
+          </div>
         `;
       }).join("")}
     </div>
