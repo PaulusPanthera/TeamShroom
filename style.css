@@ -243,6 +243,11 @@ body.darkmode .unified-card.unclaimed:hover, body.darkmode .unified-card.unclaim
     1px 1px 0 #fffbe1;
   margin-bottom: 0.22em;
   margin-top: 0.05em;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: font-size 0.15s;
 }
 body.darkmode .unified-name {
   /* Light border for dark mode */
@@ -252,6 +257,17 @@ body.darkmode .unified-name {
     0 2px #fffbe1,
     0 -2px #fffbe1,
     1px 1px 0 #000;
+}
+
+/* Slightly shrink font size for long names */
+.unified-name {
+  display: block;
+}
+.unified-name.long-name {
+  font-size: 0.98em;
+}
+.unified-name.very-long-name {
+  font-size: 0.85em;
 }
 
 /* Inline category header for showcase grid */
