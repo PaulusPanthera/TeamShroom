@@ -95,7 +95,7 @@ function renderUnifiedCard(opts) {
 }
 
 // --- MAIN GALLERY RENDERING ---
-// This version: All member cards in a single grid, but the first card of each group has a category header above it.
+// This version: Each group/category has a header, followed by a grid of member cards for that group.
 function renderShowcaseGallery(members, container, groupMode) {
   if (!container) container = document.getElementById('showcase-gallery-container');
   container.innerHTML = "";
@@ -125,45 +125,39 @@ function renderShowcaseGallery(members, container, groupMode) {
     grouped = groupMembersAlphabetically(members);
   }
 
-  // Flatten groups for grid, but mark first of each group
-  let gridItems = [];
+  // For each group, render a header and a grid of member cards
   grouped.forEach(group => {
-    group.members.forEach((member, idx) => {
-      gridItems.push({
-        ...member,
-        isFirstOfGroup: idx === 0,
-        groupHeader: idx === 0 ? group.header : null
+    // Header
+    const header = document.createElement('div');
+    header.className = "showcase-category-header";
+    header.textContent = group.header + (groupMode === "scoreboard" ? " Points" : "");
+    container.appendChild(header);
+
+    // Grid for cards
+    const gallery = document.createElement('div');
+    gallery.className = 'showcase-gallery';
+
+    group.members.forEach(member => {
+      const spriteUrls = getMemberSpriteUrls(member.name);
+      let spriteUrl = spriteUrls[0];
+      let info = `Shinies: ${member.shinies}`;
+      if (groupMode === "scoreboard") {
+        const pts = getMemberScoreboardPoints(member);
+        info = `Points: ${pts}`;
+      }
+      gallery.innerHTML += renderUnifiedCard({
+        name: member.name,
+        img: spriteUrl,
+        info
       });
     });
+
+    container.appendChild(gallery);
   });
-
-  // Create a single grid
-  const gallery = document.createElement('div');
-  gallery.className = 'showcase-gallery';
-
-  gridItems.forEach(item => {
-    if (item.isFirstOfGroup && item.groupHeader) {
-      gallery.innerHTML += `<div class="showcase-category-header">${item.groupHeader}${groupMode === "scoreboard" ? " Points" : ""}</div>`;
-    }
-    const spriteUrls = getMemberSpriteUrls(item.name);
-    let spriteUrl = spriteUrls[0];
-    let info = `Shinies: ${item.shinies}`;
-    if (groupMode === "scoreboard") {
-      const pts = getMemberScoreboardPoints(item);
-      info = `Points: ${pts}`;
-    }
-    gallery.innerHTML += renderUnifiedCard({
-      name: item.name,
-      img: spriteUrl,
-      info: info
-    });
-  });
-
-  container.appendChild(gallery);
 
   // Add fallback/error/click handler for images
   setTimeout(() => {
-    gallery.querySelectorAll('.unified-img').forEach(img => {
+    container.querySelectorAll('.unified-img').forEach(img => {
       img.onerror = function() {
         if (!this._srcIndex) this._srcIndex = 1;
         else this._srcIndex++;
