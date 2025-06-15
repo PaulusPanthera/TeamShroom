@@ -95,6 +95,7 @@ function renderUnifiedCard(opts) {
 }
 
 // --- MAIN GALLERY RENDERING ---
+// This version: All member cards in a single grid, but the first card of each group has a category header above it.
 function renderShowcaseGallery(members, container, groupMode) {
   if (!container) container = document.getElementById('showcase-gallery-container');
   container.innerHTML = "";
@@ -124,73 +125,68 @@ function renderShowcaseGallery(members, container, groupMode) {
     grouped = groupMembersAlphabetically(members);
   }
 
-  // --- SUPERGRID PATCH: wrap all sections in a grid ---
-  const superGrid = document.createElement('div');
-  superGrid.className = 'showcase-supergrid';
-
+  // Flatten groups for grid, but mark first of each group
+  let gridItems = [];
   grouped.forEach(group => {
-    const section = document.createElement("section");
-    section.className = "showcase-letter-section";
-    section.innerHTML = `<h2>${group.header}${groupMode === "scoreboard" ? " Points" : ""}</h2>
-      <div class="showcase-gallery"></div>
-    `;
-    const gallery = section.querySelector(".showcase-gallery");
-
-    // Make sure the gallery is a grid for horizontal layout (even if only 1 member)
-    gallery.style.display = "grid";
-    gallery.style.gridTemplateColumns = "repeat(auto-fill, minmax(210px, 1fr))";
-    gallery.style.gap = "1.2rem";
-    gallery.style.alignContent = "start";
-    gallery.style.placeItems = "center";
-
-    group.members.forEach(member => {
-      const spriteUrls = getMemberSpriteUrls(member.name);
-      let spriteUrl = spriteUrls[0];
-      let info = `Shinies: ${member.shinies}`;
-      if (groupMode === "scoreboard") {
-        const pts = getMemberScoreboardPoints(member);
-        info = `Points: ${pts}`;
-      }
-      // Fallback handling for sprite
-      gallery.innerHTML += renderUnifiedCard({
-        name: member.name,
-        img: spriteUrl,
-        info
+    group.members.forEach((member, idx) => {
+      gridItems.push({
+        ...member,
+        isFirstOfGroup: idx === 0,
+        groupHeader: idx === 0 ? group.header : null
       });
     });
-
-    // Attach click fallback for broken images
-    setTimeout(() => {
-      section.querySelectorAll('.unified-img').forEach(img => {
-        img.onerror = function() {
-          if (!this._srcIndex) this._srcIndex = 1;
-          else this._srcIndex++;
-          const base = this.getAttribute('alt').toLowerCase().replace(/\s+/g, '');
-          const fallbackUrls = [
-            `membersprites/${base}sprite.png`,
-            `membersprites/${base}sprite.jpg`,
-            `membersprites/${base}sprite.gif`
-          ];
-          if (this._srcIndex < fallbackUrls.length) {
-            this.src = fallbackUrls[this._srcIndex];
-          } else {
-            this.onerror = null;
-            this.src = "examplesprite.png";
-          }
-        };
-        img.onclick = function() {
-          // Navigate to member showcase, preserving sort mode
-          const sortSelect = document.querySelector('.showcase-search-controls select');
-          const sortMode = (sortSelect && sortSelect.value) || "alphabetical";
-          location.hash = `#showcase-${this.getAttribute('alt')}?sort=${sortMode}`;
-        };
-      });
-    }, 0);
-
-    superGrid.appendChild(section);
   });
 
-  container.appendChild(superGrid);
+  // Create a single grid
+  const gallery = document.createElement('div');
+  gallery.className = 'showcase-gallery';
+
+  gridItems.forEach(item => {
+    if (item.isFirstOfGroup && item.groupHeader) {
+      gallery.innerHTML += `<div class="showcase-category-header">${item.groupHeader}${groupMode === "scoreboard" ? " Points" : ""}</div>`;
+    }
+    const spriteUrls = getMemberSpriteUrls(item.name);
+    let spriteUrl = spriteUrls[0];
+    let info = `Shinies: ${item.shinies}`;
+    if (groupMode === "scoreboard") {
+      const pts = getMemberScoreboardPoints(item);
+      info = `Points: ${pts}`;
+    }
+    gallery.innerHTML += renderUnifiedCard({
+      name: item.name,
+      img: spriteUrl,
+      info: info
+    });
+  });
+
+  container.appendChild(gallery);
+
+  // Add fallback/error/click handler for images
+  setTimeout(() => {
+    gallery.querySelectorAll('.unified-img').forEach(img => {
+      img.onerror = function() {
+        if (!this._srcIndex) this._srcIndex = 1;
+        else this._srcIndex++;
+        const base = this.getAttribute('alt').toLowerCase().replace(/\s+/g, '');
+        const fallbackUrls = [
+          `membersprites/${base}sprite.png`,
+          `membersprites/${base}sprite.jpg`,
+          `membersprites/${base}sprite.gif`
+        ];
+        if (this._srcIndex < fallbackUrls.length) {
+          this.src = fallbackUrls[this._srcIndex];
+        } else {
+          this.onerror = null;
+          this.src = "examplesprite.png";
+        }
+      };
+      img.onclick = function() {
+        const sortSelect = document.querySelector('.showcase-search-controls select');
+        const sortMode = (sortSelect && sortSelect.value) || "alphabetical";
+        location.hash = `#showcase-${this.getAttribute('alt')}?sort=${sortMode}`;
+      };
+    });
+  }, 0);
 }
 
 // --- HELPER GROUPS ---
