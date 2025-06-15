@@ -1,4 +1,4 @@
-// === Search Controls & Navigation for Shiny Dex Pokedex with Tabs, Dropdowns, and Text/Family Search ===
+// === Search Controls & Navigation for Shiny Dex Pokedex with Tabs, Dropdowns, and Text/Family Search (with + prefix/suffix, search left, also in Living Dex) ===
 
 (function() {
 
@@ -80,18 +80,23 @@
 
   // --- FILTER LOGIC ---
 
-  function filterEntry(entry, filter, filterMode) {
-    // Text search: "" = all
+  function filterEntry(entry, filter) {
     if (!filter) return true;
 
-    // Family search: +<family>
-    if (filter.startsWith("+")) {
-      let familySearch = filter.slice(1).trim().toLowerCase();
+    // +family search (at start or end)
+    let plusFamily = false, familySearch = "";
+    if (filter.startsWith("+") && filter.length > 1) {
+      plusFamily = true;
+      familySearch = filter.slice(1).trim().toLowerCase();
+    } else if (filter.endsWith("+") && filter.length > 1) {
+      plusFamily = true;
+      familySearch = filter.slice(0, -1).trim().toLowerCase();
+    }
+    if (plusFamily) {
       if (!window.pokemonFamilies) return false;
       let baseName = normalizeDexName(entry.name);
       let family = window.pokemonFamilies[baseName];
       if (!family) return false;
-      // Allow family search by any member (user can type "+gengar" to get gastly line etc)
       return family.some(famName => famName.toLowerCase().includes(familySearch));
     }
 
@@ -239,7 +244,7 @@
     return totalShown;
   }
 
-  function renderLivingDex(shinyDex, teamShowcase, sortMode = "standard") {
+  function renderLivingDexFiltered(shinyDex, teamShowcase, filter, sortMode = "standard") {
     const container = document.getElementById('shiny-dex-container');
     if (!container) return;
     container.innerHTML = '';
@@ -260,13 +265,17 @@
         return a.name.localeCompare(b.name);
       });
 
+      // Apply search filter
+      let filtered = allEntries.filter(entry => filterEntry(entry, filter));
+      let totalShown = filtered.length;
+
       // Make a single region called "Most Shinies"
       const regionDiv = document.createElement('div');
       regionDiv.className = 'region-section';
       regionDiv.innerHTML = `<h2>Pokémon with Most Living Shinies</h2>`;
       const grid = document.createElement('div');
       grid.className = 'dex-grid';
-      allEntries.forEach(entry => {
+      filtered.forEach(entry => {
         grid.innerHTML += renderUnifiedCard({
           name: entry.name,
           img: getPokemonGif(entry.name),
@@ -276,9 +285,15 @@
       });
       regionDiv.appendChild(grid);
       container.appendChild(regionDiv);
+      return totalShown;
     } else {
       // Standard region view
+      let totalShown = 0;
       Object.keys(shinyDex).forEach(region => {
+        const filteredEntries = shinyDex[region].filter(entry => filterEntry(entry, filter));
+        if (!filteredEntries.length) return;
+        totalShown += filteredEntries.length;
+
         const regionDiv = document.createElement('div');
         regionDiv.className = 'region-section';
         regionDiv.innerHTML = `<h2>${region}</h2>`;
@@ -286,7 +301,7 @@
         const grid = document.createElement('div');
         grid.className = 'dex-grid';
 
-        shinyDex[region].forEach(entry => {
+        filteredEntries.forEach(entry => {
           const nName = normalizeDexName(entry.name);
           const count = counts[nName] || 0;
           grid.innerHTML += renderUnifiedCard({
@@ -300,23 +315,8 @@
         regionDiv.appendChild(grid);
         container.appendChild(regionDiv);
       });
+      return totalShown;
     }
-
-    // Card click handlers for future use
-    setTimeout(() => {
-      container.querySelectorAll('.unified-card').forEach(card => {
-        card.style.cursor = 'pointer';
-        card.onclick = function (e) {
-          if (window.getSelection && window.getSelection().toString()) return;
-          const cardType = card.getAttribute('data-card-type');
-          const cardName = card.getAttribute('data-name');
-          if (cardType === "pokemon") {
-            // Future: open Pokédex view, etc.
-            // location.hash = `#pokedex-${cardName}`;
-          }
-        };
-      });
-    }, 0);
   }
 
   // MAIN ENTRY
@@ -329,11 +329,17 @@
     const controls = document.createElement('div');
     controls.className = 'search-controls';
 
+    // --- Search for Hitlist and Living Dex Modes (first, to the left) ---
+    const searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.placeholder = 'Search';
+    searchInput.style.marginRight = '1.1em';
+    controls.appendChild(searchInput);
+
     // Tabs
     const tabDiv = document.createElement('div');
     tabDiv.style.display = 'flex';
     tabDiv.style.gap = '1.5em';
-    tabDiv.style.marginRight = '2em';
     tabDiv.style.alignItems = 'center';
 
     const hitlistTab = document.createElement('button');
@@ -380,15 +386,9 @@
     controls.appendChild(hitlistSelect);
     controls.appendChild(livingSelect);
 
-    // --- Search for Hitlist Mode ---
-    const searchInput = document.createElement('input');
-    searchInput.type = 'text';
-    searchInput.placeholder = 'Search Pokémon, +family, claimed, unclaimed, or member';
-    searchInput.style.marginLeft = '1.5em';
-    controls.appendChild(searchInput);
-
     // Result count
     const resultCount = document.createElement('span');
+    resultCount.style.marginLeft = "1.5em";
     controls.appendChild(resultCount);
 
     // Insert controls
@@ -407,14 +407,12 @@
 
     function render() {
       resultCount.textContent = "";
-      searchInput.style.display = (mode === "hitlist") ? "" : "none";
       hitlistSelect.style.display = (mode === "hitlist") ? "" : "none";
       livingSelect.style.display = (mode === "living") ? "" : "none";
 
+      const filter = searchValue.trim().toLowerCase();
+      let nShown = 0;
       if (mode === "hitlist") {
-        // Filtering for hitlist
-        const filter = searchValue.trim().toLowerCase();
-        let nShown = 0;
         if (hitlistMode === "standard") {
           nShown = renderShinyDexFiltered(shinyDex, filter);
         } else if (hitlistMode === "claims") {
@@ -426,7 +424,10 @@
           resultCount.textContent = `${nShown} Pokémon`;
         }
       } else if (mode === "living") {
-        renderLivingDex(shinyDex, teamShowcase, livingMode);
+        nShown = renderLivingDexFiltered(shinyDex, teamShowcase, filter, livingMode);
+        if (typeof nShown === "number") {
+          resultCount.textContent = `${nShown} Pokémon`;
+        }
       }
     }
 
