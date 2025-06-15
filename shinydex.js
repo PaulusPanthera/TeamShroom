@@ -656,10 +656,29 @@ function renderShinyDex(regions) {
         name: entry.name,
         img: getPokemonGif(entry.name),
         info,
-        unclaimed: !entry.claimed
+        unclaimed: !entry.claimed,
+        cardType: "pokemon"
       });
     });
     regionDiv.appendChild(grid);
     container.appendChild(regionDiv);
   });
+
+  // Make each Pokémon card clickable for future use
+  setTimeout(() => {
+    const container = document.getElementById('shiny-dex-container');
+    if (!container) return;
+    container.querySelectorAll('.unified-card').forEach(card => {
+      card.style.cursor = 'pointer';
+      card.onclick = function (e) {
+        if (window.getSelection && window.getSelection().toString()) return;
+        const cardType = card.getAttribute('data-card-type');
+        const cardName = card.getAttribute('data-name');
+        if (cardType === "pokemon") {
+          // Future: open Pokédex view, etc.
+          // location.hash = `#pokedex-${cardName}`;
+        }
+      };
+    });
+  }, 0);
 }
