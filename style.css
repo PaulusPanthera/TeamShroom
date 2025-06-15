@@ -225,6 +225,9 @@ body.darkmode .unified-card.unclaimed:hover, body.darkmode .unified-card.unclaim
   box-shadow: 0 8px 32px #2a2a2a, 0 2px 16px #23243b;
   filter: grayscale(0.12) brightness(1.00);
 }
+.unified-card.unclaimed::before {
+  display: none !important;
+}
 
 /* Red name + pixel-outline for retro sharpness */
 .unified-name {
