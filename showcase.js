@@ -124,6 +124,10 @@ function renderShowcaseGallery(members, container, groupMode) {
     grouped = groupMembersAlphabetically(members);
   }
 
+  // --- SUPERGRID PATCH: wrap all sections in a grid ---
+  const superGrid = document.createElement('div');
+  superGrid.className = 'showcase-supergrid';
+
   grouped.forEach(group => {
     const section = document.createElement("section");
     section.className = "showcase-letter-section";
@@ -176,8 +180,10 @@ function renderShowcaseGallery(members, container, groupMode) {
       });
     }, 0);
 
-    container.appendChild(section);
+    superGrid.appendChild(section);
   });
+
+  container.appendChild(superGrid);
 }
 
 // --- HELPER GROUPS ---
