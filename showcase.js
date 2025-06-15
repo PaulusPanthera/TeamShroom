@@ -254,39 +254,43 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
     const controls = document.querySelector('.showcase-search-controls');
     controls.innerHTML = "";
 
+    // Search input
     const searchInput = document.createElement('input');
     searchInput.type = 'text';
     searchInput.placeholder = 'Search Member';
     controls.appendChild(searchInput);
 
-    const sortDiv = document.createElement('div');
-    sortDiv.style.display = 'flex';
-    sortDiv.style.gap = '0.8em';
-    [
-      ["A-Z", "alphabetical"],
-      ["Total Shinies", "shinies"],
-      ["Scoreboard", "scoreboard"]
-    ].forEach(([labelText, value]) => {
-      const label = document.createElement('label');
-      const radio = document.createElement('input');
-      radio.type = 'radio';
-      radio.name = 'showcase-sort';
-      radio.value = value;
-      if (value === 'alphabetical') radio.checked = true;
-      label.appendChild(radio);
-      label.appendChild(document.createTextNode(' ' + labelText));
-      sortDiv.appendChild(label);
-    });
-    controls.appendChild(sortDiv);
+    // --- Dropdown menu for sort ---
+    const sortSelect = document.createElement('select');
+    sortSelect.style.marginLeft = '0.7em';
+    sortSelect.style.fontFamily = 'inherit';
+    sortSelect.style.fontSize = '1em';
+    sortSelect.style.borderRadius = '8px';
+    sortSelect.style.border = '1.5px solid var(--accent)';
+    sortSelect.style.background = 'var(--card)';
+    sortSelect.style.color = 'var(--accent)';
+    sortSelect.style.padding = '0.35em 0.7em';
 
+    // Add options
+    [
+      ["Alphabetical", "alphabetical"],
+      ["Total Shinies", "shinies"],
+      ["Total Shiny Points", "scoreboard"]
+    ].forEach(([labelText, value]) => {
+      const option = document.createElement('option');
+      option.value = value;
+      option.textContent = labelText;
+      sortSelect.appendChild(option);
+    });
+
+    controls.appendChild(sortSelect);
+
+    // Result count
     const resultCount = document.createElement('span');
     controls.appendChild(resultCount);
 
     let sortMode = initialSortMode || 'alphabetical';
-    // Set checked based on initialSortMode
-    sortDiv.querySelectorAll('input[name="showcase-sort"]').forEach(radio => {
-      radio.checked = radio.value === sortMode;
-    });
+    sortSelect.value = sortMode;
 
     let searchValue = '';
 
@@ -313,7 +317,6 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
 
     function updateResults() {
       const filtered = getFilteredAndSortedMembers();
-      // Use "Member" for result count in showcase
       resultCount.textContent = `${filtered.length} Member${filtered.length === 1 ? '' : 's'}`;
       const galleryContainer = document.getElementById('showcase-gallery-container');
       renderShowcaseGallery(filtered, galleryContainer, sortMode);
@@ -324,11 +327,9 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
       updateResults();
     });
 
-    sortDiv.querySelectorAll('input[name="showcase-sort"]').forEach(radio => {
-      radio.addEventListener('change', e => {
-        sortMode = e.target.value;
-        updateResults();
-      });
+    sortSelect.addEventListener('change', e => {
+      sortMode = e.target.value;
+      updateResults();
     });
 
     updateResults();
