@@ -62,18 +62,6 @@
     return window.POKEMON_POINTS[normName] || 1;
   }
 
-  // Unified card renderer (same as in shinydex.js)
-  function renderUnifiedCard(opts) {
-    // opts: { name, img, info, lost, unclaimed }
-    return `
-      <div class="unified-card${opts.lost ? ' lost' : ''}${opts.unclaimed ? ' unclaimed' : ''}">
-        <div class="unified-name">${opts.name}</div>
-        <img src="${opts.img}" alt="${opts.name}" class="unified-img"${opts.lost ? ' style="opacity:0.6;filter:grayscale(1);"' : ""}>
-        <div class="unified-info${opts.lost ? ' lost' : ''}">${opts.info}</div>
-      </div>
-    `;
-  }
-
   // Helper for Pokémon gif
   function getPokemonGif(name) {
     if (name === "Mr. Mime") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr-mime.gif";
