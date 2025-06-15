@@ -80,32 +80,51 @@
 
   // --- Renders ---
 
- function renderShinyDex(regions) {
-  const container = document.getElementById('shiny-dex-container');
-  if (!container) return;
-  container.innerHTML = '';
-  Object.keys(regions).forEach(region => {
-    const regionDiv = document.createElement('div');
-    regionDiv.className = 'region-section';
-    regionDiv.innerHTML = `<h2>${region}</h2>`;
+  function renderShinyDex(regions) {
+    const container = document.getElementById('shiny-dex-container');
+    if (!container) return;
+    container.innerHTML = '';
+    Object.keys(regions).forEach(region => {
+      const regionDiv = document.createElement('div');
+      regionDiv.className = 'region-section';
+      regionDiv.innerHTML = `<h2>${region}</h2>`;
 
-    const grid = document.createElement('div');
-    grid.className = 'dex-grid';
+      const grid = document.createElement('div');
+      grid.className = 'dex-grid';
 
-    regions[region].forEach(entry => {
-      // Show only the member name if claimed, or "Unclaimed" if not
-      let info = entry.claimed ? entry.claimed : "Unclaimed";
-      grid.innerHTML += renderUnifiedCard({
-        name: entry.name,
-        img: getPokemonGif(entry.name),
-        info,
-        unclaimed: !entry.claimed
+      regions[region].forEach(entry => {
+        // Show only the member name if claimed, or "Unclaimed" if not
+        let info = entry.claimed ? entry.claimed : "Unclaimed";
+        grid.innerHTML += renderUnifiedCard({
+          name: entry.name,
+          img: getPokemonGif(entry.name),
+          info,
+          unclaimed: !entry.claimed,
+          cardType: "pokemon"
+        });
       });
+      regionDiv.appendChild(grid);
+      container.appendChild(regionDiv);
     });
-    regionDiv.appendChild(grid);
-    container.appendChild(regionDiv);
-  });
-}
+
+    // Make each Pokémon card clickable for future use
+    setTimeout(() => {
+      const container = document.getElementById('shiny-dex-container');
+      if (!container) return;
+      container.querySelectorAll('.unified-card').forEach(card => {
+        card.style.cursor = 'pointer';
+        card.onclick = function (e) {
+          if (window.getSelection && window.getSelection().toString()) return;
+          const cardType = card.getAttribute('data-card-type');
+          const cardName = card.getAttribute('data-name');
+          if (cardType === "pokemon") {
+            // Future: open Pokédex view, etc.
+            // location.hash = `#pokedex-${cardName}`;
+          }
+        };
+      });
+    }, 0);
+  }
 
   function renderScoreboard(flattened, sortByPoints = false) {
     if (!window.POKEMON_POINTS && window.buildPokemonPoints) window.buildPokemonPoints();
@@ -152,15 +171,33 @@
         grid.innerHTML += renderUnifiedCard({
           name: entry.name,
           img: getPokemonGif(entry.name),
-          info: `${p} Points`
+          info: `${p} Points`,
+          cardType: "pokemon"
         });
       });
+      section.appendChild(grid);
       container.appendChild(section);
     });
 
     if (allMembers.length === 0) {
       container.innerHTML = `<div style="color:#e0e0e0;font-size:1.2em;">No members found.</div>`;
     }
+
+    // Make cards clickable for future use
+    setTimeout(() => {
+      container.querySelectorAll('.unified-card').forEach(card => {
+        card.style.cursor = 'pointer';
+        card.onclick = function (e) {
+          if (window.getSelection && window.getSelection().toString()) return;
+          const cardType = card.getAttribute('data-card-type');
+          const cardName = card.getAttribute('data-name');
+          if (cardType === "pokemon") {
+            // Future: open Pokédex view, etc.
+            // location.hash = `#pokedex-${cardName}`;
+          }
+        };
+      });
+    }, 0);
   }
 
   function renderLivingDex(shinyDex, teamShowcase, sortMode = "standard") {
@@ -194,7 +231,8 @@
         grid.innerHTML += renderUnifiedCard({
           name: entry.name,
           img: getPokemonGif(entry.name),
-          info: entry.count > 0 ? `<span class="livingdex-count">${entry.count}</span>` : "0"
+          info: entry.count > 0 ? `<span class="livingdex-count">${entry.count}</span>` : "0",
+          cardType: "pokemon"
         });
       });
       regionDiv.appendChild(grid);
@@ -215,7 +253,8 @@
           grid.innerHTML += renderUnifiedCard({
             name: entry.name,
             img: getPokemonGif(entry.name),
-            info: count > 0 ? `<span class="livingdex-count">${count}</span>` : "0"
+            info: count > 0 ? `<span class="livingdex-count">${count}</span>` : "0",
+            cardType: "pokemon"
           });
         });
 
@@ -223,6 +262,22 @@
         container.appendChild(regionDiv);
       });
     }
+
+    // Make cards clickable for future use
+    setTimeout(() => {
+      container.querySelectorAll('.unified-card').forEach(card => {
+        card.style.cursor = 'pointer';
+        card.onclick = function (e) {
+          if (window.getSelection && window.getSelection().toString()) return;
+          const cardType = card.getAttribute('data-card-type');
+          const cardName = card.getAttribute('data-name');
+          if (cardType === "pokemon") {
+            // Future: open Pokédex view, etc.
+            // location.hash = `#pokedex-${cardName}`;
+          }
+        };
+      });
+    }, 0);
   }
 
   // MAIN ENTRY
