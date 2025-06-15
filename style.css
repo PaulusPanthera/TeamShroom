@@ -134,7 +134,7 @@ body.darkmode {
   background: var(--card-gradient);
   border: 2.5px solid var(--accent);
   border-radius: 18px;
-  box-shadow: var(--shadow-main);
+  box-shadow: 0 8px 24px 0 rgba(80,50,10,0.11), 0 1.5px 12px #f2593733, 0 2px 0 #fffbe1 inset;
   padding: 1.2em 0.8em 1.2em 0.8em;
   min-height: 180px;
   min-width: 0;
@@ -149,13 +149,53 @@ body.darkmode {
   gap: 0.7em;
   text-align: center;
   position: relative;
-  transition: box-shadow 0.19s, border 0.19s;
+  transition: 
+    box-shadow 0.19s cubic-bezier(.4,2,.2,1),
+    border 0.19s,
+    transform 0.22s cubic-bezier(.4,2,.2,1),
+    filter 0.22s cubic-bezier(.4,2,.2,1);
+  /* 3D "push in" illusion */
+  will-change: transform, box-shadow;
+  filter: drop-shadow(0 1px 4px #fff3);
+  z-index: 1;
 }
-.unified-card:hover {
-  box-shadow: var(--shadow-hover);
+.unified-card:hover, .unified-card:focus-within {
+  box-shadow: 
+    0 16px 40px 0 rgba(80,50,10,0.19), 
+    0 3px 20px #f2593766, 
+    0 2px 0 #fffbe1 inset,
+    0 0px 32px 10px #f2593730;
   border-color: var(--success);
-  background: linear-gradient(132deg, #ffe595 70%, #fffbe1 100%);
-  z-index: 5;
+  background: linear-gradient(126deg, #ffe595 85%, #fffbe1 100%);
+  transform: translateY(-9px) scale(1.07) rotateZ(-2deg);
+  filter: brightness(1.08) drop-shadow(0 2px 12px #fff9);
+  z-index: 10;
+}
+.unified-card:active {
+  transform: scale(0.97) translateY(3px);
+  box-shadow: 0 5px 24px 0 rgba(80,50,10,0.12), 0 1.5px 12px #f2593733;
+}
+.unified-card::before {
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -60%;
+  width: 120%;
+  height: 120%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.04) 100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  border-radius: 18px;
+  z-index: 0;
+}
+.unified-card:hover::before {
+  opacity: 1;
+  animation: shimmer-card 0.9s linear 1;
+}
+@keyframes shimmer-card {
+  0% { transform: translateX(-80%) rotate(15deg);}
+  100% { transform: translateX(110%) rotate(15deg);}
 }
 
 /* Red name + pixel-outline for retro sharpness */
