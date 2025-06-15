@@ -208,14 +208,15 @@ body.darkmode .unified-info {
   font-weight: bold;
 }
 
+/* --- FIXED GRID: uniform and even spacing everywhere --- */
 .showcase-gallery,
 .dex-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 1.2rem;
   margin-top: 1.2rem;
   align-content: start;
-  place-items: start;
+  place-items: center;
 }
 
 /* --- Search/sort bar for showcase & dex --- */
