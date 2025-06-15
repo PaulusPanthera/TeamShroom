@@ -636,19 +636,6 @@ function getPokemonGif(name) {
 
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${urlName}.gif`;
 }
-
-// Unified card renderer for Pokédex entries
-function renderUnifiedCard(opts) {
-  // opts: { name, img, info, lost, unclaimed }
-  return `
-    <div class="unified-card${opts.lost ? ' lost' : ''}${opts.unclaimed ? ' unclaimed' : ''}">
-      <div class="unified-name">${opts.name}</div>
-      <img src="${opts.img}" alt="${opts.name}" class="unified-img"${opts.lost ? ' style="opacity:0.6;filter:grayscale(1);"' : ""}>
-      <div class="unified-info${opts.lost ? ' lost' : ''}">${opts.info}</div>
-    </div>
-  `;
-}
-
 // Main rendering function for the shiny dex using unified cards
 function renderShinyDex(regions) {
   const container = document.getElementById('shiny-dex-container');
