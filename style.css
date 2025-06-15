@@ -244,10 +244,13 @@ body.darkmode .unified-card.unclaimed:hover, body.darkmode .unified-card.unclaim
   margin-bottom: 0.22em;
   margin-top: 0.05em;
   max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: visible;
   transition: font-size 0.15s;
+  /* Remove text-overflow and white-space to allow wrapping! */
+  /* text-overflow: ellipsis; */
+  /* white-space: nowrap; */
+  word-break: break-word;
+  line-height: 1.15;
 }
 body.darkmode .unified-name {
   /* Light border for dark mode */
