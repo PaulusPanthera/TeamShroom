@@ -183,6 +183,22 @@ body.darkmode .unified-name {
     1px 1px 0 #000;
 }
 
+/* Inline category header for showcase grid */
+.showcase-category-header {
+  grid-column: span 1;
+  font-size: 1.17em;
+  font-weight: bold;
+  color: var(--accent);
+  background: var(--card-gradient);
+  border-radius: 14px;
+  box-shadow: 0 2px 10px #f2593755;
+  padding: 0.14em 0.8em;
+  margin-bottom: 0.7em;
+  margin-top: 0.3em;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
 /* Centered image */
 .unified-img {
   width: 90px;
