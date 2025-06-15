@@ -663,9 +663,8 @@ function renderShinyDex(regions) {
     grid.className = 'dex-grid';
 
     regions[region].forEach(entry => {
-      let info = entry.claimed
-        ? `Claimed by ${entry.claimed}`
-        : "Unclaimed";
+      // Show only the member name if claimed, or empty if not
+      let info = entry.claimed ? entry.claimed : "";
       grid.innerHTML += renderUnifiedCard({
         name: entry.name,
         img: getPokemonGif(entry.name),
