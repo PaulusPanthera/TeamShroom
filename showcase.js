@@ -135,6 +135,12 @@ function cleanPokemonName(name) {
   return cleaned;
 }
 
+// Utility to extract sort mode from hash
+function getSortModeFromHash() {
+  const m = window.location.hash.match(/sort=(\w+)/);
+  return m ? m[1] : "alphabetical";
+}
+
 // Main gallery rendering (accepts groupMode: "alphabetical", "shinies", or "scoreboard")
 function renderShowcaseGallery(members, container, groupMode) {
   if (!container) container = document.getElementById('showcase-gallery-container');
@@ -210,9 +216,9 @@ function renderShowcaseGallery(members, container, groupMode) {
       };
 
       img.onclick = e => {
-        // Get current sort mode from radio input
-        const sortModeEl = document.querySelector('input[name="showcase-sort"]:checked');
-        const sortMode = sortModeEl ? sortModeEl.value : 'alphabetical';
+        // Get current sort mode and include in hash
+        const sortSelect = document.querySelector('.showcase-search-controls select');
+        const sortMode = (sortSelect && sortSelect.value) || "alphabetical";
         location.hash = `#showcase-${member.name}?sort=${sortMode}`;
       };
       gallery.appendChild(entry);
@@ -228,11 +234,12 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
   const shinies = getMemberShinies(member);
   const points = getMemberScoreboardPoints(member);
 
+  // Use .dex-grid for the container!
   content.innerHTML = `
     <button class="back-btn" onclick="window.location.hash='#showcase?sort=${sortMode}'">← Back</button>
     <h1>${member.name}'s Shiny Showcase</h1>
     <div>Shinies: ${shinies.filter(mon => !mon.lost).length} | Points: ${points}</div>
-    <div class="showcase-shinies dex-grid" style="margin-top:1em;">
+    <div class="dex-grid" style="margin-top:1em;">
       ${shinies.map(mon => {
         const monPoints = getPointsForPokemon(mon.name);
         const name = cleanPokemonName(mon.name);
@@ -289,7 +296,8 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
     const resultCount = document.createElement('span');
     controls.appendChild(resultCount);
 
-    let sortMode = initialSortMode || 'alphabetical';
+    // Always set from hash (URL) if available
+    let sortMode = getSortModeFromHash();
     sortSelect.value = sortMode;
 
     let searchValue = '';
@@ -315,11 +323,17 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
       return filtered;
     }
 
-    function updateResults() {
+    function updateResults(pushHash = false) {
       const filtered = getFilteredAndSortedMembers();
       resultCount.textContent = `${filtered.length} Member${filtered.length === 1 ? '' : 's'}`;
       const galleryContainer = document.getElementById('showcase-gallery-container');
       renderShowcaseGallery(filtered, galleryContainer, sortMode);
+      // Update hash if requested
+      if (pushHash) {
+        window.location.hash = `#showcase?sort=${sortMode}`;
+      }
+      // Set sortSelect to correct value (important if navigating back)
+      sortSelect.value = sortMode;
     }
 
     searchInput.addEventListener('input', e => {
@@ -329,7 +343,7 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
 
     sortSelect.addEventListener('change', e => {
       sortMode = e.target.value;
-      updateResults();
+      updateResults(true);
     });
 
     updateResults();
