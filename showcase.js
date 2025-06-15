@@ -85,9 +85,16 @@ function cleanPokemonName(name) {
 // --- UNIFIED CARD RENDERER ---
 function renderUnifiedCard(opts) {
   // opts: { name, img, info, lost }
+  // Add long-name or very-long-name classes depending on name length
+  let nameClass = "unified-name";
+  if (opts.name.length > 16 && opts.name.length <= 22) {
+    nameClass += " long-name";
+  } else if (opts.name.length > 22) {
+    nameClass += " very-long-name";
+  }
   return `
     <div class="unified-card${opts.lost ? ' lost' : ''}">
-      <div class="unified-name">${opts.name}</div>
+      <div class="${nameClass}">${opts.name}</div>
       <img src="${opts.img}" alt="${opts.name}" class="unified-img"${opts.lost ? ' style="opacity:0.6;filter:grayscale(1);"' : ""}>
       <div class="unified-info${opts.lost ? ' lost' : ''}">${opts.info}</div>
     </div>
@@ -241,12 +248,20 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
       ${shinies.map(mon => {
         const monPoints = getPointsForPokemon(mon.name);
         const name = cleanPokemonName(mon.name);
-        return renderUnifiedCard({
-          name,
-          img: mon.url,
-          info: mon.lost ? "Lost" : `${monPoints} Points`,
-          lost: mon.lost
-        });
+        // Add long-name class logic for showcase cards too
+        let nameClass = "unified-name";
+        if (name.length > 16 && name.length <= 22) {
+          nameClass += " long-name";
+        } else if (name.length > 22) {
+          nameClass += " very-long-name";
+        }
+        return `
+          <div class="unified-card${mon.lost ? ' lost' : ''}">
+            <div class="${nameClass}">${name}</div>
+            <img src="${mon.url}" alt="${name}" class="unified-img"${mon.lost ? ' style="opacity:0.6;filter:grayscale(1);"' : ""}>
+            <div class="unified-info${mon.lost ? ' lost' : ''}">${mon.lost ? "Lost" : `${monPoints} Points`}</div>
+          </div>
+        `;
       }).join("")}
     </div>
   `;
