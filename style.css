@@ -304,14 +304,17 @@ body.darkmode .unified-info {
 }
 
 /* --- FIXED GRID: uniform and even spacing everywhere --- */
-.showcase-gallery,
-.dex-grid {
+.showcase-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: 1.2rem;
+  gap: 2rem;
   margin-top: 1.2rem;
+  margin-bottom: 2.5rem;
   align-content: start;
+  justify-content: center;
   place-items: center;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 /* --- Supergrid for categories/sections side by side --- */
