@@ -64,9 +64,9 @@
 
   // Unified card renderer (same as in shinydex.js)
   function renderUnifiedCard(opts) {
-    // opts: { name, img, info, lost }
+    // opts: { name, img, info, lost, unclaimed }
     return `
-      <div class="unified-card${opts.lost ? ' lost' : ''}">
+      <div class="unified-card${opts.lost ? ' lost' : ''}${opts.unclaimed ? ' unclaimed' : ''}">
         <div class="unified-name">${opts.name}</div>
         <img src="${opts.img}" alt="${opts.name}" class="unified-img"${opts.lost ? ' style="opacity:0.6;filter:grayscale(1);"' : ""}>
         <div class="unified-info${opts.lost ? ' lost' : ''}">${opts.info}</div>
@@ -110,7 +110,8 @@
       grid.innerHTML += renderUnifiedCard({
         name: entry.name,
         img: getPokemonGif(entry.name),
-        info
+        info,
+        unclaimed: !entry.claimed
       });
     });
     regionDiv.appendChild(grid);
