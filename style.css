@@ -228,9 +228,11 @@ body.darkmode .unified-info {
   align-items: flex-start;
   justify-content: flex-start;
 }
+
+/* Make categories/sections flexible for better horizontal packing on small screens */
 .showcase-supergrid > section {
-  min-width: 320px;
-  flex: 1 1 320px;
+  min-width: 0;
+  flex: 1 1 260px;
   display: flex;
   flex-direction: column;
 }
