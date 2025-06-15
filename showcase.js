@@ -136,6 +136,13 @@ function renderShowcaseGallery(members, container, groupMode) {
     `;
     const gallery = section.querySelector(".showcase-gallery");
 
+    // Make sure the gallery is a grid for horizontal layout (even if only 1 member)
+    gallery.style.display = "grid";
+    gallery.style.gridTemplateColumns = "repeat(auto-fill, minmax(210px, 1fr))";
+    gallery.style.gap = "1.2rem";
+    gallery.style.alignContent = "start";
+    gallery.style.placeItems = "center";
+
     group.members.forEach(member => {
       const spriteUrls = getMemberSpriteUrls(member.name);
       let spriteUrl = spriteUrls[0];
