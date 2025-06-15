@@ -92,32 +92,31 @@
 
   // --- Renders ---
 
-  function renderShinyDex(regions) {
-    const container = document.getElementById('shiny-dex-container');
-    if (!container) return;
-    container.innerHTML = '';
-    Object.keys(regions).forEach(region => {
-      const regionDiv = document.createElement('div');
-      regionDiv.className = 'region-section';
-      regionDiv.innerHTML = `<h2>${region}</h2>`;
+ function renderShinyDex(regions) {
+  const container = document.getElementById('shiny-dex-container');
+  if (!container) return;
+  container.innerHTML = '';
+  Object.keys(regions).forEach(region => {
+    const regionDiv = document.createElement('div');
+    regionDiv.className = 'region-section';
+    regionDiv.innerHTML = `<h2>${region}</h2>`;
 
-      const grid = document.createElement('div');
-      grid.className = 'dex-grid';
+    const grid = document.createElement('div');
+    grid.className = 'dex-grid';
 
-      regions[region].forEach(entry => {
-        let info = entry.claimed
-          ? `Claimed by ${entry.claimed}`
-          : "Unclaimed";
-        grid.innerHTML += renderUnifiedCard({
-          name: entry.name,
-          img: getPokemonGif(entry.name),
-          info
-        });
+    regions[region].forEach(entry => {
+      // Show only the member name if claimed, or "Unclaimed" if not
+      let info = entry.claimed ? entry.claimed : "Unclaimed";
+      grid.innerHTML += renderUnifiedCard({
+        name: entry.name,
+        img: getPokemonGif(entry.name),
+        info
       });
-      regionDiv.appendChild(grid);
-      container.appendChild(regionDiv);
     });
-  }
+    regionDiv.appendChild(grid);
+    container.appendChild(regionDiv);
+  });
+}
 
   function renderScoreboard(flattened, sortByPoints = false) {
     if (!window.POKEMON_POINTS && window.buildPokemonPoints) window.buildPokemonPoints();
