@@ -163,13 +163,24 @@ body.darkmode {
   font-size: 1.13em;
   font-weight: bold;
   color: var(--accent);
+  /* Improved border for light mode (dark shadow) */
+  text-shadow:
+    2px 0 #222,
+   -2px 0 #222,
+    0 2px #222,
+    0 -2px #222,
+    1px 1px 0 #fffbe1;
+  margin-bottom: 0.22em;
+  margin-top: 0.05em;
+}
+body.darkmode .unified-name {
+  /* Light border for dark mode */
   text-shadow:
     2px 0 #fffbe1,
    -2px 0 #fffbe1,
     0 2px #fffbe1,
-    0 -2px #fffbe1;
-  margin-bottom: 0.22em;
-  margin-top: 0.05em;
+    0 -2px #fffbe1,
+    1px 1px 0 #000;
 }
 
 /* Centered image */
