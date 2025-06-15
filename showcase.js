@@ -24,7 +24,7 @@ function getMemberShinies(member) {
     // fallback: create placeholder shinies if data missing
     return Array.from({ length: member.shinies }, () => ({
       name: "Placeholder",
-      url: "examplesprite.gif",
+      url: "examplesprite.png",
       lost: false
     }));
   }
@@ -32,7 +32,7 @@ function getMemberShinies(member) {
   if (!showcaseEntry || !Array.isArray(showcaseEntry.shinies)) {
     return Array.from({ length: member.shinies }, () => ({
       name: "Placeholder",
-      url: "examplesprite.gif",
+      url: "examplesprite.png",
       lost: false
     }));
   }
@@ -192,7 +192,7 @@ function renderShowcaseGallery(members, container, groupMode) {
           this.src = spriteUrls[this._srcIndex];
         } else {
           this.onerror = null;
-          this.src = "examplesprite.gif";
+          this.src = "examplesprite.png";
         }
       };
 
