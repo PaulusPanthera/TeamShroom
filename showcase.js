@@ -1,5 +1,5 @@
 // Team Shroom members and their shiny counts
-// This version AUTOMATICALLY counts shinies from teamShowcase.js, EXCLUDING lost shinies, and displays a total shinies counter.
+// Uses unified-card for all member and shiny cards
 
 const teamMembers = (window.teamShowcase || []).map(entry => ({
   name: entry.name,
@@ -12,16 +12,15 @@ const teamMembers = (window.teamShowcase || []).map(entry => ({
 function shinyGifUrl(name) {
   let urlName = name
     .toLowerCase()
-    .replace(/[\s.]/g, "-")
-    .replace(/-f$/, "-f")
-    .replace(/-m$/, "-m");
+    .replace(/♀/g, "-f")
+    .replace(/♂/g, "-m")
+    .replace(/[\s.'’]/g, "");
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${urlName}.gif`;
 }
 
 // Helper to get a member's shinies (make sure teamShowcase is loaded!)
 function getMemberShinies(member) {
   if (!window.teamShowcase) {
-    // fallback: create placeholder shinies if data missing
     return Array.from({ length: member.shinies }, () => ({
       name: "Placeholder",
       url: "examplesprite.png",
@@ -72,81 +71,35 @@ function getMemberScoreboardPoints(member) {
     .reduce((sum, mon) => sum + getPointsForPokemon(mon.name), 0);
 }
 
-// Group by first letter (A-Z)
-function groupMembersAlphabetically(members) {
-  const grouped = {};
-  members.forEach(member => {
-    const firstLetter = member.name[0].toUpperCase();
-    if (!grouped[firstLetter]) grouped[firstLetter] = [];
-    grouped[firstLetter].push(member);
-  });
-  return Object.keys(grouped).sort().map(letter => ({
-    header: letter,
-    members: grouped[letter].sort((a, b) => a.name.localeCompare(b.name))
-  }));
-}
-
-// Group by shiny count (descending)
-function groupMembersByShinies(members) {
-  const grouped = {};
-  members.forEach(member => {
-    const count = member.shinies || 0;
-    if (!grouped[count]) grouped[count] = [];
-    grouped[count].push(member);
-  });
-  // Descending order of shiny count
-  return Object.keys(grouped)
-    .map(Number)
-    .sort((a, b) => b - a)
-    .map(count => ({
-      header: count,
-      members: grouped[count].sort((a, b) => a.name.localeCompare(b.name))
-    }));
-}
-
-// Group by scoreboard points (descending)
-function groupMembersByPoints(members) {
-  const grouped = {};
-  members.forEach(member => {
-    const points = getMemberScoreboardPoints(member);
-    if (!grouped[points]) grouped[points] = [];
-    grouped[points].push(member);
-  });
-  // Descending order of points
-  return Object.keys(grouped)
-    .map(Number)
-    .sort((a, b) => b - a)
-    .map(points => ({
-      header: points,
-      members: grouped[points].sort((a, b) => a.name.localeCompare(b.name))
-    }));
-}
-
 // Utility to clean up Pokémon names
 function cleanPokemonName(name) {
-  // Remove gender/family/variant suffixes
   let cleaned = name
     .replace(/-(f|m|red-striped|blue-striped|east|west|galar|alola|hisui|paldea|mega|gigantamax|therian|origin|sky|dawn|midnight|midday|school|solo|rainy|sunny|snowy|attack|defense|speed|wash|heat|fan|frost|mow|midnight|midday|dusk|baile|pom-pom|pa'u|sensu|starter|battle-bond|ash|crowned|eternamax|gmax|complete|single-strike|rapid-strike)[^a-z0-9]*$/i, '')
     .replace(/-/g, ' ')
     .replace(/\s+/, ' ')
     .trim();
-  // Capitalize first letter of each word
   cleaned = cleaned.replace(/\b\w/g, l => l.toUpperCase());
   return cleaned;
 }
 
-// Utility to extract sort mode from hash
-function getSortModeFromHash() {
-  const m = window.location.hash.match(/sort=(\w+)/);
-  return m ? m[1] : "alphabetical";
+// --- UNIFIED CARD RENDERER ---
+function renderUnifiedCard(opts) {
+  // opts: { name, img, info, lost }
+  return `
+    <div class="unified-card${opts.lost ? ' lost' : ''}">
+      <div class="unified-name">${opts.name}</div>
+      <img src="${opts.img}" alt="${opts.name}" class="unified-img"${opts.lost ? ' style="opacity:0.6;filter:grayscale(1);"' : ""}>
+      <div class="unified-info${opts.lost ? ' lost' : ''}">${opts.info}</div>
+    </div>
+  `;
 }
 
-// Main gallery rendering (accepts groupMode: "alphabetical", "shinies", or "scoreboard")
+// --- MAIN GALLERY RENDERING ---
 function renderShowcaseGallery(members, container, groupMode) {
   if (!container) container = document.getElementById('showcase-gallery-container');
   container.innerHTML = "";
 
-  // --- Total shinies count (across all members, excluding lost) ---
+  // Total shinies
   let total = 0;
   if (window.teamShowcase) {
     window.teamShowcase.forEach(entry => {
@@ -155,14 +108,13 @@ function renderShowcaseGallery(members, container, groupMode) {
       }
     });
   }
-
-  // Insert total at the top
   const totalDiv = document.createElement("div");
   totalDiv.className = "total-shinies-count";
   totalDiv.style = "font-size: 1.25em; font-weight: bold; color: var(--accent); margin-bottom: 1.5em; text-align:center;";
   totalDiv.textContent = `Total Shinies: ${total}`;
   container.appendChild(totalDiv);
 
+  // Grouping
   let grouped;
   if (groupMode === "scoreboard") {
     grouped = groupMembersByPoints(members);
@@ -179,62 +131,105 @@ function renderShowcaseGallery(members, container, groupMode) {
       <div class="showcase-gallery"></div>
     `;
     const gallery = section.querySelector(".showcase-gallery");
-    gallery.style.display = "grid";
-    gallery.style.gridTemplateColumns = "repeat(6, 1fr)";
-    gallery.style.gap = "1.5rem";
 
     group.members.forEach(member => {
       const spriteUrls = getMemberSpriteUrls(member.name);
-      const entry = document.createElement("div");
-      entry.className = "showcase-entry";
-
-      // Provide shiny count and point count
-      let countStr = `Shinies: ${member.shinies}`;
+      let spriteUrl = spriteUrls[0];
+      let info = `Shinies: ${member.shinies}`;
       if (groupMode === "scoreboard") {
         const pts = getMemberScoreboardPoints(member);
-        countStr = `Points: ${pts}`;
+        info = `Points: ${pts}`;
       }
-
-      // Use the first sprite url that loads; fallback to gif if not found
-      let spriteUrl = spriteUrls[0];
-      entry.innerHTML = `
-        <div class="showcase-name">${member.name}</div>
-        <img src="${spriteUrl}" class="showcase-sprite" alt="${member.name}" data-member="${member.name}" style="width:100px;height:100px;object-fit:contain;">
-        <div class="showcase-shiny-count">${countStr}</div>
-      `;
-
-      const img = entry.querySelector(".showcase-sprite");
-      img.onerror = function onErr() {
-        if (!this._srcIndex) this._srcIndex = 1;
-        else this._srcIndex++;
-        if (this._srcIndex < spriteUrls.length) {
-          this.src = spriteUrls[this._srcIndex];
-        } else {
-          this.onerror = null;
-          this.src = "examplesprite.png";
-        }
-      };
-
-      img.onclick = e => {
-        // Get current sort mode and include in hash
-        const sortSelect = document.querySelector('.showcase-search-controls select');
-        const sortMode = (sortSelect && sortSelect.value) || "alphabetical";
-        location.hash = `#showcase-${member.name}?sort=${sortMode}`;
-      };
-      gallery.appendChild(entry);
+      // Fallback handling for sprite
+      gallery.innerHTML += renderUnifiedCard({
+        name: member.name,
+        img: spriteUrl,
+        info
+      });
     });
+
+    // Attach click fallback for broken images
+    setTimeout(() => {
+      section.querySelectorAll('.unified-img').forEach(img => {
+        img.onerror = function() {
+          if (!this._srcIndex) this._srcIndex = 1;
+          else this._srcIndex++;
+          const base = this.getAttribute('alt').toLowerCase().replace(/\s+/g, '');
+          const fallbackUrls = [
+            `membersprites/${base}sprite.png`,
+            `membersprites/${base}sprite.jpg`,
+            `membersprites/${base}sprite.gif`
+          ];
+          if (this._srcIndex < fallbackUrls.length) {
+            this.src = fallbackUrls[this._srcIndex];
+          } else {
+            this.onerror = null;
+            this.src = "examplesprite.png";
+          }
+        };
+        img.onclick = function() {
+          // Navigate to member showcase, preserving sort mode
+          const sortSelect = document.querySelector('.showcase-search-controls select');
+          const sortMode = (sortSelect && sortSelect.value) || "alphabetical";
+          location.hash = `#showcase-${this.getAttribute('alt')}?sort=${sortMode}`;
+        };
+      });
+    }, 0);
 
     container.appendChild(section);
   });
 }
 
-// Show a single member's full shiny showcase
+// --- HELPER GROUPS ---
+function groupMembersAlphabetically(members) {
+  const grouped = {};
+  members.forEach(member => {
+    const firstLetter = member.name[0].toUpperCase();
+    if (!grouped[firstLetter]) grouped[firstLetter] = [];
+    grouped[firstLetter].push(member);
+  });
+  return Object.keys(grouped).sort().map(letter => ({
+    header: letter,
+    members: grouped[letter].sort((a, b) => a.name.localeCompare(b.name))
+  }));
+}
+function groupMembersByShinies(members) {
+  const grouped = {};
+  members.forEach(member => {
+    const count = member.shinies || 0;
+    if (!grouped[count]) grouped[count] = [];
+    grouped[count].push(member);
+  });
+  return Object.keys(grouped)
+    .map(Number)
+    .sort((a, b) => b - a)
+    .map(count => ({
+      header: count,
+      members: grouped[count].sort((a, b) => a.name.localeCompare(b.name))
+    }));
+}
+function groupMembersByPoints(members) {
+  const grouped = {};
+  members.forEach(member => {
+    const points = getMemberScoreboardPoints(member);
+    if (!grouped[points]) grouped[points] = [];
+    grouped[points].push(member);
+  });
+  return Object.keys(grouped)
+    .map(Number)
+    .sort((a, b) => b - a)
+    .map(points => ({
+      header: points,
+      members: grouped[points].sort((a, b) => a.name.localeCompare(b.name))
+    }));
+}
+
+// --- MEMBER SHOWCASE ---
 function renderMemberShowcase(member, sortMode = "alphabetical") {
   const content = document.getElementById('page-content');
   const shinies = getMemberShinies(member);
   const points = getMemberScoreboardPoints(member);
 
-  // Use .dex-grid for the container!
   content.innerHTML = `
     <button class="back-btn" onclick="window.location.hash='#showcase?sort=${sortMode}'">← Back</button>
     <h1>${member.name}'s Shiny Showcase</h1>
@@ -243,13 +238,12 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
       ${shinies.map(mon => {
         const monPoints = getPointsForPokemon(mon.name);
         const name = cleanPokemonName(mon.name);
-        return `
-          <div class="dex-entry${mon.lost ? ' lost' : ' claimed'}" style="aspect-ratio:1/1;">
-            <img src="${mon.url}" alt="${name}${mon.lost ? ' (lost)' : ''}" class="pokemon-gif showcase-shiny-img${mon.lost ? ' lost' : ''}">
-            <div class="dex-name">${name}</div>
-            <div class="dex-claimed" style="color:var(--success);">${mon.lost ? 'Lost' : monPoints + ' Points'}</div>
-          </div>
-        `;
+        return renderUnifiedCard({
+          name,
+          img: mon.url,
+          info: mon.lost ? "Lost" : `${monPoints} Points`,
+          lost: mon.lost
+        });
       }).join("")}
     </div>
   `;
@@ -267,18 +261,9 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
     searchInput.placeholder = 'Search Member';
     controls.appendChild(searchInput);
 
-    // --- Dropdown menu for sort ---
+    // Dropdown menu for sort
     const sortSelect = document.createElement('select');
     sortSelect.style.marginLeft = '0.7em';
-    sortSelect.style.fontFamily = 'inherit';
-    sortSelect.style.fontSize = '1em';
-    sortSelect.style.borderRadius = '8px';
-    sortSelect.style.border = '1.5px solid var(--accent)';
-    sortSelect.style.background = 'var(--card)';
-    sortSelect.style.color = 'var(--accent)';
-    sortSelect.style.padding = '0.35em 0.7em';
-
-    // Add options
     [
       ["Alphabetical", "alphabetical"],
       ["Total Shinies", "shinies"],
@@ -296,8 +281,11 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
     const resultCount = document.createElement('span');
     controls.appendChild(resultCount);
 
-    // Always set from hash (URL) if available
-    let sortMode = getSortModeFromHash();
+    // Set from hash if available
+    let sortMode = (function(){
+      const m = window.location.hash.match(/sort=(\w+)/);
+      return m ? m[1] : (initialSortMode || "alphabetical");
+    })();
     sortSelect.value = sortMode;
 
     let searchValue = '';
@@ -328,11 +316,9 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
       resultCount.textContent = `${filtered.length} Member${filtered.length === 1 ? '' : 's'}`;
       const galleryContainer = document.getElementById('showcase-gallery-container');
       renderShowcaseGallery(filtered, galleryContainer, sortMode);
-      // Update hash if requested
       if (pushHash) {
         window.location.hash = `#showcase?sort=${sortMode}`;
       }
-      // Set sortSelect to correct value (important if navigating back)
       sortSelect.value = sortMode;
     }
 
