@@ -424,7 +424,7 @@ const teamShowcase = [
   ] },
 
   { name: "Terminus", shinies: [
-    { name: "mankey" }, { name: "jigglypuff" }, { name: "rattata" }, { name: "mareep" }, { name: "pikachu" }, { name: "slugma" }, { name: "mareep" }, { name: "pichu" }
+    { name: "primeape" }, { name: "jigglypuff" }, { name: "rattata" }, { name: "mareep" }, { name: "pikachu" }, { name: "slugma" }, { name: "mareep" }, { name: "pichu" }
   ] },
 
   { name: "TheJuanNonly", shinies: [
