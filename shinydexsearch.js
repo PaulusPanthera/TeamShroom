@@ -244,119 +244,187 @@
     return totalShown;
   }
 
+  // --- Living Dex with Custom Tooltip Support ---
   function renderLivingDexFiltered(shinyDex, teamShowcase, filter, sortMode = "standard") {
-  const container = document.getElementById('shiny-dex-container');
-  if (!container) return;
-  container.innerHTML = '';
-  const counts = buildLivingDexCounts(teamShowcase);
+    const container = document.getElementById('shiny-dex-container');
+    if (!container) return;
+    container.innerHTML = '';
+    const counts = buildLivingDexCounts(teamShowcase);
 
-  // Collate all entries into a flat array for sorting if needed
-  let allEntries = [];
-  Object.keys(shinyDex).forEach(region => {
-    shinyDex[region].forEach(entry => {
-      allEntries.push({ ...entry, region, count: counts[normalizeDexName(entry.name)] || 0 });
-    });
-  });
+    function getOwners(entry) {
+      let owners = [];
+      teamShowcase.forEach(m =>
+        Array.isArray(m.shinies) && m.shinies.forEach(s => {
+          let n = (s.name || "")
+            .toLowerCase()
+            .replace(/♀/g, "-f")
+            .replace(/♂/g, "-m")
+            .replace(/[\s.'’]/g, "");
+          if (n === normalizeDexName(entry.name) && !s.lost) owners.push(m.name);
+        })
+      );
+      return owners;
+    }
 
-  // Helper to get owners for a Pokémon
-  function getOwners(entry) {
-    let owners = [];
-    teamShowcase.forEach(m =>
-      Array.isArray(m.shinies) && m.shinies.forEach(s => {
-        let n = (s.name || "")
-          .toLowerCase()
-          .replace(/♀/g, "-f")
-          .replace(/♂/g, "-m")
-          .replace(/[\s.'’]/g, "");
-        if (n === normalizeDexName(entry.name) && !s.lost) owners.push(m.name);
-      })
-    );
-    return owners;
-  }
-
-  if (sortMode === "totals") {
-    // Sort Pokemon by count (descending), then alpha
-    allEntries.sort((a, b) => {
-      if (b.count !== a.count) return b.count - a.count;
-      return a.name.localeCompare(b.name);
-    });
-
-    // Apply search filter
-    let filtered = allEntries.filter(entry => filterEntry(entry, filter));
-    let totalShown = filtered.length;
-
-    // Make a single region called "Most Shinies"
-    const regionDiv = document.createElement('div');
-    regionDiv.className = 'region-section';
-    regionDiv.innerHTML = `<h2>Pokémon with Most Living Shinies</h2>`;
-    const grid = document.createElement('div');
-    grid.className = 'dex-grid';
-    filtered.forEach(entry => {
-      let owners = getOwners(entry);
-      let title = owners.length ? `Caught by: ${owners.join(", ")}` : "";
-      grid.innerHTML += `<div title="${title}">${renderUnifiedCard({
-        name: entry.name,
-        img: getPokemonGif(entry.name),
-        info: entry.count > 0 ? `<span class="livingdex-count">${entry.count}</span>` : "0",
-        cardType: "pokemon"
-      })}</div>`;
-    });
-    regionDiv.appendChild(grid);
-    container.appendChild(regionDiv);
-    return totalShown;
-  } else {
-    // Standard region view
-    let totalShown = 0;
-    Object.keys(shinyDex).forEach(region => {
-      const filteredEntries = shinyDex[region].filter(entry => filterEntry(entry, filter));
-      if (!filteredEntries.length) return;
-      totalShown += filteredEntries.length;
+    if (sortMode === "totals") {
+      let allEntries = [];
+      Object.keys(shinyDex).forEach(region => {
+        shinyDex[region].forEach(entry => {
+          allEntries.push({ ...entry, region, count: counts[normalizeDexName(entry.name)] || 0 });
+        });
+      });
+      allEntries.sort((a, b) => {
+        if (b.count !== a.count) return b.count - a.count;
+        return a.name.localeCompare(b.name);
+      });
+      let filtered = allEntries.filter(entry => filterEntry(entry, filter));
+      let totalShown = filtered.length;
 
       const regionDiv = document.createElement('div');
       regionDiv.className = 'region-section';
-      regionDiv.innerHTML = `<h2>${region}</h2>`;
-
+      regionDiv.innerHTML = `<h2>Pokémon with Most Living Shinies</h2>`;
       const grid = document.createElement('div');
       grid.className = 'dex-grid';
-
-      filteredEntries.forEach(entry => {
-        let nName = normalizeDexName(entry.name);
-        let count = counts[nName] || 0;
+      filtered.forEach(entry => {
         let owners = getOwners(entry);
-        let title = owners.length ? `Caught by: ${owners.join(", ")}` : "";
-        grid.innerHTML += `<div title="${title}">${renderUnifiedCard({
+        let card = document.createElement('div');
+        card.className = 'unified-card';
+        card.setAttribute('data-name', entry.name);
+        card.setAttribute('data-card-type', 'pokemon');
+        card.innerHTML = renderUnifiedCard({
           name: entry.name,
           img: getPokemonGif(entry.name),
-          info: count > 0 ? `<span class="livingdex-count">${count}</span>` : "0",
+          info: entry.count > 0 ? `<span class="livingdex-count">${entry.count}</span>` : "0",
           cardType: "pokemon"
-        })}</div>`;
+        });
+        card._owners = owners;
+        grid.appendChild(card);
       });
-
       regionDiv.appendChild(grid);
       container.appendChild(regionDiv);
-    });
-    return totalShown;
+      setupLivingDexOwnerTooltips(teamShowcase);
+      return totalShown;
+    } else {
+      let totalShown = 0;
+      Object.keys(shinyDex).forEach(region => {
+        const filteredEntries = shinyDex[region].filter(entry => filterEntry(entry, filter));
+        if (!filteredEntries.length) return;
+        totalShown += filteredEntries.length;
+
+        const regionDiv = document.createElement('div');
+        regionDiv.className = 'region-section';
+        regionDiv.innerHTML = `<h2>${region}</h2>`;
+
+        const grid = document.createElement('div');
+        grid.className = 'dex-grid';
+
+        filteredEntries.forEach(entry => {
+          let nName = normalizeDexName(entry.name);
+          let count = counts[nName] || 0;
+          let owners = getOwners(entry);
+          let card = document.createElement('div');
+          card.className = 'unified-card';
+          card.setAttribute('data-name', entry.name);
+          card.setAttribute('data-card-type', 'pokemon');
+          card.innerHTML = renderUnifiedCard({
+            name: entry.name,
+            img: getPokemonGif(entry.name),
+            info: count > 0 ? `<span class="livingdex-count">${count}</span>` : "0",
+            cardType: "pokemon"
+          });
+          card._owners = owners;
+          grid.appendChild(card);
+        });
+
+        regionDiv.appendChild(grid);
+        container.appendChild(regionDiv);
+      });
+      setupLivingDexOwnerTooltips(teamShowcase);
+      return totalShown;
+    }
   }
-}
+
+  // --- Custom tooltip logic for Living Dex ---
+  function setupLivingDexOwnerTooltips(teamShowcase) {
+    let tooltipDiv = document.querySelector('.dex-owner-tooltip');
+    if (!tooltipDiv) {
+      tooltipDiv = document.createElement('div');
+      tooltipDiv.className = 'dex-owner-tooltip';
+      document.body.appendChild(tooltipDiv);
+    }
+
+    function showOwnerTooltip(target, ownerNames) {
+      tooltipDiv.innerHTML = `
+        <div class="owners-title">Caught by:</div>
+        <div class="owners-list"></div>
+      `;
+      const listDiv = tooltipDiv.querySelector('.owners-list');
+      if (ownerNames.length === 0) {
+        listDiv.textContent = "(none)";
+      } else if (ownerNames.length <= 3) {
+        listDiv.innerHTML = ownerNames.join('<br>');
+      } else {
+        // Scrolling credits effect!
+        const scrollDiv = document.createElement('div');
+        scrollDiv.className = "scrolling-names";
+        scrollDiv.innerHTML = ownerNames.concat(ownerNames[0]).join("<br>");
+        const duration = Math.max(7, ownerNames.length * 1.4);
+        scrollDiv.style.animationDuration = duration + "s";
+        listDiv.appendChild(scrollDiv);
+      }
+
+      tooltipDiv.classList.add('show');
+      // Position tooltip near target
+      const rect = target.getBoundingClientRect();
+      let top = rect.top + window.scrollY - tooltipDiv.offsetHeight - 14;
+      let left = rect.left + window.scrollX + rect.width / 2 - tooltipDiv.offsetWidth / 2;
+      if (top < window.scrollY) top = rect.bottom + window.scrollY + 14;
+      if (left < 4) left = 4;
+      if (left + tooltipDiv.offsetWidth > window.innerWidth - 4)
+        left = window.innerWidth - tooltipDiv.offsetWidth - 4;
+      tooltipDiv.style.top = `${top}px`;
+      tooltipDiv.style.left = `${left}px`;
+    }
+    function hideOwnerTooltip() {
+      tooltipDiv.classList.remove('show');
+    }
+
+    document.querySelectorAll('.dex-grid .unified-card').forEach(card => {
+      card.onmouseenter = function (e) {
+        showOwnerTooltip(card, card._owners || []);
+      };
+      card.onmouseleave = hideOwnerTooltip;
+      card.onmousedown = hideOwnerTooltip;
+      card.ontouchstart = hideOwnerTooltip;
+      card.onmousemove = function (e) {
+        if (!tooltipDiv.classList.contains('show')) return;
+        const rect = card.getBoundingClientRect();
+        let top = rect.top + window.scrollY - tooltipDiv.offsetHeight - 14;
+        let left = rect.left + window.scrollX + rect.width / 2 - tooltipDiv.offsetWidth / 2;
+        if (top < window.scrollY) top = rect.bottom + window.scrollY + 14;
+        if (left < 4) left = 4;
+        if (left + tooltipDiv.offsetWidth > window.innerWidth - 4)
+          left = window.innerWidth - tooltipDiv.offsetWidth - 4;
+        tooltipDiv.style.top = `${top}px`;
+        tooltipDiv.style.left = `${left}px`;
+      };
+    });
+  }
 
   // MAIN ENTRY
   window.setupShinyDexHitlistSearch = function(shinyDex, teamShowcase) {
-    // Ensure points are built
     if (window.buildPokemonPoints) window.buildPokemonPoints();
     const flattened = flattenDexData(shinyDex);
 
-    // --- Tabs for switching between Hitlist and Living Dex ---
     const controls = document.createElement('div');
     controls.className = 'search-controls';
 
-    // --- Search for Hitlist and Living Dex Modes (first, to the left) ---
     const searchInput = document.createElement('input');
     searchInput.type = 'text';
     searchInput.placeholder = 'Search';
     searchInput.style.marginRight = '1.1em';
     controls.appendChild(searchInput);
 
-    // Tabs
     const tabDiv = document.createElement('div');
     tabDiv.style.display = 'flex';
     tabDiv.style.gap = '1.5em';
@@ -376,7 +444,6 @@
 
     controls.appendChild(tabDiv);
 
-    // --- Dropdowns for each mode ---
     const hitlistSelect = document.createElement('select');
     hitlistSelect.style.marginLeft = '1.5em';
     [
@@ -401,17 +468,15 @@
       option.textContent = labelText;
       livingSelect.appendChild(option);
     });
-    livingSelect.style.display = "none"; // hidden by default
+    livingSelect.style.display = "none";
 
     controls.appendChild(hitlistSelect);
     controls.appendChild(livingSelect);
 
-    // Result count
     const resultCount = document.createElement('span');
     resultCount.style.marginLeft = "1.5em";
     controls.appendChild(resultCount);
 
-    // Insert controls
     const container = document.getElementById('shiny-dex-container');
     if (!container) return;
     if (container.previousElementSibling && container.previousElementSibling.classList.contains('search-controls')) {
@@ -419,10 +484,9 @@
     }
     container.parentNode.insertBefore(controls, container);
 
-    // --- State ---
-    let mode = "hitlist"; // or "living"
-    let hitlistMode = "standard"; // "standard", "claims", "points"
-    let livingMode = "standard"; // "standard", "totals"
+    let mode = "hitlist";
+    let hitlistMode = "standard";
+    let livingMode = "standard";
     let searchValue = '';
 
     function render() {
@@ -451,7 +515,6 @@
       }
     }
 
-    // --- Tab event handlers ---
     hitlistTab.onclick = () => {
       mode = "hitlist";
       hitlistTab.classList.add("active");
@@ -465,7 +528,6 @@
       render();
     };
 
-    // Dropdown change events
     hitlistSelect.onchange = () => {
       hitlistMode = hitlistSelect.value;
       render();
@@ -475,105 +537,11 @@
       render();
     };
 
-    // Search input event
     searchInput.addEventListener('input', e => {
       searchValue = e.target.value;
       render();
     });
 
-    // Initial render
     render();
-  };
-})();
-// === Living Dex: Custom Tooltip for Shiny Owners ===
-(function(){
-  let tooltipDiv = null;
-  function showOwnerTooltip(target, ownerNames) {
-    if (!tooltipDiv) {
-      tooltipDiv = document.createElement('div');
-      tooltipDiv.className = 'dex-owner-tooltip';
-      document.body.appendChild(tooltipDiv);
-    }
-    // Build tooltip content
-    tooltipDiv.innerHTML = `
-      <div class="owners-title">Caught by:</div>
-      <div class="owners-list"></div>
-    `;
-    const listDiv = tooltipDiv.querySelector('.owners-list');
-    if (ownerNames.length === 0) {
-      listDiv.textContent = "(none)";
-    } else if (ownerNames.length <= 3) {
-      listDiv.innerHTML = ownerNames.join('<br>');
-    } else {
-      // Scrolling credits effect!
-      const scrollDiv = document.createElement('div');
-      scrollDiv.className = "scrolling-names";
-      scrollDiv.innerHTML = ownerNames.concat(ownerNames[0]).join("<br>");
-      // Duration: longer for more names
-      const duration = Math.max(7, ownerNames.length * 1.4);
-      scrollDiv.style.animationDuration = duration + "s";
-      listDiv.appendChild(scrollDiv);
-    }
-
-    tooltipDiv.classList.add('show');
-    // Position tooltip near target
-    const rect = target.getBoundingClientRect();
-    let top = rect.top + window.scrollY - tooltipDiv.offsetHeight - 14;
-    let left = rect.left + window.scrollX + rect.width/2 - tooltipDiv.offsetWidth/2;
-    if (top < window.scrollY) top = rect.bottom + window.scrollY + 14;
-    if (left < 4) left = 4;
-    if (left + tooltipDiv.offsetWidth > window.innerWidth - 4)
-      left = window.innerWidth - tooltipDiv.offsetWidth - 4;
-    tooltipDiv.style.top = `${top}px`;
-    tooltipDiv.style.left = `${left}px`;
-  }
-  function hideOwnerTooltip() {
-    if (tooltipDiv) tooltipDiv.classList.remove('show');
-  }
-  // Attach events after render
-  function attachOwnerTooltips(teamShowcase) {
-    // Only for Living Dex mode
-    document.querySelectorAll('.dex-grid .unified-card').forEach(card => {
-      card.onmouseenter = function(e) {
-        // Get Pokémon name from data-name
-        let poke = card.getAttribute('data-name');
-        if (!poke) return;
-        // Find owner names, ignoring lost
-        let owners = [];
-        teamShowcase.forEach(m => Array.isArray(m.shinies) && m.shinies.forEach(s => {
-          let n = (s.name || "")
-            .toLowerCase()
-            .replace(/♀/g, "-f")
-            .replace(/♂/g, "-m")
-            .replace(/[\s.'’]/g, "");
-          if (n === poke.toLowerCase().replace(/♀/g, "-f").replace(/♂/g, "-m").replace(/[\s.'’]/g, "") && !s.lost)
-            owners.push(m.name);
-        }));
-        showOwnerTooltip(card, owners);
-      };
-      card.onmouseleave = hideOwnerTooltip;
-      card.onmousedown = hideOwnerTooltip;
-      card.ontouchstart = hideOwnerTooltip;
-      card.onmousemove = function(e) {
-        if (!tooltipDiv || !tooltipDiv.classList.contains('show')) return;
-        // Follow mouse if needed
-        const rect = card.getBoundingClientRect();
-        let top = rect.top + window.scrollY - tooltipDiv.offsetHeight - 14;
-        let left = rect.left + window.scrollX + rect.width/2 - tooltipDiv.offsetWidth/2;
-        if (top < window.scrollY) top = rect.bottom + window.scrollY + 14;
-        if (left < 4) left = 4;
-        if (left + tooltipDiv.offsetWidth > window.innerWidth - 4)
-          left = window.innerWidth - tooltipDiv.offsetWidth - 4;
-        tooltipDiv.style.top = `${top}px`;
-        tooltipDiv.style.left = `${left}px`;
-      };
-    });
-  }
-  // Patch renderLivingDexFiltered to attach tooltips after rendering
-  const _oldRenderLivingDexFiltered = window.renderLivingDexFiltered;
-  window.renderLivingDexFiltered = function(shinyDex, teamShowcase, filter, sortMode) {
-    const n = _oldRenderLivingDexFiltered(shinyDex, teamShowcase, filter, sortMode);
-    setTimeout(() => attachOwnerTooltips(teamShowcase), 30);
-    return n;
   };
 })();
