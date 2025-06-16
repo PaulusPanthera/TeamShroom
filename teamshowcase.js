@@ -518,11 +518,11 @@ const teamShowcase = [
 
   { name: "ZiaStitch", shinies: [
     { name: "gyarados" }, { name: "swablu" }, { name: "rapidash" }, { name: "rhydon" }, { name: "politoed" }, { name: "accelgor" }, { name: "graveler" }, { name: "zigzagoon" }
-  ] }
+  ] },
 
   { name: "zzxyami", shinies: [
     { name: "bagon" }
-  ] },
+  ] }
 
 ];
 // Make globally available for browser scripts
