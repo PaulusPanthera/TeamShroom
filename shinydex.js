@@ -427,7 +427,7 @@ const shinyDex = {
     { name: "Chingling", claimed: false },
     { name: "Stunky", claimed: "PaulusTFT" },
     { name: "Skuntank", claimed: false },
-    { name: "Bronzor", claimed: false },
+    { name: "Bronzor", claimed: "Jutskaa" },
     { name: "Bronzong", claimed: "LordGangis" },
     { name: "Bonsly", claimed: false },
     { name: "Mime Jr.", claimed: false },
