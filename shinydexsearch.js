@@ -245,79 +245,99 @@
   }
 
   function renderLivingDexFiltered(shinyDex, teamShowcase, filter, sortMode = "standard") {
-    const container = document.getElementById('shiny-dex-container');
-    if (!container) return;
-    container.innerHTML = '';
-    const counts = buildLivingDexCounts(teamShowcase);
+  const container = document.getElementById('shiny-dex-container');
+  if (!container) return;
+  container.innerHTML = '';
+  const counts = buildLivingDexCounts(teamShowcase);
 
-    // Collate all entries into a flat array for sorting if needed
-    let allEntries = [];
-    Object.keys(shinyDex).forEach(region => {
-      shinyDex[region].forEach(entry => {
-        allEntries.push({ ...entry, region, count: counts[normalizeDexName(entry.name)] || 0 });
-      });
+  // Collate all entries into a flat array for sorting if needed
+  let allEntries = [];
+  Object.keys(shinyDex).forEach(region => {
+    shinyDex[region].forEach(entry => {
+      allEntries.push({ ...entry, region, count: counts[normalizeDexName(entry.name)] || 0 });
+    });
+  });
+
+  // Helper to get owners for a Pokémon
+  function getOwners(entry) {
+    let owners = [];
+    teamShowcase.forEach(m =>
+      Array.isArray(m.shinies) && m.shinies.forEach(s => {
+        let n = (s.name || "")
+          .toLowerCase()
+          .replace(/♀/g, "-f")
+          .replace(/♂/g, "-m")
+          .replace(/[\s.'’]/g, "");
+        if (n === normalizeDexName(entry.name) && !s.lost) owners.push(m.name);
+      })
+    );
+    return owners;
+  }
+
+  if (sortMode === "totals") {
+    // Sort Pokemon by count (descending), then alpha
+    allEntries.sort((a, b) => {
+      if (b.count !== a.count) return b.count - a.count;
+      return a.name.localeCompare(b.name);
     });
 
-    if (sortMode === "totals") {
-      // Sort Pokemon by count (descending), then alpha
-      allEntries.sort((a, b) => {
-        if (b.count !== a.count) return b.count - a.count;
-        return a.name.localeCompare(b.name);
-      });
+    // Apply search filter
+    let filtered = allEntries.filter(entry => filterEntry(entry, filter));
+    let totalShown = filtered.length;
 
-      // Apply search filter
-      let filtered = allEntries.filter(entry => filterEntry(entry, filter));
-      let totalShown = filtered.length;
+    // Make a single region called "Most Shinies"
+    const regionDiv = document.createElement('div');
+    regionDiv.className = 'region-section';
+    regionDiv.innerHTML = `<h2>Pokémon with Most Living Shinies</h2>`;
+    const grid = document.createElement('div');
+    grid.className = 'dex-grid';
+    filtered.forEach(entry => {
+      let owners = getOwners(entry);
+      let title = owners.length ? `Caught by: ${owners.join(", ")}` : "";
+      grid.innerHTML += `<div title="${title}">${renderUnifiedCard({
+        name: entry.name,
+        img: getPokemonGif(entry.name),
+        info: entry.count > 0 ? `<span class="livingdex-count">${entry.count}</span>` : "0",
+        cardType: "pokemon"
+      })}</div>`;
+    });
+    regionDiv.appendChild(grid);
+    container.appendChild(regionDiv);
+    return totalShown;
+  } else {
+    // Standard region view
+    let totalShown = 0;
+    Object.keys(shinyDex).forEach(region => {
+      const filteredEntries = shinyDex[region].filter(entry => filterEntry(entry, filter));
+      if (!filteredEntries.length) return;
+      totalShown += filteredEntries.length;
 
-      // Make a single region called "Most Shinies"
       const regionDiv = document.createElement('div');
       regionDiv.className = 'region-section';
-      regionDiv.innerHTML = `<h2>Pokémon with Most Living Shinies</h2>`;
+      regionDiv.innerHTML = `<h2>${region}</h2>`;
+
       const grid = document.createElement('div');
       grid.className = 'dex-grid';
-      filtered.forEach(entry => {
-        grid.innerHTML += renderUnifiedCard({
+
+      filteredEntries.forEach(entry => {
+        let nName = normalizeDexName(entry.name);
+        let count = counts[nName] || 0;
+        let owners = getOwners(entry);
+        let title = owners.length ? `Caught by: ${owners.join(", ")}` : "";
+        grid.innerHTML += `<div title="${title}">${renderUnifiedCard({
           name: entry.name,
           img: getPokemonGif(entry.name),
-          info: entry.count > 0 ? `<span class="livingdex-count">${entry.count}</span>` : "0",
+          info: count > 0 ? `<span class="livingdex-count">${count}</span>` : "0",
           cardType: "pokemon"
-        });
+        })}</div>`;
       });
+
       regionDiv.appendChild(grid);
       container.appendChild(regionDiv);
-      return totalShown;
-    } else {
-      // Standard region view
-      let totalShown = 0;
-      Object.keys(shinyDex).forEach(region => {
-        const filteredEntries = shinyDex[region].filter(entry => filterEntry(entry, filter));
-        if (!filteredEntries.length) return;
-        totalShown += filteredEntries.length;
-
-        const regionDiv = document.createElement('div');
-        regionDiv.className = 'region-section';
-        regionDiv.innerHTML = `<h2>${region}</h2>`;
-
-        const grid = document.createElement('div');
-        grid.className = 'dex-grid';
-
-        filteredEntries.forEach(entry => {
-          const nName = normalizeDexName(entry.name);
-          const count = counts[nName] || 0;
-          grid.innerHTML += renderUnifiedCard({
-            name: entry.name,
-            img: getPokemonGif(entry.name),
-            info: count > 0 ? `<span class="livingdex-count">${count}</span>` : "0",
-            cardType: "pokemon"
-          });
-        });
-
-        regionDiv.appendChild(grid);
-        container.appendChild(regionDiv);
-      });
-      return totalShown;
-    }
+    });
+    return totalShown;
   }
+}
 
   // MAIN ENTRY
   window.setupShinyDexHitlistSearch = function(shinyDex, teamShowcase) {
