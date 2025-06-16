@@ -485,3 +485,95 @@
     render();
   };
 })();
+// === Living Dex: Custom Tooltip for Shiny Owners ===
+(function(){
+  let tooltipDiv = null;
+  function showOwnerTooltip(target, ownerNames) {
+    if (!tooltipDiv) {
+      tooltipDiv = document.createElement('div');
+      tooltipDiv.className = 'dex-owner-tooltip';
+      document.body.appendChild(tooltipDiv);
+    }
+    // Build tooltip content
+    tooltipDiv.innerHTML = `
+      <div class="owners-title">Caught by:</div>
+      <div class="owners-list"></div>
+    `;
+    const listDiv = tooltipDiv.querySelector('.owners-list');
+    if (ownerNames.length === 0) {
+      listDiv.textContent = "(none)";
+    } else if (ownerNames.length <= 3) {
+      listDiv.innerHTML = ownerNames.join('<br>');
+    } else {
+      // Scrolling credits effect!
+      const scrollDiv = document.createElement('div');
+      scrollDiv.className = "scrolling-names";
+      scrollDiv.innerHTML = ownerNames.concat(ownerNames[0]).join("<br>");
+      // Duration: longer for more names
+      const duration = Math.max(7, ownerNames.length * 1.4);
+      scrollDiv.style.animationDuration = duration + "s";
+      listDiv.appendChild(scrollDiv);
+    }
+
+    tooltipDiv.classList.add('show');
+    // Position tooltip near target
+    const rect = target.getBoundingClientRect();
+    let top = rect.top + window.scrollY - tooltipDiv.offsetHeight - 14;
+    let left = rect.left + window.scrollX + rect.width/2 - tooltipDiv.offsetWidth/2;
+    if (top < window.scrollY) top = rect.bottom + window.scrollY + 14;
+    if (left < 4) left = 4;
+    if (left + tooltipDiv.offsetWidth > window.innerWidth - 4)
+      left = window.innerWidth - tooltipDiv.offsetWidth - 4;
+    tooltipDiv.style.top = `${top}px`;
+    tooltipDiv.style.left = `${left}px`;
+  }
+  function hideOwnerTooltip() {
+    if (tooltipDiv) tooltipDiv.classList.remove('show');
+  }
+  // Attach events after render
+  function attachOwnerTooltips(teamShowcase) {
+    // Only for Living Dex mode
+    document.querySelectorAll('.dex-grid .unified-card').forEach(card => {
+      card.onmouseenter = function(e) {
+        // Get Pokémon name from data-name
+        let poke = card.getAttribute('data-name');
+        if (!poke) return;
+        // Find owner names, ignoring lost
+        let owners = [];
+        teamShowcase.forEach(m => Array.isArray(m.shinies) && m.shinies.forEach(s => {
+          let n = (s.name || "")
+            .toLowerCase()
+            .replace(/♀/g, "-f")
+            .replace(/♂/g, "-m")
+            .replace(/[\s.'’]/g, "");
+          if (n === poke.toLowerCase().replace(/♀/g, "-f").replace(/♂/g, "-m").replace(/[\s.'’]/g, "") && !s.lost)
+            owners.push(m.name);
+        }));
+        showOwnerTooltip(card, owners);
+      };
+      card.onmouseleave = hideOwnerTooltip;
+      card.onmousedown = hideOwnerTooltip;
+      card.ontouchstart = hideOwnerTooltip;
+      card.onmousemove = function(e) {
+        if (!tooltipDiv || !tooltipDiv.classList.contains('show')) return;
+        // Follow mouse if needed
+        const rect = card.getBoundingClientRect();
+        let top = rect.top + window.scrollY - tooltipDiv.offsetHeight - 14;
+        let left = rect.left + window.scrollX + rect.width/2 - tooltipDiv.offsetWidth/2;
+        if (top < window.scrollY) top = rect.bottom + window.scrollY + 14;
+        if (left < 4) left = 4;
+        if (left + tooltipDiv.offsetWidth > window.innerWidth - 4)
+          left = window.innerWidth - tooltipDiv.offsetWidth - 4;
+        tooltipDiv.style.top = `${top}px`;
+        tooltipDiv.style.left = `${left}px`;
+      };
+    });
+  }
+  // Patch renderLivingDexFiltered to attach tooltips after rendering
+  const _oldRenderLivingDexFiltered = window.renderLivingDexFiltered;
+  window.renderLivingDexFiltered = function(shinyDex, teamShowcase, filter, sortMode) {
+    const n = _oldRenderLivingDexFiltered(shinyDex, teamShowcase, filter, sortMode);
+    setTimeout(() => attachOwnerTooltips(teamShowcase), 30);
+    return n;
+  };
+})();
