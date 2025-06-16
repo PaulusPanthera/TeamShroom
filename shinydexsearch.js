@@ -1,4 +1,4 @@
-// === Search Controls & Navigation for Shiny Dex Pokedex with Tabs, Dropdowns, and Text/Family Search (with + prefix/suffix, search left, also in Living Dex) ===
+// === Search Controls & Navigation for Shiny Dex Pokedex with Tabs, Dropdowns, and Text/Family Search (with + prefix/suffix, search left, also in Living Dex, custom tooltip) ===
 
 (function() {
 
@@ -251,26 +251,48 @@
     container.innerHTML = '';
     const counts = buildLivingDexCounts(teamShowcase);
 
+    function normalize(name) {
+      return (name || "")
+        .toLowerCase()
+        .replace(/♀/g, "-f")
+        .replace(/♂/g, "-m")
+        .replace(/[\s.'’]/g, "");
+    }
+
     function getOwners(entry) {
+      const entryNorm = normalize(entry.name);
       let owners = [];
-      teamShowcase.forEach(m =>
-        Array.isArray(m.shinies) && m.shinies.forEach(s => {
-          let n = (s.name || "")
-            .toLowerCase()
-            .replace(/♀/g, "-f")
-            .replace(/♂/g, "-m")
-            .replace(/[\s.'’]/g, "");
-          if (n === normalizeDexName(entry.name) && !s.lost) owners.push(m.name);
-        })
-      );
+      for (const member of teamShowcase) {
+        if (!Array.isArray(member.shinies)) continue;
+        for (const shiny of member.shinies) {
+          if (shiny.lost) continue;
+          if (normalize(shiny.name) === entryNorm) {
+            owners.push(member.name);
+            break; // Only show each member once per mon
+          }
+        }
+      }
       return owners;
+    }
+
+    function createCard(entry, count, owners) {
+      const temp = document.createElement("div");
+      temp.innerHTML = renderUnifiedCard({
+        name: entry.name,
+        img: getPokemonGif(entry.name),
+        info: count > 0 ? `<span class="livingdex-count">${count}</span>` : "0",
+        cardType: "pokemon"
+      });
+      const card = temp.firstElementChild;
+      card._owners = owners;
+      return card;
     }
 
     if (sortMode === "totals") {
       let allEntries = [];
       Object.keys(shinyDex).forEach(region => {
         shinyDex[region].forEach(entry => {
-          allEntries.push({ ...entry, region, count: counts[normalizeDexName(entry.name)] || 0 });
+          allEntries.push({ ...entry, region, count: counts[normalize(entry.name)] || 0 });
         });
       });
       allEntries.sort((a, b) => {
@@ -287,22 +309,12 @@
       grid.className = 'dex-grid';
       filtered.forEach(entry => {
         let owners = getOwners(entry);
-        let card = document.createElement('div');
-        card.className = 'unified-card';
-        card.setAttribute('data-name', entry.name);
-        card.setAttribute('data-card-type', 'pokemon');
-        card.innerHTML = renderUnifiedCard({
-          name: entry.name,
-          img: getPokemonGif(entry.name),
-          info: entry.count > 0 ? `<span class="livingdex-count">${entry.count}</span>` : "0",
-          cardType: "pokemon"
-        });
-        card._owners = owners;
+        let card = createCard(entry, entry.count, owners);
         grid.appendChild(card);
       });
       regionDiv.appendChild(grid);
       container.appendChild(regionDiv);
-      setupLivingDexOwnerTooltips(teamShowcase);
+      setupLivingDexOwnerTooltips();
       return totalShown;
     } else {
       let totalShown = 0;
@@ -319,33 +331,23 @@
         grid.className = 'dex-grid';
 
         filteredEntries.forEach(entry => {
-          let nName = normalizeDexName(entry.name);
+          let nName = normalize(entry.name);
           let count = counts[nName] || 0;
           let owners = getOwners(entry);
-          let card = document.createElement('div');
-          card.className = 'unified-card';
-          card.setAttribute('data-name', entry.name);
-          card.setAttribute('data-card-type', 'pokemon');
-          card.innerHTML = renderUnifiedCard({
-            name: entry.name,
-            img: getPokemonGif(entry.name),
-            info: count > 0 ? `<span class="livingdex-count">${count}</span>` : "0",
-            cardType: "pokemon"
-          });
-          card._owners = owners;
+          let card = createCard(entry, count, owners);
           grid.appendChild(card);
         });
 
         regionDiv.appendChild(grid);
         container.appendChild(regionDiv);
       });
-      setupLivingDexOwnerTooltips(teamShowcase);
+      setupLivingDexOwnerTooltips();
       return totalShown;
     }
   }
 
   // --- Custom tooltip logic for Living Dex ---
-  function setupLivingDexOwnerTooltips(teamShowcase) {
+  function setupLivingDexOwnerTooltips() {
     let tooltipDiv = document.querySelector('.dex-owner-tooltip');
     if (!tooltipDiv) {
       tooltipDiv = document.createElement('div');
@@ -354,17 +356,18 @@
     }
 
     function showOwnerTooltip(target, ownerNames) {
+      if (!ownerNames || !ownerNames.length) {
+        tooltipDiv.classList.remove('show');
+        return;
+      }
       tooltipDiv.innerHTML = `
-        <div class="owners-title">Caught by:</div>
+        <div class="owners-title">Owned by:</div>
         <div class="owners-list"></div>
       `;
       const listDiv = tooltipDiv.querySelector('.owners-list');
-      if (ownerNames.length === 0) {
-        listDiv.textContent = "(none)";
-      } else if (ownerNames.length <= 3) {
+      if (ownerNames.length <= 3) {
         listDiv.innerHTML = ownerNames.join('<br>');
       } else {
-        // Scrolling credits effect!
         const scrollDiv = document.createElement('div');
         scrollDiv.className = "scrolling-names";
         scrollDiv.innerHTML = ownerNames.concat(ownerNames[0]).join("<br>");
@@ -374,7 +377,6 @@
       }
 
       tooltipDiv.classList.add('show');
-      // Position tooltip near target
       const rect = target.getBoundingClientRect();
       let top = rect.top + window.scrollY - tooltipDiv.offsetHeight - 14;
       let left = rect.left + window.scrollX + rect.width / 2 - tooltipDiv.offsetWidth / 2;
