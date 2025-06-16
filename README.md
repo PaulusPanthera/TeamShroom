@@ -13,7 +13,8 @@ Hosted on GitHub Pages.
 2. Enable GitHub Pages in the repo settings (set source to `main` branch, `/` root).
 3. Access your site at `https://<username>.github.io/<repo>/`.
 
-To Do:  
+## To Do:  
+  
   -Add Safari, SS, Alpha, Event, etc. Symbols    
   -Add Socials (Twitch, Youtube) for Member  
   -Add Shiny Clips to Showcase  
