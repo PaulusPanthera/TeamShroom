@@ -80,10 +80,16 @@ const teamShowcase = [
     { name: "geodude" }, { name: "pelipper" }, { name: "horsea" }, { name: "ditto" }, { name: "palpitoad" }, { name: "klink" }, { name: "ferroseed" }
   ] },
 
+  { name: "Dupe", shinies: [
+    { name: "fearow" }, { name: "rapidash" }, { name: "rattata" }, { name: "nidorina" }, { name: "nidorina" }, { name: "ducklett" },
+    { name: "sandslash" }, { name: "magikarp" }, { name: "scraggy" }, { name: "mienfoo" }, { name: "cubchoo" }, { name: "onix" },
+    { name: "graveler" }, { name: "gloom" }, { name: "weepinbell" }, { name: "wurmple" }
+  ] },
+
   { name: "Eerie", shinies: [
     { name: "slowpoke" }, { name: "lanturn" }, { name: "girafarig" }, { name: "staravia" }, { name: "pelipper" },
     { name: "golbat-f" }, { name: "claydol" }, { name: "parasect" }, { name: "koffing" }, { name: "togetic" },
-    { name: "floatzel-f", lost: true }, { name: "gabite" }, { name: "buneary" }, { name: "ekans" }
+    { name: "floatzel-f", lost: true }, { name: "gabite" }, { name: "buneary" }, { name: "ekans" }, { name: "haunter" }
   ] },
 
   { name: "ElMannun", shinies: [ { name: "seedot" }, { name: "nidorino" }, { name: "pidgey" } ] },
@@ -96,12 +102,6 @@ const teamShowcase = [
 
   { name: "Geranxx", shinies: [
     { name: "rapidash" }, { name: "swellow" }, { name: "heatmor" }, { name: "rhydon" }
-  ] },
-
-  { name: "Glizcor", shinies: [
-    { name: "camerupt" }, { name: "golduck" }, { name: "gliscor" }, { name: "breloom" }, { name: "accelgor" },
-    { name: "weezing" }, { name: "pikachu" }, { name: "smeargle" }, { name: "parasect" }, { name: "alakazam" },
-    { name: "bibarel" }, { name: "dugtrio" }, { name: "snorlax" }
   ] },
 
   { name: "Grayzxv", shinies: [ { name: "camerupt-f" }, { name: "fearow" } ] },
@@ -235,15 +235,9 @@ const teamShowcase = [
     { name: "solrock" }, { name: "dugtrio" }, { name: "onix" }, { name: "larvitar" }, { name: "shelgon" }
   ] },
 
-  { name: "mbarren", shinies: [
-    { name: "fearow" }, { name: "rapidash" }, { name: "rattata" }, { name: "nidorina" }, { name: "nidorina" }, { name: "ducklett" },
-    { name: "sandslash" }, { name: "magikarp" }, { name: "scraggy" }, { name: "mienfoo" }, { name: "cubchoo" }, { name: "onix" },
-    { name: "graveler" }, { name: "gloom" }, { name: "weepinbell" }, { name: "wurmple" }
-  ] },
-
   { name: "MechanicalHippo", shinies: [
     { name: "magnemite" }, { name: "tentacruel" }, { name: "poliwag" }, { name: "mienfoo" }, { name: "mienfoo" },
-    { name: "deino" }, { name: "heatmor" }, { name: "wurmple" }
+    { name: "deino" }, { name: "heatmor" }, { name: "wurmple" }, { name: "koffing" }, { name: "venipede" }
   ] },
 
   { name: "MELVZZY", shinies: [
@@ -298,7 +292,13 @@ const teamShowcase = [
     { name: "donphan-f" }, { name: "seaking" }, { name: "golduck" }, { name: "poliwhirl" }, { name: "silcoon" }, { name: "zigzagoon" },
     { name: "phanpy" }, { name: "spinda" }, { name: "camerupt" }, { name: "golett" }, { name: "duskull" }, { name: "onix" },
     { name: "onix" }, { name: "paras" }, { name: "amoonguss" }, { name: "shroomish" }, { name: "axew" }, { name: "onix" },
-    { name: "larvitar" }, { name: "pikachu" }, { name: "misdreavus" }
+    { name: "larvitar" }, { name: "pikachu" }, { name: "misdreavus" }, { name: "lunatone" }, { name: "murkrow" }
+  ] },
+
+  { name: "Pangeaa", shinies: [
+    { name: "camerupt" }, { name: "golduck" }, { name: "gliscor" }, { name: "breloom" }, { name: "accelgor" },
+    { name: "weezing" }, { name: "pikachu" }, { name: "smeargle" }, { name: "parasect" }, { name: "alakazam" },
+    { name: "bibarel" }, { name: "dugtrio" }, { name: "snorlax" }
   ] },
 
   { name: "PaulusTFT", shinies: [
@@ -329,7 +329,9 @@ const teamShowcase = [
   ] },
 
   { name: "qtAlice", shinies: [
-    { name: "abra" }, { name: "kadabra" }, { name: "alakazam" }, { name: "shuckle" }, { name: "tauros" }, { name: "meowth" }, { name: "vanillish" }, { name: "surskit" }, { name: "masquerain" }, { name: "psyduck" }, { name: "duskull" }, { name: "tentacruel" }, { name: "gloom" }, { name: "bellossom" }, { name: "dustox-f" }, { name: "poochyena" }, { name: "zigzagoon" }, { name: "linoone" }, { name: "taillow" }, { name: "swellow" }, { name: "zigzagoon" }
+  { name: "abra" }, { name: "kadabra" }, { name: "alakazam" }, { name: "shuckle" }, { name: "tauros" }, { name: "meowth" }, { name: "vanillish" }, 
+  { name: "surskit" }, { name: "masquerain" }, { name: "psyduck" }, { name: "duskull" }, { name: "tentacruel" }, { name: "gloom" }, { name: "bellossom" },
+  { name: "dustox-f" }, { name: "poochyena" }, { name: "zigzagoon" }, { name: "linoone" }, { name: "taillow" }, { name: "swellow" }, { name: "zigzagoon" }
   ] },
 
   { name: "Qubuu", shinies: [
@@ -337,7 +339,7 @@ const teamShowcase = [
   ] },
 
   { name: "QuinJay", shinies: [
-    { name: "ursaring" }
+    { name: "ursaring" }, { name: "kakuna" }
   ] },
 
   { name: "realjuckpop", shinies: [
@@ -353,15 +355,19 @@ const teamShowcase = [
   ] },
 
   { name: "RuthlessZ", shinies: [
-    { name: "caterpie" }, { name: "rapidash" }, { name: "magikarp" }, { name: "alakazam" }, { name: "magikarp" }, { name: "teddiursa" }, { name: "rapidash" }, { name: "magikarp" }, { name: "ponyta" }, { name: "beedrill" }, { name: "magikarp" }
+    { name: "caterpie" }, { name: "rapidash" }, { name: "magikarp" }, { name: "alakazam" }, { name: "magikarp" }, { name: "teddiursa" }, { name: "rapidash" }, { name: "magikarp" }, { name: "ponyta" }, { name: "beedrill" }, { name: "magikarp" }, { name: "magikarp" }, { name: "dratini" }
+  ] },
+
+  { name: "Sardelle", shinies: [
+    { name: "drifloon" }, { name: "donphan" }
+  ] },
+
+  { name: "Scooby", shinies: [
+    { name: "smeargle" }, { name: "tentacruel" }, { name: "fearow" }, { name: "larvitar" }, { name: "donphan" }, { name: "magikarp" }, { name: "durant" }, { name: "paras" }, { name: "growlithe" }
   ] },
 
   { name: "SecretSlowshiny", shinies: [
     { name: "raticate" }, { name: "woobat" }, { name: "axew" }, { name: "bellsprout" }, { name: "woobat" }
-  ] },
-
-  { name: "Serako", shinies: [
-    { name: "smeargle" }, { name: "tentacruel" }, { name: "fearow" }, { name: "larvitar" }, { name: "donphan" }, { name: "magikarp" }, { name: "durant" }, { name: "paras" }, { name: "growlithe" }
   ] },
 
   { name: "ShakeyEy", shinies: [
