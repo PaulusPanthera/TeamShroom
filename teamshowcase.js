@@ -211,7 +211,7 @@ const teamShowcase = [
     { name: "pidgey", lost: true }, { name: "bellossom" }, { name: "crobat" }, { name: "rattata" }, { name: "snorunt" }
   ] },
 
-  { name: "LunaLost", shinies: [
+  { name: "Luna", shinies: [
     { name: "plusle" }, { name: "kingdra" }, { name: "nidoking" }, { name: "sandslash" }, { name: "sandslash" },
     { name: "durant" }, { name: "altaria" }, { name: "lotad" }, { name: "pachirisu" }, { name: "hydreigon" },
     { name: "cacnea" }, { name: "golbat" }, { name: "solrock" }, { name: "crobat" }, { name: "sandshrew" },
