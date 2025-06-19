@@ -263,6 +263,11 @@ const teamShowcase = [
     { name: "stantler", lost: true }, { name: "ampharos" }, { name: "goldeen" }, { name: "weezing" }, { name: "dustox" }, { name: "pidgeotto" }, { name: "girafarig" }
   ] },
 
+{ name: "mikesbob", shinies: [
+  { name: "tentacruel", lost: true }, { name: "ponyta" }, { name: "hydreigon" }, { name: "duskull" }, { name: "magikarp" }, { name: "poliwag" },
+  { name: "cubchoo", lost: true }, { name: "sneasel" }, { name: "luxio" }, { name: "litwick" }, { name: "steelix" }, { name: "onix" }
+] },
+
   { name: "Mileage", shinies: [
     { name: "absol" }, { name: "poliwhirl" }, { name: "ditto" }
   ] },
