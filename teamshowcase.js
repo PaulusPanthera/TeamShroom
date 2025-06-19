@@ -308,7 +308,7 @@ const teamShowcase = [
     { name: "horsea" }, { name: "lombre" }, { name: "frillish" }
   ] },
 
-  { name: "OrllandoV", shinies: [
+  { name: "Orllando", shinies: [
     { name: "donphan-f" }, { name: "seaking" }, { name: "golduck" }, { name: "poliwhirl" }, { name: "silcoon" }, { name: "zigzagoon" },
     { name: "phanpy" }, { name: "spinda" }, { name: "camerupt" }, { name: "golett" }, { name: "duskull" }, { name: "onix" },
     { name: "onix" }, { name: "paras" }, { name: "amoonguss" }, { name: "shroomish" }, { name: "axew" }, { name: "onix" },
