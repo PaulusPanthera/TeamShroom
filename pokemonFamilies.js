@@ -1,5 +1,3 @@
-window.pokemonFamilies["nidoran-f"] = window.pokemonFamilies["nidoran♀"];
-window.pokemonFamilies["nidoran-m"] = window.pokemonFamilies["nidoran♂"];
 window.pokemonFamilies = {
   // --- Kanto ---
   bulbasaur: ["bulbasaur", "ivysaur", "venusaur"],
@@ -666,3 +664,15 @@ window.pokemonFamilies = {
   larvesta: ["larvesta", "volcarona"],
   volcarona: ["larvesta", "volcarona"]
 };
+
+// --- Normalized aliases for all families (handles Nidoran and any other special case) ---
+Object.keys(window.pokemonFamilies).forEach(key => {
+  let norm = key.toLowerCase()
+    .replace(/♀/g,"-f")
+    .replace(/♂/g,"-m")
+    .replace(/[- '\.’]/g,"")
+    .trim();
+  if (norm !== key && !window.pokemonFamilies[norm]) {
+    window.pokemonFamilies[norm] = window.pokemonFamilies[key];
+  }
+});
