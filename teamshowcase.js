@@ -15,7 +15,7 @@ const teamShowcase = [
   ] },
 
   { name: "BojanglesisHere", shinies: [
-    { name: "duskull" }, { name: "floatzel-f" }, { name: "rapidash" }, { name: "cubchoo" },
+    { name: "duskull" }, { name: "floatzel" }, { name: "rapidash" }, { name: "cubchoo" },
     { name: "smeargle" }, { name: "abra" }, { name: "golett" }, { name: "poliwhirl" },
     { name: "poliwhirl" }, { name: "koffing" }, { name: "parasect" }, { name: "kecleon" }, { name: "combee" }, { name: "raticate" }
   ] },
@@ -67,11 +67,11 @@ const teamShowcase = [
   ] },
 
   { name: "Difoolioo", shinies: [
-    { name: "gloom-f" }, { name: "ponyta" }, { name: "rapidash" }, { name: "heatmor" }
+    { name: "gloom" }, { name: "ponyta" }, { name: "rapidash" }, { name: "heatmor" }
   ] },
 
   { name: "Draind", shinies: [
-    { name: "smeargle" }, { name: "raticate-f", lost: true }, { name: "politoed" }, { name: "weezing" }, { name: "typhlosion" },
+    { name: "smeargle" }, { name: "raticate", lost: true }, { name: "politoed" }, { name: "weezing" }, { name: "typhlosion" },
     { name: "weavile" }, { name: "graveler" }, { name: "gliscor" }, { name: "vanilluxe" }, { name: "donphan" },
     { name: "aerodactyl" }, { name: "bibarel" }, { name: "gallade" }, { name: "chansey" }, { name: "excadrill" }, { name: "blastoise" }, { name: "floatzel" }
   ] },
@@ -88,8 +88,8 @@ const teamShowcase = [
 
   { name: "Eerie", shinies: [
     { name: "slowpoke" }, { name: "lanturn" }, { name: "girafarig" }, { name: "staravia" }, { name: "pelipper" },
-    { name: "golbat-f" }, { name: "claydol" }, { name: "parasect" }, { name: "koffing" }, { name: "togetic" },
-    { name: "floatzel-f", lost: true }, { name: "gabite" }, { name: "buneary" }, { name: "ekans" }, { name: "haunter" }
+    { name: "golbat" }, { name: "claydol" }, { name: "parasect" }, { name: "koffing" }, { name: "togetic" },
+    { name: "floatzel", lost: true }, { name: "gabite" }, { name: "buneary" }, { name: "ekans" }, { name: "haunter" }
   ] },
 
   { name: "ElMannun", shinies: [ { name: "seedot" }, { name: "nidorino" }, { name: "pidgey" } ] },
@@ -115,7 +115,7 @@ const teamShowcase = [
     { name: "rapidash" }, { name: "swellow" }, { name: "heatmor" }, { name: "rhydon" }
   ] },
 
-  { name: "Grayzxv", shinies: [ { name: "camerupt-f" }, { name: "fearow" } ] },
+  { name: "Grayzxv", shinies: [ { name: "camerupt" }, { name: "fearow" } ] },
 
   { name: "Grrzzly", shinies: [
     { name: "mankey" }, { name: "minccino" }, { name: "phanpy" }, { name: "poochyena" }, { name: "cryogonal" },
@@ -137,7 +137,7 @@ const teamShowcase = [
   { name: "Highschoolme", shinies: [ { name: "gardevoir" }, { name: "ninetales" } ] },
 
   { name: "Hjordi", shinies: [
-    { name: "graveler", lost: true }, { name: "persian" }, { name: "nidoking" }, { name: "camerupt-f" }, { name: "spinda" },
+    { name: "graveler", lost: true }, { name: "persian" }, { name: "nidoking" }, { name: "camerupt" }, { name: "spinda" },
     { name: "teddiursa" }, { name: "shinx" }, { name: "poliwrath" }, { name: "vibrava" }, { name: "pinsir" },
     { name: "nidoqueen" }, { name: "jigglypuff" }, { name: "mantine" }, { name: "rapidash" }, { name: "bibarel" },
     { name: "ralts" }, { name: "bellossom" }
@@ -152,13 +152,13 @@ const teamShowcase = [
   ] },
 
   { name: "ItsKitas", shinies: [
-    { name: "dodrio" }, { name: "donphan-f" }, { name: "vanillish" }, { name: "pidgey" }, { name: "donphan-f", lost: true }, { name: "tranquill" }
+    { name: "dodrio" }, { name: "donphan" }, { name: "vanillish" }, { name: "pidgey" }, { name: "donphan", lost: true }, { name: "tranquill" }
   ] },
 
   { name: "Jaspn", shinies: [
     { name: "whirlipede" }, { name: "galvantula" }, { name: "tentacruel" }, { name: "tentacruel" }, { name: "hydreigon" },
     { name: "zigzagoon" }, { name: "taillow" }, { name: "shuppet" }, { name: "azumarill" }, { name: "heatmor" },
-    { name: "weezing" }, { name: "poochyena" }, { name: "linoone" }, { name: "donphan-f" }, { name: "dusclops" }, { name: "aron" }
+    { name: "weezing" }, { name: "poochyena" }, { name: "linoone" }, { name: "donphan" }, { name: "dusclops" }, { name: "aron" }
   ] },
 
   { name: "Jayyxxi", shinies: [ { name: "altaria" }, { name: "haxorus" }, { name: "druddigon" }, { name: "dusclops" }, { name: "mienfoo" }, { name: "deino" }, { name: "horsea" } ] },
@@ -172,7 +172,7 @@ const teamShowcase = [
 
   { name: "Johnerrr", shinies: [
     { name: "victreebel" }, { name: "gyarados" }, { name: "ditto" }, { name: "rapidash" }, { name: "loudred" },
-    { name: "bibarel-f" }, { name: "duskull" }, { name: "chandelure" }, { name: "cryogonal" }, { name: "magikarp" },
+    { name: "bibarel" }, { name: "duskull" }, { name: "chandelure" }, { name: "cryogonal" }, { name: "magikarp" },
     { name: "smeargle" }, { name: "dratini" }
   ] },
 
@@ -232,16 +232,16 @@ const teamShowcase = [
   ] },
 
   { name: "Macarene", shinies: [
-    { name: "frillish-f" }
+    { name: "frillish" }
   ] },
 
   { name: "maknaez", shinies: [
-    { name: "gyarados-f" }, { name: "durant", lost: true }, { name: "durant", lost: true }, { name: "hydreigon" }, { name: "meowth", lost: true },
+    { name: "gyarados" }, { name: "durant", lost: true }, { name: "durant", lost: true }, { name: "hydreigon" }, { name: "meowth", lost: true },
     { name: "ferroseed", lost: true }, { name: "graveler", lost: true }, { name: "gliscor" }, { name: "amoonguss", lost: true }, { name: "amoonguss" },
-    { name: "conkeldurr" }, { name: "ledian-f" }, { name: "smeargle" }, { name: "torkoal" }, { name: "bibarel-f" }, { name: "ninetales" },
-    { name: "banette" }, { name: "sneasel-f" }, { name: "miltank" }, { name: "luxray-f" }, { name: "chandelure" }, { name: "fraxure" },
+    { name: "conkeldurr" }, { name: "ledian" }, { name: "smeargle" }, { name: "torkoal" }, { name: "bibarel" }, { name: "ninetales" },
+    { name: "banette" }, { name: "sneasel" }, { name: "miltank" }, { name: "luxray" }, { name: "chandelure" }, { name: "fraxure" },
     { name: "weezing" }, { name: "poliwhirl" }, { name: "floatzel", lost: true }, { name: "floatzel" }, { name: "floatzel" }, { name: "floatzel" },
-    { name: "gabite" }, { name: "onix" }, { name: "steelix-f" }, { name: "kingdra" }, { name: "spinda" }, { name: "haunter" }, { name: "bibarel" },
+    { name: "gabite" }, { name: "onix" }, { name: "steelix" }, { name: "kingdra" }, { name: "spinda" }, { name: "haunter" }, { name: "bibarel" },
     { name: "poliwhirl" }, { name: "onix" }, { name: "magikarp" }, { name: "dragonair" }, { name: "onix" }, { name: "onix" }, { name: "rapidash" },
     { name: "solrock" }, { name: "dugtrio" }, { name: "onix" }, { name: "larvitar" }, { name: "shelgon" }
   ] },
@@ -252,7 +252,7 @@ const teamShowcase = [
   ] },
 
   { name: "MELVZZY", shinies: [
-    { name: "marowak" }, { name: "golduck" }, { name: "meowth" }, { name: "geodude" }, { name: "slugma" }, { name: "gyarados" }, { name: "politoed-f" },
+    { name: "marowak" }, { name: "golduck" }, { name: "meowth" }, { name: "geodude" }, { name: "slugma" }, { name: "gyarados" }, { name: "politoed" },
     { name: "venomoth" }, { name: "vanillish" }, { name: "charizard" }, { name: "reuniclus" }, { name: "smeargle" }, { name: "zigzagoon" },
     { name: "onix" }, { name: "pikachu" }, { name: "vulpix" }
   ] },
@@ -310,7 +310,7 @@ const teamShowcase = [
   ] },
 
   { name: "Orllando", shinies: [
-    { name: "donphan-f" }, { name: "seaking" }, { name: "golduck" }, { name: "poliwhirl" }, { name: "silcoon" }, { name: "zigzagoon" },
+    { name: "donphan" }, { name: "seaking" }, { name: "golduck" }, { name: "poliwhirl" }, { name: "silcoon" }, { name: "zigzagoon" },
     { name: "phanpy" }, { name: "spinda" }, { name: "camerupt" }, { name: "golett" }, { name: "duskull" }, { name: "onix" },
     { name: "onix" }, { name: "paras" }, { name: "amoonguss" }, { name: "shroomish" }, { name: "axew" }, { name: "onix" },
     { name: "larvitar" }, { name: "pikachu" }, { name: "misdreavus" }, { name: "lunatone" }, { name: "murkrow" }
@@ -356,7 +356,7 @@ const teamShowcase = [
   { name: "qtAlice", shinies: [
   { name: "abra" }, { name: "kadabra" }, { name: "alakazam" }, { name: "shuckle" }, { name: "tauros" }, { name: "meowth" }, { name: "vanillish" }, 
   { name: "surskit" }, { name: "masquerain" }, { name: "psyduck" }, { name: "duskull" }, { name: "tentacruel" }, { name: "gloom" }, { name: "bellossom" },
-  { name: "dustox-f" }, { name: "poochyena" }, { name: "zigzagoon" }, { name: "linoone" }, { name: "taillow" }, { name: "swellow" }, { name: "zigzagoon" }
+  { name: "dustox" }, { name: "poochyena" }, { name: "zigzagoon" }, { name: "linoone" }, { name: "taillow" }, { name: "swellow" }, { name: "zigzagoon" }
   ] },
 
   { name: "Qubuu", shinies: [
@@ -409,7 +409,7 @@ const teamShowcase = [
   ] },
 
   { name: "Sirbeyy", shinies: [
-    { name: "growlithe", lost: true }, { name: "altaria" }, { name: "rhydon" }, { name: "houndour" }, { name: "crawdaunt" }, { name: "silcoon" }, { name: "whimsicott" }, { name: "tropius" }, { name: "heracross-f" }
+    { name: "growlithe", lost: true }, { name: "altaria" }, { name: "rhydon" }, { name: "houndour" }, { name: "crawdaunt" }, { name: "silcoon" }, { name: "whimsicott" }, { name: "tropius" }, { name: "heracross" }
   ] },
 
   { name: "SmiigZ", shinies: [
@@ -421,11 +421,11 @@ const teamShowcase = [
   ] },
 
   { name: "srysu", shinies: [
-    { name: "piloswine-f" }, { name: "clamperl" }, { name: "meowth" }, { name: "pelipper" }, { name: "sableye" }, { name: "dewgong" }, 
-    { name: "bibarel-f" }, { name: "heatmor" }, { name: "accelgor" }, { name: "octillery-f" }, { name: "hypno-f" }, { name: "scolipede" }, 
-    { name: "linoone" }, { name: "gloom-f" }, { name: "venipede" }, { name: "geodude", lost: true }, { name: "graveler", lost: true }, { name: "graveler" }, 
-    { name: "beedrill" }, { name: "rapidash" }, { name: "rapidash" }, { name: "cubchoo" }, { name: "cubchoo" }, { name: "roselia-f" }, { name: "purugly" }, { name: "roselia-f" }, 
-    { name: "pachirisu-f" }, { name: "lopunny" }, { name: "paras" }, { name: "donphan" }, { name: "vulpix" }, { name: "graveler" }, { name: "poliwrath" }
+    { name: "piloswine" }, { name: "clamperl" }, { name: "meowth" }, { name: "pelipper" }, { name: "sableye" }, { name: "dewgong" }, 
+    { name: "bibarel" }, { name: "heatmor" }, { name: "accelgor" }, { name: "octillery" }, { name: "hypno" }, { name: "scolipede" }, 
+    { name: "linoone" }, { name: "gloom" }, { name: "venipede" }, { name: "geodude", lost: true }, { name: "graveler", lost: true }, { name: "graveler" }, 
+    { name: "beedrill" }, { name: "rapidash" }, { name: "rapidash" }, { name: "cubchoo" }, { name: "cubchoo" }, { name: "roselia" }, { name: "purugly" }, { name: "roselia" }, 
+    { name: "pachirisu" }, { name: "lopunny" }, { name: "paras" }, { name: "donphan" }, { name: "vulpix" }, { name: "graveler" }, { name: "poliwrath" }
   ] },
 
   { name: "Stathiskris", shinies: [
@@ -433,7 +433,7 @@ const teamShowcase = [
   ] },
 
   { name: "SubSpacePet", shinies: [
-    { name: "tentacruel" }, { name: "bidoof" }, { name: "feebas" }, { name: "milotic-f" }
+    { name: "tentacruel" }, { name: "bidoof" }, { name: "feebas" }, { name: "milotic" }
   ] },
 
   { name: "SushiWhopperK", shinies: [
@@ -467,7 +467,7 @@ const teamShowcase = [
   ] },
 
   { name: "TTVxSenseiNESS", shinies: [
-    { name: "basculin-red-striped", lost: true }, { name: "donphan-f" }, { name: "haxorus" }, { name: "mienshao" }, { name: "chandelure" }, { name: "smeargle" },
+    { name: "basculin-red-striped", lost: true }, { name: "donphan" }, { name: "haxorus" }, { name: "mienshao" }, { name: "chandelure" }, { name: "smeargle" },
     { name: "primeape" }, { name: "noctowl" }, { name: "jellicent" }, { name: "weezing" }, { name: "whimsicott" }, { name: "scolipede" },
     { name: "whirlipede" }, { name: "gastrodon-east" }, { name: "lilligant" }, { name: "venipede" }, { name: "golem" }, { name: "ninetales" },
     { name: "spinda" }
@@ -498,7 +498,7 @@ const teamShowcase = [
   ] },
 
   { name: "WillyPS", shinies: [
-    { name: "muk" }, { name: "ditto", lost: true }, { name: "ditto" }, { name: "poliwag" }, { name: "nidorino" }, { name: "magikarp" }, { name: "pikachu-f" }, { name: "wooper-f" },
+    { name: "muk" }, { name: "ditto", lost: true }, { name: "ditto" }, { name: "poliwag" }, { name: "nidorino" }, { name: "magikarp" }, { name: "pikachu" }, { name: "wooper" },
     { name: "butterfree" }, { name: "hoppip", lost: true }, { name: "ponyta" }, { name: "vulpix" }, { name: "sealeo" }, { name: "lombre" }, { name: "swablu" }, { name: "lairon" },
     { name: "psyduck" }, { name: "snorunt" }, { name: "mareep" }, { name: "ekans" }, { name: "tentacool" }, { name: "growlithe" }, { name: "charmander" }, { name: "raticate" },
     { name: "raticate" }, { name: "psyduck" }, { name: "squirtle" }, { name: "phanpy" }, { name: "bulbasaur" }, { name: "eevee" }, { name: "eevee" }, { name: "golbat" },
