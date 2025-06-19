@@ -1,3 +1,5 @@
+window.pokemonFamilies["nidoran-f"] = window.pokemonFamilies["nidoran♀"];
+window.pokemonFamilies["nidoran-m"] = window.pokemonFamilies["nidoran♂"];
 window.pokemonFamilies = {
   // --- Kanto ---
   bulbasaur: ["bulbasaur", "ivysaur", "venusaur"],
