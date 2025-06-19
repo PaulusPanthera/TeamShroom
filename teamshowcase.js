@@ -411,6 +411,10 @@ const teamShowcase = [
     { name: "pachirisu-f" }, { name: "lopunny" }, { name: "paras" }, { name: "donphan" }, { name: "vulpix" }, { name: "graveler" }, { name: "poliwrath" }
   ] },
 
+  { name: "Stathiskris", shinies: [
+    { name: "spearow", lost: true }, { name: "bellsprout", lost: true }, { name: "bellsprout", lost: true }, { name: "donphan" }
+  ] },
+
   { name: "SubSpacePet", shinies: [
     { name: "tentacruel" }, { name: "bidoof" }, { name: "feebas" }, { name: "milotic-f" }
   ] },
