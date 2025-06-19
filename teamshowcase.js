@@ -269,7 +269,8 @@ const teamShowcase = [
 ] },
 
   { name: "Mileage", shinies: [
-    { name: "absol" }, { name: "poliwhirl" }, { name: "ditto" }
+  { name: "nidoqueen" }, { name: "tyranitar" }, { name: "camerupt" }, { name: "tentacool" }, { name: "magikarp" },
+  { name: "scolipede" }, { name: "smeargle" }, { name: "absol" }, { name: "poliwhirl" }, { name: "ditto" }
   ] },
 
   { name: "Minatoway", shinies: [
