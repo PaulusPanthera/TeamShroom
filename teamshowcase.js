@@ -489,7 +489,7 @@ const teamShowcase = [
   ] },
 
   { name: "Whamalicious", shinies: [
-    { name: "poliwhirl" }
+    { name: "tentacruel" }, { name: "poliwhirl" }
   ] },
 
   { name: "WhosWill", shinies: [
