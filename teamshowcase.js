@@ -489,7 +489,7 @@ const teamShowcase = [
   ] },
 
   { name: "WinterIvy", shinies: [
-    { name: "poochyena" }
+   { name: "poliwhirl" }, { name: "rapidash" }, { name: "skiploom" }, { name: "piloswine" }, { name: "raticate" }, { name: "raticate" }, { name: "hoothoot" }, { name: "poochyena" }
   ] },
 
   { name: "Wisqi", shinies: [
