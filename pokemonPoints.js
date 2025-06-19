@@ -49,7 +49,7 @@ const TIER_FAMILIES = {
   "Tier 1": [
     "Absol","Aerodactyl","Anorith","Archen","Beldum","Burmy","Carnivine","Castform","Chansey","Cherubi","Cranidos",
     "Eevee","Feebas","Kabuto","Kecleon","Larvesta","Lileep","Omanyte","Panpour","Pansage","Pansear","Pinsir",
-    "Scyther","Shieldon","Skarmory","Skitty","Slakoth","Snorlax","Sudowoodo","Tirtouga"
+    "Scyther","Shieldon","Skarmory","Skitty","Slakoth","Snorlax","Sudowoodo","Tirtouga", "Zorua"
   ],
   "Tier 0": [
     "Alomomola","Audino","Bulbasaur","Charmander","Chikorita","Chimchar","Cyndaquil",
