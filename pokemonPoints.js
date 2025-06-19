@@ -19,7 +19,7 @@ const TIER_FAMILIES = {
     "Dunsparce","Durant","Duskull","Dwebble","Elgyem","Foongus","Frillish","Gastly","Geodude",
     "Goldeen","Golett","Gothita","Grimer","Heatmor","Hoppip","Horsea","Jigglypuff","Jynx",
     "Koffing","Krabby","Lickitung","Lillipup","Litwick","Lotad","Lunatone","Machop","Magikarp",
-    "Magnemite","Makuhita","Mantine","Marill","Meowth","Mienfoo","Nidoran♀","Nidoran♂","Numel","Oddish",
+    "Magnemite","Makuhita","Mantine","Marill","Meowth","Mienfoo","Nidoran-f","Nidoran-m","Numel","Oddish",
     "Onix","Paras","Patrat","Pidgey","Pidove","Pikachu","Poliwag","Ponyta","Poochyena","Psyduck",
     "Purrloin","Rattata","Rhyhorn","Roggenrola","Roselia","Sandile","Sandshrew","Seel","Sewaddle","Shellos",
     "Shelmet","Shuppet","Slowpoke","Slugma","Smeargle","Sneasel","Snover","Solosis","Solrock","Spearow",
