@@ -100,6 +100,17 @@ const teamShowcase = [
     { name: "accelgor" }, { name: "spinda" }, { name: "gothorita" }
   ] },
 
+{ name: "Genesect", shinies: [
+  { name: "ponyta" }, { name: "psyduck" }, { name: "altaria" }, { name: "magneton" },
+  { name: "cacturne" }, { name: "amoonguss" }, { name: "magikarp" }, { name: "nidoking" },
+  { name: "leafeon" }, { name: "ninetales" }, { name: "wooper" }, { name: "beautifly" },
+  { name: "weezing" }, { name: "zorua" }, { name: "gyarados" }, { name: "dragonair" },
+  { name: "ampharos" }, { name: "muk" }, { name: "seadra" }, { name: "ariados" },
+  { name: "rapidash" }, { name: "houndoom" }, { name: "duskull" }, { name: "piplup" },
+  { name: "sneasel" }, { name: "starmie" }, { name: "emolga" }, { name: "liepard" },
+  { name: "leavanny" }, { name: "butterfree" }, { name: "metapod" }, { name: "beedrill" }
+] },
+
   { name: "Geranxx", shinies: [
     { name: "rapidash" }, { name: "swellow" }, { name: "heatmor" }, { name: "rhydon" }
   ] },
