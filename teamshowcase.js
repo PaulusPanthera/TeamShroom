@@ -35,7 +35,7 @@ const teamShowcase = [
   { name: "cgrtmlk", shinies: [ { name: "altaria" }, { name: "mienfoo" } ] },
 
   { name: "CheesasaurusRex", shinies: [
-    { name: "dragonair" }, { name: "lopunny" }, { name: "vespiquen" }, { name: "vanilluxe" }, { name: "onix" }, { name: "onix" }, { name: "cascoon" }
+    { name: "dragonite" }, { name: "lopunny" }, { name: "vespiquen" }, { name: "vanilluxe" }, { name: "onix" }, { name: "onix" }, { name: "cascoon" }
   ] },
 
   { name: "ChimpExc", shinies: [ { name: "tentacool" }, { name: "gastly" } ] },
