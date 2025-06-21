@@ -239,20 +239,34 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
   const shinies = getMemberShinies(member);
   const points = getMemberScoreboardPoints(member);
 
+  // Find the showcase data for this member so we can get the extra flags for each shiny
+  const showcaseEntry = (window.teamShowcase || []).find(m => m.name === member.name);
+
   content.innerHTML = `
     <button class="back-btn" onclick="window.location.hash='#showcase?sort=${sortMode}'">← Back</button>
     <h1>${member.name}'s Shiny Showcase</h1>
     <div>Shinies: ${shinies.filter(mon => !mon.lost).length} | Points: ${points}</div>
     <div class="dex-grid" style="margin-top:1em;">
-      ${shinies.map(mon => {
+      ${shinies.map((mon, i) => {
         const monPoints = getPointsForPokemon(mon.name);
         const name = cleanPokemonName(mon.name);
+        // Get extra symbol fields if present in teamShowcase (alpha, egg, etc)
+        let extra = (showcaseEntry && showcaseEntry.shinies && showcaseEntry.shinies[i]) || {};
         return renderUnifiedCard({
           name: name,
           img: mon.url,
           info: mon.lost ? "Lost" : `${monPoints} Points`,
           lost: mon.lost,
-          cardType: "pokemon"
+          cardType: "pokemon",
+          // Only pass these for the showcase, not for the main dex!
+          symbols: {
+            secretshiny: !!extra.secretshiny,
+            egg: !!extra.egg,
+            safari: !!extra.safari,
+            event: !!extra.event,
+            alpha: !!extra.alpha,
+            clip: !!extra.clip
+          }
         });
       }).join("")}
     </div>
