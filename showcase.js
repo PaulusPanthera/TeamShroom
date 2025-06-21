@@ -67,13 +67,15 @@ function getPointsForPokemon(name, extra = {}) {
   // Alpha: always 50
   if (extra.alpha) return 50;
 
-  // Egg: 20 unless tier 0 or 1
+  // Egg: 20 unless tier 0 or 1 (then use tier points)
   if (extra.egg) {
-    const TIER_0_1 = (window.TIER_FAMILIES?.["Tier 0"] || []).concat(window.TIER_FAMILIES?.["Tier 1"] || []);
-    const T0T1norm = TIER_0_1.map(n =>
-      n.toLowerCase().replace(/♀/g,"-f").replace(/♂/g,"-m").replace(/[\s.'’]/g,"")
-    );
-    if (!T0T1norm.includes(normName)) return 20;
+    if (!window._tier01set) {
+      const TIER_0_1 = (window.TIER_FAMILIES?.["Tier 0"] || []).concat(window.TIER_FAMILIES?.["Tier 1"] || []);
+      window._tier01set = new Set(TIER_0_1.map(n =>
+        n.toLowerCase().replace(/♀/g,"-f").replace(/♂/g,"-m").replace(/[\s.'’]/g,"")
+      ));
+    }
+    if (!window._tier01set.has(normName)) return 20;
     // else fall through to base tier points
   }
 
