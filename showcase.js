@@ -75,6 +75,8 @@ function getPointsForPokemon(name, extra = {}) {
         n.toLowerCase().replace(/♀/g,"-f").replace(/♂/g,"-m").replace(/[\s.'’]/g,"")
       ));
     }
+    // DEBUG OUTPUT:
+    console.log('EGG CHECK', { normName, inTier01: window._tier01set.has(normName), basePoints, extra });
     if (!window._tier01set.has(normName)) return 20;
     // else fall through to base tier points
   }
