@@ -2,7 +2,7 @@
 // Points mapping for all Pokémon families based on tier
 // Tier 6: 2 Points, Tier 5: 3 Points, Tier 4: 6 Points, Tier 3: 10 Points, Tier 2: 15 Points, Tier 1: 25 Points, Tier 0: 30 Points
 
-const TIER_POINTS = {
+window.TIER_POINTS = {
   "Tier 6": 2,
   "Tier 5": 3,
   "Tier 4": 6,
@@ -12,7 +12,7 @@ const TIER_POINTS = {
   "Tier 0": 30
 };
 
-const TIER_FAMILIES = {
+window.TIER_FAMILIES = {
   "Tier 6": [
     "Abra","Aron","Baltoy","Basculin","Bidoof","Blitzle","Bouffalant","Bronzor",
     "Buizel","Chinchou","Clamperl","Cubchoo","Cubone","Deerling","Diglett","Drowzee","Druddigon",
@@ -61,8 +61,8 @@ const TIER_FAMILIES = {
 // Build the points map at runtime, after pokemonFamilies.js is loaded
 window.buildPokemonPoints = function() {
   const points = {};
-  Object.entries(TIER_FAMILIES).forEach(([tier, list]) => {
-    const pointVal = TIER_POINTS[tier];
+  Object.entries(window.TIER_FAMILIES).forEach(([tier, list]) => {
+    const pointVal = window.TIER_POINTS[tier];
     list.forEach(mon => {
       let familyBase = mon
         .toLowerCase()
@@ -90,4 +90,4 @@ window.buildPokemonPoints = function() {
 };
 
 // If families already loaded, build immediately
-if (window.pokemonFamilies) buildPokemonPoints();
+if (window.pokemonFamilies) window.buildPokemonPoints();
