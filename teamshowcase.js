@@ -323,10 +323,31 @@ const teamShowcase = [
   ] },
 
   { name: "PaulusTFT", shinies: [
-    { name: "mightyena" }, { name: "linoone" }, { name: "typhlosion", clip: true }, { name: "smeargle", clip: true }, { name: "camerupt", clip: true }, { name: "bellsprout" },
-    { name: "rapidash" }, { name: "miltank" }, { name: "swablu", event: true }, { name: "scolipede" }, { name: "drilbur", egg: true }, { name: "cubchoo" },
-    { name: "cryogonal" }, { name: "metapod" }, { name: "donphan" }, { name: "slowbro" }, { name: "rattata" }, { name: "dodrio" },
-    { name: "paras" }, { name: "voltorb", secret: true }, { name: "weezing" }, { name: "gligar" }, { name: "amoonguss" }, { name: "koffing", safari: true, secret: true, alpha: true, event: true, clip: true, egg: true  }, { name: "golurk" }, { name: "stunky" }
+    { name: "mightyena" }, { name: "linoone" }, 
+    { name: "typhlosion", clip: "https://clips.twitch.tv/KathishObservantAppleVoHiYo-Myzgqwqa61TaTP1a" }, 
+    { name: "smeargle", clip: "https://clips.twitch.tv/ScrumptiousVainBaconAllenHuhu-D4JAjsec_8vkJCTe" }, 
+    { name: "camerupt", clip: "https://clips.twitch.tv/HorribleCredulousChinchillaKappaClaus-fntXCeKYtw2HwOcs" }, 
+    { name: "bellsprout", clip: "https://clips.twitch.tv/TawdryTalentedWitchKappaPride-tdH5eCOYj0EQHm91" },
+    { name: "rapidash", clip: "https://clips.twitch.tv/SpeedyBlazingEggnogHotPokket-zhR4zM9GhGS-vZ-G" }, 
+    { name: "miltank", clip: "https://clips.twitch.tv/InterestingObservantBulgogiBudStar-3_X3oNr87gRs2w1V" }, 
+    { name: "swablu", event: true }, 
+    { name: "scolipede", clip: "https://www.twitch.tv/paulustft/clip/TallDreamyGrasshopperTBCheesePull-8fTo_yZYuW4J4-IJ" }, 
+    { name: "drilbur", egg: true, clip: "https://www.twitch.tv/paulustft/clip/ElegantOnerousWoodcockPMSTwin-l9Hh4ukASQvPpnIx" }, 
+    { name: "cubchoo", clip: "https://www.twitch.tv/paulustft/clip/CoyOddAntelopeSquadGoals-QN5OetDYej7PXfkF" },
+    { name: "cryogonal", clip: "https://www.twitch.tv/paulustft/clip/MoistUglyKumquatOneHand-l2QKEhMoMZgijU9w" }, 
+    { name: "metapod", clip: "https://www.twitch.tv/paulustft/clip/LovelyMoistCrabCopyThis-IWvbq1OFmhY5nVEo" }, 
+    { name: "donphan", clip: "https://www.twitch.tv/paulustft/clip/BetterTenaciousKleeSwiftRage-8f_h7v04pdHDg23k" }, 
+    { name: "slowbro", clip: "https://www.twitch.tv/paulustft/clip/TawdryImportantKumquatKlappa-edqkdn7ezDAYHjMs" }, 
+    { name: "rattata", clip: "https://www.twitch.tv/paulustft/clip/RepleteConsideratePigeonBrokeBack-sdxC00E_T4pUmxSh" }, 
+    { name: "dodrio", clip: "https://www.twitch.tv/paulustft/clip/ShakingVenomousWaffleSoonerLater-knVDGqNLHaks4tp5" },
+    { name: "paras", clip: "https://www.twitch.tv/paulustft/clip/CulturedBraveTaroTheTarFu-YbcZ18BT8ZVQkUkd" }, 
+    { name: "voltorb", secret: true, clip: "https://www.twitch.tv/paulustft/clip/StrangeMotionlessHippoNinjaGrumpy-gqZY3-3MANIZjvml" }, 
+    { name: "weezing", clip: "https://www.twitch.tv/paulustft/clip/SolidMotionlessCheesecakeDoggo-Cyg-jYpTEqGGqQqs" }, 
+    { name: "gligar", clip: "https://www.twitch.tv/paulustft/clip/CourageousPiercingSwanSMOrc-nOsZ6Gg7sB8lXskB" }, 
+    { name: "amoonguss", clip: "https://www.twitch.tv/paulustft/clip/ApatheticSquareBatPipeHype-6PLnTpUGAA7N_YZ2" }, 
+    { name: "koffing", safari: true, secret: true, clip: "https://www.twitch.tv/paulustft/clip/MushyProtectivePorpoiseBabyRage-VEM-4L67kZsKsFrv" }, 
+    { name: "golurk" }, 
+    { name: "stunky" }
   ] },
 
   { name: "peachhteaa", shinies: [
