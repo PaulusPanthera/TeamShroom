@@ -12,6 +12,11 @@
   --text-muted: #679a56;
   --shadow-main: 0 6px 32px #0003, 0 1.5px 12px #f2593733;
   --shadow-hover: 0 10px 32px #f2593788, 0 4px 26px #0003;
+
+  /* Symbol overlay variables for showcase cards */
+  --symbol-gap-x: 12px;     /* Horizontal gap from card border */
+  --symbol-top-y: 38px;     /* Distance from top for top symbols */
+  --symbol-bottom-y: 46px;  /* Distance from bottom for bottom symbols */
 }
 
 body {
@@ -154,7 +159,6 @@ body.darkmode {
     border 0.19s,
     transform 0.22s cubic-bezier(.4,2,.2,1),
     filter 0.22s cubic-bezier(.4,2,.2,1);
-  /* 3D "push in" illusion */
   will-change: transform, box-shadow;
   filter: drop-shadow(0 1px 4px #fff3);
   z-index: 1;
@@ -234,7 +238,6 @@ body.darkmode .unified-card.unclaimed:hover, body.darkmode .unified-card.unclaim
   font-size: 1.13em;
   font-weight: bold;
   color: var(--accent);
-  /* Improved border for light mode (dark shadow) */
   text-shadow:
     2px 0 #222,
    -2px 0 #222,
@@ -246,14 +249,10 @@ body.darkmode .unified-card.unclaimed:hover, body.darkmode .unified-card.unclaim
   max-width: 100%;
   overflow: visible;
   transition: font-size 0.15s;
-  /* Remove text-overflow and white-space to allow wrapping! */
-  /* text-overflow: ellipsis; */
-  /* white-space: nowrap; */
   word-break: break-word;
   line-height: 1.15;
 }
 body.darkmode .unified-name {
-  /* Light border for dark mode */
   text-shadow:
     2px 0 #fffbe1,
    -2px 0 #fffbe1,
@@ -261,8 +260,6 @@ body.darkmode .unified-name {
     0 -2px #fffbe1,
     1px 1px 0 #000;
 }
-
-/* Slightly shrink font size for long names */
 .unified-name {
   display: block;
 }
@@ -319,7 +316,6 @@ body.darkmode .unified-info {
   background: rgba(40,40,40,0.18);
   color: var(--text-main);
 }
-
 .unified-info.lost {
   color: #a22;
   font-weight: bold;
@@ -349,8 +345,6 @@ body.darkmode .unified-info {
   align-items: flex-start;
   justify-content: flex-start;
 }
-
-/* Make categories/sections flexible for better horizontal packing on small screens */
 .showcase-supergrid > section {
   min-width: 0;
   flex: 1 1 260px;
@@ -587,7 +581,7 @@ body.darkmode .unified-info {
   100% { transform: translateY(calc(-100% + 2.5em)); }
 }
 
-/* --- SYMBOL OVERLAYS (IMPROVED) --- */
+/* --- SYMBOL OVERLAYS (Showcase cards, fixed placement & centering) --- */
 .symbol-overlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -608,9 +602,35 @@ body.darkmode .unified-info {
   display: block;
   padding: 2px;
 }
-.symbol.secret    { top: 8px;  left: 8px; }
-.symbol.egg       { top: 50%;  left: 8px; transform: translateY(-50%); }
-.symbol.safari    { bottom: 8px; left: 8px; }
-.symbol.event     { top: 8px;  right: 8px; }
-.symbol.alpha     { top: 50%;  right: 8px; transform: translateY(-50%); }
-.symbol.clip      { bottom: 8px; right: 8px; }
+/* Top left: secret */
+.symbol.secret {
+  left: var(--symbol-gap-x);
+  top: var(--symbol-top-y);
+}
+/* Top right: event */
+.symbol.event {
+  right: var(--symbol-gap-x);
+  top: var(--symbol-top-y);
+}
+/* Bottom left: safari */
+.symbol.safari {
+  left: var(--symbol-gap-x);
+  bottom: var(--symbol-bottom-y);
+}
+/* Bottom right: clip */
+.symbol.clip {
+  right: var(--symbol-gap-x);
+  bottom: var(--symbol-bottom-y);
+}
+/* Vertically centered left: egg */
+.symbol.egg {
+  left: var(--symbol-gap-x);
+  top: 50%;
+  transform: translateY(-50%);
+}
+/* Vertically centered right: alpha */
+.symbol.alpha {
+  right: var(--symbol-gap-x);
+  top: 50%;
+  transform: translateY(-50%);
+}
