@@ -2,7 +2,7 @@
 // Shared card renderer for all modules, now with optional symbol overlays for showcase shinies
 
 window.renderUnifiedCard = function(opts) {
-  // opts: { name, img, info, lost, unclaimed, cardType, symbols }
+  // opts: { name, img, info, lost, unclaimed, cardType, symbols, clip }
   let nameClass = "unified-name";
   if (opts.name.length > 16 && opts.name.length <= 22) {
     nameClass += " long-name";
@@ -28,9 +28,12 @@ window.renderUnifiedCard = function(opts) {
     `;
   }
 
+  // If there's a clip link, add data-clip attribute
+  const dataClip = opts.clip ? ` data-clip="${String(opts.clip).replace(/"/g, "&quot;")}"` : "";
+
   return `
     <div class="unified-card${opts.lost ? ' lost' : ''}${opts.unclaimed ? ' unclaimed' : ''}" 
-         data-card-type="${cardType}" data-name="${dataName}">
+         data-card-type="${cardType}" data-name="${dataName}"${dataClip}>
       ${symbolOverlay}
       <div class="${nameClass}">${opts.name}</div>
       <img src="${opts.img}" alt="${opts.name}" class="unified-img"${opts.lost ? ' style="opacity:0.6;filter:grayscale(1);"' : ""}>
