@@ -71,7 +71,22 @@ window.buildPokemonPoints = function() {
         .replace(/♂/g,"-m")
         .replace(/[- '\.’]/g,"")
         .trim();
+      // Add all known aliases for this family
       if(window.pokemonFamilies && window.pokemonFamilies[familyBase]) {
+        // Add all aliases (keys) that point to this family array
+        Object.keys(window.pokemonFamilies).forEach(famKey => {
+          if (
+            window.pokemonFamilies[famKey] === window.pokemonFamilies[familyBase] ||
+            (
+              Array.isArray(window.pokemonFamilies[famKey]) &&
+              Array.isArray(window.pokemonFamilies[familyBase]) &&
+              window.pokemonFamilies[famKey].join() === window.pokemonFamilies[familyBase].join()
+            )
+          ) {
+            points[famKey] = pointVal;
+          }
+        });
+        // Also add all the listed family members (as in your code)
         window.pokemonFamilies[familyBase].forEach(famName => {
           let key = famName
             .toLowerCase()
