@@ -586,3 +586,52 @@ body.darkmode .unified-info {
   90% { transform: translateY(calc(-100% + 2.5em)); }
   100% { transform: translateY(calc(-100% + 2.5em)); }
 }
+
+/* Add at the end of style.css, or adapt as needed */
+.unified-card {
+  position: relative;
+}
+.symbol-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+}
+.symbol-col.left, .symbol-col.right {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 90px;
+  top: 25px;
+  pointer-events: none;
+}
+.symbol-col.left {
+  left: 2px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.symbol-col.right {
+  right: 2px;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.symbol {
+  width: 20px;
+  height: 20px;
+  opacity: 0.97;
+  background: rgba(255,255,255,0.7);
+  border-radius: 5px;
+  pointer-events: auto;
+  box-shadow: 0 1px 3px #0002;
+  margin: 0;
+}
+.symbol.secretshiny { align-self: flex-start; }
+.symbol.egg { align-self: center; }
+.symbol.safari { align-self: flex-end; }
+.symbol.event { align-self: flex-start; }
+.symbol.alpha { align-self: center; }
+.symbol.clip { align-self: flex-end; }
