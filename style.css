@@ -50,7 +50,7 @@ body.darkmode {
   background-attachment: fixed;
 }
 
-/* NAVIGATION BAR */
+/* FIXED HEADER, SEARCH, NIGHT MODE BUTTON */
 .nav {
   display: flex;
   gap: 1rem;
@@ -59,11 +59,47 @@ body.darkmode {
   border-bottom: 3px solid var(--success);
   box-shadow: 0 6px 32px #0005, 0 2px 20px #f2593766;
   border-radius: 0 0 20px 20px;
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 99;
+  left: 0;
+  width: 100vw;
+  z-index: 1050;
 }
 
+.showcase-search-controls,
+.search-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 2.1rem;
+  flex-wrap: wrap;
+  background: linear-gradient(120deg, var(--card) 75%, var(--bg) 100%);
+  border-radius: 12px;
+  box-shadow: 0 2px 14px #f2593722;
+  padding: 0.6em 1.6em 0.6em 1.3em;
+  border: 1.5px solid #f2593733;
+
+  /* Sticky under nav */
+  position: sticky;
+  top: 4.5em;
+  z-index: 1049;
+}
+
+#darkmode-toggle {
+  position: fixed !important;
+  top: 1.2rem !important;
+  right: 1.5rem !important;
+  z-index: 1100 !important;
+}
+
+/* Make sure page content isn't hidden under fixed header + search */
+#page-content {
+  margin-top: 8.5em;
+  padding: 0 1.5rem;
+  min-height: 70vh;
+}
+
+/* NAVIGATION BAR LINKS */
 .nav a {
   color: var(--bg);
   text-decoration: none;
@@ -87,12 +123,8 @@ body.darkmode {
   box-shadow: 0 6px 32px #f2593788, 0 2px 20px #fffbe144;
   border-color: #fffbe1;
 }
-#page-content {
-  margin: 2.5rem 0;
-  padding: 0 1.5rem;
-  min-height: 70vh;
-}
 
+/* REGION/SECTION CONTAINERS */
 .region-section {
   margin-bottom: 2.5rem;
   border-radius: 18px;
@@ -522,6 +554,7 @@ body.darkmode .unified-info {
     grid-template-columns: 1fr;
   }
 }
+
 /* Custom tooltip for shiny owners */
 .dex-owner-tooltip {
   position: fixed;
