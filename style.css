@@ -94,7 +94,7 @@ body.darkmode {
 
 /* Make sure page content isn't hidden under fixed header + search */
 #page-content {
-  margin-top: 8.5em;
+  margin-top: 6em;
   padding: 0 1.5rem;
   min-height: 70vh;
 }
