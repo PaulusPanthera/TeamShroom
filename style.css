@@ -14,9 +14,9 @@
   --shadow-hover: 0 10px 32px #f2593788, 0 4px 26px #0003;
 
   /* Symbol overlay variables for showcase cards */
-  --symbol-gap-x: 12px;      /* Horizontal gap from card border */
-  --symbol-top-y: 54px;      /* Distance from top for top symbols (lowered for visual symmetry) */
-  --symbol-bottom-y: 46px;   /* Distance from bottom for bottom symbols */
+  --symbol-gap-x: 12px;
+  --symbol-top-y: 54px;
+  --symbol-bottom-y: 54px;
 }
 
 body {
@@ -595,7 +595,7 @@ body.darkmode .unified-info {
   position: absolute;
   background: var(--card-gradient);
   border-radius: 8px;
-  border: 2.5px solid var(--accent);
+  /* border: 2.5px solid var(--accent); */
   box-shadow: 0 2px 8px #f2593733, 0 1px 3px #0002;
   opacity: 0.99;
   pointer-events: auto;
