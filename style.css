@@ -601,6 +601,7 @@ body.darkmode .unified-info {
   pointer-events: auto;
   display: block;
   padding: 2px;
+  filter: contrast(1.2) brightness(0.97) drop-shadow(0 0 6px #f25937aa);
 }
 /* Top left: secret */
 .symbol.secret {
