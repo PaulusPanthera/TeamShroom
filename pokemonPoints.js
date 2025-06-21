@@ -34,7 +34,7 @@ window.TIER_FAMILIES = {
   ],
   "Tier 4": [
     "Bellsprout","Buneary","Chimecho","Clefairy","Cottonee","Darumaka","Dratini","Drifloon","Electabuzz","Hippopotas",
-    "Karrablast","Larvitar","Ledyba","Magmar","Miltank","Minun","Pachirisu","Petilil","Sawk","Snubbull","Spoink",
+    "Karrablast","Larvitar","Ledyba","Magmar","Miltank","Minun","Pachirisu","Petilil","Sawk","Snubbull","Spoink", "Spinda",
     "Stantler","Starly","Stunky","Sunkern","Tauros","Throh","Trapinch","Trubbish","Tynamo","Venipede","Venonat","Wurmple"
   ],
   "Tier 3": [
