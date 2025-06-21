@@ -15,11 +15,11 @@ Hosted on GitHub Pages.
 
 ## To Do:  
   
-  -Add Safari, SS, Alpha, Event, etc. Symbols    
+  -Add Donator Symbols    
   -Add Socials (Twitch, Youtube) for Member  
-  -Add Shiny Clips to Showcase  
   -Add alternative Shiny View with Shinies roaming around  
-  -Add Rarity Count to Living Dex  
+  -Add Rarity Count to Living Dex    
+  -Add Summary to Shinies
   
 ---
 Inspired by Pokémon. Not affiliated with Nintendo, Game Freak, or PokeMMO.
