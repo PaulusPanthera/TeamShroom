@@ -18,16 +18,12 @@ window.renderUnifiedCard = function(opts) {
   if (s && Object.values(s).some(Boolean)) {
     symbolOverlay = `
       <div class="symbol-overlay">
-        <div class="symbol-col left">
-          ${s.secretshiny ? `<img class="symbol secretshiny" src="symbols/secretshinysprite.png" title="Secret Shiny">` : ""}
-          ${s.egg ? `<img class="symbol egg" src="symbols/eggsprite.png" title="Egg">` : ""}
-          ${s.safari ? `<img class="symbol safari" src="symbols/safarisprite.png" title="Safari">` : ""}
-        </div>
-        <div class="symbol-col right">
-          ${s.event ? `<img class="symbol event" src="symbols/eventsprite.png" title="Event">` : ""}
-          ${s.alpha ? `<img class="symbol alpha" src="symbols/alphasprite.png" title="Alpha">` : ""}
-          ${s.clip ? `<img class="symbol clip" src="symbols/clipsprite.png" title="Clip">` : ""}
-        </div>
+        ${s.secret ? `<img class="symbol secret" src="symbols/secretshinysprite.png" title="Secret Shiny">` : ""}
+        ${s.egg ? `<img class="symbol egg" src="symbols/eggsprite.png" title="Egg">` : ""}
+        ${s.safari ? `<img class="symbol safari" src="symbols/safarisprite.png" title="Safari">` : ""}
+        ${s.event ? `<img class="symbol event" src="symbols/eventsprite.png" title="Event">` : ""}
+        ${s.alpha ? `<img class="symbol alpha" src="symbols/alphasprite.png" title="Alpha">` : ""}
+        ${s.clip ? `<img class="symbol clip" src="symbols/clipsprite.png" title="Clip">` : ""}
       </div>
     `;
   }
