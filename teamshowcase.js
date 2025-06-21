@@ -42,7 +42,7 @@ const teamShowcase = [
 
   { name: "Chucklesworth", shinies: [ { name: "krookodile" }, { name: "krokorok" } ] },
 
-  { name: "clairofan", shinies: [
+  { name: "clairo", shinies: [
     { name: "smeargle" }, { name: "lanturn" }, { name: "stoutland" }, { name: "pachirisu" },
     { name: "floatzel" }, { name: "camerupt" }, { name: "quagsire" }, { name: "taillow" },
     { name: "breloom", egg: true }, { name: "psyduck", lost: true }, { name: "psyduck" },
