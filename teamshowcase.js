@@ -161,7 +161,7 @@ const teamShowcase = [
     { name: "weezing" }, { name: "poochyena" }, { name: "linoone" }, { name: "donphan" }, { name: "dusclops" }, { name: "aron" }
   ] },
 
-  { name: "Jayyxxi", shinies: [ { name: "altaria" }, { name: "haxorus" }, { name: "druddigon" }, { name: "dusclops" }, { name: "mienfoo" }, { name: "deino" }, { name: "horsea" } ] },
+  { name: "Jayyxxi", shinies: [ { name: "altaria" }, { name: "haxorus" }, { name: "druddigon" }, { name: "dusclops" }, { name: "mienshao" }, { name: "hydreigon" }, { name: "magikarp" }, { name: "scrafty" }, { name: "kingdra" } ] },
 
   { name: "Jeakama", shinies: [
     { name: "chandelure" }, { name: "haxorus" }, { name: "wurmple" }, { name: "deino" }, { name: "treecko" },
