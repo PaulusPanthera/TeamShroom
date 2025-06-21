@@ -73,7 +73,6 @@ function getPointsForPokemon(name, extra = {}) {
       const TIER_0_1 = (window.TIER_FAMILIES?.["Tier 0"] || []).concat(window.TIER_FAMILIES?.["Tier 1"] || []);
       let allNames = [];
       TIER_0_1.forEach(base => {
-        // Use the same normalization as in buildPokemonPoints
         let familyBase = base
           .toLowerCase()
           .replace(/\[.*\]/g,"")
@@ -96,6 +95,8 @@ function getPointsForPokemon(name, extra = {}) {
         }
       });
       window._tier01set = new Set(allNames);
+      // DEBUG: Print set for troubleshooting
+      console.log("tier01 set contents:", Array.from(window._tier01set));
     }
     // DEBUG OUTPUT:
     console.log('EGG CHECK', { normName, inTier01: window._tier01set.has(normName), basePoints, extra });
@@ -131,6 +132,11 @@ function cleanPokemonName(name) {
   cleaned = cleaned.replace(/\b\w/g, l => l.toUpperCase());
   return cleaned;
 }
+
+// --- FORCE TIER01 SET REBUILD SUPPORT ---
+window.rebuildTier01Set = function() {
+  window._tier01set = null;
+};
 
 // --- MAIN GALLERY RENDERING ---
 // This version: Each group/category has a header, followed by a grid of member cards for that group.
