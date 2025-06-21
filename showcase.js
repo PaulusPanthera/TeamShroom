@@ -252,12 +252,15 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
         const name = cleanPokemonName(mon.name);
         // Get extra symbol fields if present in teamShowcase (alpha, egg, etc)
         let extra = (showcaseEntry && showcaseEntry.shinies && showcaseEntry.shinies[i]) || {};
+        // --- PATCH: If extra.clip is a string (the link), use !!extra.clip for the symbol
+        const hasClip = typeof extra.clip === "string" && extra.clip.trim().length > 0;
         return renderUnifiedCard({
           name: name,
           img: mon.url,
           info: mon.lost ? "Lost" : `${monPoints} Points`,
           lost: mon.lost,
           cardType: "pokemon",
+          clip: hasClip ? extra.clip : undefined,
           // Only pass these for the showcase, not for the main dex!
           symbols: {
             secret: !!extra.secret,
@@ -265,12 +268,30 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
             safari: !!extra.safari,
             event: !!extra.event,
             alpha: !!extra.alpha,
-            clip: !!extra.clip
+            clip: hasClip
           }
         });
       }).join("")}
     </div>
   `;
+
+  // Make Pokémon cards clickable, opening the clip if present
+  setTimeout(() => {
+    content.querySelectorAll('.unified-card').forEach(card => {
+      card.style.cursor = 'pointer';
+      card.onclick = function (e) {
+        if (window.getSelection && window.getSelection().toString()) return;
+        const cardType = card.getAttribute('data-card-type');
+        const cardName = card.getAttribute('data-name');
+        const clipUrl = card.getAttribute('data-clip');
+        if (cardType === "pokemon" && clipUrl) {
+          window.open(clipUrl, "_blank");
+          return;
+        }
+        // (rest of logic for other card types)
+      };
+    });
+  }, 0);
 }
 
 // --- SEARCH AND SORT SETUP ---
