@@ -89,7 +89,7 @@ const teamShowcase = [
   { name: "Eerie", shinies: [
     { name: "slowpoke" }, { name: "lanturn" }, { name: "girafarig" }, { name: "staravia" }, { name: "pelipper" },
     { name: "golbat" }, { name: "claydol" }, { name: "parasect" }, { name: "koffing" }, { name: "togetic" },
-    { name: "floatzel", lost: true }, { name: "gabite" }, { name: "buneary" }, { name: "ekans" }, { name: "haunter" }
+    { name: "floatzel", lost: true }, { name: "gabite" }, { name: "buneary" }, { name: "ekans" }, { name: "vanillite" }
   ] },
 
   { name: "ElMannun", shinies: [ { name: "seedot" }, { name: "nidorino" }, { name: "pidgey" } ] },
