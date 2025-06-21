@@ -323,10 +323,10 @@ const teamShowcase = [
   ] },
 
   { name: "PaulusTFT", shinies: [
-    { name: "mightyena" }, { name: "linoone" }, { name: "typhlosion" }, { name: "smeargle" }, { name: "camerupt" }, { name: "bellsprout" },
-    { name: "rapidash" }, { name: "miltank" }, { name: "swablu" }, { name: "scolipede" }, { name: "drilbur" }, { name: "cubchoo" },
+    { name: "mightyena" }, { name: "linoone" }, { name: "typhlosion", clip: true }, { name: "smeargle", clip: true }, { name: "camerupt", clip: true }, { name: "bellsprout" },
+    { name: "rapidash" }, { name: "miltank" }, { name: "swablu", event: true }, { name: "scolipede" }, { name: "drilbur", egg: true }, { name: "cubchoo" },
     { name: "cryogonal" }, { name: "metapod" }, { name: "donphan" }, { name: "slowbro" }, { name: "rattata" }, { name: "dodrio" },
-    { name: "paras" }, { name: "voltorb" }, { name: "weezing" }, { name: "gligar" }, { name: "amoonguss" }, { name: "koffing" }, { name: "golurk" }, { name: "stunky" }
+    { name: "paras" }, { name: "voltorb", secretshiny: true }, { name: "weezing" }, { name: "gligar" }, { name: "amoonguss" }, { name: "koffing", safari: true, secretshiny: true  }, { name: "golurk" }, { name: "stunky" }
   ] },
 
   { name: "peachhteaa", shinies: [
