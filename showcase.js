@@ -53,22 +53,46 @@ function getMemberSpriteUrls(memberName) {
 }
 
 // --- SCOREBOARD POINT LOGIC ---
-function getPointsForPokemon(name) {
+function getPointsForPokemon(name, extra = {}) {
   if (!window.POKEMON_POINTS && window.buildPokemonPoints) window.buildPokemonPoints();
   if (!window.POKEMON_POINTS) return 1;
+
   let normName = name
     .toLowerCase()
     .replace(/♀/g, "-f")
     .replace(/♂/g, "-m")
     .replace(/[\s.'’]/g, "");
-  return window.POKEMON_POINTS[normName] || 1;
+  let basePoints = window.POKEMON_POINTS[normName] || 1;
+
+  // Alpha: always 50
+  if (extra.alpha) return 50;
+
+  // Egg: 20 unless tier 0 or 1
+  if (extra.egg) {
+    const TIER_0_1 = (window.TIER_FAMILIES?.["Tier 0"] || []).concat(window.TIER_FAMILIES?.["Tier 1"] || []);
+    const T0T1norm = TIER_0_1.map(n =>
+      n.toLowerCase().replace(/♀/g,"-f").replace(/♂/g,"-m").replace(/[\s.'’]/g,"")
+    );
+    if (!T0T1norm.includes(normName)) return 20;
+    // else fall through to base tier points
+  }
+
+  // Secret/safari bonuses
+  let bonus = 0;
+  if (extra.secret) bonus += 10;
+  if (extra.safari) bonus += 5;
+
+  return basePoints + bonus;
 }
 function getMemberScoreboardPoints(member) {
   const showcaseEntry = (window.teamShowcase || []).find(m => m.name === member.name);
   if (!showcaseEntry || !Array.isArray(showcaseEntry.shinies)) return 0;
   return showcaseEntry.shinies
     .filter(mon => !mon.lost)
-    .reduce((sum, mon) => sum + getPointsForPokemon(mon.name), 0);
+    .reduce((sum, mon, i) => {
+      const extra = showcaseEntry.shinies[i] || {};
+      return sum + getPointsForPokemon(mon.name, extra);
+    }, 0);
 }
 
 // Utility to clean up Pokémon names
@@ -161,8 +185,6 @@ function renderShowcaseGallery(members, container, groupMode) {
           location.hash = `#showcase-${cardName}?sort=${sortMode}`;
         } else if (cardType === "pokemon") {
           // Future: open Pokédex view, etc.
-          // Example:
-          // location.hash = `#pokedex-${cardName}`;
         }
       };
     });
@@ -237,23 +259,32 @@ function groupMembersByPoints(members) {
 function renderMemberShowcase(member, sortMode = "alphabetical") {
   const content = document.getElementById('page-content');
   const shinies = getMemberShinies(member);
-  const points = getMemberScoreboardPoints(member);
-
   // Find the showcase data for this member so we can get the extra flags for each shiny
   const showcaseEntry = (window.teamShowcase || []).find(m => m.name === member.name);
+
+  // Compute total points for this member (using updated logic)
+  let totalPoints = 0;
+  if (showcaseEntry && Array.isArray(showcaseEntry.shinies)) {
+    totalPoints = showcaseEntry.shinies
+      .filter(mon => !mon.lost)
+      .reduce((sum, mon, i) => {
+        const extra = showcaseEntry.shinies[i] || {};
+        return sum + getPointsForPokemon(mon.name, extra);
+      }, 0);
+  }
 
   content.innerHTML = `
     <button class="back-btn" onclick="window.location.hash='#showcase?sort=${sortMode}'">← Back</button>
     <h1>${member.name}'s Shiny Showcase</h1>
-    <div>Shinies: ${shinies.filter(mon => !mon.lost).length} | Points: ${points}</div>
+    <div>Shinies: ${shinies.filter(mon => !mon.lost).length} | Points: ${totalPoints}</div>
     <div class="dex-grid" style="margin-top:1em;">
       ${shinies.map((mon, i) => {
-        const monPoints = getPointsForPokemon(mon.name);
         const name = cleanPokemonName(mon.name);
         // Get extra symbol fields if present in teamShowcase (alpha, egg, etc)
         let extra = (showcaseEntry && showcaseEntry.shinies && showcaseEntry.shinies[i]) || {};
         // --- PATCH: If extra.clip is a string (the link), use !!extra.clip for the symbol
         const hasClip = typeof extra.clip === "string" && extra.clip.trim().length > 0;
+        const monPoints = getPointsForPokemon(mon.name, extra);
         return renderUnifiedCard({
           name: name,
           img: mon.url,
