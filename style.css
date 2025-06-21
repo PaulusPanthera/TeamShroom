@@ -594,9 +594,9 @@ body.darkmode .unified-info {
   height: 28px;
   position: absolute;
   background: none;
-  border-radius: 8px;
-  border: 2.5px solid var(--accent);
-  box-shadow: 0 2px 8px #f2593733, 0 1px 3px #0002;
+  border-radius: 10px;
+  border: 2px solid #fffbe1;
+  box-shadow: 0 1px 8px #f2593733;
   opacity: 0.99;
   pointer-events: auto;
   display: block;
