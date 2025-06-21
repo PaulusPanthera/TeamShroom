@@ -29,6 +29,10 @@
   <script>
     if (window.buildPokemonPoints) window.buildPokemonPoints();
   </script>
+  <!-- FORCE TIER 0/1 SET REBUILD AFTER ALL SCRIPTS LOADED -->
+  <script>
+    if (window.rebuildTier01Set) window.rebuildTier01Set();
+  </script>
   <script>
     // Routing: supports #showcase, #showcase-<member>, #hitlist
     function renderPage() {
