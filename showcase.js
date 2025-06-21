@@ -71,9 +71,31 @@ function getPointsForPokemon(name, extra = {}) {
   if (extra.egg) {
     if (!window._tier01set) {
       const TIER_0_1 = (window.TIER_FAMILIES?.["Tier 0"] || []).concat(window.TIER_FAMILIES?.["Tier 1"] || []);
-      window._tier01set = new Set(TIER_0_1.map(n =>
-        n.toLowerCase().replace(/♀/g,"-f").replace(/♂/g,"-m").replace(/[\s.'’]/g,"")
-      ));
+      let allNames = [];
+      TIER_0_1.forEach(base => {
+        // Use the same normalization as in buildPokemonPoints
+        let familyBase = base
+          .toLowerCase()
+          .replace(/\[.*\]/g,"")
+          .replace(/♀/g,"-f")
+          .replace(/♂/g,"-m")
+          .replace(/[- '\.’]/g,"")
+          .trim();
+        if(window.pokemonFamilies && window.pokemonFamilies[familyBase]) {
+          window.pokemonFamilies[familyBase].forEach(famName => {
+            let key = famName
+              .toLowerCase()
+              .replace(/♀/g,"-f")
+              .replace(/♂/g,"-m")
+              .replace(/[- '\.’]/g,"")
+              .trim();
+            allNames.push(key);
+          });
+        } else {
+          allNames.push(familyBase);
+        }
+      });
+      window._tier01set = new Set(allNames);
     }
     // DEBUG OUTPUT:
     console.log('EGG CHECK', { normName, inTier01: window._tier01set.has(normName), basePoints, extra });
