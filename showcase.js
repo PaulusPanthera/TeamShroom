@@ -95,11 +95,7 @@ function getPointsForPokemon(name, extra = {}) {
         }
       });
       window._tier01set = new Set(allNames);
-      // DEBUG: Print set for troubleshooting
-      console.log("tier01 set contents:", Array.from(window._tier01set));
     }
-    // DEBUG OUTPUT:
-    console.log('EGG CHECK', { normName, inTier01: window._tier01set.has(normName), basePoints, extra });
     if (!window._tier01set.has(normName)) return 20;
     // else fall through to base tier points
   }
@@ -139,7 +135,6 @@ window.rebuildTier01Set = function() {
 };
 
 // --- MAIN GALLERY RENDERING ---
-// This version: Each group/category has a header, followed by a grid of member cards for that group.
 function renderShowcaseGallery(members, container, groupMode) {
   if (!container) container = document.getElementById('showcase-gallery-container');
   container.innerHTML = "";
@@ -200,7 +195,6 @@ function renderShowcaseGallery(members, container, groupMode) {
     container.appendChild(gallery);
   });
 
-  // Add fallback/error/click handler for images and cards
   setTimeout(() => {
     // Entire card clickable (for both member and Pokémon cards in the future)
     container.querySelectorAll('.unified-card').forEach(card => {
@@ -211,17 +205,13 @@ function renderShowcaseGallery(members, container, groupMode) {
         const cardType = card.getAttribute('data-card-type');
         const cardName = card.getAttribute('data-name');
         if (cardType === "member") {
-          // Use the current sort mode
           const sortSelect = document.querySelector('.showcase-search-controls select');
           const sortMode = (sortSelect && sortSelect.value) || "alphabetical";
           location.hash = `#showcase-${cardName}?sort=${sortMode}`;
-        } else if (cardType === "pokemon") {
-          // Future: open Pokédex view, etc.
         }
       };
     });
 
-    // Keep the existing image fallback handler for broken images
     container.querySelectorAll('.unified-img').forEach(img => {
       img.onerror = function() {
         if (!this._srcIndex) this._srcIndex = 1;
@@ -291,10 +281,8 @@ function groupMembersByPoints(members) {
 function renderMemberShowcase(member, sortMode = "alphabetical") {
   const content = document.getElementById('page-content');
   const shinies = getMemberShinies(member);
-  // Find the showcase data for this member so we can get the extra flags for each shiny
   const showcaseEntry = (window.teamShowcase || []).find(m => m.name === member.name);
 
-  // Compute total points for this member (using updated logic)
   let totalPoints = 0;
   if (showcaseEntry && Array.isArray(showcaseEntry.shinies)) {
     totalPoints = showcaseEntry.shinies
@@ -312,9 +300,7 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
     <div class="dex-grid" style="margin-top:1em;">
       ${shinies.map((mon, i) => {
         const name = cleanPokemonName(mon.name);
-        // Get extra symbol fields if present in teamShowcase (alpha, egg, etc)
         let extra = (showcaseEntry && showcaseEntry.shinies && showcaseEntry.shinies[i]) || {};
-        // --- PATCH: If extra.clip is a string (the link), use !!extra.clip for the symbol
         const hasClip = typeof extra.clip === "string" && extra.clip.trim().length > 0;
         const monPoints = getPointsForPokemon(mon.name, extra);
         return renderUnifiedCard({
@@ -324,7 +310,6 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
           lost: mon.lost,
           cardType: "pokemon",
           clip: hasClip ? extra.clip : undefined,
-          // Only pass these for the showcase, not for the main dex!
           symbols: {
             secret: !!extra.secret,
             egg: !!extra.egg,
@@ -338,20 +323,17 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
     </div>
   `;
 
-  // Make Pokémon cards clickable, opening the clip if present
   setTimeout(() => {
     content.querySelectorAll('.unified-card').forEach(card => {
       card.style.cursor = 'pointer';
       card.onclick = function (e) {
         if (window.getSelection && window.getSelection().toString()) return;
         const cardType = card.getAttribute('data-card-type');
-        const cardName = card.getAttribute('data-name');
         const clipUrl = card.getAttribute('data-clip');
         if (cardType === "pokemon" && clipUrl) {
           window.open(clipUrl, "_blank");
           return;
         }
-        // (rest of logic for other card types)
       };
     });
   }, 0);
@@ -363,13 +345,11 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
     const controls = document.querySelector('.showcase-search-controls');
     controls.innerHTML = "";
 
-    // Search input
     const searchInput = document.createElement('input');
     searchInput.type = 'text';
     searchInput.placeholder = 'Search Member';
     controls.appendChild(searchInput);
 
-    // Dropdown menu for sort
     const sortSelect = document.createElement('select');
     sortSelect.style.marginLeft = '0.7em';
     [
@@ -385,11 +365,9 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
 
     controls.appendChild(sortSelect);
 
-    // Result count
     const resultCount = document.createElement('span');
     controls.appendChild(resultCount);
 
-    // Set from hash if available
     let sortMode = (function(){
       const m = window.location.hash.match(/sort=(\w+)/);
       return m ? m[1] : (initialSortMode || "alphabetical");
