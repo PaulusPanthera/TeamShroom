@@ -593,9 +593,9 @@ body.darkmode .unified-info {
   width: 28px;
   height: 28px;
   position: absolute;
-  background: var(--card-gradient);
+  background: none;
   border-radius: 8px;
-  /* border: 2.5px solid var(--accent); */
+  border: 2.5px solid var(--accent);
   box-shadow: 0 2px 8px #f2593733, 0 1px 3px #0002;
   opacity: 0.99;
   pointer-events: auto;
