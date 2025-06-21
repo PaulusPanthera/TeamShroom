@@ -14,9 +14,9 @@
   --shadow-hover: 0 10px 32px #f2593788, 0 4px 26px #0003;
 
   /* Symbol overlay variables for showcase cards */
-  --symbol-gap-x: 12px;     /* Horizontal gap from card border */
-  --symbol-top-y: 38px;     /* Distance from top for top symbols */
-  --symbol-bottom-y: 46px;  /* Distance from bottom for bottom symbols */
+  --symbol-gap-x: 12px;      /* Horizontal gap from card border */
+  --symbol-top-y: 54px;      /* Distance from top for top symbols (lowered for visual symmetry) */
+  --symbol-bottom-y: 46px;   /* Distance from bottom for bottom symbols */
 }
 
 body {
