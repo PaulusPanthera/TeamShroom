@@ -260,7 +260,7 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
           cardType: "pokemon",
           // Only pass these for the showcase, not for the main dex!
           symbols: {
-            secretshiny: !!extra.secretshiny,
+            secret: !!extra.secret,
             egg: !!extra.egg,
             safari: !!extra.safari,
             event: !!extra.event,
