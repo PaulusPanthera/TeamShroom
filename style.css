@@ -81,7 +81,7 @@ body.darkmode {
 
   /* Sticky under nav */
   position: sticky;
-  top: 4.5em;
+  top: 80px;
   z-index: 1049;
 }
 
