@@ -40,6 +40,7 @@ Hosted on GitHub Pages.
 - [ ] Add Rarity Count to Living Dex
 - [ ] Add Summary section to Shinies
 - [ ] Improve mobile and accessibility features
+- [ ] Donators Site
 
 ---
 
