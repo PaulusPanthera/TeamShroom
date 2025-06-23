@@ -5,6 +5,7 @@ body.darkmode .unified-card {
   filter: drop-shadow(0 1px 4px #fff3);
 }
 
+/* Unclaimed state and hover: match light mode (from cards.css) */
 body.darkmode .unified-card.unclaimed {
   background: linear-gradient(132deg, #f4f4f4 70%, #e3e3e3 100%) !important;
   border-color: #cccccc;
@@ -12,7 +13,6 @@ body.darkmode .unified-card.unclaimed {
   filter: grayscale(0.20) brightness(0.97);
   opacity: 0.93;
 }
-
 body.darkmode .unified-card.unclaimed:hover,
 body.darkmode .unified-card.unclaimed:focus-within {
   border-color: #aaa;
@@ -22,6 +22,7 @@ body.darkmode .unified-card.unclaimed:focus-within {
   opacity: 0.93;
 }
 
+/* Only override text shadow for name/info */
 body.darkmode .unified-name {
   text-shadow:
     2px 0 #fffbe1,
