@@ -8,8 +8,8 @@ window.buildTeamMembers = function() {
     shinies: Array.isArray(entry.shinies)
       ? entry.shinies.filter(mon => !mon.lost).length
       : 0,
-    status: entry.status,
-    donator: entry.donator
+    status: entry.status
+    // donator field removed: now set dynamically elsewhere
   }));
 };
 if (window.teamShowcase) window.buildTeamMembers();
@@ -196,7 +196,7 @@ function renderShowcaseGallery(members, container, groupMode) {
         info,
         cardType: "member",
         memberStatus: member.status,
-        donatorStatus: member.donator
+        donatorStatus: member.donator // This is now set dynamically elsewhere
       });
     });
 
