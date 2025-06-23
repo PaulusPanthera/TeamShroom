@@ -56,7 +56,7 @@
   { "name": "Difoolioo", "status": "", "donator": "", "shinies": [
     { "name": "gloom" }, { "name": "ponyta" }, { "name": "rapidash" }, { "name": "heatmor" }
   ] },
-  { "name": "Draind", "status": "", "donator": "", "shinies": [
+  { "name": "Drain", "status": "", "donator": "", "shinies": [
     { "name": "smeargle" }, { "name": "raticate", "lost": true }, { "name": "politoed" }, { "name": "weezing" }, { "name": "typhlosion", "egg": true },
     { "name": "weavile" }, { "name": "graveler" }, { "name": "gliscor" }, { "name": "vanilluxe" }, { "name": "donphan" },
     { "name": "aerodactyl", "egg": true }, { "name": "bibarel" }, { "name": "gallade" }, { "name": "chansey", "egg": true }, { "name": "excadrill", "egg": true }, { "name": "blastoise", "egg": true }, { "name": "floatzel" }
