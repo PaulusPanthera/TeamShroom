@@ -1,4 +1,6 @@
+// unifiedCard.js
 // Renders a unified card for Pokémon/member with icon slots
+
 function renderUnifiedCard({
   name,
   img,
@@ -36,9 +38,11 @@ function renderUnifiedCard({
   let cardAttributes = `class="${cardClass}" data-card-type="${cardType || ""}" data-name="${name.replace(/"/g, '&quot;')}"`;
   if (clip) cardAttributes += ` data-clip="${clip.replace(/"/g, '&quot;')}"`;
 
+  // Build all icons that need to be rendered for this card
   let symbolsHtml = "";
-  // For Pokémon cards, render their symbols as before
-  if (cardType === "pokemon" && symbols) {
+
+  if (cardType === "pokemon") {
+    // Pokémon card symbols
     symbolsHtml = `
       <div class="symbol-overlay">
         ${symbols.secret ? `<img class="symbol secret" src="symbols/secret.png" title="Secret" alt="Secret">` : ""}
@@ -49,9 +53,8 @@ function renderUnifiedCard({
         ${symbols.alpha ? `<img class="symbol alpha" src="symbols/alpha.png" title="Alpha" alt="Alpha">` : ""}
       </div>
     `;
-  }
-  // For member cards, render status/donator icon overlays (bottom left/right)
-  if (cardType === "member" && (statusIcon || donatorIcon)) {
+  } else if (cardType === "member" && (statusIcon || donatorIcon)) {
+    // Member card icons
     symbolsHtml = `
       <div class="symbol-overlay">
         ${statusIcon ? `<img class="symbol member-status" src="${statusIcon}" alt="Member Status">` : ""}
@@ -60,7 +63,7 @@ function renderUnifiedCard({
     `;
   }
 
-  // Determine name length class
+  // Name class for truncation
   let nameClass = "unified-name";
   if (name.length > 13) nameClass += " long-name";
   if (name.length > 16) nameClass += " very-long-name";
