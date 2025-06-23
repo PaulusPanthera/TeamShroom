@@ -6,18 +6,20 @@
   <!-- Retro Pixel Font -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style/base.css">
-<link rel="stylesheet" href="style/layout.css">
-<link rel="stylesheet" href="style/cards.css">
-<link rel="stylesheet" href="style/buttons.css">
-<link rel="stylesheet" href="style/search.css">
-<link rel="stylesheet" href="style/tooltip.css">
-<link rel="stylesheet" href="style/darkmode.css">
+  <link rel="stylesheet" href="style/layout.css">
+  <link rel="stylesheet" href="style/cards.css">
+  <link rel="stylesheet" href="style/buttons.css">
+  <link rel="stylesheet" href="style/search.css">
+  <link rel="stylesheet" href="style/tooltip.css">
+  <link rel="stylesheet" href="style/darkmode.css">
   <link rel="icon" href="data:,">
 </head>
 <body>
   <div class="nav">
     <a href="#showcase" id="nav-showcase">Shiny Showcase</a>
     <a href="#hitlist" id="nav-hitlist">Shiny Pokedex</a>
+    <a href="#shinyweekly" id="nav-shinyweekly">Shiny Weekly</a>
+    <a href="#donators" id="nav-donators">Donators</a>
   </div>
   <button id="darkmode-toggle" style="position: absolute; top: 1rem; right: 1.5rem; z-index: 1000; background: var(--card); color: var(--accent); border: 2px solid var(--accent); border-radius: 8px; font-family: 'Press Start 2P', monospace; font-size: 1em; padding: 0.4em 1em; cursor: pointer; box-shadow: 0 2px 10px #000a; transition: background 0.2s, color 0.2s;">
     🌙 Dark Mode
@@ -40,11 +42,16 @@
     if (window.rebuildTier01Set) window.rebuildTier01Set();
   </script>
   <script>
-    // Routing: supports #showcase, #showcase-<member>, #hitlist
+    // Routing: supports #showcase, #showcase-<member>, #hitlist, #shinyweekly, #donators
     function renderPage() {
       let hash = window.location.hash.replace("#", "");
       document.querySelectorAll('.nav a').forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + (hash.split("-")[0] || "showcase"));
+        let navId = a.getAttribute('href').replace('#','');
+        let active = false;
+        if (hash.startsWith(navId)) active = true;
+        // For default page (no hash), activate showcase
+        if (!hash && navId === 'showcase') active = true;
+        a.classList.toggle('active', active);
       });
 
       const content = document.getElementById('page-content');
@@ -84,6 +91,10 @@
             }
           }, 0);
         }, 0);
+      } else if (hash === "shinyweekly") {
+        content.innerHTML = "<h1>Shiny Weekly</h1><div style='font-size:1.4em; margin:2em 0; color:var(--accent); text-align:center;'>soon-to-be</div>";
+      } else if (hash === "donators") {
+        content.innerHTML = "<h1>Donators</h1><div style='font-size:1.4em; margin:2em 0; color:var(--accent); text-align:center;'>soon-to-be</div>";
       } else {
         content.innerHTML = "<h1>Page not found.</h1>";
       }
