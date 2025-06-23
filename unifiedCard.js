@@ -1,6 +1,19 @@
 // unifiedCard.js
 // Renders a unified card for Pokémon/member with icon slots
 
+// --- Add this mapping at the top (before renderUnifiedCard) ---
+// Map Pokémon name to scale factor for animated GIFs or PNGs.
+// Only add entries for outliers; default is 1.
+const pokemonImgScales = {
+  // Example: "Onix": 0.85, "Wailord": 0.75
+  // Add entries for outlier Pokémon only if needed.
+};
+
+// Helper to get scale
+function getPokemonImgScale(name) {
+  return pokemonImgScales[name] || 1;
+}
+
 function renderUnifiedCard({
   name,
   img,
@@ -64,15 +77,12 @@ function renderUnifiedCard({
   if (name.length > 13) nameClass += " long-name";
   if (name.length > 16) nameClass += " very-long-name";
 
-  // --- Apply scale style if defined ---
-  const scale = getPokemonImgScale(name);
-  const imgStyle = scale !== 1 ? `style="transform: scale(${scale});"` : "";
-
+  // No scaling: revert to just standard .unified-img!
   return `
     <div ${cardAttributes}>
       ${symbolsHtml}
       <span class="${nameClass}">${name}</span>
-      <img class="unified-img" src="${img}" alt="${name}" ${imgStyle}>
+      <img class="unified-img" src="${img}" alt="${name}">
       <span class="unified-info${lost ? ' lost' : ''}">${info || ""}</span>
     </div>
   `;
