@@ -1,43 +1,76 @@
-// unifiedCard.js
-// Shared card renderer for all modules, now with optional symbol overlays for showcase shinies
+// Renders a unified card for Pokémon/member with icon slots
+function renderUnifiedCard({
+  name,
+  img,
+  info,
+  unclaimed,
+  lost,
+  cardType,
+  clip,
+  symbols = {},
+  memberStatus,
+  donatorStatus
+}) {
+  // Symbol icon mapping for member status
+  const statusIconMap = {
+    spore: "sporesprite.png",
+    shroom: "shroomsprite.png",
+    shinyshroom: "shinyshroomsprite.png",
+    mushcap: "mushcapsprite.png"
+  };
+  // Symbol icon mapping for donator status
+  const donatorIconMap = {
+    bronze: "bronzedonatorsprite.png",
+    silver: "silverdonatorsprite.png",
+    gold: "golddonatorsprite.png",
+    platinum: "platinumdonatorsprite.png",
+    diamond: "diamonddonatorsprite.png",
+    top: "topdonatorsprite.png"
+  };
+  const statusIcon = memberStatus && statusIconMap[memberStatus] ? `symbols/${statusIconMap[memberStatus]}` : "";
+  const donatorIcon = donatorStatus && donatorIconMap[donatorStatus] ? `symbols/${donatorIconMap[donatorStatus]}` : "";
 
-window.renderUnifiedCard = function(opts) {
-  // opts: { name, img, info, lost, unclaimed, cardType, symbols, clip }
-  let nameClass = "unified-name";
-  if (opts.name.length > 16 && opts.name.length <= 22) {
-    nameClass += " long-name";
-  } else if (opts.name.length > 22) {
-    nameClass += " very-long-name";
-  }
-  const cardType = opts.cardType || "member";
-  const dataName = String(opts.name).replace(/"/g, "&quot;");
+  let cardClass = "unified-card";
+  if (unclaimed) cardClass += " unclaimed";
+  if (lost) cardClass += " lost";
+  let cardAttributes = `class="${cardClass}" data-card-type="${cardType || ""}" data-name="${name.replace(/"/g, '&quot;')}"`;
+  if (clip) cardAttributes += ` data-clip="${clip.replace(/"/g, '&quot;')}"`;
 
-  // Symbol overlay logic (only for showcase with .symbols property)
-  let symbolOverlay = "";
-  const s = opts.symbols || {};
-  if (s && Object.values(s).some(Boolean)) {
-    symbolOverlay = `
+  let symbolsHtml = "";
+  // For Pokémon cards, render their symbols as before
+  if (cardType === "pokemon" && symbols) {
+    symbolsHtml = `
       <div class="symbol-overlay">
-        ${s.secret ? `<img class="symbol secret" src="symbols/secretshinysprite.png" title="Secret Shiny">` : ""}
-        ${s.egg ? `<img class="symbol egg" src="symbols/eggsprite.png" title="Egg">` : ""}
-        ${s.safari ? `<img class="symbol safari" src="symbols/safarisprite.png" title="Safari">` : ""}
-        ${s.event ? `<img class="symbol event" src="symbols/eventsprite.png" title="Event">` : ""}
-        ${s.alpha ? `<img class="symbol alpha" src="symbols/alphasprite.png" title="Alpha">` : ""}
-        ${s.clip ? `<img class="symbol clip" src="symbols/clipsprite.png" title="Clip">` : ""}
+        ${symbols.secret ? `<img class="symbol secret" src="symbols/secret.png" title="Secret" alt="Secret">` : ""}
+        ${symbols.event ? `<img class="symbol event" src="symbols/event.png" title="Event" alt="Event">` : ""}
+        ${symbols.safari ? `<img class="symbol safari" src="symbols/safari.png" title="Safari" alt="Safari">` : ""}
+        ${symbols.clip ? `<img class="symbol clip" src="symbols/clip.png" title="Clip" alt="Clip">` : ""}
+        ${symbols.egg ? `<img class="symbol egg" src="symbols/egg.png" title="Egg" alt="Egg">` : ""}
+        ${symbols.alpha ? `<img class="symbol alpha" src="symbols/alpha.png" title="Alpha" alt="Alpha">` : ""}
+      </div>
+    `;
+  }
+  // For member cards, render status/donator icon overlays (bottom left/right)
+  if (cardType === "member" && (statusIcon || donatorIcon)) {
+    symbolsHtml = `
+      <div class="symbol-overlay">
+        ${statusIcon ? `<img class="symbol member-status" src="${statusIcon}" alt="Member Status">` : ""}
+        ${donatorIcon ? `<img class="symbol donator-status" src="${donatorIcon}" alt="Donator Status">` : ""}
       </div>
     `;
   }
 
-  // If there's a clip link, add data-clip attribute
-  const dataClip = opts.clip ? ` data-clip="${String(opts.clip).replace(/"/g, "&quot;")}"` : "";
+  // Determine name length class
+  let nameClass = "unified-name";
+  if (name.length > 13) nameClass += " long-name";
+  if (name.length > 16) nameClass += " very-long-name";
 
   return `
-    <div class="unified-card${opts.lost ? ' lost' : ''}${opts.unclaimed ? ' unclaimed' : ''}" 
-         data-card-type="${cardType}" data-name="${dataName}"${dataClip}>
-      ${symbolOverlay}
-      <div class="${nameClass}">${opts.name}</div>
-      <img src="${opts.img}" alt="${opts.name}" class="unified-img"${opts.lost ? ' style="opacity:0.6;filter:grayscale(1);"' : ""}>
-      <div class="unified-info${opts.lost ? ' lost' : ''}">${opts.info}</div>
+    <div ${cardAttributes}>
+      ${symbolsHtml}
+      <span class="${nameClass}">${name}</span>
+      <img class="unified-img" src="${img}" alt="${name}">
+      <span class="unified-info${lost ? ' lost' : ''}">${info || ""}</span>
     </div>
   `;
-};
+}
