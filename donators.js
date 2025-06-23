@@ -52,7 +52,7 @@ window.assignDonatorTiersToTeam = function() {
 // Donators Page Logic
 function renderDonators() {
   const content = document.getElementById('page-content');
-  content.innerHTML = "<h1>Donators</h1><div id='donators-list'></div>";
+  content.innerHTML = "<div id='donators-list'></div>";
 
   if (!window.donations) {
     document.getElementById('donators-list').innerHTML = "Donations data not loaded.";
