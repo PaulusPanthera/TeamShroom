@@ -104,6 +104,12 @@
     if (filter === "claimed") return !!entry.claimed;
     if (filter === "unclaimed") return !entry.claimed;
 
+    // --- Region search support ---
+    const regionList = ["kanto", "johto", "hoenn", "sinnoh", "unova"];
+    if (regionList.includes(filter)) {
+      return (entry.region && entry.region.toLowerCase() === filter);
+    }
+
     // Otherwise, match name or claimed string
     let nameMatch = entry.name.toLowerCase().includes(filter);
     let claimedMatch = entry.claimed && typeof entry.claimed === "string"
