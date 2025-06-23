@@ -21,7 +21,13 @@ Hosted on GitHub Pages.
 ## Project Structure
 
 - `index.html` — Main site page and routing logic.
-- `style.css` — Styling for the site.
+- /style/
+  base.css          /* variables, resets, fonts */
+  layout.css        /* layout, nav, container styles */
+  cards.css         /* unified-card/card styles */
+  buttons.css       /* button styles (including back-btn, tabs) */
+  darkmode.css      /* dark mode overrides */
+  tooltip.css       /* tooltip and popover styles */
 - `shinydex.js` — Full shiny Pokédex data and claims.
 - `teamshowcase.js` — Shiny lists per team member.
 - `showcase.js` — Showcase logic and shiny points display.
