@@ -41,6 +41,14 @@
   <script>
     if (window.rebuildTier01Set) window.rebuildTier01Set();
   </script>
+  <!-- DONATORS DATA LOADING -->
+  <script>
+    fetch('donations.json').then(r=>r.json()).then(d=>{
+      window.donations = d;
+      if (window.teamShowcase && window.assignDonatorTiersToTeam) window.assignDonatorTiersToTeam();
+    });
+  </script>
+  <script src="donators.js"></script>
   <script>
     // Routing: supports #showcase, #showcase-<member>, #hitlist, #shinyweekly, #donators
     function renderPage() {
@@ -94,7 +102,7 @@
       } else if (hash === "shinyweekly") {
         content.innerHTML = "<h1>Shiny Weekly</h1><div style='font-size:1.4em; margin:2em 0; color:var(--accent); text-align:center;'>soon-to-be</div>";
       } else if (hash === "donators") {
-        content.innerHTML = "<h1>Donators</h1><div style='font-size:1.4em; margin:2em 0; color:var(--accent); text-align:center;'>soon-to-be</div>";
+        renderDonators();
       } else {
         content.innerHTML = "<h1>Page not found.</h1>";
       }
