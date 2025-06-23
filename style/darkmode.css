@@ -1,5 +1,3 @@
-/* Only color overrides for cards in dark mode. Keeps layout/spacing/structure from cards.css! */
-
 body.darkmode .unified-card {
   background: linear-gradient(132deg, #fffbe1 65%, #ffe595 100%) !important;
   color: #222 !important;
@@ -15,13 +13,44 @@ body.darkmode .unified-card:focus-within {
   filter: brightness(1.08) drop-shadow(0 2px 12px #fff9);
   z-index: 10;
 }
+body.darkmode .unified-card::before {
+  /* SHIMMER overlay, use gold/white for light cards */
+  background: linear-gradient(120deg, rgba(255, 210, 80, 0.16) 0%, rgba(255,255,255,0.12) 100%);
+  border-radius: 18px;
+}
+body.darkmode .unified-img {
+  background: #fffbe1;
+  border: 2.5px solid #ffe595;
+  border-radius: 14px;
+}
+
+/* Name badge for darkmode: bright background, dark border and text */
+body.darkmode .unified-name {
+  color: #222 !important;
+  background: rgba(255, 245, 180, 0.94) !important;
+  border: 2px solid #c8ac3f !important;
+  box-shadow: 0 2px 8px #ffe59555;
+  text-shadow: 1px 1px 0 #fffbe1, 0 0px #fffbe1;
+}
+/* Info badge for darkmode: matching light background */
+body.darkmode .unified-info {
+  color: #222 !important;
+  background: rgba(255,255,255,0.30);
+  text-shadow: 0 1px 1px #fff;
+  border: 2px solid #ffe59555 !important;
+}
+body.darkmode .unified-info.lost {
+  color: #a22 !important;
+}
+
+/* Unclaimed: faded/distinct on light background */
 body.darkmode .unified-card.unclaimed {
   background: linear-gradient(132deg, #f4f4f4 70%, #e3e3e3 100%) !important;
   color: #999 !important;
   border-color: #bbb;
   box-shadow: 0 4px 20px #bbb4, 0 1.5px 12px #ccc8;
-  filter: grayscale(0.6) brightness(1.14) blur(0.5px) !important;
-  opacity: 0.70 !important;
+  filter: grayscale(0.6) brightness(1.10) blur(0.5px) !important;
+  opacity: 0.65 !important;
   position: relative;
 }
 body.darkmode .unified-card.unclaimed:hover,
@@ -30,7 +59,7 @@ body.darkmode .unified-card.unclaimed:focus-within {
   background: linear-gradient(126deg, #eeeeee 85%, #e3e3e3 100%) !important;
   box-shadow: 0 8px 32px #bbb8, 0 2px 16px #eee8;
   filter: grayscale(0.4) brightness(1.18);
-  opacity: 0.82;
+  opacity: 0.75;
 }
 body.darkmode .unified-card.unclaimed::before { display: none !important; }
 body.darkmode .unified-card.unclaimed::after {
@@ -45,16 +74,4 @@ body.darkmode .unified-card.unclaimed::after {
   opacity: 0.33;
   pointer-events: none;
   text-shadow: 0 2px 6px #fff, 0 1px 2px #e3e3e3;
-}
-body.darkmode .unified-name {
-  color: var(--accent) !important;
-  text-shadow: 2px 0 #fffbe1, -2px 0 #fffbe1, 0 2px #fffbe1, 0 -2px #fffbe1, 1px 1px 0 #000;
-}
-body.darkmode .unified-info {
-  color: var(--accent) !important;
-  background: rgba(255,255,255,0.13);
-  text-shadow: 0 1px 1px #fff;
-}
-body.darkmode .unified-info.lost {
-  color: #a22 !important;
 }
