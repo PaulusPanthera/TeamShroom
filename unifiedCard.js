@@ -1,6 +1,24 @@
 // unifiedCard.js
 // Renders a unified card for Pokémon/member with icon slots
 
+// --- Add this mapping at the top (before renderUnifiedCard) ---
+// Map Pokémon name to scale factor for animated GIFs or PNGs.
+// Only add entries for outliers; default is 1.
+const pokemonImgScales = {
+  "Bulbasaur": 0.7,
+  "Ivysaur": 0.8,
+  "Charmander": 0.65,
+  "Charmeleon": 0.8,
+  "Squirtle": 0.65,
+  "Wartotle": 0.8,
+  // Add more as needed
+};
+
+// Helper to get scale
+function getPokemonImgScale(name) {
+  return pokemonImgScales[name] || 1;
+}
+
 function renderUnifiedCard({
   name,
   img,
@@ -13,14 +31,12 @@ function renderUnifiedCard({
   memberStatus,
   donatorStatus
 }) {
-  // Symbol icon mapping for member status
   const statusIconMap = {
     spore: "sporesprite.png",
     shroom: "shroomsprite.png",
     shinyshroom: "shinyshroomsprite.png",
     mushcap: "mushcapsprite.png"
   };
-  // Symbol icon mapping for donator status
   const donatorIconMap = {
     bronze: "bronzedonatorsprite.png",
     silver: "silverdonatorsprite.png",
@@ -42,7 +58,6 @@ function renderUnifiedCard({
   let symbolsHtml = "";
 
   if (cardType === "pokemon") {
-    // Pokémon card symbols
     symbolsHtml = `
   <div class="symbol-overlay">
     ${symbols.secret ? `<img class="symbol secret" src="symbols/secretshinysprite.png" title="Secret" alt="Secret">` : ""}
@@ -54,7 +69,6 @@ function renderUnifiedCard({
   </div>
 `;
   } else if (cardType === "member" && (statusIcon || donatorIcon)) {
-    // Member card icons
     symbolsHtml = `
       <div class="symbol-overlay">
         ${statusIcon ? `<img class="symbol member-status" src="${statusIcon}" alt="Member Status">` : ""}
@@ -68,11 +82,15 @@ function renderUnifiedCard({
   if (name.length > 13) nameClass += " long-name";
   if (name.length > 16) nameClass += " very-long-name";
 
+  // --- Apply scale style if defined ---
+  const scale = getPokemonImgScale(name);
+  const imgStyle = scale !== 1 ? `style="transform: scale(${scale});"` : "";
+
   return `
     <div ${cardAttributes}>
       ${symbolsHtml}
       <span class="${nameClass}">${name}</span>
-      <img class="unified-img" src="${img}" alt="${name}">
+      <img class="unified-img" src="${img}" alt="${name}" ${imgStyle}>
       <span class="unified-info${lost ? ' lost' : ''}">${info || ""}</span>
     </div>
   `;
