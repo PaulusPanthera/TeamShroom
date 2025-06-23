@@ -1,15 +1,18 @@
 // Team Shroom members and their shiny counts
 // Uses unified-card for all member and shiny cards
 
-const teamMembers = (window.teamShowcase || []).map(entry => ({
-  name: entry.name,
-  shinies: Array.isArray(entry.shinies)
-    ? entry.shinies.filter(mon => !mon.lost).length
-    : 0,
-  // Add status and donator from name variable if present in teamShowcase (see below)
-  status: entry.status,
-  donator: entry.donator
-}));
+// Instead of a top-level const, build teamMembers only after teamShowcase is loaded.
+window.buildTeamMembers = function() {
+  window.teamMembers = (window.teamShowcase || []).map(entry => ({
+    name: entry.name,
+    shinies: Array.isArray(entry.shinies)
+      ? entry.shinies.filter(mon => !mon.lost).length
+      : 0,
+    status: entry.status,
+    donator: entry.donator
+  }));
+};
+if (window.teamShowcase) window.buildTeamMembers();
 
 // Helper to generate the correct shiny gif url
 function shinyGifUrl(name) {
@@ -187,7 +190,6 @@ function renderShowcaseGallery(members, container, groupMode) {
         const pts = getMemberScoreboardPoints(member);
         info = `Points: ${pts}`;
       }
-      // Pass status/donator variables to renderUnifiedCard
       gallery.innerHTML += renderUnifiedCard({
         name: member.name,
         img: spriteUrl,
@@ -427,3 +429,6 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
     updateResults();
   };
 })();
+
+// --- Ensure teamMembers is built whenever teamShowcase is available (for async JSON) ---
+if (!window.teamMembers && window.teamShowcase) window.buildTeamMembers();
