@@ -2,9 +2,7 @@
 
 const teamShowcase = [
 
-  { name: "akaFlexy", shinies: [ { name: "claydol" }, { name: "ponyta" } ] },
-
-  { name: "ANNlLlATION", shinies: [ { name: "larvesta" } ] },
+  { name: "akaFlexy", status: "spore", shinies: [ { name: "claydol" }, { name: "ponyta" } ] },
 
   { name: "ashash", shinies: [ { name: "rattata" }, { name: "magikarp" }, { name: "rhydon" } ] },
 
@@ -234,7 +232,7 @@ const teamShowcase = [
     { name: "pidgey", lost: true }, { name: "bellossom" }, { name: "crobat" }, { name: "rattata" }, { name: "snorunt" }
   ] },
 
-  { name: "Luna", shinies: [
+  { name: "Luna", status: "mushcap", shinies: [
     { name: "plusle" }, { name: "kingdra" }, { name: "nidoking" }, { name: "sandslash" }, { name: "sandslash" },
     { name: "durant" }, { name: "altaria" }, { name: "lotad" }, { name: "pachirisu" }, { name: "hydreigon" },
     { name: "cacnea" }, { name: "golbat" }, { name: "solrock" }, { name: "crobat" }, { name: "sandshrew" },
@@ -344,7 +342,7 @@ const teamShowcase = [
     { name: "bibarel" }, { name: "dugtrio" }, { name: "snorlax" }
   ] },
 
-  { name: "PaulusTFT", shinies: [
+  { name: "PaulusTFT", status: "mushcap", donator: "bronze", shinies: [
     { name: "mightyena" }, { name: "linoone" }, 
     { name: "typhlosion", clip: "https://clips.twitch.tv/KathishObservantAppleVoHiYo-Myzgqwqa61TaTP1a" }, 
     { name: "smeargle", clip: "https://clips.twitch.tv/ScrumptiousVainBaconAllenHuhu-D4JAjsec_8vkJCTe" }, 
@@ -409,6 +407,8 @@ const teamShowcase = [
   { name: "QuinJay", shinies: [
     { name: "ursaring" }, { name: "kakuna" }
   ] },
+
+  { name: "Rakiza", shinies: [ { name: "larvesta" } ] },
 
   { name: "realjuckpop", shinies: [
     { name: "psyduck" }, { name: "rattata" }, { name: "koffing", lost: true }
