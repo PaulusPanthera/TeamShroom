@@ -1,0 +1,34 @@
+:root {
+  /* Colors */
+  --bg: #f4e2b2;
+  --bg2: #f9e7b0;
+  --card: #fffbe1;
+  --card-gradient: linear-gradient(132deg, #fffbe1 65%, #ffe595 100%);
+  --accent: #f25937;
+  --success: #67b356;
+  --claimed: #67b356;
+  --unclaimed: #f25937;
+  --text-main: #222;
+  --text-muted: #679a56;
+  --shadow-main: 0 6px 32px #0003, 0 1.5px 12px #f2593733;
+  --shadow-hover: 0 10px 32px #f2593788, 0 4px 26px #0003;
+
+  /* Symbol overlay variables for showcase cards */
+  --symbol-gap-x: 12px;
+  --symbol-top-y: 54px;
+  --symbol-bottom-y: 54px;
+}
+
+body {
+  background-color: var(--bg);
+  background-image: url('https://www.transparenttextures.com/patterns/square-bg.png');
+  background-size: 120px 120px;
+  background-attachment: fixed;
+  color: var(--text-main);
+  font-family: 'Press Start 2P', 'Consolas', 'monospace';
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  transition: background 0.4s, color 0.4s;
+}
