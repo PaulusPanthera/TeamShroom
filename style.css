@@ -249,20 +249,30 @@ body.darkmode {
   filter: grayscale(0.10) brightness(1.02);
 }
 body.darkmode .unified-card.unclaimed {
-  border-color: #3a3a3a;
-  background: linear-gradient(132deg, #282828 75%, #23243b 100%);
-  box-shadow: 0 4px 20px #23243b, 0 1.5px 12px #111b;
-  filter: grayscale(0.22) brightness(0.89);
-  opacity: 0.95;
+  /* Give unclaimed cards the same background and effect as hovered cards in darkmode */
+  background: linear-gradient(126deg, #ffe595 85%, #fffbe1 100%) !important;
+  border-color: var(--success);
+  box-shadow: 0 16px 40px 0 rgba(80,50,10,0.19), 0 3px 20px #f2593766, 0 2px 0 #fffbe1 inset, 0 0px 32px 10px #f2593730;
+  filter: brightness(1.08) drop-shadow(0 2px 12px #fff9);
+  opacity: 1;
 }
 body.darkmode .unified-card.unclaimed:hover, body.darkmode .unified-card.unclaimed:focus-within {
-  border-color: #444;
-  background: linear-gradient(126deg, #292929 85%, #23243b 100%);
-  box-shadow: 0 8px 32px #2a2a2a, 0 2px 16px #23243b;
-  filter: grayscale(0.12) brightness(1.00);
+  border-color: var(--success);
+  background: linear-gradient(126deg, #ffe595 85%, #fffbe1 100%) !important;
+  box-shadow: 0 16px 40px 0 rgba(80,50,10,0.19), 0 3px 20px #f2593766, 0 2px 0 #fffbe1 inset, 0 0px 32px 10px #f2593730;
+  filter: brightness(1.08) drop-shadow(0 2px 12px #fff9);
+  opacity: 1;
 }
 .unified-card.unclaimed::before {
   display: none !important;
+}
+
+/* --- DARKMODE: Make all cards always look like hovered state --- */
+body.darkmode .unified-card {
+  background: linear-gradient(126deg, #ffe595 85%, #fffbe1 100%) !important;
+  border-color: var(--success);
+  box-shadow: 0 16px 40px 0 rgba(80,50,10,0.19), 0 3px 20px #f2593766, 0 2px 0 #fffbe1 inset, 0 0px 32px 10px #f2593730;
+  filter: brightness(1.08) drop-shadow(0 2px 12px #fff9);
 }
 
 /* Red name + pixel-outline for retro sharpness */
