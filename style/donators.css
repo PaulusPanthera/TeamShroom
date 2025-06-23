@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 1.5em;
+  gap: 1.2em;
   margin: 2em 0 2.7em 0;
   flex-wrap: wrap;
 }
@@ -13,7 +13,7 @@
   border-radius: 14px;
   box-shadow: 0 2px 14px #f2593744;
   padding: 1.25em 2em 1.5em 2em;
-  font-size: 1.13em;
+  font-size: 1.23em;
   text-align: left;
   border: 2.5px solid var(--accent);
   max-width: 500px;
@@ -26,7 +26,7 @@
 .how-to-donate-box h2 {
   color: var(--success);
   margin-bottom: 0.7em;
-  font-size: 1.18em;
+  font-size: 1.22em;
   letter-spacing: 1px;
 }
 .donate-highlight {
@@ -50,8 +50,8 @@
   font-size: 1.08em;
   text-align: left;
   border: 2.5px solid var(--success);
-  min-width: 430px;
-  max-width: 720px;
+  min-width: 540px;
+  max-width: 900px;
   margin-right: auto;
   margin-left: 0;
   min-height: 228px;
@@ -72,7 +72,7 @@
   border-spacing: 0 0.18em;
   background: transparent;
   font-size: 1em;
-  min-width: 400px;
+  min-width: 460px;
   table-layout: fixed;
 }
 .last-donations-table th,
@@ -84,9 +84,9 @@
   border: none;
   font-family: inherit;
   font-size: 0.98em;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .last-donations-table th {
   color: var(--card);
@@ -98,6 +98,10 @@
 .last-donations-table td {
   border-radius: 9px;
 }
+.last-donations-table td:nth-child(1) { width: 120px; }
+.last-donations-table td:nth-child(2) { width: 170px; }
+.last-donations-table td:nth-child(3) { width: 200px; }
+.last-donations-table td:nth-child(4) { width: 120px; }
 .last-donations-table .donation-item {
   color: var(--success);
   font-weight: bold;
@@ -195,23 +199,21 @@
 }
 
 /* Responsive for stacked on mobile */
-@media (max-width: 950px) {
+@media (max-width: 1100px) {
+  .last-donations-fixed-box {
+    min-width: 320px;
+    max-width: 99vw;
+    font-size: 1em;
+    padding: 1em 0.5em 1em 0.5em;
+  }
+  .how-to-donate-box {
+    max-width: 100%;
+    min-width: 0;
+    font-size: 1.1em;
+  }
   .donators-top-flex {
     flex-direction: column-reverse;
     gap: 1.6em;
     align-items: stretch;
-  }
-  .how-to-donate-box, .last-donations-fixed-box {
-    margin-left: 0;
-    margin-right: 0;
-    text-align: center;
-    max-width: 100%;
-    min-width: 0;
-  }
-  .last-donations-table th,
-  .last-donations-table td {
-    white-space: normal;
-    font-size: 0.95em;
-    padding: 0.26em 0.35em;
   }
 }
