@@ -20,6 +20,8 @@
   min-width: 280px;
   margin-left: auto;
   margin-right: 0;
+  min-height: 228px; /* fallback for matching last-donations-fixed-box */
+  box-sizing: border-box;
 }
 .how-to-donate-box h2 {
   color: var(--success);
@@ -44,14 +46,19 @@
   color: var(--accent);
   border-radius: 14px;
   box-shadow: 0 2px 14px #67b35633;
-  padding: 1.25em 1.7em 1.5em 1.7em;
+  padding: 1.25em 2.5em 1.5em 2.5em;
   font-size: 1.08em;
   text-align: left;
   border: 2.5px solid var(--success);
-  max-width: 390px;
-  min-width: 220px;
+  max-width: 650px;
+  min-width: 325px;
   margin-right: auto;
   margin-left: 0;
+  min-height: 228px; /* fallback for matching how-to-donate-box */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 .last-donations-fixed-box h2 {
   color: var(--success);
@@ -65,6 +72,7 @@
   border-spacing: 0 0.18em;
   background: transparent;
   font-size: 1em;
+  min-width: 300px;
 }
 .last-donations-table th,
 .last-donations-table td {
@@ -75,6 +83,7 @@
   border: none;
   font-family: inherit;
   font-size: 0.98em;
+  white-space: nowrap;
 }
 .last-donations-table th {
   color: var(--card);
@@ -93,95 +102,6 @@
   font-size: 0.97em;
 }
 
-.donators-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 0.4em;
-  background: transparent;
-  font-size: 1.08em;
-  margin-bottom: 2.5em;
-}
-.donators-table th,
-.donators-table td {
-  padding: 0.75em 1.2em;
-  text-align: left;
-  background: var(--card-gradient);
-  color: var(--accent);
-  border: none;
-  font-family: inherit;
-}
-.donators-table th {
-  position: sticky;
-  top: 0;
-  background: var(--accent);
-  color: var(--card);
-  z-index: 3;
-  font-size: 1.05em;
-  letter-spacing: 1px;
-  border-radius: 16px 16px 0 0;
-}
-.donators-table tr.top {
-  background: linear-gradient(90deg, #ffe595 70%, #f25937 120%);
-  font-weight: bold;
-  box-shadow: 0 2px 12px #f2593766;
-  border-radius: 20px;
-}
-.donators-table tr.diamond td { background: linear-gradient(90deg, #b8f0ff 60%, #6ef 120%);}
-.donators-table tr.platinum td { background: linear-gradient(90deg, #e9e9e9 60%, #bdbdbd 120%);}
-.donators-table tr.gold td { background: linear-gradient(90deg, #ffe595 60%, #ffd700 120%);}
-.donators-table tr.silver td { background: linear-gradient(90deg, #e6e6e6 60%, #cccccc 120%);}
-.donators-table tr.bronze td { background: linear-gradient(90deg, #ffdfb0 60%, #c97 120%);}
-.donators-table tr td {
-  vertical-align: middle;
-  border-radius: 12px;
-  background-clip: padding-box;
-}
-.donators-table td.donator-tier {
-  font-weight: bold;
-  font-size: 1em;
-  position: relative;
-}
-.donators-table .tier-icon {
-  width: 28px;
-  height: 28px;
-  vertical-align: middle;
-  margin-right: 0.3em;
-  margin-bottom: -5px;
-}
-.donators-table .placement {
-  font-weight: bold;
-  color: var(--accent);
-}
-.donator-tier-tooltip {
-  position: relative;
-  cursor: help;
-}
-.donator-tier-tooltip .tooltip-text {
-  visibility: hidden;
-  opacity: 0;
-  width: 180px;
-  background: #222;
-  color: #ffe595;
-  text-align: center;
-  border-radius: 8px;
-  padding: 0.6em 1em;
-  position: absolute;
-  z-index: 10;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 130%;
-  font-size: 0.98em;
-  box-shadow: 0 2px 12px #181a2088;
-  pointer-events: none;
-  transition: opacity 0.16s;
-}
-.donator-tier-tooltip:hover .tooltip-text,
-.donator-tier-tooltip:focus .tooltip-text {
-  visibility: visible;
-  opacity: 1;
-}
-
-/* Responsive layout for stacked on mobile */
 @media (max-width: 950px) {
   .donators-top-flex {
     flex-direction: column-reverse;
@@ -193,5 +113,12 @@
     margin-right: 0;
     text-align: center;
     max-width: 100%;
+    min-width: 0;
+  }
+  .last-donations-table th,
+  .last-donations-table td {
+    white-space: normal;
+    font-size: 0.95em;
+    padding: 0.26em 0.35em;
   }
 }
