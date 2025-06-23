@@ -1,0 +1,159 @@
+body.darkmode {
+  --bg: #181a20;
+  --bg2: #23243b;
+  --card: #23243b;
+  --card-gradient: linear-gradient(132deg, #23243b 55%, #181a20 100%);
+  --accent: #f25937;
+  --success: #67b356;
+  --claimed: #67b356;
+  --unclaimed: #f25937;
+  --text-main: #ffe595;
+  --text-muted: #679a56;
+  background-color: var(--bg);
+  background-image: url('https://www.transparenttextures.com/patterns/square-bg.png');
+  background-size: 120px 120px;
+  background-attachment: fixed;
+}
+
+/* FIXED HEADER, SEARCH, NIGHT MODE BUTTON */
+.nav {
+  display: flex;
+  gap: 1rem;
+  background: var(--accent);
+  padding: 1.2rem 2rem;
+  border-bottom: 3px solid var(--success);
+  box-shadow: 0 6px 32px #0005, 0 2px 20px #f2593766;
+  border-radius: 0 0 20px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 1050;
+}
+
+#darkmode-toggle {
+  position: fixed !important;
+  top: 1.2rem !important;
+  right: 1.5rem !important;
+  z-index: 1100 !important;
+}
+
+/* Make sure page content isn't hidden under fixed header + search */
+#page-content {
+  margin-top: 8em;
+  padding: 0 1.5rem;
+  min-height: 70vh;
+}
+
+/* REGION/SECTION CONTAINERS */
+.region-section {
+  margin-bottom: 2.5rem;
+  border-radius: 18px;
+  box-shadow: var(--shadow-main);
+  background: var(--card-gradient);
+  padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+  border: 1.5px solid #f2593733;
+}
+.region-section h2 {
+  color: var(--accent);
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  font-size: 1.2em;
+  border-bottom: 2px solid var(--success);
+  padding-bottom: 0.25em;
+  padding-left: 1.1em;
+  text-shadow: 0 0 5px #f2593788, 1px 1px 0 #fffbe1;
+  border-radius: 0 0 14px 14px;
+}
+.scoreboard-member-section {
+  border-radius: 18px;
+  box-shadow: var(--shadow-main);
+  background: var(--card-gradient);
+  padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+  border: 1.5px solid #f2593733;
+  margin-bottom: 2.5rem;
+}
+.scoreboard-member-section h2 {
+  color: var(--accent);
+  font-size: 1.2em;
+  letter-spacing: 2px;
+  border-bottom: 2px solid var(--success);
+  padding-bottom: 0.25em;
+  padding-left: 1.1em;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 5px #f2593788, 1px 1px 0 #fffbe1;
+}
+.showcase-category-header {
+  grid-column: span 1;
+  font-size: 1.17em;
+  font-weight: bold;
+  color: var(--accent);
+  background: var(--card-gradient);
+  border-radius: 14px;
+  box-shadow: 0 2px 10px #f2593755;
+  padding: 0.14em 0.8em;
+  margin-bottom: 0.7em;
+  margin-top: 0.3em;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+/* --- FIXED GRID: uniform and even spacing everywhere --- */
+.showcase-gallery,
+.dex-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 2rem;
+  margin-top: 1.2rem;
+  margin-bottom: 2.5rem;
+  align-content: start;
+  justify-content: center;
+  place-items: center;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* --- Supergrid for categories/sections side by side --- */
+.showcase-supergrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  margin-bottom: 2em;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.showcase-supergrid > section {
+  min-width: 0;
+  flex: 1 1 260px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+  .showcase-gallery,
+  .dex-grid { grid-template-columns: repeat(6, 1fr);}
+  .showcase-supergrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .showcase-gallery,
+  .dex-grid { grid-template-columns: repeat(3, 1fr);}
+  .region-section { padding: 1.7rem 0.4rem 1.3rem 0.4rem; }
+  .scoreboard-member-section { padding: 1.7rem 0.4rem 1.3rem 0.4rem; }
+  .showcase-supergrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  body { font-size: 12px; }
+  .showcase-gallery,
+  .dex-grid { grid-template-columns: repeat(2, 1fr);}
+  .nav { padding: 1rem 0.3rem; }
+  .region-section, .scoreboard-member-section { padding: 1.2rem 0.2rem 1rem 0.2rem; }
+  .showcase-search-controls, .search-controls { padding: 0.5em 0.5em; }
+  .showcase-supergrid {
+    grid-template-columns: 1fr;
+  }
+}
