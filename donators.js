@@ -1,3 +1,5 @@
+// donators.js
+
 // Utility: parse "1.234.567" or "1000000" to integer
 function parseDonationValue(str) {
   return parseInt(str.replace(/\./g, "").replace(/,/g, ""));
@@ -6,16 +8,16 @@ function parseDonationValue(str) {
 // Determine donator tier
 function getDonatorTier(value, isTop) {
   if (isTop) return "top";
-  if (value > 50_000_000) return "diamond";
-  if (value > 25_000_000) return "platinum";
-  if (value > 10_000_000) return "gold";
-  if (value > 5_000_000)  return "silver";
-  if (value > 1_000_000)  return "bronze";
+  if (value >= 50_000_000) return "diamond";
+  if (value >= 25_000_000) return "platinum";
+  if (value >= 10_000_000) return "gold";
+  if (value >= 5_000_000)  return "silver";
+  if (value >= 1_000_000)  return "bronze";
   return "";
 }
 
-// This should be called after both donations and teamShowcase are loaded
-function assignDonatorTiersToTeam() {
+// Assign donator tiers to teamShowcase members if possible (for showcase gallery icons)
+window.assignDonatorTiersToTeam = function() {
   if (!window.donations || !window.teamShowcase) return;
   // Aggregate totals by name
   const totals = {};
@@ -32,7 +34,7 @@ function assignDonatorTiersToTeam() {
       maxValue = value;
     }
   });
-  // Assign donator status to member objects (in teamShowcase)
+  // Assign donator status/tiers to member objects (in teamShowcase)
   window.teamShowcase.forEach(member => {
     const value = totals[member.name] || 0;
     member.donator = getDonatorTier(value, member.name === maxName && value > 0);
@@ -52,8 +54,8 @@ function renderDonators() {
   const content = document.getElementById('page-content');
   content.innerHTML = "<h1>Donators</h1><div id='donators-list'></div>";
 
-  if (!window.donations || !window.teamShowcase) {
-    document.getElementById('donators-list').innerHTML = "Donations or team data not loaded.";
+  if (!window.donations) {
+    document.getElementById('donators-list').innerHTML = "Donations data not loaded.";
     return;
   }
 
@@ -74,10 +76,8 @@ function renderDonators() {
     }
   });
 
-  // Only show names that are also in teamShowcase
-  const showcaseNames = new Set(window.teamShowcase.map(m => m.name));
+  // Prepare donator list (all, not just teamshowcase)
   let donators = Object.entries(totals)
-    .filter(([name]) => showcaseNames.has(name))
     .map(([name, value]) => ({
       name,
       value,
@@ -105,6 +105,3 @@ function renderDonators() {
 
   document.getElementById('donators-list').innerHTML = html;
 }
-
-// Make sure to run assignDonatorTiersToTeam once both datasets are loaded
-if (window.donations && window.teamShowcase) assignDonatorTiersToTeam();
