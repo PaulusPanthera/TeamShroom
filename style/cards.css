@@ -136,10 +136,10 @@
   width: 28px;
   height: 28px;
   position: absolute;
-  background: none;
-  border-radius: 10px;
-  border: 2px solid var(--accent) !important;
-  box-shadow: 0 1px 8px #23243b33;
+  background: rgba(34, 36, 59, 0.88); /* match .unified-name background */
+  border-radius: 9px; /* match .unified-name border-radius */
+  border: 2px solid #ffe595aa !important; /* match .unified-name border */
+  box-shadow: 0 2px 8px #181a2077; /* match .unified-name box-shadow */
   opacity: 0.99;
   pointer-events: auto;
   display: block;
