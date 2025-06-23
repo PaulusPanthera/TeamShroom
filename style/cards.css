@@ -1,9 +1,10 @@
 /* UNIFIED CARD STYLE */
+/* DARK THEME by default (light-mode cards are dark, dark-mode cards will be swapped to light via darkmode.css) */
 .unified-card {
-  background: var(--card-gradient);
+  background: linear-gradient(132deg, #23243b 55%, #181a20 100%);
   border: 2.5px solid var(--accent);
   border-radius: 18px;
-  box-shadow: 0 8px 24px 0 rgba(80,50,10,0.11), 0 1.5px 12px #f2593733, 0 2px 0 #fffbe1 inset;
+  box-shadow: 0 8px 24px 0 rgba(80,50,10,0.26), 0 1.5px 12px #1a1a1a88, 0 2px 0 #181a20 inset;
   padding: 1.2em 0.8em 1.2em 0.8em;
   min-height: 180px;
   min-width: 0;
@@ -29,19 +30,19 @@
 }
 .unified-card:hover, .unified-card:focus-within {
   box-shadow: 
-    0 16px 40px 0 rgba(80,50,10,0.19), 
-    0 3px 20px #f2593766, 
-    0 2px 0 #fffbe1 inset,
-    0 0px 32px 10px #f2593730;
+    0 16px 40px 0 rgba(80,50,10,0.32), 
+    0 3px 20px #23243b66, 
+    0 2px 0 #23243b inset,
+    0 0px 32px 10px #23243b30;
   border-color: var(--success);
-  background: linear-gradient(126deg, #ffe595 85%, #fffbe1 100%);
+  background: linear-gradient(126deg, #2c2f50 85%, #181a20 100%);
   transform: translateY(-9px) scale(1.07) rotateZ(-2deg);
   filter: brightness(1.08) drop-shadow(0 2px 12px #fff9);
   z-index: 10;
 }
 .unified-card:active {
   transform: scale(0.97) translateY(3px);
-  box-shadow: 0 5px 24px 0 rgba(80,50,10,0.12), 0 1.5px 12px #f2593733;
+  box-shadow: 0 5px 24px 0 rgba(80,50,10,0.24), 0 1.5px 12px #23243b77;
 }
 .unified-card::before {
   content: "";
@@ -50,7 +51,7 @@
   left: -60%;
   width: 120%;
   height: 120%;
-  background: linear-gradient(120deg, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.04) 100%);
+  background: linear-gradient(120deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 100%);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s;
@@ -67,16 +68,16 @@
 }
 /* UNCLAIMED VARIATION */
 .unified-card.unclaimed {
-  border-color: #cccccc;
-  background: linear-gradient(132deg, #f4f4f4 70%, #e3e3e3 100%);
-  box-shadow: 0 4px 20px #bbb4, 0 1.5px 12px #ccc8;
+  border-color: #444;
+  background: linear-gradient(132deg, #32344a 70%, #22242f 100%);
+  box-shadow: 0 4px 20px #222a, 0 1.5px 12px #23243b44;
   filter: grayscale(0.20) brightness(0.97);
   opacity: 0.93;
 }
 .unified-card.unclaimed:hover, .unified-card.unclaimed:focus-within {
-  border-color: #aaa;
-  background: linear-gradient(126deg, #eeeeee 85%, #e3e3e3 100%);
-  box-shadow: 0 8px 32px #bbb8, 0 2px 16px #eee8;
+  border-color: #666;
+  background: linear-gradient(126deg, #3e405a 85%, #23243b 100%);
+  box-shadow: 0 8px 32px #23243b44, 0 2px 16px #23243b22;
   filter: grayscale(0.10) brightness(1.02);
 }
 .unified-card.unclaimed::before {
@@ -88,11 +89,11 @@
   font-weight: bold;
   color: var(--accent);
   text-shadow:
-    2px 0 #222,
-   -2px 0 #222,
-    0 2px #222,
-    0 -2px #222,
-    1px 1px 0 #fffbe1;
+    2px 0 #eee,
+   -2px 0 #eee,
+    0 2px #eee,
+    0 -2px #eee,
+    1px 1px 0 #222;
   margin-bottom: 0.22em;
   margin-top: 0.05em;
   max-width: 100%;
@@ -116,11 +117,11 @@
   display: block;
   margin: 0.3em 0;
   image-rendering: pixelated;
-  filter: contrast(1.2) brightness(0.97) drop-shadow(0 0 6px #f25937aa);
-  background: var(--bg);
+  filter: contrast(1.2) brightness(0.97) drop-shadow(0 0 6px #181a20aa);
+  background: #181a20;
   border-radius: 10px;
-  border: 2px solid #fffbe1;
-  box-shadow: 0 1px 8px #f2593733;
+  border: 2px solid #23243b;
+  box-shadow: 0 1px 8px #23243b33;
   transition: box-shadow 0.18s, border 0.18s;
 }
 /* Info/text badge */
@@ -128,7 +129,7 @@
   color: var(--text-main);
   font-size: 1em;
   margin-top: 0.18em;
-  background: rgba(255,255,255,0.13);
+  background: rgba(40,40,40,0.13);
   padding: 0.19em 0.8em;
   border-radius: 6px;
   font-weight: bold;
@@ -151,13 +152,13 @@
   position: absolute;
   background: none;
   border-radius: 10px;
-  border: 2px solid #fffbe1;
-  box-shadow: 0 1px 8px #f2593733;
+  border: 2px solid #23243b;
+  box-shadow: 0 1px 8px #23243b33;
   opacity: 0.99;
   pointer-events: auto;
   display: block;
   padding: 2px;
-  filter: contrast(1.2) brightness(0.97) drop-shadow(0 0 6px #f25937aa);
+  filter: contrast(1.2) brightness(0.97) drop-shadow(0 0 6px #181a20aa);
 }
 /* Top left: secret */
 .symbol.secret {
