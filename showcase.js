@@ -305,6 +305,22 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
     <button class="back-btn" onclick="window.location.hash='#showcase?sort=${sortMode}'">← Back</button>
     <h1>${member.name}'s Shiny Showcase</h1>
     <div>Shinies: ${shinies.filter(mon => !mon.lost).length} | Points: ${totalPoints}</div>
+    <div class="showcase-search-controls" style="margin-bottom:1.5em;">
+      <span class="icon-help-tooltip" tabindex="0">
+        <span class="icon-help">[?]</span>
+        <span class="icon-help-tooltip-box">
+          <b>Card Icon Legend</b><br>
+          <img class="symbol" src="symbols/secretshinysprite.png" alt="Secret" /> Secret Shiny<br>
+          <img class="symbol" src="symbols/eventsprite.png" alt="Event" /> Event Shiny<br>
+          <img class="symbol" src="symbols/safarisprite.png" alt="Safari" /> Safari Shiny<br>
+          <img class="symbol" src="symbols/clipsprite.png" alt="Clip" /> Clip/Video<br>
+          <img class="symbol" src="symbols/eggsprite.png" alt="Egg" /> Hatched from Egg<br>
+          <img class="symbol" src="symbols/alphasprite.png" alt="Alpha" /> Alpha Shiny<br>
+          <img class="symbol" src="symbols/bronzedonatorsprite.png" alt="Bronze" /> Donator Tier<br>
+          <img class="symbol" src="symbols/shroomsprite.png" alt="Member" /> Team Member<br>
+        </span>
+      </span>
+    </div>
     <div class="dex-grid" style="margin-top:1em;">
       ${shinies.map((mon, i) => {
         const name = cleanPokemonName(mon.name);
@@ -372,6 +388,26 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
     });
 
     controls.appendChild(sortSelect);
+
+    // Add the [?] icon legend tooltip
+    const iconLegend = document.createElement('span');
+    iconLegend.className = "icon-help-tooltip";
+    iconLegend.tabIndex = 0;
+    iconLegend.innerHTML = `
+      <span class="icon-help">[?]</span>
+      <span class="icon-help-tooltip-box">
+        <b>Card Icon Legend</b><br>
+        <img class="symbol" src="symbols/secretshinysprite.png" alt="Secret" /> Secret Shiny<br>
+        <img class="symbol" src="symbols/eventsprite.png" alt="Event" /> Event Shiny<br>
+        <img class="symbol" src="symbols/safarisprite.png" alt="Safari" /> Safari Shiny<br>
+        <img class="symbol" src="symbols/clipsprite.png" alt="Clip" /> Clip/Video<br>
+        <img class="symbol" src="symbols/eggsprite.png" alt="Egg" /> Hatched from Egg<br>
+        <img class="symbol" src="symbols/alphasprite.png" alt="Alpha" /> Alpha Shiny<br>
+        <img class="symbol" src="symbols/bronzedonatorsprite.png" alt="Bronze" /> Donator Tier<br>
+        <img class="symbol" src="symbols/shroomsprite.png" alt="Member" /> Team Member<br>
+      </span>
+    `;
+    controls.appendChild(iconLegend);
 
     const resultCount = document.createElement('span');
     controls.appendChild(resultCount);
