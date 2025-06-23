@@ -1,24 +1,6 @@
 // unifiedCard.js
 // Renders a unified card for Pokémon/member with icon slots
 
-// --- Add this mapping at the top (before renderUnifiedCard) ---
-// Map Pokémon name to scale factor for animated GIFs or PNGs.
-// Only add entries for outliers; default is 1.
-const pokemonImgScales = {
-  "Bulbasaur": 0.7,
-  "Ivysaur": 0.8,
-  "Charmander": 0.65,
-  "Charmeleon": 0.8,
-  "Squirtle": 0.65,
-  "Wartotle": 0.8
-  // Add more as needed
-};
-
-// Helper to get scale
-function getPokemonImgScale(name) {
-  return pokemonImgScales[name] || 1;
-}
-
 function renderUnifiedCard({
   name,
   img,
