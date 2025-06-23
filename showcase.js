@@ -5,7 +5,10 @@ const teamMembers = (window.teamShowcase || []).map(entry => ({
   name: entry.name,
   shinies: Array.isArray(entry.shinies)
     ? entry.shinies.filter(mon => !mon.lost).length
-    : 0
+    : 0,
+  // Add status and donator from name variable if present in teamShowcase (see below)
+  status: entry.status,
+  donator: entry.donator
 }));
 
 // Helper to generate the correct shiny gif url
@@ -184,11 +187,14 @@ function renderShowcaseGallery(members, container, groupMode) {
         const pts = getMemberScoreboardPoints(member);
         info = `Points: ${pts}`;
       }
+      // Pass status/donator variables to renderUnifiedCard
       gallery.innerHTML += renderUnifiedCard({
         name: member.name,
         img: spriteUrl,
         info,
-        cardType: "member"
+        cardType: "member",
+        memberStatus: member.status,
+        donatorStatus: member.donator
       });
     });
 
