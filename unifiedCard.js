@@ -45,12 +45,12 @@ function renderUnifiedCard({
     // Pokémon card symbols
     symbolsHtml = `
   <div class="symbol-overlay">
-    ${symbols.secret ? `<img class="symbol secret" src="symbols/secretsprite.png" title="Secret" alt="Secret">` : ""}
+    ${symbols.secret ? `<img class="symbol secret" src="symbols/secretshinysprite.png" title="Secret" alt="Secret">` : ""}
     ${symbols.event ? `<img class="symbol event" src="symbols/eventsprite.png" title="Event" alt="Event">` : ""}
     ${symbols.safari ? `<img class="symbol safari" src="symbols/safarisprite.png" title="Safari" alt="Safari">` : ""}
     ${symbols.clip ? `<img class="symbol clip" src="symbols/clipsprite.png" title="Clip" alt="Clip">` : ""}
     ${symbols.egg ? `<img class="symbol egg" src="symbols/eggsprite.png" title="Egg" alt="Egg">` : ""}
-    ${symbols.alpha ? `<img class="symbol alpha" src="symbols/alpha.png" title="Alpha" alt="Alpha">` : ""}
+    ${symbols.alpha ? `<img class="symbol alpha" src="symbols/alphasprite.png" title="Alpha" alt="Alpha">` : ""}
   </div>
 `;
   } else if (cardType === "member" && (statusIcon || donatorIcon)) {
