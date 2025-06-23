@@ -42,7 +42,6 @@ function getLastDonations(n = 5) {
 
 function renderLastDonationsCard() {
   const last = getLastDonations(5);
-  // Find height of how-to-donate-box, set min-height to match in CSS.
   return `
     <div class="last-donations-fixed-box">
       <h2>Last 5 Donations</h2>
@@ -62,7 +61,7 @@ function renderLastDonationsCard() {
                 ? last.map(d => `<tr>
                   <td>${d.date ? formatDonationDate(d.date) : "-"}</td>
                   <td>${d.name || "-"}</td>
-                  <td>${d.donation || d.item || "-"}</td>
+                  <td>${(d.donation || d.item || "").trim() ? (d.donation || d.item) : "Pokéyen"}</td>
                   <td>${d.value ? parseDonationValue(d.value).toLocaleString("en-US") : (d.value || "-")}</td>
                 </tr>`).join("")
                 : `<tr><td colspan="4" style="text-align:center;color:#999;font-style:italic;">No recent donations.</td></tr>`
@@ -161,7 +160,7 @@ function renderDonators() {
             <tr class="${rowClass}">
               <td class="placement">#${i + 1}</td>
               <td>${iconHtml}${d.name}</td>
-              <td>${d.value.toLocaleString("en-US")}</td>
+              <td style="background:var(--card-gradient);color:var(--accent);font-weight:bold;">${d.value.toLocaleString("en-US")}</td>
               <td class="donator-tier donator-tier-tooltip">
                 ${tierData.label}
                 ${tierData.desc ? `<span class="tooltip-text">${tierData.desc}</span>` : ""}
