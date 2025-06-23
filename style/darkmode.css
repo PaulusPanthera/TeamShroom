@@ -1,17 +1,14 @@
-/* In dark mode, show LIGHT cards (the original light-mode card style) */
+/* In dark mode, show LIGHT cards */
 body.darkmode .unified-card {
-  background: var(--card-gradient) !important;
+  background: linear-gradient(132deg, #fffbe1 65%, #ffe595 100%) !important;
+  color: #222 !important;
   border-color: var(--accent);
   box-shadow: 0 8px 24px 0 rgba(80,50,10,0.11), 0 1.5px 12px #f2593733, 0 2px 0 #fffbe1 inset;
-  filter: drop-shadow(0 1px 4px #fff3);
+  filter: none !important;
 }
 body.darkmode .unified-card:hover, 
 body.darkmode .unified-card:focus-within {
-  box-shadow: 
-    0 16px 40px 0 rgba(80,50,10,0.19), 
-    0 3px 20px #f2593766, 
-    0 2px 0 #fffbe1 inset,
-    0 0px 32px 10px #f2593730;
+  box-shadow: 0 16px 40px 0 rgba(80,50,10,0.19), 0 3px 20px #f2593766, 0 2px 0 #fffbe1 inset, 0 0px 32px 10px #f2593730;
   border-color: var(--success);
   background: linear-gradient(126deg, #ffe595 85%, #fffbe1 100%) !important;
   filter: brightness(1.08) drop-shadow(0 2px 12px #fff9);
@@ -19,31 +16,44 @@ body.darkmode .unified-card:focus-within {
 }
 body.darkmode .unified-card.unclaimed {
   background: linear-gradient(132deg, #f4f4f4 70%, #e3e3e3 100%) !important;
-  border-color: #cccccc;
+  color: #999 !important;
+  border-color: #bbb;
   box-shadow: 0 4px 20px #bbb4, 0 1.5px 12px #ccc8;
-  filter: grayscale(0.20) brightness(0.97);
-  opacity: 0.93;
+  filter: grayscale(0.6) brightness(1.14) blur(0.5px) !important;
+  opacity: 0.70 !important;
+  position: relative;
+}
+body.darkmode .unified-card.unclaimed::after {
+  content: "UNCLAIMED";
+  position: absolute;
+  bottom: 10px;
+  left: 0; right: 0;
+  color: #888;
+  font-size: 1.1em;
+  font-weight: bold;
+  letter-spacing: 2px;
+  opacity: 0.33;
+  pointer-events: none;
+  text-shadow: 0 2px 6px #fff, 0 1px 2px #e3e3e3;
 }
 body.darkmode .unified-card.unclaimed:hover,
 body.darkmode .unified-card.unclaimed:focus-within {
   border-color: #aaa;
   background: linear-gradient(126deg, #eeeeee 85%, #e3e3e3 100%) !important;
   box-shadow: 0 8px 32px #bbb8, 0 2px 16px #eee8;
-  filter: grayscale(0.10) brightness(1.02);
-  opacity: 0.93;
+  filter: grayscale(0.4) brightness(1.18);
+  opacity: 0.82;
 }
-body.darkmode .unified-card.unclaimed::before {
-  display: none !important;
-}
+body.darkmode .unified-card.unclaimed::before { display: none !important; }
 body.darkmode .unified-name {
-  text-shadow:
-    2px 0 #222,
-   -2px 0 #222,
-    0 2px #222,
-    0 -2px #222,
-    1px 1px 0 #fffbe1;
+  color: var(--accent) !important;
+  text-shadow: 2px 0 #fffbe1, -2px 0 #fffbe1, 0 2px #fffbe1, 0 -2px #fffbe1, 1px 1px 0 #000;
 }
 body.darkmode .unified-info {
+  color: var(--accent) !important;
   background: rgba(255,255,255,0.13);
-  color: var(--text-main);
+  text-shadow: 0 1px 1px #fff;
+}
+body.darkmode .unified-info.lost {
+  color: #a22 !important;
 }
