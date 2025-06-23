@@ -5,6 +5,18 @@ function parseDonationValue(str) {
   return parseInt(str.replace(/\./g, "").replace(/,/g, ""));
 }
 
+// Format date as YYYY-MM-DD or locale
+function formatDonationDate(dt) {
+  if (!dt) return "";
+  // Try to parse as ISO string
+  const d = new Date(dt);
+  if (!isNaN(d.getTime())) {
+    // Format as YYYY-MM-DD
+    return d.toISOString().slice(0, 10);
+  }
+  return dt;
+}
+
 // Donator tier data for icons and tooltips
 const donatorTiers = {
   top:      { icon: "symbols/topdonatorsprite.png",      label: "Top Donator",    desc: "Our #1 supporter! Thank you for your incredible generosity!" },
@@ -27,23 +39,46 @@ function getDonatorTier(value, isTop) {
   return "";
 }
 
-// --- New: helper for last N donations (latest are last in array) ---
+// --- Helper for last N donations (latest are last in array) ---
 function getLastDonations(n = 5) {
   if (!window.donations) return [];
-  // If your donations have timestamps, sort by it, else just take last N
-  return window.donations.slice(-n).reverse();
+  // If your donations have timestamps/dates, sort by them; otherwise, just take last N
+  let arr = window.donations.slice();
+  if (arr.length && arr[0].date) {
+    arr.sort((a, b) => new Date(b.date) - new Date(a.date));
+  }
+  // else: assuming donation order is chronological in the JSON
+  return arr.slice(0, n);
 }
 
-// --- Tooltip generation for last 5 donations ---
-function renderLastDonationsTooltip() {
+// --- Fixed info card for the last 5 donations ---
+function renderLastDonationsCard() {
   const last = getLastDonations(5);
-  if (!last.length) return "<div class='last-donations-empty'>No recent donations.</div>";
   return `
-    <div class="last-donations-tooltip-content">
-      <strong>Last 5 Donations</strong>
-      <ul>
-        ${last.map(d => `<li><span class="donor-name">${d.name}</span> <span class="donor-value">${parseDonationValue(d.value).toLocaleString("en-US")}</span></li>`).join("")}
-      </ul>
+    <div class="last-donations-fixed-box">
+      <h2>Last 5 Donations</h2>
+      <div>
+        <table class="last-donations-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Donator</th>
+              <th>Donation</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${
+              last.length
+                ? last.map(d => `<tr>
+                  <td>${d.date ? formatDonationDate(d.date) : "-"}</td>
+                  <td>${d.name}</td>
+                  <td>${d.value ? parseDonationValue(d.value).toLocaleString("en-US") : (d.value || "-")}${d.item ? ` <span class="donation-item">${d.item}</span>` : ""}</td>
+                </tr>`).join("")
+                : `<tr><td colspan="3" style="text-align:center;color:#999;font-style:italic;">No recent donations.</td></tr>`
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   `;
 }
@@ -64,14 +99,7 @@ function renderDonators() {
   const content = document.getElementById('page-content');
   content.innerHTML = `
     <div class="donators-top-flex">
-      <div class="last-donations-box">
-        <button class="last-donations-btn" tabindex="0" aria-label="Show last 5 donations">
-          🪙
-        </button>
-        <div class="last-donations-tooltip">
-          ${renderLastDonationsTooltip()}
-        </div>
-      </div>
+      ${renderLastDonationsCard()}
       <div class="how-to-donate-box">
         <h2>How to Donate</h2>
         <div>
@@ -82,15 +110,6 @@ function renderDonators() {
     </div>
     <div id='donators-list'></div>
   `;
-
-  // Tooltip hover/click logic
-  const btn = document.querySelector(".last-donations-btn");
-  const tip = document.querySelector(".last-donations-tooltip");
-  btn.addEventListener("mouseenter", () => tip.classList.add("show"));
-  btn.addEventListener("focus", () => tip.classList.add("show"));
-  btn.addEventListener("mouseleave", () => tip.classList.remove("show"));
-  btn.addEventListener("blur", () => tip.classList.remove("show"));
-  btn.addEventListener("click", () => tip.classList.toggle("show"));
 
   if (!window.donations) {
     document.getElementById('donators-list').innerHTML = "Donations data not loaded.";
