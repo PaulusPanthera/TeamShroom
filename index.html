@@ -53,6 +53,15 @@
     // Routing: supports #showcase, #showcase-<member>, #hitlist, #shinyweekly, #donators
     function renderPage() {
       let hash = window.location.hash.replace("#", "");
+      // Wait for teamShowcase/teamMembers for showcase-related pages
+      if (
+        (hash.startsWith("showcase") || hash === "" || hash.startsWith("showcase-"))
+        && (!window.teamMembers || !window.teamShowcase)
+      ) {
+        setTimeout(renderPage, 50);
+        return;
+      }
+
       document.querySelectorAll('.nav a').forEach(a => {
         let navId = a.getAttribute('href').replace('#','');
         let active = false;
