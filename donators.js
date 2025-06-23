@@ -1,23 +1,16 @@
 // donators.js
 
-// Utility: parse "1.234.567" or "1000000" to integer
 function parseDonationValue(str) {
   return parseInt(str.replace(/\./g, "").replace(/,/g, ""));
 }
 
-// Format date as YYYY-MM-DD or locale
 function formatDonationDate(dt) {
   if (!dt) return "";
-  // Try to parse as ISO string
   const d = new Date(dt);
-  if (!isNaN(d.getTime())) {
-    // Format as YYYY-MM-DD
-    return d.toISOString().slice(0, 10);
-  }
+  if (!isNaN(d.getTime())) return d.toISOString().slice(0, 10);
   return dt;
 }
 
-// Donator tier data for icons and tooltips
 const donatorTiers = {
   top:      { icon: "symbols/topdonatorsprite.png",      label: "Top Donator",    desc: "Our #1 supporter! Thank you for your incredible generosity!" },
   diamond:  { icon: "symbols/diamonddonatorsprite.png",  label: "Diamond",        desc: "Donated 50,000,000 or more. Legendary support!" },
@@ -28,7 +21,6 @@ const donatorTiers = {
   "":       { icon: "",                                  label: "",               desc: "" }
 };
 
-// Determine donator tier
 function getDonatorTier(value, isTop) {
   if (isTop) return "top";
   if (value >= 50_000_000) return "diamond";
@@ -39,21 +31,18 @@ function getDonatorTier(value, isTop) {
   return "";
 }
 
-// --- Helper for last N donations (latest are last in array) ---
 function getLastDonations(n = 5) {
   if (!window.donations) return [];
-  // If your donations have timestamps/dates, sort by them; otherwise, just take last N
   let arr = window.donations.slice();
   if (arr.length && arr[0].date) {
     arr.sort((a, b) => new Date(b.date) - new Date(a.date));
   }
-  // else: assuming donation order is chronological in the JSON
   return arr.slice(0, n);
 }
 
-// --- Fixed info card for the last 5 donations ---
 function renderLastDonationsCard() {
   const last = getLastDonations(5);
+  // Find height of how-to-donate-box, set min-height to match in CSS.
   return `
     <div class="last-donations-fixed-box">
       <h2>Last 5 Donations</h2>
@@ -64,6 +53,7 @@ function renderLastDonationsCard() {
               <th>Date</th>
               <th>Donator</th>
               <th>Donation</th>
+              <th>Value</th>
             </tr>
           </thead>
           <tbody>
@@ -71,10 +61,11 @@ function renderLastDonationsCard() {
               last.length
                 ? last.map(d => `<tr>
                   <td>${d.date ? formatDonationDate(d.date) : "-"}</td>
-                  <td>${d.name}</td>
-                  <td>${d.value ? parseDonationValue(d.value).toLocaleString("en-US") : (d.value || "-")}${d.item ? ` <span class="donation-item">${d.item}</span>` : ""}</td>
+                  <td>${d.name || "-"}</td>
+                  <td>${d.donation || d.item || "-"}</td>
+                  <td>${d.value ? parseDonationValue(d.value).toLocaleString("en-US") : (d.value || "-")}</td>
                 </tr>`).join("")
-                : `<tr><td colspan="3" style="text-align:center;color:#999;font-style:italic;">No recent donations.</td></tr>`
+                : `<tr><td colspan="4" style="text-align:center;color:#999;font-style:italic;">No recent donations.</td></tr>`
             }
           </tbody>
         </table>
@@ -83,7 +74,6 @@ function renderLastDonationsCard() {
   `;
 }
 
-// Wait for donations data if not loaded yet
 function renderDonatorsWhenReady() {
   const content = document.getElementById('page-content');
   if (window.donations) {
@@ -94,13 +84,12 @@ function renderDonatorsWhenReady() {
   }
 }
 
-// Donators Page Logic
 function renderDonators() {
   const content = document.getElementById('page-content');
   content.innerHTML = `
     <div class="donators-top-flex">
       ${renderLastDonationsCard()}
-      <div class="how-to-donate-box">
+      <div class="how-to-donate-box" id="how-to-donate-box">
         <h2>How to Donate</h2>
         <div>
           Support Team Shroom by sending Pokéyen or items via in-game mail in <b>PokeMMO</b> to:<br>
@@ -111,12 +100,22 @@ function renderDonators() {
     <div id='donators-list'></div>
   `;
 
+  // Make both boxes the same height
+  setTimeout(() => {
+    const donateBox = document.getElementById("how-to-donate-box");
+    const lastBox = document.querySelector(".last-donations-fixed-box");
+    if (donateBox && lastBox) {
+      const targetHeight = Math.max(donateBox.offsetHeight, lastBox.offsetHeight);
+      donateBox.style.minHeight = targetHeight + "px";
+      lastBox.style.minHeight = targetHeight + "px";
+    }
+  }, 30);
+
   if (!window.donations) {
     document.getElementById('donators-list').innerHTML = "Donations data not loaded.";
     return;
   }
 
-  // Aggregate totals by name
   const totals = {};
   window.donations.forEach(entry => {
     const name = entry.name.trim();
@@ -124,7 +123,6 @@ function renderDonators() {
     totals[name] = (totals[name] || 0) + value;
   });
 
-  // Find the top donator
   let maxName = null, maxValue = 0;
   Object.entries(totals).forEach(([name, value]) => {
     if (value > maxValue) {
@@ -133,7 +131,6 @@ function renderDonators() {
     }
   });
 
-  // Prepare donator list (all, not just teamshowcase)
   let donators = Object.entries(totals)
     .map(([name, value]) => ({
       name,
@@ -142,7 +139,6 @@ function renderDonators() {
     }))
     .sort((a, b) => b.value - a.value);
 
-  // Render as table with flair and placement
   let html = `
     <table class="donators-table">
       <thead>
