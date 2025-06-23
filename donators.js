@@ -27,6 +27,17 @@ function getDonatorTier(value, isTop) {
   return "";
 }
 
+// Wait for donations data if not loaded yet
+function renderDonatorsWhenReady() {
+  const content = document.getElementById('page-content');
+  if (window.donations) {
+    renderDonators();
+  } else {
+    content.innerHTML = "<div style='text-align:center;font-size:1.1em;color:var(--accent);'>Loading donations data...</div>";
+    setTimeout(renderDonatorsWhenReady, 60);
+  }
+}
+
 // Donators Page Logic
 function renderDonators() {
   const content = document.getElementById('page-content');
@@ -34,7 +45,7 @@ function renderDonators() {
     <div class="how-to-donate-box">
       <h2>How to Donate</h2>
       <div>
-        To support Team Shroom, send your Donations (Pokéyen or Items) via in-game mail to:<br>
+        Support Team Shroom by sending Pokéyen or items via in-game mail in <b>PokeMMO</b> to:<br>
         <span class="donate-highlight">TeamShroomBank</span>
       </div>
     </div>
