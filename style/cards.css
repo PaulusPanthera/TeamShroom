@@ -36,7 +36,6 @@
     0 2px 0 #23243b inset,
     0 0px 32px 10px #23243b30;
   border-color: var(--success);
-  /* Subtle color change for lightmode, like darkmode effect */
   background: linear-gradient(126deg, #2c2f50 80%, #23243b 100%);
   filter: brightness(1.10) drop-shadow(0 2px 12px #fff9);
   transform: translateY(-9px) scale(1.07) rotateZ(-2deg);
@@ -47,7 +46,6 @@
   box-shadow: 0 5px 24px 0 rgba(80,50,10,0.24), 0 1.5px 12px #23243b77;
 }
 .unified-card::before {
-  /* Remove shimmer in lightmode hover for subtlety */
   content: "";
   display: none;
 }
@@ -67,7 +65,6 @@
   transition: box-shadow 0.18s, border 0.18s;
 }
 
-/* Name badge with background and border */
 .unified-name {
   font-size: 1.13em;
   font-weight: bold;
@@ -86,11 +83,9 @@
   display: block;
   word-break: break-word;
 }
-
 .unified-name.long-name { font-size: 0.98em; }
 .unified-name.very-long-name { font-size: 0.85em; }
 
-/* UNCLAIMED VARIATION - faded/dimmed */
 .unified-card.unclaimed {
   border-color: #444;
   background: linear-gradient(132deg, #32344a 70%, #22242f 100%);
@@ -135,8 +130,6 @@
   border: 2px solid #ffe59555;
   box-shadow: 0 2px 8px #181a2077;
 }
-
-/* Info badge for "lost" */
 .unified-info.lost {
   color: #ffc9c9;
   font-weight: bold;
@@ -195,4 +188,17 @@
   right: var(--symbol-gap-x);
   top: 50%;
   transform: translateY(-50%);
+}
+/* Member status/donator (bottom left/right, like safari/clip) */
+.symbol.member-status {
+  left: var(--symbol-gap-x);
+  bottom: var(--symbol-bottom-y);
+  right: auto;
+  top: auto;
+}
+.symbol.donator-status {
+  right: var(--symbol-gap-x);
+  bottom: var(--symbol-bottom-y);
+  left: auto;
+  top: auto;
 }
