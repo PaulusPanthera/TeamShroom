@@ -1,7 +1,6 @@
 // Team Shroom members and their shiny counts
 // Uses unified-card for all member and shiny cards
 
-// Instead of a top-level const, build teamMembers only after teamShowcase is loaded.
 window.buildTeamMembers = function() {
   window.teamMembers = (window.teamShowcase || []).map(entry => ({
     name: entry.name,
@@ -9,12 +8,10 @@ window.buildTeamMembers = function() {
       ? entry.shinies.filter(mon => !mon.lost).length
       : 0,
     status: entry.status
-    // donator field removed: now set dynamically elsewhere
   }));
 };
 if (window.teamShowcase) window.buildTeamMembers();
 
-// Helper to generate the correct shiny gif url
 function shinyGifUrl(name) {
   let urlName = name
     .toLowerCase()
@@ -24,7 +21,6 @@ function shinyGifUrl(name) {
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${urlName}.gif`;
 }
 
-// Helper to get a member's shinies (make sure teamShowcase is loaded!)
 function getMemberShinies(member) {
   if (!window.teamShowcase) {
     return Array.from({ length: member.shinies }, () => ({
@@ -48,7 +44,6 @@ function getMemberShinies(member) {
   }));
 }
 
-// Helper to get the custom sprite path for a member (tries png, jpg, gif in /membersprites/)
 function getMemberSpriteUrls(memberName) {
   const base = memberName.toLowerCase().replace(/\s+/g, '');
   return [
@@ -58,7 +53,6 @@ function getMemberSpriteUrls(memberName) {
   ];
 }
 
-// --- SCOREBOARD POINT LOGIC ---
 function getPointsForPokemon(name, extra = {}) {
   if (!window.POKEMON_POINTS && window.buildPokemonPoints) window.buildPokemonPoints();
   if (!window.POKEMON_POINTS) return 1;
@@ -69,11 +63,7 @@ function getPointsForPokemon(name, extra = {}) {
     .replace(/♂/g, "-m")
     .replace(/[\s.'’]/g, "");
   let basePoints = window.POKEMON_POINTS[normName] || 1;
-
-  // Alpha: always 50
   if (extra.alpha) return 50;
-
-  // Egg: 20 unless tier 0 or 1 (then use tier points)
   if (extra.egg) {
     if (!window._tier01set) {
       const TIER_0_1 = (window.TIER_FAMILIES?.["Tier 0"] || []).concat(window.TIER_FAMILIES?.["Tier 1"] || []);
@@ -103,10 +93,7 @@ function getPointsForPokemon(name, extra = {}) {
       window._tier01set = new Set(allNames);
     }
     if (!window._tier01set.has(normName)) return 20;
-    // else fall through to base tier points
   }
-
-  // Secret/safari bonuses
   let bonus = 0;
   if (extra.secret) bonus += 10;
   if (extra.safari) bonus += 5;
@@ -124,7 +111,6 @@ function getMemberScoreboardPoints(member) {
     }, 0);
 }
 
-// Utility to clean up Pokémon names
 function cleanPokemonName(name) {
   let cleaned = name
     .replace(/-(f|m|red-striped|blue-striped|east|west|galar|alola|hisui|paldea|mega|gigantamax|therian|origin|sky|dawn|midnight|midday|school|solo|rainy|sunny|snowy|attack|defense|speed|wash|heat|fan|frost|mow|midnight|midday|dusk|baile|pom-pom|pa'u|sensu|starter|battle-bond|ash|crowned|eternamax|gmax|complete|single-strike|rapid-strike)[^a-z0-9]*$/i, '')
@@ -135,17 +121,14 @@ function cleanPokemonName(name) {
   return cleaned;
 }
 
-// --- FORCE TIER01 SET REBUILD SUPPORT ---
 window.rebuildTier01Set = function() {
   window._tier01set = null;
 };
 
-// --- MAIN GALLERY RENDERING ---
 function renderShowcaseGallery(members, container, groupMode) {
   if (!container) container = document.getElementById('showcase-gallery-container');
   container.innerHTML = "";
 
-  // Total shinies
   let total = 0;
   if (window.teamShowcase) {
     window.teamShowcase.forEach(entry => {
@@ -160,7 +143,6 @@ function renderShowcaseGallery(members, container, groupMode) {
   totalDiv.textContent = `Total Shinies: ${total}`;
   container.appendChild(totalDiv);
 
-  // Grouping
   let grouped;
   if (groupMode === "scoreboard") {
     grouped = groupMembersByPoints(members);
@@ -170,15 +152,12 @@ function renderShowcaseGallery(members, container, groupMode) {
     grouped = groupMembersAlphabetically(members);
   }
 
-  // For each group, render a header and a grid of member cards for that group.
   grouped.forEach(group => {
-    // Header
     const header = document.createElement('div');
     header.className = "showcase-category-header";
     header.textContent = group.header + (groupMode === "scoreboard" ? " Points" : "");
     container.appendChild(header);
 
-    // Grid for cards
     const gallery = document.createElement('div');
     gallery.className = 'showcase-gallery';
 
@@ -196,7 +175,7 @@ function renderShowcaseGallery(members, container, groupMode) {
         info,
         cardType: "member",
         memberStatus: member.status,
-        donatorStatus: member.donator // This is now set dynamically elsewhere
+        donatorStatus: member.donator
       });
     });
 
@@ -204,11 +183,9 @@ function renderShowcaseGallery(members, container, groupMode) {
   });
 
   setTimeout(() => {
-    // Entire card clickable (for both member and Pokémon cards in the future)
     container.querySelectorAll('.unified-card').forEach(card => {
       card.style.cursor = 'pointer';
       card.onclick = function (e) {
-        // Don't trigger if user is selecting text
         if (window.getSelection && window.getSelection().toString()) return;
         const cardType = card.getAttribute('data-card-type');
         const cardName = card.getAttribute('data-name');
@@ -241,7 +218,6 @@ function renderShowcaseGallery(members, container, groupMode) {
   }, 0);
 }
 
-// --- HELPER GROUPS ---
 function groupMembersAlphabetically(members) {
   const grouped = {};
   members.forEach(member => {
@@ -285,7 +261,6 @@ function groupMembersByPoints(members) {
     }));
 }
 
-// --- MEMBER SHOWCASE ---
 function renderMemberShowcase(member, sortMode = "alphabetical") {
   const content = document.getElementById('page-content');
   const shinies = getMemberShinies(member);
@@ -309,15 +284,15 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
       <span class="icon-help-tooltip" tabindex="0">
         <span class="icon-help">[?]</span>
         <span class="icon-help-tooltip-box">
-          <b>Card Icon Legend</b><br>
-          <img class="symbol" src="symbols/secretshinysprite.png" alt="Secret" /> Secret Shiny<br>
-          <img class="symbol" src="symbols/eventsprite.png" alt="Event" /> Event Shiny<br>
-          <img class="symbol" src="symbols/safarisprite.png" alt="Safari" /> Safari Shiny<br>
-          <img class="symbol" src="symbols/clipsprite.png" alt="Clip" /> Clip/Video<br>
-          <img class="symbol" src="symbols/eggsprite.png" alt="Egg" /> Hatched from Egg<br>
-          <img class="symbol" src="symbols/alphasprite.png" alt="Alpha" /> Alpha Shiny<br>
-          <img class="symbol" src="symbols/bronzedonatorsprite.png" alt="Bronze" /> Donator Tier<br>
-          <img class="symbol" src="symbols/shroomsprite.png" alt="Member" /> Team Member<br>
+          <div style="font-weight:bold;margin-bottom:0.7em;">Card Icon Legend</div>
+          <div class="icon-row"><img class="symbol" src="symbols/secretshinysprite.png" alt="Secret" />Secret Shiny</div>
+          <div class="icon-row"><img class="symbol" src="symbols/eventsprite.png" alt="Event" />Event Shiny</div>
+          <div class="icon-row"><img class="symbol" src="symbols/safarisprite.png" alt="Safari" />Safari Shiny</div>
+          <div class="icon-row"><img class="symbol" src="symbols/clipsprite.png" alt="Clip" />Clip/Video</div>
+          <div class="icon-row"><img class="symbol" src="symbols/eggsprite.png" alt="Egg" />Hatched from Egg</div>
+          <div class="icon-row"><img class="symbol" src="symbols/alphasprite.png" alt="Alpha" />Alpha Shiny</div>
+          <div class="icon-row"><img class="symbol" src="symbols/bronzedonatorsprite.png" alt="Bronze" />Donator Tier</div>
+          <div class="icon-row"><img class="symbol" src="symbols/shroomsprite.png" alt="Member" />Team Member</div>
         </span>
       </span>
     </div>
@@ -363,7 +338,6 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
   }, 0);
 }
 
-// --- SEARCH AND SORT SETUP ---
 (function(){
   window.setupShowcaseSearchAndSort = function(teamMembers, renderShowcaseGallery, initialSortMode) {
     const controls = document.querySelector('.showcase-search-controls');
@@ -389,22 +363,22 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
 
     controls.appendChild(sortSelect);
 
-    // Add the [?] icon legend tooltip
+    // Add the [?] icon legend tooltip in right corner
     const iconLegend = document.createElement('span');
     iconLegend.className = "icon-help-tooltip";
     iconLegend.tabIndex = 0;
     iconLegend.innerHTML = `
       <span class="icon-help">[?]</span>
       <span class="icon-help-tooltip-box">
-        <b>Card Icon Legend</b><br>
-        <img class="symbol" src="symbols/secretshinysprite.png" alt="Secret" /> Secret Shiny<br>
-        <img class="symbol" src="symbols/eventsprite.png" alt="Event" /> Event Shiny<br>
-        <img class="symbol" src="symbols/safarisprite.png" alt="Safari" /> Safari Shiny<br>
-        <img class="symbol" src="symbols/clipsprite.png" alt="Clip" /> Clip/Video<br>
-        <img class="symbol" src="symbols/eggsprite.png" alt="Egg" /> Hatched from Egg<br>
-        <img class="symbol" src="symbols/alphasprite.png" alt="Alpha" /> Alpha Shiny<br>
-        <img class="symbol" src="symbols/bronzedonatorsprite.png" alt="Bronze" /> Donator Tier<br>
-        <img class="symbol" src="symbols/shroomsprite.png" alt="Member" /> Team Member<br>
+        <div style="font-weight:bold;margin-bottom:0.7em;">Card Icon Legend</div>
+        <div class="icon-row"><img class="symbol" src="symbols/secretshinysprite.png" alt="Secret" />Secret Shiny</div>
+        <div class="icon-row"><img class="symbol" src="symbols/eventsprite.png" alt="Event" />Event Shiny</div>
+        <div class="icon-row"><img class="symbol" src="symbols/safarisprite.png" alt="Safari" />Safari Shiny</div>
+        <div class="icon-row"><img class="symbol" src="symbols/clipsprite.png" alt="Clip" />Clip/Video</div>
+        <div class="icon-row"><img class="symbol" src="symbols/eggsprite.png" alt="Egg" />Hatched from Egg</div>
+        <div class="icon-row"><img class="symbol" src="symbols/alphasprite.png" alt="Alpha" />Alpha Shiny</div>
+        <div class="icon-row"><img class="symbol" src="symbols/bronzedonatorsprite.png" alt="Bronze" />Donator Tier</div>
+        <div class="icon-row"><img class="symbol" src="symbols/shroomsprite.png" alt="Member" />Team Member</div>
       </span>
     `;
     controls.appendChild(iconLegend);
@@ -466,5 +440,4 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
   };
 })();
 
-// --- Ensure teamMembers is built whenever teamShowcase is available (for async JSON) ---
 if (!window.teamMembers && window.teamShowcase) window.buildTeamMembers();
