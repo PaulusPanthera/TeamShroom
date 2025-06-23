@@ -4,6 +4,7 @@
   align-items: flex-start;
   gap: 1.5em;
   margin: 2em 0 2.7em 0;
+  flex-wrap: wrap;
 }
 
 .how-to-donate-box {
@@ -38,114 +39,58 @@
   letter-spacing: 1.2px;
 }
 
-.last-donations-box {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  min-width: 54px;
-  margin-right: 2em;
-}
-.last-donations-btn {
-  background: var(--accent);
-  color: var(--card);
-  border-radius: 50%;
-  border: none;
-  font-size: 1.8em;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 2px 10px #f2593755;
-  transition: background 0.17s, color 0.17s, border 0.16s, box-shadow 0.14s;
-  margin-top: 8px;
-  position: relative;
-  z-index: 2;
-}
-.last-donations-btn:focus {
-  outline: 2px solid var(--success);
-}
-.last-donations-tooltip {
-  position: absolute;
-  left: 110%;
-  top: 0;
+.last-donations-fixed-box {
+  background: var(--card-gradient);
+  color: var(--accent);
+  border-radius: 14px;
+  box-shadow: 0 2px 14px #67b35633;
+  padding: 1.25em 1.7em 1.5em 1.7em;
+  font-size: 1.08em;
+  text-align: left;
+  border: 2.5px solid var(--success);
+  max-width: 390px;
   min-width: 220px;
-  background: #222;
-  color: #ffe595;
-  border-radius: 10px;
-  padding: 1em 1.5em;
-  font-size: 1em;
-  box-shadow: 0 2px 18px #181a2088, 0 2px 10px #f2593722;
-  opacity: 0;
-  pointer-events: none;
-  visibility: hidden;
-  transition: opacity 0.16s;
-  z-index: 10;
-  white-space: nowrap;
+  margin-right: auto;
+  margin-left: 0;
 }
-.last-donations-tooltip.show {
-  opacity: 1;
-  pointer-events: auto;
-  visibility: visible;
-}
-.last-donations-tooltip-content strong {
-  display: block;
-  margin-bottom: 0.7em;
-  font-size: 1.1em;
+.last-donations-fixed-box h2 {
   color: var(--success);
+  margin-bottom: 0.6em;
+  font-size: 1.13em;
   letter-spacing: 1px;
 }
-.last-donations-tooltip-content ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.last-donations-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.18em;
+  background: transparent;
+  font-size: 1em;
 }
-.last-donations-tooltip-content li {
-  margin-bottom: 0.2em;
-  display: flex;
-  justify-content: space-between;
-  gap: 0.7em;
-  font-size: 0.97em;
-}
-.last-donations-tooltip-content .donor-name {
-  color: #ffe595;
-  font-weight: bold;
-}
-.last-donations-tooltip-content .donor-value {
-  color: var(--success);
-  font-weight: bold;
-}
-
-.last-donations-empty {
-  color: #999;
-  font-style: italic;
-  padding: 0.7em 0.5em;
+.last-donations-table th,
+.last-donations-table td {
+  padding: 0.36em 0.7em;
+  text-align: left;
+  background: var(--card-gradient);
+  color: var(--accent);
+  border: none;
+  font-family: inherit;
   font-size: 0.98em;
 }
-
-/* Responsive for stacked on mobile */
-@media (max-width: 700px) {
-  .donators-top-flex {
-    flex-direction: column-reverse;
-    gap: 0.7em;
-    align-items: stretch;
-  }
-  .how-to-donate-box {
-    margin-left: 0;
-    margin-right: 0;
-    text-align: center;
-  }
-  .last-donations-box {
-    margin: 0 auto 1em auto;
-    justify-content: center;
-  }
-  .last-donations-tooltip {
-    left: 0;
-    top: 120%;
-    min-width: 220px;
-    white-space: normal;
-  }
+.last-donations-table th {
+  color: var(--card);
+  background: var(--success);
+  font-weight: bold;
+  font-size: 1em;
+  border-radius: 12px 12px 0 0;
+}
+.last-donations-table td {
+  border-radius: 9px;
+}
+.last-donations-table .donation-item {
+  color: var(--success);
+  font-weight: bold;
+  margin-left: 0.3em;
+  font-size: 0.97em;
 }
 
 .donators-table {
@@ -234,4 +179,19 @@
 .donator-tier-tooltip:focus .tooltip-text {
   visibility: visible;
   opacity: 1;
+}
+
+/* Responsive layout for stacked on mobile */
+@media (max-width: 950px) {
+  .donators-top-flex {
+    flex-direction: column-reverse;
+    gap: 1.6em;
+    align-items: stretch;
+  }
+  .how-to-donate-box, .last-donations-fixed-box {
+    margin-left: 0;
+    margin-right: 0;
+    text-align: center;
+    max-width: 100%;
+  }
 }
