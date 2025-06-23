@@ -8,7 +8,7 @@ function parseDonationValue(str) {
 // Donator tier data for icons and tooltips
 const donatorTiers = {
   top:      { icon: "symbols/topdonatorsprite.png",      label: "Top Donator",    desc: "Our #1 supporter! Thank you for your incredible generosity!" },
-  diamond:  { icon: "symbols/diamondshroomsprite.png",   label: "Diamond",        desc: "Donated 50,000,000 or more. Legendary support!" },
+  diamond:  { icon: "symbols/diamonddonatorsprite.png",  label: "Diamond",        desc: "Donated 50,000,000 or more. Legendary support!" },
   platinum: { icon: "symbols/platinumdonatorsprite.png", label: "Platinum",       desc: "Donated 25,000,000 or more. Thank you for your amazing support!" },
   gold:     { icon: "symbols/golddonatorsprite.png",     label: "Gold",           desc: "Donated 10,000,000 or more. Your generosity shines bright!" },
   silver:   { icon: "symbols/silverdonatorsprite.png",   label: "Silver",         desc: "Donated 5,000,000 or more. Much appreciated!" },
@@ -31,9 +31,13 @@ function getDonatorTier(value, isTop) {
 function renderDonators() {
   const content = document.getElementById('page-content');
   content.innerHTML = `
-    <a class="how-to-donate-btn" href="mailto:TeamShroomBank?subject=Donation%20to%20Team%20Shroom%20Bank">
-      💸 How to Donate
-    </a>
+    <div class="how-to-donate-box">
+      <h2>How to Donate</h2>
+      <div>
+        To support Team Shroom, send your Donations (Pokéyen or Items) via in-game mail to:<br>
+        <span class="donate-highlight">TeamShroomBank</span>
+      </div>
+    </div>
     <div id='donators-list'></div>
   `;
 
@@ -68,19 +72,29 @@ function renderDonators() {
     }))
     .sort((a, b) => b.value - a.value);
 
-  // Render as table with flair
+  // Render as table with flair and placement
   let html = `
     <table class="donators-table">
       <thead>
-        <tr><th>Donator</th><th>Total Donated</th><th>Tier</th></tr>
+        <tr>
+          <th>#</th>
+          <th>Donator</th>
+          <th>Total Donated</th>
+          <th>Tier</th>
+        </tr>
       </thead>
       <tbody>
         ${donators.map((d, i) => {
           const tierData = donatorTiers[d.tier];
           const rowClass = d.tier + (d.tier === "top" ? " top" : "");
+          let iconHtml = "";
+          if (tierData.icon) {
+            iconHtml = `<img class="tier-icon" src="${tierData.icon}" alt="${tierData.label}" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span style=&quot;font-size:1.1em;margin-right:0.2em&quot;>💎</span>')">`;
+          }
           return `
             <tr class="${rowClass}">
-              <td>${tierData.icon ? `<img class="tier-icon" src="${tierData.icon}" alt="${tierData.label}">` : ""}${d.name}</td>
+              <td class="placement">#${i + 1}</td>
+              <td>${iconHtml}${d.name}</td>
               <td>${d.value.toLocaleString("en-US")}</td>
               <td class="donator-tier donator-tier-tooltip">
                 ${tierData.label}
@@ -95,5 +109,3 @@ function renderDonators() {
 
   document.getElementById('donators-list').innerHTML = html;
 }
-
-// Optional: assignDonatorTiersToTeam remains unchanged for other uses
