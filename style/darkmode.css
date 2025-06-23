@@ -35,9 +35,13 @@ body.darkmode .unified-name {
 /* Info badge for darkmode: matching light background */
 body.darkmode .unified-info {
   color: #222 !important;
-  background: rgba(255,255,255,0.30);
-  text-shadow: 0 1px 1px #fff;
-  border: 2px solid #ffe59555 !important;
+  background: rgba(255, 245, 180, 0.94) !important;
+  border: 2px solid #c8ac3f !important;
+  border-radius: 9px !important;
+  box-shadow: 0 2px 8px #ffe59555 !important;
+  text-shadow: 1px 1px 0 #fffbe1, 0 0px #fffbe1;
+  padding: 0.27em 0.8em !important;
+  font-weight: bold;
 }
 body.darkmode .unified-info.lost {
   color: #a22 !important;
