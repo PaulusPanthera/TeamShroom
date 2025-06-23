@@ -27,6 +27,27 @@ function getDonatorTier(value, isTop) {
   return "";
 }
 
+// --- New: helper for last N donations (latest are last in array) ---
+function getLastDonations(n = 5) {
+  if (!window.donations) return [];
+  // If your donations have timestamps, sort by it, else just take last N
+  return window.donations.slice(-n).reverse();
+}
+
+// --- Tooltip generation for last 5 donations ---
+function renderLastDonationsTooltip() {
+  const last = getLastDonations(5);
+  if (!last.length) return "<div class='last-donations-empty'>No recent donations.</div>";
+  return `
+    <div class="last-donations-tooltip-content">
+      <strong>Last 5 Donations</strong>
+      <ul>
+        ${last.map(d => `<li><span class="donor-name">${d.name}</span> <span class="donor-value">${parseDonationValue(d.value).toLocaleString("en-US")}</span></li>`).join("")}
+      </ul>
+    </div>
+  `;
+}
+
 // Wait for donations data if not loaded yet
 function renderDonatorsWhenReady() {
   const content = document.getElementById('page-content');
@@ -42,15 +63,34 @@ function renderDonatorsWhenReady() {
 function renderDonators() {
   const content = document.getElementById('page-content');
   content.innerHTML = `
-    <div class="how-to-donate-box">
-      <h2>How to Donate</h2>
-      <div>
-        Support Team Shroom by sending Pokéyen or items via in-game mail in <b>PokeMMO</b> to:<br>
-        <span class="donate-highlight">TeamShroomBank</span>
+    <div class="donators-top-flex">
+      <div class="last-donations-box">
+        <button class="last-donations-btn" tabindex="0" aria-label="Show last 5 donations">
+          🪙
+        </button>
+        <div class="last-donations-tooltip">
+          ${renderLastDonationsTooltip()}
+        </div>
+      </div>
+      <div class="how-to-donate-box">
+        <h2>How to Donate</h2>
+        <div>
+          Support Team Shroom by sending Pokéyen or items via in-game mail in <b>PokeMMO</b> to:<br>
+          <span class="donate-highlight">TeamShroomBank</span>
+        </div>
       </div>
     </div>
     <div id='donators-list'></div>
   `;
+
+  // Tooltip hover/click logic
+  const btn = document.querySelector(".last-donations-btn");
+  const tip = document.querySelector(".last-donations-tooltip");
+  btn.addEventListener("mouseenter", () => tip.classList.add("show"));
+  btn.addEventListener("focus", () => tip.classList.add("show"));
+  btn.addEventListener("mouseleave", () => tip.classList.remove("show"));
+  btn.addEventListener("blur", () => tip.classList.remove("show"));
+  btn.addEventListener("click", () => tip.classList.toggle("show"));
 
   if (!window.donations) {
     document.getElementById('donators-list').innerHTML = "Donations data not loaded.";
