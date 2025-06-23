@@ -1,5 +1,162 @@
-// Team Shroom members and their shiny counts
-// Uses unified-card for all member and shiny cards
+// showcase.js
+
+// --- ICON LEGEND DATA ---
+
+const DONATOR_MEMBER_ICONS = [
+  {
+    icon: "symbols/topdonatorsprite.png",
+    label: "Top Donator",
+    desc: "Our #1 supporter! Thank you for your incredible generosity."
+  },
+  {
+    icon: "symbols/diamonddonatorsprite.png",
+    label: "Diamond Donator",
+    desc: "Donated 50,000,000 or more Pokéyen or value in items."
+  },
+  {
+    icon: "symbols/platinumdonatorsprite.png",
+    label: "Platinum Donator",
+    desc: "Donated 25,000,000 or more Pokéyen or value in items."
+  },
+  {
+    icon: "symbols/golddonatorsprite.png",
+    label: "Gold Donator",
+    desc: "Donated 10,000,000 or more Pokéyen or value in items."
+  },
+  {
+    icon: "symbols/silverdonatorsprite.png",
+    label: "Silver Donator",
+    desc: "Donated 5,000,000 or more Pokéyen or value in items."
+  },
+  {
+    icon: "symbols/bronzedonatorsprite.png",
+    label: "Bronze Donator",
+    desc: "Donated 1,000,000 or more Pokéyen or value in items."
+  },
+  {
+    icon: "symbols/shroomsprite.png",
+    label: "Team Member",
+    desc: "Active member of Team Shroom."
+  },
+  {
+    icon: "symbols/sporesprite.png",
+    label: "Spore",
+    desc: "Special team rank: Spore."
+  },
+  {
+    icon: "symbols/mushcapsprite.png",
+    label: "Mushcap",
+    desc: "Special team rank: Mushcap."
+  },
+  {
+    icon: "symbols/shinyshroomsprite.png",
+    label: "Shiny Shroom",
+    desc: "Special team rank: Shiny Shroom."
+  }
+];
+
+const POKEMON_ICONS = [
+  {
+    icon: "symbols/secretshinysprite.png",
+    label: "Secret Shiny",
+    desc: "Obtained as a secret shiny encounter."
+  },
+  {
+    icon: "symbols/eventsprite.png",
+    label: "Event Shiny",
+    desc: "Caught during a special event."
+  },
+  {
+    icon: "symbols/safarisprite.png",
+    label: "Safari Shiny",
+    desc: "Caught in the Safari Zone."
+  },
+  {
+    icon: "symbols/clipsprite.png",
+    label: "Clip/Video",
+    desc: "Has a video or clip attached."
+  },
+  {
+    icon: "symbols/eggsprite.png",
+    label: "Hatched from Egg",
+    desc: "Shiny Pokémon obtained via egg hatching."
+  },
+  {
+    icon: "symbols/alphasprite.png",
+    label: "Alpha Shiny",
+    desc: "Caught as an Alpha Shiny."
+  }
+];
+
+// --- TOOLTIP RENDERER ---
+
+function renderIconLegendTooltip(icons) {
+  return `
+    <div class="icon-help-tooltip-box" tabindex="-1">
+      <div style="font-weight:bold;margin-bottom:0.7em;">Card Icon Legend</div>
+      ${icons.map(
+        icon =>
+          `<div class="icon-row">
+            <img class="symbol" src="${icon.icon}" alt="${icon.label}" />
+            <div>
+              <b>${icon.label}</b><br>
+              <span class="icon-desc">${icon.desc}</span>
+            </div>
+          </div>`
+      ).join("")}
+    </div>
+  `;
+}
+
+// --- MAIN PAGE SEARCH CONTROLS (Donator/Member icons only) ---
+
+function renderShowcaseSearchControls() {
+  return `
+    <div class="showcase-search-controls">
+      <input type="text" id="showcase-search-input" placeholder="Search Pokémon or OT..." autocomplete="off" spellcheck="false" />
+      <label for="showcase-sort-select">Sort by:</label>
+      <select id="showcase-sort-select">
+        <option value="alphabetical">A → Z</option>
+        <option value="caught">Caught Date</option>
+        <option value="rarity">Rarity</option>
+        <option value="recent">Recently Added</option>
+        <option value="count">Count</option>
+      </select>
+      <span class="icon-help-tooltip" tabindex="0">
+        <span class="icon-help">[?]</span>
+        ${renderIconLegendTooltip(DONATOR_MEMBER_ICONS)}
+      </span>
+    </div>
+  `;
+}
+
+// --- MEMBER SHOWCASE: Top Right Tooltip (Pokémon icons only) ---
+
+function addMemberShowcaseIconTooltip() {
+  // Remove any existing
+  let old = document.querySelector('.member-showcase-icon-tooltip');
+  if (old) old.remove();
+
+  let wrapper = document.createElement("span");
+  wrapper.className = "icon-help-tooltip member-showcase-icon-tooltip";
+  wrapper.tabIndex = 0;
+  wrapper.innerHTML = `
+    <span class="icon-help">[?]</span>
+    ${renderIconLegendTooltip(POKEMON_ICONS)}
+  `;
+  document.body.appendChild(wrapper);
+
+  // Focus/hover for accessibility
+  const box = wrapper.querySelector('.icon-help-tooltip-box');
+  wrapper.addEventListener('mouseenter', () => { box.style.visibility = "visible"; box.style.opacity = "1"; });
+  wrapper.addEventListener('mouseleave', () => { box.style.visibility = ""; box.style.opacity = ""; });
+  wrapper.addEventListener('focusin', () => { box.style.visibility = "visible"; box.style.opacity = "1"; });
+  wrapper.addEventListener('focusout', () => { box.style.visibility = ""; box.style.opacity = ""; });
+}
+
+// --- SHOWCASE PAGE LOGIC ---
+
+// Your helpers: buildTeamMembers, getMemberShinies, getMemberSpriteUrls, getPointsForPokemon, getMemberScoreboardPoints, cleanPokemonName, etc...
 
 window.buildTeamMembers = function() {
   window.teamMembers = (window.teamShowcase || []).map(entry => ({
@@ -261,6 +418,8 @@ function groupMembersByPoints(members) {
     }));
 }
 
+// --- MEMBER SHOWCASE PAGE ---
+
 function renderMemberShowcase(member, sortMode = "alphabetical") {
   const content = document.getElementById('page-content');
   const shinies = getMemberShinies(member);
@@ -280,22 +439,6 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
     <button class="back-btn" onclick="window.location.hash='#showcase?sort=${sortMode}'">← Back</button>
     <h1>${member.name}'s Shiny Showcase</h1>
     <div>Shinies: ${shinies.filter(mon => !mon.lost).length} | Points: ${totalPoints}</div>
-    <div class="showcase-search-controls" style="margin-bottom:1.5em;">
-      <span class="icon-help-tooltip" tabindex="0">
-        <span class="icon-help">[?]</span>
-        <span class="icon-help-tooltip-box">
-          <div style="font-weight:bold;margin-bottom:0.7em;">Card Icon Legend</div>
-          <div class="icon-row"><img class="symbol" src="symbols/secretshinysprite.png" alt="Secret" />Secret Shiny</div>
-          <div class="icon-row"><img class="symbol" src="symbols/eventsprite.png" alt="Event" />Event Shiny</div>
-          <div class="icon-row"><img class="symbol" src="symbols/safarisprite.png" alt="Safari" />Safari Shiny</div>
-          <div class="icon-row"><img class="symbol" src="symbols/clipsprite.png" alt="Clip" />Clip/Video</div>
-          <div class="icon-row"><img class="symbol" src="symbols/eggsprite.png" alt="Egg" />Hatched from Egg</div>
-          <div class="icon-row"><img class="symbol" src="symbols/alphasprite.png" alt="Alpha" />Alpha Shiny</div>
-          <div class="icon-row"><img class="symbol" src="symbols/bronzedonatorsprite.png" alt="Bronze" />Donator Tier</div>
-          <div class="icon-row"><img class="symbol" src="symbols/shroomsprite.png" alt="Member" />Team Member</div>
-        </span>
-      </span>
-    </div>
     <div class="dex-grid" style="margin-top:1em;">
       ${shinies.map((mon, i) => {
         const name = cleanPokemonName(mon.name);
@@ -322,6 +465,9 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
     </div>
   `;
 
+  // Show the icon legend tooltip for Pokémon icons in the top right
+  addMemberShowcaseIconTooltip();
+
   setTimeout(() => {
     content.querySelectorAll('.unified-card').forEach(card => {
       card.style.cursor = 'pointer';
@@ -338,106 +484,97 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
   }, 0);
 }
 
-(function(){
-  window.setupShowcaseSearchAndSort = function(teamMembers, renderShowcaseGallery, initialSortMode) {
-    const controls = document.querySelector('.showcase-search-controls');
-    controls.innerHTML = "";
+// --- SEARCH AND SORT SETUP ---
 
-    const searchInput = document.createElement('input');
-    searchInput.type = 'text';
-    searchInput.placeholder = 'Search Member';
-    controls.appendChild(searchInput);
+window.setupShowcaseSearchAndSort = function(teamMembers, renderShowcaseGallery, initialSortMode) {
+  const controls = document.querySelector('.showcase-search-controls');
+  controls.innerHTML = "";
 
-    const sortSelect = document.createElement('select');
-    sortSelect.style.marginLeft = '0.7em';
-    [
-      ["Alphabetical", "alphabetical"],
-      ["Total Shinies", "shinies"],
-      ["Total Shiny Points", "scoreboard"]
-    ].forEach(([labelText, value]) => {
-      const option = document.createElement('option');
-      option.value = value;
-      option.textContent = labelText;
-      sortSelect.appendChild(option);
-    });
+  const searchInput = document.createElement('input');
+  searchInput.type = 'text';
+  searchInput.placeholder = 'Search Member';
+  controls.appendChild(searchInput);
 
-    controls.appendChild(sortSelect);
+  const sortSelect = document.createElement('select');
+  sortSelect.style.marginLeft = '0.7em';
+  [
+    ["Alphabetical", "alphabetical"],
+    ["Total Shinies", "shinies"],
+    ["Total Shiny Points", "scoreboard"]
+  ].forEach(([labelText, value]) => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = labelText;
+    sortSelect.appendChild(option);
+  });
 
-    // Add the [?] icon legend tooltip in right corner
-    const iconLegend = document.createElement('span');
-    iconLegend.className = "icon-help-tooltip";
-    iconLegend.tabIndex = 0;
-    iconLegend.innerHTML = `
-      <span class="icon-help">[?]</span>
-      <span class="icon-help-tooltip-box">
-        <div style="font-weight:bold;margin-bottom:0.7em;">Card Icon Legend</div>
-        <div class="icon-row"><img class="symbol" src="symbols/secretshinysprite.png" alt="Secret" />Secret Shiny</div>
-        <div class="icon-row"><img class="symbol" src="symbols/eventsprite.png" alt="Event" />Event Shiny</div>
-        <div class="icon-row"><img class="symbol" src="symbols/safarisprite.png" alt="Safari" />Safari Shiny</div>
-        <div class="icon-row"><img class="symbol" src="symbols/clipsprite.png" alt="Clip" />Clip/Video</div>
-        <div class="icon-row"><img class="symbol" src="symbols/eggsprite.png" alt="Egg" />Hatched from Egg</div>
-        <div class="icon-row"><img class="symbol" src="symbols/alphasprite.png" alt="Alpha" />Alpha Shiny</div>
-        <div class="icon-row"><img class="symbol" src="symbols/bronzedonatorsprite.png" alt="Bronze" />Donator Tier</div>
-        <div class="icon-row"><img class="symbol" src="symbols/shroomsprite.png" alt="Member" />Team Member</div>
-      </span>
-    `;
-    controls.appendChild(iconLegend);
+  controls.appendChild(sortSelect);
 
-    const resultCount = document.createElement('span');
-    controls.appendChild(resultCount);
+  // Add the [?] icon legend tooltip in right corner
+  const iconLegend = document.createElement('span');
+  iconLegend.className = "icon-help-tooltip";
+  iconLegend.tabIndex = 0;
+  iconLegend.innerHTML = `
+    <span class="icon-help">[?]</span>
+    ${renderIconLegendTooltip(DONATOR_MEMBER_ICONS)}
+  `;
+  controls.appendChild(iconLegend);
 
-    let sortMode = (function(){
-      const m = window.location.hash.match(/sort=(\w+)/);
-      return m ? m[1] : (initialSortMode || "alphabetical");
-    })();
+  const resultCount = document.createElement('span');
+  controls.appendChild(resultCount);
+
+  let sortMode = (function(){
+    const m = window.location.hash.match(/sort=(\w+)/);
+    return m ? m[1] : (initialSortMode || "alphabetical");
+  })();
+  sortSelect.value = sortMode;
+
+  let searchValue = '';
+
+  function getFilteredAndSortedMembers() {
+    const input = searchValue.trim().toLowerCase();
+    let filtered = teamMembers.filter(m => m.name.toLowerCase().includes(input));
+    if (sortMode === 'alphabetical') {
+      filtered.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortMode === 'shinies') {
+      filtered.sort((a, b) => {
+        const diff = (b.shinies || 0) - (a.shinies || 0);
+        if (diff !== 0) return diff;
+        return a.name.localeCompare(b.name);
+      });
+    } else if (sortMode === 'scoreboard') {
+      filtered.sort((a, b) => {
+        const diff = getMemberScoreboardPoints(b) - getMemberScoreboardPoints(a);
+        if (diff !== 0) return diff;
+        return a.name.localeCompare(b.name);
+      });
+    }
+    return filtered;
+  }
+
+  function updateResults(pushHash = false) {
+    const filtered = getFilteredAndSortedMembers();
+    resultCount.textContent = `${filtered.length} Member${filtered.length === 1 ? '' : 's'}`;
+    const galleryContainer = document.getElementById('showcase-gallery-container');
+    renderShowcaseGallery(filtered, galleryContainer, sortMode);
+    if (pushHash) {
+      window.location.hash = `#showcase?sort=${sortMode}`;
+    }
     sortSelect.value = sortMode;
+  }
 
-    let searchValue = '';
-
-    function getFilteredAndSortedMembers() {
-      const input = searchValue.trim().toLowerCase();
-      let filtered = teamMembers.filter(m => m.name.toLowerCase().includes(input));
-      if (sortMode === 'alphabetical') {
-        filtered.sort((a, b) => a.name.localeCompare(b.name));
-      } else if (sortMode === 'shinies') {
-        filtered.sort((a, b) => {
-          const diff = (b.shinies || 0) - (a.shinies || 0);
-          if (diff !== 0) return diff;
-          return a.name.localeCompare(b.name);
-        });
-      } else if (sortMode === 'scoreboard') {
-        filtered.sort((a, b) => {
-          const diff = getMemberScoreboardPoints(b) - getMemberScoreboardPoints(a);
-          if (diff !== 0) return diff;
-          return a.name.localeCompare(b.name);
-        });
-      }
-      return filtered;
-    }
-
-    function updateResults(pushHash = false) {
-      const filtered = getFilteredAndSortedMembers();
-      resultCount.textContent = `${filtered.length} Member${filtered.length === 1 ? '' : 's'}`;
-      const galleryContainer = document.getElementById('showcase-gallery-container');
-      renderShowcaseGallery(filtered, galleryContainer, sortMode);
-      if (pushHash) {
-        window.location.hash = `#showcase?sort=${sortMode}`;
-      }
-      sortSelect.value = sortMode;
-    }
-
-    searchInput.addEventListener('input', e => {
-      searchValue = e.target.value;
-      updateResults();
-    });
-
-    sortSelect.addEventListener('change', e => {
-      sortMode = e.target.value;
-      updateResults(true);
-    });
-
+  searchInput.addEventListener('input', e => {
+    searchValue = e.target.value;
     updateResults();
-  };
-})();
+  });
 
+  sortSelect.addEventListener('change', e => {
+    sortMode = e.target.value;
+    updateResults(true);
+  });
+
+  updateResults();
+};
+
+// --- Ensure teamMembers is built whenever teamShowcase is available ---
 if (!window.teamMembers && window.teamShowcase) window.buildTeamMembers();
