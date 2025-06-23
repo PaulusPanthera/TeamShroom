@@ -1,4 +1,5 @@
-/* In dark mode, show LIGHT cards */
+/* Only color overrides for cards in dark mode. Keeps layout/spacing/structure from cards.css! */
+
 body.darkmode .unified-card {
   background: linear-gradient(132deg, #fffbe1 65%, #ffe595 100%) !important;
   color: #222 !important;
@@ -23,6 +24,15 @@ body.darkmode .unified-card.unclaimed {
   opacity: 0.70 !important;
   position: relative;
 }
+body.darkmode .unified-card.unclaimed:hover,
+body.darkmode .unified-card.unclaimed:focus-within {
+  border-color: #aaa;
+  background: linear-gradient(126deg, #eeeeee 85%, #e3e3e3 100%) !important;
+  box-shadow: 0 8px 32px #bbb8, 0 2px 16px #eee8;
+  filter: grayscale(0.4) brightness(1.18);
+  opacity: 0.82;
+}
+body.darkmode .unified-card.unclaimed::before { display: none !important; }
 body.darkmode .unified-card.unclaimed::after {
   content: "UNCLAIMED";
   position: absolute;
@@ -36,15 +46,6 @@ body.darkmode .unified-card.unclaimed::after {
   pointer-events: none;
   text-shadow: 0 2px 6px #fff, 0 1px 2px #e3e3e3;
 }
-body.darkmode .unified-card.unclaimed:hover,
-body.darkmode .unified-card.unclaimed:focus-within {
-  border-color: #aaa;
-  background: linear-gradient(126deg, #eeeeee 85%, #e3e3e3 100%) !important;
-  box-shadow: 0 8px 32px #bbb8, 0 2px 16px #eee8;
-  filter: grayscale(0.4) brightness(1.18);
-  opacity: 0.82;
-}
-body.darkmode .unified-card.unclaimed::before { display: none !important; }
 body.darkmode .unified-name {
   color: var(--accent) !important;
   text-shadow: 2px 0 #fffbe1, -2px 0 #fffbe1, 0 2px #fffbe1, 0 -2px #fffbe1, 1px 1px 0 #000;
