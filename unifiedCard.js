@@ -44,15 +44,15 @@ function renderUnifiedCard({
   if (cardType === "pokemon") {
     // Pokémon card symbols
     symbolsHtml = `
-      <div class="symbol-overlay">
-        ${symbols.secret ? `<img class="symbol secret" src="symbols/secret.png" title="Secret" alt="Secret">` : ""}
-        ${symbols.event ? `<img class="symbol event" src="symbols/event.png" title="Event" alt="Event">` : ""}
-        ${symbols.safari ? `<img class="symbol safari" src="symbols/safari.png" title="Safari" alt="Safari">` : ""}
-        ${symbols.clip ? `<img class="symbol clip" src="symbols/clip.png" title="Clip" alt="Clip">` : ""}
-        ${symbols.egg ? `<img class="symbol egg" src="symbols/egg.png" title="Egg" alt="Egg">` : ""}
-        ${symbols.alpha ? `<img class="symbol alpha" src="symbols/alpha.png" title="Alpha" alt="Alpha">` : ""}
-      </div>
-    `;
+  <div class="symbol-overlay">
+    ${symbols.secret ? `<img class="symbol secret" src="symbols/secretsprite.png" title="Secret" alt="Secret">` : ""}
+    ${symbols.event ? `<img class="symbol event" src="symbols/eventsprite.png" title="Event" alt="Event">` : ""}
+    ${symbols.safari ? `<img class="symbol safari" src="symbols/safarisprite.png" title="Safari" alt="Safari">` : ""}
+    ${symbols.clip ? `<img class="symbol clip" src="symbols/clipsprite.png" title="Clip" alt="Clip">` : ""}
+    ${symbols.egg ? `<img class="symbol egg" src="symbols/eggsprite.png" title="Egg" alt="Egg">` : ""}
+    ${symbols.alpha ? `<img class="symbol alpha" src="symbols/alpha.png" title="Alpha" alt="Alpha">` : ""}
+  </div>
+`;
   } else if (cardType === "member" && (statusIcon || donatorIcon)) {
     // Member card icons
     symbolsHtml = `
