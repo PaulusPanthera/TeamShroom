@@ -10,7 +10,7 @@ const pokemonImgScales = {
   "Charmander": 0.65,
   "Charmeleon": 0.8,
   "Squirtle": 0.65,
-  "Wartotle": 0.8,
+  "Wartotle": 0.8
   // Add more as needed
 };
 
