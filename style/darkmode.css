@@ -1,24 +1,7 @@
-body.darkmode .unified-card {
-  background: linear-gradient(126deg, #ffe595 85%, #fffbe1 100%) !important;
-  border-color: var(--success);
-  box-shadow: 0 16px 40px 0 rgba(80,50,10,0.19), 0 3px 20px #f2593766, 0 2px 0 #fffbe1 inset, 0 0px 32px 10px #f2593730;
-  filter: brightness(1.08) drop-shadow(0 2px 12px #fff9);
-}
-body.darkmode .unified-card.unclaimed {
-  background: linear-gradient(126deg, #ffe595 85%, #fffbe1 100%) !important;
-  border-color: var(--success);
-  box-shadow: 0 16px 40px 0 rgba(80,50,10,0.19), 0 3px 20px #f2593766, 0 2px 0 #fffbe1 inset, 0 0px 32px 10px #f2593730;
-  filter: brightness(1.08) drop-shadow(0 2px 12px #fff9);
-  opacity: 1;
-}
-body.darkmode .unified-card.unclaimed:hover,
-body.darkmode .unified-card.unclaimed:focus-within {
-  border-color: var(--success);
-  background: linear-gradient(126deg, #ffe595 85%, #fffbe1 100%) !important;
-  box-shadow: 0 16px 40px 0 rgba(80,50,10,0.19), 0 3px 20px #f2593766, 0 2px 0 #fffbe1 inset, 0 0px 32px 10px #f2593730;
-  filter: brightness(1.08) drop-shadow(0 2px 12px #fff9);
-  opacity: 1;
-}
+/* No card overrides.
+   All card colors, backgrounds, borders, shadows, and hovers will be exactly as in light mode.
+   Only override text or backgrounds outside of cards if needed. */
+
 body.darkmode .unified-name {
   text-shadow:
     2px 0 #fffbe1,
@@ -27,6 +10,7 @@ body.darkmode .unified-name {
     0 -2px #fffbe1,
     1px 1px 0 #000;
 }
+
 body.darkmode .unified-info {
   background: rgba(40,40,40,0.18);
   color: var(--text-main);
