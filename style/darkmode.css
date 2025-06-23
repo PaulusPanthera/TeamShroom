@@ -47,6 +47,13 @@ body.darkmode .unified-info.lost {
   color: #a22 !important;
 }
 
+/* Symbol overlays (icons) should match the name badge in darkmode */
+body.darkmode .symbol {
+  background: rgba(255, 245, 180, 0.94) !important;
+  border: 2px solid #c8ac3f !important;
+  box-shadow: 0 2px 8px #ffe59555 !important;
+}
+
 /* Unclaimed: faded/distinct on light background */
 body.darkmode .unified-card.unclaimed {
   background: linear-gradient(132deg, #f4f4f4 70%, #e3e3e3 100%) !important;
