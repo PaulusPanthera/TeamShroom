@@ -93,13 +93,14 @@
         const m = window.location.hash.match(/sort=(\w+)/);
         if (m) sortMode = m[1];
         content.innerHTML = `
-          <h1>Shiny Showcase</h1>
           <div class="showcase-search-controls"></div>
           <div id="showcase-gallery-container"></div>
         `;
         setupShowcaseSearchAndSort(teamMembers, renderShowcaseGallery, sortMode);
       } else if (hash === "hitlist") {
-        content.innerHTML = "<h1>Shiny Pokedex</h1><div id='shiny-dex-container'></div>";
+        content.innerHTML = `
+          <div id='shiny-dex-container'></div>
+        `;
         setTimeout(() => {
           renderShinyDex(shinyDex);
           setTimeout(() => {
@@ -109,7 +110,9 @@
           }, 0);
         }, 0);
       } else if (hash === "shinyweekly") {
-        content.innerHTML = "<h1>Shiny Weekly</h1><div style='font-size:1.4em; margin:2em 0; color:var(--accent); text-align:center;'>soon-to-be</div>";
+        content.innerHTML = `
+          <div style='font-size:1.4em; margin:2em 0; color:var(--accent); text-align:center;'>soon-to-be</div>
+        `;
       } else if (hash === "donators") {
         renderDonators();
       } else {
