@@ -48,7 +48,7 @@ const shinyDex = {
     { name: "Vileplume", claimed: "Darktrench" },
     { name: "Paras", claimed: "skyeatsme" },
     { name: "Parasect", claimed: "SmiigZ" },
-    { name: "Venonat", claimed: false },
+    { name: "Venonat", claimed: "PaulusTFT" },
     { name: "Venomoth", claimed: false },
     { name: "Diglett", claimed: "maknaez" },
     { name: "Dugtrio", claimed: "EgoPraise" },
