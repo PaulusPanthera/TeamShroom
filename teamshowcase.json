@@ -107,7 +107,8 @@
       {"name": "vanilluxe"},
       {"name": "onix"},
       {"name": "onix"},
-      {"name": "cascoon"}
+      {"name": "cascoon"},
+      {"name": "poochyena"}
     ]
   },
   {
@@ -270,7 +271,8 @@
       {"name": "graveler"},
       {"name": "gloom"},
       {"name": "weepinbell"},
-      {"name": "wurmple"}
+      {"name": "wurmple"},
+      {"name": "staryu"}
     ]
   },
   {
@@ -628,7 +630,8 @@
       {"name": "starmie","clip": "https://www.youtube.com/watch?v=4kv70V3D6pQ"},
       {"name": "clefairy"},
       {"name": "camerupt"},
-      {"name": "durant"}
+      {"name": "durant"},
+      {"name": "bronzong"}
     ]
   },
   {
@@ -998,6 +1001,13 @@
     ]
   },
   {
+    "name": "NoxxPrime",
+    "status": "spore",
+    "shinies": [
+      {"name": "poliwhirl", "safari": true, "lost": true}
+    ]
+  },
+  {
     "name": "NSxPRODIGY",
     "status": "spore",
     "shinies": [
@@ -1051,7 +1061,8 @@
       {"name": "alakazam"},
       {"name": "bibarel"},
       {"name": "dugtrio"},
-      {"name": "snorlax"}
+      {"name": "snorlax"},
+      {"name": "murkrow"}
     ]
   },
   {
@@ -1439,7 +1450,8 @@
       {"name": "pikachu"},
       {"name": "slugma"},
       {"name": "mareep"},
-      {"name": "pichu"}
+      {"name": "pichu"},
+      {"name": "slakoth"}
     ]
   },
   {
@@ -1759,7 +1771,8 @@
     "name": "zzxyami",
     "status": "spore",
     "shinies": [
-      {"name": "bagon"}
+      {"name": "bagon"},
+      {"name": "sharpedo"}
     ]
   }
 ]
