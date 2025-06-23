@@ -21,13 +21,14 @@ Hosted on GitHub Pages.
 ## Project Structure
 
 - `index.html` — Main site page and routing logic.
-- /style/
-  base.css          /* variables, resets, fonts */
-  layout.css        /* layout, nav, container styles */
-  cards.css         /* unified-card/card styles */
-  buttons.css       /* button styles (including back-btn, tabs) */
-  darkmode.css      /* dark mode overrides */
-  tooltip.css       /* tooltip and popover styles */
+- `/style/` — All CSS files (see below)
+    - `base.css` — CSS variables, resets, base font.
+    - `layout.css` — Layout, nav, containers, grid, responsive.
+    - `cards.css` — Unified card styles for Pokémon/member cards.
+    - `buttons.css` — Button, tab, and navigation link styles.
+    - `search.css` — Search, filter, and form UI styles.
+    - `tooltip.css` — Tooltip and popover styles.
+    - `darkmode.css` — Dark mode overrides.
 - `shinydex.js` — Full shiny Pokédex data and claims.
 - `teamshowcase.js` — Shiny lists per team member.
 - `showcase.js` — Showcase logic and shiny points display.
@@ -35,6 +36,32 @@ Hosted on GitHub Pages.
 - `pokemonPoints.js` — Shiny point values by tier and family.
 - `shinydexsearch.js` — Hitlist search, filtering, and living dex logic.
 - `unifiedCard.js` — Card rendering for member and Pokémon display.
+
+---
+
+## CSS Usage
+
+All CSS styles are split into modular files under the `/style/` folder.
+
+**Include all of these in your `<head>` in this order:**
+```html
+<link rel="stylesheet" href="style/base.css">
+<link rel="stylesheet" href="style/layout.css">
+<link rel="stylesheet" href="style/cards.css">
+<link rel="stylesheet" href="style/buttons.css">
+<link rel="stylesheet" href="style/search.css">
+<link rel="stylesheet" href="style/tooltip.css">
+<link rel="stylesheet" href="style/darkmode.css">
+```
+
+**Edit the relevant CSS file for the type of style you need to change:**
+- General colors, variables, base font: `base.css`
+- Layout, grid, nav, containers: `layout.css`
+- Card appearance: `cards.css`
+- Buttons, tabs, navigation links: `buttons.css`
+- Search bar, dropdowns, forms: `search.css`
+- Tooltip styles: `tooltip.css`
+- Dark mode (overrides): `darkmode.css`
 
 ---
 
