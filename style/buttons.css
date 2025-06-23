@@ -1,0 +1,75 @@
+/* Tabs for Dex Mode */
+.dex-tab {
+  background: var(--card);
+  color: var(--accent);
+  border: 2.5px solid var(--accent);
+  border-radius: 12px 12px 0 0;
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 0.52em 1.45em;
+  cursor: pointer;
+  margin-bottom: -2px;
+  box-shadow: 0 2px 10px #f2593766;
+  transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
+  letter-spacing: 1px;
+  outline: none;
+  position: relative;
+  z-index: 10;
+}
+.dex-tab.active, .dex-tab:focus {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+  box-shadow: 0 4px 16px #f2593788;
+}
+
+.back-btn {
+  background: var(--accent);
+  color: var(--bg);
+  border: 2.5px solid var(--accent);
+  border-radius: 11px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 0.42em 1.4em;
+  cursor: pointer;
+  margin-bottom: 1em;
+  box-shadow: 0 2px 14px #f2593766;
+  transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
+  letter-spacing: 1px;
+  display: inline-block;
+}
+.back-btn:hover,
+.back-btn:focus {
+  background: var(--unclaimed);
+  color: var(--card);
+  border-color: var(--unclaimed);
+  box-shadow: 0 4px 16px #f2593788;
+  outline: none;
+}
+
+/* NAVIGATION BAR LINKS */
+.nav a {
+  color: var(--bg);
+  text-decoration: none;
+  font-weight: bold;
+  font-family: inherit;
+  background: var(--success);
+  padding: 0.7rem 1.3rem;
+  border-radius: 12px;
+  border: 2px solid var(--success);
+  font-size: 1em;
+  transition: background 0.25s, box-shadow 0.25s, color 0.18s, border 0.22s;
+  box-shadow: 0 2px 14px #67b35644;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 #fff9, 0 0 6px #fff8;
+  position: relative;
+  overflow: hidden;
+}
+.nav a.active, .nav a:hover {
+  background: var(--unclaimed);
+  color: var(--card);
+  box-shadow: 0 6px 32px #f2593788, 0 2px 20px #fffbe144;
+  border-color: #fffbe1;
+}
