@@ -207,3 +207,6 @@
   top: 50%;
   transform: translateY(-50%);
 }
+.symbol {
+  border: 2px solid var(--accent) !important;
+}
