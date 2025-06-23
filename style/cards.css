@@ -17,27 +17,29 @@
   gap: 0.7em;
   text-align: center;
   position: relative;
-  transition: 
+  transition:
     box-shadow 0.19s cubic-bezier(.4,2,.2,1),
     border 0.19s,
-    transform 0.22s cubic-bezier(.4,2,.2,1),
-    filter 0.22s cubic-bezier(.4,2,.2,1);
-  will-change: transform, box-shadow;
+    background 0.22s cubic-bezier(.4,2,.2,1),
+    filter 0.22s cubic-bezier(.4,2,.2,1),
+    transform 0.22s cubic-bezier(.4,2,.2,1);
+  will-change: transform, box-shadow, background;
   filter: drop-shadow(0 1px 4px #fff3);
   z-index: 1;
   color: #ffe595;
 }
 
 .unified-card:hover, .unified-card:focus-within {
-  box-shadow: 
-    0 16px 40px 0 rgba(80,50,10,0.32), 
-    0 3px 20px #23243b66, 
+  box-shadow:
+    0 16px 40px 0 rgba(80,50,10,0.32),
+    0 3px 20px #23243b66,
     0 2px 0 #23243b inset,
     0 0px 32px 10px #23243b30;
   border-color: var(--success);
-  background: linear-gradient(126deg, #2c2f50 85%, #181a20 100%);
+  /* Subtle color change for lightmode, like darkmode effect */
+  background: linear-gradient(126deg, #2c2f50 80%, #23243b 100%);
+  filter: brightness(1.10) drop-shadow(0 2px 12px #fff9);
   transform: translateY(-9px) scale(1.07) rotateZ(-2deg);
-  filter: brightness(1.08) drop-shadow(0 2px 12px #fff9);
   z-index: 10;
 }
 .unified-card:active {
@@ -45,27 +47,11 @@
   box-shadow: 0 5px 24px 0 rgba(80,50,10,0.24), 0 1.5px 12px #23243b77;
 }
 .unified-card::before {
-  /* SHIMMER overlay, soft gold for dark cards */
+  /* Remove shimmer in lightmode hover for subtlety */
   content: "";
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(120deg, rgba(255, 255, 160, 0.13) 0%, rgba(255, 255, 255, 0.04) 100%);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-  border-radius: 18px;
-  z-index: 0;
-}
-.unified-card:hover::before {
-  opacity: 1;
-  animation: shimmer-card 0.9s linear 1;
-}
-@keyframes shimmer-card {
-  0% { transform: translateX(-80%) rotate(15deg);}
-  100% { transform: translateX(110%) rotate(15deg);}
+  display: none;
 }
 
-/* Bigger GIF box */
 .unified-img {
   width: 120px;
   height: 120px;
@@ -142,12 +128,15 @@
   font-size: 1em;
   margin-top: 0.18em;
   background: rgba(40,40,40,0.23);
-  padding: 0.19em 0.8em;
-  border-radius: 6px;
+  padding: 0.27em 0.8em;
+  border-radius: 9px;
   font-weight: bold;
   text-shadow: 0 1px 1px #000;
   border: 2px solid #ffe59555;
+  box-shadow: 0 2px 8px #181a2077;
 }
+
+/* Info badge for "lost" */
 .unified-info.lost {
   color: #ffc9c9;
   font-weight: bold;
@@ -167,7 +156,7 @@
   position: absolute;
   background: none;
   border-radius: 10px;
-  border: 2px solid #23243b;
+  border: 2px solid var(--accent) !important;
   box-shadow: 0 1px 8px #23243b33;
   opacity: 0.99;
   pointer-events: auto;
@@ -206,7 +195,4 @@
   right: var(--symbol-gap-x);
   top: 50%;
   transform: translateY(-50%);
-}
-.symbol {
-  border: 2px solid var(--accent) !important;
 }
