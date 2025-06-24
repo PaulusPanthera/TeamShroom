@@ -1,0 +1,2606 @@
+[
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "1\tbulbasaur\tbulbasaur,ivysaur,venusaur\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "2\tivysaur\tbulbasaur,ivysaur,venusaur\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "3\tvenusaur\tbulbasaur,ivysaur,venusaur\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "4\tcharmander\tcharmander,charmeleon,charizard\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "5\tcharmeleon\tcharmander,charmeleon,charizard\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "6\tcharizard\tcharmander,charmeleon,charizard\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "7\tsquirtle\tsquirtle,wartortle,blastoise\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "8\twartortle\tsquirtle,wartortle,blastoise\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "9\tblastoise\tsquirtle,wartortle,blastoise\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "10\tcaterpie\tcaterpie,metapod,butterfree\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "11\tmetapod\tcaterpie,metapod,butterfree\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "12\tbutterfree\tcaterpie,metapod,butterfree\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "13\tweedle\tweedle,kakuna,beedrill\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "14\tkakuna\tweedle,kakuna,beedrill\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "15\tbeedrill\tweedle,kakuna,beedrill\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "16\tpidgey\tpidgey,pidgeotto,pidgeot\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "17\tpidgeotto\tpidgey,pidgeotto,pidgeot\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "18\tpidgeot\tpidgey,pidgeotto,pidgeot\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "19\trattata\trattata,raticate\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "20\traticate\trattata,raticate\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "21\tspearow\tspearow,fearow\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "22\tfearow\tspearow,fearow\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "23\tekans\tekans,arbok\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "24\tarbok\tekans,arbok\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "25\tpikachu\tpichu,pikachu,raichu\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "26\traichu\tpichu,pikachu,raichu\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "27\tsandshrew\tsandshrew,sandslash\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "28\tsandslash\tsandshrew,sandslash\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "29\tnidoran♀\tnidoran♀,nidorina,nidoqueen,nidoran♂,nidorino,nidoking\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "30\tnidorina\tnidoran♀,nidorina,nidoqueen,nidoran♂,nidorino,nidoking\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "31\tnidoqueen\tnidoran♀,nidorina,nidoqueen,nidoran♂,nidorino,nidoking\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "32\tnidoran♂\tnidoran♀,nidorina,nidoqueen,nidoran♂,nidorino,nidoking\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "33\tnidorino\tnidoran♀,nidorina,nidoqueen,nidoran♂,nidorino,nidoking\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "34\tnidoking\tnidoran♀,nidorina,nidoqueen,nidoran♂,nidorino,nidoking\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "35\tclefairy\tcleffa,clefairy,clefable\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "36\tclefable\tcleffa,clefairy,clefable\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "37\tvulpix\tvulpix,ninetales\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "38\tninetales\tvulpix,ninetales\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "39\tjigglypuff\tigglybuff,jigglypuff,wigglytuff\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "40\twigglytuff\tigglybuff,jigglypuff,wigglytuff\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "41\tzubat\tzubat,golbat,crobat\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "42\tgolbat\tzubat,golbat,crobat\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "43\toddish\toddish,gloom,vileplume,bellossom\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "44\tgloom\toddish,gloom,vileplume,bellossom\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "45\tvileplume\toddish,gloom,vileplume,bellossom\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "46\tparas\tparas,parasect\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "47\tparasect\tparas,parasect\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "48\tvenonat\tvenonat,venomoth\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "49\tvenomoth\tvenonat,venomoth\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "50\tdiglett\tdiglett,dugtrio\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "51\tdugtrio\tdiglett,dugtrio\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "52\tmeowth\tmeowth,persian\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "53\tpersian\tmeowth,persian\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "54\tpsyduck\tpsyduck,golduck\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "55\tgolduck\tpsyduck,golduck\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "56\tmankey\tmankey,primeape\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "57\tprimeape\tmankey,primeape\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "58\tgrowlithe\tgrowlithe,arcanine\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "59\tarcanine\tgrowlithe,arcanine\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "60\tpoliwag\tpoliwag,poliwhirl,poliwrath,politoed\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "61\tpoliwhirl\tpoliwag,poliwhirl,poliwrath,politoed\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "62\tpoliwrath\tpoliwag,poliwhirl,poliwrath,politoed\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "63\tabra\tabra,kadabra,alakazam\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "64\tkadabra\tabra,kadabra,alakazam\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "65\talakazam\tabra,kadabra,alakazam\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "66\tmachop\tmachop,machoke,machamp\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "67\tmachoke\tmachop,machoke,machamp\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "68\tmachamp\tmachop,machoke,machamp\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "69\tbellsprout\tbellsprout,weepinbell,victreebel\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "70\tweepinbell\tbellsprout,weepinbell,victreebel\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "71\tvictreebel\tbellsprout,weepinbell,victreebel\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "72\ttentacool\ttentacool,tentacruel\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "73\ttentacruel\ttentacool,tentacruel\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "74\tgeodude\tgeodude,graveler,golem\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "75\tgraveler\tgeodude,graveler,golem\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "76\tgolem\tgeodude,graveler,golem\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "77\tponyta\tponyta,rapidash\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "78\trapidash\tponyta,rapidash\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "79\tslowpoke\tslowpoke,slowbro,slowking\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "80\tslowbro\tslowpoke,slowbro,slowking\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "81\tmagnemite\tmagnemite,magneton,magnezone\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "82\tmagneton\tmagnemite,magneton,magnezone\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "83\tfarfetch’d\tfarfetch’d\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "84\tdoduo\tdoduo,dodrio\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "85\tdodrio\tdoduo,dodrio\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "86\tseel\tseel,dewgong\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "87\tdewgong\tseel,dewgong\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "88\tgrimer\tgrimer,muk\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "89\tmuk\tgrimer,muk\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "90\tshellder\tshellder,cloyster\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "91\tcloyster\tshellder,cloyster\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "92\tgastly\tgastly,haunter,gengar\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "93\thaunter\tgastly,haunter,gengar\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "94\tgengar\tgastly,haunter,gengar\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "95\tonix\tonix,steelix\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "96\tdrowzee\tdrowzee,hypno\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "97\thypno\tdrowzee,hypno\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "98\tkrabby\tkrabby,kingler\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "99\tkingler\tkrabby,kingler\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "100\tvoltorb\tvoltorb,electrode\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "101\telectrode\tvoltorb,electrode\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "102\texeggcute\texeggcute,exeggutor\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "103\texeggutor\texeggcute,exeggutor\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "104\tcubone\tcubone,marowak\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "105\tmarowak\tcubone,marowak\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "106\thitmonlee\ttyrogue,hitmonlee,hitmonchan,hitmontop\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "107\thitmonchan\ttyrogue,hitmonlee,hitmonchan,hitmontop\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "108\tlickitung\tlickitung,lickilicky\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "109\tkoffing\tkoffing,weezing\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "110\tweezing\tkoffing,weezing\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "111\trhyhorn\trhyhorn,rhydon,rhyperior\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "112\trhydon\trhyhorn,rhydon,rhyperior\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "113\tchansey\thappiny,chansey,blissey\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "114\ttangela\ttangela,tangrowth\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "115\tkangaskhan\tkangaskhan\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "116\thorsea\thorsea,seadra,kingdra\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "117\tseadra\thorsea,seadra,kingdra\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "118\tgoldeen\tgoldeen,seaking\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "119\tseaking\tgoldeen,seaking\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "120\tstaryu\tstaryu,starmie\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "121\tstarmie\tstaryu,starmie\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "122\tmr.",
+    "": "2\tKanto"
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "123\tscyther\tscyther,scizor\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "124\tjynx\tsmoochum,jynx\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "125\telectabuzz\telekid,electabuzz,electivire\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "126\tmagmar\tmagby,magmar,magmortar\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "127\tpinsir\tpinsir\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "128\ttauros\ttauros\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "129\tmagikarp\tmagikarp,gyarados\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "130\tgyarados\tmagikarp,gyarados\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "131\tlapras\tlapras\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "132\tditto\tditto\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "133\teevee\teevee,vaporeon,jolteon,flareon,espeon,umbreon,leafeon,glaceon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "134\tvaporeon\teevee,vaporeon,jolteon,flareon,espeon,umbreon,leafeon,glaceon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "135\tjolteon\teevee,vaporeon,jolteon,flareon,espeon,umbreon,leafeon,glaceon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "136\tflareon\teevee,vaporeon,jolteon,flareon,espeon,umbreon,leafeon,glaceon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "137\tporygon\tporygon,porygon2,porygon-z\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "138\tomanyte\tomanyte,omastar\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "139\tomastar\tomanyte,omastar\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "140\tkabuto\tkabuto,kabutops\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "141\tkabutops\tkabuto,kabutops\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "142\taerodactyl\taerodactyl\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "143\tsnorlax\tmunchlax,snorlax\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "144\tarticuno\tarticuno\tLegendary\tKanto\tlegendary",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "145\tzapdos\tzapdos\tLegendary\tKanto\tlegendary",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "146\tmoltres\tmoltres\tLegendary\tKanto\tlegendary",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "147\tdratini\tdratini,dragonair,dragonite\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "148\tdragonair\tdratini,dragonair,dragonite\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "149\tdragonite\tdratini,dragonair,dragonite\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "150\tmewtwo\tmewtwo\tLegendary\tKanto\tlegendary",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "151\tmew\tmew\tLegendary\tKanto\tmythical",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "152\tchikorita\tchikorita,bayleef,meganium\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "153\tbayleef\tchikorita,bayleef,meganium\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "154\tmeganium\tchikorita,bayleef,meganium\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "155\tcyndaquil\tcyndaquil,quilava,typhlosion\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "156\tquilava\tcyndaquil,quilava,typhlosion\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "157\ttyphlosion\tcyndaquil,quilava,typhlosion\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "158\ttotodile\ttotodile,croconaw,feraligatr\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "159\tcroconaw\ttotodile,croconaw,feraligatr\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "160\tferaligatr\ttotodile,croconaw,feraligatr\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "161\tsentret\tsentret,furret\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "162\tfurret\tsentret,furret\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "163\thoothoot\thoothoot,noctowl\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "164\tnoctowl\thoothoot,noctowl\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "165\tledyba\tledyba,ledian\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "166\tledian\tledyba,ledian\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "167\tspinarak\tspinarak,ariados\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "168\tariados\tspinarak,ariados\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "169\tcrobat\tzubat,golbat,crobat\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "170\tchinchou\tchinchou,lanturn\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "171\tlanturn\tchinchou,lanturn\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "172\tpichu\tpichu,pikachu,raichu\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "173\tcleffa\tcleffa,clefairy,clefable\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "174\tigglybuff\tigglybuff,jigglypuff,wigglytuff\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "175\ttogepi\ttogepi,togetic,togekiss\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "176\ttogetic\ttogepi,togetic,togekiss\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "177\tnatu\tnatu,xatu\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "178\txatu\tnatu,xatu\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "179\tmareep\tmareep,flaaffy,ampharos\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "180\tflaaffy\tmareep,flaaffy,ampharos\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "181\tampharos\tmareep,flaaffy,ampharos\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "182\tbellossom\toddish,gloom,vileplume,bellossom\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "183\tmarill\tazurill,marill,azumarill\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "184\tazumarill\tazurill,marill,azumarill\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "185\tsudowoodo\tbonsly,sudowoodo\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "186\tpolitoed\tpoliwag,poliwhirl,poliwrath,politoed\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "187\thoppip\thoppip,skiploom,jumpluff\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "188\tskiploom\thoppip,skiploom,jumpluff\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "189\tjumpluff\thoppip,skiploom,jumpluff\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "190\taipom\taipom,ambipom\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "191\tsunkern\tsunkern,sunflora\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "192\tsunflora\tsunkern,sunflora\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "193\tyanma\tyanma,yanmega\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "194\twooper\twooper,quagsire\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "195\tquagsire\twooper,quagsire\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "196\tespeon\teevee,vaporeon,jolteon,flareon,espeon,umbreon,leafeon,glaceon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "197\tumbreon\teevee,vaporeon,jolteon,flareon,espeon,umbreon,leafeon,glaceon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "198\tmurkrow\tmurkrow,honchkrow\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "199\tslowking\tslowpoke,slowbro,slowking\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "200\tmisdreavus\tmisdreavus,mismagius\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "201\tunown\tunown\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "202\twobbuffet\twynaut,wobbuffet\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "203\tgirafarig\tgirafarig\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "204\tpineco\tpineco,forretress\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "205\tforretress\tpineco,forretress\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "206\tdunsparce\tdunsparce\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "207\tgligar\tgligar,gliscor\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "208\tsteelix\tonix,steelix\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "209\tsnubbull\tsnubbull,granbull\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "210\tgranbull\tsnubbull,granbull\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "211\tqwilfish\tqwilfish\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "212\tscizor\tscyther,scizor\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "213\tshuckle\tshuckle\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "214\theracross\theracross\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "215\tsneasel\tsneasel,weavile\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "216\tteddiursa\tteddiursa,ursaring\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "217\tursaring\tteddiursa,ursaring\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "218\tslugma\tslugma,magcargo\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "219\tmagcargo\tslugma,magcargo\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "220\tswinub\tswinub,piloswine,mamoswine\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "221\tpiloswine\tswinub,piloswine,mamoswine\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "222\tcorsola\tcorsola\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "223\tremoraid\tremoraid,octillery\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "224\toctillery\tremoraid,octillery\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "225\tdelibird\tdelibird\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "226\tmantine\tmantyke,mantine\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "227\tskarmory\tskarmory\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "228\thoundour\thoundour,houndoom\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "229\thoundoom\thoundour,houndoom\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "230\tkingdra\thorsea,seadra,kingdra\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "231\tphanpy\tphanpy,donphan\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "232\tdonphan\tphanpy,donphan\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "233\tporygon2\tporygon,porygon2,porygon-z\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "234\tstantler\tstantler\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "235\tsmeargle\tsmeargle\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "236\ttyrogue\ttyrogue,hitmonlee,hitmonchan,hitmontop\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "237\thitmontop\ttyrogue,hitmonlee,hitmonchan,hitmontop\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "238\tsmoochum\tsmoochum,jynx\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "239\telekid\telekid,electabuzz,electivire\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "240\tmagby\tmagby,magmar,magmortar\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "241\tmiltank\tmiltank\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "242\tblissey\thappiny,chansey,blissey\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "243\traikou\traikou\tLegendary\tJohto\tlegendary",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "244\tentei\tentei\tLegendary\tJohto\tlegendary",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "245\tsuicune\tsuicune\tLegendary\tJohto\tlegendary",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "246\tlarvitar\tlarvitar,pupitar,tyranitar\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "247\tpupitar\tlarvitar,pupitar,tyranitar\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "248\ttyranitar\tlarvitar,pupitar,tyranitar\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "249\tlugia\tlugia\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "250\tho-oh\tho-oh\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "251\tcelebi\tcelebi\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "252\ttreecko\ttreecko,grovyle,sceptile\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "253\tgrovyle\ttreecko,grovyle,sceptile\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "254\tsceptile\ttreecko,grovyle,sceptile\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "255\ttorchic\ttorchic,combusken,blaziken\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "256\tcombusken\ttorchic,combusken,blaziken\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "257\tblaziken\ttorchic,combusken,blaziken\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "258\tmudkip\tmudkip,marshtomp,swampert\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "259\tmarshtomp\tmudkip,marshtomp,swampert\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "260\tswampert\tmudkip,marshtomp,swampert\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "261\tpoochyena\tpoochyena,mightyena\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "262\tmightyena\tpoochyena,mightyena\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "263\tzigzagoon\tzigzagoon,linoone\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "264\tlinoone\tzigzagoon,linoone\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "265\twurmple\twurmple,silcoon,beautifly,cascoon,dustox\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "266\tsilcoon\twurmple,silcoon,beautifly,cascoon,dustox\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "267\tbeautifly\twurmple,silcoon,beautifly,cascoon,dustox\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "268\tcascoon\twurmple,silcoon,beautifly,cascoon,dustox\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "269\tdustox\twurmple,silcoon,beautifly,cascoon,dustox\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "270\tlotad\tlotad,lombre,ludicolo\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "271\tlombre\tlotad,lombre,ludicolo\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "272\tludicolo\tlotad,lombre,ludicolo\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "273\tseedot\tseedot,nuzleaf,shiftry\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "274\tnuzleaf\tseedot,nuzleaf,shiftry\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "275\tshiftry\tseedot,nuzleaf,shiftry\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "276\ttaillow\ttaillow,swellow\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "277\tswellow\ttaillow,swellow\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "278\twingull\twingull,pelipper\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "279\tpelipper\twingull,pelipper\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "280\tralts\tralts,kirlia,gardevoir,gallade\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "281\tkirlia\tralts,kirlia,gardevoir,gallade\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "282\tgardevoir\tralts,kirlia,gardevoir,gallade\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "283\tsurskit\tsurskit,masquerain\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "284\tmasquerain\tsurskit,masquerain\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "285\tshroomish\tshroomish,breloom\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "286\tbreloom\tshroomish,breloom\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "287\tslakoth\tslakoth,vigoroth,slaking\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "288\tvigoroth\tslakoth,vigoroth,slaking\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "289\tslaking\tslakoth,vigoroth,slaking\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "290\tnincada\tnincada,ninjask,shedinja\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "291\tninjask\tnincada,ninjask,shedinja\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "292\tshedinja\tnincada,ninjask,shedinja\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "293\twhismur\twhismur,loudred,exploud\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "294\tloudred\twhismur,loudred,exploud\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "295\texploud\twhismur,loudred,exploud\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "296\tmakuhita\tmakuhita,hariyama\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "297\thariyama\tmakuhita,hariyama\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "298\tazurill\tazurill,marill,azumarill\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "299\tnosepass\tnosepass,probopass\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "300\tskitty\tskitty,delcatty\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "301\tdelcatty\tskitty,delcatty\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "302\tsableye\tsableye\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "303\tmawile\tmawile\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "304\taron\taron,lairon,aggron\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "305\tlairon\taron,lairon,aggron\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "306\taggron\taron,lairon,aggron\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "307\tmeditite\tmeditite,medicham\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "308\tmedicham\tmeditite,medicham\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "309\telectrike\telectrike,manectric\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "310\tmanectric\telectrike,manectric\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "311\tplusle\tplusle\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "312\tminun\tminun\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "313\tvolbeat\tvolbeat\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "314\tillumise\tillumise\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "315\troselia\tbudew,roselia,roserade\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "316\tgulpin\tgulpin,swalot\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "317\tswalot\tgulpin,swalot\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "318\tcarvanha\tcarvanha,sharpedo\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "319\tsharpedo\tcarvanha,sharpedo\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "320\twailmer\twailmer,wailord\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "321\twailord\twailmer,wailord\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "322\tnumel\tnumel,camerupt\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "323\tcamerupt\tnumel,camerupt\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "324\ttorkoal\ttorkoal\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "325\tspoink\tspoink,grumpig\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "326\tgrumpig\tspoink,grumpig\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "327\tspinda\tspinda\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "328\ttrapinch\ttrapinch,vibrava,flygon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "329\tvibrava\ttrapinch,vibrava,flygon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "330\tflygon\ttrapinch,vibrava,flygon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "331\tcacnea\tcacnea,cacturne\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "332\tcacturne\tcacnea,cacturne\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "333\tswablu\tswablu,altaria\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "334\taltaria\tswablu,altaria\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "335\tzangoose\tzangoose\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "336\tseviper\tseviper\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "337\tlunatone\tlunatone\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "338\tsolrock\tsolrock\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "339\tbarboach\tbarboach,whiscash\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "340\twhiscash\tbarboach,whiscash\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "341\tcorphish\tcorphish,crawdaunt\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "342\tcrawdaunt\tcorphish,crawdaunt\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "343\tbaltoy\tbaltoy,claydol\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "344\tclaydol\tbaltoy,claydol\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "345\tlileep\tlileep,cradily\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "346\tcradily\tlileep,cradily\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "347\tanorith\tanorith,armaldo\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "348\tarmaldo\tanorith,armaldo\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "349\tfeebas\tfeebas,milotic\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "350\tmilotic\tfeebas,milotic\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "351\tcastform\tcastform\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "352\tkecleon\tkecleon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "353\tshuppet\tshuppet,banette\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "354\tbanette\tshuppet,banette\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "355\tduskull\tduskull,dusclops,dusknoir\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "356\tdusclops\tduskull,dusclops,dusknoir\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "357\ttropius\ttropius\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "358\tchimecho\tchingling,chimecho\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "359\tabsol\tabsol\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "360\twynaut\twynaut,wobbuffet\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "361\tsnorunt\tsnorunt,glalie,froslass\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "362\tglalie\tsnorunt,glalie,froslass\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "363\tspheal\tspheal,sealeo,walrein\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "364\tsealeo\tspheal,sealeo,walrein\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "365\twalrein\tspheal,sealeo,walrein\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "366\tclamperl\tclamperl,huntail,gorebyss\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "367\thuntail\tclamperl,huntail,gorebyss\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "368\tgorebyss\tclamperl,huntail,gorebyss\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "369\trelicanth\trelicanth\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "370\tluvdisc\tluvdisc\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "371\tbagon\tbagon,shelgon,salamence\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "372\tshelgon\tbagon,shelgon,salamence\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "373\tsalamence\tbagon,shelgon,salamence\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "374\tbeldum\tbeldum,metang,metagross\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "375\tmetang\tbeldum,metang,metagross\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "376\tmetagross\tbeldum,metang,metagross\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "377\tregirock\tregirock\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "378\tregice\tregice\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "379\tregisteel\tregisteel\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "380\tlatias\tlatias\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "381\tlatios\tlatios\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "382\tkyogre\tkyogre\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "383\tgroudon\tgroudon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "384\trayquaza\trayquaza\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "385\tjirachi\tjirachi\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "386\tdeoxys\tdeoxys\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "387\tturtwig\tturtwig,grotle,torterra\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "388\tgrotle\tturtwig,grotle,torterra\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "389\ttorterra\tturtwig,grotle,torterra\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "390\tchimchar\tchimchar,monferno,infernape\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "391\tmonferno\tchimchar,monferno,infernape\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "392\tinfernape\tchimchar,monferno,infernape\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "393\tpiplup\tpiplup,prinplup,empoleon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "394\tprinplup\tpiplup,prinplup,empoleon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "395\tempoleon\tpiplup,prinplup,empoleon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "396\tstarly\tstarly,staravia,staraptor\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "397\tstaravia\tstarly,staravia,staraptor\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "398\tstaraptor\tstarly,staravia,staraptor\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "399\tbidoof\tbidoof,bibarel\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "400\tbibarel\tbidoof,bibarel\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "401\tkricketot\tkricketot,kricketune\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "402\tkricketune\tkricketot,kricketune\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "403\tshinx\tshinx,luxio,luxray\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "404\tluxio\tshinx,luxio,luxray\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "405\tluxray\tshinx,luxio,luxray\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "406\tbudew\tbudew,roselia,roserade\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "407\troserade\tbudew,roselia,roserade\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "408\tcranidos\tcranidos,rampardos\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "409\trampardos\tcranidos,rampardos\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "410\tshieldon\tshieldon,bastiodon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "411\tbastiodon\tshieldon,bastiodon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "412\tburmy\tburmy,wormadam,mothim\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "413\twormadam\tburmy,wormadam,mothim\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "414\tmothim\tburmy,wormadam,mothim\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "415\tcombee\tcombee,vespiquen\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "416\tvespiquen\tcombee,vespiquen\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "417\tpachirisu\tpachirisu\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "418\tbuizel\tbuizel,floatzel\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "419\tfloatzel\tbuizel,floatzel\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "420\tcherubi\tcherubi,cherrim\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "421\tcherrim\tcherubi,cherrim\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "422\tshellos-west\tshellos-west,shellos-east,gastrodon-west,gastrodon-east\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "422\tshellos-east\tshellos-west,shellos-east,gastrodon-west,gastrodon-east\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "423\tgastrodon-west\tshellos-west,shellos-east,gastrodon-west,gastrodon-east\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "423\tgastrodon-east\tshellos-west,shellos-east,gastrodon-west,gastrodon-east\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "424\tambipom\taipom,ambipom\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "425\tdrifloon\tdrifloon,drifblim\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "426\tdrifblim\tdrifloon,drifblim\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "427\tbuneary\tbuneary,lopunny\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "428\tlopunny\tbuneary,lopunny\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "429\tmismagius\tmisdreavus,mismagius\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "430\thonchkrow\tmurkrow,honchkrow\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "431\tglameow\tglameow,purugly\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "432\tpurugly\tglameow,purugly\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "433\tchingling\tchingling,chimecho\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "434\tstunky\tstunky,skuntank\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "435\tskuntank\tstunky,skuntank\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "436\tbronzor\tbronzor,bronzong\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "437\tbronzong\tbronzor,bronzong\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "438\tbonsly\tbonsly,sudowoodo\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "439\tmime",
+    "": "2\tSinnoh\tBaby"
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "440\thappiny\thappiny,chansey,blissey\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "441\tchatot\tchatot\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "442\tspiritomb\tspiritomb\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "443\tgible\tgible,gabite,garchomp\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "444\tgabite\tgible,gabite,garchomp\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "445\tgarchomp\tgible,gabite,garchomp\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "446\tmunchlax\tmunchlax,snorlax\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "447\triolu\triolu,lucario\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "448\tlucario\triolu,lucario\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "449\thippopotas\thippopotas,hippowdon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "450\thippowdon\thippopotas,hippowdon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "451\tskorupi\tskorupi,drapion\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "452\tdrapion\tskorupi,drapion\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "453\tcroagunk\tcroagunk,toxicroak\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "454\ttoxicroak\tcroagunk,toxicroak\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "455\tcarnivine\tcarnivine\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "456\tfinneon\tfinneon,lumineon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "457\tlumineon\tfinneon,lumineon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "458\tmantyke\tmantyke,mantine\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "459\tsnover\tsnover,abomasnow\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "460\tabomasnow\tsnover,abomasnow\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "461\tweavile\tsneasel,weavile\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "462\tmagnezone\tmagnemite,magneton,magnezone\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "463\tlickilicky\tlickitung,lickilicky\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "464\trhyperior\trhyhorn,rhydon,rhyperior\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "465\ttangrowth\ttangela,tangrowth\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "466\telectivire\telekid,electabuzz,electivire\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "467\tmagmortar\tmagby,magmar,magmortar\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "468\ttogekiss\ttogepi,togetic,togekiss\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "469\tyanmega\tyanma,yanmega\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "470\tleafeon\teevee,vaporeon,jolteon,flareon,espeon,umbreon,leafeon,glaceon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "471\tglaceon\teevee,vaporeon,jolteon,flareon,espeon,umbreon,leafeon,glaceon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "472\tgliscor\tgligar,gliscor\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "473\tmamoswine\tswinub,piloswine,mamoswine\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "474\tporygon-z\tporygon,porygon2,porygon-z\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "475\tgallade\tralts,kirlia,gardevoir,gallade\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "476\tprobopass\tnosepass,probopass\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "477\tdusknoir\tduskull,dusclops,dusknoir\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "478\tfroslass\tsnorunt,glalie,froslass\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "479\trotom\trotom\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "480\tuxie\tuxie\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "481\tmesprit\tmesprit\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "482\tazelf\tazelf\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "483\tdialga\tdialga\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "484\tpalkia\tpalkia\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "485\theatran\theatran\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "486\tregigigas\tregigigas\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "487\tgiratina\tgiratina\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "488\tcresselia\tcresselia\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "489\tphione\tphione\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "490\tmanaphy\tmanaphy\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "491\tdarkrai\tdarkrai\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "492\tshaymin\tshaymin\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "493\tarceus\tarceus\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "494\tvictini\tvictini\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "495\tsnivy\tsnivy,servine,serperior\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "496\tservine\tsnivy,servine,serperior\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "497\tserperior\tsnivy,servine,serperior\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "498\ttepig\ttepig,pignite,emboar\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "499\tpignite\ttepig,pignite,emboar\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "500\temboar\ttepig,pignite,emboar\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "501\toshawott\toshawott,dewott,samurott\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "502\tdewott\toshawott,dewott,samurott\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "503\tsamurott\toshawott,dewott,samurott\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "504\tpatrat\tpatrat,watchog\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "505\twatchog\tpatrat,watchog\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "506\tlillipup\tlillipup,herdier,stoutland\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "507\therdier\tlillipup,herdier,stoutland\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "508\tstoutland\tlillipup,herdier,stoutland\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "509\tpurrloin\tpurrloin,liepard\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "510\tliepard\tpurrloin,liepard\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "511\tpansage\tpansage,simisage\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "512\tsimisage\tpansage,simisage\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "513\tpansear\tpansear,simisear\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "514\tsimisear\tpansear,simisear\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "515\tpanpour\tpanpour,simipour\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "516\tsimipour\tpanpour,simipour\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "517\tmunna\tmunna,musharna\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "518\tmusharna\tmunna,musharna\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "519\tpidove\tpidove,tranquill,unfezant\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "520\ttranquill\tpidove,tranquill,unfezant\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "521\tunfezant\tpidove,tranquill,unfezant\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "522\tblitzle\tblitzle,zebstrika\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "523\tzebstrika\tblitzle,zebstrika\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "524\troggenrola\troggenrola,boldore,gigalith\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "525\tboldore\troggenrola,boldore,gigalith\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "526\tgigalith\troggenrola,boldore,gigalith\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "527\twoobat\twoobat,swoobat\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "528\tswoobat\twoobat,swoobat\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "529\tdrilbur\tdrilbur,excadrill\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "530\texcadrill\tdrilbur,excadrill\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "531\taudino\taudino\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "532\ttimburr\ttimburr,gurdurr,conkeldurr\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "533\tgurdurr\ttimburr,gurdurr,conkeldurr\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "534\tconkeldurr\ttimburr,gurdurr,conkeldurr\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "535\ttympole\ttympole,palpitoad,seismitoad\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "536\tpalpitoad\ttympole,palpitoad,seismitoad\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "537\tseismitoad\ttympole,palpitoad,seismitoad\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "538\tthroh\tthroh\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "539\tsawk\tsawk\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "540\tsewaddle\tsewaddle,swadloon,leavanny\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "541\tswadloon\tsewaddle,swadloon,leavanny\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "542\tleavanny\tsewaddle,swadloon,leavanny\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "543\tvenipede\tvenipede,whirlipede,scolipede\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "544\twhirlipede\tvenipede,whirlipede,scolipede\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "545\tscolipede\tvenipede,whirlipede,scolipede\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "546\tcottonee\tcottonee,whimsicott\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "547\twhimsicott\tcottonee,whimsicott\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "548\tpetilil\tpetilil,lilligant\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "549\tlilligant\tpetilil,lilligant\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "550\tbasculin\tbasculin\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "551\tsandile\tsandile,krokorok,krookodile\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "552\tkrokorok\tsandile,krokorok,krookodile\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "553\tkrookodile\tsandile,krokorok,krookodile\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "554\tdarumaka\tdarumaka,darmanitan\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "555\tdarmanitan\tdarumaka,darmanitan\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "556\tmaractus\tmaractus\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "557\tdwebble\tdwebble,crustle\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "558\tcrustle\tdwebble,crustle\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "559\tscraggy\tscraggy,scrafty\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "560\tscrafty\tscraggy,scrafty\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "561\tsigilyph\tsigilyph\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "562\tyamask\tyamask,cofagrigus\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "563\tcofagrigus\tyamask,cofagrigus\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "564\ttirtouga\ttirtouga,carracosta\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "565\tcarracosta\ttirtouga,carracosta\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "566\tarchen\tarchen,archeops\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "567\tarcheops\tarchen,archeops\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "568\ttrubbish\ttrubbish,garbodor\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "569\tgarbodor\ttrubbish,garbodor\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "570\tzorua\tzorua,zoroark\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "571\tzoroark\tzorua,zoroark\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "572\tminccino\tminccino,cinccino\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "573\tcinccino\tminccino,cinccino\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "574\tgothita\tgothita,gothorita,gothitelle\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "575\tgothorita\tgothita,gothorita,gothitelle\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "576\tgothitelle\tgothita,gothorita,gothitelle\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "577\tsolosis\tsolosis,duosion,reuniclus\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "578\tduosion\tsolosis,duosion,reuniclus\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "579\treuniclus\tsolosis,duosion,reuniclus\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "580\tducklett\tducklett,swanna\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "581\tswanna\tducklett,swanna\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "582\tvanillite\tvanillite,vanillish,vanilluxe\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "583\tvanillish\tvanillite,vanillish,vanilluxe\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "584\tvanilluxe\tvanillite,vanillish,vanilluxe\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "585\tdeerling\tdeerling,sawsbuck\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "586\tsawsbuck\tdeerling,sawsbuck\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "587\temolga\temolga\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "588\tkarrablast\tkarrablast,escavalier\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "589\tescavalier\tkarrablast,escavalier\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "590\tfoongus\tfoongus,amoonguss\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "591\tamoonguss\tfoongus,amoonguss\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "592\tfrillish\tfrillish,jellicent\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "593\tjellicent\tfrillish,jellicent\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "594\talomomola\talomomola\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "595\tjoltik\tjoltik,galvantula\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "596\tgalvantula\tjoltik,galvantula\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "597\tferroseed\tferroseed,ferrothorn\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "598\tferrothorn\tferroseed,ferrothorn\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "599\tklink\tklink,klang,klinklang\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "600\tklang\tklink,klang,klinklang\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "601\tklinklang\tklink,klang,klinklang\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "602\ttynamo\ttynamo,eelektrik,eelektross\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "603\teelektrik\ttynamo,eelektrik,eelektross\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "604\teelektross\ttynamo,eelektrik,eelektross\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "605\telgyem\telgyem,beheeyem\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "606\tbeheeyem\telgyem,beheeyem\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "607\tlitwick\tlitwick,lampent,chandelure\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "608\tlampent\tlitwick,lampent,chandelure\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "609\tchandelure\tlitwick,lampent,chandelure\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "610\taxew\taxew,fraxure,haxorus\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "611\tfraxure\taxew,fraxure,haxorus\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "612\thaxorus\taxew,fraxure,haxorus\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "613\tcubchoo\tcubchoo,beartic\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "614\tbeartic\tcubchoo,beartic\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "615\tcryogonal\tcryogonal\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "616\tshelmet\tshelmet,accelgor\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "617\taccelgor\tshelmet,accelgor\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "618\tstunfisk\tstunfisk\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "619\tmienfoo\tmienfoo,mienshao\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "620\tmienshao\tmienfoo,mienshao\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "621\tdruddigon\tdruddigon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "622\tgolett\tgolett,golurk\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "623\tgolurk\tgolett,golurk\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "624\tpawniard\tpawniard,bisharp\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "625\tbisharp\tpawniard,bisharp\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "626\tbouffalant\tbouffalant\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "627\trufflet\trufflet,braviary\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "628\tbraviary\trufflet,braviary\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "629\tvullaby\tvullaby,mandibuzz\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "630\tmandibuzz\tvullaby,mandibuzz\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "631\theatmor\theatmor\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "632\tdurant\tdurant\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "633\tdeino\tdeino,zweilous,hydreigon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "634\tzweilous\tdeino,zweilous,hydreigon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "635\thydreigon\tdeino,zweilous,hydreigon\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "636\tlarvesta\tlarvesta,volcarona\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "637\tvolcarona\tlarvesta,volcarona\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "638\tcobalion\tcobalion\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "639\tterrakion\tterrakion\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "640\tvirizion\tvirizion\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "641\ttornadus\ttornadus\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "642\tthundurus\tthundurus\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "643\treshiram\treshiram\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "644\tzekrom\tzekrom\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "645\tlandorus\tlandorus\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "646\tkyurem\tkyurem\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "647\tkeldeo\tkeldeo\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "648\tmeloetta\tmeloetta\tTier",
+    "": ""
+  },
+  {
+    "#\tpokemon\tfamily_members\ttier\tregion\trarity": "649\tgenesect\tgenesect\tTier",
+    "": ""
+  }
+]
