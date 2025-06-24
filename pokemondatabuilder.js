@@ -1,11 +1,7 @@
 // pokemondatabuilder.js
+import { normalizePokemonName } from './utils.js';
 
-if (!window.pokemonFamiliesData) {
-  throw new Error("window.pokemonFamiliesData is not loaded! Please load your JSON first.");
-}
-
-// Assign point values for each tier, including Legendary as 100
-window.TIER_POINTS = {
+export let TIER_POINTS = {
   "Tier 6": 2,
   "Tier 5": 3,
   "Tier 4": 6,
@@ -16,51 +12,42 @@ window.TIER_POINTS = {
   "Tier LM": 100
 };
 
-// Build all data structures from the JSON
-window.TIER_FAMILIES = {};
-window.POKEMON_POINTS = {};
-window.POKEMON_TIER = {};
-window.POKEMON_REGION = {};
-window.POKEMON_RARITY = {};
-window.pokemonFamilies = {};
+export let TIER_FAMILIES = {};
+export let POKEMON_POINTS = {};
+export let POKEMON_TIER = {};
+export let POKEMON_REGION = {};
+export let POKEMON_RARITY = {};
+export let pokemonFamilies = {};
 
-window.pokemonFamiliesData.forEach(entry => {
-  const tier = entry.tier;
-  const fam = entry.family_members.split(",");
-  const region = entry.region || "";
-  const rarity = entry.rarity || "";
+export function buildPokemonData(pokemonFamiliesData) {
+  TIER_FAMILIES = {};
+  POKEMON_POINTS = {};
+  POKEMON_TIER = {};
+  POKEMON_REGION = {};
+  POKEMON_RARITY = {};
+  pokemonFamilies = {};
 
-  // Assign family base
-  const base = fam[0].trim().toLowerCase();
-  if (!window.TIER_FAMILIES[tier]) window.TIER_FAMILIES[tier] = [];
-  if (!window.TIER_FAMILIES[tier].includes(base)) {
-    window.TIER_FAMILIES[tier].push(base);
-  }
+  pokemonFamiliesData.forEach(entry => {
+    const tier = entry.tier;
+    const fam = entry.family_members.split(",");
+    const region = entry.region || "";
+    const rarity = entry.rarity || "";
 
-  // Map every family member to the family
-  fam.forEach(name => {
-    const norm = name
-      .toLowerCase()
-      .replace(/♀/g,"-f")
-      .replace(/♂/g,"-m")
-      .replace(/[- '\.’;]/g,"")
-      .trim();
+    // Assign family base
+    const base = normalizePokemonName(fam[0].trim());
+    if (!TIER_FAMILIES[tier]) TIER_FAMILIES[tier] = [];
+    if (!TIER_FAMILIES[tier].includes(base)) {
+      TIER_FAMILIES[tier].push(base);
+    }
 
-    window.pokemonFamilies[norm] = fam.map(item =>
-      item
-        .toLowerCase()
-        .replace(/♀/g,"-f")
-        .replace(/♂/g,"-m")
-        .replace(/[- '\.’;]/g,"")
-        .trim()
-    );
-
-    window.POKEMON_POINTS[norm] = window.TIER_POINTS[tier] || 0;
-    window.POKEMON_TIER[norm] = tier;
-    window.POKEMON_REGION[norm] = region;
-    window.POKEMON_RARITY[norm] = rarity;
+    // Map every family member to the family
+    fam.forEach(name => {
+      const norm = normalizePokemonName(name);
+      pokemonFamilies[norm] = fam.map(item => normalizePokemonName(item));
+      POKEMON_POINTS[norm] = TIER_POINTS[tier] || 0;
+      POKEMON_TIER[norm] = tier;
+      POKEMON_REGION[norm] = region;
+      POKEMON_RARITY[norm] = rarity;
+    });
   });
-});
-
-// Support for legacy code
-window.buildPokemonPoints = function() {}; // No longer needed; everything is built above.
+}
