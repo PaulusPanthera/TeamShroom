@@ -32,7 +32,6 @@
   justify-content: center;
   align-items: flex-start;
 }
-
 .how-to-donate-box h2 {
   color: var(--success);
   margin-bottom: 1.1em;
@@ -40,7 +39,6 @@
   letter-spacing: 1px;
   font-weight: 900;
 }
-
 .donate-highlight {
   display: inline-block;
   background: var(--accent);
@@ -71,7 +69,6 @@
   justify-content: flex-start;
   align-items: flex-start;
 }
-
 .last-donations-fixed-box h2 {
   color: var(--success);
   margin-bottom: 1.1em;
@@ -79,7 +76,6 @@
   letter-spacing: 1px;
   font-weight: 900;
 }
-
 .last-donations-table {
   width: 100%;
   border-collapse: separate;
@@ -89,7 +85,6 @@
   min-width: 540px;
   table-layout: fixed;
 }
-
 .last-donations-table th,
 .last-donations-table td {
   padding: 0.48em 1.1em;
@@ -110,7 +105,6 @@
   font-size: 1.10em;
   border-radius: 12px 12px 0 0;
 }
-
 .last-donations-table td {
   border-radius: 9px;
 }
@@ -118,12 +112,60 @@
 .last-donations-table td:nth-child(2) { width: 160px; }
 .last-donations-table td:nth-child(3) { width: 300px; }
 .last-donations-table td:nth-child(4) { width: 110px; }
-
 .last-donations-table .donation-item {
   color: var(--success);
   font-weight: bold;
   margin-left: 0.3em;
   font-size: 0.97em;
+}
+
+/* Donators table */
+.donators-table {
+  width: 100%;
+  min-width: 540px;
+  border-collapse: separate;
+  border-spacing: 0 0.18em;
+  background: transparent;
+  font-size: 1.09em;
+  table-layout: fixed;
+}
+.donators-table th,
+.donators-table td {
+  padding: 0.48em 1.1em;
+  text-align: left;
+  background: var(--card-gradient);
+  color: var(--accent);
+  border: none;
+  font-family: inherit;
+  font-size: 1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.donators-table th {
+  color: var(--card);
+  background: var(--success);
+  font-weight: bold;
+  font-size: 1.10em;
+  border-radius: 12px 12px 0 0;
+}
+.donators-table td {
+  border-radius: 9px;
+}
+.donators-table td:nth-child(1) { width: 70px; }
+.donators-table td:nth-child(2) { width: 180px; }
+.donators-table td:nth-child(3) { width: 220px; }
+.donators-table td:nth-child(4) { width: 180px; }
+.donators-table .donator-tier {
+  font-weight: bold;
+  color: var(--success);
+}
+.donators-table .tier-icon {
+  width: 2em;
+  height: 2em;
+  vertical-align: middle;
+  margin-right: 0.4em;
+  margin-bottom: 0.15em;
 }
 
 /* Responsive for mobile: stack and adjust font size */
@@ -142,11 +184,14 @@
     padding: 1.1em 1em 1.2em 1em;
   }
   .last-donations-table th,
-  .last-donations-table td {
+  .last-donations-table td,
+  .donators-table th,
+  .donators-table td {
     font-size: 0.98em;
     padding: 0.25em 0.3em;
   }
-  .last-donations-table td:nth-child(3) { width: 180px; }
+  .last-donations-table td:nth-child(3),
+  .donators-table td:nth-child(3) { width: 180px; }
 }
 
 @media (max-width: 700px) {
@@ -157,8 +202,12 @@
   }
   .last-donations-table,
   .last-donations-table th,
-  .last-donations-table td {
+  .last-donations-table td,
+  .donators-table,
+  .donators-table th,
+  .donators-table td {
     font-size: 0.87em;
   }
-  .last-donations-table td:nth-child(3) { width: 110px; }
+  .last-donations-table td:nth-child(3),
+  .donators-table td:nth-child(3) { width: 110px; }
 }
