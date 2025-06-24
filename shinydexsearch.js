@@ -1,6 +1,20 @@
 // === Search Controls & Navigation for Shiny Dex Pokedex with Tabs, Dropdowns, and Text/Family Search (with + prefix/suffix, search left, also in Living Dex, custom tooltip) ===
 
 (function() {
+  // --- BUILD SHINY DEX FROM JSON (FAMILIES) ---
+  window.buildShinyDexFromFamilies = function() {
+    // Group Pokémon by region
+    const shinyDex = {};
+    (window.pokemonFamiliesData || []).forEach(entry => {
+      const region = entry.region || "Other";
+      if (!shinyDex[region]) shinyDex[region] = [];
+      shinyDex[region].push({
+        name: entry.pokemon,
+        claimed: entry.claimed
+      });
+    });
+    window.shinyDex = shinyDex;
+  };
 
   // Utilities
   function flattenDexData(shinyDex) {
