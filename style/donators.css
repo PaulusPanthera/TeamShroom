@@ -1,18 +1,17 @@
 .donators-top-flex {
   display: flex;
-  justify-content: space-between;
+  gap: 2em;
+  justify-content: center;
   align-items: flex-start;
-  gap: 2.2em;
   margin: 2em 0 2.7em 0;
   flex-wrap: wrap;
 }
 
-/* Make both toolboxes as wide as possible */
 .how-to-donate-box,
 .last-donations-fixed-box {
-  flex: 1 1 0;
-  min-width: 390px;
-  max-width: 640px;
+  flex: 1 1 420px;
+  min-width: 350px;
+  max-width: 560px;
   box-sizing: border-box;
 }
 
@@ -21,23 +20,19 @@
   color: var(--accent);
   border-radius: 14px;
   box-shadow: 0 2px 14px #f2593744;
-  padding: 2em 2.4em 2.1em 2.4em;
-  font-size: 1.55em;
+  padding: 2em 2.3em 2em 2.3em;
+  font-size: 1.3em;
   text-align: left;
   border: 2.5px solid var(--accent);
-  margin-left: auto;
-  margin-right: 0;
-  min-height: 260px;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: flex-start;
 }
 .how-to-donate-box h2 {
   color: var(--success);
-  margin-bottom: 0.93em;
-  font-size: 1.35em;
-  letter-spacing: 1px;
+  margin-bottom: 1em;
+  font-size: 1.3em;
   font-weight: 900;
 }
 .donate-highlight {
@@ -45,7 +40,7 @@
   background: var(--accent);
   color: var(--card);
   font-weight: 900;
-  padding: 0.32em 1.5em;
+  padding: 0.32em 1.6em;
   border-radius: 12px;
   margin-top: 1.1em;
   font-size: 1.5em;
@@ -53,47 +48,42 @@
   box-shadow: 0 2px 8px #f2593744;
 }
 
-/* Donations box gets same width and min height */
 .last-donations-fixed-box {
   background: var(--card-gradient);
   color: var(--accent);
   border-radius: 14px;
   box-shadow: 0 2px 14px #67b35633;
-  padding: 2em 2.4em 2.1em 2.4em;
-  font-size: 1.16em;
+  padding: 2em 2.3em 2em 2.3em;
+  font-size: 1.1em;
   text-align: left;
   border: 2.5px solid var(--success);
-  margin-right: auto;
-  margin-left: 0;
-  min-height: 260px;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: flex-start;
 }
+
 .last-donations-fixed-box h2 {
   color: var(--success);
-  margin-bottom: 0.9em;
-  font-size: 1.15em;
-  letter-spacing: 1px;
+  margin-bottom: 1em;
+  font-size: 1.1em;
   font-weight: 900;
 }
-/* Ensure table fills box and is readable */
 .last-donations-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 0.18em;
   background: transparent;
-  font-size: 1.07em;
-  min-width: 480px;
+  font-size: 1em;
+  min-width: 440px;
   table-layout: fixed;
 }
 .last-donations-table th,
 .last-donations-table td {
-  padding: 0.37em 0.9em;
+  padding: 0.35em 0.7em;
   text-align: left;
-  background: var(--card-gradient);
-  color: var(--accent);
+  background: var(--success);
+  color: var(--card);
   border: none;
   font-family: inherit;
   font-size: 1em;
@@ -102,20 +92,21 @@
   white-space: nowrap;
 }
 .last-donations-table th {
-  color: var(--card);
   background: var(--success);
+  color: var(--card);
   font-weight: bold;
-  font-size: 1.07em;
+  font-size: 1.05em;
   border-radius: 12px 12px 0 0;
 }
-/* Widen donation cell! */
-.last-donations-table td:nth-child(1) { width: 110px; }
-.last-donations-table td:nth-child(2) { width: 160px; }
-.last-donations-table td:nth-child(3) { width: 260px; }
-.last-donations-table td:nth-child(4) { width: 110px; }
 .last-donations-table td {
+  background: var(--card-gradient);
+  color: var(--accent);
   border-radius: 9px;
 }
+.last-donations-table td:nth-child(1) { width: 90px; }
+.last-donations-table td:nth-child(2) { width: 130px; }
+.last-donations-table td:nth-child(3) { width: 170px; }
+.last-donations-table td:nth-child(4) { width: 120px; }
 .last-donations-table .donation-item {
   color: var(--success);
   font-weight: bold;
@@ -123,8 +114,94 @@
   font-size: 0.97em;
 }
 
+/* Donators table */
+.donators-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.13em;
+  background: transparent;
+  font-size: 1.05em;
+  table-layout: fixed;
+  margin-top: 2em;
+}
+.donators-table th,
+.donators-table td {
+  padding: 0.39em 0.8em;
+  text-align: left;
+  background: var(--success);
+  color: var(--card);
+  border: none;
+  font-family: inherit;
+  font-size: 1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.donators-table th {
+  background: var(--success);
+  color: var(--card);
+  font-weight: bold;
+  font-size: 1.11em;
+  border-radius: 12px 12px 0 0;
+}
+.donators-table td {
+  background: var(--card-gradient);
+  color: var(--accent);
+  border-radius: 7px;
+}
+.donators-table td:nth-child(1) { width: 55px; }
+.donators-table td:nth-child(2) { width: 160px; }
+.donators-table td:nth-child(3) { width: 155px; }
+.donators-table td:nth-child(4) { width: 260px; }
+.donators-table .donator-tier {
+  font-weight: bold;
+  color: var(--success);
+  position: relative;
+  cursor: pointer;
+}
+.donators-table .tier-icon {
+  width: 1.3em;
+  height: 1.3em;
+  vertical-align: middle;
+  margin-right: 0.4em;
+  margin-bottom: 0.15em;
+}
+
+/* --- Tier Tooltip on Hover --- */
+.donator-tier-tooltip {
+  position: relative;
+}
+.donator-tier-tooltip .tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  width: max-content;
+  min-width: 170px;
+  max-width: 260px;
+  background: #181a20;
+  color: #ffe595;
+  text-align: left;
+  border-radius: 9px;
+  padding: 0.57em 0.95em;
+  position: absolute;
+  z-index: 50;
+  left: 50%;
+  top: 105%;
+  transform: translateX(-50%);
+  font-size: 0.98em;
+  box-shadow: 0 2px 14px #f2593722;
+  transition: opacity 0.12s;
+  pointer-events: none;
+  font-family: inherit;
+  line-height: 1.35;
+}
+.donator-tier-tooltip:hover .tooltip-text,
+.donator-tier-tooltip:focus .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
 /* Responsive for mobile: stack and adjust font size */
-@media (max-width: 1150px) {
+@media (max-width: 1100px) {
   .donators-top-flex {
     flex-direction: column-reverse;
     gap: 1.6em;
@@ -135,15 +212,18 @@
     min-width: 0;
     max-width: 100%;
     margin: 0 0 1.3em 0;
-    font-size: 1.05em;
+    font-size: 1em;
     padding: 1.1em 1em 1.2em 1em;
   }
   .last-donations-table th,
-  .last-donations-table td {
+  .last-donations-table td,
+  .donators-table th,
+  .donators-table td {
     font-size: 0.98em;
-    padding: 0.25em 0.3em;
+    padding: 0.22em 0.3em;
   }
-  .last-donations-table td:nth-child(3) { width: 180px; }
+  .last-donations-table td:nth-child(3),
+  .donators-table td:nth-child(3) { width: 120px; }
 }
 
 @media (max-width: 700px) {
@@ -154,8 +234,12 @@
   }
   .last-donations-table,
   .last-donations-table th,
-  .last-donations-table td {
+  .last-donations-table td,
+  .donators-table,
+  .donators-table th,
+  .donators-table td {
     font-size: 0.87em;
   }
-  .last-donations-table td:nth-child(3) { width: 110px; }
+  .last-donations-table td:nth-child(3),
+  .donators-table td:nth-child(3) { width: 70px; }
 }
