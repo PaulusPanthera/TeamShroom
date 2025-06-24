@@ -1,4 +1,4 @@
-// unifiedCard.js
+// unifiedcard.js
 // Renders a unified card for Pokémon/member with icon slots
 
 // --- Add this mapping at the top (before renderUnifiedCard) ---
