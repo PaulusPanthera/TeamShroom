@@ -133,25 +133,108 @@
   width: 28px;
   height: 28px;
   position: absolute;
-  background: rgba(34, 36, 59, 0.88);
-  border-radius: 9px;
-  border: 2px solid #ffe595aa !important;
-  box-shadow: 0 2px 8px #181a2077;
+  background: rgba(34, 36, 59, 0.88); /* match .unified-name background */
+  border-radius: 9px; /* match .unified-name border-radius */
+  border: 2px solid #ffe595aa !important; /* match .unified-name border */
+  box-shadow: 0 2px 8px #181a2077; /* match .unified-name box-shadow */
   opacity: 0.99;
   pointer-events: auto;
   display: block;
   padding: 2px;
   filter: contrast(1.2) brightness(0.97) drop-shadow(0 0 6px #181a20aa);
 }
+/* Top left: secret */
+.symbol.secret {
+  left: var(--symbol-gap-x);
+  top: var(--symbol-top-y);
+}
+/* Top right: event */
+.symbol.event {
+  right: var(--symbol-gap-x);
+  top: var(--symbol-top-y);
+}
+/* Bottom left: safari */
+.symbol.safari {
+  left: var(--symbol-gap-x);
+  bottom: var(--symbol-bottom-y);
+}
+/* Bottom right: clip */
+.symbol.clip {
+  right: var(--symbol-gap-x);
+  bottom: var(--symbol-bottom-y);
+}
+/* Vertically centered left: egg */
+.symbol.egg {
+  left: var(--symbol-gap-x);
+  top: 50%;
+  transform: translateY(-50%);
+}
+/* Vertically centered right: alpha */
+.symbol.alpha {
+  right: var(--symbol-gap-x);
+  top: 50%;
+  transform: translateY(-50%);
+}
+/* Member status/donator (bottom left/right, like safari/clip) */
+.symbol.member-status {
+  left: var(--symbol-gap-x);
+  bottom: var(--symbol-bottom-y);
+  right: auto;
+  top: auto;
+}
+.symbol.donator-status {
+  right: var(--symbol-gap-x);
+  bottom: var(--symbol-bottom-y);
+  left: auto;
+  top: auto;
+}
 
-/* --- COMPACT GRID FOR SHOWCASE ICONS --- */
-.symbol.secret  { left: 12px;  top: 54px; }
-.symbol.event   { left: 48px;  top: 54px; }
-.symbol.safari  { left: 84px;  top: 54px; }
-.symbol.clip    { left: 120px; top: 54px; }
-.symbol.egg     { left: 156px; top: 54px; }
-.symbol.alpha   { left: 192px; top: 54px; }
+/* --- ICON LEGEND TOOLTIP --- */
+/* REMOVE THE [?] BUTTON, BUT KEEP LAYOUT FOR ICONS/TOOLTIPS IN CASE NEEDED */
+.icon-help-tooltip {
+  display: none !important; /* Hide the legend tooltip trigger */
+}
+/* The rest is kept for icon layout consistency and future-proofing */
+.icon-help-tooltip-box {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  left: 115%;
+  top: 50%;
+  transform: translateY(-50%);
+  min-width: 220px;
+  max-width: 350px;
+  background: #222;
+  color: #ffe595;
+  border-radius: 10px;
+  padding: 1em 1.3em;
+  font-size: 1em;
+  box-shadow: 0 2px 18px #181a2088, 0 2px 10px #f2593722;
+  z-index: 99;
+  white-space: nowrap;
+  text-align: left;
+  pointer-events: none;
+  transition: opacity 0.18s;
+  line-height: 1.7;
+}
+.icon-help-tooltip-box img.symbol {
+  width: 1.6em;
+  height: 1.6em;
+  vertical-align: middle;
+  margin-right: 0.4em;
+  margin-bottom: 0.12em;
+  border-radius: 4px;
+  border: 1px solid #ffe59544;
+  background: #181a20;
+}
 
-/* Member and donator icons (for member cards, bottom corners) */
-.symbol.member-status  { left: 12px;   bottom: 54px; right: auto; top: auto; }
-.symbol.donator-status { right: 12px;  bottom: 54px; left: auto; top: auto; }
+@media (max-width: 900px) {
+  .icon-help-tooltip-box {
+    left: 0;
+    top: 115%;
+    transform: none;
+    min-width: 200px;
+    max-width: 95vw;
+    white-space: normal;
+  }
+}
