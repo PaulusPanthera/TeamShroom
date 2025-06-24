@@ -13,7 +13,7 @@ window.TIER_POINTS = {
   "Tier 2": 15,
   "Tier 1": 25,
   "Tier 0": 30,
-  "Legendary": 100
+  "Tier LM": 100
 };
 
 // Build all data structures from the JSON
@@ -43,7 +43,7 @@ window.pokemonFamiliesData.forEach(entry => {
       .toLowerCase()
       .replace(/♀/g,"-f")
       .replace(/♂/g,"-m")
-      .replace(/[- '\.’]/g,"")
+      .replace(/[- '\.’;]/g,"")
       .trim();
 
     window.pokemonFamilies[norm] = fam.map(item =>
@@ -51,7 +51,7 @@ window.pokemonFamiliesData.forEach(entry => {
         .toLowerCase()
         .replace(/♀/g,"-f")
         .replace(/♂/g,"-m")
-        .replace(/[- '\.’]/g,"")
+        .replace(/[- '\.’;]/g,"")
         .trim()
     );
 
