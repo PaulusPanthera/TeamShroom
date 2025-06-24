@@ -1147,7 +1147,7 @@
     "#": 144,
     "pokemon": "articuno",
     "family_members": "articuno",
-    "tier": "Legendary",
+    "tier": "Tier LM",
     "region": "Kanto",
     "rarity": "legendary"
   },
@@ -1155,7 +1155,7 @@
     "#": 145,
     "pokemon": "zapdos",
     "family_members": "zapdos",
-    "tier": "Legendary",
+    "tier": "Tier LM",
     "region": "Kanto",
     "rarity": "legendary"
   },
@@ -1163,7 +1163,7 @@
     "#": 146,
     "pokemon": "moltres",
     "family_members": "moltres",
-    "tier": "Legendary",
+    "tier": "Tier LM",
     "region": "Kanto",
     "rarity": "legendary"
   },
@@ -1195,7 +1195,7 @@
     "#": 150,
     "pokemon": "mewtwo",
     "family_members": "mewtwo",
-    "tier": "Legendary",
+    "tier": "Tier LM",
     "region": "Kanto",
     "rarity": "legendary"
   },
@@ -1203,7 +1203,7 @@
     "#": 151,
     "pokemon": "mew",
     "family_members": "mew",
-    "tier": "Legendary",
+    "tier": "Tier LM",
     "region": "Kanto",
     "rarity": "mythical"
   },
@@ -1939,7 +1939,7 @@
     "#": 243,
     "pokemon": "raikou",
     "family_members": "raikou",
-    "tier": "Legendary",
+    "tier": "Tier LM",
     "region": "Johto",
     "rarity": "legendary"
   },
@@ -1947,7 +1947,7 @@
     "#": 244,
     "pokemon": "entei",
     "family_members": "entei",
-    "tier": "Legendary",
+    "tier": "Tier LM",
     "region": "Johto",
     "rarity": "legendary"
   },
@@ -1955,7 +1955,7 @@
     "#": 245,
     "pokemon": "suicune",
     "family_members": "suicune",
-    "tier": "Legendary",
+    "tier": "Tier LM",
     "region": "Johto",
     "rarity": "legendary"
   },
