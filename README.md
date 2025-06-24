@@ -85,6 +85,7 @@ Hosted on GitHub Pages.
 - [ ] Add Summary section to Shinies
 - [ ] Badge Case
 - [ ] Improve mobile and accessibility features
+- [ ] Switch to React framework
 
 ---
 
