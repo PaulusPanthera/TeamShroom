@@ -67,13 +67,11 @@ All CSS styles are split into modular files under the `/style/` folder.
 
 ## To Do
 
-- [ ] Add Donator Symbols
 - [ ] Add Socials (Twitch, Youtube) for Members
 - [ ] Add alternative Shiny View with shinies roaming around
 - [ ] Add Rarity Count to Living Dex
 - [ ] Add Summary section to Shinies
 - [ ] Improve mobile and accessibility features
-- [ ] Donators Site
 
 ---
 
