@@ -1,7 +1,7 @@
 // main.js
 // Entrypoint for Team Shroom Shiny Pages — ES Modules, centralized helpers, no inline JS in HTML.
 
-import { buildPokemonData } from './pokemondatabuilder.js';
+import { buildPokemonData, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies } from './pokemondatabuilder.js';
 import { renderShowcaseGallery, setupShowcaseSearchAndSort, renderMemberShowcase } from './showcase.js';
 import { setupShinyDexHitlistSearch } from './shinydexsearch.js';
 import { renderDonators, renderDonatorsWhenReady, assignDonatorTiersToTeam } from './donators.js';
@@ -91,6 +91,11 @@ async function renderPage() {
   // Rebuild points/tier data for use everywhere
   if (pokemonFamiliesData) buildPokemonData(pokemonFamiliesData);
 
+  // Expose POKEMON_POINTS etc globally for modules expecting them
+  window.POKEMON_POINTS = POKEMON_POINTS;
+  window.TIER_FAMILIES = TIER_FAMILIES;
+  window.pokemonFamilies = pokemonFamilies;
+
   // Assign donator tiers to teamShowcase before rendering
   if (teamShowcaseData && donationsData) assignDonatorTiersToTeam(teamShowcaseData, null, donationsData);
 
@@ -114,7 +119,15 @@ async function renderPage() {
       status: entry.status,
       donator: entry.donator
     }));
-    setupShowcaseSearchAndSort(teamMembers, renderShowcaseGallery, sort);
+    setupShowcaseSearchAndSort(
+      teamMembers,
+      renderShowcaseGallery,
+      sort,
+      teamShowcaseData,
+      POKEMON_POINTS,
+      TIER_FAMILIES,
+      pokemonFamilies
+    );
   } else if (page === 'member' && member) {
     // Find the member
     let memData = teamShowcaseData.find(m => m.name.toLowerCase() === member.toLowerCase());
@@ -122,7 +135,7 @@ async function renderPage() {
       content.innerHTML = `<div style="font-size:1.3em;color:var(--accent);margin:2em;text-align:center;">Member not found.</div>`;
     } else {
       // Re-render using member showcase (sort by query param if present)
-      renderMemberShowcase(memData, sort);
+      renderMemberShowcase(memData, sort, teamShowcaseData, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies);
     }
   } else if (page === 'hitlist') {
     content.innerHTML = `<div id="shiny-dex-container"></div>`;
@@ -131,8 +144,10 @@ async function renderPage() {
     (pokemonFamiliesData || []).forEach(entry => {
       const region = entry.region || "Other";
       if (!shinyDex[region]) shinyDex[region] = [];
+      // Use entry.name or entry.pokemon, but always prettify for display, and always set name property
+      const pokeName = prettifyPokemonName(entry.pokemon || entry.name);
       shinyDex[region].push({
-        name: prettifyPokemonName(entry.pokemon),
+        name: pokeName,
         claimed: entry.claimed
       });
     });
