@@ -3,18 +3,22 @@
 // Now as an ES module, using centralized utils and no window globals.
 
 import { renderUnifiedCard } from './unifiedcard.js';
-import { normalizeMemberName, prettifyMemberName } from './utils.js';
+import { normalizeMemberName, prettifyMemberName, normalizePokemonName } from './utils.js';
 
 // --- DATA FETCHING AND STRUCTURE ---
 // (Data is now loaded and passed in by main.js; no fetching here.)
 
 // Helper to generate the correct shiny gif URL
 function shinyGifUrl(name) {
-  let urlName = name
-    .toLowerCase()
-    .replace(/♀/g, "-f")
-    .replace(/♂/g, "-m")
-    .replace(/[\s.'’]/g, "");
+  // Handle exceptions
+  if (name === "Mr. Mime" || name === "mr.mime" || name === "mr-mime") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr-mime.gif";
+  if (name === "Mime Jr." || name === "mime.jr" || name === "mime-jr") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mime-jr.gif";
+  if (name === "Nidoran♀" || name === "nidoran♀" || name === "nidoran-f" || name === "nidoranf") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-f.gif";
+  if (name === "Nidoran♂" || name === "nidoran♂" || name === "nidoran-m" || name === "nidoranm") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-m.gif";
+  if (name === "Type: Null" || name === "type:null" || name === "type-null" || name === "typenull") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/type-null.gif";
+  if (name === "Porygon-Z" || name === "porygon-z" || name === "porygonz") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/porygon-z.gif";
+
+  const urlName = normalizePokemonName(name);
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${urlName}.gif`;
 }
 
@@ -56,11 +60,7 @@ function getMemberSpriteUrls(memberName) {
 function getPointsForPokemon(name, extra = {}, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies) {
   if (!POKEMON_POINTS) return 1;
 
-  let normName = name
-    .toLowerCase()
-    .replace(/♀/g, "-f")
-    .replace(/♂/g, "-m")
-    .replace(/[\s.'’]/g, "");
+  let normName = normalizePokemonName(name);
   let basePoints = POKEMON_POINTS[normName] || 1;
 
   // Alpha: always 50
