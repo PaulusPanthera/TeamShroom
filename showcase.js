@@ -1,24 +1,23 @@
 // showcase.js
-// This file combines the logic from the former teamshowcase.js and showcase.js.
-// It handles fetching teamShowcase data, building teamMembers, and rendering the Team Shroom showcase.
+// Team Shroom: member showcase logic (fetch, build, render, scoreboard, sorting)
+// All asset/data paths updated to new structure
 
 // --- DATA FETCHING AND STRUCTURE ---
 function fetchTeamShowcaseData(callback) {
-  fetch('teamshowcase.json')
+  fetch('data/teamshowcase.json')
     .then(response => response.json())
     .then(data => {
       window.teamShowcase = data;
       buildTeamMembers();
       if (typeof window.assignDonatorTiersToTeam === 'function') window.assignDonatorTiersToTeam();
       if (callback) callback();
-      // If the page is ready, initialize rendering
       if (window.setupShowcaseSearchAndSort && document.getElementById('showcase-gallery-container')) {
         window.setupShowcaseSearchAndSort(window.teamMembers, window.renderShowcaseGallery, "alphabetical");
       }
     });
 }
 
-// Instead of a top-level const, build teamMembers only after teamShowcase is loaded.
+// Build global teamMembers array from teamShowcase data
 function buildTeamMembers() {
   window.teamMembers = (window.teamShowcase || []).map(entry => ({
     name: entry.name,
@@ -26,16 +25,14 @@ function buildTeamMembers() {
       ? entry.shinies.filter(mon => !mon.lost).length
       : 0,
     status: entry.status,
-    // Donator field set dynamically elsewhere
-    donator: undefined
+    donator: undefined // Set by donators.js
   }));
 }
 window.buildTeamMembers = buildTeamMembers;
 
-// If teamShowcase is already loaded (possibly via cache), build teamMembers now
 if (window.teamShowcase) window.buildTeamMembers();
 
-// Helper to generate the correct shiny gif url
+// Helper to generate the correct shiny gif URL
 function shinyGifUrl(name) {
   let urlName = name
     .toLowerCase()
@@ -45,12 +42,12 @@ function shinyGifUrl(name) {
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${urlName}.gif`;
 }
 
-// Helper to get a member's shinies (make sure teamShowcase is loaded!)
+// Get a member's shinies (with fallback for missing data)
 function getMemberShinies(member) {
   if (!window.teamShowcase) {
     return Array.from({ length: member.shinies }, () => ({
       name: "Placeholder",
-      url: "membersprites/examplesprite.png",
+      url: "img/membersprites/examplesprite.png",
       lost: false
     }));
   }
@@ -58,7 +55,7 @@ function getMemberShinies(member) {
   if (!showcaseEntry || !Array.isArray(showcaseEntry.shinies)) {
     return Array.from({ length: member.shinies }, () => ({
       name: "Placeholder",
-      url: "membersprites/examplesprite.png",
+      url: "img/membersprites/examplesprite.png",
       lost: false
     }));
   }
@@ -69,13 +66,13 @@ function getMemberShinies(member) {
   }));
 }
 
-// Helper to get the custom sprite path for a member (tries png, jpg, gif in /membersprites/)
+// Get member custom sprite URLs (tries png, jpg, gif in /img/membersprites/)
 function getMemberSpriteUrls(memberName) {
   const base = memberName.toLowerCase().replace(/\s+/g, '');
   return [
-    `membersprites/${base}sprite.png`,
-    `membersprites/${base}sprite.jpg`,
-    `membersprites/${base}sprite.gif`
+    `img/membersprites/${base}sprite.png`,
+    `img/membersprites/${base}sprite.jpg`,
+    `img/membersprites/${base}sprite.gif`
   ];
 }
 
@@ -134,6 +131,7 @@ function getPointsForPokemon(name, extra = {}) {
 
   return basePoints + bonus;
 }
+
 function getMemberScoreboardPoints(member) {
   const showcaseEntry = (window.teamShowcase || []).find(m => m.name === member.name);
   if (!showcaseEntry || !Array.isArray(showcaseEntry.shinies)) return 0;
@@ -145,7 +143,7 @@ function getMemberScoreboardPoints(member) {
     }, 0);
 }
 
-// Utility to clean up Pokémon names
+// Utility to clean up Pokémon names for display
 function cleanPokemonName(name) {
   let cleaned = name
     .replace(/-(f|m|red-striped|blue-striped|east|west|galar|alola|hisui|paldea|mega|gigantamax|therian|origin|sky|dawn|midnight|midday|school|solo|rainy|sunny|snowy|attack|defense|speed|wash|heat|fan|frost|mow|midnight|midday|dusk|baile|pom-pom|pa'u|sensu|starter|battle-bond|ash|crowned|eternamax|gmax|complete|single-strike|rapid-strike)[^a-z0-9]*$/i, '')
@@ -229,7 +227,6 @@ function renderShowcaseGallery(members, container, groupMode) {
     container.querySelectorAll('.unified-card').forEach(card => {
       card.style.cursor = 'pointer';
       card.onclick = function (e) {
-        // Don't trigger if user is selecting text
         if (window.getSelection && window.getSelection().toString()) return;
         const cardType = card.getAttribute('data-card-type');
         const cardName = card.getAttribute('data-name');
@@ -247,15 +244,15 @@ function renderShowcaseGallery(members, container, groupMode) {
         else this._srcIndex++;
         const base = this.getAttribute('alt').toLowerCase().replace(/\s+/g, '');
         const fallbackUrls = [
-          `membersprites/${base}sprite.png`,
-          `membersprites/${base}sprite.jpg`,
-          `membersprites/${base}sprite.gif`
+          `img/membersprites/${base}sprite.png`,
+          `img/membersprites/${base}sprite.jpg`,
+          `img/membersprites/${base}sprite.gif`
         ];
         if (this._srcIndex < fallbackUrls.length) {
           this.src = fallbackUrls[this._srcIndex];
         } else {
           this.onerror = null;
-          this.src = "membersprites/examplesprite.png";
+          this.src = "img/membersprites/examplesprite.png";
         }
       };
     });
