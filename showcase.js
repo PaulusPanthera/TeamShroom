@@ -50,7 +50,7 @@ function getMemberShinies(member) {
   if (!window.teamShowcase) {
     return Array.from({ length: member.shinies }, () => ({
       name: "Placeholder",
-      url: "examplesprite.png",
+      url: "membersprites/examplesprite.png",
       lost: false
     }));
   }
@@ -58,7 +58,7 @@ function getMemberShinies(member) {
   if (!showcaseEntry || !Array.isArray(showcaseEntry.shinies)) {
     return Array.from({ length: member.shinies }, () => ({
       name: "Placeholder",
-      url: "examplesprite.png",
+      url: "membersprites/examplesprite.png",
       lost: false
     }));
   }
@@ -255,7 +255,7 @@ function renderShowcaseGallery(members, container, groupMode) {
           this.src = fallbackUrls[this._srcIndex];
         } else {
           this.onerror = null;
-          this.src = "examplesprite.png";
+          this.src = "membersprites/examplesprite.png";
         }
       };
     });
