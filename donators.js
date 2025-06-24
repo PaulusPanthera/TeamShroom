@@ -174,6 +174,7 @@ function renderDonators() {
 
   document.getElementById('donators-list').innerHTML = html;
 }
+
 // Returns donator tier for a given name (or "" if not a donator)
 function getDonatorTierByName(name) {
   if (!window.donations) return "";
@@ -200,6 +201,7 @@ function getDonatorTierByName(name) {
 }
 window.getDonatorTierByName = getDonatorTierByName;
 
+// Assign donator tier to each member in teamShowcase/teamMembers (for card rendering)
 function assignDonatorTiersToTeam() {
   if (!window.teamShowcase || !window.donations || !window.getDonatorTierByName) return;
   for (const member of window.teamShowcase) {
@@ -209,6 +211,19 @@ function assignDonatorTiersToTeam() {
     for (const member of window.teamMembers) {
       member.donator = getDonatorTierByName(member.name);
     }
+  }
+  // Re-render showcase if on showcase page and everything is loaded
+  if (
+    window.location.hash.startsWith("#showcase") &&
+    typeof window.setupShowcaseSearchAndSort === "function" &&
+    typeof window.renderShowcaseGallery === "function" &&
+    window.teamMembers
+  ) {
+    // Get sort mode from hash
+    let sortMode = "alphabetical";
+    const m = window.location.hash.match(/sort=(\w+)/);
+    if (m) sortMode = m[1];
+    window.setupShowcaseSearchAndSort(window.teamMembers, window.renderShowcaseGallery, sortMode);
   }
 }
 window.assignDonatorTiersToTeam = assignDonatorTiersToTeam;
