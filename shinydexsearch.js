@@ -99,11 +99,8 @@ function filterEntry(entry, filter, pokemonFamilies, POKEMON_POINTS) {
   if (filter === "claimed") return !!entry.claimed && entry.claimed !== "NA";
   if (filter === "unclaimed") return !entry.claimed || entry.claimed === "NA";
 
-  // --- Region search support ---
-  const regionList = ["kanto", "johto", "hoenn", "sinnoh", "unova"];
-  if (regionList.includes(filter)) {
-    return (entry.region && entry.region.toLowerCase() === filter);
-  }
+  // --- Region search support (dynamic, matches any region present in the data) ---
+  if (entry.region && entry.region.toLowerCase() === filter) return true;
 
   // Otherwise, match name or claimed string
   let nameMatch = entry.name.toLowerCase().includes(filter);
@@ -138,7 +135,7 @@ function renderShinyDexFiltered(regions, filter, pokemonFamilies, POKEMON_POINTS
       const pts = POKEMON_POINTS && POKEMON_POINTS[normName];
       // Skip NA again for safety
       if (!pts || pts === "NA" || entry.claimed === "NA") return;
-      // CHANGE: Do not show points in (standard) mode; only show claimed name or "Unclaimed"
+      // Do not show points in (standard) mode; only show claimed name or "Unclaimed"
       let info = (entry.claimed && entry.claimed !== "NA") ? entry.claimed : "Unclaimed";
       grid.innerHTML += renderUnifiedCard({
         name: entry.name,
@@ -273,15 +270,16 @@ function renderLivingDexFiltered(shinyDex, teamShowcase, filter, sortMode = "sta
     return owners;
   }
 
-  function createCard(entry, count, owners, POKEMON_POINTS) {
+  function createCard(entry, count, owners) {
     const normName = normalizePokemonName(entry.name);
     const pts = POKEMON_POINTS && POKEMON_POINTS[normName];
     if (!pts || pts === "NA" || entry.claimed === "NA") return null;
+    // Never show points for Living Dex
     const temp = document.createElement("div");
     temp.innerHTML = renderUnifiedCard({
       name: entry.name,
       img: getPokemonGif(entry.name),
-      info: `${pts} Points — <span class="livingdex-count">${count}</span>`,
+      info: `<span class="livingdex-count">${count}</span>`,
       cardType: "pokemon"
     });
     const card = temp.firstElementChild;
@@ -310,7 +308,7 @@ function renderLivingDexFiltered(shinyDex, teamShowcase, filter, sortMode = "sta
     grid.className = 'dex-grid';
     filtered.forEach(entry => {
       let owners = getOwners(entry);
-      let card = createCard(entry, entry.count, owners, POKEMON_POINTS);
+      let card = createCard(entry, entry.count, owners);
       if (card) grid.appendChild(card);
     });
     regionDiv.appendChild(grid);
@@ -335,7 +333,7 @@ function renderLivingDexFiltered(shinyDex, teamShowcase, filter, sortMode = "sta
         let nName = normalizePokemonName(entry.name);
         let count = counts[nName] || 0;
         let owners = getOwners(entry);
-        let card = createCard(entry, count, owners, POKEMON_POINTS);
+        let card = createCard(entry, count, owners);
         if (card) grid.appendChild(card);
       });
 
