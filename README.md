@@ -7,8 +7,13 @@ Hosted on GitHub Pages.
 
 ## How to Update the Dex
 
-- Edit `shinydex.js` to add or remove Pokémon and update their claimed/caught status.
-- To add, update, or remove team member shinies, edit `teamshowcase.js`.
+- **Update member shinies:** Edit `teamshowcase.json` to add, update, or remove team member shinies and their data.
+- **Update shiny Pokédex:** Edit `pokemon_families.json` to update Pokémon families, regions, rarity, and claimed status.
+- **Update donations:** Edit `donations.json` to record or update donations for the Donators page.
+- **Custom member avatars:** Place custom member avatars as `<membername>sprite.png` (or `.jpg`, `.gif`) in the `/membersprites/` folder. Fallback: `examplesprite.png` in the same folder.
+- **Custom icons/symbols:** Place in `/symbols/` folder.
+
+---
 
 ## How to Deploy
 
@@ -29,13 +34,20 @@ Hosted on GitHub Pages.
     - `search.css` — Search, filter, and form UI styles.
     - `tooltip.css` — Tooltip and popover styles.
     - `darkmode.css` — Dark mode overrides.
-- `shinydex.js` — Full shiny Pokédex data and claims.
-- `teamshowcase.js` — Shiny lists per team member.
-- `showcase.js` — Showcase logic and shiny points display.
-- `pokemonFamilies.js` — Pokémon family and evolution group mapping.
-- `pokemonPoints.js` — Shiny point values by tier and family.
-- `shinydexsearch.js` — Hitlist search, filtering, and living dex logic.
-- `unifiedCard.js` — Card rendering for member and Pokémon display.
+    - `donators.css` — Donator card/table styles.
+- **JavaScript files:**
+    - `pokemonDataBuilder.js` — Builds Pokémon families, points, tiers, and rarity from JSON.
+    - `showcase.js` — Showcase logic, member shiny display, and shiny points scoreboard.
+    - `shinydexsearch.js` — Hitlist search, filtering, and living dex logic.
+    - `unifiedCard.js` — Card rendering for member and Pokémon display.
+    - `donators.js` — Donator logic, tier assignment, and donation display.
+- **Data files:**
+    - `teamshowcase.json` — Main source for all team members and their shinies.
+    - `pokemon_families.json` — Pokémon family and evolution group mapping, region, and rarity.
+    - `donations.json` — List of donations and amounts for the Donators page.
+- **Asset folders:**
+    - `/membersprites/` — Member avatar sprites (custom images, PNG/JPG/GIF, plus `examplesprite.png` as fallback).
+    - `/symbols/` — Icons for donator tiers, member statuses, and card overlays.
 
 ---
 
@@ -52,6 +64,7 @@ All CSS styles are split into modular files under the `/style/` folder.
 <link rel="stylesheet" href="style/search.css">
 <link rel="stylesheet" href="style/tooltip.css">
 <link rel="stylesheet" href="style/darkmode.css">
+<link rel="stylesheet" href="style/donators.css">
 ```
 
 **Edit the relevant CSS file for the type of style you need to change:**
@@ -62,6 +75,26 @@ All CSS styles are split into modular files under the `/style/` folder.
 - Search bar, dropdowns, forms: `search.css`
 - Tooltip styles: `tooltip.css`
 - Dark mode (overrides): `darkmode.css`
+- Donator tables and boxes: `donators.css`
+
+---
+
+## Data & Asset Folders
+
+- **/membersprites/**  
+  Custom member avatars, named as `<membername>sprite.png` (or .jpg, .gif). Fallback avatar: `examplesprite.png` (must exist in this folder).
+
+- **/symbols/**  
+  Icons for donator tiers (e.g. `golddonatorsprite.png`), member statuses, and card overlays (e.g. `secretshinysprite.png`, `eventsprite.png`).
+
+- **teamshowcase.json**  
+  Main list of all team members and their shiny Pokémon (with status and custom data).
+
+- **pokemon_families.json**  
+  Pokémon families, region, rarity, and claimed member for each dex entry.
+
+- **donations.json**  
+  List of donations for the Donators leaderboard.
 
 ---
 
