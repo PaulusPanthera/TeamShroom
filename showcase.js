@@ -41,7 +41,11 @@ function getMemberShinies(teamShowcase, member) {
       lost: false
     }));
   }
+  // DEBUG LOGGING
+  //console.log("getMemberShinies:", member.name, showcaseEntry, showcaseEntry && showcaseEntry.shinies);
+
   return showcaseEntry.shinies.map(mon => ({
+    ...mon,
     name: mon.name,
     url: shinyGifUrl(mon.name),
     lost: !!mon.lost
@@ -292,6 +296,21 @@ export function renderMemberShowcase(member, sortMode = "alphabetical", teamShow
   const showcaseEntry = (teamShowcase || []).find(
     m => m.name.toLowerCase() === member.name.toLowerCase()
   );
+
+  // DEBUG LOGGING
+  // console.log("MEMBER SHOWCASE DEBUG");
+  // console.log("member:", member);
+  // console.log("shinies from getMemberShinies:", shinies);
+  // console.log("HTML:", shinies.map((mon, i) => {
+  //   const name = cleanPokemonName(mon.name);
+  //   return renderUnifiedCard({
+  //     name: name,
+  //     img: mon.url,
+  //     info: mon.lost ? "Lost" : "X Points", // replace with your logic
+  //     lost: mon.lost,
+  //     cardType: "pokemon",
+  //   });
+  // }).join(""));
 
   let totalPoints = 0;
   if (showcaseEntry && Array.isArray(showcaseEntry.shinies)) {
