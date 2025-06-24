@@ -46,14 +46,11 @@ function getMemberShinies(teamShowcase, member) {
   }));
 }
 
-// Get member custom sprite URLs (tries png, jpg, gif in /img/membersprites/)
-function getMemberSpriteUrls(memberName) {
+// Improved member sprite loader: load examplesprite.png first, then try custom PNG/JPG/GIF, swap in if exists.
+function getMemberSpriteUrl(memberName) {
   const base = normalizeMemberName(memberName);
-  return [
-    `img/membersprites/${base}sprite.png`,
-    `img/membersprites/${base}sprite.jpg`,
-    `img/membersprites/${base}sprite.gif`
-  ];
+  // Always use the placeholder first, swap in custom avatar only if it loads.
+  return `img/membersprites/examplesprite.png`;
 }
 
 // --- SCOREBOARD POINT LOGIC ---
@@ -172,8 +169,8 @@ export function renderShowcaseGallery(members, container, groupMode, teamShowcas
     gallery.className = 'showcase-gallery';
 
     group.members.forEach(member => {
-      const spriteUrls = getMemberSpriteUrls(member.name);
-      let spriteUrl = spriteUrls[0];
+      // Always start with the placeholder, and try to load a custom avatar in JS
+      let spriteUrl = getMemberSpriteUrl(member.name);
       let info = `Shinies: ${member.shinies}`;
       if (groupMode === "scoreboard") {
         const pts = getMemberScoreboardPoints(member, teamShowcase, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies);
@@ -192,6 +189,7 @@ export function renderShowcaseGallery(members, container, groupMode, teamShowcas
     container.appendChild(gallery);
   });
 
+  // After render: try to swap in custom avatar if it exists (no 404s for missing)
   setTimeout(() => {
     // Entire card clickable
     container.querySelectorAll('.unified-card').forEach(card => {
@@ -208,22 +206,32 @@ export function renderShowcaseGallery(members, container, groupMode, teamShowcas
       };
     });
 
-    container.querySelectorAll('.unified-img').forEach(img => {
+    // Improved: Only try to swap in a member sprite if it exists, to avoid 404s
+    container.querySelectorAll('.unified-card[data-card-type="member"] .unified-img').forEach(img => {
+      const base = img.getAttribute('alt').toLowerCase().replace(/\s+/g, '');
+      const formats = ['png', 'jpg', 'gif'];
+      let tried = 0;
+      function tryNextFormat() {
+        if (tried >= formats.length) return;
+        const testUrl = `img/membersprites/${base}sprite.${formats[tried]}`;
+        const testImg = new window.Image();
+        testImg.onload = function() {
+          img.src = testUrl; // Swap in custom avatar
+        };
+        testImg.onerror = function() {
+          tried++;
+          tryNextFormat();
+        };
+        testImg.src = testUrl;
+      }
+      tryNextFormat();
+    });
+
+    // For Pokémon cards (fallback logic unchanged)
+    container.querySelectorAll('.unified-card:not([data-card-type="member"]) .unified-img').forEach(img => {
       img.onerror = function() {
-        if (!this._srcIndex) this._srcIndex = 1;
-        else this._srcIndex++;
-        const base = this.getAttribute('alt').toLowerCase().replace(/\s+/g, '');
-        const fallbackUrls = [
-          `img/membersprites/${base}sprite.png`,
-          `img/membersprites/${base}sprite.jpg`,
-          `img/membersprites/${base}sprite.gif`
-        ];
-        if (this._srcIndex < fallbackUrls.length) {
-          this.src = fallbackUrls[this._srcIndex];
-        } else {
-          this.onerror = null;
-          this.src = "img/membersprites/examplesprite.png";
-        }
+        this.onerror = null;
+        this.src = "img/membersprites/examplesprite.png";
       };
     });
   }, 0);
