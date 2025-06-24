@@ -174,3 +174,6 @@ function renderDonators() {
 
   document.getElementById('donators-list').innerHTML = html;
 }
+
+// Optionally: call renderDonatorsWhenReady() on page load for this page
+// Example: window.addEventListener('DOMContentLoaded', renderDonatorsWhenReady);
