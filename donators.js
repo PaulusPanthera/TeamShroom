@@ -1,11 +1,16 @@
 // donators.js
 
-// Utility: parse "1.234.567" or "1000000" to integer
 function parseDonationValue(str) {
   return parseInt(str.replace(/\./g, "").replace(/,/g, ""));
 }
 
-// Donator tier data for icons and tooltips
+function formatDonationDate(dt) {
+  if (!dt) return "";
+  const d = new Date(dt);
+  if (!isNaN(d.getTime())) return d.toISOString().slice(0, 10);
+  return dt;
+}
+
 const donatorTiers = {
   top:      { icon: "symbols/topdonatorsprite.png",      label: "Top Donator",    desc: "Our #1 supporter! Thank you for your incredible generosity!" },
   diamond:  { icon: "symbols/diamonddonatorsprite.png",  label: "Diamond",        desc: "Donated 50,000,000 or more. Legendary support!" },
@@ -16,7 +21,6 @@ const donatorTiers = {
   "":       { icon: "",                                  label: "",               desc: "" }
 };
 
-// Determine donator tier
 function getDonatorTier(value, isTop) {
   if (isTop) return "top";
   if (value >= 50_000_000) return "diamond";
@@ -27,28 +31,48 @@ function getDonatorTier(value, isTop) {
   return "";
 }
 
-// --- New: helper for last N donations (latest are last in array) ---
 function getLastDonations(n = 5) {
   if (!window.donations) return [];
-  // If your donations have timestamps, sort by it, else just take last N
-  return window.donations.slice(-n).reverse();
+  let arr = window.donations.slice();
+  if (arr.length && arr[0].date) {
+    arr.sort((a, b) => new Date(b.date) - new Date(a.date));
+  }
+  return arr.slice(0, n);
 }
 
-// --- Tooltip generation for last 5 donations ---
-function renderLastDonationsTooltip() {
+function renderLastDonationsCard() {
   const last = getLastDonations(5);
-  if (!last.length) return "<div class='last-donations-empty'>No recent donations.</div>";
   return `
-    <div class="last-donations-tooltip-content">
-      <strong>Last 5 Donations</strong>
-      <ul>
-        ${last.map(d => `<li><span class="donor-name">${d.name}</span> <span class="donor-value">${parseDonationValue(d.value).toLocaleString("en-US")}</span></li>`).join("")}
-      </ul>
+    <div class="last-donations-fixed-box">
+      <h2>Last 5 Donations</h2>
+      <div>
+        <table class="last-donations-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Donator</th>
+              <th>Donation</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${
+              last.length
+                ? last.map(d => `<tr>
+                  <td>${d.date ? formatDonationDate(d.date) : "-"}</td>
+                  <td>${d.name || "-"}</td>
+                  <td>${(d.donation || d.item || "").trim() ? (d.donation || d.item) : "Pokéyen"}</td>
+                  <td>${d.value ? parseDonationValue(d.value).toLocaleString("en-US") : (d.value || "-")}</td>
+                </tr>`).join("")
+                : `<tr><td colspan="4" style="text-align:center;color:#999;font-style:italic;">No recent donations.</td></tr>`
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   `;
 }
 
-// Wait for donations data if not loaded yet
 function renderDonatorsWhenReady() {
   const content = document.getElementById('page-content');
   if (window.donations) {
@@ -59,20 +83,12 @@ function renderDonatorsWhenReady() {
   }
 }
 
-// Donators Page Logic
 function renderDonators() {
   const content = document.getElementById('page-content');
   content.innerHTML = `
     <div class="donators-top-flex">
-      <div class="last-donations-box">
-        <button class="last-donations-btn" tabindex="0" aria-label="Show last 5 donations">
-          🪙
-        </button>
-        <div class="last-donations-tooltip">
-          ${renderLastDonationsTooltip()}
-        </div>
-      </div>
-      <div class="how-to-donate-box">
+      ${renderLastDonationsCard()}
+      <div class="how-to-donate-box" id="how-to-donate-box">
         <h2>How to Donate</h2>
         <div>
           Support Team Shroom by sending Pokéyen or items via in-game mail in <b>PokeMMO</b> to:<br>
@@ -83,21 +99,22 @@ function renderDonators() {
     <div id='donators-list'></div>
   `;
 
-  // Tooltip hover/click logic
-  const btn = document.querySelector(".last-donations-btn");
-  const tip = document.querySelector(".last-donations-tooltip");
-  btn.addEventListener("mouseenter", () => tip.classList.add("show"));
-  btn.addEventListener("focus", () => tip.classList.add("show"));
-  btn.addEventListener("mouseleave", () => tip.classList.remove("show"));
-  btn.addEventListener("blur", () => tip.classList.remove("show"));
-  btn.addEventListener("click", () => tip.classList.toggle("show"));
+  // Make both boxes the same height
+  setTimeout(() => {
+    const donateBox = document.getElementById("how-to-donate-box");
+    const lastBox = document.querySelector(".last-donations-fixed-box");
+    if (donateBox && lastBox) {
+      const targetHeight = Math.max(donateBox.offsetHeight, lastBox.offsetHeight);
+      donateBox.style.minHeight = targetHeight + "px";
+      lastBox.style.minHeight = targetHeight + "px";
+    }
+  }, 30);
 
   if (!window.donations) {
     document.getElementById('donators-list').innerHTML = "Donations data not loaded.";
     return;
   }
 
-  // Aggregate totals by name
   const totals = {};
   window.donations.forEach(entry => {
     const name = entry.name.trim();
@@ -105,7 +122,6 @@ function renderDonators() {
     totals[name] = (totals[name] || 0) + value;
   });
 
-  // Find the top donator
   let maxName = null, maxValue = 0;
   Object.entries(totals).forEach(([name, value]) => {
     if (value > maxValue) {
@@ -114,7 +130,6 @@ function renderDonators() {
     }
   });
 
-  // Prepare donator list (all, not just teamshowcase)
   let donators = Object.entries(totals)
     .map(([name, value]) => ({
       name,
@@ -123,7 +138,6 @@ function renderDonators() {
     }))
     .sort((a, b) => b.value - a.value);
 
-  // Render as table with flair and placement
   let html = `
     <table class="donators-table">
       <thead>
@@ -146,7 +160,7 @@ function renderDonators() {
             <tr class="${rowClass}">
               <td class="placement">#${i + 1}</td>
               <td>${iconHtml}${d.name}</td>
-              <td>${d.value.toLocaleString("en-US")}</td>
+              <td style="background:var(--card-gradient);color:var(--accent);font-weight:bold;">${d.value.toLocaleString("en-US")}</td>
               <td class="donator-tier donator-tier-tooltip">
                 ${tierData.label}
                 ${tierData.desc ? `<span class="tooltip-text">${tierData.desc}</span>` : ""}
