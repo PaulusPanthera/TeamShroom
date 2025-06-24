@@ -2,17 +2,16 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 2.2em;
+  gap: 2.5em;
   margin: 2em 0 2.7em 0;
   flex-wrap: wrap;
 }
 
-/* Make both toolboxes as wide as possible */
 .how-to-donate-box,
 .last-donations-fixed-box {
   flex: 1 1 0;
   min-width: 390px;
-  max-width: 640px;
+  max-width: 680px;
   box-sizing: border-box;
 }
 
@@ -21,7 +20,7 @@
   color: var(--accent);
   border-radius: 14px;
   box-shadow: 0 2px 14px #f2593744;
-  padding: 2em 2.4em 2.1em 2.4em;
+  padding: 2.3em 2.7em 2.2em 2.7em;
   font-size: 1.55em;
   text-align: left;
   border: 2.5px solid var(--accent);
@@ -33,34 +32,35 @@
   justify-content: center;
   align-items: flex-start;
 }
+
 .how-to-donate-box h2 {
   color: var(--success);
-  margin-bottom: 0.93em;
-  font-size: 1.35em;
+  margin-bottom: 1.1em;
+  font-size: 1.38em;
   letter-spacing: 1px;
   font-weight: 900;
 }
+
 .donate-highlight {
   display: inline-block;
   background: var(--accent);
   color: var(--card);
   font-weight: 900;
-  padding: 0.32em 1.5em;
+  padding: 0.36em 1.7em;
   border-radius: 12px;
-  margin-top: 1.1em;
-  font-size: 1.5em;
+  margin-top: 1.25em;
+  font-size: 1.6em;
   letter-spacing: 1.5px;
   box-shadow: 0 2px 8px #f2593744;
 }
 
-/* Donations box gets same width and min height */
 .last-donations-fixed-box {
   background: var(--card-gradient);
   color: var(--accent);
   border-radius: 14px;
   box-shadow: 0 2px 14px #67b35633;
-  padding: 2em 2.4em 2.1em 2.4em;
-  font-size: 1.16em;
+  padding: 2.3em 2.7em 2.2em 2.7em;
+  font-size: 1.18em;
   text-align: left;
   border: 2.5px solid var(--success);
   margin-right: auto;
@@ -71,26 +71,28 @@
   justify-content: flex-start;
   align-items: flex-start;
 }
+
 .last-donations-fixed-box h2 {
   color: var(--success);
-  margin-bottom: 0.9em;
-  font-size: 1.15em;
+  margin-bottom: 1.1em;
+  font-size: 1.18em;
   letter-spacing: 1px;
   font-weight: 900;
 }
-/* Ensure table fills box and is readable */
+
 .last-donations-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 0.18em;
   background: transparent;
-  font-size: 1.07em;
-  min-width: 480px;
+  font-size: 1.09em;
+  min-width: 540px;
   table-layout: fixed;
 }
+
 .last-donations-table th,
 .last-donations-table td {
-  padding: 0.37em 0.9em;
+  padding: 0.48em 1.1em;
   text-align: left;
   background: var(--card-gradient);
   color: var(--accent);
@@ -105,17 +107,18 @@
   color: var(--card);
   background: var(--success);
   font-weight: bold;
-  font-size: 1.07em;
+  font-size: 1.10em;
   border-radius: 12px 12px 0 0;
 }
-/* Widen donation cell! */
-.last-donations-table td:nth-child(1) { width: 110px; }
-.last-donations-table td:nth-child(2) { width: 160px; }
-.last-donations-table td:nth-child(3) { width: 260px; }
-.last-donations-table td:nth-child(4) { width: 110px; }
+
 .last-donations-table td {
   border-radius: 9px;
 }
+.last-donations-table td:nth-child(1) { width: 110px; }
+.last-donations-table td:nth-child(2) { width: 160px; }
+.last-donations-table td:nth-child(3) { width: 300px; }
+.last-donations-table td:nth-child(4) { width: 110px; }
+
 .last-donations-table .donation-item {
   color: var(--success);
   font-weight: bold;
@@ -124,10 +127,10 @@
 }
 
 /* Responsive for mobile: stack and adjust font size */
-@media (max-width: 1150px) {
+@media (max-width: 1250px) {
   .donators-top-flex {
     flex-direction: column-reverse;
-    gap: 1.6em;
+    gap: 1.9em;
     align-items: stretch;
   }
   .how-to-donate-box,
@@ -135,7 +138,7 @@
     min-width: 0;
     max-width: 100%;
     margin: 0 0 1.3em 0;
-    font-size: 1.05em;
+    font-size: 1.07em;
     padding: 1.1em 1em 1.2em 1em;
   }
   .last-donations-table th,
