@@ -1,19 +1,7 @@
 // unifiedcard.js
 // Renders a unified card for Pokémon/member with icon slots
 
-// Map Pokémon name to scale factor for animated GIFs or PNGs.
-// Only add entries for outliers; default is 1.
-const pokemonImgScales = {
-  // Example: "Onix": 0.85, "Wailord": 0.75
-  // Add entries for outlier Pokémon only if needed.
-};
-
-// Helper to get scale
-function getPokemonImgScale(name) {
-  return pokemonImgScales[name] || 1;
-}
-
-function renderUnifiedCard({
+export function renderUnifiedCard({
   name,
   img,
   info,
@@ -77,7 +65,6 @@ function renderUnifiedCard({
   if (name.length > 13) nameClass += " long-name";
   if (name.length > 16) nameClass += " very-long-name";
 
-  // No scaling: revert to just standard .unified-img!
   return `
     <div ${cardAttributes}>
       ${symbolsHtml}
