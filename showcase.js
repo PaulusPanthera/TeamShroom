@@ -1,17 +1,38 @@
-// Team Shroom members and their shiny counts
-// Uses unified-card for all member and shiny cards
+// showcase.js
+// This file combines the logic from the former teamshowcase.js and showcase.js.
+// It handles fetching teamShowcase data, building teamMembers, and rendering the Team Shroom showcase.
+
+// --- DATA FETCHING AND STRUCTURE ---
+function fetchTeamShowcaseData(callback) {
+  fetch('teamshowcase.json')
+    .then(response => response.json())
+    .then(data => {
+      window.teamShowcase = data;
+      buildTeamMembers();
+      if (typeof window.assignDonatorTiersToTeam === 'function') window.assignDonatorTiersToTeam();
+      if (callback) callback();
+      // If the page is ready, initialize rendering
+      if (window.setupShowcaseSearchAndSort && document.getElementById('showcase-gallery-container')) {
+        window.setupShowcaseSearchAndSort(window.teamMembers, window.renderShowcaseGallery, "alphabetical");
+      }
+    });
+}
 
 // Instead of a top-level const, build teamMembers only after teamShowcase is loaded.
-window.buildTeamMembers = function() {
+function buildTeamMembers() {
   window.teamMembers = (window.teamShowcase || []).map(entry => ({
     name: entry.name,
     shinies: Array.isArray(entry.shinies)
       ? entry.shinies.filter(mon => !mon.lost).length
       : 0,
-    status: entry.status
-    // donator field removed: now set dynamically elsewhere
+    status: entry.status,
+    // Donator field set dynamically elsewhere
+    donator: undefined
   }));
-};
+}
+window.buildTeamMembers = buildTeamMembers;
+
+// If teamShowcase is already loaded (possibly via cache), build teamMembers now
 if (window.teamShowcase) window.buildTeamMembers();
 
 // Helper to generate the correct shiny gif url
@@ -196,7 +217,7 @@ function renderShowcaseGallery(members, container, groupMode) {
         info,
         cardType: "member",
         memberStatus: member.status,
-        donatorStatus: member.donator // This is now set dynamically elsewhere
+        donatorStatus: member.donator // Set dynamically elsewhere
       });
     });
 
@@ -432,3 +453,6 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
 
 // --- Ensure teamMembers is built whenever teamShowcase is available (for async JSON) ---
 if (!window.teamMembers && window.teamShowcase) window.buildTeamMembers();
+
+// --- INITIALIZE DATA LOADING ---
+fetchTeamShowcaseData();
