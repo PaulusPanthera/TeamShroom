@@ -148,7 +148,8 @@ async function renderPage() {
       const pokeName = prettifyPokemonName(entry.pokemon || entry.name);
       shinyDex[region].push({
         name: pokeName,
-        claimed: entry.claimed
+        claimed: entry.claimed,
+        region: region // Ensure each Pokemon entry has region property for correct region search!
       });
     });
     setupShinyDexHitlistSearch(shinyDex, teamShowcaseData);
