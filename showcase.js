@@ -1,7 +1,4 @@
-// showcase.js
-
 // --- ICON LEGEND DATA ---
-
 const DONATOR_MEMBER_ICONS = [
   {
     icon: "symbols/topdonatorsprite.png",
@@ -88,35 +85,33 @@ const POKEMON_ICONS = [
   }
 ];
 
-function removeMemberShowcaseIconTooltip() {
-  const old = document.querySelector('.member-showcase-icon-tooltip');
-  if (old) old.remove();
-}
-
 // --- TOOLTIP RENDERER ---
-
 function renderIconLegendTooltip(icons) {
   return `
     <div class="icon-help-tooltip-box" tabindex="-1">
       <div class="icon-tooltip-title">Card Icon Legend</div>
       <div class="icon-tooltip-list">
-        ${icons.map(
-          icon =>
-            `<div class="icon-row">
-              <img class="symbol" src="${icon.icon}" alt="${icon.label}" />
-              <div class="icon-meta">
-                <span class="icon-label">${icon.label}</span>
-                <span class="icon-desc">${icon.desc}</span>
-              </div>
-            </div>`
-        ).join("")}
+        ${icons.map(icon => `
+          <div class="icon-row">
+            <img class="symbol" src="${icon.icon}" alt="${icon.label}" />
+            <div class="icon-meta">
+              <span class="icon-label">${icon.label}</span>
+              <span class="icon-desc">${icon.desc}</span>
+            </div>
+          </div>
+        `).join("")}
       </div>
     </div>
   `;
 }
 
-// --- MAIN PAGE SEARCH CONTROLS (Donator/Member icons only) ---
+// --- REMOVE TOOLTIP ON PAGE CHANGE ---
+function removeMemberShowcaseIconTooltip() {
+  const old = document.querySelector('.member-showcase-icon-tooltip');
+  if (old) old.remove();
+}
 
+// --- MAIN PAGE SEARCH CONTROLS (Donator/Member icons only) ---
 function renderShowcaseSearchControls() {
   return `
     <div class="showcase-search-controls">
@@ -138,12 +133,8 @@ function renderShowcaseSearchControls() {
 }
 
 // --- MEMBER SHOWCASE: Tooltip (Pokémon icons only), not too high ---
-
 function addMemberShowcaseIconTooltip() {
-  // Remove any existing
-  let old = document.querySelector('.member-showcase-icon-tooltip');
-  if (old) old.remove();
-
+  removeMemberShowcaseIconTooltip();
   let wrapper = document.createElement("span");
   wrapper.className = "icon-help-tooltip member-showcase-icon-tooltip";
   wrapper.tabIndex = 0;
@@ -181,7 +172,6 @@ function addMemberShowcaseIconTooltip() {
 }
 
 // --- TEAM MEMBER HELPERS ---
-
 window.buildTeamMembers = function() {
   window.teamMembers = (window.teamShowcase || []).map(entry => ({
     name: entry.name,
@@ -307,7 +297,6 @@ window.rebuildTier01Set = function() {
 };
 
 // --- GROUPING ---
-
 function groupMembersAlphabetically(members) {
   const grouped = {};
   members.forEach(member => {
@@ -352,8 +341,8 @@ function groupMembersByPoints(members) {
 }
 
 // --- RENDER SHOWCASE GALLERY ---
-
 function renderShowcaseGallery(members, container, groupMode) {
+  removeMemberShowcaseIconTooltip();
   if (!container) container = document.getElementById('showcase-gallery-container');
   container.innerHTML = "";
 
@@ -446,8 +435,8 @@ function renderShowcaseGallery(members, container, groupMode) {
 }
 
 // --- MEMBER SHOWCASE PAGE ---
-
 function renderMemberShowcase(member, sortMode = "alphabetical") {
+  removeMemberShowcaseIconTooltip();
   const content = document.getElementById('page-content');
   const shinies = getMemberShinies(member);
   const showcaseEntry = (window.teamShowcase || []).find(m => m.name === member.name);
@@ -512,8 +501,8 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
 }
 
 // --- SEARCH AND SORT SETUP ---
-
 window.setupShowcaseSearchAndSort = function(teamMembers, renderShowcaseGallery, initialSortMode) {
+  removeMemberShowcaseIconTooltip();
   const controls = document.querySelector('.showcase-search-controls');
   controls.innerHTML = "";
 
