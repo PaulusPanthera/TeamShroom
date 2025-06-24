@@ -9,7 +9,7 @@ export function normalizePokemonName(name) {
       .replace(/♀/g, "-f")
       .replace(/♂/g, "-m")
       .replace(/[\s.'’]/g, "")
-      .replace(/-/g, "")
+      // do not remove hyphens!
   );
 }
 
