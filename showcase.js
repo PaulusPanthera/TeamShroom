@@ -31,7 +31,9 @@ function getMemberShinies(teamShowcase, member) {
       lost: false
     }));
   }
-  const showcaseEntry = teamShowcase.find(m => m.name === member.name);
+  const showcaseEntry = teamShowcase.find(
+    m => m.name.toLowerCase() === member.name.toLowerCase()
+  );
   if (!showcaseEntry || !Array.isArray(showcaseEntry.shinies)) {
     return Array.from({ length: member.shinies }, () => ({
       name: "Placeholder",
@@ -105,7 +107,9 @@ function getPointsForPokemon(name, extra = {}, POKEMON_POINTS, TIER_FAMILIES, po
 }
 
 function getMemberScoreboardPoints(member, teamShowcase, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies) {
-  const showcaseEntry = (teamShowcase || []).find(m => m.name === member.name);
+  const showcaseEntry = (teamShowcase || []).find(
+    m => m.name.toLowerCase() === member.name.toLowerCase()
+  );
   if (!showcaseEntry || !Array.isArray(showcaseEntry.shinies)) return 0;
   return showcaseEntry.shinies
     .filter(mon => !mon.lost)
@@ -285,7 +289,9 @@ function groupMembersByPoints(members, teamShowcase, POKEMON_POINTS, TIER_FAMILI
 export function renderMemberShowcase(member, sortMode = "alphabetical", teamShowcase, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies) {
   const content = document.getElementById('page-content');
   const shinies = getMemberShinies(teamShowcase, member);
-  const showcaseEntry = (teamShowcase || []).find(m => m.name === member.name);
+  const showcaseEntry = (teamShowcase || []).find(
+    m => m.name.toLowerCase() === member.name.toLowerCase()
+  );
 
   let totalPoints = 0;
   if (showcaseEntry && Array.isArray(showcaseEntry.shinies)) {
