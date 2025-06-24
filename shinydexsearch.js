@@ -1,6 +1,21 @@
 // === Search Controls & Navigation for Shiny Dex Pokedex with Tabs, Dropdowns, and Text/Family Search (with + prefix/suffix, search left, also in Living Dex, custom tooltip) ===
 
 (function() {
+  // --- Helper to prettify Pokémon names from lowercase or dash/underscore to display case ---
+  function prettifyPokemonName(raw) {
+    if (raw === "nidoran-f") return "Nidoran♀";
+    if (raw === "nidoran-m") return "Nidoran♂";
+    if (raw === "mr.mime") return "Mr. Mime";
+    if (raw === "mime-jr") return "Mime Jr.";
+    if (raw === "type-null") return "Type: Null";
+    if (raw === "porygon-z") return "Porygon-Z";
+    // Add more exceptions if needed.
+    return raw
+      .split(/[-_]/)
+      .map(s => s.charAt(0).toUpperCase() + s.slice(1))
+      .join(' ');
+  }
+
   // --- BUILD SHINY DEX FROM JSON (FAMILIES) ---
   window.buildShinyDexFromFamilies = function() {
     // Group Pokémon by region
@@ -9,7 +24,7 @@
       const region = entry.region || "Other";
       if (!shinyDex[region]) shinyDex[region] = [];
       shinyDex[region].push({
-        name: entry.pokemon,
+        name: prettifyPokemonName(entry.pokemon),
         claimed: entry.claimed
       });
     });
@@ -78,10 +93,13 @@
 
   // Helper for Pokémon gif
   function getPokemonGif(name) {
+    // Use prettified name for exceptions
     if (name === "Mr. Mime") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr-mime.gif";
     if (name === "Mime Jr.") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mime-jr.gif";
     if (name === "Nidoran♀") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-f.gif";
     if (name === "Nidoran♂") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-m.gif";
+    if (name === "Type: Null") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/type-null.gif";
+    if (name === "Porygon-Z") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/porygon-z.gif";
 
     let urlName = name
       .toLowerCase()
