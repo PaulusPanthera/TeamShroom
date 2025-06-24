@@ -94,9 +94,7 @@
   opacity: 0.70;
   position: relative;
 }
-/* Remove overlay "UNCLAIMED" from unclaimed cards */
 .unified-card.unclaimed::after { display: none !important; }
-
 .unified-card.unclaimed:hover, .unified-card.unclaimed:focus-within {
   border-color: #666;
   background: linear-gradient(126deg, #3e405a 85%, #23243b 100%);
@@ -105,7 +103,6 @@
   opacity: 0.82;
 }
 .unified-card.unclaimed::before { display: none !important; }
-/* No ::after here! */
 
 .unified-info {
   color: #ffe595;
@@ -132,7 +129,6 @@
   pointer-events: none;
   z-index: 5;
 }
-/* NON-OVERLAPPING ICONS, SPACED OUT */
 .symbol {
   width: 28px;
   height: 28px;
@@ -147,7 +143,6 @@
   padding: 2px;
   filter: contrast(1.2) brightness(0.97) drop-shadow(0 0 6px #181a20aa);
 }
-/* Adjust spacing to prevent overlap */
 .symbol.secret { left: var(--symbol-gap-x);     top: var(--symbol-top-y); }
 .symbol.event  { left: 52px;                    top: var(--symbol-top-y); }
 .symbol.safari { left: var(--symbol-gap-x);     bottom: var(--symbol-bottom-y); }
@@ -169,7 +164,6 @@
 }
 .icon-help-tooltip.member-showcase-icon-tooltip {
   position: fixed !important;
-  /* top set dynamically below navigation */
   right: 1.7em !important;
   z-index: 2100 !important;
 }
@@ -230,7 +224,6 @@
   pointer-events: auto;
 }
 
-/* Tooltip content layout - improved, never overlaps */
 .icon-tooltip-title {
   font-weight: bold;
   margin-bottom: 0.8em;
@@ -242,6 +235,7 @@
   display: flex;
   flex-direction: column;
   gap: 1em;
+  width: 100%;
 }
 .icon-row {
   display: flex;
