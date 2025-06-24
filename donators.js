@@ -1,6 +1,6 @@
-// donators.js
+// donators.js (ES module)
 
-function parseDonationValue(str) {
+export function parseDonationValue(str) {
   return parseInt(str.replace(/\./g, "").replace(/,/g, ""));
 }
 
@@ -31,17 +31,17 @@ function getDonatorTier(value, isTop) {
   return "";
 }
 
-function getLastDonations(n = 5) {
-  if (!window.donations) return [];
-  let arr = window.donations.slice();
+function getLastDonations(donations, n = 5) {
+  if (!donations) return [];
+  let arr = donations.slice();
   if (arr.length && arr[0].date) {
     arr.sort((a, b) => new Date(b.date) - new Date(a.date));
   }
   return arr.slice(0, n);
 }
 
-function renderLastDonationsCard() {
-  const last = getLastDonations(5);
+function renderLastDonationsCard(donations) {
+  const last = getLastDonations(donations, 5);
   return `
     <div class="last-donations-fixed-box">
       <h2>Last 5 Donations</h2>
@@ -73,21 +73,21 @@ function renderLastDonationsCard() {
   `;
 }
 
-function renderDonatorsWhenReady() {
+export function renderDonatorsWhenReady(donations) {
   const content = document.getElementById('page-content');
-  if (window.donations) {
-    renderDonators();
+  if (donations) {
+    renderDonators(donations);
   } else {
     content.innerHTML = "<div style='text-align:center;font-size:1.1em;color:var(--accent);'>Loading donations data...</div>";
-    setTimeout(renderDonatorsWhenReady, 60);
+    setTimeout(() => renderDonatorsWhenReady(donations), 60);
   }
 }
 
-function renderDonators() {
+export function renderDonators(donations) {
   const content = document.getElementById('page-content');
   content.innerHTML = `
     <div class="donators-top-flex">
-      ${renderLastDonationsCard()}
+      ${renderLastDonationsCard(donations)}
       <div class="how-to-donate-box" id="how-to-donate-box">
         <h2>How to Donate</h2>
         <div>
@@ -110,13 +110,13 @@ function renderDonators() {
     }
   }, 30);
 
-  if (!window.donations) {
+  if (!donations) {
     document.getElementById('donators-list').innerHTML = "Donations data not loaded.";
     return;
   }
 
   const totals = {};
-  window.donations.forEach(entry => {
+  donations.forEach(entry => {
     const name = entry.name.trim();
     const value = parseDonationValue(entry.value);
     totals[name] = (totals[name] || 0) + value;
@@ -176,10 +176,10 @@ function renderDonators() {
 }
 
 // Returns donator tier for a given name (or "" if not a donator)
-function getDonatorTierByName(name) {
-  if (!window.donations) return "";
+export function getDonatorTierByName(name, donations) {
+  if (!donations) return "";
   let total = 0;
-  window.donations.forEach(entry => {
+  donations.forEach(entry => {
     if (entry.name.trim().toLowerCase() === name.trim().toLowerCase()) {
       total += parseDonationValue(entry.value);
     }
@@ -187,7 +187,7 @@ function getDonatorTierByName(name) {
   // Is this the top donator?
   let maxValue = 0, maxName = "";
   let totals = {};
-  window.donations.forEach(entry => {
+  donations.forEach(entry => {
     let n = entry.name.trim();
     let v = parseDonationValue(entry.value);
     totals[n] = (totals[n] || 0) + v;
@@ -199,31 +199,16 @@ function getDonatorTierByName(name) {
   const isTop = maxName.trim().toLowerCase() === name.trim().toLowerCase() && total > 0;
   return getDonatorTier(total, isTop);
 }
-window.getDonatorTierByName = getDonatorTierByName;
 
 // Assign donator tier to each member in teamShowcase/teamMembers (for card rendering)
-function assignDonatorTiersToTeam() {
-  if (!window.teamShowcase || !window.donations || !window.getDonatorTierByName) return;
-  for (const member of window.teamShowcase) {
-    member.donator = getDonatorTierByName(member.name);
+export function assignDonatorTiersToTeam(teamShowcase, teamMembers, donations) {
+  if (!teamShowcase || !donations || !getDonatorTierByName) return;
+  for (const member of teamShowcase) {
+    member.donator = getDonatorTierByName(member.name, donations);
   }
-  if (window.teamMembers) {
-    for (const member of window.teamMembers) {
-      member.donator = getDonatorTierByName(member.name);
+  if (teamMembers) {
+    for (const member of teamMembers) {
+      member.donator = getDonatorTierByName(member.name, donations);
     }
   }
-  // Re-render showcase if on showcase page and everything is loaded
-  if (
-    window.location.hash.startsWith("#showcase") &&
-    typeof window.setupShowcaseSearchAndSort === "function" &&
-    typeof window.renderShowcaseGallery === "function" &&
-    window.teamMembers
-  ) {
-    // Get sort mode from hash
-    let sortMode = "alphabetical";
-    const m = window.location.hash.match(/sort=(\w+)/);
-    if (m) sortMode = m[1];
-    window.setupShowcaseSearchAndSort(window.teamMembers, window.renderShowcaseGallery, sortMode);
-  }
 }
-window.assignDonatorTiersToTeam = assignDonatorTiersToTeam;
