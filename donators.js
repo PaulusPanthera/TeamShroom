@@ -199,3 +199,16 @@ function getDonatorTierByName(name) {
   return getDonatorTier(total, isTop);
 }
 window.getDonatorTierByName = getDonatorTierByName;
+
+function assignDonatorTiersToTeam() {
+  if (!window.teamShowcase || !window.donations || !window.getDonatorTierByName) return;
+  for (const member of window.teamShowcase) {
+    member.donator = getDonatorTierByName(member.name);
+  }
+  if (window.teamMembers) {
+    for (const member of window.teamMembers) {
+      member.donator = getDonatorTierByName(member.name);
+    }
+  }
+}
+window.assignDonatorTiersToTeam = assignDonatorTiersToTeam;
