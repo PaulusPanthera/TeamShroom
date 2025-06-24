@@ -1,176 +1,5 @@
 // showcase.js
-
-// --- ICON LEGEND DATA ---
-const DONATOR_MEMBER_ICONS = [
-  {
-    icon: "symbols/topdonatorsprite.png",
-    label: "Top Donator",
-    desc: "Our #1 supporter! Thank you for your incredible generosity."
-  },
-  {
-    icon: "symbols/diamonddonatorsprite.png",
-    label: "Diamond Donator",
-    desc: "Donated 50,000,000 or more Pokéyen or value in items."
-  },
-  {
-    icon: "symbols/platinumdonatorsprite.png",
-    label: "Platinum Donator",
-    desc: "Donated 25,000,000 or more Pokéyen or value in items."
-  },
-  {
-    icon: "symbols/golddonatorsprite.png",
-    label: "Gold Donator",
-    desc: "Donated 10,000,000 or more Pokéyen or value in items."
-  },
-  {
-    icon: "symbols/silverdonatorsprite.png",
-    label: "Silver Donator",
-    desc: "Donated 5,000,000 or more Pokéyen or value in items."
-  },
-  {
-    icon: "symbols/bronzedonatorsprite.png",
-    label: "Bronze Donator",
-    desc: "Donated 1,000,000 or more Pokéyen or value in items."
-  },
-  {
-    icon: "symbols/shroomsprite.png",
-    label: "Team Member",
-    desc: "Active member of Team Shroom."
-  },
-  {
-    icon: "symbols/sporesprite.png",
-    label: "Spore",
-    desc: "Special team rank: Spore."
-  },
-  {
-    icon: "symbols/mushcapsprite.png",
-    label: "Mushcap",
-    desc: "Special team rank: Mushcap."
-  },
-  {
-    icon: "symbols/shinyshroomsprite.png",
-    label: "Shiny Shroom",
-    desc: "Special team rank: Shiny Shroom."
-  }
-];
-
-const POKEMON_ICONS = [
-  {
-    icon: "symbols/secretshinysprite.png",
-    label: "Secret Shiny",
-    desc: "Obtained as a secret shiny encounter."
-  },
-  {
-    icon: "symbols/eventsprite.png",
-    label: "Event Shiny",
-    desc: "Caught during a special event."
-  },
-  {
-    icon: "symbols/safarisprite.png",
-    label: "Safari Shiny",
-    desc: "Caught in the Safari Zone."
-  },
-  {
-    icon: "symbols/clipsprite.png",
-    label: "Clip/Video",
-    desc: "Has a video or clip attached."
-  },
-  {
-    icon: "symbols/eggsprite.png",
-    label: "Hatched from Egg",
-    desc: "Shiny Pokémon obtained via egg hatching."
-  },
-  {
-    icon: "symbols/alphasprite.png",
-    label: "Alpha Shiny",
-    desc: "Caught as an Alpha Shiny."
-  }
-];
-
-// --- TOOLTIP RENDERER ---
-function renderIconLegendTooltip(icons) {
-  return `
-    <div class="icon-help-tooltip-box" tabindex="-1">
-      <div class="icon-tooltip-title">Card Icon Legend</div>
-      <div class="icon-tooltip-list">
-        ${icons.map(icon => `
-          <div class="icon-row">
-            <img class="symbol" src="${icon.icon}" alt="${icon.label}" />
-            <div class="icon-meta">
-              <span class="icon-label">${icon.label}</span>
-              <span class="icon-desc">${icon.desc}</span>
-            </div>
-          </div>
-        `).join("")}
-      </div>
-    </div>
-  `;
-}
-
-// --- REMOVE TOOLTIP ON PAGE CHANGE ---
-function removeMemberShowcaseIconTooltip() {
-  const old = document.querySelector('.member-showcase-icon-tooltip');
-  if (old) old.remove();
-}
-
-// --- MEMBER SHOWCASE: Tooltip (Pokémon icons only), not too high ---
-function addMemberShowcaseIconTooltip() {
-  removeMemberShowcaseIconTooltip();
-  let wrapper = document.createElement("span");
-  wrapper.className = "icon-help-tooltip member-showcase-icon-tooltip";
-  wrapper.tabIndex = 0;
-  wrapper.innerHTML = `
-    <span class="icon-help">[?]</span>
-    ${renderIconLegendTooltip(POKEMON_ICONS)}
-  `;
-  document.body.appendChild(wrapper);
-
-  function updatePosition() {
-    const nav = document.querySelector('.nav');
-    let navBottom = 0;
-    if (nav) {
-      const rect = nav.getBoundingClientRect();
-      navBottom = rect.bottom + window.scrollY;
-    } else {
-      navBottom = 90;
-    }
-    wrapper.style.position = "fixed";
-    wrapper.style.top = (navBottom + 12) + "px";
-    wrapper.style.right = "1.7em";
-    wrapper.style.zIndex = 2100;
-  }
-  updatePosition();
-  window.addEventListener('resize', updatePosition);
-  window.addEventListener('scroll', updatePosition);
-
-  // Accessibility
-  const box = wrapper.querySelector('.icon-help-tooltip-box');
-  wrapper.addEventListener('mouseenter', () => { box.style.visibility = "visible"; box.style.opacity = "1"; });
-  wrapper.addEventListener('mouseleave', () => { box.style.visibility = ""; box.style.opacity = ""; });
-  wrapper.addEventListener('focusin', () => { box.style.visibility = "visible"; box.style.opacity = "1"; });
-  wrapper.addEventListener('focusout', () => { box.style.visibility = ""; box.style.opacity = ""; });
-}
-
-// --- MAIN PAGE SEARCH CONTROLS (Donator/Member icons only) ---
-function renderShowcaseSearchControls() {
-  return `
-    <div class="showcase-search-controls">
-      <input type="text" id="showcase-search-input" placeholder="Search Pokémon or OT..." autocomplete="off" spellcheck="false" />
-      <label for="showcase-sort-select">Sort by:</label>
-      <select id="showcase-sort-select">
-        <option value="alphabetical">A → Z</option>
-        <option value="caught">Caught Date</option>
-        <option value="rarity">Rarity</option>
-        <option value="recent">Recently Added</option>
-        <option value="count">Count</option>
-      </select>
-      <span class="icon-help-tooltip mainpage-tooltip" tabindex="0">
-        <span class="icon-help">[?]</span>
-        ${renderIconLegendTooltip(DONATOR_MEMBER_ICONS)}
-      </span>
-    </div>
-  `;
-}
+// Minimal, tooltip-free version for Team Shroom Shiny Showcase
 
 // --- TEAM MEMBER HELPERS ---
 window.buildTeamMembers = function() {
@@ -343,7 +172,6 @@ function groupMembersByPoints(members) {
 
 // --- RENDER SHOWCASE GALLERY ---
 function renderShowcaseGallery(members, container, groupMode) {
-  removeMemberShowcaseIconTooltip();
   if (!container) container = document.getElementById('showcase-gallery-container');
   container.innerHTML = "";
 
@@ -437,7 +265,6 @@ function renderShowcaseGallery(members, container, groupMode) {
 
 // --- MEMBER SHOWCASE PAGE ---
 function renderMemberShowcase(member, sortMode = "alphabetical") {
-  removeMemberShowcaseIconTooltip();
   const content = document.getElementById('page-content');
   const shinies = getMemberShinies(member);
   const showcaseEntry = (window.teamShowcase || []).find(m => m.name === member.name);
@@ -482,9 +309,6 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
     </div>
   `;
 
-  // Show the icon legend tooltip for Pokémon icons in the top right (below nav!)
-  addMemberShowcaseIconTooltip();
-
   setTimeout(() => {
     content.querySelectorAll('.unified-card').forEach(card => {
       card.style.cursor = 'pointer';
@@ -503,7 +327,6 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
 
 // --- SEARCH AND SORT SETUP ---
 window.setupShowcaseSearchAndSort = function(teamMembers, renderShowcaseGallery, initialSortMode) {
-  removeMemberShowcaseIconTooltip();
   const controls = document.querySelector('.showcase-search-controls');
   controls.innerHTML = "";
 
@@ -526,16 +349,6 @@ window.setupShowcaseSearchAndSort = function(teamMembers, renderShowcaseGallery,
   });
 
   controls.appendChild(sortSelect);
-
-  // Add the main page [?] icon legend tooltip
-  const iconLegend = document.createElement('span');
-  iconLegend.className = "icon-help-tooltip mainpage-tooltip";
-  iconLegend.tabIndex = 0;
-  iconLegend.innerHTML = `
-    <span class="icon-help">[?]</span>
-    ${renderIconLegendTooltip(DONATOR_MEMBER_ICONS)}
-  `;
-  controls.appendChild(iconLegend);
 
   const resultCount = document.createElement('span');
   controls.appendChild(resultCount);
