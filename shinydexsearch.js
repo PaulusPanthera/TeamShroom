@@ -138,8 +138,8 @@ function renderShinyDexFiltered(regions, filter, pokemonFamilies, POKEMON_POINTS
       const pts = POKEMON_POINTS && POKEMON_POINTS[normName];
       // Skip NA again for safety
       if (!pts || pts === "NA" || entry.claimed === "NA") return;
-      let info = `${pts} Points`;
-      if (entry.claimed && entry.claimed !== "NA") info += ` — ${entry.claimed}`;
+      // CHANGE: Do not show points in (standard) mode; only show claimed name or "Unclaimed"
+      let info = (entry.claimed && entry.claimed !== "NA") ? entry.claimed : "Unclaimed";
       grid.innerHTML += renderUnifiedCard({
         name: entry.name,
         img: getPokemonGif(entry.name),
