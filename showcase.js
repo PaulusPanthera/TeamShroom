@@ -88,6 +88,11 @@ const POKEMON_ICONS = [
   }
 ];
 
+function removeMemberShowcaseIconTooltip() {
+  const old = document.querySelector('.member-showcase-icon-tooltip');
+  if (old) old.remove();
+}
+
 // --- TOOLTIP RENDERER ---
 
 function renderIconLegendTooltip(icons) {
