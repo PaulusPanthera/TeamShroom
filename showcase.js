@@ -1,3 +1,5 @@
+// showcase.js
+
 // --- ICON LEGEND DATA ---
 const DONATOR_MEMBER_ICONS = [
   {
@@ -111,6 +113,44 @@ function removeMemberShowcaseIconTooltip() {
   if (old) old.remove();
 }
 
+// --- MEMBER SHOWCASE: Tooltip (Pokémon icons only), not too high ---
+function addMemberShowcaseIconTooltip() {
+  removeMemberShowcaseIconTooltip();
+  let wrapper = document.createElement("span");
+  wrapper.className = "icon-help-tooltip member-showcase-icon-tooltip";
+  wrapper.tabIndex = 0;
+  wrapper.innerHTML = `
+    <span class="icon-help">[?]</span>
+    ${renderIconLegendTooltip(POKEMON_ICONS)}
+  `;
+  document.body.appendChild(wrapper);
+
+  function updatePosition() {
+    const nav = document.querySelector('.nav');
+    let navBottom = 0;
+    if (nav) {
+      const rect = nav.getBoundingClientRect();
+      navBottom = rect.bottom + window.scrollY;
+    } else {
+      navBottom = 90;
+    }
+    wrapper.style.position = "fixed";
+    wrapper.style.top = (navBottom + 12) + "px";
+    wrapper.style.right = "1.7em";
+    wrapper.style.zIndex = 2100;
+  }
+  updatePosition();
+  window.addEventListener('resize', updatePosition);
+  window.addEventListener('scroll', updatePosition);
+
+  // Accessibility
+  const box = wrapper.querySelector('.icon-help-tooltip-box');
+  wrapper.addEventListener('mouseenter', () => { box.style.visibility = "visible"; box.style.opacity = "1"; });
+  wrapper.addEventListener('mouseleave', () => { box.style.visibility = ""; box.style.opacity = ""; });
+  wrapper.addEventListener('focusin', () => { box.style.visibility = "visible"; box.style.opacity = "1"; });
+  wrapper.addEventListener('focusout', () => { box.style.visibility = ""; box.style.opacity = ""; });
+}
+
 // --- MAIN PAGE SEARCH CONTROLS (Donator/Member icons only) ---
 function renderShowcaseSearchControls() {
   return `
@@ -130,45 +170,6 @@ function renderShowcaseSearchControls() {
       </span>
     </div>
   `;
-}
-
-// --- MEMBER SHOWCASE: Tooltip (Pokémon icons only), not too high ---
-function addMemberShowcaseIconTooltip() {
-  removeMemberShowcaseIconTooltip();
-  let wrapper = document.createElement("span");
-  wrapper.className = "icon-help-tooltip member-showcase-icon-tooltip";
-  wrapper.tabIndex = 0;
-  wrapper.innerHTML = `
-    <span class="icon-help">[?]</span>
-    ${renderIconLegendTooltip(POKEMON_ICONS)}
-  `;
-  document.body.appendChild(wrapper);
-
-  // Position below nav, not absolute top right
-  function updatePosition() {
-    const nav = document.querySelector('.nav');
-    let navBottom = 0;
-    if (nav) {
-      const rect = nav.getBoundingClientRect();
-      navBottom = rect.bottom + window.scrollY;
-    } else {
-      navBottom = 90;
-    }
-    wrapper.style.position = "fixed";
-    wrapper.style.top = (navBottom + 18) + "px";
-    wrapper.style.right = "1.7em";
-    wrapper.style.zIndex = 2100;
-  }
-  updatePosition();
-  window.addEventListener('resize', updatePosition);
-  window.addEventListener('scroll', updatePosition);
-
-  // Focus/hover for accessibility
-  const box = wrapper.querySelector('.icon-help-tooltip-box');
-  wrapper.addEventListener('mouseenter', () => { box.style.visibility = "visible"; box.style.opacity = "1"; });
-  wrapper.addEventListener('mouseleave', () => { box.style.visibility = ""; box.style.opacity = ""; });
-  wrapper.addEventListener('focusin', () => { box.style.visibility = "visible"; box.style.opacity = "1"; });
-  wrapper.addEventListener('focusout', () => { box.style.visibility = ""; box.style.opacity = ""; });
 }
 
 // --- TEAM MEMBER HELPERS ---
