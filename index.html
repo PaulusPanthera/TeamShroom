@@ -28,49 +28,48 @@
 
   <!-- 1. LOAD POKEMON FAMILIES JSON, THEN RUN pokemonDataBuilder.js -->
   <script>
-    window.pokemonFamiliesData = null;
-    function loadPokemonFamiliesAndBuilder() {
-      fetch('pokemon_families.json')
-        .then(r => r.json())
-        .then(data => {
-          window.pokemonFamiliesData = data;
-          // Dynamically load the builder after JSON is ready
-          var script = document.createElement('script');
-          script.src = 'pokemonDataBuilder.js';
-          script.onload = function() {
-            // After builder, load all other scripts
-            var scripts = [
-              "unifiedCard.js",
-              "teamshowcase.js",
-              // shinydex.js is now removed!
-              "showcase.js",
-              "shinydexsearch.js",
-              "donators.js"
-            ];
-            var idx = 0;
-            function loadNext() {
-              if (idx < scripts.length) {
-                var s = document.createElement('script');
-                s.src = scripts[idx++];
-                s.onload = loadNext;
-                document.body.appendChild(s);
-              } else {
-                // Load donations.json for donators, then assign tiers
-                fetch('donations.json').then(r=>r.json()).then(d=>{
-                  window.donations = d;
-                  if (window.teamShowcase && window.assignDonatorTiersToTeam) window.assignDonatorTiersToTeam();
-                });
-                // Also: Build shinyDex from the loaded families JSON
-                if (window.buildShinyDexFromFamilies) window.buildShinyDexFromFamilies();
-              }
+  window.pokemonFamiliesData = null;
+  function loadPokemonFamiliesAndBuilder() {
+    fetch('pokemon_families.json')
+      .then(r => r.json())
+      .then(data => {
+        window.pokemonFamiliesData = data;
+        // Dynamically load the builder after JSON is ready
+        var script = document.createElement('script');
+        script.src = 'pokemonDataBuilder.js';
+        script.onload = function() {
+          // After builder, load all other scripts
+          var scripts = [
+            "unifiedCard.js",
+            // "teamshowcase.js", // <-- REMOVE this line!
+            "showcase.js",      // <-- Only this file is now needed
+            "shinydexsearch.js",
+            "donators.js"
+          ];
+          var idx = 0;
+          function loadNext() {
+            if (idx < scripts.length) {
+              var s = document.createElement('script');
+              s.src = scripts[idx++];
+              s.onload = loadNext;
+              document.body.appendChild(s);
+            } else {
+              // Load donations.json for donators, then assign tiers
+              fetch('donations.json').then(r=>r.json()).then(d=>{
+                window.donations = d;
+                if (window.teamShowcase && window.assignDonatorTiersToTeam) window.assignDonatorTiersToTeam();
+              });
+              // Also: Build shinyDex from the loaded families JSON
+              if (window.buildShinyDexFromFamilies) window.buildShinyDexFromFamilies();
             }
-            loadNext();
-          };
-          document.body.appendChild(script);
-        });
-    }
-    loadPokemonFamiliesAndBuilder();
-  </script>
+          }
+          loadNext();
+        };
+        document.body.appendChild(script);
+      });
+  }
+  loadPokemonFamiliesAndBuilder();
+</script>
 
   <!-- PAGE ROUTING & DARK MODE (these can be inline since they don't depend on Pokémon data) -->
   <script>
