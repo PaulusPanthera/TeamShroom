@@ -24,28 +24,24 @@ function shinyGifUrl(name) {
 
 // Get a member's shinies (with fallback for missing data)
 function getMemberShinies(teamShowcase, member) {
-  if (!teamShowcase) {
-    return Array.from({ length: member.shinies }, () => ({
-      name: "Placeholder",
-      url: "img/membersprites/examplesprite.png",
-      lost: false
+  // FIX: If the member object already has a 'shinies' array, use it directly.
+  if (member && Array.isArray(member.shinies) && member.shinies.length > 0) {
+    return member.shinies.map(mon => ({
+      ...mon,
+      name: mon.name,
+      url: shinyGifUrl(mon.name),
+      lost: !!mon.lost
     }));
+  }
+  if (!teamShowcase) {
+    return [];
   }
   const showcaseEntry = teamShowcase.find(
     m => m.name.toLowerCase() === member.name.toLowerCase()
   );
   if (!showcaseEntry || !Array.isArray(showcaseEntry.shinies)) {
-    return Array.from({ length: member.shinies }, () => ({
-      name: "Placeholder",
-      url: "img/membersprites/examplesprite.png",
-      lost: false
-    }));
+    return [];
   }
-  // DEBUG LOGGING
-  console.log("[DEBUG getMemberShinies] member.name:", member.name);
-  console.log("[DEBUG getMemberShinies] showcaseEntry:", showcaseEntry);
-  console.log("[DEBUG getMemberShinies] showcaseEntry.shinies:", showcaseEntry && showcaseEntry.shinies);
-
   return showcaseEntry.shinies.map(mon => ({
     ...mon,
     name: mon.name,
@@ -294,12 +290,7 @@ function groupMembersByPoints(members, teamShowcase, POKEMON_POINTS, TIER_FAMILI
 // --- MEMBER SHOWCASE ---
 export function renderMemberShowcase(member, sortMode = "alphabetical", teamShowcase, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies) {
   const content = document.getElementById('page-content');
-  // --- DEBUG LOGGING ---
-  console.log("[DEBUG renderMemberShowcase] member:", member);
-  console.log("[DEBUG renderMemberShowcase] member.shinies:", member.shinies);
-
   const shinies = getMemberShinies(teamShowcase, member);
-  console.log("[DEBUG renderMemberShowcase] shinies from getMemberShinies:", shinies);
 
   const showcaseEntry = (teamShowcase || []).find(
     m => m.name.toLowerCase() === member.name.toLowerCase()
