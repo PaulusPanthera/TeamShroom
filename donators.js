@@ -174,3 +174,28 @@ function renderDonators() {
 
   document.getElementById('donators-list').innerHTML = html;
 }
+// Returns donator tier for a given name (or "" if not a donator)
+function getDonatorTierByName(name) {
+  if (!window.donations) return "";
+  let total = 0;
+  window.donations.forEach(entry => {
+    if (entry.name.trim().toLowerCase() === name.trim().toLowerCase()) {
+      total += parseDonationValue(entry.value);
+    }
+  });
+  // Is this the top donator?
+  let maxValue = 0, maxName = "";
+  let totals = {};
+  window.donations.forEach(entry => {
+    let n = entry.name.trim();
+    let v = parseDonationValue(entry.value);
+    totals[n] = (totals[n] || 0) + v;
+    if (totals[n] > maxValue) {
+      maxValue = totals[n];
+      maxName = n;
+    }
+  });
+  const isTop = maxName.trim().toLowerCase() === name.trim().toLowerCase() && total > 0;
+  return getDonatorTier(total, isTop);
+}
+window.getDonatorTierByName = getDonatorTierByName;
