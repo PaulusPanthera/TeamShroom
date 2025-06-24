@@ -1,4 +1,4 @@
-// pokemonDataBuilder.js
+// pokemondatabuilder.js
 
 if (!window.pokemonFamiliesData) {
   throw new Error("window.pokemonFamiliesData is not loaded! Please load your JSON first.");
