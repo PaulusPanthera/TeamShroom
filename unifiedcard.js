@@ -1,7 +1,6 @@
 // unifiedcard.js
 // Renders a unified card for Pokémon/member with icon slots
 
-// --- Add this mapping at the top (before renderUnifiedCard) ---
 // Map Pokémon name to scale factor for animated GIFs or PNGs.
 // Only add entries for outliers; default is 1.
 const pokemonImgScales = {
@@ -26,22 +25,23 @@ function renderUnifiedCard({
   memberStatus,
   donatorStatus
 }) {
-const statusIconMap = {
-  spore: "img/symbols/sporesprite.png",
-  shroom: "img/symbols/shroomsprite.png",
-  shinyshroom: "img/symbols/shinyshroomsprite.png",
-  mushcap: "img/symbols/mushcapsprite.png"
-};
-const donatorIconMap = {
-  bronze: "img/symbols/bronzedonatorsprite.png",
-  silver: "img/symbols/silverdonatorsprite.png",
-  gold: "img/symbols/golddonatorsprite.png",
-  platinum: "img/symbols/platinumdonatorsprite.png",
-  diamond: "img/symbols/diamonddonatorsprite.png",
-  top: "img/symbols/topdonatorsprite.png"
-};
-  const statusIcon = memberStatus && statusIconMap[memberStatus] ? `symbols/${statusIconMap[memberStatus]}` : "";
-  const donatorIcon = donatorStatus && donatorIconMap[donatorStatus] ? `symbols/${donatorIconMap[donatorStatus]}` : "";
+  // --- ICON PATHS (all paths must start with img/symbols/) ---
+  const statusIconMap = {
+    spore: "img/symbols/sporesprite.png",
+    shroom: "img/symbols/shroomsprite.png",
+    shinyshroom: "img/symbols/shinyshroomsprite.png",
+    mushcap: "img/symbols/mushcapsprite.png"
+  };
+  const donatorIconMap = {
+    bronze: "img/symbols/bronzedonatorsprite.png",
+    silver: "img/symbols/silverdonatorsprite.png",
+    gold: "img/symbols/golddonatorsprite.png",
+    platinum: "img/symbols/platinumdonatorsprite.png",
+    diamond: "img/symbols/diamonddonatorsprite.png",
+    top: "img/symbols/topdonatorsprite.png"
+  };
+  const statusIcon = memberStatus && statusIconMap[memberStatus] ? statusIconMap[memberStatus] : "";
+  const donatorIcon = donatorStatus && donatorIconMap[donatorStatus] ? donatorIconMap[donatorStatus] : "";
 
   let cardClass = "unified-card";
   if (unclaimed) cardClass += " unclaimed";
@@ -54,15 +54,15 @@ const donatorIconMap = {
 
   if (cardType === "pokemon") {
     symbolsHtml = `
-  <div class="symbol-overlay">
-    ${symbols.secret ? `<img class="symbol secret" src="symbols/secretshinysprite.png" title="Secret" alt="Secret">` : ""}
-    ${symbols.event ? `<img class="symbol event" src="symbols/eventsprite.png" title="Event" alt="Event">` : ""}
-    ${symbols.safari ? `<img class="symbol safari" src="symbols/safarisprite.png" title="Safari" alt="Safari">` : ""}
-    ${symbols.clip ? `<img class="symbol clip" src="symbols/clipsprite.png" title="Clip" alt="Clip">` : ""}
-    ${symbols.egg ? `<img class="symbol egg" src="symbols/eggsprite.png" title="Egg" alt="Egg">` : ""}
-    ${symbols.alpha ? `<img class="symbol alpha" src="symbols/alphasprite.png" title="Alpha" alt="Alpha">` : ""}
-  </div>
-`;
+      <div class="symbol-overlay">
+        ${symbols.secret ? `<img class="symbol secret" src="img/symbols/secretshinysprite.png" title="Secret" alt="Secret">` : ""}
+        ${symbols.event ? `<img class="symbol event" src="img/symbols/eventsprite.png" title="Event" alt="Event">` : ""}
+        ${symbols.safari ? `<img class="symbol safari" src="img/symbols/safarisprite.png" title="Safari" alt="Safari">` : ""}
+        ${symbols.clip ? `<img class="symbol clip" src="img/symbols/clipsprite.png" title="Clip" alt="Clip">` : ""}
+        ${symbols.egg ? `<img class="symbol egg" src="img/symbols/eggsprite.png" title="Egg" alt="Egg">` : ""}
+        ${symbols.alpha ? `<img class="symbol alpha" src="img/symbols/alphasprite.png" title="Alpha" alt="Alpha">` : ""}
+      </div>
+    `;
   } else if (cardType === "member" && (statusIcon || donatorIcon)) {
     symbolsHtml = `
       <div class="symbol-overlay">
