@@ -42,7 +42,9 @@ function getMemberShinies(teamShowcase, member) {
     }));
   }
   // DEBUG LOGGING
-  //console.log("getMemberShinies:", member.name, showcaseEntry, showcaseEntry && showcaseEntry.shinies);
+  console.log("[DEBUG getMemberShinies] member.name:", member.name);
+  console.log("[DEBUG getMemberShinies] showcaseEntry:", showcaseEntry);
+  console.log("[DEBUG getMemberShinies] showcaseEntry.shinies:", showcaseEntry && showcaseEntry.shinies);
 
   return showcaseEntry.shinies.map(mon => ({
     ...mon,
@@ -292,25 +294,16 @@ function groupMembersByPoints(members, teamShowcase, POKEMON_POINTS, TIER_FAMILI
 // --- MEMBER SHOWCASE ---
 export function renderMemberShowcase(member, sortMode = "alphabetical", teamShowcase, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies) {
   const content = document.getElementById('page-content');
+  // --- DEBUG LOGGING ---
+  console.log("[DEBUG renderMemberShowcase] member:", member);
+  console.log("[DEBUG renderMemberShowcase] member.shinies:", member.shinies);
+
   const shinies = getMemberShinies(teamShowcase, member);
+  console.log("[DEBUG renderMemberShowcase] shinies from getMemberShinies:", shinies);
+
   const showcaseEntry = (teamShowcase || []).find(
     m => m.name.toLowerCase() === member.name.toLowerCase()
   );
-
-  // DEBUG LOGGING
-  // console.log("MEMBER SHOWCASE DEBUG");
-  // console.log("member:", member);
-  // console.log("shinies from getMemberShinies:", shinies);
-  // console.log("HTML:", shinies.map((mon, i) => {
-  //   const name = cleanPokemonName(mon.name);
-  //   return renderUnifiedCard({
-  //     name: name,
-  //     img: mon.url,
-  //     info: mon.lost ? "Lost" : "X Points", // replace with your logic
-  //     lost: mon.lost,
-  //     cardType: "pokemon",
-  //   });
-  // }).join(""));
 
   let totalPoints = 0;
   if (showcaseEntry && Array.isArray(showcaseEntry.shinies)) {
