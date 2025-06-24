@@ -4,6 +4,30 @@
 import { renderUnifiedCard } from './unifiedcard.js';
 import { normalizePokemonName, prettifyPokemonName } from './utils.js';
 
+// Dynamically gather list of regions from JSON data
+function getAllRegionsFromData() {
+  // Expects pokemonFamiliesData to be loaded and available globally (from main.js)
+  const families = window.pokemonFamiliesData || [];
+  const regionSet = new Set();
+  families.forEach(entry => {
+    if (entry.region && typeof entry.region === "string" && entry.region.trim().length) {
+      regionSet.add(entry.region.trim());
+    }
+  });
+  // Lowercased, for matching
+  return Array.from(regionSet).map(r => r.toLowerCase());
+}
+
+let ALL_REGIONS = [];
+if (window.pokemonFamiliesData) {
+  ALL_REGIONS = getAllRegionsFromData();
+}
+window.addEventListener("DOMContentLoaded", () => {
+  if (window.pokemonFamiliesData) {
+    ALL_REGIONS = getAllRegionsFromData();
+  }
+});
+
 // --- Helper to build a GIF URL for a Pokémon ---
 function getPokemonGif(name) {
   // Handle exceptions
@@ -99,8 +123,15 @@ function filterEntry(entry, filter, pokemonFamilies, POKEMON_POINTS) {
   if (filter === "claimed") return !!entry.claimed && entry.claimed !== "NA";
   if (filter === "unclaimed") return !entry.claimed || entry.claimed === "NA";
 
-  // --- Region search support (dynamic, matches any region present in the data) ---
-  if (entry.region && entry.region.toLowerCase() === filter) return true;
+  // --- Region search support (dynamically from JSON data, case-insensitive) ---
+  if (ALL_REGIONS.length === 0 && window.pokemonFamiliesData) {
+    ALL_REGIONS = getAllRegionsFromData();
+  }
+  if (
+    typeof entry.region === "string" &&
+    ALL_REGIONS.includes(filter.trim().toLowerCase()) &&
+    entry.region.trim().toLowerCase() === filter.trim().toLowerCase()
+  ) return true;
 
   // Otherwise, match name or claimed string
   let nameMatch = entry.name.toLowerCase().includes(filter);
@@ -417,6 +448,11 @@ export function setupShinyDexHitlistSearch(shinyDex, teamShowcase) {
   // Pull points/family info from global scope if available
   const POKEMON_POINTS = window.POKEMON_POINTS || {};
   const pokemonFamilies = window.pokemonFamilies || {};
+
+  // Update region list from JSON (if not already set)
+  if (window.pokemonFamiliesData) {
+    ALL_REGIONS = getAllRegionsFromData();
+  }
 
   const flattened = flattenDexData(shinyDex);
 
