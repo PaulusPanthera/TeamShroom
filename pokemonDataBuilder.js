@@ -61,3 +61,6 @@ window.pokemonFamiliesData.forEach(entry => {
     window.POKEMON_RARITY[norm] = rarity;
   });
 });
+
+// Support for legacy code
+window.buildPokemonPoints = function() {}; // No longer needed; everything is built above.
