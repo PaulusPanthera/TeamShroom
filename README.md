@@ -71,6 +71,7 @@ All CSS styles are split into modular files under the `/style/` folder.
 - [ ] Add alternative Shiny View with shinies roaming around
 - [ ] Add Rarity Count to Living Dex
 - [ ] Add Summary section to Shinies
+- [ ] Badge Case
 - [ ] Improve mobile and accessibility features
 
 ---
