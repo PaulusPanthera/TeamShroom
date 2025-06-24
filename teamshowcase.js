@@ -15,3 +15,5 @@ fetch('teamshowcase.json')
       window.setupShowcaseSearchAndSort(window.teamMembers, window.renderShowcaseGallery, "alphabetical");
     }
   });
+// At the end of teamshowcase.js or after loading it:
+if (window.donations && window.assignDonatorTiersToTeam) window.assignDonatorTiersToTeam();
