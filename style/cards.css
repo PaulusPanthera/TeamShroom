@@ -143,11 +143,15 @@
   padding: 2px;
   filter: contrast(1.2) brightness(0.97) drop-shadow(0 0 6px #181a20aa);
 }
-.symbol.secret { left: var(--symbol-gap-x);     top: var(--symbol-top-y); }
-.symbol.event  { left: 52px;                    top: var(--symbol-top-y); }
-.symbol.safari { left: var(--symbol-gap-x);     bottom: var(--symbol-bottom-y); }
-.symbol.clip   { left: 52px;                    bottom: var(--symbol-bottom-y); }
-.symbol.egg    { right: 52px;                   top: 50%; transform: translateY(-50%);}
-.symbol.alpha  { right: var(--symbol-gap-x);    top: 50%; transform: translateY(-50%);}
-.symbol.member-status  { left: var(--symbol-gap-x);    bottom: var(--symbol-bottom-y); right: auto; top: auto;}
-.symbol.donator-status { right: var(--symbol-gap-x);   bottom: var(--symbol-bottom-y); left: auto; top: auto;}
+
+/* --- COMPACT GRID FOR SHOWCASE ICONS --- */
+.symbol.secret  { left: 12px;  top: 54px; }
+.symbol.event   { left: 48px;  top: 54px; }
+.symbol.safari  { left: 84px;  top: 54px; }
+.symbol.clip    { left: 120px; top: 54px; }
+.symbol.egg     { left: 156px; top: 54px; }
+.symbol.alpha   { left: 192px; top: 54px; }
+
+/* Member and donator icons (for member cards, bottom corners) */
+.symbol.member-status  { left: 12px;   bottom: 54px; right: auto; top: auto; }
+.symbol.donator-status { right: 12px;  bottom: 54px; left: auto; top: auto; }
