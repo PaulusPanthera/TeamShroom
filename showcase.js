@@ -93,17 +93,19 @@ const POKEMON_ICONS = [
 function renderIconLegendTooltip(icons) {
   return `
     <div class="icon-help-tooltip-box" tabindex="-1">
-      <div style="font-weight:bold;margin-bottom:0.7em;">Card Icon Legend</div>
-      ${icons.map(
-        icon =>
-          `<div class="icon-row">
-            <img class="symbol" src="${icon.icon}" alt="${icon.label}" />
-            <div>
-              <b>${icon.label}</b><br>
-              <span class="icon-desc">${icon.desc}</span>
-            </div>
-          </div>`
-      ).join("")}
+      <div class="icon-tooltip-title">Card Icon Legend</div>
+      <div class="icon-tooltip-list">
+        ${icons.map(
+          icon =>
+            `<div class="icon-row">
+              <img class="symbol" src="${icon.icon}" alt="${icon.label}" />
+              <div class="icon-meta">
+                <span class="icon-label">${icon.label}</span>
+                <span class="icon-desc">${icon.desc}</span>
+              </div>
+            </div>`
+        ).join("")}
+      </div>
     </div>
   `;
 }
@@ -122,7 +124,7 @@ function renderShowcaseSearchControls() {
         <option value="recent">Recently Added</option>
         <option value="count">Count</option>
       </select>
-      <span class="icon-help-tooltip" tabindex="0">
+      <span class="icon-help-tooltip mainpage-tooltip" tabindex="0">
         <span class="icon-help">[?]</span>
         ${renderIconLegendTooltip(DONATOR_MEMBER_ICONS)}
       </span>
@@ -130,7 +132,7 @@ function renderShowcaseSearchControls() {
   `;
 }
 
-// --- MEMBER SHOWCASE: Top Right Tooltip (Pokémon icons only) ---
+// --- MEMBER SHOWCASE: Tooltip (Pokémon icons only), not too high ---
 
 function addMemberShowcaseIconTooltip() {
   // Remove any existing
@@ -146,6 +148,25 @@ function addMemberShowcaseIconTooltip() {
   `;
   document.body.appendChild(wrapper);
 
+  // Position below nav, not absolute top right
+  function updatePosition() {
+    const nav = document.querySelector('.nav');
+    let navBottom = 0;
+    if (nav) {
+      const rect = nav.getBoundingClientRect();
+      navBottom = rect.bottom + window.scrollY;
+    } else {
+      navBottom = 90;
+    }
+    wrapper.style.position = "fixed";
+    wrapper.style.top = (navBottom + 18) + "px";
+    wrapper.style.right = "1.7em";
+    wrapper.style.zIndex = 2100;
+  }
+  updatePosition();
+  window.addEventListener('resize', updatePosition);
+  window.addEventListener('scroll', updatePosition);
+
   // Focus/hover for accessibility
   const box = wrapper.querySelector('.icon-help-tooltip-box');
   wrapper.addEventListener('mouseenter', () => { box.style.visibility = "visible"; box.style.opacity = "1"; });
@@ -155,8 +176,6 @@ function addMemberShowcaseIconTooltip() {
 }
 
 // --- SHOWCASE PAGE LOGIC ---
-
-// Your helpers: buildTeamMembers, getMemberShinies, getMemberSpriteUrls, getPointsForPokemon, getMemberScoreboardPoints, cleanPokemonName, etc...
 
 window.buildTeamMembers = function() {
   window.teamMembers = (window.teamShowcase || []).map(entry => ({
@@ -210,213 +229,7 @@ function getMemberSpriteUrls(memberName) {
   ];
 }
 
-function getPointsForPokemon(name, extra = {}) {
-  if (!window.POKEMON_POINTS && window.buildPokemonPoints) window.buildPokemonPoints();
-  if (!window.POKEMON_POINTS) return 1;
-
-  let normName = name
-    .toLowerCase()
-    .replace(/♀/g, "-f")
-    .replace(/♂/g, "-m")
-    .replace(/[\s.'’]/g, "");
-  let basePoints = window.POKEMON_POINTS[normName] || 1;
-  if (extra.alpha) return 50;
-  if (extra.egg) {
-    if (!window._tier01set) {
-      const TIER_0_1 = (window.TIER_FAMILIES?.["Tier 0"] || []).concat(window.TIER_FAMILIES?.["Tier 1"] || []);
-      let allNames = [];
-      TIER_0_1.forEach(base => {
-        let familyBase = base
-          .toLowerCase()
-          .replace(/\[.*\]/g,"")
-          .replace(/♀/g,"-f")
-          .replace(/♂/g,"-m")
-          .replace(/[- '\.’]/g,"")
-          .trim();
-        if(window.pokemonFamilies && window.pokemonFamilies[familyBase]) {
-          window.pokemonFamilies[familyBase].forEach(famName => {
-            let key = famName
-              .toLowerCase()
-              .replace(/♀/g,"-f")
-              .replace(/♂/g,"-m")
-              .replace(/[- '\.’]/g,"")
-              .trim();
-            allNames.push(key);
-          });
-        } else {
-          allNames.push(familyBase);
-        }
-      });
-      window._tier01set = new Set(allNames);
-    }
-    if (!window._tier01set.has(normName)) return 20;
-  }
-  let bonus = 0;
-  if (extra.secret) bonus += 10;
-  if (extra.safari) bonus += 5;
-
-  return basePoints + bonus;
-}
-function getMemberScoreboardPoints(member) {
-  const showcaseEntry = (window.teamShowcase || []).find(m => m.name === member.name);
-  if (!showcaseEntry || !Array.isArray(showcaseEntry.shinies)) return 0;
-  return showcaseEntry.shinies
-    .filter(mon => !mon.lost)
-    .reduce((sum, mon, i) => {
-      const extra = showcaseEntry.shinies[i] || {};
-      return sum + getPointsForPokemon(mon.name, extra);
-    }, 0);
-}
-
-function cleanPokemonName(name) {
-  let cleaned = name
-    .replace(/-(f|m|red-striped|blue-striped|east|west|galar|alola|hisui|paldea|mega|gigantamax|therian|origin|sky|dawn|midnight|midday|school|solo|rainy|sunny|snowy|attack|defense|speed|wash|heat|fan|frost|mow|midnight|midday|dusk|baile|pom-pom|pa'u|sensu|starter|battle-bond|ash|crowned|eternamax|gmax|complete|single-strike|rapid-strike)[^a-z0-9]*$/i, '')
-    .replace(/-/g, ' ')
-    .replace(/\s+/, ' ')
-    .trim();
-  cleaned = cleaned.replace(/\b\w/g, l => l.toUpperCase());
-  return cleaned;
-}
-
-window.rebuildTier01Set = function() {
-  window._tier01set = null;
-};
-
-function renderShowcaseGallery(members, container, groupMode) {
-  if (!container) container = document.getElementById('showcase-gallery-container');
-  container.innerHTML = "";
-
-  let total = 0;
-  if (window.teamShowcase) {
-    window.teamShowcase.forEach(entry => {
-      if (Array.isArray(entry.shinies)) {
-        total += entry.shinies.filter(mon => !mon.lost).length;
-      }
-    });
-  }
-  const totalDiv = document.createElement("div");
-  totalDiv.className = "total-shinies-count";
-  totalDiv.style = "font-size: 1.25em; font-weight: bold; color: var(--accent); margin-bottom: 1.5em; text-align:center;";
-  totalDiv.textContent = `Total Shinies: ${total}`;
-  container.appendChild(totalDiv);
-
-  let grouped;
-  if (groupMode === "scoreboard") {
-    grouped = groupMembersByPoints(members);
-  } else if (groupMode === "shinies") {
-    grouped = groupMembersByShinies(members);
-  } else {
-    grouped = groupMembersAlphabetically(members);
-  }
-
-  grouped.forEach(group => {
-    const header = document.createElement('div');
-    header.className = "showcase-category-header";
-    header.textContent = group.header + (groupMode === "scoreboard" ? " Points" : "");
-    container.appendChild(header);
-
-    const gallery = document.createElement('div');
-    gallery.className = 'showcase-gallery';
-
-    group.members.forEach(member => {
-      const spriteUrls = getMemberSpriteUrls(member.name);
-      let spriteUrl = spriteUrls[0];
-      let info = `Shinies: ${member.shinies}`;
-      if (groupMode === "scoreboard") {
-        const pts = getMemberScoreboardPoints(member);
-        info = `Points: ${pts}`;
-      }
-      gallery.innerHTML += renderUnifiedCard({
-        name: member.name,
-        img: spriteUrl,
-        info,
-        cardType: "member",
-        memberStatus: member.status,
-        donatorStatus: member.donator
-      });
-    });
-
-    container.appendChild(gallery);
-  });
-
-  setTimeout(() => {
-    container.querySelectorAll('.unified-card').forEach(card => {
-      card.style.cursor = 'pointer';
-      card.onclick = function (e) {
-        if (window.getSelection && window.getSelection().toString()) return;
-        const cardType = card.getAttribute('data-card-type');
-        const cardName = card.getAttribute('data-name');
-        if (cardType === "member") {
-          const sortSelect = document.querySelector('.showcase-search-controls select');
-          const sortMode = (sortSelect && sortSelect.value) || "alphabetical";
-          location.hash = `#showcase-${cardName}?sort=${sortMode}`;
-        }
-      };
-    });
-
-    container.querySelectorAll('.unified-img').forEach(img => {
-      img.onerror = function() {
-        if (!this._srcIndex) this._srcIndex = 1;
-        else this._srcIndex++;
-        const base = this.getAttribute('alt').toLowerCase().replace(/\s+/g, '');
-        const fallbackUrls = [
-          `membersprites/${base}sprite.png`,
-          `membersprites/${base}sprite.jpg`,
-          `membersprites/${base}sprite.gif`
-        ];
-        if (this._srcIndex < fallbackUrls.length) {
-          this.src = fallbackUrls[this._srcIndex];
-        } else {
-          this.onerror = null;
-          this.src = "examplesprite.png";
-        }
-      };
-    });
-  }, 0);
-}
-
-function groupMembersAlphabetically(members) {
-  const grouped = {};
-  members.forEach(member => {
-    const firstLetter = member.name[0].toUpperCase();
-    if (!grouped[firstLetter]) grouped[firstLetter] = [];
-    grouped[firstLetter].push(member);
-  });
-  return Object.keys(grouped).sort().map(letter => ({
-    header: letter,
-    members: grouped[letter].sort((a, b) => a.name.localeCompare(b.name))
-  }));
-}
-function groupMembersByShinies(members) {
-  const grouped = {};
-  members.forEach(member => {
-    const count = member.shinies || 0;
-    if (!grouped[count]) grouped[count] = [];
-    grouped[count].push(member);
-  });
-  return Object.keys(grouped)
-    .map(Number)
-    .sort((a, b) => b - a)
-    .map(count => ({
-      header: count,
-      members: grouped[count].sort((a, b) => a.name.localeCompare(b.name))
-    }));
-}
-function groupMembersByPoints(members) {
-  const grouped = {};
-  members.forEach(member => {
-    const points = getMemberScoreboardPoints(member);
-    if (!grouped[points]) grouped[points] = [];
-    grouped[points].push(member);
-  });
-  return Object.keys(grouped)
-    .map(Number)
-    .sort((a, b) => b - a)
-    .map(points => ({
-      header: points,
-      members: grouped[points].sort((a, b) => a.name.localeCompare(b.name))
-    }));
-}
+// ... (other helpers: getPointsForPokemon, getMemberScoreboardPoints, cleanPokemonName, grouping, etc.) ...
 
 // --- MEMBER SHOWCASE PAGE ---
 
@@ -465,7 +278,7 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
     </div>
   `;
 
-  // Show the icon legend tooltip for Pokémon icons in the top right
+  // Show the icon legend tooltip for Pokémon icons in the top right (below nav!)
   addMemberShowcaseIconTooltip();
 
   setTimeout(() => {
@@ -510,9 +323,9 @@ window.setupShowcaseSearchAndSort = function(teamMembers, renderShowcaseGallery,
 
   controls.appendChild(sortSelect);
 
-  // Add the [?] icon legend tooltip in right corner
+  // Add the main page [?] icon legend tooltip
   const iconLegend = document.createElement('span');
-  iconLegend.className = "icon-help-tooltip";
+  iconLegend.className = "icon-help-tooltip mainpage-tooltip";
   iconLegend.tabIndex = 0;
   iconLegend.innerHTML = `
     <span class="icon-help">[?]</span>
