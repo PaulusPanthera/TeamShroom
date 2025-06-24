@@ -24,7 +24,7 @@ function shinyGifUrl(name) {
 
 // Get a member's shinies (with fallback for missing data)
 function getMemberShinies(teamShowcase, member) {
-  // FIX: If the member object already has a 'shinies' array, use it directly.
+  // If the member object already has a 'shinies' array, use it directly and preserve all properties
   if (member && Array.isArray(member.shinies) && member.shinies.length > 0) {
     return member.shinies.map(mon => ({
       ...mon,
@@ -313,7 +313,8 @@ export function renderMemberShowcase(member, sortMode = "alphabetical", teamShow
     <div class="dex-grid" style="margin-top:1em;">
       ${shinies.map((mon, i) => {
         const name = cleanPokemonName(mon.name);
-        let extra = (showcaseEntry && showcaseEntry.shinies && showcaseEntry.shinies[i]) || {};
+        // Use the mon object itself for extra properties (icons, etc)
+        let extra = mon || {};
         const hasClip = typeof extra.clip === "string" && extra.clip.trim().length > 0;
         const monPoints = getPointsForPokemon(mon.name, extra, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies);
         return renderUnifiedCard({
