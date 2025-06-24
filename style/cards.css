@@ -249,12 +249,13 @@
   gap: 1em;
   margin-bottom: 0.2em;
   min-width: 0;
+  width: 100%;
 }
 .icon-help-tooltip-box img.symbol {
   width: 2.2em;
   height: 2.2em;
   flex-shrink: 0;
-  margin: 0 0.4em 0 0;
+  margin-right: 0.6em;
   border-radius: 4px;
   border: 1px solid #ffe59544;
   background: #181a20;
@@ -265,7 +266,7 @@
   flex-direction: column;
   min-width: 0;
   max-width: 500px;
-  flex: 1;
+  flex: 1 1 0;
 }
 .icon-label {
   font-weight: bold;
@@ -273,6 +274,7 @@
   color: #ffe595;
   margin-bottom: 0.1em;
   word-break: break-word;
+  white-space: normal;
 }
 .icon-desc {
   font-size: 1em;
@@ -282,6 +284,9 @@
   line-height: 1.4;
   margin-top: 0.05em;
   min-width: 0;
+  overflow-wrap: anywhere;
+  flex-shrink: 1;
+  flex-basis: 100%;
 }
 
 @media (max-width: 900px) {
@@ -304,5 +309,21 @@
   .icon-help-tooltip-box img.symbol {
     width: 1.6em;
     height: 1.6em;
+  }
+}
+
+@media (max-width: 700px) {
+  .icon-help-tooltip-box {
+    left: 0;
+    right: auto;
+    top: 120%;
+    min-width: 160px;
+    max-width: 98vw;
+    white-space: normal;
+    padding: 0.7em 0.7em;
+  }
+  .icon-help-tooltip-box img.symbol {
+    width: 1.7em;
+    height: 1.7em;
   }
 }
