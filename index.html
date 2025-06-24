@@ -26,30 +26,52 @@
     🌙 Dark Mode
   </button>
   <div id="page-content"></div>
-  <!-- Ensure teamshowcase.js is loaded BEFORE showcase.js -->
-  <script src="unifiedCard.js"></script>
-  <script src="pokemonFamilies.js"></script>
-  <script src="pokemonPoints.js"></script>
-  <script src="teamshowcase.js"></script>
-  <script src="shinydex.js"></script>
-  <script src="showcase.js"></script>
-  <script src="shinydexsearch.js"></script>
-  <!-- THIS LINE ENSURES FAMILY POINTS LOGIC WORKS -->
+
+  <!-- 1. LOAD POKEMON FAMILIES JSON, THEN RUN pokemonDataBuilder.js -->
   <script>
-    if (window.buildPokemonPoints) window.buildPokemonPoints();
+    window.pokemonFamiliesData = null;
+    function loadPokemonFamiliesAndBuilder() {
+      fetch('pokemon_families.json')
+        .then(r => r.json())
+        .then(data => {
+          window.pokemonFamiliesData = data;
+          // Dynamically load the builder after JSON is ready
+          var script = document.createElement('script');
+          script.src = 'pokemonDataBuilder.js';
+          script.onload = function() {
+            // After builder, load all other scripts
+            var scripts = [
+              "unifiedCard.js",
+              "teamshowcase.js",
+              "shinydex.js",
+              "showcase.js",
+              "shinydexsearch.js",
+              "donators.js"
+            ];
+            var idx = 0;
+            function loadNext() {
+              if (idx < scripts.length) {
+                var s = document.createElement('script');
+                s.src = scripts[idx++];
+                s.onload = loadNext;
+                document.body.appendChild(s);
+              } else {
+                // Load donations.json for donators, then assign tiers
+                fetch('donations.json').then(r=>r.json()).then(d=>{
+                  window.donations = d;
+                  if (window.teamShowcase && window.assignDonatorTiersToTeam) window.assignDonatorTiersToTeam();
+                });
+              }
+            }
+            loadNext();
+          };
+          document.body.appendChild(script);
+        });
+    }
+    loadPokemonFamiliesAndBuilder();
   </script>
-  <!-- FORCE TIER 0/1 SET REBUILD AFTER ALL SCRIPTS LOADED -->
-  <script>
-    if (window.rebuildTier01Set) window.rebuildTier01Set();
-  </script>
-  <!-- DONATORS DATA LOADING -->
-  <script>
-    fetch('donations.json').then(r=>r.json()).then(d=>{
-      window.donations = d;
-      if (window.teamShowcase && window.assignDonatorTiersToTeam) window.assignDonatorTiersToTeam();
-    });
-  </script>
-  <script src="donators.js"></script>
+
+  <!-- PAGE ROUTING & DARK MODE (these can be inline since they don't depend on Pokémon data) -->
   <script>
     // Routing: supports #showcase, #showcase-<member>, #hitlist, #shinyweekly, #donators
     function renderPage() {
@@ -82,9 +104,9 @@
           const m = queryPart.match(/sort=(\w+)/);
           if (m) sortMode = m[1];
         }
-        const member = teamMembers.find(m => m.name === memberName);
+        const member = window.teamMembers && teamMembers.find(m => m.name === memberName);
         if (member) {
-          renderMemberShowcase(member, sortMode);
+          window.renderMemberShowcase(member, sortMode);
         } else {
           content.innerHTML = "<h1>Member not found.</h1>";
         }
@@ -97,25 +119,29 @@
           <div class="showcase-search-controls"></div>
           <div id="showcase-gallery-container"></div>
         `;
-        setupShowcaseSearchAndSort(teamMembers, renderShowcaseGallery, sortMode);
+        if (window.setupShowcaseSearchAndSort && window.teamMembers && window.renderShowcaseGallery) {
+          window.setupShowcaseSearchAndSort(window.teamMembers, window.renderShowcaseGallery, sortMode);
+        }
       } else if (hash === "hitlist") {
         content.innerHTML = `
           <div id='shiny-dex-container'></div>
         `;
         setTimeout(() => {
-          renderShinyDex(shinyDex);
-          setTimeout(() => {
-            if (typeof setupShinyDexHitlistSearch === 'function') {
-              setupShinyDexHitlistSearch(shinyDex, teamShowcase);
-            }
-          }, 0);
+          if (window.renderShinyDex && window.shinyDex) {
+            window.renderShinyDex(window.shinyDex);
+            setTimeout(() => {
+              if (typeof window.setupShinyDexHitlistSearch === 'function') {
+                window.setupShinyDexHitlistSearch(window.shinyDex, window.teamShowcase);
+              }
+            }, 0);
+          }
         }, 0);
       } else if (hash === "shinyweekly") {
         content.innerHTML = `
           <div style='font-size:1.4em; margin:2em 0; color:var(--accent); text-align:center;'>soon-to-be</div>
         `;
       } else if (hash === "donators") {
-        renderDonatorsWhenReady();
+        if (window.renderDonatorsWhenReady) window.renderDonatorsWhenReady();
       } else {
         content.innerHTML = "<h1>Page not found.</h1>";
       }
