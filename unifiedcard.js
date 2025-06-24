@@ -26,20 +26,20 @@ function renderUnifiedCard({
   memberStatus,
   donatorStatus
 }) {
-  const statusIconMap = {
-    spore: "sporesprite.png",
-    shroom: "shroomsprite.png",
-    shinyshroom: "shinyshroomsprite.png",
-    mushcap: "mushcapsprite.png"
-  };
-  const donatorIconMap = {
-    bronze: "bronzedonatorsprite.png",
-    silver: "silverdonatorsprite.png",
-    gold: "golddonatorsprite.png",
-    platinum: "platinumdonatorsprite.png",
-    diamond: "diamonddonatorsprite.png",
-    top: "topdonatorsprite.png"
-  };
+const statusIconMap = {
+  spore: "img/symbols/sporesprite.png",
+  shroom: "img/symbols/shroomsprite.png",
+  shinyshroom: "img/symbols/shinyshroomsprite.png",
+  mushcap: "img/symbols/mushcapsprite.png"
+};
+const donatorIconMap = {
+  bronze: "img/symbols/bronzedonatorsprite.png",
+  silver: "img/symbols/silverdonatorsprite.png",
+  gold: "img/symbols/golddonatorsprite.png",
+  platinum: "img/symbols/platinumdonatorsprite.png",
+  diamond: "img/symbols/diamonddonatorsprite.png",
+  top: "img/symbols/topdonatorsprite.png"
+};
   const statusIcon = memberStatus && statusIconMap[memberStatus] ? `symbols/${statusIconMap[memberStatus]}` : "";
   const donatorIcon = donatorStatus && donatorIconMap[donatorStatus] ? `symbols/${donatorIconMap[donatorStatus]}` : "";
 
