@@ -1,0 +1,5210 @@
+[
+  {
+    "#": 1,
+    "pokemon": "bulbasaur",
+    "family_members": "bulbasaur,ivysaur,venusaur",
+    "tier": "Tier 0",
+    "region": "Kanto",
+    "rarity": "starter"
+  },
+  {
+    "#": 2,
+    "pokemon": "ivysaur",
+    "family_members": "bulbasaur,ivysaur,venusaur",
+    "tier": "Tier 0",
+    "region": "Kanto",
+    "rarity": "starter"
+  },
+  {
+    "#": 3,
+    "pokemon": "venusaur",
+    "family_members": "bulbasaur,ivysaur,venusaur",
+    "tier": "Tier 0",
+    "region": "Kanto",
+    "rarity": "starter"
+  },
+  {
+    "#": 4,
+    "pokemon": "charmander",
+    "family_members": "charmander,charmeleon,charizard",
+    "tier": "Tier 0",
+    "region": "Kanto",
+    "rarity": "starter"
+  },
+  {
+    "#": 5,
+    "pokemon": "charmeleon",
+    "family_members": "charmander,charmeleon,charizard",
+    "tier": "Tier 0",
+    "region": "Kanto",
+    "rarity": "starter"
+  },
+  {
+    "#": 6,
+    "pokemon": "charizard",
+    "family_members": "charmander,charmeleon,charizard",
+    "tier": "Tier 0",
+    "region": "Kanto",
+    "rarity": "starter"
+  },
+  {
+    "#": 7,
+    "pokemon": "squirtle",
+    "family_members": "squirtle,wartortle,blastoise",
+    "tier": "Tier 0",
+    "region": "Kanto",
+    "rarity": "starter"
+  },
+  {
+    "#": 8,
+    "pokemon": "wartortle",
+    "family_members": "squirtle,wartortle,blastoise",
+    "tier": "Tier 0",
+    "region": "Kanto",
+    "rarity": "starter"
+  },
+  {
+    "#": 9,
+    "pokemon": "blastoise",
+    "family_members": "squirtle,wartortle,blastoise",
+    "tier": "Tier 0",
+    "region": "Kanto",
+    "rarity": "starter"
+  },
+  {
+    "#": 10,
+    "pokemon": "caterpie",
+    "family_members": "caterpie,metapod,butterfree",
+    "tier": "Tier 5",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 11,
+    "pokemon": "metapod",
+    "family_members": "caterpie,metapod,butterfree",
+    "tier": "Tier 5",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 12,
+    "pokemon": "butterfree",
+    "family_members": "caterpie,metapod,butterfree",
+    "tier": "Tier 5",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 13,
+    "pokemon": "weedle",
+    "family_members": "weedle,kakuna,beedrill",
+    "tier": "Tier 5",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 14,
+    "pokemon": "kakuna",
+    "family_members": "weedle,kakuna,beedrill",
+    "tier": "Tier 5",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 15,
+    "pokemon": "beedrill",
+    "family_members": "weedle,kakuna,beedrill",
+    "tier": "Tier 5",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 16,
+    "pokemon": "pidgey",
+    "family_members": "pidgey,pidgeotto,pidgeot",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 17,
+    "pokemon": "pidgeotto",
+    "family_members": "pidgey,pidgeotto,pidgeot",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 18,
+    "pokemon": "pidgeot",
+    "family_members": "pidgey,pidgeotto,pidgeot",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 19,
+    "pokemon": "rattata",
+    "family_members": "rattata,raticate",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 20,
+    "pokemon": "raticate",
+    "family_members": "rattata,raticate",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 21,
+    "pokemon": "spearow",
+    "family_members": "spearow,fearow",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 22,
+    "pokemon": "fearow",
+    "family_members": "spearow,fearow",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 23,
+    "pokemon": "ekans",
+    "family_members": "ekans,arbok",
+    "tier": "Tier 5",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 24,
+    "pokemon": "arbok",
+    "family_members": "ekans,arbok",
+    "tier": "Tier 5",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 25,
+    "pokemon": "pikachu",
+    "family_members": "pichu,pikachu,raichu",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 26,
+    "pokemon": "raichu",
+    "family_members": "pichu,pikachu,raichu",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 27,
+    "pokemon": "sandshrew",
+    "family_members": "sandshrew,sandslash",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 28,
+    "pokemon": "sandslash",
+    "family_members": "sandshrew,sandslash",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 29,
+    "pokemon": "nidoran♀",
+    "family_members": "nidoran♀,nidorina,nidoqueen,nidoran♂,nidorino,nidoking",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 30,
+    "pokemon": "nidorina",
+    "family_members": "nidoran♀,nidorina,nidoqueen,nidoran♂,nidorino,nidoking",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 31,
+    "pokemon": "nidoqueen",
+    "family_members": "nidoran♀,nidorina,nidoqueen,nidoran♂,nidorino,nidoking",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 32,
+    "pokemon": "nidoran♂",
+    "family_members": "nidoran♀,nidorina,nidoqueen,nidoran♂,nidorino,nidoking",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 33,
+    "pokemon": "nidorino",
+    "family_members": "nidoran♀,nidorina,nidoqueen,nidoran♂,nidorino,nidoking",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 34,
+    "pokemon": "nidoking",
+    "family_members": "nidoran♀,nidorina,nidoqueen,nidoran♂,nidorino,nidoking",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 35,
+    "pokemon": "clefairy",
+    "family_members": "cleffa,clefairy,clefable",
+    "tier": "Tier 4",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 36,
+    "pokemon": "clefable",
+    "family_members": "cleffa,clefairy,clefable",
+    "tier": "Tier 4",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 37,
+    "pokemon": "vulpix",
+    "family_members": "vulpix,ninetales",
+    "tier": "Tier 5",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 38,
+    "pokemon": "ninetales",
+    "family_members": "vulpix,ninetales",
+    "tier": "Tier 5",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 39,
+    "pokemon": "jigglypuff",
+    "family_members": "igglybuff,jigglypuff,wigglytuff",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 40,
+    "pokemon": "wigglytuff",
+    "family_members": "igglybuff,jigglypuff,wigglytuff",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 41,
+    "pokemon": "zubat",
+    "family_members": "zubat,golbat,crobat",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 42,
+    "pokemon": "golbat",
+    "family_members": "zubat,golbat,crobat",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 43,
+    "pokemon": "oddish",
+    "family_members": "oddish,gloom,vileplume,bellossom",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 44,
+    "pokemon": "gloom",
+    "family_members": "oddish,gloom,vileplume,bellossom",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 45,
+    "pokemon": "vileplume",
+    "family_members": "oddish,gloom,vileplume,bellossom",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 46,
+    "pokemon": "paras",
+    "family_members": "paras,parasect",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 47,
+    "pokemon": "parasect",
+    "family_members": "paras,parasect",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 48,
+    "pokemon": "venonat",
+    "family_members": "venonat,venomoth",
+    "tier": "Tier 4",
+    "region": "Kanto",
+    "rarity": "3x100%N"
+  },
+  {
+    "#": 49,
+    "pokemon": "venomoth",
+    "family_members": "venonat,venomoth",
+    "tier": "Tier 4",
+    "region": "Kanto",
+    "rarity": "3x100%N"
+  },
+  {
+    "#": 50,
+    "pokemon": "diglett",
+    "family_members": "diglett,dugtrio",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 51,
+    "pokemon": "dugtrio",
+    "family_members": "diglett,dugtrio",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 52,
+    "pokemon": "meowth",
+    "family_members": "meowth,persian",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 53,
+    "pokemon": "persian",
+    "family_members": "meowth,persian",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 54,
+    "pokemon": "psyduck",
+    "family_members": "psyduck,golduck",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 55,
+    "pokemon": "golduck",
+    "family_members": "psyduck,golduck",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 56,
+    "pokemon": "mankey",
+    "family_members": "mankey,primeape",
+    "tier": "Tier 5",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 57,
+    "pokemon": "primeape",
+    "family_members": "mankey,primeape",
+    "tier": "Tier 5",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 58,
+    "pokemon": "growlithe",
+    "family_members": "growlithe,arcanine",
+    "tier": "Tier 5",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 59,
+    "pokemon": "arcanine",
+    "family_members": "growlithe,arcanine",
+    "tier": "Tier 5",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 60,
+    "pokemon": "poliwag",
+    "family_members": "poliwag,poliwhirl,poliwrath,politoed",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 61,
+    "pokemon": "poliwhirl",
+    "family_members": "poliwag,poliwhirl,poliwrath,politoed",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 62,
+    "pokemon": "poliwrath",
+    "family_members": "poliwag,poliwhirl,poliwrath,politoed",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 63,
+    "pokemon": "abra",
+    "family_members": "abra,kadabra,alakazam",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 64,
+    "pokemon": "kadabra",
+    "family_members": "abra,kadabra,alakazam",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 65,
+    "pokemon": "alakazam",
+    "family_members": "abra,kadabra,alakazam",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 66,
+    "pokemon": "machop",
+    "family_members": "machop,machoke,machamp",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 67,
+    "pokemon": "machoke",
+    "family_members": "machop,machoke,machamp",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 68,
+    "pokemon": "machamp",
+    "family_members": "machop,machoke,machamp",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 69,
+    "pokemon": "bellsprout",
+    "family_members": "bellsprout,weepinbell,victreebel",
+    "tier": "Tier 4",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 70,
+    "pokemon": "weepinbell",
+    "family_members": "bellsprout,weepinbell,victreebel",
+    "tier": "Tier 4",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 71,
+    "pokemon": "victreebel",
+    "family_members": "bellsprout,weepinbell,victreebel",
+    "tier": "Tier 4",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 72,
+    "pokemon": "tentacool",
+    "family_members": "tentacool,tentacruel",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 73,
+    "pokemon": "tentacruel",
+    "family_members": "tentacool,tentacruel",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 74,
+    "pokemon": "geodude",
+    "family_members": "geodude,graveler,golem",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 75,
+    "pokemon": "graveler",
+    "family_members": "geodude,graveler,golem",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 76,
+    "pokemon": "golem",
+    "family_members": "geodude,graveler,golem",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 77,
+    "pokemon": "ponyta",
+    "family_members": "ponyta,rapidash",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 78,
+    "pokemon": "rapidash",
+    "family_members": "ponyta,rapidash",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 79,
+    "pokemon": "slowpoke",
+    "family_members": "slowpoke,slowbro,slowking",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 80,
+    "pokemon": "slowbro",
+    "family_members": "slowpoke,slowbro,slowking",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 81,
+    "pokemon": "magnemite",
+    "family_members": "magnemite,magneton,magnezone",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 82,
+    "pokemon": "magneton",
+    "family_members": "magnemite,magneton,magnezone",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 83,
+    "pokemon": "farfetch’d",
+    "family_members": "farfetch’d",
+    "tier": "Tier 2",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 84,
+    "pokemon": "doduo",
+    "family_members": "doduo,dodrio",
+    "tier": "Tier 5",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 85,
+    "pokemon": "dodrio",
+    "family_members": "doduo,dodrio",
+    "tier": "Tier 5",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 86,
+    "pokemon": "seel",
+    "family_members": "seel,dewgong",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 87,
+    "pokemon": "dewgong",
+    "family_members": "seel,dewgong",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 88,
+    "pokemon": "grimer",
+    "family_members": "grimer,muk",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 89,
+    "pokemon": "muk",
+    "family_members": "grimer,muk",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 90,
+    "pokemon": "shellder",
+    "family_members": "shellder,cloyster",
+    "tier": "Tier 3",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 91,
+    "pokemon": "cloyster",
+    "family_members": "shellder,cloyster",
+    "tier": "Tier 3",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 92,
+    "pokemon": "gastly",
+    "family_members": "gastly,haunter,gengar",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 93,
+    "pokemon": "haunter",
+    "family_members": "gastly,haunter,gengar",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 94,
+    "pokemon": "gengar",
+    "family_members": "gastly,haunter,gengar",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 95,
+    "pokemon": "onix",
+    "family_members": "onix,steelix",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 96,
+    "pokemon": "drowzee",
+    "family_members": "drowzee,hypno",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 97,
+    "pokemon": "hypno",
+    "family_members": "drowzee,hypno",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 98,
+    "pokemon": "krabby",
+    "family_members": "krabby,kingler",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 99,
+    "pokemon": "kingler",
+    "family_members": "krabby,kingler",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 100,
+    "pokemon": "voltorb",
+    "family_members": "voltorb,electrode",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 101,
+    "pokemon": "electrode",
+    "family_members": "voltorb,electrode",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 102,
+    "pokemon": "exeggcute",
+    "family_members": "exeggcute,exeggutor",
+    "tier": "Tier 2",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 103,
+    "pokemon": "exeggutor",
+    "family_members": "exeggcute,exeggutor",
+    "tier": "Tier 2",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 104,
+    "pokemon": "cubone",
+    "family_members": "cubone,marowak",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 105,
+    "pokemon": "marowak",
+    "family_members": "cubone,marowak",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 106,
+    "pokemon": "hitmonlee",
+    "family_members": "tyrogue,hitmonlee,hitmonchan,hitmontop",
+    "tier": "Tier 0",
+    "region": "Kanto",
+    "rarity": "rare"
+  },
+  {
+    "#": 107,
+    "pokemon": "hitmonchan",
+    "family_members": "tyrogue,hitmonlee,hitmonchan,hitmontop",
+    "tier": "Tier 0",
+    "region": "Kanto",
+    "rarity": "rare"
+  },
+  {
+    "#": 108,
+    "pokemon": "lickitung",
+    "family_members": "lickitung,lickilicky",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 109,
+    "pokemon": "koffing",
+    "family_members": "koffing,weezing",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 110,
+    "pokemon": "weezing",
+    "family_members": "koffing,weezing",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 111,
+    "pokemon": "rhyhorn",
+    "family_members": "rhyhorn,rhydon,rhyperior",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 112,
+    "pokemon": "rhydon",
+    "family_members": "rhyhorn,rhydon,rhyperior",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 113,
+    "pokemon": "chansey",
+    "family_members": "happiny,chansey,blissey",
+    "tier": "Tier 1",
+    "region": "Kanto",
+    "rarity": "rare"
+  },
+  {
+    "#": 114,
+    "pokemon": "tangela",
+    "family_members": "tangela,tangrowth",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 115,
+    "pokemon": "kangaskhan",
+    "family_members": "kangaskhan",
+    "tier": "Tier 2",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 116,
+    "pokemon": "horsea",
+    "family_members": "horsea,seadra,kingdra",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 117,
+    "pokemon": "seadra",
+    "family_members": "horsea,seadra,kingdra",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 118,
+    "pokemon": "goldeen",
+    "family_members": "goldeen,seaking",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 119,
+    "pokemon": "seaking",
+    "family_members": "goldeen,seaking",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 120,
+    "pokemon": "staryu",
+    "family_members": "staryu,starmie",
+    "tier": "Tier 3",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 121,
+    "pokemon": "starmie",
+    "family_members": "staryu,starmie",
+    "tier": "Tier 3",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 122,
+    "pokemon": "mr.;mime",
+    "family_members": "mime;jr.,mr.;mime",
+    "tier": "Tier 2",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 123,
+    "pokemon": "scyther",
+    "family_members": "scyther,scizor",
+    "tier": "Tier 1",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 124,
+    "pokemon": "jynx",
+    "family_members": "smoochum,jynx",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 125,
+    "pokemon": "electabuzz",
+    "family_members": "elekid,electabuzz,electivire",
+    "tier": "Tier 4",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 126,
+    "pokemon": "magmar",
+    "family_members": "magby,magmar,magmortar",
+    "tier": "Tier 4",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 127,
+    "pokemon": "pinsir",
+    "family_members": "pinsir",
+    "tier": "Tier 1",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 128,
+    "pokemon": "tauros",
+    "family_members": "tauros",
+    "tier": "Tier 4",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 129,
+    "pokemon": "magikarp",
+    "family_members": "magikarp,gyarados",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 130,
+    "pokemon": "gyarados",
+    "family_members": "magikarp,gyarados",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 131,
+    "pokemon": "lapras",
+    "family_members": "lapras",
+    "tier": "Tier 2",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 132,
+    "pokemon": "ditto",
+    "family_members": "ditto",
+    "tier": "Tier 5",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 133,
+    "pokemon": "eevee",
+    "family_members": "eevee,vaporeon,jolteon,flareon,espeon,umbreon,leafeon,glaceon",
+    "tier": "Tier 1",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 134,
+    "pokemon": "vaporeon",
+    "family_members": "eevee,vaporeon,jolteon,flareon,espeon,umbreon,leafeon,glaceon",
+    "tier": "Tier 1",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 135,
+    "pokemon": "jolteon",
+    "family_members": "eevee,vaporeon,jolteon,flareon,espeon,umbreon,leafeon,glaceon",
+    "tier": "Tier 1",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 136,
+    "pokemon": "flareon",
+    "family_members": "eevee,vaporeon,jolteon,flareon,espeon,umbreon,leafeon,glaceon",
+    "tier": "Tier 1",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 137,
+    "pokemon": "porygon",
+    "family_members": "porygon,porygon2,porygon-z",
+    "tier": "Tier 0",
+    "region": "Kanto",
+    "rarity": "rare"
+  },
+  {
+    "#": 138,
+    "pokemon": "omanyte",
+    "family_members": "omanyte,omastar",
+    "tier": "Tier 1",
+    "region": "Kanto",
+    "rarity": "fossil"
+  },
+  {
+    "#": 139,
+    "pokemon": "omastar",
+    "family_members": "omanyte,omastar",
+    "tier": "Tier 1",
+    "region": "Kanto",
+    "rarity": "fossil"
+  },
+  {
+    "#": 140,
+    "pokemon": "kabuto",
+    "family_members": "kabuto,kabutops",
+    "tier": "Tier 1",
+    "region": "Kanto",
+    "rarity": "fossil"
+  },
+  {
+    "#": 141,
+    "pokemon": "kabutops",
+    "family_members": "kabuto,kabutops",
+    "tier": "Tier 1",
+    "region": "Kanto",
+    "rarity": "fossil"
+  },
+  {
+    "#": 142,
+    "pokemon": "aerodactyl",
+    "family_members": "aerodactyl",
+    "tier": "Tier 1",
+    "region": "Kanto",
+    "rarity": "fossil"
+  },
+  {
+    "#": 143,
+    "pokemon": "snorlax",
+    "family_members": "munchlax,snorlax",
+    "tier": "Tier 1",
+    "region": "Kanto",
+    "rarity": ""
+  },
+  {
+    "#": 144,
+    "pokemon": "articuno",
+    "family_members": "articuno",
+    "tier": "Legendary",
+    "region": "Kanto",
+    "rarity": "legendary"
+  },
+  {
+    "#": 145,
+    "pokemon": "zapdos",
+    "family_members": "zapdos",
+    "tier": "Legendary",
+    "region": "Kanto",
+    "rarity": "legendary"
+  },
+  {
+    "#": 146,
+    "pokemon": "moltres",
+    "family_members": "moltres",
+    "tier": "Legendary",
+    "region": "Kanto",
+    "rarity": "legendary"
+  },
+  {
+    "#": 147,
+    "pokemon": "dratini",
+    "family_members": "dratini,dragonair,dragonite",
+    "tier": "Tier 4",
+    "region": "Kanto",
+    "rarity": "5x20%"
+  },
+  {
+    "#": 148,
+    "pokemon": "dragonair",
+    "family_members": "dratini,dragonair,dragonite",
+    "tier": "Tier 4",
+    "region": "Kanto",
+    "rarity": "5x20%"
+  },
+  {
+    "#": 149,
+    "pokemon": "dragonite",
+    "family_members": "dratini,dragonair,dragonite",
+    "tier": "Tier 4",
+    "region": "Kanto",
+    "rarity": "5x20%"
+  },
+  {
+    "#": 150,
+    "pokemon": "mewtwo",
+    "family_members": "mewtwo",
+    "tier": "Legendary",
+    "region": "Kanto",
+    "rarity": "legendary"
+  },
+  {
+    "#": 151,
+    "pokemon": "mew",
+    "family_members": "mew",
+    "tier": "Legendary",
+    "region": "Kanto",
+    "rarity": "mythical"
+  },
+  {
+    "#": 152,
+    "pokemon": "chikorita",
+    "family_members": "chikorita,bayleef,meganium",
+    "tier": "Tier 0",
+    "region": "Johto",
+    "rarity": "starter"
+  },
+  {
+    "#": 153,
+    "pokemon": "bayleef",
+    "family_members": "chikorita,bayleef,meganium",
+    "tier": "Tier 0",
+    "region": "Johto",
+    "rarity": "starter"
+  },
+  {
+    "#": 154,
+    "pokemon": "meganium",
+    "family_members": "chikorita,bayleef,meganium",
+    "tier": "Tier 0",
+    "region": "Johto",
+    "rarity": "starter"
+  },
+  {
+    "#": 155,
+    "pokemon": "cyndaquil",
+    "family_members": "cyndaquil,quilava,typhlosion",
+    "tier": "Tier 0",
+    "region": "Johto",
+    "rarity": "starter"
+  },
+  {
+    "#": 156,
+    "pokemon": "quilava",
+    "family_members": "cyndaquil,quilava,typhlosion",
+    "tier": "Tier 0",
+    "region": "Johto",
+    "rarity": "starter"
+  },
+  {
+    "#": 157,
+    "pokemon": "typhlosion",
+    "family_members": "cyndaquil,quilava,typhlosion",
+    "tier": "Tier 0",
+    "region": "Johto",
+    "rarity": "starter"
+  },
+  {
+    "#": 158,
+    "pokemon": "totodile",
+    "family_members": "totodile,croconaw,feraligatr",
+    "tier": "Tier 0",
+    "region": "Johto",
+    "rarity": "starter"
+  },
+  {
+    "#": 159,
+    "pokemon": "croconaw",
+    "family_members": "totodile,croconaw,feraligatr",
+    "tier": "Tier 0",
+    "region": "Johto",
+    "rarity": "starter"
+  },
+  {
+    "#": 160,
+    "pokemon": "feraligatr",
+    "family_members": "totodile,croconaw,feraligatr",
+    "tier": "Tier 0",
+    "region": "Johto",
+    "rarity": "starter"
+  },
+  {
+    "#": 161,
+    "pokemon": "sentret",
+    "family_members": "sentret,furret",
+    "tier": "Tier 3",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 162,
+    "pokemon": "furret",
+    "family_members": "sentret,furret",
+    "tier": "Tier 3",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 163,
+    "pokemon": "hoothoot",
+    "family_members": "hoothoot,noctowl",
+    "tier": "Tier 5",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 164,
+    "pokemon": "noctowl",
+    "family_members": "hoothoot,noctowl",
+    "tier": "Tier 5",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 165,
+    "pokemon": "ledyba",
+    "family_members": "ledyba,ledian",
+    "tier": "Tier 4",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 166,
+    "pokemon": "ledian",
+    "family_members": "ledyba,ledian",
+    "tier": "Tier 4",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 167,
+    "pokemon": "spinarak",
+    "family_members": "spinarak,ariados",
+    "tier": "Tier 5",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 168,
+    "pokemon": "ariados",
+    "family_members": "spinarak,ariados",
+    "tier": "Tier 5",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 169,
+    "pokemon": "crobat",
+    "family_members": "zubat,golbat,crobat",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 170,
+    "pokemon": "chinchou",
+    "family_members": "chinchou,lanturn",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 171,
+    "pokemon": "lanturn",
+    "family_members": "chinchou,lanturn",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 172,
+    "pokemon": "pichu",
+    "family_members": "pichu,pikachu,raichu",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "Baby"
+  },
+  {
+    "#": 173,
+    "pokemon": "cleffa",
+    "family_members": "cleffa,clefairy,clefable",
+    "tier": "Tier 4",
+    "region": "Johto",
+    "rarity": "Baby"
+  },
+  {
+    "#": 174,
+    "pokemon": "igglybuff",
+    "family_members": "igglybuff,jigglypuff,wigglytuff",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "Baby"
+  },
+  {
+    "#": 175,
+    "pokemon": "togepi",
+    "family_members": "togepi,togetic,togekiss",
+    "tier": "Tier 0",
+    "region": "Johto",
+    "rarity": "Baby"
+  },
+  {
+    "#": 176,
+    "pokemon": "togetic",
+    "family_members": "togepi,togetic,togekiss",
+    "tier": "Tier 0",
+    "region": "Johto",
+    "rarity": "rare"
+  },
+  {
+    "#": 177,
+    "pokemon": "natu",
+    "family_members": "natu,xatu",
+    "tier": "Tier 5",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 178,
+    "pokemon": "xatu",
+    "family_members": "natu,xatu",
+    "tier": "Tier 5",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 179,
+    "pokemon": "mareep",
+    "family_members": "mareep,flaaffy,ampharos",
+    "tier": "Tier 5",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 180,
+    "pokemon": "flaaffy",
+    "family_members": "mareep,flaaffy,ampharos",
+    "tier": "Tier 5",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 181,
+    "pokemon": "ampharos",
+    "family_members": "mareep,flaaffy,ampharos",
+    "tier": "Tier 5",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 182,
+    "pokemon": "bellossom",
+    "family_members": "oddish,gloom,vileplume,bellossom",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 183,
+    "pokemon": "marill",
+    "family_members": "azurill,marill,azumarill",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 184,
+    "pokemon": "azumarill",
+    "family_members": "azurill,marill,azumarill",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 185,
+    "pokemon": "sudowoodo",
+    "family_members": "bonsly,sudowoodo",
+    "tier": "Tier 1",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 186,
+    "pokemon": "politoed",
+    "family_members": "poliwag,poliwhirl,poliwrath,politoed",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 187,
+    "pokemon": "hoppip",
+    "family_members": "hoppip,skiploom,jumpluff",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 188,
+    "pokemon": "skiploom",
+    "family_members": "hoppip,skiploom,jumpluff",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 189,
+    "pokemon": "jumpluff",
+    "family_members": "hoppip,skiploom,jumpluff",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 190,
+    "pokemon": "aipom",
+    "family_members": "aipom,ambipom",
+    "tier": "Tier 2",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 191,
+    "pokemon": "sunkern",
+    "family_members": "sunkern,sunflora",
+    "tier": "Tier 4",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 192,
+    "pokemon": "sunflora",
+    "family_members": "sunkern,sunflora",
+    "tier": "Tier 4",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 193,
+    "pokemon": "yanma",
+    "family_members": "yanma,yanmega",
+    "tier": "Tier 2",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 194,
+    "pokemon": "wooper",
+    "family_members": "wooper,quagsire",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 195,
+    "pokemon": "quagsire",
+    "family_members": "wooper,quagsire",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 196,
+    "pokemon": "espeon",
+    "family_members": "eevee,vaporeon,jolteon,flareon,espeon,umbreon,leafeon,glaceon",
+    "tier": "Tier 1",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 197,
+    "pokemon": "umbreon",
+    "family_members": "eevee,vaporeon,jolteon,flareon,espeon,umbreon,leafeon,glaceon",
+    "tier": "Tier 1",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 198,
+    "pokemon": "murkrow",
+    "family_members": "murkrow,honchkrow",
+    "tier": "Tier 5",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 199,
+    "pokemon": "slowking",
+    "family_members": "slowpoke,slowbro,slowking",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 200,
+    "pokemon": "misdreavus",
+    "family_members": "misdreavus,mismagius",
+    "tier": "Tier 4",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 201,
+    "pokemon": "unown",
+    "family_members": "unown",
+    "tier": "Tier 3",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 202,
+    "pokemon": "wobbuffet",
+    "family_members": "wynaut,wobbuffet",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 203,
+    "pokemon": "girafarig",
+    "family_members": "girafarig",
+    "tier": "Tier 5",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 204,
+    "pokemon": "pineco",
+    "family_members": "pineco,forretress",
+    "tier": "Tier 2",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 205,
+    "pokemon": "forretress",
+    "family_members": "pineco,forretress",
+    "tier": "Tier 2",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 206,
+    "pokemon": "dunsparce",
+    "family_members": "dunsparce",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 207,
+    "pokemon": "gligar",
+    "family_members": "gligar,gliscor",
+    "tier": "Tier 5",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 208,
+    "pokemon": "steelix",
+    "family_members": "onix,steelix",
+    "tier": "Tier 6",
+    "region": "Kanto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 209,
+    "pokemon": "snubbull",
+    "family_members": "snubbull,granbull",
+    "tier": "Tier 4",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 210,
+    "pokemon": "granbull",
+    "family_members": "snubbull,granbull",
+    "tier": "Tier 4",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 211,
+    "pokemon": "qwilfish",
+    "family_members": "qwilfish",
+    "tier": "Tier 2",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 212,
+    "pokemon": "scizor",
+    "family_members": "scyther,scizor",
+    "tier": "Tier 1",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 213,
+    "pokemon": "shuckle",
+    "family_members": "shuckle",
+    "tier": "Tier 2",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 214,
+    "pokemon": "heracross",
+    "family_members": "heracross",
+    "tier": "Tier 2",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 215,
+    "pokemon": "sneasel",
+    "family_members": "sneasel,weavile",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 216,
+    "pokemon": "teddiursa",
+    "family_members": "teddiursa,ursaring",
+    "tier": "Tier 5",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 217,
+    "pokemon": "ursaring",
+    "family_members": "teddiursa,ursaring",
+    "tier": "Tier 5",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 218,
+    "pokemon": "slugma",
+    "family_members": "slugma,magcargo",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 219,
+    "pokemon": "magcargo",
+    "family_members": "slugma,magcargo",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 220,
+    "pokemon": "swinub",
+    "family_members": "swinub,piloswine,mamoswine",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 221,
+    "pokemon": "piloswine",
+    "family_members": "swinub,piloswine,mamoswine",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 222,
+    "pokemon": "corsola",
+    "family_members": "corsola",
+    "tier": "Tier 3",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 223,
+    "pokemon": "remoraid",
+    "family_members": "remoraid,octillery",
+    "tier": "Tier 3",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 224,
+    "pokemon": "octillery",
+    "family_members": "remoraid,octillery",
+    "tier": "Tier 3",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 225,
+    "pokemon": "delibird",
+    "family_members": "delibird",
+    "tier": "Tier 5",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 226,
+    "pokemon": "mantine",
+    "family_members": "mantyke,mantine",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 227,
+    "pokemon": "skarmory",
+    "family_members": "skarmory",
+    "tier": "Tier 1",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 228,
+    "pokemon": "houndour",
+    "family_members": "houndour,houndoom",
+    "tier": "Tier 3",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 229,
+    "pokemon": "houndoom",
+    "family_members": "houndour,houndoom",
+    "tier": "Tier 3",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 230,
+    "pokemon": "kingdra",
+    "family_members": "horsea,seadra,kingdra",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 231,
+    "pokemon": "phanpy",
+    "family_members": "phanpy,donphan",
+    "tier": "Tier 5",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 232,
+    "pokemon": "donphan",
+    "family_members": "phanpy,donphan",
+    "tier": "Tier 5",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 233,
+    "pokemon": "porygon2",
+    "family_members": "porygon,porygon2,porygon-z",
+    "tier": "Tier 0",
+    "region": "Johto",
+    "rarity": "rare"
+  },
+  {
+    "#": 234,
+    "pokemon": "stantler",
+    "family_members": "stantler",
+    "tier": "Tier 4",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 235,
+    "pokemon": "smeargle",
+    "family_members": "smeargle",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 236,
+    "pokemon": "tyrogue",
+    "family_members": "tyrogue,hitmonlee,hitmonchan,hitmontop",
+    "tier": "Tier 0",
+    "region": "Johto",
+    "rarity": "Baby"
+  },
+  {
+    "#": 237,
+    "pokemon": "hitmontop",
+    "family_members": "tyrogue,hitmonlee,hitmonchan,hitmontop",
+    "tier": "Tier 0",
+    "region": "Johto",
+    "rarity": "rare"
+  },
+  {
+    "#": 238,
+    "pokemon": "smoochum",
+    "family_members": "smoochum,jynx",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "Baby"
+  },
+  {
+    "#": 239,
+    "pokemon": "elekid",
+    "family_members": "elekid,electabuzz,electivire",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "Baby"
+  },
+  {
+    "#": 240,
+    "pokemon": "magby",
+    "family_members": "magby,magmar,magmortar",
+    "tier": "Tier 6",
+    "region": "Johto",
+    "rarity": "Baby"
+  },
+  {
+    "#": 241,
+    "pokemon": "miltank",
+    "family_members": "miltank",
+    "tier": "Tier 4",
+    "region": "Johto",
+    "rarity": ""
+  },
+  {
+    "#": 242,
+    "pokemon": "blissey",
+    "family_members": "happiny,chansey,blissey",
+    "tier": "Tier 1",
+    "region": "Johto",
+    "rarity": "rare"
+  },
+  {
+    "#": 243,
+    "pokemon": "raikou",
+    "family_members": "raikou",
+    "tier": "Legendary",
+    "region": "Johto",
+    "rarity": "legendary"
+  },
+  {
+    "#": 244,
+    "pokemon": "entei",
+    "family_members": "entei",
+    "tier": "Legendary",
+    "region": "Johto",
+    "rarity": "legendary"
+  },
+  {
+    "#": 245,
+    "pokemon": "suicune",
+    "family_members": "suicune",
+    "tier": "Legendary",
+    "region": "Johto",
+    "rarity": "legendary"
+  },
+  {
+    "#": 246,
+    "pokemon": "larvitar",
+    "family_members": "larvitar,pupitar,tyranitar",
+    "tier": "Tier 4",
+    "region": "Johto",
+    "rarity": "5x20%"
+  },
+  {
+    "#": 247,
+    "pokemon": "pupitar",
+    "family_members": "larvitar,pupitar,tyranitar",
+    "tier": "Tier 4",
+    "region": "Johto",
+    "rarity": "5x20%"
+  },
+  {
+    "#": 248,
+    "pokemon": "tyranitar",
+    "family_members": "larvitar,pupitar,tyranitar",
+    "tier": "Tier 4",
+    "region": "Johto",
+    "rarity": "5x20%"
+  },
+  {
+    "#": 249,
+    "pokemon": "lugia",
+    "family_members": "lugia",
+    "tier": "Tier LM",
+    "region": "Johto",
+    "rarity": "legendary"
+  },
+  {
+    "#": 250,
+    "pokemon": "ho-oh",
+    "family_members": "ho-oh",
+    "tier": "Tier LM",
+    "region": "Johto",
+    "rarity": "legendary"
+  },
+  {
+    "#": 251,
+    "pokemon": "celebi",
+    "family_members": "celebi",
+    "tier": "Tier LM",
+    "region": "Johto",
+    "rarity": "mythical"
+  },
+  {
+    "#": 252,
+    "pokemon": "treecko",
+    "family_members": "treecko,grovyle,sceptile",
+    "tier": "Tier 0",
+    "region": "Hoenn",
+    "rarity": "starter"
+  },
+  {
+    "#": 253,
+    "pokemon": "grovyle",
+    "family_members": "treecko,grovyle,sceptile",
+    "tier": "Tier 0",
+    "region": "Hoenn",
+    "rarity": "starter"
+  },
+  {
+    "#": 254,
+    "pokemon": "sceptile",
+    "family_members": "treecko,grovyle,sceptile",
+    "tier": "Tier 0",
+    "region": "Hoenn",
+    "rarity": "starter"
+  },
+  {
+    "#": 255,
+    "pokemon": "torchic",
+    "family_members": "torchic,combusken,blaziken",
+    "tier": "Tier 0",
+    "region": "Hoenn",
+    "rarity": "starter"
+  },
+  {
+    "#": 256,
+    "pokemon": "combusken",
+    "family_members": "torchic,combusken,blaziken",
+    "tier": "Tier 0",
+    "region": "Hoenn",
+    "rarity": "starter"
+  },
+  {
+    "#": 257,
+    "pokemon": "blaziken",
+    "family_members": "torchic,combusken,blaziken",
+    "tier": "Tier 0",
+    "region": "Hoenn",
+    "rarity": "starter"
+  },
+  {
+    "#": 258,
+    "pokemon": "mudkip",
+    "family_members": "mudkip,marshtomp,swampert",
+    "tier": "Tier 0",
+    "region": "Hoenn",
+    "rarity": "starter"
+  },
+  {
+    "#": 259,
+    "pokemon": "marshtomp",
+    "family_members": "mudkip,marshtomp,swampert",
+    "tier": "Tier 0",
+    "region": "Hoenn",
+    "rarity": "starter"
+  },
+  {
+    "#": 260,
+    "pokemon": "swampert",
+    "family_members": "mudkip,marshtomp,swampert",
+    "tier": "Tier 0",
+    "region": "Hoenn",
+    "rarity": "starter"
+  },
+  {
+    "#": 261,
+    "pokemon": "poochyena",
+    "family_members": "poochyena,mightyena",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 262,
+    "pokemon": "mightyena",
+    "family_members": "poochyena,mightyena",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 263,
+    "pokemon": "zigzagoon",
+    "family_members": "zigzagoon,linoone",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 264,
+    "pokemon": "linoone",
+    "family_members": "zigzagoon,linoone",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 265,
+    "pokemon": "wurmple",
+    "family_members": "wurmple,silcoon,beautifly,cascoon,dustox",
+    "tier": "Tier 5",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 266,
+    "pokemon": "silcoon",
+    "family_members": "wurmple,silcoon,beautifly,cascoon,dustox",
+    "tier": "Tier 5",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 267,
+    "pokemon": "beautifly",
+    "family_members": "wurmple,silcoon,beautifly,cascoon,dustox",
+    "tier": "Tier 5",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 268,
+    "pokemon": "cascoon",
+    "family_members": "wurmple,silcoon,beautifly,cascoon,dustox",
+    "tier": "Tier 5",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 269,
+    "pokemon": "dustox",
+    "family_members": "wurmple,silcoon,beautifly,cascoon,dustox",
+    "tier": "Tier 5",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 270,
+    "pokemon": "lotad",
+    "family_members": "lotad,lombre,ludicolo",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 271,
+    "pokemon": "lombre",
+    "family_members": "lotad,lombre,ludicolo",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 272,
+    "pokemon": "ludicolo",
+    "family_members": "lotad,lombre,ludicolo",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 273,
+    "pokemon": "seedot",
+    "family_members": "seedot,nuzleaf,shiftry",
+    "tier": "Tier 5",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 274,
+    "pokemon": "nuzleaf",
+    "family_members": "seedot,nuzleaf,shiftry",
+    "tier": "Tier 5",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 275,
+    "pokemon": "shiftry",
+    "family_members": "seedot,nuzleaf,shiftry",
+    "tier": "Tier 5",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 276,
+    "pokemon": "taillow",
+    "family_members": "taillow,swellow",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 277,
+    "pokemon": "swellow",
+    "family_members": "taillow,swellow",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 278,
+    "pokemon": "wingull",
+    "family_members": "wingull,pelipper",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 279,
+    "pokemon": "pelipper",
+    "family_members": "wingull,pelipper",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 280,
+    "pokemon": "ralts",
+    "family_members": "ralts,kirlia,gardevoir,gallade",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 281,
+    "pokemon": "kirlia",
+    "family_members": "ralts,kirlia,gardevoir,gallade",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 282,
+    "pokemon": "gardevoir",
+    "family_members": "ralts,kirlia,gardevoir,gallade",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 283,
+    "pokemon": "surskit",
+    "family_members": "surskit,masquerain",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 284,
+    "pokemon": "masquerain",
+    "family_members": "surskit,masquerain",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 285,
+    "pokemon": "shroomish",
+    "family_members": "shroomish,breloom",
+    "tier": "Tier 2",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 286,
+    "pokemon": "breloom",
+    "family_members": "shroomish,breloom",
+    "tier": "Tier 2",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 287,
+    "pokemon": "slakoth",
+    "family_members": "slakoth,vigoroth,slaking",
+    "tier": "Tier 1",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 288,
+    "pokemon": "vigoroth",
+    "family_members": "slakoth,vigoroth,slaking",
+    "tier": "Tier 1",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 289,
+    "pokemon": "slaking",
+    "family_members": "slakoth,vigoroth,slaking",
+    "tier": "Tier 1",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 290,
+    "pokemon": "nincada",
+    "family_members": "nincada,ninjask,shedinja",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 291,
+    "pokemon": "ninjask",
+    "family_members": "nincada,ninjask,shedinja",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 292,
+    "pokemon": "shedinja",
+    "family_members": "nincada,ninjask,shedinja",
+    "tier": "Tier 0",
+    "region": "Hoenn",
+    "rarity": "rare"
+  },
+  {
+    "#": 293,
+    "pokemon": "whismur",
+    "family_members": "whismur,loudred,exploud",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 294,
+    "pokemon": "loudred",
+    "family_members": "whismur,loudred,exploud",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 295,
+    "pokemon": "exploud",
+    "family_members": "whismur,loudred,exploud",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 296,
+    "pokemon": "makuhita",
+    "family_members": "makuhita,hariyama",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 297,
+    "pokemon": "hariyama",
+    "family_members": "makuhita,hariyama",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 298,
+    "pokemon": "azurill",
+    "family_members": "azurill,marill,azumarill",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "Baby"
+  },
+  {
+    "#": 299,
+    "pokemon": "nosepass",
+    "family_members": "nosepass,probopass",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 300,
+    "pokemon": "skitty",
+    "family_members": "skitty,delcatty",
+    "tier": "Tier 1",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 301,
+    "pokemon": "delcatty",
+    "family_members": "skitty,delcatty",
+    "tier": "Tier 1",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 302,
+    "pokemon": "sableye",
+    "family_members": "sableye",
+    "tier": "Tier 5",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 303,
+    "pokemon": "mawile",
+    "family_members": "mawile",
+    "tier": "Tier 5",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 304,
+    "pokemon": "aron",
+    "family_members": "aron,lairon,aggron",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 305,
+    "pokemon": "lairon",
+    "family_members": "aron,lairon,aggron",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 306,
+    "pokemon": "aggron",
+    "family_members": "aron,lairon,aggron",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 307,
+    "pokemon": "meditite",
+    "family_members": "meditite,medicham",
+    "tier": "Tier 5",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 308,
+    "pokemon": "medicham",
+    "family_members": "meditite,medicham",
+    "tier": "Tier 5",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 309,
+    "pokemon": "electrike",
+    "family_members": "electrike,manectric",
+    "tier": "Tier 5",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 310,
+    "pokemon": "manectric",
+    "family_members": "electrike,manectric",
+    "tier": "Tier 5",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 311,
+    "pokemon": "plusle",
+    "family_members": "plusle",
+    "tier": "Tier 2",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 312,
+    "pokemon": "minun",
+    "family_members": "minun",
+    "tier": "Tier 2",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 313,
+    "pokemon": "volbeat",
+    "family_members": "volbeat",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 314,
+    "pokemon": "illumise",
+    "family_members": "illumise",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 315,
+    "pokemon": "roselia",
+    "family_members": "budew,roselia,roserade",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 316,
+    "pokemon": "gulpin",
+    "family_members": "gulpin,swalot",
+    "tier": "Tier 2",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 317,
+    "pokemon": "swalot",
+    "family_members": "gulpin,swalot",
+    "tier": "Tier 2",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 318,
+    "pokemon": "carvanha",
+    "family_members": "carvanha,sharpedo",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 319,
+    "pokemon": "sharpedo",
+    "family_members": "carvanha,sharpedo",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 320,
+    "pokemon": "wailmer",
+    "family_members": "wailmer,wailord",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 321,
+    "pokemon": "wailord",
+    "family_members": "wailmer,wailord",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 322,
+    "pokemon": "numel",
+    "family_members": "numel,camerupt",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 323,
+    "pokemon": "camerupt",
+    "family_members": "numel,camerupt",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 324,
+    "pokemon": "torkoal",
+    "family_members": "torkoal",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 325,
+    "pokemon": "spoink",
+    "family_members": "spoink,grumpig",
+    "tier": "Tier 4",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 326,
+    "pokemon": "grumpig",
+    "family_members": "spoink,grumpig",
+    "tier": "Tier 4",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 327,
+    "pokemon": "spinda",
+    "family_members": "spinda",
+    "tier": "Tier 4",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 328,
+    "pokemon": "trapinch",
+    "family_members": "trapinch,vibrava,flygon",
+    "tier": "Tier 4",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 329,
+    "pokemon": "vibrava",
+    "family_members": "trapinch,vibrava,flygon",
+    "tier": "Tier 4",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 330,
+    "pokemon": "flygon",
+    "family_members": "trapinch,vibrava,flygon",
+    "tier": "Tier 4",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 331,
+    "pokemon": "cacnea",
+    "family_members": "cacnea,cacturne",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 332,
+    "pokemon": "cacturne",
+    "family_members": "cacnea,cacturne",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 333,
+    "pokemon": "swablu",
+    "family_members": "swablu,altaria",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 334,
+    "pokemon": "altaria",
+    "family_members": "swablu,altaria",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 335,
+    "pokemon": "zangoose",
+    "family_members": "zangoose",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 336,
+    "pokemon": "seviper",
+    "family_members": "seviper",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 337,
+    "pokemon": "lunatone",
+    "family_members": "lunatone",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 338,
+    "pokemon": "solrock",
+    "family_members": "solrock",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 339,
+    "pokemon": "barboach",
+    "family_members": "barboach,whiscash",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 340,
+    "pokemon": "whiscash",
+    "family_members": "barboach,whiscash",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 341,
+    "pokemon": "corphish",
+    "family_members": "corphish,crawdaunt",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 342,
+    "pokemon": "crawdaunt",
+    "family_members": "corphish,crawdaunt",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 343,
+    "pokemon": "baltoy",
+    "family_members": "baltoy,claydol",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 344,
+    "pokemon": "claydol",
+    "family_members": "baltoy,claydol",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 345,
+    "pokemon": "lileep",
+    "family_members": "lileep,cradily",
+    "tier": "Tier 1",
+    "region": "Hoenn",
+    "rarity": "fossil"
+  },
+  {
+    "#": 346,
+    "pokemon": "cradily",
+    "family_members": "lileep,cradily",
+    "tier": "Tier 1",
+    "region": "Hoenn",
+    "rarity": "fossil"
+  },
+  {
+    "#": 347,
+    "pokemon": "anorith",
+    "family_members": "anorith,armaldo",
+    "tier": "Tier 1",
+    "region": "Hoenn",
+    "rarity": "fossil"
+  },
+  {
+    "#": 348,
+    "pokemon": "armaldo",
+    "family_members": "anorith,armaldo",
+    "tier": "Tier 1",
+    "region": "Hoenn",
+    "rarity": "fossil"
+  },
+  {
+    "#": 349,
+    "pokemon": "feebas",
+    "family_members": "feebas,milotic",
+    "tier": "Tier 1",
+    "region": "Hoenn",
+    "rarity": "rare"
+  },
+  {
+    "#": 350,
+    "pokemon": "milotic",
+    "family_members": "feebas,milotic",
+    "tier": "Tier 1",
+    "region": "Hoenn",
+    "rarity": "rare"
+  },
+  {
+    "#": 351,
+    "pokemon": "castform",
+    "family_members": "castform",
+    "tier": "Tier 1",
+    "region": "Hoenn",
+    "rarity": "rare"
+  },
+  {
+    "#": 352,
+    "pokemon": "kecleon",
+    "family_members": "kecleon",
+    "tier": "Tier 1",
+    "region": "Hoenn",
+    "rarity": "rare"
+  },
+  {
+    "#": 353,
+    "pokemon": "shuppet",
+    "family_members": "shuppet,banette",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 354,
+    "pokemon": "banette",
+    "family_members": "shuppet,banette",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 355,
+    "pokemon": "duskull",
+    "family_members": "duskull,dusclops,dusknoir",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 356,
+    "pokemon": "dusclops",
+    "family_members": "duskull,dusclops,dusknoir",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 357,
+    "pokemon": "tropius",
+    "family_members": "tropius",
+    "tier": "Tier 2",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 358,
+    "pokemon": "chimecho",
+    "family_members": "chingling,chimecho",
+    "tier": "Tier 4",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 359,
+    "pokemon": "absol",
+    "family_members": "absol",
+    "tier": "Tier 1",
+    "region": "Hoenn",
+    "rarity": "rare"
+  },
+  {
+    "#": 360,
+    "pokemon": "wynaut",
+    "family_members": "wynaut,wobbuffet",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "Baby"
+  },
+  {
+    "#": 361,
+    "pokemon": "snorunt",
+    "family_members": "snorunt,glalie,froslass",
+    "tier": "Tier 5",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 362,
+    "pokemon": "glalie",
+    "family_members": "snorunt,glalie,froslass",
+    "tier": "Tier 5",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 363,
+    "pokemon": "spheal",
+    "family_members": "spheal,sealeo,walrein",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 364,
+    "pokemon": "sealeo",
+    "family_members": "spheal,sealeo,walrein",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 365,
+    "pokemon": "walrein",
+    "family_members": "spheal,sealeo,walrein",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 366,
+    "pokemon": "clamperl",
+    "family_members": "clamperl,huntail,gorebyss",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 367,
+    "pokemon": "huntail",
+    "family_members": "clamperl,huntail,gorebyss",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 368,
+    "pokemon": "gorebyss",
+    "family_members": "clamperl,huntail,gorebyss",
+    "tier": "Tier 6",
+    "region": "Hoenn",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 369,
+    "pokemon": "relicanth",
+    "family_members": "relicanth",
+    "tier": "Tier 2",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 370,
+    "pokemon": "luvdisc",
+    "family_members": "luvdisc",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 371,
+    "pokemon": "bagon",
+    "family_members": "bagon,shelgon,salamence",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 372,
+    "pokemon": "shelgon",
+    "family_members": "bagon,shelgon,salamence",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 373,
+    "pokemon": "salamence",
+    "family_members": "bagon,shelgon,salamence",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 374,
+    "pokemon": "beldum",
+    "family_members": "beldum,metang,metagross",
+    "tier": "Tier 1",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 375,
+    "pokemon": "metang",
+    "family_members": "beldum,metang,metagross",
+    "tier": "Tier 1",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 376,
+    "pokemon": "metagross",
+    "family_members": "beldum,metang,metagross",
+    "tier": "Tier 1",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 377,
+    "pokemon": "regirock",
+    "family_members": "regirock",
+    "tier": "Tier LM",
+    "region": "Hoenn",
+    "rarity": "legendary"
+  },
+  {
+    "#": 378,
+    "pokemon": "regice",
+    "family_members": "regice",
+    "tier": "Tier LM",
+    "region": "Hoenn",
+    "rarity": "legendary"
+  },
+  {
+    "#": 379,
+    "pokemon": "registeel",
+    "family_members": "registeel",
+    "tier": "Tier LM",
+    "region": "Hoenn",
+    "rarity": "legendary"
+  },
+  {
+    "#": 380,
+    "pokemon": "latias",
+    "family_members": "latias",
+    "tier": "Tier LM",
+    "region": "Hoenn",
+    "rarity": "legendary"
+  },
+  {
+    "#": 381,
+    "pokemon": "latios",
+    "family_members": "latios",
+    "tier": "Tier LM",
+    "region": "Hoenn",
+    "rarity": "legendary"
+  },
+  {
+    "#": 382,
+    "pokemon": "kyogre",
+    "family_members": "kyogre",
+    "tier": "Tier LM",
+    "region": "Hoenn",
+    "rarity": "legendary"
+  },
+  {
+    "#": 383,
+    "pokemon": "groudon",
+    "family_members": "groudon",
+    "tier": "Tier LM",
+    "region": "Hoenn",
+    "rarity": "legendary"
+  },
+  {
+    "#": 384,
+    "pokemon": "rayquaza",
+    "family_members": "rayquaza",
+    "tier": "Tier LM",
+    "region": "Hoenn",
+    "rarity": "legendary"
+  },
+  {
+    "#": 385,
+    "pokemon": "jirachi",
+    "family_members": "jirachi",
+    "tier": "Tier LM",
+    "region": "Hoenn",
+    "rarity": "mythical"
+  },
+  {
+    "#": 386,
+    "pokemon": "deoxys",
+    "family_members": "deoxys",
+    "tier": "Tier LM",
+    "region": "Hoenn",
+    "rarity": "mythical"
+  },
+  {
+    "#": 387,
+    "pokemon": "turtwig",
+    "family_members": "turtwig,grotle,torterra",
+    "tier": "Tier 0",
+    "region": "Sinnoh",
+    "rarity": "starter"
+  },
+  {
+    "#": 388,
+    "pokemon": "grotle",
+    "family_members": "turtwig,grotle,torterra",
+    "tier": "Tier 0",
+    "region": "Sinnoh",
+    "rarity": "starter"
+  },
+  {
+    "#": 389,
+    "pokemon": "torterra",
+    "family_members": "turtwig,grotle,torterra",
+    "tier": "Tier 0",
+    "region": "Sinnoh",
+    "rarity": "starter"
+  },
+  {
+    "#": 390,
+    "pokemon": "chimchar",
+    "family_members": "chimchar,monferno,infernape",
+    "tier": "Tier 0",
+    "region": "Sinnoh",
+    "rarity": "starter"
+  },
+  {
+    "#": 391,
+    "pokemon": "monferno",
+    "family_members": "chimchar,monferno,infernape",
+    "tier": "Tier 0",
+    "region": "Sinnoh",
+    "rarity": "starter"
+  },
+  {
+    "#": 392,
+    "pokemon": "infernape",
+    "family_members": "chimchar,monferno,infernape",
+    "tier": "Tier 0",
+    "region": "Sinnoh",
+    "rarity": "starter"
+  },
+  {
+    "#": 393,
+    "pokemon": "piplup",
+    "family_members": "piplup,prinplup,empoleon",
+    "tier": "Tier 0",
+    "region": "Sinnoh",
+    "rarity": "starter"
+  },
+  {
+    "#": 394,
+    "pokemon": "prinplup",
+    "family_members": "piplup,prinplup,empoleon",
+    "tier": "Tier 0",
+    "region": "Sinnoh",
+    "rarity": "starter"
+  },
+  {
+    "#": 395,
+    "pokemon": "empoleon",
+    "family_members": "piplup,prinplup,empoleon",
+    "tier": "Tier 0",
+    "region": "Sinnoh",
+    "rarity": "starter"
+  },
+  {
+    "#": 396,
+    "pokemon": "starly",
+    "family_members": "starly,staravia,staraptor",
+    "tier": "Tier 4",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 397,
+    "pokemon": "staravia",
+    "family_members": "starly,staravia,staraptor",
+    "tier": "Tier 4",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 398,
+    "pokemon": "staraptor",
+    "family_members": "starly,staravia,staraptor",
+    "tier": "Tier 4",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 399,
+    "pokemon": "bidoof",
+    "family_members": "bidoof,bibarel",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 400,
+    "pokemon": "bibarel",
+    "family_members": "bidoof,bibarel",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 401,
+    "pokemon": "kricketot",
+    "family_members": "kricketot,kricketune",
+    "tier": "Tier 5",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 402,
+    "pokemon": "kricketune",
+    "family_members": "kricketot,kricketune",
+    "tier": "Tier 5",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 403,
+    "pokemon": "shinx",
+    "family_members": "shinx,luxio,luxray",
+    "tier": "Tier 5",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 404,
+    "pokemon": "luxio",
+    "family_members": "shinx,luxio,luxray",
+    "tier": "Tier 5",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 405,
+    "pokemon": "luxray",
+    "family_members": "shinx,luxio,luxray",
+    "tier": "Tier 5",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 406,
+    "pokemon": "budew",
+    "family_members": "budew,roselia,roserade",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "Baby"
+  },
+  {
+    "#": 407,
+    "pokemon": "roserade",
+    "family_members": "budew,roselia,roserade",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 408,
+    "pokemon": "cranidos",
+    "family_members": "cranidos,rampardos",
+    "tier": "Tier 1",
+    "region": "Sinnoh",
+    "rarity": "fossil"
+  },
+  {
+    "#": 409,
+    "pokemon": "rampardos",
+    "family_members": "cranidos,rampardos",
+    "tier": "Tier 1",
+    "region": "Sinnoh",
+    "rarity": "fossil"
+  },
+  {
+    "#": 410,
+    "pokemon": "shieldon",
+    "family_members": "shieldon,bastiodon",
+    "tier": "Tier 1",
+    "region": "Sinnoh",
+    "rarity": "fossil"
+  },
+  {
+    "#": 411,
+    "pokemon": "bastiodon",
+    "family_members": "shieldon,bastiodon",
+    "tier": "Tier 1",
+    "region": "Sinnoh",
+    "rarity": "fossil"
+  },
+  {
+    "#": 412,
+    "pokemon": "burmy",
+    "family_members": "burmy,wormadam,mothim",
+    "tier": "Tier 1",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 413,
+    "pokemon": "wormadam",
+    "family_members": "burmy,wormadam,mothim",
+    "tier": "Tier 1",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 414,
+    "pokemon": "mothim",
+    "family_members": "burmy,wormadam,mothim",
+    "tier": "Tier 1",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 415,
+    "pokemon": "combee",
+    "family_members": "combee,vespiquen",
+    "tier": "Tier 2",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 416,
+    "pokemon": "vespiquen",
+    "family_members": "combee,vespiquen",
+    "tier": "Tier 2",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 417,
+    "pokemon": "pachirisu",
+    "family_members": "pachirisu",
+    "tier": "Tier 4",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 418,
+    "pokemon": "buizel",
+    "family_members": "buizel,floatzel",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 419,
+    "pokemon": "floatzel",
+    "family_members": "buizel,floatzel",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 420,
+    "pokemon": "cherubi",
+    "family_members": "cherubi,cherrim",
+    "tier": "Tier 1",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 421,
+    "pokemon": "cherrim",
+    "family_members": "cherubi,cherrim",
+    "tier": "Tier 1",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 422,
+    "pokemon": "shellos-west",
+    "family_members": "shellos-west,shellos-east,gastrodon-west,gastrodon-east",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 422,
+    "pokemon": "shellos-east",
+    "family_members": "shellos-west,shellos-east,gastrodon-west,gastrodon-east",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 423,
+    "pokemon": "gastrodon-west",
+    "family_members": "shellos-west,shellos-east,gastrodon-west,gastrodon-east",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 423,
+    "pokemon": "gastrodon-east",
+    "family_members": "shellos-west,shellos-east,gastrodon-west,gastrodon-east",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 424,
+    "pokemon": "ambipom",
+    "family_members": "aipom,ambipom",
+    "tier": "Tier 2",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 425,
+    "pokemon": "drifloon",
+    "family_members": "drifloon,drifblim",
+    "tier": "Tier 4",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 426,
+    "pokemon": "drifblim",
+    "family_members": "drifloon,drifblim",
+    "tier": "Tier 4",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 427,
+    "pokemon": "buneary",
+    "family_members": "buneary,lopunny",
+    "tier": "Tier 4",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 428,
+    "pokemon": "lopunny",
+    "family_members": "buneary,lopunny",
+    "tier": "Tier 4",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 429,
+    "pokemon": "mismagius",
+    "family_members": "misdreavus,mismagius",
+    "tier": "Tier 4",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 430,
+    "pokemon": "honchkrow",
+    "family_members": "murkrow,honchkrow",
+    "tier": "Tier 5",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 431,
+    "pokemon": "glameow",
+    "family_members": "glameow,purugly",
+    "tier": "Tier 5",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 432,
+    "pokemon": "purugly",
+    "family_members": "glameow,purugly",
+    "tier": "Tier 5",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 433,
+    "pokemon": "chingling",
+    "family_members": "chingling,chimecho",
+    "tier": "Tier 4",
+    "region": "Sinnoh",
+    "rarity": "Baby"
+  },
+  {
+    "#": 434,
+    "pokemon": "stunky",
+    "family_members": "stunky,skuntank",
+    "tier": "Tier 4",
+    "region": "Sinnoh",
+    "rarity": "3x50%"
+  },
+  {
+    "#": 435,
+    "pokemon": "skuntank",
+    "family_members": "stunky,skuntank",
+    "tier": "Tier 4",
+    "region": "Sinnoh",
+    "rarity": "3x50%"
+  },
+  {
+    "#": 436,
+    "pokemon": "bronzor",
+    "family_members": "bronzor,bronzong",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 437,
+    "pokemon": "bronzong",
+    "family_members": "bronzor,bronzong",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 438,
+    "pokemon": "bonsly",
+    "family_members": "bonsly,sudowoodo",
+    "tier": "Tier 1",
+    "region": "Sinnoh",
+    "rarity": "Baby"
+  },
+  {
+    "#": 439,
+    "pokemon": "mime;jr.",
+    "family_members": "mime;jr.,mr.;mime",
+    "tier": "Tier 2",
+    "region": "Sinnoh",
+    "rarity": "Baby"
+  },
+  {
+    "#": 440,
+    "pokemon": "happiny",
+    "family_members": "happiny,chansey,blissey",
+    "tier": "Tier 1",
+    "region": "Sinnoh",
+    "rarity": "Baby"
+  },
+  {
+    "#": 441,
+    "pokemon": "chatot",
+    "family_members": "chatot",
+    "tier": "Tier 3",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 442,
+    "pokemon": "spiritomb",
+    "family_members": "spiritomb",
+    "tier": "Tier 0",
+    "region": "Sinnoh",
+    "rarity": "rare"
+  },
+  {
+    "#": 443,
+    "pokemon": "gible",
+    "family_members": "gible,gabite,garchomp",
+    "tier": "Tier 5",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 444,
+    "pokemon": "gabite",
+    "family_members": "gible,gabite,garchomp",
+    "tier": "Tier 5",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 445,
+    "pokemon": "garchomp",
+    "family_members": "gible,gabite,garchomp",
+    "tier": "Tier 5",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 446,
+    "pokemon": "munchlax",
+    "family_members": "munchlax,snorlax",
+    "tier": "Tier 1",
+    "region": "Sinnoh",
+    "rarity": "Baby"
+  },
+  {
+    "#": 447,
+    "pokemon": "riolu",
+    "family_members": "riolu,lucario",
+    "tier": "Tier 0",
+    "region": "Sinnoh",
+    "rarity": "Baby"
+  },
+  {
+    "#": 448,
+    "pokemon": "lucario",
+    "family_members": "riolu,lucario",
+    "tier": "Tier 0",
+    "region": "Sinnoh",
+    "rarity": "rare"
+  },
+  {
+    "#": 449,
+    "pokemon": "hippopotas",
+    "family_members": "hippopotas,hippowdon",
+    "tier": "Tier 4",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 450,
+    "pokemon": "hippowdon",
+    "family_members": "hippopotas,hippowdon",
+    "tier": "Tier 4",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 451,
+    "pokemon": "skorupi",
+    "family_members": "skorupi,drapion",
+    "tier": "Tier 1",
+    "region": "Sinnoh",
+    "rarity": "rare"
+  },
+  {
+    "#": 452,
+    "pokemon": "drapion",
+    "family_members": "skorupi,drapion",
+    "tier": "Tier 1",
+    "region": "Sinnoh",
+    "rarity": "rare"
+  },
+  {
+    "#": 453,
+    "pokemon": "croagunk",
+    "family_members": "croagunk,toxicroak",
+    "tier": "Tier 2",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 454,
+    "pokemon": "toxicroak",
+    "family_members": "croagunk,toxicroak",
+    "tier": "Tier 2",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 455,
+    "pokemon": "carnivine",
+    "family_members": "carnivine",
+    "tier": "Tier 1",
+    "region": "Sinnoh",
+    "rarity": "rare"
+  },
+  {
+    "#": 456,
+    "pokemon": "finneon",
+    "family_members": "finneon,lumineon",
+    "tier": "Tier 3",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 457,
+    "pokemon": "lumineon",
+    "family_members": "finneon,lumineon",
+    "tier": "Tier 3",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 458,
+    "pokemon": "mantyke",
+    "family_members": "mantyke,mantine",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "Baby"
+  },
+  {
+    "#": 459,
+    "pokemon": "snover",
+    "family_members": "snover,abomasnow",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 460,
+    "pokemon": "abomasnow",
+    "family_members": "snover,abomasnow",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 461,
+    "pokemon": "weavile",
+    "family_members": "sneasel,weavile",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 462,
+    "pokemon": "magnezone",
+    "family_members": "magnemite,magneton,magnezone",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 463,
+    "pokemon": "lickilicky",
+    "family_members": "lickitung,lickilicky",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 464,
+    "pokemon": "rhyperior",
+    "family_members": "rhyhorn,rhydon,rhyperior",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 465,
+    "pokemon": "tangrowth",
+    "family_members": "tangela,tangrowth",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 466,
+    "pokemon": "electivire",
+    "family_members": "elekid,electabuzz,electivire",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 467,
+    "pokemon": "magmortar",
+    "family_members": "magby,magmar,magmortar",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 468,
+    "pokemon": "togekiss",
+    "family_members": "togepi,togetic,togekiss",
+    "tier": "Tier 0",
+    "region": "Sinnoh",
+    "rarity": "rare"
+  },
+  {
+    "#": 469,
+    "pokemon": "yanmega",
+    "family_members": "yanma,yanmega",
+    "tier": "Tier 2",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 470,
+    "pokemon": "leafeon",
+    "family_members": "eevee,vaporeon,jolteon,flareon,espeon,umbreon,leafeon,glaceon",
+    "tier": "Tier 1",
+    "region": "Sinnoh",
+    "rarity": "rare"
+  },
+  {
+    "#": 471,
+    "pokemon": "glaceon",
+    "family_members": "eevee,vaporeon,jolteon,flareon,espeon,umbreon,leafeon,glaceon",
+    "tier": "Tier 1",
+    "region": "Sinnoh",
+    "rarity": "rare"
+  },
+  {
+    "#": 472,
+    "pokemon": "gliscor",
+    "family_members": "gligar,gliscor",
+    "tier": "Tier 5",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 473,
+    "pokemon": "mamoswine",
+    "family_members": "swinub,piloswine,mamoswine",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 474,
+    "pokemon": "porygon-z",
+    "family_members": "porygon,porygon2,porygon-z",
+    "tier": "Tier 0",
+    "region": "Sinnoh",
+    "rarity": "rare"
+  },
+  {
+    "#": 475,
+    "pokemon": "gallade",
+    "family_members": "ralts,kirlia,gardevoir,gallade",
+    "tier": "Tier 3",
+    "region": "Hoenn",
+    "rarity": ""
+  },
+  {
+    "#": 476,
+    "pokemon": "probopass",
+    "family_members": "nosepass,probopass",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 477,
+    "pokemon": "dusknoir",
+    "family_members": "duskull,dusclops,dusknoir",
+    "tier": "Tier 6",
+    "region": "Sinnoh",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 478,
+    "pokemon": "froslass",
+    "family_members": "snorunt,glalie,froslass",
+    "tier": "Tier 5",
+    "region": "Sinnoh",
+    "rarity": ""
+  },
+  {
+    "#": 479,
+    "pokemon": "rotom",
+    "family_members": "rotom",
+    "tier": "Tier 0",
+    "region": "Sinnoh",
+    "rarity": "rare"
+  },
+  {
+    "#": 480,
+    "pokemon": "uxie",
+    "family_members": "uxie",
+    "tier": "Tier LM",
+    "region": "Sinnoh",
+    "rarity": "legendary"
+  },
+  {
+    "#": 481,
+    "pokemon": "mesprit",
+    "family_members": "mesprit",
+    "tier": "Tier LM",
+    "region": "Sinnoh",
+    "rarity": "legendary"
+  },
+  {
+    "#": 482,
+    "pokemon": "azelf",
+    "family_members": "azelf",
+    "tier": "Tier LM",
+    "region": "Sinnoh",
+    "rarity": "legendary"
+  },
+  {
+    "#": 483,
+    "pokemon": "dialga",
+    "family_members": "dialga",
+    "tier": "Tier LM",
+    "region": "Sinnoh",
+    "rarity": "legendary"
+  },
+  {
+    "#": 484,
+    "pokemon": "palkia",
+    "family_members": "palkia",
+    "tier": "Tier LM",
+    "region": "Sinnoh",
+    "rarity": "legendary"
+  },
+  {
+    "#": 485,
+    "pokemon": "heatran",
+    "family_members": "heatran",
+    "tier": "Tier LM",
+    "region": "Sinnoh",
+    "rarity": "legendary"
+  },
+  {
+    "#": 486,
+    "pokemon": "regigigas",
+    "family_members": "regigigas",
+    "tier": "Tier LM",
+    "region": "Sinnoh",
+    "rarity": "legendary"
+  },
+  {
+    "#": 487,
+    "pokemon": "giratina",
+    "family_members": "giratina",
+    "tier": "Tier LM",
+    "region": "Sinnoh",
+    "rarity": "legendary"
+  },
+  {
+    "#": 488,
+    "pokemon": "cresselia",
+    "family_members": "cresselia",
+    "tier": "Tier LM",
+    "region": "Sinnoh",
+    "rarity": "legendary"
+  },
+  {
+    "#": 489,
+    "pokemon": "phione",
+    "family_members": "phione",
+    "tier": "Tier LM",
+    "region": "Sinnoh",
+    "rarity": "mythical"
+  },
+  {
+    "#": 490,
+    "pokemon": "manaphy",
+    "family_members": "manaphy",
+    "tier": "Tier LM",
+    "region": "Sinnoh",
+    "rarity": "mythical"
+  },
+  {
+    "#": 491,
+    "pokemon": "darkrai",
+    "family_members": "darkrai",
+    "tier": "Tier LM",
+    "region": "Sinnoh",
+    "rarity": "mythical"
+  },
+  {
+    "#": 492,
+    "pokemon": "shaymin",
+    "family_members": "shaymin",
+    "tier": "Tier LM",
+    "region": "Sinnoh",
+    "rarity": "mythical"
+  },
+  {
+    "#": 493,
+    "pokemon": "arceus",
+    "family_members": "arceus",
+    "tier": "Tier LM",
+    "region": "Sinnoh",
+    "rarity": "mythical"
+  },
+  {
+    "#": 494,
+    "pokemon": "victini",
+    "family_members": "victini",
+    "tier": "Tier LM",
+    "region": "Unova",
+    "rarity": "mythical"
+  },
+  {
+    "#": 495,
+    "pokemon": "snivy",
+    "family_members": "snivy,servine,serperior",
+    "tier": "Tier 0",
+    "region": "Unova",
+    "rarity": "starter"
+  },
+  {
+    "#": 496,
+    "pokemon": "servine",
+    "family_members": "snivy,servine,serperior",
+    "tier": "Tier 0",
+    "region": "Unova",
+    "rarity": "starter"
+  },
+  {
+    "#": 497,
+    "pokemon": "serperior",
+    "family_members": "snivy,servine,serperior",
+    "tier": "Tier 0",
+    "region": "Unova",
+    "rarity": "starter"
+  },
+  {
+    "#": 498,
+    "pokemon": "tepig",
+    "family_members": "tepig,pignite,emboar",
+    "tier": "Tier 0",
+    "region": "Unova",
+    "rarity": "starter"
+  },
+  {
+    "#": 499,
+    "pokemon": "pignite",
+    "family_members": "tepig,pignite,emboar",
+    "tier": "Tier 0",
+    "region": "Unova",
+    "rarity": "starter"
+  },
+  {
+    "#": 500,
+    "pokemon": "emboar",
+    "family_members": "tepig,pignite,emboar",
+    "tier": "Tier 0",
+    "region": "Unova",
+    "rarity": "starter"
+  },
+  {
+    "#": 501,
+    "pokemon": "oshawott",
+    "family_members": "oshawott,dewott,samurott",
+    "tier": "Tier 0",
+    "region": "Unova",
+    "rarity": "starter"
+  },
+  {
+    "#": 502,
+    "pokemon": "dewott",
+    "family_members": "oshawott,dewott,samurott",
+    "tier": "Tier 0",
+    "region": "Unova",
+    "rarity": "starter"
+  },
+  {
+    "#": 503,
+    "pokemon": "samurott",
+    "family_members": "oshawott,dewott,samurott",
+    "tier": "Tier 0",
+    "region": "Unova",
+    "rarity": "starter"
+  },
+  {
+    "#": 504,
+    "pokemon": "patrat",
+    "family_members": "patrat,watchog",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 505,
+    "pokemon": "watchog",
+    "family_members": "patrat,watchog",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 506,
+    "pokemon": "lillipup",
+    "family_members": "lillipup,herdier,stoutland",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 507,
+    "pokemon": "herdier",
+    "family_members": "lillipup,herdier,stoutland",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 508,
+    "pokemon": "stoutland",
+    "family_members": "lillipup,herdier,stoutland",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 509,
+    "pokemon": "purrloin",
+    "family_members": "purrloin,liepard",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 510,
+    "pokemon": "liepard",
+    "family_members": "purrloin,liepard",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 511,
+    "pokemon": "pansage",
+    "family_members": "pansage,simisage",
+    "tier": "Tier 1",
+    "region": "Unova",
+    "rarity": "rare"
+  },
+  {
+    "#": 512,
+    "pokemon": "simisage",
+    "family_members": "pansage,simisage",
+    "tier": "Tier 1",
+    "region": "Unova",
+    "rarity": "rare"
+  },
+  {
+    "#": 513,
+    "pokemon": "pansear",
+    "family_members": "pansear,simisear",
+    "tier": "Tier 1",
+    "region": "Unova",
+    "rarity": "rare"
+  },
+  {
+    "#": 514,
+    "pokemon": "simisear",
+    "family_members": "pansear,simisear",
+    "tier": "Tier 1",
+    "region": "Unova",
+    "rarity": "rare"
+  },
+  {
+    "#": 515,
+    "pokemon": "panpour",
+    "family_members": "panpour,simipour",
+    "tier": "Tier 1",
+    "region": "Unova",
+    "rarity": "rare"
+  },
+  {
+    "#": 516,
+    "pokemon": "simipour",
+    "family_members": "panpour,simipour",
+    "tier": "Tier 1",
+    "region": "Unova",
+    "rarity": "rare"
+  },
+  {
+    "#": 517,
+    "pokemon": "munna",
+    "family_members": "munna,musharna",
+    "tier": "Tier 3",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 518,
+    "pokemon": "musharna",
+    "family_members": "munna,musharna",
+    "tier": "Tier 3",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 519,
+    "pokemon": "pidove",
+    "family_members": "pidove,tranquill,unfezant",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 520,
+    "pokemon": "tranquill",
+    "family_members": "pidove,tranquill,unfezant",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 521,
+    "pokemon": "unfezant",
+    "family_members": "pidove,tranquill,unfezant",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 522,
+    "pokemon": "blitzle",
+    "family_members": "blitzle,zebstrika",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 523,
+    "pokemon": "zebstrika",
+    "family_members": "blitzle,zebstrika",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 524,
+    "pokemon": "roggenrola",
+    "family_members": "roggenrola,boldore,gigalith",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 525,
+    "pokemon": "boldore",
+    "family_members": "roggenrola,boldore,gigalith",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 526,
+    "pokemon": "gigalith",
+    "family_members": "roggenrola,boldore,gigalith",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 527,
+    "pokemon": "woobat",
+    "family_members": "woobat,swoobat",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 528,
+    "pokemon": "swoobat",
+    "family_members": "woobat,swoobat",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 529,
+    "pokemon": "drilbur",
+    "family_members": "drilbur,excadrill",
+    "tier": "Tier 0",
+    "region": "Unova",
+    "rarity": "pheno"
+  },
+  {
+    "#": 530,
+    "pokemon": "excadrill",
+    "family_members": "drilbur,excadrill",
+    "tier": "Tier 0",
+    "region": "Unova",
+    "rarity": "pheno"
+  },
+  {
+    "#": 531,
+    "pokemon": "audino",
+    "family_members": "audino",
+    "tier": "Tier 0",
+    "region": "Unova",
+    "rarity": "pheno"
+  },
+  {
+    "#": 532,
+    "pokemon": "timburr",
+    "family_members": "timburr,gurdurr,conkeldurr",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 533,
+    "pokemon": "gurdurr",
+    "family_members": "timburr,gurdurr,conkeldurr",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 534,
+    "pokemon": "conkeldurr",
+    "family_members": "timburr,gurdurr,conkeldurr",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 535,
+    "pokemon": "tympole",
+    "family_members": "tympole,palpitoad,seismitoad",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 536,
+    "pokemon": "palpitoad",
+    "family_members": "tympole,palpitoad,seismitoad",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 537,
+    "pokemon": "seismitoad",
+    "family_members": "tympole,palpitoad,seismitoad",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 538,
+    "pokemon": "throh",
+    "family_members": "throh",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 539,
+    "pokemon": "sawk",
+    "family_members": "sawk",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 540,
+    "pokemon": "sewaddle",
+    "family_members": "sewaddle,swadloon,leavanny",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 541,
+    "pokemon": "swadloon",
+    "family_members": "sewaddle,swadloon,leavanny",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 542,
+    "pokemon": "leavanny",
+    "family_members": "sewaddle,swadloon,leavanny",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 543,
+    "pokemon": "venipede",
+    "family_members": "venipede,whirlipede,scolipede",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 544,
+    "pokemon": "whirlipede",
+    "family_members": "venipede,whirlipede,scolipede",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 545,
+    "pokemon": "scolipede",
+    "family_members": "venipede,whirlipede,scolipede",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 546,
+    "pokemon": "cottonee",
+    "family_members": "cottonee,whimsicott",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 547,
+    "pokemon": "whimsicott",
+    "family_members": "cottonee,whimsicott",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 548,
+    "pokemon": "petilil",
+    "family_members": "petilil,lilligant",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 549,
+    "pokemon": "lilligant",
+    "family_members": "petilil,lilligant",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 550,
+    "pokemon": "basculin",
+    "family_members": "basculin",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 551,
+    "pokemon": "sandile",
+    "family_members": "sandile,krokorok,krookodile",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 552,
+    "pokemon": "krokorok",
+    "family_members": "sandile,krokorok,krookodile",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 553,
+    "pokemon": "krookodile",
+    "family_members": "sandile,krokorok,krookodile",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 554,
+    "pokemon": "darumaka",
+    "family_members": "darumaka,darmanitan",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 555,
+    "pokemon": "darmanitan",
+    "family_members": "darumaka,darmanitan",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 556,
+    "pokemon": "maractus",
+    "family_members": "maractus",
+    "tier": "Tier 3",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 557,
+    "pokemon": "dwebble",
+    "family_members": "dwebble,crustle",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 558,
+    "pokemon": "crustle",
+    "family_members": "dwebble,crustle",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 559,
+    "pokemon": "scraggy",
+    "family_members": "scraggy,scrafty",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 560,
+    "pokemon": "scrafty",
+    "family_members": "scraggy,scrafty",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 561,
+    "pokemon": "sigilyph",
+    "family_members": "sigilyph",
+    "tier": "Tier 3",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 562,
+    "pokemon": "yamask",
+    "family_members": "yamask,cofagrigus",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 563,
+    "pokemon": "cofagrigus",
+    "family_members": "yamask,cofagrigus",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 564,
+    "pokemon": "tirtouga",
+    "family_members": "tirtouga,carracosta",
+    "tier": "Tier 1",
+    "region": "Unova",
+    "rarity": "fossil"
+  },
+  {
+    "#": 565,
+    "pokemon": "carracosta",
+    "family_members": "tirtouga,carracosta",
+    "tier": "Tier 1",
+    "region": "Unova",
+    "rarity": "fossil"
+  },
+  {
+    "#": 566,
+    "pokemon": "archen",
+    "family_members": "archen,archeops",
+    "tier": "Tier 1",
+    "region": "Unova",
+    "rarity": "fossil"
+  },
+  {
+    "#": 567,
+    "pokemon": "archeops",
+    "family_members": "archen,archeops",
+    "tier": "Tier 1",
+    "region": "Unova",
+    "rarity": "fossil"
+  },
+  {
+    "#": 568,
+    "pokemon": "trubbish",
+    "family_members": "trubbish,garbodor",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 569,
+    "pokemon": "garbodor",
+    "family_members": "trubbish,garbodor",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 570,
+    "pokemon": "zorua",
+    "family_members": "zorua,zoroark",
+    "tier": "Tier 1",
+    "region": "Unova",
+    "rarity": "rare"
+  },
+  {
+    "#": 571,
+    "pokemon": "zoroark",
+    "family_members": "zorua,zoroark",
+    "tier": "Tier 1",
+    "region": "Unova",
+    "rarity": "rare"
+  },
+  {
+    "#": 572,
+    "pokemon": "minccino",
+    "family_members": "minccino,cinccino",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 573,
+    "pokemon": "cinccino",
+    "family_members": "minccino,cinccino",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 574,
+    "pokemon": "gothita",
+    "family_members": "gothita,gothorita,gothitelle",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 575,
+    "pokemon": "gothorita",
+    "family_members": "gothita,gothorita,gothitelle",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 576,
+    "pokemon": "gothitelle",
+    "family_members": "gothita,gothorita,gothitelle",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 577,
+    "pokemon": "solosis",
+    "family_members": "solosis,duosion,reuniclus",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 578,
+    "pokemon": "duosion",
+    "family_members": "solosis,duosion,reuniclus",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 579,
+    "pokemon": "reuniclus",
+    "family_members": "solosis,duosion,reuniclus",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 580,
+    "pokemon": "ducklett",
+    "family_members": "ducklett,swanna",
+    "tier": "Tier 0",
+    "region": "Unova",
+    "rarity": "pheno"
+  },
+  {
+    "#": 581,
+    "pokemon": "swanna",
+    "family_members": "ducklett,swanna",
+    "tier": "Tier 0",
+    "region": "Unova",
+    "rarity": "pheno"
+  },
+  {
+    "#": 582,
+    "pokemon": "vanillite",
+    "family_members": "vanillite,vanillish,vanilluxe",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 583,
+    "pokemon": "vanillish",
+    "family_members": "vanillite,vanillish,vanilluxe",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 584,
+    "pokemon": "vanilluxe",
+    "family_members": "vanillite,vanillish,vanilluxe",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 585,
+    "pokemon": "deerling",
+    "family_members": "deerling,sawsbuck",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 586,
+    "pokemon": "sawsbuck",
+    "family_members": "deerling,sawsbuck",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 587,
+    "pokemon": "emolga",
+    "family_members": "emolga",
+    "tier": "Tier 0",
+    "region": "Unova",
+    "rarity": "pheno"
+  },
+  {
+    "#": 588,
+    "pokemon": "karrablast",
+    "family_members": "karrablast,escavalier",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 589,
+    "pokemon": "escavalier",
+    "family_members": "karrablast,escavalier",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 590,
+    "pokemon": "foongus",
+    "family_members": "foongus,amoonguss",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 591,
+    "pokemon": "amoonguss",
+    "family_members": "foongus,amoonguss",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 592,
+    "pokemon": "frillish",
+    "family_members": "frillish,jellicent",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 593,
+    "pokemon": "jellicent",
+    "family_members": "frillish,jellicent",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 594,
+    "pokemon": "alomomola",
+    "family_members": "alomomola",
+    "tier": "Tier 0",
+    "region": "Unova",
+    "rarity": "pheno"
+  },
+  {
+    "#": 595,
+    "pokemon": "joltik",
+    "family_members": "joltik,galvantula",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 596,
+    "pokemon": "galvantula",
+    "family_members": "joltik,galvantula",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 597,
+    "pokemon": "ferroseed",
+    "family_members": "ferroseed,ferrothorn",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 598,
+    "pokemon": "ferrothorn",
+    "family_members": "ferroseed,ferrothorn",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 599,
+    "pokemon": "klink",
+    "family_members": "klink,klang,klinklang",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 600,
+    "pokemon": "klang",
+    "family_members": "klink,klang,klinklang",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 601,
+    "pokemon": "klinklang",
+    "family_members": "klink,klang,klinklang",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 602,
+    "pokemon": "tynamo",
+    "family_members": "tynamo,eelektrik,eelektross",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": "5x20%"
+  },
+  {
+    "#": 603,
+    "pokemon": "eelektrik",
+    "family_members": "tynamo,eelektrik,eelektross",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": "5x20%"
+  },
+  {
+    "#": 604,
+    "pokemon": "eelektross",
+    "family_members": "tynamo,eelektrik,eelektross",
+    "tier": "Tier 4",
+    "region": "Unova",
+    "rarity": "5x20%"
+  },
+  {
+    "#": 605,
+    "pokemon": "elgyem",
+    "family_members": "elgyem,beheeyem",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 606,
+    "pokemon": "beheeyem",
+    "family_members": "elgyem,beheeyem",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 607,
+    "pokemon": "litwick",
+    "family_members": "litwick,lampent,chandelure",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 608,
+    "pokemon": "lampent",
+    "family_members": "litwick,lampent,chandelure",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 609,
+    "pokemon": "chandelure",
+    "family_members": "litwick,lampent,chandelure",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 610,
+    "pokemon": "axew",
+    "family_members": "axew,fraxure,haxorus",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 611,
+    "pokemon": "fraxure",
+    "family_members": "axew,fraxure,haxorus",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 612,
+    "pokemon": "haxorus",
+    "family_members": "axew,fraxure,haxorus",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 613,
+    "pokemon": "cubchoo",
+    "family_members": "cubchoo,beartic",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 614,
+    "pokemon": "beartic",
+    "family_members": "cubchoo,beartic",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 615,
+    "pokemon": "cryogonal",
+    "family_members": "cryogonal",
+    "tier": "Tier 3",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 616,
+    "pokemon": "shelmet",
+    "family_members": "shelmet,accelgor",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 617,
+    "pokemon": "accelgor",
+    "family_members": "shelmet,accelgor",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 618,
+    "pokemon": "stunfisk",
+    "family_members": "stunfisk",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 619,
+    "pokemon": "mienfoo",
+    "family_members": "mienfoo,mienshao",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 620,
+    "pokemon": "mienshao",
+    "family_members": "mienfoo,mienshao",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 621,
+    "pokemon": "druddigon",
+    "family_members": "druddigon",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 622,
+    "pokemon": "golett",
+    "family_members": "golett,golurk",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 623,
+    "pokemon": "golurk",
+    "family_members": "golett,golurk",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 624,
+    "pokemon": "pawniard",
+    "family_members": "pawniard,bisharp",
+    "tier": "Tier 3",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 625,
+    "pokemon": "bisharp",
+    "family_members": "pawniard,bisharp",
+    "tier": "Tier 3",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 626,
+    "pokemon": "bouffalant",
+    "family_members": "bouffalant",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 627,
+    "pokemon": "rufflet",
+    "family_members": "rufflet,braviary",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 628,
+    "pokemon": "braviary",
+    "family_members": "rufflet,braviary",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 629,
+    "pokemon": "vullaby",
+    "family_members": "vullaby,mandibuzz",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 630,
+    "pokemon": "mandibuzz",
+    "family_members": "vullaby,mandibuzz",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 631,
+    "pokemon": "heatmor",
+    "family_members": "heatmor",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 632,
+    "pokemon": "durant",
+    "family_members": "durant",
+    "tier": "Tier 6",
+    "region": "Unova",
+    "rarity": "5x100%"
+  },
+  {
+    "#": 633,
+    "pokemon": "deino",
+    "family_members": "deino,zweilous,hydreigon",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 634,
+    "pokemon": "zweilous",
+    "family_members": "deino,zweilous,hydreigon",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 635,
+    "pokemon": "hydreigon",
+    "family_members": "deino,zweilous,hydreigon",
+    "tier": "Tier 5",
+    "region": "Unova",
+    "rarity": ""
+  },
+  {
+    "#": 636,
+    "pokemon": "larvesta",
+    "family_members": "larvesta,volcarona",
+    "tier": "Tier 1",
+    "region": "Unova",
+    "rarity": "rare"
+  },
+  {
+    "#": 637,
+    "pokemon": "volcarona",
+    "family_members": "larvesta,volcarona",
+    "tier": "Tier 1",
+    "region": "Unova",
+    "rarity": "rare"
+  },
+  {
+    "#": 638,
+    "pokemon": "cobalion",
+    "family_members": "cobalion",
+    "tier": "Tier LM",
+    "region": "Unova",
+    "rarity": "legendary"
+  },
+  {
+    "#": 639,
+    "pokemon": "terrakion",
+    "family_members": "terrakion",
+    "tier": "Tier LM",
+    "region": "Unova",
+    "rarity": "legendary"
+  },
+  {
+    "#": 640,
+    "pokemon": "virizion",
+    "family_members": "virizion",
+    "tier": "Tier LM",
+    "region": "Unova",
+    "rarity": "legendary"
+  },
+  {
+    "#": 641,
+    "pokemon": "tornadus",
+    "family_members": "tornadus",
+    "tier": "Tier LM",
+    "region": "Unova",
+    "rarity": "legendary"
+  },
+  {
+    "#": 642,
+    "pokemon": "thundurus",
+    "family_members": "thundurus",
+    "tier": "Tier LM",
+    "region": "Unova",
+    "rarity": "legendary"
+  },
+  {
+    "#": 643,
+    "pokemon": "reshiram",
+    "family_members": "reshiram",
+    "tier": "Tier LM",
+    "region": "Unova",
+    "rarity": "legendary"
+  },
+  {
+    "#": 644,
+    "pokemon": "zekrom",
+    "family_members": "zekrom",
+    "tier": "Tier LM",
+    "region": "Unova",
+    "rarity": "legendary"
+  },
+  {
+    "#": 645,
+    "pokemon": "landorus",
+    "family_members": "landorus",
+    "tier": "Tier LM",
+    "region": "Unova",
+    "rarity": "legendary"
+  },
+  {
+    "#": 646,
+    "pokemon": "kyurem",
+    "family_members": "kyurem",
+    "tier": "Tier LM",
+    "region": "Unova",
+    "rarity": "legendary"
+  },
+  {
+    "#": 647,
+    "pokemon": "keldeo",
+    "family_members": "keldeo",
+    "tier": "Tier LM",
+    "region": "Unova",
+    "rarity": "mythical"
+  },
+  {
+    "#": 648,
+    "pokemon": "meloetta",
+    "family_members": "meloetta",
+    "tier": "Tier LM",
+    "region": "Unova",
+    "rarity": "mythical"
+  },
+  {
+    "#": 649,
+    "pokemon": "genesect",
+    "family_members": "genesect",
+    "tier": "Tier LM",
+    "region": "Unova",
+    "rarity": "mythical"
+  }
+]
