@@ -158,11 +158,6 @@
 .symbol.donator-status { right: var(--symbol-gap-x);   bottom: var(--symbol-bottom-y); left: auto; top: auto;}
 
 /* --- ICON LEGEND TOOLTIP --- */
-.showcase-search-controls {
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
-}
 .icon-help-tooltip {
   display: inline-block;
   position: absolute;
@@ -172,6 +167,18 @@
   z-index: 200;
   vertical-align: middle;
 }
+.icon-help-tooltip.member-showcase-icon-tooltip {
+  position: fixed !important;
+  /* top set dynamically below navigation */
+  right: 1.7em !important;
+  z-index: 2100 !important;
+}
+.icon-help-tooltip.mainpage-tooltip {
+  position: absolute;
+  top: 0.7em;
+  right: 1.2em;
+}
+
 .icon-help {
   background: var(--accent);
   color: var(--card);
@@ -214,6 +221,7 @@
   overflow-x: auto;
   max-height: 340px;
 }
+
 .icon-help-tooltip:hover .icon-help-tooltip-box,
 .icon-help-tooltip:focus-within .icon-help-tooltip-box,
 .member-showcase-icon-tooltip:focus-within .icon-help-tooltip-box {
@@ -221,29 +229,54 @@
   opacity: 1;
   pointer-events: auto;
 }
-.icon-help-tooltip-box .icon-row {
+
+/* Tooltip content layout */
+.icon-tooltip-title {
+  font-weight: bold;
+  margin-bottom: 0.8em;
+  font-size: 1.11em;
+  letter-spacing: 1px;
+  text-align: left;
+}
+.icon-tooltip-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
+.icon-row {
   display: flex;
   align-items: flex-start;
-  gap: 0.8em;
-  margin-bottom: 0.5em;
+  gap: 0.9em;
+  margin-bottom: 0.1em;
+}
+.icon-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  min-width: 0;
+}
+.icon-label {
+  font-weight: bold;
+  font-size: 1.08em;
+  margin-bottom: 0.04em;
+}
+.icon-desc {
+  display: inline-block;
+  white-space: normal;
+  word-break: break-word;
+  max-width: 540px;
+  font-size: 1em;
+  color: #ffe595;
 }
 .icon-help-tooltip-box img.symbol {
   width: 2.1em;
   height: 2.1em;
   vertical-align: middle;
-  margin-right: 0.6em;
-  margin-bottom: 0.12em;
+  margin-right: 0.3em;
   border-radius: 4px;
   border: 1px solid #ffe59544;
   background: #181a20;
   flex-shrink: 0;
-}
-.icon-help-tooltip-box .icon-desc {
-  display: inline-block;
-  white-space: pre-line;
-  word-break: break-word;
-  max-width: 540px;
-  overflow-x: auto;
 }
 
 @media (max-width: 900px) {
@@ -260,31 +293,11 @@
     right: 0.3em;
     top: 0.3em;
   }
-}
-
-/* Member Showcase: Tooltip fixed in top right */
-.member-showcase-icon-tooltip {
-  position: fixed !important;
-  top: 2.2em !important;
-  right: 1.7em !important;
-  z-index: 2100 !important;
-}
-.member-showcase-icon-tooltip .icon-help-tooltip-box {
-  min-width: 430px;
-  max-width: 650px;
-  padding: 1em 2em;
-  font-size: 1em;
-  overflow-x: auto;
-  max-height: 340px;
-}
-@media (max-width: 900px) {
-  .member-showcase-icon-tooltip {
-    top: 1.2em !important;
+  .icon-help-tooltip.member-showcase-icon-tooltip {
     right: 0.4em !important;
   }
-  .member-showcase-icon-tooltip .icon-help-tooltip-box {
-    min-width: 180px;
-    max-width: 99vw;
-    padding: 0.7em 0.7em;
+  .icon-help-tooltip-box img.symbol {
+    width: 1.6em;
+    height: 1.6em;
   }
 }
