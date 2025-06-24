@@ -30,10 +30,12 @@ function flattenDexData(shinyDex) {
 }
 
 // --- Map members to their claims ---
-function getMemberClaims(flattened) {
+function getMemberClaims(flattened, POKEMON_POINTS) {
   const memberMap = {};
   flattened.forEach(e => {
-    if (typeof e.claimed === 'string' && e.claimed) {
+    const normName = normalizePokemonName(e.name);
+    const pts = POKEMON_POINTS && POKEMON_POINTS[normName];
+    if (typeof e.claimed === 'string' && e.claimed && e.claimed !== "NA" && pts && pts !== "NA") {
       if (!memberMap[e.claimed]) memberMap[e.claimed] = [];
       memberMap[e.claimed].push(e);
     }
@@ -42,13 +44,15 @@ function getMemberClaims(flattened) {
 }
 
 // --- Build Living Dex counts from teamShowcase data ---
-function buildLivingDexCounts(teamShowcase) {
+function buildLivingDexCounts(teamShowcase, POKEMON_POINTS) {
   const counts = {};
   teamShowcase.forEach(member => {
     if (!member.shinies) return;
     member.shinies.forEach(shiny => {
       if (shiny.lost) return;
       let name = normalizePokemonName(shiny.name || "");
+      // Only count if points are not NA
+      if (POKEMON_POINTS && (POKEMON_POINTS[name] === undefined || POKEMON_POINTS[name] === "NA")) return;
       counts[name] = (counts[name] || 0) + 1;
     });
   });
@@ -59,12 +63,19 @@ function buildLivingDexCounts(teamShowcase) {
 function getPointsForPokemon(name, POKEMON_POINTS) {
   if (!POKEMON_POINTS) return 1;
   let normName = normalizePokemonName(name);
-  return POKEMON_POINTS[normName] || 1;
+  let pts = POKEMON_POINTS[normName];
+  if (!pts || pts === "NA") return 0;
+  return pts;
 }
 
 // --- FILTER LOGIC ---
 
-function filterEntry(entry, filter, pokemonFamilies) {
+function filterEntry(entry, filter, pokemonFamilies, POKEMON_POINTS) {
+  const normName = normalizePokemonName(entry.name);
+  const pts = POKEMON_POINTS && POKEMON_POINTS[normName];
+  // Exclude NA Pokémon everywhere
+  if (!pts || pts === "NA" || entry.claimed === "NA") return false;
+
   if (!filter) return true;
 
   // +family search (at start or end)
@@ -85,8 +96,8 @@ function filterEntry(entry, filter, pokemonFamilies) {
   }
 
   // Claimed/unclaimed text search
-  if (filter === "claimed") return !!entry.claimed;
-  if (filter === "unclaimed") return !entry.claimed;
+  if (filter === "claimed") return !!entry.claimed && entry.claimed !== "NA";
+  if (filter === "unclaimed") return !entry.claimed || entry.claimed === "NA";
 
   // --- Region search support ---
   const regionList = ["kanto", "johto", "hoenn", "sinnoh", "unova"];
@@ -104,14 +115,14 @@ function filterEntry(entry, filter, pokemonFamilies) {
 
 // --- Renders ---
 
-function renderShinyDexFiltered(regions, filter, pokemonFamilies) {
+function renderShinyDexFiltered(regions, filter, pokemonFamilies, POKEMON_POINTS) {
   const container = document.getElementById('shiny-dex-container');
   if (!container) return;
   container.innerHTML = '';
   let totalShown = 0;
   Object.keys(regions).forEach(region => {
     const filteredEntries = regions[region].filter(entry =>
-      filterEntry(entry, filter, pokemonFamilies)
+      filterEntry(entry, filter, pokemonFamilies, POKEMON_POINTS)
     );
     if (!filteredEntries.length) return;
     totalShown += filteredEntries.length;
@@ -123,12 +134,17 @@ function renderShinyDexFiltered(regions, filter, pokemonFamilies) {
     grid.className = 'dex-grid';
 
     filteredEntries.forEach(entry => {
-      let info = entry.claimed ? entry.claimed : "Unclaimed";
+      const normName = normalizePokemonName(entry.name);
+      const pts = POKEMON_POINTS && POKEMON_POINTS[normName];
+      // Skip NA again for safety
+      if (!pts || pts === "NA" || entry.claimed === "NA") return;
+      let info = `${pts} Points`;
+      if (entry.claimed && entry.claimed !== "NA") info += ` — ${entry.claimed}`;
       grid.innerHTML += renderUnifiedCard({
         name: entry.name,
         img: getPokemonGif(entry.name),
         info,
-        unclaimed: !entry.claimed,
+        unclaimed: !entry.claimed || entry.claimed === "NA",
         cardType: "pokemon"
       });
     });
@@ -161,11 +177,11 @@ function renderScoreboardFiltered(flattened, filter, sortByPoints, POKEMON_POINT
   if (!container) return;
   container.innerHTML = '';
 
-  const memberMap = getMemberClaims(flattened);
+  const memberMap = getMemberClaims(flattened, POKEMON_POINTS);
   let allMembers = Object.entries(memberMap)
     .map(([member, pokes]) => ({
       member,
-      pokes: pokes.filter(entry => filterEntry(entry, filter, pokemonFamilies)),
+      pokes: pokes.filter(entry => filterEntry(entry, filter, pokemonFamilies, POKEMON_POINTS)),
       points: pokes.reduce((sum, entry) => sum + getPointsForPokemon(entry.name, POKEMON_POINTS), 0)
     }))
     .filter(m => m.pokes.length > 0);
@@ -198,11 +214,13 @@ function renderScoreboardFiltered(flattened, filter, sortByPoints, POKEMON_POINT
     const grid = section.querySelector('.dex-grid');
     pokes.sort((a, b) => a.name.localeCompare(b.name));
     pokes.forEach(entry => {
-      const p = getPointsForPokemon(entry.name, POKEMON_POINTS);
+      const normName = normalizePokemonName(entry.name);
+      const pts = POKEMON_POINTS && POKEMON_POINTS[normName];
+      if (!pts || pts === "NA" || entry.claimed === "NA") return;
       grid.innerHTML += renderUnifiedCard({
         name: entry.name,
         img: getPokemonGif(entry.name),
-        info: `${p} Points`,
+        info: `${pts} Points`,
         cardType: "pokemon"
       });
     });
@@ -233,11 +251,11 @@ function renderScoreboardFiltered(flattened, filter, sortByPoints, POKEMON_POINT
 }
 
 // --- Living Dex with Custom Tooltip Support ---
-function renderLivingDexFiltered(shinyDex, teamShowcase, filter, sortMode = "standard", pokemonFamilies) {
+function renderLivingDexFiltered(shinyDex, teamShowcase, filter, sortMode = "standard", pokemonFamilies, POKEMON_POINTS) {
   const container = document.getElementById('shiny-dex-container');
   if (!container) return;
   container.innerHTML = '';
-  const counts = buildLivingDexCounts(teamShowcase);
+  const counts = buildLivingDexCounts(teamShowcase, POKEMON_POINTS);
 
   function getOwners(entry) {
     const entryNorm = normalizePokemonName(entry.name);
@@ -255,12 +273,15 @@ function renderLivingDexFiltered(shinyDex, teamShowcase, filter, sortMode = "sta
     return owners;
   }
 
-  function createCard(entry, count, owners) {
+  function createCard(entry, count, owners, POKEMON_POINTS) {
+    const normName = normalizePokemonName(entry.name);
+    const pts = POKEMON_POINTS && POKEMON_POINTS[normName];
+    if (!pts || pts === "NA" || entry.claimed === "NA") return null;
     const temp = document.createElement("div");
     temp.innerHTML = renderUnifiedCard({
       name: entry.name,
       img: getPokemonGif(entry.name),
-      info: count > 0 ? `<span class="livingdex-count">${count}</span>` : "0",
+      info: `${pts} Points — <span class="livingdex-count">${count}</span>`,
       cardType: "pokemon"
     });
     const card = temp.firstElementChild;
@@ -279,7 +300,7 @@ function renderLivingDexFiltered(shinyDex, teamShowcase, filter, sortMode = "sta
       if (b.count !== a.count) return b.count - a.count;
       return a.name.localeCompare(b.name);
     });
-    let filtered = allEntries.filter(entry => filterEntry(entry, filter, pokemonFamilies));
+    let filtered = allEntries.filter(entry => filterEntry(entry, filter, pokemonFamilies, POKEMON_POINTS));
     let totalShown = filtered.length;
 
     const regionDiv = document.createElement('div');
@@ -289,8 +310,8 @@ function renderLivingDexFiltered(shinyDex, teamShowcase, filter, sortMode = "sta
     grid.className = 'dex-grid';
     filtered.forEach(entry => {
       let owners = getOwners(entry);
-      let card = createCard(entry, entry.count, owners);
-      grid.appendChild(card);
+      let card = createCard(entry, entry.count, owners, POKEMON_POINTS);
+      if (card) grid.appendChild(card);
     });
     regionDiv.appendChild(grid);
     container.appendChild(regionDiv);
@@ -299,7 +320,7 @@ function renderLivingDexFiltered(shinyDex, teamShowcase, filter, sortMode = "sta
   } else {
     let totalShown = 0;
     Object.keys(shinyDex).forEach(region => {
-      const filteredEntries = shinyDex[region].filter(entry => filterEntry(entry, filter, pokemonFamilies));
+      const filteredEntries = shinyDex[region].filter(entry => filterEntry(entry, filter, pokemonFamilies, POKEMON_POINTS));
       if (!filteredEntries.length) return;
       totalShown += filteredEntries.length;
 
@@ -314,8 +335,8 @@ function renderLivingDexFiltered(shinyDex, teamShowcase, filter, sortMode = "sta
         let nName = normalizePokemonName(entry.name);
         let count = counts[nName] || 0;
         let owners = getOwners(entry);
-        let card = createCard(entry, count, owners);
-        grid.appendChild(card);
+        let card = createCard(entry, count, owners, POKEMON_POINTS);
+        if (card) grid.appendChild(card);
       });
 
       regionDiv.appendChild(grid);
@@ -483,7 +504,7 @@ export function setupShinyDexHitlistSearch(shinyDex, teamShowcase) {
     let nShown = 0;
     if (mode === "hitlist") {
       if (hitlistMode === "standard") {
-        nShown = renderShinyDexFiltered(shinyDex, filter, pokemonFamilies);
+        nShown = renderShinyDexFiltered(shinyDex, filter, pokemonFamilies, POKEMON_POINTS);
       } else if (hitlistMode === "claims") {
         nShown = renderScoreboardFiltered(flattened, filter, false, POKEMON_POINTS, pokemonFamilies);
       } else if (hitlistMode === "points") {
@@ -493,7 +514,7 @@ export function setupShinyDexHitlistSearch(shinyDex, teamShowcase) {
         resultCount.textContent = `${nShown} Pokémon`;
       }
     } else if (mode === "living") {
-      nShown = renderLivingDexFiltered(shinyDex, teamShowcase, filter, livingMode, pokemonFamilies);
+      nShown = renderLivingDexFiltered(shinyDex, teamShowcase, filter, livingMode, pokemonFamilies, POKEMON_POINTS);
       if (typeof nShown === "number") {
         resultCount.textContent = `${nShown} Pokémon`;
       }
