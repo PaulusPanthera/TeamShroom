@@ -156,11 +156,12 @@ export function renderDonators(donations) {
           if (tierData.icon) {
             iconHtml = `<img class="tier-icon" src="${tierData.icon}" alt="${tierData.label}" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span style=&quot;font-size:1.1em;margin-right:0.2em&quot;>💎</span>')">`;
           }
+          // CHANGE: Remove inline style for background/color, use a class for bold only
           return `
             <tr class="${rowClass}">
               <td class="placement">#${i + 1}</td>
               <td>${iconHtml}${d.name}</td>
-              <td style="background:var(--card-gradient);color:var(--accent);font-weight:bold;">${d.value.toLocaleString("en-US")}</td>
+              <td class="total-donated">${d.value.toLocaleString("en-US")}</td>
               <td class="donator-tier donator-tier-tooltip">
                 ${tierData.label}
                 ${tierData.desc ? `<span class="tooltip-text">${tierData.desc}</span>` : ""}
