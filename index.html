@@ -26,23 +26,22 @@
   </button>
   <div id="page-content"></div>
 
-  <!-- 1. LOAD POKEMON FAMILIES JSON, THEN RUN pokemonDataBuilder.js -->
+  <!-- 1. LOAD POKEMON FAMILIES JSON, THEN RUN pokemondatabuilder.js -->
   <script>
   window.pokemonFamiliesData = null;
   function loadPokemonFamiliesAndBuilder() {
-    fetch('pokemon_families.json')
+    fetch('data/pokemonfamilies.json')
       .then(r => r.json())
       .then(data => {
         window.pokemonFamiliesData = data;
         // Dynamically load the builder after JSON is ready
         var script = document.createElement('script');
-        script.src = 'pokemonDataBuilder.js';
+        script.src = 'pokemondatabuilder.js';
         script.onload = function() {
           // After builder, load all other scripts
           var scripts = [
-            "unifiedCard.js",
-            // "teamshowcase.js", // <-- REMOVE this line!
-            "showcase.js",      // <-- Only this file is now needed
+            "unifiedcard.js",
+            "showcase.js",
             "shinydexsearch.js",
             "donators.js"
           ];
@@ -55,7 +54,7 @@
               document.body.appendChild(s);
             } else {
               // Load donations.json for donators, then assign tiers
-              fetch('donations.json').then(r=>r.json()).then(d=>{
+              fetch('data/donations.json').then(r=>r.json()).then(d=>{
                 window.donations = d;
                 if (window.teamShowcase && window.assignDonatorTiersToTeam) window.assignDonatorTiersToTeam();
               });
