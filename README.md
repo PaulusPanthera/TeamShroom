@@ -28,7 +28,9 @@ Hosted on GitHub Pages.
 - `index.html` — Main site page and routing logic.
 - `/style/` — All CSS files (see below)
     - `base.css`, `layout.css`, `cards.css`, `buttons.css`, `search.css`, `tooltip.css`, `darkmode.css`, `donators.css`
-- **JavaScript files:**
+- **JavaScript files:** (now using modern ES modules)
+    - `main.js` — Entry point. Handles all routing, data loading, and page rendering. No inline JS in HTML.
+    - `utils.js` — Centralized helpers for normalization, prettification, and other utilities.
     - `pokemondatabuilder.js` — Builds Pokémon families, points, tiers, and rarity from JSON.
     - `showcase.js` — Showcase logic, member shiny display, and shiny points scoreboard.
     - `shinydexsearch.js` — Hitlist search, filtering, and living dex logic.
@@ -41,6 +43,18 @@ Hosted on GitHub Pages.
 - **Asset folders:** (under `/img/`)
     - `/img/membersprites/` — Member avatar sprites (PNG/JPG/GIF, plus `examplesprite.png` as fallback).
     - `/img/symbols/` — Icons for donator tiers, member statuses, and card overlays.
+
+---
+
+## ES Modules Architecture
+
+- All JavaScript files now use [ES module syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules):
+  - Use `import` and `export` instead of attaching to `window` or using global variables.
+  - All dependencies are declared explicitly at the top of each file.
+  - The entrypoint (`main.js`) is loaded in `index.html` as a module:  
+    `<script type="module" src="main.js"></script>`
+- **No inline JS in HTML.**  
+  All page logic (including dark mode, navigation, and initialization) is contained in `main.js`.
 
 ---
 
