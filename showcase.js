@@ -1,36 +1,12 @@
 // showcase.js
 // Team Shroom: member showcase logic (fetch, build, render, scoreboard, sorting)
-// All asset/data paths updated to new structure
+// Now as an ES module, using centralized utils and no window globals.
+
+import { renderUnifiedCard } from './unifiedcard.js';
+import { normalizeMemberName, prettifyMemberName } from './utils.js';
 
 // --- DATA FETCHING AND STRUCTURE ---
-function fetchTeamShowcaseData(callback) {
-  fetch('data/teamshowcase.json')
-    .then(response => response.json())
-    .then(data => {
-      window.teamShowcase = data;
-      buildTeamMembers();
-      if (typeof window.assignDonatorTiersToTeam === 'function') window.assignDonatorTiersToTeam();
-      if (callback) callback();
-      if (window.setupShowcaseSearchAndSort && document.getElementById('showcase-gallery-container')) {
-        window.setupShowcaseSearchAndSort(window.teamMembers, window.renderShowcaseGallery, "alphabetical");
-      }
-    });
-}
-
-// Build global teamMembers array from teamShowcase data
-function buildTeamMembers() {
-  window.teamMembers = (window.teamShowcase || []).map(entry => ({
-    name: entry.name,
-    shinies: Array.isArray(entry.shinies)
-      ? entry.shinies.filter(mon => !mon.lost).length
-      : 0,
-    status: entry.status,
-    donator: undefined // Set by donators.js
-  }));
-}
-window.buildTeamMembers = buildTeamMembers;
-
-if (window.teamShowcase) window.buildTeamMembers();
+// (Data is now loaded and passed in by main.js; no fetching here.)
 
 // Helper to generate the correct shiny gif URL
 function shinyGifUrl(name) {
@@ -43,8 +19,8 @@ function shinyGifUrl(name) {
 }
 
 // Get a member's shinies (with fallback for missing data)
-function getMemberShinies(member) {
-  if (!window.teamShowcase) {
+function getMemberShinies(teamShowcase, member) {
+  if (!teamShowcase) {
     return Array.from({ length: member.shinies }, () => ({
       name: "Placeholder",
       url: "img/membersprites/examplesprite.png",
@@ -68,7 +44,7 @@ function getMemberShinies(member) {
 
 // Get member custom sprite URLs (tries png, jpg, gif in /img/membersprites/)
 function getMemberSpriteUrls(memberName) {
-  const base = memberName.toLowerCase().replace(/\s+/g, '');
+  const base = normalizeMemberName(memberName);
   return [
     `img/membersprites/${base}sprite.png`,
     `img/membersprites/${base}sprite.jpg`,
@@ -77,24 +53,23 @@ function getMemberSpriteUrls(memberName) {
 }
 
 // --- SCOREBOARD POINT LOGIC ---
-function getPointsForPokemon(name, extra = {}) {
-  if (!window.POKEMON_POINTS && window.buildPokemonPoints) window.buildPokemonPoints();
-  if (!window.POKEMON_POINTS) return 1;
+function getPointsForPokemon(name, extra = {}, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies) {
+  if (!POKEMON_POINTS) return 1;
 
   let normName = name
     .toLowerCase()
     .replace(/♀/g, "-f")
     .replace(/♂/g, "-m")
     .replace(/[\s.'’]/g, "");
-  let basePoints = window.POKEMON_POINTS[normName] || 1;
+  let basePoints = POKEMON_POINTS[normName] || 1;
 
   // Alpha: always 50
   if (extra.alpha) return 50;
 
   // Egg: 20 unless tier 0 or 1 (then use tier points)
   if (extra.egg) {
-    if (!window._tier01set) {
-      const TIER_0_1 = (window.TIER_FAMILIES?.["Tier 0"] || []).concat(window.TIER_FAMILIES?.["Tier 1"] || []);
+    if (!getPointsForPokemon._tier01set) {
+      const TIER_0_1 = (TIER_FAMILIES?.["Tier 0"] || []).concat(TIER_FAMILIES?.["Tier 1"] || []);
       let allNames = [];
       TIER_0_1.forEach(base => {
         let familyBase = base
@@ -104,8 +79,8 @@ function getPointsForPokemon(name, extra = {}) {
           .replace(/♂/g,"-m")
           .replace(/[- '\.’]/g,"")
           .trim();
-        if(window.pokemonFamilies && window.pokemonFamilies[familyBase]) {
-          window.pokemonFamilies[familyBase].forEach(famName => {
+        if(pokemonFamilies && pokemonFamilies[familyBase]) {
+          pokemonFamilies[familyBase].forEach(famName => {
             let key = famName
               .toLowerCase()
               .replace(/♀/g,"-f")
@@ -118,9 +93,9 @@ function getPointsForPokemon(name, extra = {}) {
           allNames.push(familyBase);
         }
       });
-      window._tier01set = new Set(allNames);
+      getPointsForPokemon._tier01set = new Set(allNames);
     }
-    if (!window._tier01set.has(normName)) return 20;
+    if (!getPointsForPokemon._tier01set.has(normName)) return 20;
     // else fall through to base tier points
   }
 
@@ -132,14 +107,14 @@ function getPointsForPokemon(name, extra = {}) {
   return basePoints + bonus;
 }
 
-function getMemberScoreboardPoints(member) {
-  const showcaseEntry = (window.teamShowcase || []).find(m => m.name === member.name);
+function getMemberScoreboardPoints(member, teamShowcase, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies) {
+  const showcaseEntry = (teamShowcase || []).find(m => m.name === member.name);
   if (!showcaseEntry || !Array.isArray(showcaseEntry.shinies)) return 0;
   return showcaseEntry.shinies
     .filter(mon => !mon.lost)
     .reduce((sum, mon, i) => {
       const extra = showcaseEntry.shinies[i] || {};
-      return sum + getPointsForPokemon(mon.name, extra);
+      return sum + getPointsForPokemon(mon.name, extra, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies);
     }, 0);
 }
 
@@ -154,20 +129,15 @@ function cleanPokemonName(name) {
   return cleaned;
 }
 
-// --- FORCE TIER01 SET REBUILD SUPPORT ---
-window.rebuildTier01Set = function() {
-  window._tier01set = null;
-};
-
 // --- MAIN GALLERY RENDERING ---
-function renderShowcaseGallery(members, container, groupMode) {
+export function renderShowcaseGallery(members, container, groupMode, teamShowcase, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies) {
   if (!container) container = document.getElementById('showcase-gallery-container');
   container.innerHTML = "";
 
   // Total shinies
   let total = 0;
-  if (window.teamShowcase) {
-    window.teamShowcase.forEach(entry => {
+  if (teamShowcase) {
+    teamShowcase.forEach(entry => {
       if (Array.isArray(entry.shinies)) {
         total += entry.shinies.filter(mon => !mon.lost).length;
       }
@@ -182,7 +152,7 @@ function renderShowcaseGallery(members, container, groupMode) {
   // Grouping
   let grouped;
   if (groupMode === "scoreboard") {
-    grouped = groupMembersByPoints(members);
+    grouped = groupMembersByPoints(members, teamShowcase, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies);
   } else if (groupMode === "shinies") {
     grouped = groupMembersByShinies(members);
   } else {
@@ -206,7 +176,7 @@ function renderShowcaseGallery(members, container, groupMode) {
       let spriteUrl = spriteUrls[0];
       let info = `Shinies: ${member.shinies}`;
       if (groupMode === "scoreboard") {
-        const pts = getMemberScoreboardPoints(member);
+        const pts = getMemberScoreboardPoints(member, teamShowcase, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies);
         info = `Points: ${pts}`;
       }
       gallery.innerHTML += renderUnifiedCard({
@@ -223,7 +193,7 @@ function renderShowcaseGallery(members, container, groupMode) {
   });
 
   setTimeout(() => {
-    // Entire card clickable (for both member and Pokémon cards in the future)
+    // Entire card clickable
     container.querySelectorAll('.unified-card').forEach(card => {
       card.style.cursor = 'pointer';
       card.onclick = function (e) {
@@ -287,10 +257,10 @@ function groupMembersByShinies(members) {
       members: grouped[count].sort((a, b) => a.name.localeCompare(b.name))
     }));
 }
-function groupMembersByPoints(members) {
+function groupMembersByPoints(members, teamShowcase, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies) {
   const grouped = {};
   members.forEach(member => {
-    const points = getMemberScoreboardPoints(member);
+    const points = getMemberScoreboardPoints(member, teamShowcase, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies);
     if (!grouped[points]) grouped[points] = [];
     grouped[points].push(member);
   });
@@ -304,10 +274,10 @@ function groupMembersByPoints(members) {
 }
 
 // --- MEMBER SHOWCASE ---
-function renderMemberShowcase(member, sortMode = "alphabetical") {
+export function renderMemberShowcase(member, sortMode = "alphabetical", teamShowcase, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies) {
   const content = document.getElementById('page-content');
-  const shinies = getMemberShinies(member);
-  const showcaseEntry = (window.teamShowcase || []).find(m => m.name === member.name);
+  const shinies = getMemberShinies(teamShowcase, member);
+  const showcaseEntry = (teamShowcase || []).find(m => m.name === member.name);
 
   let totalPoints = 0;
   if (showcaseEntry && Array.isArray(showcaseEntry.shinies)) {
@@ -315,7 +285,7 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
       .filter(mon => !mon.lost)
       .reduce((sum, mon, i) => {
         const extra = showcaseEntry.shinies[i] || {};
-        return sum + getPointsForPokemon(mon.name, extra);
+        return sum + getPointsForPokemon(mon.name, extra, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies);
       }, 0);
   }
 
@@ -328,7 +298,7 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
         const name = cleanPokemonName(mon.name);
         let extra = (showcaseEntry && showcaseEntry.shinies && showcaseEntry.shinies[i]) || {};
         const hasClip = typeof extra.clip === "string" && extra.clip.trim().length > 0;
-        const monPoints = getPointsForPokemon(mon.name, extra);
+        const monPoints = getPointsForPokemon(mon.name, extra, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies);
         return renderUnifiedCard({
           name: name,
           img: mon.url,
@@ -366,90 +336,82 @@ function renderMemberShowcase(member, sortMode = "alphabetical") {
 }
 
 // --- SEARCH AND SORT SETUP ---
-(function(){
-  window.setupShowcaseSearchAndSort = function(teamMembers, renderShowcaseGallery, initialSortMode) {
-    const controls = document.querySelector('.showcase-search-controls');
-    controls.innerHTML = "";
+export function setupShowcaseSearchAndSort(teamMembers, renderShowcaseGalleryCb, initialSortMode, teamShowcase, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies) {
+  const controls = document.querySelector('.showcase-search-controls');
+  controls.innerHTML = "";
 
-    const searchInput = document.createElement('input');
-    searchInput.type = 'text';
-    searchInput.placeholder = 'Search Member';
-    controls.appendChild(searchInput);
+  const searchInput = document.createElement('input');
+  searchInput.type = 'text';
+  searchInput.placeholder = 'Search Member';
+  controls.appendChild(searchInput);
 
-    const sortSelect = document.createElement('select');
-    sortSelect.style.marginLeft = '0.7em';
-    [
-      ["Alphabetical", "alphabetical"],
-      ["Total Shinies", "shinies"],
-      ["Total Shiny Points", "scoreboard"]
-    ].forEach(([labelText, value]) => {
-      const option = document.createElement('option');
-      option.value = value;
-      option.textContent = labelText;
-      sortSelect.appendChild(option);
-    });
+  const sortSelect = document.createElement('select');
+  sortSelect.style.marginLeft = '0.7em';
+  [
+    ["Alphabetical", "alphabetical"],
+    ["Total Shinies", "shinies"],
+    ["Total Shiny Points", "scoreboard"]
+  ].forEach(([labelText, value]) => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = labelText;
+    sortSelect.appendChild(option);
+  });
 
-    controls.appendChild(sortSelect);
+  controls.appendChild(sortSelect);
 
-    const resultCount = document.createElement('span');
-    controls.appendChild(resultCount);
+  const resultCount = document.createElement('span');
+  controls.appendChild(resultCount);
 
-    let sortMode = (function(){
-      const m = window.location.hash.match(/sort=(\w+)/);
-      return m ? m[1] : (initialSortMode || "alphabetical");
-    })();
+  let sortMode = (function(){
+    const m = window.location.hash.match(/sort=(\w+)/);
+    return m ? m[1] : (initialSortMode || "alphabetical");
+  })();
+  sortSelect.value = sortMode;
+
+  let searchValue = '';
+
+  function getFilteredAndSortedMembers() {
+    const input = searchValue.trim().toLowerCase();
+    let filtered = teamMembers.filter(m => m.name.toLowerCase().includes(input));
+    if (sortMode === 'alphabetical') {
+      filtered.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortMode === 'shinies') {
+      filtered.sort((a, b) => {
+        const diff = (b.shinies || 0) - (a.shinies || 0);
+        if (diff !== 0) return diff;
+        return a.name.localeCompare(b.name);
+      });
+    } else if (sortMode === 'scoreboard') {
+      filtered.sort((a, b) => {
+        const diff = getMemberScoreboardPoints(b, teamShowcase, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies) - getMemberScoreboardPoints(a, teamShowcase, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies);
+        if (diff !== 0) return diff;
+        return a.name.localeCompare(b.name);
+      });
+    }
+    return filtered;
+  }
+
+  function updateResults(pushHash = false) {
+    const filtered = getFilteredAndSortedMembers();
+    resultCount.textContent = `${filtered.length} Member${filtered.length === 1 ? '' : 's'}`;
+    const galleryContainer = document.getElementById('showcase-gallery-container');
+    renderShowcaseGalleryCb(filtered, galleryContainer, sortMode, teamShowcase, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies);
+    if (pushHash) {
+      window.location.hash = `#showcase?sort=${sortMode}`;
+    }
     sortSelect.value = sortMode;
+  }
 
-    let searchValue = '';
-
-    function getFilteredAndSortedMembers() {
-      const input = searchValue.trim().toLowerCase();
-      let filtered = teamMembers.filter(m => m.name.toLowerCase().includes(input));
-      if (sortMode === 'alphabetical') {
-        filtered.sort((a, b) => a.name.localeCompare(b.name));
-      } else if (sortMode === 'shinies') {
-        filtered.sort((a, b) => {
-          const diff = (b.shinies || 0) - (a.shinies || 0);
-          if (diff !== 0) return diff;
-          return a.name.localeCompare(b.name);
-        });
-      } else if (sortMode === 'scoreboard') {
-        filtered.sort((a, b) => {
-          const diff = getMemberScoreboardPoints(b) - getMemberScoreboardPoints(a);
-          if (diff !== 0) return diff;
-          return a.name.localeCompare(b.name);
-        });
-      }
-      return filtered;
-    }
-
-    function updateResults(pushHash = false) {
-      const filtered = getFilteredAndSortedMembers();
-      resultCount.textContent = `${filtered.length} Member${filtered.length === 1 ? '' : 's'}`;
-      const galleryContainer = document.getElementById('showcase-gallery-container');
-      renderShowcaseGallery(filtered, galleryContainer, sortMode);
-      if (pushHash) {
-        window.location.hash = `#showcase?sort=${sortMode}`;
-      }
-      sortSelect.value = sortMode;
-    }
-
-    searchInput.addEventListener('input', e => {
-      searchValue = e.target.value;
-      updateResults();
-    });
-
-    sortSelect.addEventListener('change', e => {
-      sortMode = e.target.value;
-      updateResults(true);
-    });
-
+  searchInput.addEventListener('input', e => {
+    searchValue = e.target.value;
     updateResults();
-  };
-})();
+  });
 
-// --- Ensure teamMembers is built whenever teamShowcase is available (for async JSON) ---
-if (!window.teamMembers && window.teamShowcase) window.buildTeamMembers();
+  sortSelect.addEventListener('change', e => {
+    sortMode = e.target.value;
+    updateResults(true);
+  });
 
-// --- INITIALIZE DATA LOADING ---
-fetchTeamShowcaseData();
+  updateResults();
+}
