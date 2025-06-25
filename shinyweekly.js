@@ -1,7 +1,8 @@
+// shinyweekly.js
 import { renderUnifiedCard } from './unifiedcard.js';
 import { prettifyPokemonName } from './utils.js';
 
-// Helper to get GIF (copy from showcase.js)
+// Helper: Get shiny gif url (copy from showcase.js)
 function getPokemonGif(name) {
   const n = name.replace(/[\s.'’\-]/g, "").toLowerCase();
   if (n === "mrmime") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr-mime.gif";
@@ -14,6 +15,7 @@ function getPokemonGif(name) {
 }
 
 export function renderShinyWeekly(weeklyData, container) {
+  if (!container) return;
   container.innerHTML = `
     <h2>Shiny Weekly Overview</h2>
     <div class="weekly-calendar"></div>
@@ -22,15 +24,14 @@ export function renderShinyWeekly(weeklyData, container) {
   const calDiv = container.querySelector('.weekly-calendar');
   const cardsDiv = container.querySelector('.weekly-cards');
 
-  weeklyData.forEach((week, idx) => {
+  // Show weeks in reverse order (newest first)
+  [...weeklyData].reverse().forEach((week, idx) => {
     const btn = document.createElement('button');
     btn.className = 'week-btn';
     btn.textContent = week.label || week.week;
-    btn.onclick = () => {
-      renderWeekDetails(week);
-    };
+    btn.onclick = () => renderWeekDetails(week);
     calDiv.appendChild(btn);
-    // Auto-show most recent week
+    // Default: show the most recent week
     if (idx === 0) renderWeekDetails(week);
   });
 
