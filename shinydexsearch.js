@@ -6,8 +6,8 @@ import { normalizePokemonName, prettifyPokemonName } from './utils.js';
 
 // --- Helper to build a GIF URL for a Pokémon ---
 function getPokemonGif(name) {
-  // Handle exceptions
-  if (name === "Mr. Mime") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr-mime.gif";
+  // Handle exceptions (fix Mr. Mime to use mr._mime.gif)
+  if (name === "Mr. Mime") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr._mime.gif";
   if (name === "Mime Jr.") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mime-jr.gif";
   if (name === "Nidoran♀") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-f.gif";
   if (name === "Nidoran♂") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-m.gif";
