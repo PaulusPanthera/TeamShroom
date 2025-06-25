@@ -1,0 +1,70 @@
+[
+  {
+    "week": "2024-03-08_to_2024-03-10",
+    "label": "March 8th–10th 2024",
+    "shinies": [
+      { "member": "Slowshiny", "name": "zigzagoon" },
+      { "member": "BUSTHETHOMAS", "name": "wooper" },
+      { "member": "Johnerrr", "name": "cryogonal", "secret": true },
+      { "member": "BabyLime", "name": "poochyena" },
+      { "member": "skyeatsme", "name": "poochyena" },
+      { "member": "Maknaez", "name": "spinda" },
+      { "member": "Blistik", "name": "cottonee" },
+      { "member": "Bulkanator", "name": "mankey" }
+    ]
+  },
+  {
+    "week": "2024-03-11_to_2024-03-17",
+    "label": "March 11th–17th 2024",
+    "shinies": [
+      { "member": "Cometsan", "name": "palpitoad" },
+      { "member": "KenGriffsuJr", "name": "shelmet" },
+      { "member": "HokeyMMO", "name": "swablu" },
+      { "member": "JazxB", "name": "ponyta" },
+      { "member": "UltraKingRom", "name": "magikarp" },
+      { "member": "BabyLime", "name": "pidgey" },
+      { "member": "BabyLime", "name": "pidgeotto" },
+      { "member": "BabyLime", "name": "pidgeotto" },
+      { "member": "maknaez", "name": "haunter" },
+      { "member": "maknaez", "name": "bibarel" },
+      { "member": "LilAF", "name": "joltik" }
+    ]
+  },
+  {
+    "week": "2024-03-18_to_2024-03-24",
+    "label": "March 18th–24th 2024",
+    "shinies": [
+      { "member": "MELVZZY", "name": "smeargle" },
+      { "member": "HokeyMMO", "name": "machop" },
+      { "member": "Loundemon", "name": "kadabra" },
+      { "member": "Loundemon", "name": "rapidash" },
+      { "member": "BUSTHETHOMAS", "name": "gastly" },
+      { "member": "BUSTHETHOMAS", "name": "graveler" },
+      { "member": "BUSTHETHOMAS", "name": "graveler" },
+      { "member": "Slowshiny", "name": "clefairy" },
+      { "member": "Maknaez", "name": "beldum", "egg": true },
+      { "member": "Maknaez", "name": "poliwhirl" },
+      { "member": "Maknaez", "name": "onix" }
+    ]
+  },
+  {
+    "week": "2024-03-25_to_2024-03-31",
+    "label": "March 25th–31st 2024",
+    "shinies": [
+      { "member": "DaddyMolo", "name": "ekans" },
+      { "member": "BUSTHETHOMAS", "name": "gligar" },
+      { "member": "Cometsan", "name": "klink" },
+      { "member": "drownsyy", "name": "mankey" },
+      { "member": "JazxB", "name": "ponyta" },
+      { "member": "slowshiny", "name": "rhyhorn" },
+      { "member": "maknaez", "name": "magikarp" },
+      { "member": "maknaez", "name": "dratini" },
+      { "member": "skyeatsme", "name": "wurmple" },
+      { "member": "skyeatsme", "name": "sandile" },
+      { "member": "Instintooo", "name": "ditto" },
+      { "member": "qtAlice", "name": "zigzagoon" },
+      { "member": "Splinterbrained", "name": "graveler" },
+      { "member": "lilAF", "name": "joltik" }
+    ]
+  }
+]
