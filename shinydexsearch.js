@@ -348,7 +348,7 @@ function renderLivingDexFiltered(shinyDex, teamShowcase, filter, sortMode = "sta
   }
 }
 
-// --- Custom tooltip logic for Living Dex ---
+// --- Custom tooltip logic for Living Dex (robust positioning) ---
 function setupLivingDexOwnerTooltips() {
   let tooltipDiv = document.querySelector('.dex-owner-tooltip');
   if (!tooltipDiv) {
@@ -378,16 +378,33 @@ function setupLivingDexOwnerTooltips() {
       listDiv.appendChild(scrollDiv);
     }
 
+    // --- Robust positioning ---
+    // Show offscreen first to measure
+    tooltipDiv.style.left = '-9999px';
+    tooltipDiv.style.top = '-9999px';
+    tooltipDiv.style.opacity = 0;
     tooltipDiv.classList.add('show');
-    const rect = target.getBoundingClientRect();
-    let top = rect.top + window.scrollY - tooltipDiv.offsetHeight - 14;
-    let left = rect.left + window.scrollX + rect.width / 2 - tooltipDiv.offsetWidth / 2;
-    if (top < window.scrollY) top = rect.bottom + window.scrollY + 14;
-    if (left < 4) left = 4;
-    if (left + tooltipDiv.offsetWidth > window.innerWidth - 4)
-      left = window.innerWidth - tooltipDiv.offsetWidth - 4;
-    tooltipDiv.style.top = `${top}px`;
-    tooltipDiv.style.left = `${left}px`;
+
+    setTimeout(() => {
+      const rect = target.getBoundingClientRect();
+      const scrollY = window.scrollY || window.pageYOffset;
+      const scrollX = window.scrollX || window.pageXOffset;
+      const tooltipRect = tooltipDiv.getBoundingClientRect();
+      let top = rect.top + scrollY - tooltipDiv.offsetHeight - 14;
+      let left = rect.left + scrollX + rect.width / 2 - tooltipDiv.offsetWidth / 2;
+
+      // If the tooltip would go above the viewport, place it below the card
+      if (top < scrollY) top = rect.bottom + scrollY + 14;
+
+      // Prevent from going out of viewport horizontally
+      if (left < 4) left = 4;
+      if (left + tooltipDiv.offsetWidth > window.innerWidth - 4)
+        left = window.innerWidth - tooltipDiv.offsetWidth - 4;
+
+      tooltipDiv.style.top = `${top}px`;
+      tooltipDiv.style.left = `${left}px`;
+      tooltipDiv.style.opacity = 1;
+    }, 0);
   }
   function hideOwnerTooltip() {
     tooltipDiv.classList.remove('show');
@@ -402,10 +419,14 @@ function setupLivingDexOwnerTooltips() {
     card.ontouchstart = hideOwnerTooltip;
     card.onmousemove = function (e) {
       if (!tooltipDiv.classList.contains('show')) return;
+      // Reposition robustly as mouse moves
       const rect = card.getBoundingClientRect();
-      let top = rect.top + window.scrollY - tooltipDiv.offsetHeight - 14;
-      let left = rect.left + window.scrollX + rect.width / 2 - tooltipDiv.offsetWidth / 2;
-      if (top < window.scrollY) top = rect.bottom + window.scrollY + 14;
+      const scrollY = window.scrollY || window.pageYOffset;
+      const scrollX = window.scrollX || window.pageXOffset;
+      const tooltipRect = tooltipDiv.getBoundingClientRect();
+      let top = rect.top + scrollY - tooltipDiv.offsetHeight - 14;
+      let left = rect.left + scrollX + rect.width / 2 - tooltipDiv.offsetWidth / 2;
+      if (top < scrollY) top = rect.bottom + scrollY + 14;
       if (left < 4) left = 4;
       if (left + tooltipDiv.offsetWidth > window.innerWidth - 4)
         left = window.innerWidth - tooltipDiv.offsetWidth - 4;
@@ -413,6 +434,9 @@ function setupLivingDexOwnerTooltips() {
       tooltipDiv.style.left = `${left}px`;
     };
   });
+
+  // Optional: Hide tooltip on scroll to prevent floating tooltips
+  window.addEventListener('scroll', hideOwnerTooltip, { passive: true });
 }
 
 // --- MAIN ENTRY ---
