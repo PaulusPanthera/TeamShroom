@@ -18,8 +18,8 @@
   z-index: 10;
 }
 .dex-tab.active, .dex-tab:focus {
-  background: var(--accent);
-  color: #fffbe1;
+  background: var(--card-gradient);
+  color: var(--accent);
   border-bottom: 3.5px solid var(--success);
   border-top: 3.5px solid var(--success);
   border-left: 2.5px solid var(--accent);
