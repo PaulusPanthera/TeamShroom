@@ -119,3 +119,25 @@ body.darkmode .unified-card.lost::after {
   pointer-events: none;
   text-shadow: 0 2px 6px #fff, 0 1px 2px #e3e3e3;
 }
+
+/* MEMBER NAMEPLATE adjustments for dark mode */
+body.darkmode .member-nameplate {
+  background: var(--card-gradient);
+  color: var(--accent);
+  border-color: var(--success);
+}
+body.darkmode .member-nameplate .member-name {
+  background: var(--card);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+body.darkmode .member-nameplate .shiny-count {
+  background: var(--success);
+  color: var(--card);
+  border-color: var(--success);
+}
+body.darkmode .member-nameplate .point-count {
+  background: var(--accent);
+  color: var(--card);
+  border-color: var(--accent);
+}
