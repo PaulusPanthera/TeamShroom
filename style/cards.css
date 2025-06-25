@@ -104,6 +104,24 @@
 }
 .unified-card.unclaimed::before { display: none !important; }
 
+/* --- LOST SHINY CARDS --- */
+.unified-card.lost {
+  border-color: #a44;
+  background: linear-gradient(132deg, #32344a 70%, #22242f 100%);
+  box-shadow: 0 4px 20px #a222, 0 1.5px 12px #a4423b44;
+  filter: grayscale(0.78) brightness(0.73);
+  opacity: 0.72;
+  position: relative;
+}
+.unified-card.lost:hover, .unified-card.lost:focus-within {
+  border-color: #c66;
+  background: linear-gradient(126deg, #3e405a 85%, #23243b 100%);
+  box-shadow: 0 8px 32px #a4423b44, 0 2px 16px #a4423b22;
+  filter: grayscale(0.68) brightness(0.82);
+  opacity: 0.80;
+}
+.unified-card.lost::before { display: none !important; }
+
 .unified-info {
   color: #ffe595;
   font-size: 1em;
