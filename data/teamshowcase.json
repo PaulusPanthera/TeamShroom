@@ -1643,7 +1643,7 @@
       {"name": "vulpix"},
       {"name": "aipom","safari": true,"secret": true},
       {"name": "pineco","safari": true, "clip": "https://www.youtube.com/watch?v=n3NBcXYR1Yw"},
-      {"name": "jigglypuff","safari": true,"secret": true, "clip": "https://www.youtube.com/watch?v=4GyTdTEttTE"}
+      {"name": "jigglypuff","safari": true,"secret": true, "lost": true, "clip": "https://www.youtube.com/watch?v=4GyTdTEttTE"}
     ]
   },
   {
