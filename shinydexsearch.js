@@ -6,7 +6,7 @@ import { normalizePokemonName, prettifyPokemonName } from './utils.js';
 
 // --- Helper to build a GIF URL for a Pokémon ---
 function getPokemonGif(name) {
-  // Handle exceptions (fix Mr. Mime to use mr._mime.gif)
+  // Handle exceptions (Pokemondb: Mr. Mime is mr._mime.gif, Mime Jr. is mime_jr.gif)
   if (name === "Mr. Mime" || name === "mr.mime" || name === "mr-mime") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr._mime.gif";
   if (name === "Mime Jr." || name === "mime.jr" || name === "mime-jr") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mime_jr.gif";
   if (name === "Nidoran♀") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-f.gif";
@@ -357,9 +357,14 @@ function setupLivingDexOwnerTooltips() {
     document.body.appendChild(tooltipDiv);
   }
 
-  function showOwnerTooltip(target, ownerNames) {
+  function clamp(val, min, max) {
+    return Math.max(min, Math.min(max, val));
+  }
+
+  function showOwnerTooltip(target, ownerNames, mouseEvent = null) {
     if (!ownerNames || !ownerNames.length) {
       tooltipDiv.classList.remove('show');
+      tooltipDiv.style.opacity = 0;
       return;
     }
     tooltipDiv.innerHTML = `
@@ -377,65 +382,59 @@ function setupLivingDexOwnerTooltips() {
       scrollDiv.style.animationDuration = duration + "s";
       listDiv.appendChild(scrollDiv);
     }
-
-    // --- Robust positioning ---
-    // Show offscreen first to measure
-    tooltipDiv.style.left = '-9999px';
-    tooltipDiv.style.top = '-9999px';
+    // Force visible and opacity 0 for measurement
+    tooltipDiv.style.display = 'block';
     tooltipDiv.style.opacity = 0;
     tooltipDiv.classList.add('show');
 
-    setTimeout(() => {
+    // Use RAF for next paint, so offsetHeight/offsetWidth is correct
+    requestAnimationFrame(() => {
       const rect = target.getBoundingClientRect();
       const scrollY = window.scrollY || window.pageYOffset;
       const scrollX = window.scrollX || window.pageXOffset;
+
       const tooltipRect = tooltipDiv.getBoundingClientRect();
-      let top = rect.top + scrollY - tooltipDiv.offsetHeight - 14;
-      let left = rect.left + scrollX + rect.width / 2 - tooltipDiv.offsetWidth / 2;
+      let left, top;
+      // If mouseEvent available (mousemove), use its position
+      if (mouseEvent) {
+        left = mouseEvent.clientX + scrollX - tooltipRect.width/2;
+        top = mouseEvent.clientY + scrollY - tooltipRect.height - 12;
+        // If above top, flip below
+        if (top < scrollY) top = mouseEvent.clientY + scrollY + 24;
+      } else {
+        // Default: center above card
+        left = rect.left + scrollX + rect.width/2 - tooltipRect.width/2;
+        top = rect.top + scrollY - tooltipRect.height - 14;
+        if (top < scrollY) top = rect.bottom + scrollY + 14;
+      }
+      // Clamp to window
+      left = clamp(left, 4, window.innerWidth - tooltipRect.width - 4);
+      top = clamp(top, scrollY + 2, scrollY + window.innerHeight - tooltipRect.height - 4);
 
-      // If the tooltip would go above the viewport, place it below the card
-      if (top < scrollY) top = rect.bottom + scrollY + 14;
-
-      // Prevent from going out of viewport horizontally
-      if (left < 4) left = 4;
-      if (left + tooltipDiv.offsetWidth > window.innerWidth - 4)
-        left = window.innerWidth - tooltipDiv.offsetWidth - 4;
-
-      tooltipDiv.style.top = `${top}px`;
       tooltipDiv.style.left = `${left}px`;
+      tooltipDiv.style.top = `${top}px`;
       tooltipDiv.style.opacity = 1;
-    }, 0);
+    });
   }
+
   function hideOwnerTooltip() {
     tooltipDiv.classList.remove('show');
+    tooltipDiv.style.opacity = 0;
   }
 
   document.querySelectorAll('.dex-grid .unified-card').forEach(card => {
     card.onmouseenter = function (e) {
-      showOwnerTooltip(card, card._owners || []);
+      showOwnerTooltip(card, card._owners || [], e);
     };
     card.onmouseleave = hideOwnerTooltip;
     card.onmousedown = hideOwnerTooltip;
     card.ontouchstart = hideOwnerTooltip;
     card.onmousemove = function (e) {
       if (!tooltipDiv.classList.contains('show')) return;
-      // Reposition robustly as mouse moves
-      const rect = card.getBoundingClientRect();
-      const scrollY = window.scrollY || window.pageYOffset;
-      const scrollX = window.scrollX || window.pageXOffset;
-      const tooltipRect = tooltipDiv.getBoundingClientRect();
-      let top = rect.top + scrollY - tooltipDiv.offsetHeight - 14;
-      let left = rect.left + scrollX + rect.width / 2 - tooltipDiv.offsetWidth / 2;
-      if (top < scrollY) top = rect.bottom + scrollY + 14;
-      if (left < 4) left = 4;
-      if (left + tooltipDiv.offsetWidth > window.innerWidth - 4)
-        left = window.innerWidth - tooltipDiv.offsetWidth - 4;
-      tooltipDiv.style.top = `${top}px`;
-      tooltipDiv.style.left = `${left}px`;
+      showOwnerTooltip(card, card._owners || [], e);
     };
   });
 
-  // Optional: Hide tooltip on scroll to prevent floating tooltips
   window.addEventListener('scroll', hideOwnerTooltip, { passive: true });
 }
 
