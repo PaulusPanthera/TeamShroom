@@ -1090,8 +1090,8 @@
   },
   {
     "#": 122,
-    "pokemon": "mr.;mime",
-    "family_members": "mime;jr.,mr.;mime",
+    "pokemon": "mr.mime",
+    "family_members": "mimejr.,mr.mime",
     "tier": "Tier 2",
     "region": "Kanto",
     "rarity": "",
@@ -3961,8 +3961,8 @@
   },
   {
     "#": 439,
-    "pokemon": "mime;jr.",
-    "family_members": "mime;jr.,mr.;mime",
+    "pokemon": "mimejr.",
+    "family_members": "mimejr.,mr.mime",
     "tier": "Tier 2",
     "region": "Sinnoh",
     "rarity": "Baby",
