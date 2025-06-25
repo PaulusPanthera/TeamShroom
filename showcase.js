@@ -10,8 +10,8 @@ import { normalizeMemberName, prettifyMemberName, normalizePokemonName } from '.
 
 // Helper to generate the correct shiny gif URL
 function shinyGifUrl(name) {
-  // Handle exceptions
-  if (name === "Mr. Mime" || name === "mr.mime" || name === "mr-mime") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr-mime.gif";
+  // Handle exceptions (fix Mr. Mime to use mr._mime.gif)
+  if (name === "Mr. Mime" || name === "mr.mime" || name === "mr-mime") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr._mime.gif";
   if (name === "Mime Jr." || name === "mime.jr" || name === "mime-jr") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mime-jr.gif";
   if (name === "Nidoran♀" || name === "nidoran♀" || name === "nidoran-f" || name === "nidoranf") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-f.gif";
   if (name === "Nidoran♂" || name === "nidoran♂" || name === "nidoran-m" || name === "nidoranm") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-m.gif";
