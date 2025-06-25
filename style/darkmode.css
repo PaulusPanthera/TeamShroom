@@ -73,19 +73,7 @@ body.darkmode .unified-card.unclaimed:focus-within {
   opacity: 0.75;
 }
 body.darkmode .unified-card.unclaimed::before { display: none !important; }
-body.darkmode .unified-card.unclaimed::after {
-  content: "UNCLAIMED";
-  position: absolute;
-  bottom: 10px;
-  left: 0; right: 0;
-  color: #888;
-  font-size: 1.1em;
-  font-weight: bold;
-  letter-spacing: 2px;
-  opacity: 0.33;
-  pointer-events: none;
-  text-shadow: 0 2px 6px #fff, 0 1px 2px #e3e3e3;
-}
+/* body.darkmode .unified-card.unclaimed::after { ... } — REMOVED */
 
 /* LOST: faded/distinct on light background, reddish tint */
 body.darkmode .unified-card.lost {
@@ -106,19 +94,7 @@ body.darkmode .unified-card.lost:focus-within {
   opacity: 0.76;
 }
 body.darkmode .unified-card.lost::before { display: none !important; }
-body.darkmode .unified-card.lost::after {
-  content: "LOST";
-  position: absolute;
-  bottom: 10px;
-  left: 0; right: 0;
-  color: #a66;
-  font-size: 1.1em;
-  font-weight: bold;
-  letter-spacing: 2px;
-  opacity: 0.33;
-  pointer-events: none;
-  text-shadow: 0 2px 6px #fff, 0 1px 2px #e3e3e3;
-}
+/* body.darkmode .unified-card.lost::after { ... } — REMOVED */
 
 /* MEMBER NAMEPLATE adjustments for dark mode */
 body.darkmode .member-nameplate {
