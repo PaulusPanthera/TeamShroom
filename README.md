@@ -86,7 +86,7 @@ Hosted on GitHub Pages.
 - [ ] Badge Case
 - [ ] Improve mobile and accessibility features
 - [ ] Switch to React framework
-
+- [ ] json -> google doc so everyone can edit it
 ---
 
 Inspired by Pokémon.  
