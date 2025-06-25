@@ -6,13 +6,24 @@ import { normalizePokemonName, prettifyPokemonName } from './utils.js';
 
 // --- Helper to build a GIF URL for a Pokémon ---
 function getPokemonGif(name) {
-  // Handle exceptions (Pokemondb: Mr. Mime is mr._mime.gif, Mime Jr. is mime_jr.gif)
-  if (name === "Mr. Mime" || name === "mr.mime" || name === "mr-mime") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr._mime.gif";
-  if (name === "Mime Jr." || name === "mime.jr" || name === "mime-jr") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mime_jr.gif";
-  if (name === "Nidoran♀") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-f.gif";
-  if (name === "Nidoran♂") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-m.gif";
-  if (name === "Type: Null") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/type-null.gif";
-  if (name === "Porygon-Z") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/porygon-z.gif";
+  // Lowercase, remove special chars for matching
+  const n = name.toLowerCase().replace(/[\s.'’\-]/g, "");
+  if (
+    name === "Mr. Mime" ||
+    name === "mr.mime" ||
+    name === "mr-mime" ||
+    n === "mrmime"
+  ) return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr._mime.gif";
+  if (
+    name === "Mime Jr." ||
+    name === "mime.jr" ||
+    name === "mime-jr" ||
+    n === "mimejr"
+  ) return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mime_jr.gif";
+  if (name === "Nidoran♀" || name === "nidoran♀" || name === "nidoran-f" || name === "nidoranf") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-f.gif";
+  if (name === "Nidoran♂" || name === "nidoran♂" || name === "nidoran-m" || name === "nidoranm") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-m.gif";
+  if (name === "Type: Null" || name === "type:null" || name === "type-null" || name === "typenull") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/type-null.gif";
+  if (name === "Porygon-Z" || name === "porygon-z" || name === "porygonz") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/porygon-z.gif";
 
   let urlName = normalizePokemonName(name);
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${urlName}.gif`;
