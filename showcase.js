@@ -207,7 +207,7 @@ export function renderShowcaseGallery(members, container, groupMode, teamShowcas
         if (cardType === "member") {
           const sortSelect = document.querySelector('.showcase-search-controls select');
           const sortMode = (sortSelect && sortSelect.value) || "alphabetical";
-          location.hash = `#showcase-${cardName}?sort=${sortMode}`;
+          location.hash = `#showcase-${cardName}`;
         }
       };
     });
@@ -308,8 +308,11 @@ export function renderMemberShowcase(member, sortMode = "alphabetical", teamShow
 
   content.innerHTML = `
     <button class="back-btn" onclick="window.location.hash='#showcase?sort=${sortMode}'">← Back</button>
-    <h1>${member.name}'s Shiny Showcase</h1>
-    <div>Shinies: ${shinies.filter(mon => !mon.lost).length} | Points: ${totalPoints}</div>
+    <div class="member-nameplate">
+      <span class="member-name">${member.name}</span>
+      <span class="shiny-count">Shinies: ${shinies.filter(mon => !mon.lost).length}</span>
+      <span class="point-count">Points: ${totalPoints}</span>
+    </div>
     <div class="dex-grid" style="margin-top:1em;">
       ${shinies.map((mon, i) => {
         const name = cleanPokemonName(mon.name);
