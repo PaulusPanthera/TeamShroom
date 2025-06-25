@@ -10,25 +10,14 @@ import { normalizeMemberName, prettifyMemberName, normalizePokemonName } from '.
 
 // --- Helper to build a GIF URL for a Pokémon ---
 function getPokemonGif(name) {
-  // Lowercase, remove special chars for matching
-  const n = name.toLowerCase().replace(/[\s.'’\-]/g, "");
-  if (
-    name === "Mr. Mime" ||
-    name === "mr.mime" ||
-    name === "mr-mime" ||
-    n === "mrmime"
-  ) return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr-mime.gif";
-  if (
-    name === "Mime Jr." ||
-    name === "mime.jr" ||
-    name === "mime-jr" ||
-    n === "mimejr"
-  ) return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mime-jr.gif";
-  if (name === "Nidoran♀" || name === "nidoran♀" || name === "nidoran-f" || name === "nidoranf") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-f.gif";
-  if (name === "Nidoran♂" || name === "nidoran♂" || name === "nidoran-m" || name === "nidoranm") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-m.gif";
-  if (name === "Type: Null" || name === "type:null" || name === "type-null" || name === "typenull") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/type-null.gif";
-  if (name === "Porygon-Z" || name === "porygon-z" || name === "porygonz") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/porygon-z.gif";
-
+  // Normalize to catch any variant of Mr. Mime or Mime Jr.
+  const n = name.replace(/[\s.'’\-]/g, "").toLowerCase();
+  if (n === "mrmime") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr-mime.gif";
+  if (n === "mimejr") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mime-jr.gif";
+  if (n === "nidoranf") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-f.gif";
+  if (n === "nidoranm") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-m.gif";
+  if (n === "typenull") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/type-null.gif";
+  if (n === "porygonz") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/porygon-z.gif";
   let urlName = normalizePokemonName(name);
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${urlName}.gif`;
 }
@@ -40,7 +29,7 @@ function getMemberShinies(teamShowcase, member) {
     return member.shinies.map(mon => ({
       ...mon,
       name: mon.name,
-      url: shinyGifUrl(mon.name),
+      url: getPokemonGif(mon.name),
       lost: !!mon.lost
     }));
   }
@@ -56,7 +45,7 @@ function getMemberShinies(teamShowcase, member) {
   return showcaseEntry.shinies.map(mon => ({
     ...mon,
     name: mon.name,
-    url: shinyGifUrl(mon.name),
+    url: getPokemonGif(mon.name),
     lost: !!mon.lost
   }));
 }
