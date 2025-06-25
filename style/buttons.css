@@ -22,6 +22,16 @@
   color: var(--bg);
   border-color: var(--accent);
   box-shadow: 0 4px 16px #f2593788;
+  position: relative;
+}
+.dex-tab.active::after {
+  content: "★";
+  color: var(--bg);
+  font-size: 1.2em;
+  position: absolute;
+  top: 7px;
+  right: 11px;
+  pointer-events: none;
 }
 
 .back-btn {
