@@ -86,3 +86,36 @@ body.darkmode .unified-card.unclaimed::after {
   pointer-events: none;
   text-shadow: 0 2px 6px #fff, 0 1px 2px #e3e3e3;
 }
+
+/* LOST: faded/distinct on light background, reddish tint */
+body.darkmode .unified-card.lost {
+  background: linear-gradient(132deg, #f4f4f4 70%, #e3e3e3 100%) !important;
+  color: #a66 !important;
+  border-color: #c88;
+  box-shadow: 0 4px 20px #bbb4, 0 1.5px 12px #ccc8;
+  filter: grayscale(0.72) brightness(1.10) blur(0.6px) !important;
+  opacity: 0.62 !important;
+  position: relative;
+}
+body.darkmode .unified-card.lost:hover,
+body.darkmode .unified-card.lost:focus-within {
+  border-color: #eaa;
+  background: linear-gradient(126deg, #eeeeee 85%, #e3e3e3 100%) !important;
+  box-shadow: 0 8px 32px #bbb8, 0 2px 16px #eee8;
+  filter: grayscale(0.58) brightness(1.18);
+  opacity: 0.76;
+}
+body.darkmode .unified-card.lost::before { display: none !important; }
+body.darkmode .unified-card.lost::after {
+  content: "LOST";
+  position: absolute;
+  bottom: 10px;
+  left: 0; right: 0;
+  color: #a66;
+  font-size: 1.1em;
+  font-weight: bold;
+  letter-spacing: 2px;
+  opacity: 0.33;
+  pointer-events: none;
+  text-shadow: 0 2px 6px #fff, 0 1px 2px #e3e3e3;
+}
