@@ -17,13 +17,13 @@ function getPokemonGif(name) {
     name === "mr.mime" ||
     name === "mr-mime" ||
     n === "mrmime"
-  ) return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr._mime.gif";
+  ) return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr-mime.gif";
   if (
     name === "Mime Jr." ||
     name === "mime.jr" ||
     name === "mime-jr" ||
     n === "mimejr"
-  ) return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mime_jr.gif";
+  ) return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mime-jr.gif";
   if (name === "Nidoran♀" || name === "nidoran♀" || name === "nidoran-f" || name === "nidoranf") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-f.gif";
   if (name === "Nidoran♂" || name === "nidoran♂" || name === "nidoran-m" || name === "nidoranm") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-m.gif";
   if (name === "Type: Null" || name === "type:null" || name === "type-null" || name === "typenull") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/type-null.gif";
