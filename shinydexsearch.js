@@ -524,6 +524,19 @@ export function setupShinyDexHitlistSearch(shinyDex, teamShowcase) {
     hitlistSelect.style.display = (mode === "hitlist") ? "" : "none";
     livingSelect.style.display = (mode === "living") ? "" : "none";
 
+    // Visually indicate active mode tab and ARIA (for accessibility)
+    if (mode === "hitlist") {
+      hitlistTab.classList.add("active");
+      livingTab.classList.remove("active");
+      hitlistTab.setAttribute("aria-current", "page");
+      livingTab.removeAttribute("aria-current");
+    } else {
+      hitlistTab.classList.remove("active");
+      livingTab.classList.add("active");
+      livingTab.setAttribute("aria-current", "page");
+      hitlistTab.removeAttribute("aria-current");
+    }
+
     const filter = searchValue.trim().toLowerCase();
     let nShown = 0;
     if (mode === "hitlist") {
@@ -547,14 +560,10 @@ export function setupShinyDexHitlistSearch(shinyDex, teamShowcase) {
 
   hitlistTab.onclick = () => {
     mode = "hitlist";
-    hitlistTab.classList.add("active");
-    livingTab.classList.remove("active");
     render();
   };
   livingTab.onclick = () => {
     mode = "living";
-    hitlistTab.classList.remove("active");
-    livingTab.classList.add("active");
     render();
   };
 
