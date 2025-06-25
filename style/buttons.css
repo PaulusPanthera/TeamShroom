@@ -11,7 +11,7 @@
   cursor: pointer;
   margin-bottom: -2px;
   box-shadow: 0 2px 10px #f2593766;
-  transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
+  transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s, opacity 0.2s, filter 0.2s, transform 0.19s;
   letter-spacing: 1px;
   outline: none;
   position: relative;
@@ -19,20 +19,25 @@
 }
 .dex-tab.active, .dex-tab:focus {
   background: var(--accent);
-  color: var(--bg);
-  border-color: var(--accent);
-  box-shadow: 0 4px 16px #f2593788;
-  position: relative;
+  color: #fffbe1;
+  border-bottom: 3.5px solid var(--success);
+  border-top: 3.5px solid var(--success);
+  border-left: 2.5px solid var(--accent);
+  border-right: 2.5px solid var(--accent);
+  box-shadow: 0 6px 24px #f2593788, 0 0 0 2.5px #fffbe1, 0 8px 0 0 var(--success) inset;
+  font-weight: bold;
+  z-index: 12;
+  transform: translateY(-2px) scale(1.06);
 }
-.dex-tab.active::after {
-  content: "★";
-  color: var(--bg);
-  font-size: 1.2em;
-  position: absolute;
-  top: 7px;
-  right: 11px;
-  pointer-events: none;
+.dex-tab:not(.active) {
+  opacity: 0.63;
+  filter: grayscale(0.23) brightness(0.9);
+  border-bottom: 2.5px solid var(--accent);
+  border-top: 2.5px solid var(--accent);
+  transform: none;
 }
+
+/* Removed the star icon overlay */
 
 .back-btn {
   background: var(--accent);
