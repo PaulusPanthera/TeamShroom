@@ -181,7 +181,7 @@
       {"name": "poliwhirl"},
       {"name": "bouffalant","clip": "https://www.youtube.com/watch?v=7OeR63i97VA"},
       {"name": "nidoran-m"},
-      {"name": "slowbro","clip": "https://www.youtube.com/watch?v=icThxj1y3jk"},
+      {"name": "bro","clip": "https://www.youtube.com/watch?v=icThxj1y3jk"},
       {"name": "ducklett","egg": true,"clip": "https://www.youtube.com/watch?v=TnTYljgWOEY"},
       {"name": "vanilluxe","clip": "https://www.youtube.com/watch?v=Gml3gj-uuPk"},
       {"name": "raticate"},
@@ -279,7 +279,7 @@
     "name": "Eerie",
     "status": "shroom",
     "shinies": [
-      {"name": "slowpoke"},
+      {"name": "poke"},
       {"name": "lanturn"},
       {"name": "girafarig"},
       {"name": "staravia"},
@@ -1271,7 +1271,7 @@
     ]
   },
   {
-    "name": "SecretSlowshiny",
+    "name": "slowturtle",
     "status": "shroom",
     "shinies": [
       {"name": "raticate"},
