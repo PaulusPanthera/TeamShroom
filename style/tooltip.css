@@ -17,9 +17,8 @@
   overflow: hidden;
   transition: opacity 0.18s;
   opacity: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: block;
+  /* Removed flex, use block for consistency */
 }
 .dex-owner-tooltip.show {
   opacity: 1;
@@ -39,6 +38,7 @@
   overflow: hidden;
   position: relative;
   height: 2.5em;
+  color: var(--accent);
 }
 .dex-owner-tooltip .scrolling-names {
   display: block;
@@ -48,7 +48,7 @@
   animation: tooltip-scroll 7s linear infinite;
   white-space: pre-line;
   text-align: center;
-  color: var(--text-main);
+  color: var(--accent);
 }
 @keyframes tooltip-scroll {
   0% { transform: translateY(0); }
