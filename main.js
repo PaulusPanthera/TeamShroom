@@ -8,10 +8,14 @@ import { renderDonators, renderDonatorsWhenReady, assignDonatorTiersToTeam } fro
 import { renderUnifiedCard } from './unifiedcard.js';
 import { normalizePokemonName, prettifyPokemonName, normalizeMemberName, prettifyMemberName } from './utils.js';
 
+// ADD: Import Shiny Weekly
+import { renderShinyWeekly } from './shinyweekly.js';
+
 // Global data caches
 let teamShowcaseData = null;
 let pokemonFamiliesData = null;
 let donationsData = null;
+let shinyWeeklyData = null; // NEW
 
 // --- Data loading helpers ---
 async function fetchJson(path) {
@@ -87,6 +91,8 @@ async function renderPage() {
   if (!teamShowcaseData) teamShowcaseData = await fetchJson('data/teamshowcase.json');
   if (!pokemonFamiliesData) pokemonFamiliesData = await fetchJson('data/pokemonfamilies.json');
   if (!donationsData) donationsData = await fetchJson('data/donations.json');
+  // NEW: Load weekly data
+  if (page === 'shinyweekly' && !shinyWeeklyData) shinyWeeklyData = await fetchJson('data/shinyweekly.json');
 
   // Rebuild points/tier data for use everywhere
   if (pokemonFamiliesData) buildPokemonData(pokemonFamiliesData);
@@ -156,7 +162,13 @@ async function renderPage() {
   } else if (page === 'donators') {
     renderDonators(donationsData);
   } else if (page === 'shinyweekly') {
-    content.innerHTML = `<div style="font-size:1.4em;color:var(--accent);margin:2em;text-align:center;">Shiny Weekly coming soon!</div>`;
+    // NEW: Render Shiny Weekly
+    content.innerHTML = `<div id="shinyweekly-container"></div>`;
+    if (shinyWeeklyData && Array.isArray(shinyWeeklyData)) {
+      renderShinyWeekly(shinyWeeklyData, document.getElementById('shinyweekly-container'));
+    } else {
+      content.innerHTML = `<div style="font-size:1.4em;color:var(--accent);margin:2em;text-align:center;">Could not load shiny weekly data.</div>`;
+    }
   } else {
     content.innerHTML = `<div style="font-size:1.3em;color:var(--accent);margin:2em;text-align:center;">Page not found.</div>`;
   }
