@@ -8,17 +8,28 @@ import { normalizeMemberName, prettifyMemberName, normalizePokemonName } from '.
 // --- DATA FETCHING AND STRUCTURE ---
 // (Data is now loaded and passed in by main.js; no fetching here.)
 
-// Helper to generate the correct shiny gif URL
-function shinyGifUrl(name) {
-  // Handle exceptions (fix Mr. Mime to use mr._mime.gif)
-  if (name === "Mr. Mime" || name === "mr.mime" || name === "mr-mime") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr._mime.gif";
-  if (name === "Mime Jr." || name === "mime.jr" || name === "mime-jr") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mime_jr.gif";
+// --- Helper to build a GIF URL for a Pokémon ---
+function getPokemonGif(name) {
+  // Lowercase, remove special chars for matching
+  const n = name.toLowerCase().replace(/[\s.'’\-]/g, "");
+  if (
+    name === "Mr. Mime" ||
+    name === "mr.mime" ||
+    name === "mr-mime" ||
+    n === "mrmime"
+  ) return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr._mime.gif";
+  if (
+    name === "Mime Jr." ||
+    name === "mime.jr" ||
+    name === "mime-jr" ||
+    n === "mimejr"
+  ) return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mime_jr.gif";
   if (name === "Nidoran♀" || name === "nidoran♀" || name === "nidoran-f" || name === "nidoranf") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-f.gif";
   if (name === "Nidoran♂" || name === "nidoran♂" || name === "nidoran-m" || name === "nidoranm") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-m.gif";
   if (name === "Type: Null" || name === "type:null" || name === "type-null" || name === "typenull") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/type-null.gif";
   if (name === "Porygon-Z" || name === "porygon-z" || name === "porygonz") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/porygon-z.gif";
 
-  const urlName = normalizePokemonName(name);
+  let urlName = normalizePokemonName(name);
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${urlName}.gif`;
 }
 
