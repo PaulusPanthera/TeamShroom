@@ -295,7 +295,7 @@
       {"name": "buneary"},
       {"name": "ekans","secret": true},
       {"name": "vanillite"},
-      {"name": "geodude","lost": true},
+      {"name": "geodude","lost": true}
     ]
   },
   {
