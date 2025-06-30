@@ -294,7 +294,8 @@
       {"name": "gabite"},
       {"name": "buneary"},
       {"name": "ekans","secret": true},
-      {"name": "vanillite"}
+      {"name": "vanillite"},
+      {"name": "geodude","lost": true},
     ]
   },
   {
@@ -537,7 +538,9 @@
       {"name": "hydreigon"},
       {"name": "magikarp"},
       {"name": "scrafty"},
-      {"name": "kingdra"}
+      {"name": "kingdra"},
+      {"name": "roselia"},
+      {"name": "magikarp"}
     ]
   },
   {
@@ -816,7 +819,8 @@
       {"name": "dugtrio"},
       {"name": "onix"},
       {"name": "larvitar"},
-      {"name": "shelgon"}
+      {"name": "shelgon"},
+      {"name": "staryu"}
     ]
   },
   {
@@ -897,7 +901,8 @@
       {"name": "luxio"},
       {"name": "litwick"},
       {"name": "steelix"},
-      {"name": "onix"}
+      {"name": "onix"},
+      {"name": "donphan"}
     ]
   },
   {
@@ -1043,7 +1048,8 @@
       {"name": "bibarel"},
       {"name": "dugtrio"},
       {"name": "snorlax"},
-      {"name": "murkrow"}
+      {"name": "murkrow"},
+      {"name": "marill","safari": true}
     ]
   },
   {
@@ -1075,7 +1081,9 @@
       {"name": "amoonguss","clip": "https://www.twitch.tv/paulustft/clip/ApatheticSquareBatPipeHype-6PLnTpUGAA7N_YZ2"},
       {"name": "koffing","safari": true,"secret": true,"clip": "https://www.twitch.tv/paulustft/clip/MushyProtectivePorpoiseBabyRage-VEM-4L67kZsKsFrv"},
       {"name": "golurk"},
-      {"name": "stunky"}
+      {"name": "stunky"},
+      {"name": "venonat"},
+      {"name": "roselia"}
     ]
   },
   {
@@ -1709,7 +1717,8 @@
       {"name": "magikarp","lost": true},
       {"name": "bibarel","lost": true},
       {"name": "fearow"},
-      {"name": "ralts"}
+      {"name": "ralts"},
+      {"name": "claydol"}
     ]
   },
   {
