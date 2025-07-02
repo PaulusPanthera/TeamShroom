@@ -308,25 +308,6 @@
     ]
   },
   {
-    "name": "FrostyIceScream",
-    "status": "shinyshroom",
-    "shinies": [
-      {"name": "shroomish"},
-      {"name": "sneasel"},
-      {"name": "magikarp"},
-      {"name": "woobat"},
-      {"name": "swoobat"},
-      {"name": "haxorus"},
-      {"name": "politoed"},
-      {"name": "camerupt"},
-      {"name": "gliscor"},
-      {"name": "roselia"},
-      {"name": "accelgor"},
-      {"name": "spinda"},
-      {"name": "gothorita"}
-    ]
-  },
-  {
     "name": "Genesect",
     "status": "spore",
     "shinies": [
