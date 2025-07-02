@@ -16,6 +16,36 @@ function getPokemonGif(name) {
 
 export function renderShinyWeekly(weeklyData, container) {
   if (!container) return;
+
+  // --- MAINTENANCE SUPPORT ---
+  // If weeklyData is an object and has a .maintenance flag, show only "soon to be" message
+  if (weeklyData && typeof weeklyData === "object" && !Array.isArray(weeklyData) && weeklyData.maintenance) {
+    container.innerHTML = `
+      <div style="font-size:1.6em;color:var(--accent);margin:3em 0;text-align:center;">
+        ${weeklyData.message || "Shiny Weekly is soon to be. Stay tuned!"}
+      </div>
+    `;
+    return;
+  }
+
+  // If array with first element as { maintenance: true }, also show maintenance message
+  if (
+    Array.isArray(weeklyData) &&
+    weeklyData.length &&
+    weeklyData[0] &&
+    typeof weeklyData[0] === "object" &&
+    weeklyData[0].maintenance
+  ) {
+    const msg = weeklyData[0].message || "Shiny Weekly is soon to be. Stay tuned!";
+    container.innerHTML = `
+      <div style="font-size:1.6em;color:var(--accent);margin:3em 0;text-align:center;">
+        ${msg}
+      </div>
+    `;
+    return;
+  }
+
+  // --- NORMAL RENDER ---
   container.innerHTML = `
     <h2>Shiny Weekly Overview</h2>
     <div class="weekly-calendar"></div>
