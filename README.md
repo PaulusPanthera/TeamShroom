@@ -80,6 +80,7 @@ Hosted on GitHub Pages.
 ## To Do
 
 - [ ] Add Socials (Twitch, Youtube) for Members
+- [ ] Gastrodon fixen
 - [ ] Add alternative Shiny View with shinies roaming around
 - [ ] Add Rarity Count to Living Dex
 - [ ] Add Summary section to Shinies
