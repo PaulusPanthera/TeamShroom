@@ -237,7 +237,7 @@
       {"name": "typhlosion","egg": true},
       {"name": "weavile"},
       {"name": "graveler"},
-      {"name": "gliscor"},
+      {"name": "glir"},
       {"name": "vanilluxe"},
       {"name": "donphan"},
       {"name": "aerodactyl","egg": true},
@@ -1284,6 +1284,21 @@
       {"name": "durant"},
       {"name": "paras"},
       {"name": "growlithe"}
+    ]
+  },
+  {
+    "name": "Scooty",
+    "status": "spore",
+    "shinies": [
+      {"name": "rapidash"},
+      {"name": "tympole"},
+      {"name": "buizel"},
+      {"name": "ponyta"},
+      {"name": "heatmor"},
+      {"name": "nosepass"},
+      {"name": "furret", "clip": "https://www.youtube.com/watch?v=_JwiBKXQcHE"},
+      {"name": "nidorina"},
+      {"name": "magneton"}
     ]
   },
   {
