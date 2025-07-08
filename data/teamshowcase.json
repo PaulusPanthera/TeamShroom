@@ -282,7 +282,7 @@
     "name": "Eerie",
     "status": "shroom",
     "shinies": [
-      {"name": "poke"},
+      {"name": "slowpoke"},
       {"name": "lanturn"},
       {"name": "girafarig"},
       {"name": "staravia"},
@@ -308,6 +308,38 @@
       {"name": "nidorino"},
       {"name": "pidgey"}
     ]
+  },
+  {
+    "name": "Emmy",
+    "status": "spore",
+    "shinies": [
+  { "name": "Tentacruel" },
+  { "name": "Pelipper" },
+  { "name": "Linoone" },
+  { "name": "Vanilluxe" },
+  { "name": "Litwick" },
+  { "name": "Magikarp" },
+  { "name": "Klink" },
+  { "name": "Minccino" },
+  { "name": "Darumaka" },
+  { "name": "Donphan" },
+  { "name": "Donphan" },
+  { "name": "Donphan" },
+  { "name": "Duskull" },
+  { "name": "Wynaut" },
+  { "name": "Boldore" },
+  { "name": "Smeargle" },
+  { "name": "Liepard" },
+  { "name": "Crustle" },
+  { "name": "Mawile" },
+  { "name": "Bronzong" },
+  { "name": "Nosepass" },
+  { "name": "Klang" },
+  { "name": "Durant" },
+  { "name": "Ferrothorn" },
+  { "name": "Cubone" },
+  { "name": "Beldum", "egg": true }
+]
   },
   {
     "name": "Genesect",
