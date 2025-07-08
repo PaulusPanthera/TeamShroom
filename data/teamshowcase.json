@@ -8,6 +8,14 @@
     ]
   },
   {
+    "name": "Aokiza",
+    "status": "spore",
+    "shinies": [
+      {"name": "psyduck"},
+      {"name": "rapidash"}
+    ]
+  },
+  {
     "name": "ashash",
     "status": "spore",
     "shinies": [
