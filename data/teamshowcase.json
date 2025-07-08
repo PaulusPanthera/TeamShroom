@@ -102,8 +102,8 @@
     "status": "spore",
     "shinies": [
       {"name": "dragonite"},
-      {"name": "lopunny"},
       {"name": "vespiquen"},
+      {"name": "lopunny"},
       {"name": "vanilluxe"},
       {"name": "onix"},
       {"name": "steelix"},
