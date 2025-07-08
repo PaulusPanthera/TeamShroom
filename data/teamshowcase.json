@@ -323,10 +323,10 @@
     "shinies": [
       { "name": "tentacruel" },
       { "name": "pelipper" },
+      { "name": "geodude" },
       { "name": "linoone" },
       { "name": "vanilluxe" },
       { "name": "litwick" },
-      { "name": "magikarp" },
       { "name": "klink" },
       { "name": "minccino" },
       { "name": "darumaka" },
@@ -346,7 +346,8 @@
       { "name": "durant" },
       { "name": "ferrothorn" },
       { "name": "cubone" },
-      { "name": "beldum", "egg": true }
+      { "name": "beldum", "egg": true },
+      { "name": "pidgey" }
     ]
   },
   {
@@ -1759,6 +1760,7 @@
       {"name": "gyarados"},
       {"name": "magikarp","lost": true},
       {"name": "bibarel","lost": true},
+      {"name": "tentacool"},
       {"name": "fearow"},
       {"name": "ralts"},
       {"name": "claydol"},
