@@ -1122,13 +1122,6 @@
     ]
   },
   {
-    "name": "peachhteaa",
-    "status": "spore",
-    "shinies": [
-      {"name": "psyduck"}
-    ]
-  },
-  {
     "name": "pearishx",
     "status": "shroom",
     "shinies": [
@@ -1185,33 +1178,6 @@
       {"name": "persian"},
       {"name": "treecko"},
       {"name": "smeargle"}
-    ]
-  },
-  {
-    "name": "qtAlice",
-    "status": "shroom",
-    "shinies": [
-      {"name": "abra"},
-      {"name": "kadabra"},
-      {"name": "alakazam"},
-      {"name": "shuckle","safari": true},
-      {"name": "tauros"},
-      {"name": "meowth"},
-      {"name": "vanillish"},
-      {"name": "surskit"},
-      {"name": "masquerain"},
-      {"name": "psyduck"},
-      {"name": "duskull"},
-      {"name": "tentacruel"},
-      {"name": "gloom"},
-      {"name": "bellossom"},
-      {"name": "dustox"},
-      {"name": "poochyena"},
-      {"name": "zigzagoon"},
-      {"name": "linoone"},
-      {"name": "taillow"},
-      {"name": "swellow"},
-      {"name": "zigzagoon"}
     ]
   },
   {
