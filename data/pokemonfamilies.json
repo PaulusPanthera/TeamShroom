@@ -2685,7 +2685,7 @@
     "#": 299,
     "pokemon": "nosepass",
     "family_members": "nosepass,probopass",
-    "tier": "Tier 6",
+    "tier": "Tier 4",
     "region": "Hoenn",
     "rarity": "5x100%",
     "claimed": false
@@ -4296,7 +4296,7 @@
     "#": 476,
     "pokemon": "probopass",
     "family_members": "nosepass,probopass",
-    "tier": "Tier 6",
+    "tier": "Tier 4",
     "region": "Sinnoh",
     "rarity": "5x100%",
     "claimed": false
