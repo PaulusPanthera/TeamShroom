@@ -1241,7 +1241,7 @@
     "name": "Sardelle",
     "status": "spore",
     "shinies": [
-      {"name": "drifloon"},
+      {"name": "drifloon","event": true},
       {"name": "donphan"}
     ]
   },
