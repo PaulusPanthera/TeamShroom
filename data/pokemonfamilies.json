@@ -2145,7 +2145,7 @@
     "#": 239,
     "pokemon": "elekid",
     "family_members": "elekid,electabuzz,electivire",
-    "tier": "Tier 6",
+    "tier": "Tier 4",
     "region": "Johto",
     "rarity": "Baby",
     "claimed": false
@@ -4206,7 +4206,7 @@
     "#": 466,
     "pokemon": "electivire",
     "family_members": "elekid,electabuzz,electivire",
-    "tier": "Tier 6",
+    "tier": "Tier 4",
     "region": "Sinnoh",
     "rarity": "5x100%",
     "claimed": "OhItsDunco"
@@ -5859,3 +5859,4 @@
     "claimed": "NA"
   }
 ]
+
