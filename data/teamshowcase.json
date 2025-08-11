@@ -191,7 +191,7 @@
       {"name": "poliwhirl"},
       {"name": "bouffalant","clip": "https://www.youtube.com/watch?v=7OeR63i97VA"},
       {"name": "nidoran-m"},
-      {"name": "bro","clip": "https://www.youtube.com/watch?v=icThxj1y3jk"},
+      {"name": "slowbro","clip": "https://www.youtube.com/watch?v=icThxj1y3jk"},
       {"name": "ducklett","egg": true,"clip": "https://www.youtube.com/watch?v=TnTYljgWOEY"},
       {"name": "vanilluxe","clip": "https://www.youtube.com/watch?v=Gml3gj-uuPk"},
       {"name": "raticate"},
@@ -1780,3 +1780,4 @@
     ]
   }
 ]
+
