@@ -43,34 +43,6 @@
     ]
   },
   {
-    "name": "BojanglesisHere",
-    "status": "shroom",
-    "shinies": [
-      {"name": "duskull"},
-      {"name": "floatzel"},
-      {"name": "rapidash"},
-      {"name": "cubchoo"},
-      {"name": "smeargle"},
-      {"name": "abra"},
-      {"name": "golett"},
-      {"name": "poliwhirl"},
-      {"name": "poliwhirl"},
-      {"name": "koffing"},
-      {"name": "parasect"},
-      {"name": "kecleon"},
-      {"name": "combee"},
-      {"name": "raticate"}
-    ]
-  },
-  {
-    "name": "Brokencycles",
-    "status": "shroom",
-    "shinies": [
-      {"name": "lanturn"},
-      {"name": "bellossom"}
-    ]
-  },
-  {
     "name": "Bulkanator",
     "status": "shroom",
     "shinies": [
@@ -464,14 +436,6 @@
     "status": "spore",
     "shinies": [
       {"name": "rapidash"}
-    ]
-  },
-  {
-    "name": "Highschoolme",
-    "status": "shroom",
-    "shinies": [
-      {"name": "gardevoir"},
-      {"name": "ninetales"}
     ]
   },
   {
@@ -955,15 +919,6 @@
     ]
   },
   {
-    "name": "MitchOsu",
-    "status": "shroom",
-    "shinies": [
-      {"name": "litwick"},
-      {"name": "meowth"},
-      {"name": "rhyperior"}
-    ]
-  },
-  {
     "name": "mossballetje",
     "status": "shroom",
     "shinies": [
@@ -1001,14 +956,7 @@
     ]
   },
   {
-    "name": "nerfviands",
-    "status": "spore",
-    "shinies": [
-      {"name": "mantine"}
-    ]
-  },
-  {
-    "name": "Nercylla",
+    "name": "Clairbear",
     "status": "shroom",
     "shinies": [
       {"name": "silcoon"},
@@ -1276,17 +1224,6 @@
     ]
   },
   {
-    "name": "slowturtle",
-    "status": "shroom",
-    "shinies": [
-      {"name": "raticate"},
-      {"name": "woobat"},
-      {"name": "axew"},
-      {"name": "bellsprout"},
-      {"name": "swoobat"}
-    ]
-  },
-  {
     "name": "ShakeyEy",
     "status": "shroom",
     "shinies": [
@@ -1453,23 +1390,6 @@
     ]
   },
   {
-    "name": "TheJuanNonly",
-    "status": "shroom",
-    "shinies": [
-      {"name": "beldum"},
-      {"name": "tentacool"},
-      {"name": "deino"},
-      {"name": "nidoran-f"},
-      {"name": "woobat"},
-      {"name": "growlithe"},
-      {"name": "vulpix"},
-      {"name": "axew"},
-      {"name": "duskull"},
-      {"name": "sneasel"},
-      {"name": "misdreavus"}
-    ]
-  },
-  {
     "name": "TheStahlBayBay",
     "status": "shroom",
     "shinies": [
@@ -1550,25 +1470,6 @@
       {"name": "tentacool"},
       {"name": "carvanha"},
       {"name": "sharpedo"}
-    ]
-  },
-  {
-    "name": "TzKalZuk",
-    "status": "spore",
-    "shinies": [
-      {"name": "fearow"},
-      {"name": "tentacruel"},
-      {"name": "geodude","lost": true}
-    ]
-  },
-  {
-    "name": "UltraKingRom",
-    "status": "spore",
-    "shinies": [
-      {"name": "floatzel","lost": true},
-      {"name": "woobat","lost": true},
-      {"name": "tentacruel","lost": true},
-      {"name": "magikarp"}
     ]
   },
   {
@@ -1657,22 +1558,6 @@
       {"name": "raticate"},
       {"name": "hoothoot"},
       {"name": "poochyena"}
-    ]
-  },
-  {
-    "name": "Wisqi",
-    "status": "shroom",
-    "shinies": [
-      {"name": "baltoy"},
-      {"name": "stunfisk"},
-      {"name": "muk"},
-      {"name": "rapidash"},
-      {"name": "tentacruel"},
-      {"name": "beheeyem"},
-      {"name": "golduck"},
-      {"name": "machoke"},
-      {"name": "piloswine"},
-      {"name": "camerupt"}
     ]
   },
   {
@@ -1780,4 +1665,5 @@
     ]
   }
 ]
+
 
