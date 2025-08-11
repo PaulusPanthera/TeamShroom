@@ -15,7 +15,7 @@
     "tier": "Tier 0",
     "region": "Kanto",
     "rarity": "starter",
-    "claimed": false
+    "claimed": "Orllando"
   },
   {
     "#": 3,
@@ -438,7 +438,7 @@
     "tier": "Tier 4",
     "region": "Kanto",
     "rarity": "3x100%N",
-    "claimed": false
+    "claimed": "Dupe"
   },
   {
     "#": 50,
@@ -735,7 +735,7 @@
     "tier": "Tier 6",
     "region": "Kanto",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Emmy"
   },
   {
     "#": 83,
@@ -780,7 +780,7 @@
     "tier": "Tier 6",
     "region": "Kanto",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Dupe"
   },
   {
     "#": 88,
@@ -888,7 +888,7 @@
     "tier": "Tier 6",
     "region": "Kanto",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Grrzzly"
   },
   {
     "#": 100,
@@ -906,7 +906,7 @@
     "tier": "Tier 6",
     "region": "Kanto",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Dupe"
   },
   {
     "#": 102,
@@ -969,7 +969,7 @@
     "tier": "Tier 6",
     "region": "Kanto",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Hjordi"
   },
   {
     "#": 109,
@@ -1059,7 +1059,7 @@
     "tier": "Tier 6",
     "region": "Kanto",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "mikesbob"
   },
   {
     "#": 119,
@@ -1113,7 +1113,7 @@
     "tier": "Tier 6",
     "region": "Kanto",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Tortuponchy"
   },
   {
     "#": 125,
@@ -1122,7 +1122,7 @@
     "tier": "Tier 4",
     "region": "Kanto",
     "rarity": "",
-    "claimed": false
+    "claimed": "WillyPS"
   },
   {
     "#": 126,
@@ -1365,7 +1365,7 @@
     "tier": "Tier 0",
     "region": "Johto",
     "rarity": "starter",
-    "claimed": false
+    "claimed": "tulicreme"
   },
   {
     "#": 153,
@@ -1419,7 +1419,7 @@
     "tier": "Tier 0",
     "region": "Johto",
     "rarity": "starter",
-    "claimed": false
+    "claimed": "WillyPS"
   },
   {
     "#": 159,
@@ -1428,7 +1428,7 @@
     "tier": "Tier 0",
     "region": "Johto",
     "rarity": "starter",
-    "claimed": false
+    "claimed": "Grrzzly"
   },
   {
     "#": 160,
@@ -1509,7 +1509,7 @@
     "tier": "Tier 5",
     "region": "Johto",
     "rarity": "",
-    "claimed": false
+    "claimed": "Jutskaa"
   },
   {
     "#": 169,
@@ -1689,7 +1689,7 @@
     "tier": "Tier 6",
     "region": "Johto",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Pangeaa"
   },
   {
     "#": 189,
@@ -1815,7 +1815,7 @@
     "tier": "Tier 6",
     "region": "Johto",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Skullz"
   },
   {
     "#": 203,
@@ -1851,7 +1851,7 @@
     "tier": "Tier 6",
     "region": "Johto",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "WillyPS"
   },
   {
     "#": 207,
@@ -1977,7 +1977,7 @@
     "tier": "Tier 6",
     "region": "Johto",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Skullz"
   },
   {
     "#": 221,
@@ -2103,7 +2103,7 @@
     "tier": "Tier 4",
     "region": "Johto",
     "rarity": "",
-    "claimed": false
+    "claimed": "PaulusTFT"
   },
   {
     "#": 235,
@@ -2130,7 +2130,7 @@
     "tier": "Tier 0",
     "region": "Johto",
     "rarity": "rare",
-    "claimed": false
+    "claimed": "Pangeaa"
   },
   {
     "#": 238,
@@ -2148,7 +2148,7 @@
     "tier": "Tier 4",
     "region": "Johto",
     "rarity": "Baby",
-    "claimed": false
+    "claimed": "riahC"
   },
   {
     "#": 240,
@@ -2157,7 +2157,7 @@
     "tier": "Tier 6",
     "region": "Johto",
     "rarity": "Baby",
-    "claimed": false
+    "claimed": "kitsucupid"
   },
   {
     "#": 241,
@@ -2328,7 +2328,7 @@
     "tier": "Tier 0",
     "region": "Hoenn",
     "rarity": "starter",
-    "claimed": false
+    "claimed": "PaulusTFT"
   },
   {
     "#": 260,
@@ -2472,7 +2472,7 @@
     "tier": "Tier 5",
     "region": "Hoenn",
     "rarity": "",
-    "claimed": false
+    "claimed": "TTVxSenseiNESS"
   },
   {
     "#": 276,
@@ -2553,7 +2553,7 @@
     "tier": "Tier 6",
     "region": "Hoenn",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Whamalicious"
   },
   {
     "#": 285,
@@ -2652,7 +2652,7 @@
     "tier": "Tier 6",
     "region": "Hoenn",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Yoyoyoshie"
   },
   {
     "#": 296,
@@ -2661,7 +2661,7 @@
     "tier": "Tier 6",
     "region": "Hoenn",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "PaulusTFT"
   },
   {
     "#": 297,
@@ -2670,7 +2670,7 @@
     "tier": "Tier 6",
     "region": "Hoenn",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "fisplant"
   },
   {
     "#": 298,
@@ -2760,7 +2760,7 @@
     "tier": "Tier 5",
     "region": "Hoenn",
     "rarity": "",
-    "claimed": false
+    "claimed": "Grrzzly"
   },
   {
     "#": 308,
@@ -2778,7 +2778,7 @@
     "tier": "Tier 5",
     "region": "Hoenn",
     "rarity": "",
-    "claimed": false
+    "claimed": "Terminus"
   },
   {
     "#": 310,
@@ -2985,7 +2985,7 @@
     "tier": "Tier 3",
     "region": "Hoenn",
     "rarity": "",
-    "claimed": false
+    "claimed": "PaulusTFT"
   },
   {
     "#": 333,
@@ -3138,7 +3138,7 @@
     "tier": "Tier 1",
     "region": "Hoenn",
     "rarity": "rare",
-    "claimed": false
+    "claimed": "MELVZZY"
   },
   {
     "#": 350,
@@ -3246,7 +3246,7 @@
     "tier": "Tier 5",
     "region": "Hoenn",
     "rarity": "",
-    "claimed": false
+    "claimed": "PaulusTFT"
   },
   {
     "#": 362,
@@ -3300,7 +3300,7 @@
     "tier": "Tier 6",
     "region": "Hoenn",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Mileage"
   },
   {
     "#": 368,
@@ -3327,7 +3327,7 @@
     "tier": "Tier 3",
     "region": "Hoenn",
     "rarity": "",
-    "claimed": false
+    "claimed": "TorontoKid"
   },
   {
     "#": 371,
@@ -3372,7 +3372,7 @@
     "tier": "Tier 1",
     "region": "Hoenn",
     "rarity": "",
-    "claimed": false
+    "claimed": "Skullz"
   },
   {
     "#": 376,
@@ -3642,7 +3642,7 @@
     "tier": "Tier 5",
     "region": "Sinnoh",
     "rarity": "",
-    "claimed": false
+    "claimed": "TTVxSenseiNESS"
   },
   {
     "#": 406,
@@ -3705,7 +3705,7 @@
     "tier": "Tier 1",
     "region": "Sinnoh",
     "rarity": "",
-    "claimed": false
+    "claimed": "Jutskaa"
   },
   {
     "#": 413,
@@ -3894,7 +3894,7 @@
     "tier": "Tier 5",
     "region": "Sinnoh",
     "rarity": "",
-    "claimed": false
+    "claimed": "Jayyxxi"
   },
   {
     "#": 432,
@@ -3903,7 +3903,7 @@
     "tier": "Tier 5",
     "region": "Sinnoh",
     "rarity": "",
-    "claimed": false
+    "claimed": "Rintuu"
   },
   {
     "#": 433,
@@ -4551,7 +4551,7 @@
     "tier": "Tier 6",
     "region": "Unova",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "mikesbob"
   },
   {
     "#": 505,
@@ -4578,7 +4578,7 @@
     "tier": "Tier 6",
     "region": "Unova",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "PaulusTFT"
   },
   {
     "#": 508,
@@ -4722,7 +4722,7 @@
     "tier": "Tier 6",
     "region": "Unova",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "PaulusTFT"
   },
   {
     "#": 524,
@@ -4749,7 +4749,7 @@
     "tier": "Tier 6",
     "region": "Unova",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "tulicreme"
   },
   {
     "#": 527,
@@ -4821,7 +4821,7 @@
     "tier": "Tier 6",
     "region": "Unova",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Skullz"
   },
   {
     "#": 535,
@@ -4830,7 +4830,7 @@
     "tier": "Tier 6",
     "region": "Unova",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Skullz"
   },
   {
     "#": 536,
@@ -4857,7 +4857,7 @@
     "tier": "Tier 4",
     "region": "Unova",
     "rarity": "",
-    "claimed": false
+    "claimed": "mikesbob"
   },
   {
     "#": 539,
@@ -4866,7 +4866,7 @@
     "tier": "Tier 4",
     "region": "Unova",
     "rarity": "",
-    "claimed": false
+    "claimed": "Scooby"
   },
   {
     "#": 540,
@@ -5010,7 +5010,7 @@
     "tier": "Tier 4",
     "region": "Unova",
     "rarity": "",
-    "claimed": false
+    "claimed": "JGrenade"
   },
   {
     "#": 556,
@@ -5037,7 +5037,7 @@
     "tier": "Tier 6",
     "region": "Unova",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Orllando"
   },
   {
     "#": 559,
@@ -5064,7 +5064,7 @@
     "tier": "Tier 3",
     "region": "Unova",
     "rarity": "",
-    "claimed": false
+    "claimed": "Eerie"
   },
   {
     "#": 562,
@@ -5073,7 +5073,7 @@
     "tier": "Tier 6",
     "region": "Unova",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Pangeaa"
   },
   {
     "#": 563,
@@ -5127,7 +5127,7 @@
     "tier": "Tier 4",
     "region": "Unova",
     "rarity": "",
-    "claimed": false
+    "claimed": "Scooby"
   },
   {
     "#": 569,
@@ -5190,7 +5190,7 @@
     "tier": "Tier 6",
     "region": "Unova",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "TTVxSenseiNESS"
   },
   {
     "#": 576,
@@ -5289,7 +5289,7 @@
     "tier": "Tier 6",
     "region": "Unova",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "TTVxSenseiNESS"
   },
   {
     "#": 587,
@@ -5307,7 +5307,7 @@
     "tier": "Tier 4",
     "region": "Unova",
     "rarity": "",
-    "claimed": false
+    "claimed": "Emmy"
   },
   {
     "#": 589,
@@ -5469,7 +5469,7 @@
     "tier": "Tier 6",
     "region": "Unova",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Luna"
   },
   {
     "#": 607,
@@ -5577,7 +5577,7 @@
     "tier": "Tier 6",
     "region": "Unova",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "PaulusTFT"
   },
   {
     "#": 619,
@@ -5604,7 +5604,7 @@
     "tier": "Tier 6",
     "region": "Unova",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "DaddyMolo"
   },
   {
     "#": 622,
@@ -5676,7 +5676,7 @@
     "tier": "Tier 5",
     "region": "Unova",
     "rarity": "",
-    "claimed": false
+    "claimed": "BojanglesisHere"
   },
   {
     "#": 630,
@@ -5859,4 +5859,5 @@
     "claimed": "NA"
   }
 ]
+
 
