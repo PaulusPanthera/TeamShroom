@@ -1238,7 +1238,7 @@
       {"name": "jigglypuff","clip": "https://www.twitch.tv/paulustft/clip/CarefulExcitedRatRlyTho-h7Ewli2Y63xLD8xP"},
       {"name": "herdier","clip": "https://www.twitch.tv/paulustft/clip/RamshackleFancyCockroachChocolateRain-Ic-ueAhNanriwUHm"},
       {"name": "hariyama","clip": "https://www.twitch.tv/paulustft/clip/ImpossibleCheerfulOwlANELE-J7BImmTRFwhUQOkS"},
-      {"name": "zebstrika","clip": "https://www.twitch.tv/paulustft/clip/UnsightlyEnchantingAmazonTwitchRPG-G3Pry1zXtvyRKbik"}
+      {"name": "zebstrika","clip": "https://www.twitch.tv/paulustft/clip/UnsightlyEnchantingAmazonTwitchRPG-G3Pry1zXtvyRKbik"},
       {"name": "mudkip","egg": true,"clip": "https://www.twitch.tv/paulustft/clip/DependableThoughtfulHawkKlappa-AoWxrVpBv6tqq7Mc"},
       {"name": "stunfisk"},
       {"name": "basculin","clip": "https://www.twitch.tv/paulustft/clip/TransparentKathishEggplantBloodTrail-KhEWU2B-VddGj4fD"},
@@ -2016,6 +2016,7 @@
     ]
   }
 ]
+
 
 
 
