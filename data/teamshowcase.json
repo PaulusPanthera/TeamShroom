@@ -736,7 +736,7 @@
       {"name": "vulpix"},
       {"name": "munna","event": true},
       {"name": "magikarp"},
-      {"name": "politoad"},
+      {"name": "politoed"},
       {"name": "smeargle"},
       {"name": "magmar"},
       {"name": "miltank","event": true},
@@ -1737,7 +1737,7 @@
       {"name": "luxray"},
       {"name": "garchomp"},
       {"name": "graveler"},
-      {"name": "politoad"},
+      {"name": "politoed"},
       {"name": "gothitelle"},
       {"name": "golurk"},
       {"name": "shiftry"},
@@ -2016,6 +2016,7 @@
     ]
   }
 ]
+
 
 
 
