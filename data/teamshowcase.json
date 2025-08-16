@@ -1591,7 +1591,7 @@
     "shinies": [
       {"name": "tentacruel"},
       {"name": "bidoof"},
-      {"name": "milotic"},
+      {"name": "milotic","egg": true},
       {"name": "pikachu"},
       {"name": "graveler"},
       {"name": "luxio"}
@@ -2016,6 +2016,7 @@
     ]
   }
 ]
+
 
 
 
