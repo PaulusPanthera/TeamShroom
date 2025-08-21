@@ -1024,7 +1024,7 @@
       {"name": "duskull"},
       {"name": "magikarp"},
       {"name": "poliwag"},
-      {"name": "cubchoo","lost": true},
+      {"name": "cubchoo"},
       {"name": "sneasel"},
       {"name": "luxio"},
       {"name": "litwick"},
@@ -2016,6 +2016,7 @@
     ]
   }
 ]
+
 
 
 
