@@ -7,6 +7,43 @@
       {"name": "ponyta"}
     ]
   },
+   {
+    "name": "AKatharina",
+    "status": "spore",
+    "shinies": [
+      {"name": "tentacruel"},
+      {"name": "ponyta"},
+      {"name": "rapidash"},
+      {"name": "magikarp"},
+      {"name": "gyarados"},
+      {"name": "crobat"},
+      {"name": "swablu"},
+      {"name": "altaria"},
+      {"name": "bibarel"},
+      {"name": "gardevoir"},
+      {"name": "graveler"},
+      {"name": "golem"},
+      {"name": "gliscor"},
+      {"name": "ludicolo"},
+      {"name": "druddigon"},
+      {"name": "gabite"},
+      {"name": "torkoal"},
+      {"name": "skuntank"},
+      {"name": "exploud"},
+      {"name": "golurk"},
+      {"name": "steelix"},
+      {"name": "heatmor"},
+      {"name": "liepard"},
+      {"name": "victreebel"},
+      {"name": "wigglytuff"},
+      {"name": "cinccino"},
+      {"name": "darmanitan"},
+      {"name": "beartic"},
+      {"name": "pikachu"},
+      {"name": "stoutland"},
+      {"name": "vanilluxe"}
+    ]
+  },
   {
     "name": "Aokiza",
     "status": "spore",
@@ -32,6 +69,24 @@
       {"name": "rapidash"},
       {"name": "ninetales"},
       {"name": "chandelure"}
+    ]
+  },
+  {
+    "name": "Biiidou",
+    "status": "spore",
+    "shinies": [
+      {"name": "ditto"},
+      {"name": "weezing"},
+      {"name": "hippopotas"},
+      {"name": "venipede"},
+      {"name": "venipede"},
+      {"name": "graveler"},
+      {"name": "rapidash","lost": true},
+      {"name": "rapidash","lost": true},
+      {"name": "petilil","lost": true},
+      {"name": "bouffalant","lost": true},
+      {"name": "graveler","lost": true},
+      {"name": "graveler","lost": true}
     ]
   },
   {
@@ -406,11 +461,38 @@
     ]
   },
   {
+    "name": "Freenox",
+    "status": "spore",
+    "shinies": [
+      {"name": "spearow","lost": true},
+      {"name": "ponyta"},
+      {"name": "rapidash","lost": true},
+      {"name": "bellsprout"},
+      {"name": "tentacool"},
+      {"name": "tentacruel","lost": true},
+      {"name": "donphan"},
+      {"name": "donphan"},
+      {"name": "dodrio"}
+    ]
+  },
+  {
     "name": "fisplant",
     "status": "spore",
     "shinies": [
       {"name": "hariyama"},
       {"name": "graveler"}
+    ]
+  },
+  {
+    "name": "Gaudjo",
+    "status": "spore",
+    "shinies": [
+      {"name": "corphish"},
+      {"name": "glalie"},
+      {"name": "mankey"},
+      {"name": "flygon"},
+      {"name": "sandslash"},
+      {"name": "lotad"}
     ]
   },
   {
@@ -743,6 +825,21 @@
       {"name": "jigglypuff","safari": true,"clip": "https://www.youtube.com/watch?v=Nl3Vb5NdkrU"}
     ]
   },
+  {
+    "name": "Kaaflaa",
+    "status": "spore",
+    "shinies": [
+      {"name": "stunfisk"},
+      {"name": "politoed"},
+      {"name": "unfezant"},
+      {"name": "pidgeot"},
+      {"name": "pelipper"},
+      {"name": "drifblim"},
+      {"name": "mienfoo"},
+      {"name": "shelmet"},
+      {"name": "tentacruel"}
+    ]
+  },
    {
     "name": "Kithri",
     "status": "spore",
@@ -831,6 +928,28 @@
       {"name": "aipom"},
       {"name": "metang"},
       {"name": "cubchoo","lost": true}
+    ]
+  },
+  {
+    "name": "locobounty",
+    "status": "spore",
+    "shinies": [
+      {"name": "bellosom"},
+      {"name": "silcoon"},
+      {"name": "wurmple"},
+      {"name": "poochyena"},
+      {"name": "smeargle"},
+      {"name": "psyduck"},
+      {"name": "spinda"},
+      {"name": "wurmple"},
+      {"name": "camerupt"},
+      {"name": "zebstrika"},
+      {"name": "watchog"},
+      {"name": "linoone"},
+      {"name": "hariyama"},
+      {"name": "oddish"},
+      {"name": "altaria"},
+      {"name": "cubchoo"}
     ]
   },
   {
@@ -1020,20 +1139,19 @@
     "status": "spore",
     "shinies": [
       {"name": "lilligant"},
+      {"name": "chandelure"},
       {"name": "duskull"},
       {"name": "poochyena"},
-      {"name": "chandelure"},
+      {"name": "crobat"},
       {"name": "jellicent"},
       {"name": "cofagrigus"},
-      {"name": "shuppet"},
-      {"name": "roselia"},
-      {"name": "crobat"},
       {"name": "alakazam"},
+      {"name": "shuppet"},
       {"name": "nidorina"},
+      {"name": "roselia"},
       {"name": "lickilicky"},
-      {"name": "conkeldurr"},
       {"name": "cubchoo"},
-      {"name": "exploud"}
+      {"name": "conkeldurr"}
     ]
   },
   {
@@ -1266,6 +1384,20 @@
       {"name": "crustle"},
       {"name": "swablu"},
       {"name": "rhydon"}
+    ]
+  },
+  {
+    "name": "Othryx",
+    "status": "spore",
+    "shinies": [
+      {"name": "gengar"},
+      {"name": "cofagrigus"},
+      {"name": "krabby"},
+      {"name": "glaceon"},
+      {"name": "vanilluxe"},
+      {"name": "poliwhirl"},
+      {"name": "larvitar"},
+      {"name": "bronzong"}
     ]
   },
   {
@@ -1720,6 +1852,63 @@
     ]
   },
   {
+    "name": "TakeOnMeh",
+    "status": "spore",
+    "shinies": [
+      {"name": "psyduck"},
+      {"name": "cofagrigus"},
+      {"name": "weavile"},
+      {"name": "chandelure"},
+      {"name": "smeargle"},
+      {"name": "pelipper"},
+      {"name": "golduck","lost": true},
+      {"name": "hydreigon"},
+      {"name": "starmie"},
+      {"name": "bibarel"},
+      {"name": "bibarel","lost": true},
+      {"name": "bibarel","lost": true},
+      {"name": "Gallade"},
+      {"name": "magikarp"},
+      {"name": "cascoon"},
+      {"name": "politoed"},
+      {"name": "reuniclus"},
+      {"name": "walrein"},
+      {"name": "hoothoot"},
+      {"name": "krookodile"},
+      {"name": "dusclops"},
+      {"name": "muk"},
+      {"name": "alakazam"},
+      {"name": "magneton"},
+      {"name": "solrock"},
+      {"name": "crobat"},
+      {"name": "golbat"},
+      {"name": "solrock"},
+      {"name": "solrock"},
+      {"name": "golbat"},
+      {"name": "salamence"},
+      {"name": "slowbro"},
+      {"name": "azumarill"},
+      {"name": "minccino"},
+      {"name": "pawniard","secret": true},
+      {"name": "gliscor"},
+      {"name": "darmanitan"},
+      {"name": "dustox"},
+      {"name": "slakoth"},
+      {"name": "zigzagoon"},
+      {"name": "wurmple"},
+      {"name": "beautifly"},
+      {"name": "cascoon"},
+      {"name": "zigzagoon"},
+      {"name": "magcargo"},
+      {"name": "vibrava"},
+      {"name": "electrode"},
+      {"name": "wobbuffet"},
+      {"name": "piloswine"},
+      {"name": "stantler"},
+      {"name": "gigalith"}
+    ]
+  },
+  {
     "name": "tardigreat",
     "status": "shroom",
     "shinies": [
@@ -2106,6 +2295,16 @@
     ]
   },
   {
+    "name": "ZekTV",
+    "status": "spore",
+    "shinies": [
+      {"name": "victreebel"},
+      {"name": "gyarados"},
+      {"name": "machamp"},
+      {"name": "rhyperior"}
+    ]
+  },
+  {
     "name": "ZiaStitch",
     "status": "shroom",
     "shinies": [
@@ -2128,6 +2327,7 @@
     ]
   }
 ]
+
 
 
 
