@@ -26,6 +26,15 @@
     ]
   },
   {
+    "name": "azili",
+    "status": "spore",
+    "shinies": [
+      {"name": "rapidash"},
+      {"name": "ninetales"},
+      {"name": "chandelure"}
+    ]
+  },
+  {
     "name": "BlistiK",
     "status": "shroom",
     "shinies": [
@@ -1978,6 +1987,7 @@
     ]
   }
 ]
+
 
 
 
