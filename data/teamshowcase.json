@@ -937,7 +937,7 @@
     "name": "locobounty",
     "status": "spore",
     "shinies": [
-      {"name": "bellosom"},
+      {"name": "bellossom"},
       {"name": "silcoon"},
       {"name": "wurmple"},
       {"name": "poochyena"},
@@ -2339,6 +2339,7 @@
     ]
   }
 ]
+
 
 
 
