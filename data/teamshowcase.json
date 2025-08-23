@@ -835,7 +835,7 @@
       {"name": "unfezant"},
       {"name": "mienshao"},
       {"name": "accelgor"},
-      {"name": "tentacruel"}
+      {"name": "tentacruel"},
       {"name": "pidgeot"},
       {"name": "drifblim"},
       {"name": "pelipper"},
@@ -2339,6 +2339,7 @@
     ]
   }
 ]
+
 
 
 
