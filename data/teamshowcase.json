@@ -1771,7 +1771,7 @@
       {"name": "furret"},
       {"name": "treecko"},
       {"name": "golurk"},
-      {"name": "tailow"},
+      {"name": "taillow"},
       {"name": "beautifly"}
     ]
   },
@@ -2128,6 +2128,7 @@
     ]
   }
 ]
+
 
 
 
