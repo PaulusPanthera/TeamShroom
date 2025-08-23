@@ -157,7 +157,8 @@
     "shinies": [
       {"name": "magikarp"},
       {"name": "girafarig"},
-      {"name": "mankey"}
+      {"name": "mankey"},
+      {"name": "dunsparce"}
     ]
   },
    {
@@ -172,7 +173,8 @@
       {"name": "caterpie"},
       {"name": "meowth"},
       {"name": "accelgor"},
-      {"name": "wurmple"}
+      {"name": "wurmple"},
+      {"name": "hoppip"}
     ]
   },
   {
@@ -457,7 +459,8 @@
       {"name": "aggron"},
       {"name": "tyranitar"},
       {"name": "escavalier"},
-      {"name": "steelix"}
+      {"name": "steelix"},
+      {"name": "liepard"}
     ]
   },
   {
@@ -927,7 +930,8 @@
       {"name": "slugma"},
       {"name": "aipom"},
       {"name": "metang"},
-      {"name": "cubchoo","lost": true}
+      {"name": "cubchoo","lost": true},
+      {"name": "garbodor"}
     ]
   },
   {
@@ -961,7 +965,8 @@
       {"name": "sneasel"},
       {"name": "abomasnow"},
       {"name": "roserade"},
-      {"name": "haunter"}
+      {"name": "haunter"},
+      {"name": "bellossom"}
     ]
   },
   {
@@ -1131,7 +1136,8 @@
       {"name": "reuniclus"},
       {"name": "duskull"},
       {"name": "mantine"},
-      {"name": "minccino"}
+      {"name": "minccino"},
+      {"name": "vanillish"}
     ]
   },
   {
@@ -1191,7 +1197,9 @@
       {"name": "pikachu"},
       {"name": "vulpix"},
       {"name": "milotic"},
-      {"name": "koffing"}
+      {"name": "koffing"},
+      {"name": "feebas"},
+      {"name": "jigglypuff","safari": true}
     ]
   },
   {
@@ -1961,7 +1969,8 @@
       {"name": "treecko"},
       {"name": "golurk"},
       {"name": "taillow"},
-      {"name": "beautifly"}
+      {"name": "beautifly"},
+      {"name": "wurmple"}
     ]
   },
   {
@@ -2056,7 +2065,8 @@
       {"name": "sawsbuck-autumn"},
       {"name": "linoone"},
       {"name": "cubchoo"},
-      {"name": "leavanny"}
+      {"name": "leavanny"},
+      {"name": "kadabra"}
     ]
   },
   {
@@ -2073,7 +2083,8 @@
       {"name": "lanturn"},
       {"name": "boldore"},
       {"name": "chikorita","egg": true},
-      {"name": "fearow"}
+      {"name": "fearow"},
+      {"name": "carvanha"}
     ]
   },
   {
@@ -2327,6 +2338,7 @@
     ]
   }
 ]
+
 
 
 
