@@ -1698,7 +1698,7 @@
     "tier": "Tier 6",
     "region": "Johto",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Chestia"
   },
   {
     "#": 190,
@@ -3147,7 +3147,7 @@
     "tier": "Tier 1",
     "region": "Hoenn",
     "rarity": "rare",
-    "claimed": false
+    "claimed": "MELVZZY"
   },
   {
     "#": 351,
@@ -5136,7 +5136,7 @@
     "tier": "Tier 4",
     "region": "Unova",
     "rarity": "",
-    "claimed": false
+    "claimed": "Skullz"
   },
   {
     "#": 570,
@@ -5859,6 +5859,7 @@
     "claimed": "NA"
   }
 ]
+
 
 
 
