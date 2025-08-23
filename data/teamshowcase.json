@@ -75,18 +75,17 @@
     "name": "Biiidou",
     "status": "spore",
     "shinies": [
-      {"name": "ditto"},
-      {"name": "weezing"},
-      {"name": "hippopotas"},
-      {"name": "venipede"},
-      {"name": "venipede"},
-      {"name": "graveler"},
-      {"name": "rapidash","lost": true},
-      {"name": "rapidash","lost": true},
-      {"name": "petilil","lost": true},
-      {"name": "bouffalant","lost": true},
       {"name": "graveler","lost": true},
-      {"name": "graveler","lost": true}
+      {"name": "rapidash","lost": true},
+      {"name": "rapidash","lost": true},
+      {"name": "venipede"},
+      {"name": "graveler","lost": true},
+      {"name": "bouffalant","lost": true},
+      {"name": "petilil","lost": true},
+      {"name": "venipede","clip": "https://medal.tv/de/games/pokemmo/clips/kIXwlaoP46QG2EzWB?invite=cr-MSxUZUksNDE4MTk5NDMw&v=0"},
+      {"name": "hippopotas","clip": "https://medal.tv/de/games/pokemmo/clips/kIYh2sTAaHSv2029J?invite=cr-MSw5SnAsNDE4MTk5NDMw&v=0"},
+      {"name": "weezing","clip": "https://medal.tv/de/games/pokemmo/clips/kJ5r3DUmhmWsHi96s?invite=cr-MSx1Q1UsNDE4MTk5NDMw&v=0"},
+      {"name": "graveler"}
     ]
   },
   {
@@ -2340,6 +2339,7 @@
     ]
   }
 ]
+
 
 
 
