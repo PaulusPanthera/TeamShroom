@@ -803,7 +803,7 @@
       {"name": "darmanitan"},
       {"name": "rotom","egg": true},
       {"name": "crobat"},
-      {"name": "metang","egg": true},
+      {"name": "metagross","egg": true},
       {"name": "nuzleaf"},
       {"name": "conkeldurr"},
       {"name": "primeape"},
@@ -2128,6 +2128,7 @@
     ]
   }
 ]
+
 
 
 
