@@ -640,6 +640,28 @@
     ]
   },
   {
+    "name": "JokageZero",
+    "status": "spore",
+    "shinies": [
+      {"name": "bibarel"},
+      {"name": "rhyperior"},
+      {"name": "mienfoo"},
+      {"name": "rhydon","lost": true},
+      {"name": "rhydon","lost": true},
+      {"name": "stantler"},
+      {"name": "vulpix"},
+      {"name": "bibarel","lost": true},
+      {"name": "bibarel","lost": true},
+      {"name": "bibarel","lost": true},
+      {"name": "ralts"},
+      {"name": "swablu"},
+      {"name": "shelmet"},
+      {"name": "wooper"},
+      {"name": "smeargle"},
+      {"name": "aggron"}
+    ]
+  },
+  {
     "name": "JulieJewel",
     "status": "shroom",
     "shinies": [
@@ -1995,6 +2017,7 @@
     ]
   }
 ]
+
 
 
 
