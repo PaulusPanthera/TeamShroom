@@ -1737,16 +1737,16 @@
     "name": "SirPrivacy",
     "status": "spore",
     "shinies": [
-      {"name": "dratini"},
+      {"name": "dragonair"},
       {"name": "lapras","safari": true,"lost": true},
-      {"name": "poliwag","safari": true},
+      {"name": "politoed","safari": true},
       {"name": "poliwag","safari": true,"lost": true},
       {"name": "smeargle"},
       {"name": "pachirisu"},
-      {"name": "buneary"},
+      {"name": "lopunny"},
       {"name": "miltank","safari": true,"lost": true},
       {"name": "lapras","safari": true,"lost": true},
-      {"name": "pidgey"},
+      {"name": "pidgeotto"},
       {"name": "wobbuffet"},
       {"name": "altaria"}
     ]
@@ -2340,6 +2340,7 @@
     ]
   }
 ]
+
 
 
 
