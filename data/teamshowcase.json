@@ -776,7 +776,7 @@
       {"name": "magikarp","lost": true},
       {"name": "magikarp","lost": true},
       {"name": "magikarp","lost": true},
-      {"name": "gyarados","lost": true},
+      {"name": "gyarados"},
       {"name": "weezing"},
       {"name": "krookodile"},
       {"name": "dusclops"},
@@ -2128,6 +2128,7 @@
     ]
   }
 ]
+
 
 
 
