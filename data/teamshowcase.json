@@ -1747,7 +1747,8 @@
       {"name": "miltank","safari": true,"lost": true},
       {"name": "lapras","safari": true,"lost": true},
       {"name": "pidgey"},
-      {"name": "wobbuffet"}
+      {"name": "wobbuffet"},
+      {"name": "swablu"}
     ]
   },
   {
@@ -2339,6 +2340,7 @@
     ]
   }
 ]
+
 
 
 
