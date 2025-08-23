@@ -105,6 +105,21 @@
       {"name": "mankey"}
     ]
   },
+   {
+    "name": "Chestia",
+    "status": "spore",
+    "shinies": [
+      {"name": "wooper"},
+      {"name": "machop"},
+      {"name": "crobat"},
+      {"name": "ponyta"},
+      {"name": "weezing"},
+      {"name": "caterpie"},
+      {"name": "meowth"},
+      {"name": "accelgor"},
+      {"name": "wurmple"}
+    ]
+  },
   {
     "name": "ChimpExc",
     "status": "shroom",
@@ -1080,6 +1095,25 @@
       {"name": "rapidash"}
     ]
   },
+    {
+    "name": "MrBiscottes",
+    "status": "spore",
+    "shinies": [
+      {"name": "swoobat"},
+      {"name": "haxorus"},
+      {"name": "poliwrath"},
+      {"name": "politoed"},
+      {"name": "zigzagoon"},
+      {"name": "zigzagoon", "lost": true},
+      {"name": "poochyena"},
+      {"name": "rattata"},
+      {"name": "durant"},
+      {"name": "duskull"},
+      {"name": "grimer"},
+      {"name": "krabby"},
+      {"name": "mienfoo"}
+    ]
+  },
   {
     "name": "MrChooch",
     "status": "shroom",
@@ -1665,6 +1699,19 @@
     ]
   },
   {
+    "name": "Tobias",
+    "status": "spore",
+    "shinies": [
+      {"name": "swablu"},
+      {"name": "smeargle"},
+      {"name": "furret"},
+      {"name": "treecko"},
+      {"name": "golurk"},
+      {"name": "tailow"},
+      {"name": "beautifly"}
+    ]
+  },
+  {
     "name": "Togadh",
     "status": "spore",
     "shinies": [
@@ -2017,6 +2064,7 @@
     ]
   }
 ]
+
 
 
 
