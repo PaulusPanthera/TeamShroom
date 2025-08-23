@@ -129,6 +129,21 @@
       {"name": "mienfoo"}
     ]
   },
+    {
+    "name": "Clairbear",
+    "status": "shroom",
+    "shinies": [
+      {"name": "silcoon"},
+      {"name": "mareep"},
+      {"name": "gligar"},
+      {"name": "girafarig"},
+      {"name": "gyarados"},
+      {"name": "litwick"},
+      {"name": "swablu"},
+      {"name": "duosion"},
+      {"name": "horsea"}
+    ]
+  },
   {
     "name": "clairo",
     "status": "shinyshroom",
@@ -1072,19 +1087,12 @@
       {"name": "amoonguss"}
     ]
   },
-  {
-    "name": "Clairbear",
+    {
+    "name": "Navy",
     "status": "shroom",
     "shinies": [
-      {"name": "silcoon"},
-      {"name": "mareep"},
-      {"name": "gligar"},
-      {"name": "girafarig"},
-      {"name": "gyarados"},
-      {"name": "litwick"},
-      {"name": "swablu"},
-      {"name": "duosion"},
-      {"name": "horsea"}
+      {"name": "raichu"},
+      {"name": "butterfree"}
     ]
   },
   {
@@ -1987,6 +1995,7 @@
     ]
   }
 ]
+
 
 
 
