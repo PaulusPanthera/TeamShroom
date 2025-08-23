@@ -831,15 +831,15 @@
     "name": "Kaaflaa",
     "status": "spore",
     "shinies": [
-      {"name": "stunfisk"},
       {"name": "politoed"},
       {"name": "unfezant"},
-      {"name": "pidgeot"},
-      {"name": "pelipper"},
-      {"name": "drifblim"},
-      {"name": "mienfoo"},
-      {"name": "shelmet"},
+      {"name": "mienshao"},
+      {"name": "accelgor"},
       {"name": "tentacruel"}
+      {"name": "pidgeot"},
+      {"name": "drifblim"},
+      {"name": "pelipper"},
+      {"name": "stunfisk"}
     ]
   },
    {
@@ -2339,6 +2339,7 @@
     ]
   }
 ]
+
 
 
 
