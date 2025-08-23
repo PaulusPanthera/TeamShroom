@@ -1297,6 +1297,17 @@
     ]
   },
   {
+    "name": "Raiketsu",
+    "status": "shroom",
+    "shinies": [
+      {"name": "nidorino"},
+      {"name": "pidgey"},
+      {"name": "woobat"},
+      {"name": "magikarp"},
+      {"name": "machoke"}
+    ]
+  },
+  {
     "name": "Rakiza",
     "status": "spore",
     "shinies": [
@@ -1885,17 +1896,6 @@
     ]
   },
   {
-    "name": "xRaiketsu",
-    "status": "shroom",
-    "shinies": [
-      {"name": "nidorino"},
-      {"name": "pidgey"},
-      {"name": "woobat"},
-      {"name": "magikarp"},
-      {"name": "machoke"}
-    ]
-  },
-  {
     "name": "XxEmperiorxX",
     "status": "shroom",
     "shinies": [
@@ -1978,6 +1978,7 @@
     ]
   }
 ]
+
 
 
 
