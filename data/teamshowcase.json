@@ -768,6 +768,49 @@
     ]
   },
   {
+    "name": "Kynnyto",
+    "status": "spore",
+    "shinies": [
+      {"name": "magikarp","lost": true},
+      {"name": "magikarp","lost": true},
+      {"name": "magikarp","lost": true},
+      {"name": "magikarp","lost": true},
+      {"name": "magikarp","lost": true},
+      {"name": "gyarados","lost": true},
+      {"name": "weezing"},
+      {"name": "krookodile"},
+      {"name": "dusclops"},
+      {"name": "chandelure"},
+      {"name": "altaria"},
+      {"name": "dragonite"},
+      {"name": "ludicolo"},
+      {"name": "luxray"},
+      {"name": "whimsicott"},
+      {"name": "mienshao"},
+      {"name": "accelgor"},
+      {"name": "camerupt"},
+      {"name": "seadra"},
+      {"name": "dugtrio"},
+      {"name": "smeargle"},
+      {"name": "arcanine"},
+      {"name": "nidoking"},
+      {"name": "gabite"},
+      {"name": "vanillite"},
+      {"name": "ferrothorn"},
+      {"name": "meditie"},
+      {"name": "aggron"},
+      {"name": "vibrava"},
+      {"name": "darmanitan"},
+      {"name": "rotom","egg": true},
+      {"name": "crobat"},
+      {"name": "metang","egg": true},
+      {"name": "nuzleaf"},
+      {"name": "conkeldurr"},
+      {"name": "primeape"},
+      {"name": "magneton"}
+    ]
+  },
+  {
     "name": "Skullz",
     "status": "shroom",
     "shinies": [
@@ -970,6 +1013,27 @@
       {"name": "duskull"},
       {"name": "mantine"},
       {"name": "minccino"}
+    ]
+  },
+  {
+    "name": "Mattmattoux",
+    "status": "spore",
+    "shinies": [
+      {"name": "lilligant"},
+      {"name": "duskull"},
+      {"name": "poochyena"},
+      {"name": "chandelure"},
+      {"name": "jellicent"},
+      {"name": "cofagrigus"},
+      {"name": "shuppet"},
+      {"name": "roselia"},
+      {"name": "crobat"},
+      {"name": "alakazam"},
+      {"name": "nidorina"},
+      {"name": "lickilicky"},
+      {"name": "conkeldurr"},
+      {"name": "cubchoo"},
+      {"name": "exploud"}
     ]
   },
   {
@@ -2064,6 +2128,7 @@
     ]
   }
 ]
+
 
 
 
