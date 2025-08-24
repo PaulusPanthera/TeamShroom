@@ -165,7 +165,7 @@
     "status": "spore",
     "shinies": [
       {"name": "wooper"},
-      {"name": "machop"},
+      {"name": "machamp"},
       {"name": "crobat"},
       {"name": "ponyta"},
       {"name": "weezing"},
@@ -2339,6 +2339,7 @@
     ]
   }
 ]
+
 
 
 
