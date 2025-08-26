@@ -650,18 +650,6 @@
     ]
   },
   {
-    "name": "ItsKitas",
-    "status": "shroom",
-    "shinies": [
-      {"name": "dodrio"},
-      {"name": "donphan"},
-      {"name": "vanillish"},
-      {"name": "pidgey","secret": true},
-      {"name": "donphan","lost": true},
-      {"name": "tranquill"}
-    ]
-  },
-  {
     "name": "Jaspn",
     "status": "shroom",
     "shinies": [
@@ -2324,20 +2312,6 @@
     ]
   },
   {
-    "name": "ZiaStitch",
-    "status": "shroom",
-    "shinies": [
-      {"name": "gyarados"},
-      {"name": "swablu"},
-      {"name": "rapidash"},
-      {"name": "rhydon"},
-      {"name": "politoed"},
-      {"name": "accelgor"},
-      {"name": "graveler"},
-      {"name": "zigzagoon"}
-    ]
-  },
-  {
     "name": "zzxyami",
     "status": "spore",
     "shinies": [
@@ -2346,6 +2320,7 @@
     ]
   }
 ]
+
 
 
 
