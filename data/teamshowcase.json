@@ -1529,14 +1529,6 @@
     ]
   },
   {
-    "name": "pitcheronly",
-    "status": "spore",
-    "shinies": [
-      {"name": "aggron"},
-      {"name": "smeargle"}
-    ]
-  },
-  {
     "name": "PokeBodega",
     "status": "shroom",
     "shinies": [
@@ -2354,6 +2346,7 @@
     ]
   }
 ]
+
 
 
 
