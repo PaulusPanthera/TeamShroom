@@ -1237,7 +1237,7 @@
       {"name": "litwick"},
       {"name": "steelix"},
       {"name": "onix"},
-      {"name": "donphan"},
+      {"name": "donphan","lost": true},
       {"name": "rhydon"},
       {"name": "throh"},
       {"name": "patrat"},
@@ -1250,7 +1250,9 @@
       {"name": "swadloon"},
       {"name": "poochyena"},
       {"name": "axew"},
-      {"name": "dodrio"}
+      {"name": "dodrio"},
+      {"name": "donphan"},
+      {"name": "phanpy"}
     ]
   },
   {
@@ -2320,6 +2322,7 @@
     ]
   }
 ]
+
 
 
 
