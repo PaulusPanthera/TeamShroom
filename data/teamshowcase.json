@@ -1347,8 +1347,13 @@
   },
   {
     "name": "NotAHumanSure",
-    "status": "shroom",
+    "status": "spore",
     "shinies": [
+      {"name": "ponyta"},
+      {"name": "abra"},
+      {"name": "donphan"},
+      {"name": "poliwhirl"},
+      {"name": "ponyta"},
       {"name": "pikachu"}
     ]
   },
@@ -1562,6 +1567,16 @@
     ]
   },
   {
+    "name": "Pucci",
+    "status": "spore",
+    "shinies": [
+      {"name": "rapidash"},
+      {"name": "weezing"},
+      {"name": "vanilluxe"},
+      {"name": "horsea"}
+    ]
+  },
+  {
     "name": "QuinJay",
     "status": "shroom",
     "shinies": [
@@ -1620,6 +1635,20 @@
     "shinies": [
       {"name": "pelipper"},
       {"name": "purugly"}
+    ]
+  },
+  {
+    "name": "Roach",
+    "status": "spore",
+    "shinies": [
+      {"name": "golem"},
+      {"name": "tentacruel"},
+      {"name": "lombre"},
+      {"name": "duosion"},
+      {"name": "druddigon"},
+      {"name": "bidoof"},
+      {"name": "koffing"},
+      {"name": "parasect"}
     ]
   },
   {
@@ -1695,7 +1724,7 @@
       {"name": "horsea"},
       {"name": "kingdra"},
       {"name": "seadra"},
-      {"name": "axew"}
+      {"name": "haxorus"}
     ]
   },
   {
@@ -1749,6 +1778,25 @@
       {"name": "swadloon"},
       {"name": "litwick"},
       {"name": "krokorok"}
+    ]
+  },
+  {
+    "name": "Smough",
+    "status": "spore",
+    "shinies": [
+      {"name": "nidorina"},
+      {"name": "pikachu"},
+      {"name": "ditto"},
+      {"name": "tentacruel"},
+      {"name": "arcanine"},
+      {"name": "nidorino"},
+      {"name": "starly"},
+      {"name": "slowbro"},
+      {"name": "magikarp"},
+      {"name": "rhydon"},
+      {"name": "palpitoad"},
+      {"name": "flaaffy"},
+      {"name": "raticate"}
     ]
   },
   {
@@ -2321,6 +2369,7 @@
     ]
   }
 ]
+
 
 
 
