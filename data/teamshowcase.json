@@ -41,7 +41,8 @@
       {"name": "beartic"},
       {"name": "pikachu"},
       {"name": "stoutland"},
-      {"name": "vanilluxe"}
+      {"name": "vanilluxe"},
+      {"name": "pelipper"}
     ]
   },
   {
@@ -184,14 +185,6 @@
     "shinies": [
       {"name": "tentacool"},
       {"name": "gastly"}
-    ]
-  },
-  {
-    "name": "Chucklesworth",
-    "status": "shroom",
-    "shinies": [
-      {"name": "krookodile"},
-      {"name": "krokorok"}
     ]
   },
   {
@@ -566,7 +559,8 @@
       {"name": "paras"},
       {"name": "donphan"},
       {"name": "shellder"},
-      {"name": "cottonee"}
+      {"name": "cottonee"},
+      {"name": "golduck"}
     ]
   },
   {
@@ -620,7 +614,8 @@
       {"name": "tangela"},
       {"name": "lickitung"},
       {"name": "claydol"},
-      {"name": "zigzagoon"}
+      {"name": "zigzagoon"},
+      {"name": "politoed"}
     ]
   },
   {
@@ -728,7 +723,8 @@
       {"name": "cryogonal","secret": true},
       {"name": "magikarp"},
       {"name": "smeargle"},
-      {"name": "dratini"}
+      {"name": "dratini"},
+      {"name": "slakoth"}
     ]
   },
   {
@@ -842,7 +838,8 @@
     "shinies": [
       {"name": "wooper"},
       {"name": "roselia"},
-      {"name": "swablu"}
+      {"name": "swablu"},
+      {"name": "audino","egg": true}
     ]
   },
   {
@@ -900,7 +897,9 @@
       {"name": "nuzleaf"},
       {"name": "conkeldurr"},
       {"name": "primeape"},
-      {"name": "magneton"}
+      {"name": "magneton"},
+      {"name": "poliwhirl"},
+      {"name": "parasect"}
     ]
   },
   {
@@ -987,21 +986,6 @@
       {"name": "koffing"},
       {"name": "cubchoo"},
       {"name": "vulpix"}
-    ]
-  },
-  {
-    "name": "Loundemon",
-    "status": "spore",
-    "shinies": [
-      {"name": "linoone"},
-      {"name": "seaking"},
-      {"name": "chandelure"},
-      {"name": "golem"},
-      {"name": "dusknoir"},
-      {"name": "alakazam"},
-      {"name": "rapidash"},
-      {"name": "gyarados"},
-      {"name": "tentacruel"}
     ]
   },
   {
@@ -1252,7 +1236,8 @@
       {"name": "axew"},
       {"name": "dodrio"},
       {"name": "donphan"},
-      {"name": "phanpy"}
+      {"name": "phanpy"},
+      {"name": "dodrio"}
     ]
   },
   {
@@ -1340,21 +1325,19 @@
     ]
   },
   {
+    "name": "NotAHumanSure",
+    "status": "shroom",
+    "shinies": [
+      {"name": "pikachu"}
+    ]
+  },
+  {
     "name": "NoxxPrime",
     "status": "spore",
     "shinies": [
       {"name": "poliwhirl", "safari": true, "lost": true},
       {"name": "gastly"},
       {"name": "pikachu"}
-    ]
-  },
-  {
-    "name": "NSxPRODIGY",
-    "status": "spore",
-    "shinies": [
-      {"name": "horsea"},
-      {"name": "lombre"},
-      {"name": "frillish"}
     ]
   },
   {
@@ -1479,7 +1462,8 @@
       {"name": "mudkip","egg": true,"clip": "https://www.twitch.tv/paulustft/clip/DependableThoughtfulHawkKlappa-AoWxrVpBv6tqq7Mc"},
       {"name": "stunfisk"},
       {"name": "basculin","clip": "https://www.twitch.tv/paulustft/clip/TransparentKathishEggplantBloodTrail-KhEWU2B-VddGj4fD"},
-      {"name": "durant","clip": "https://www.twitch.tv/paulustft/clip/VastInspiringPrariedogKreygasm-iADAYyvs6wwSshKv"}
+      {"name": "durant","clip": "https://www.twitch.tv/paulustft/clip/VastInspiringPrariedogKreygasm-iADAYyvs6wwSshKv"},
+      {"name": "cascoon","clip": "https://www.twitch.tv/paulustft/clip/BetterPleasantMilkOptimizePrime-DHQsKKK3rUDk1yYE"}
     ]
   },
   {
@@ -1659,7 +1643,8 @@
       {"name": "growlithe"},
       {"name": "sawk"},
       {"name": "trubbish"},
-      {"name": "roselia"}
+      {"name": "roselia"},
+      {"name": "nidoking"}
       
     ]
   },
@@ -1682,31 +1667,10 @@
     ]
   },
   {
-    "name": "ShakeyEy",
-    "status": "shroom",
+    "name": "shmattbean",
+    "status": "spore",
     "shinies": [
-      {"name": "gyarados"},
-      {"name": "tentacruel"},
-      {"name": "mareep"},
-      {"name": "skarmory"},
-      {"name": "koffing"},
-      {"name": "trapinch"},
-      {"name": "cubchoo"},
-      {"name": "magmar"},
-      {"name": "gastly"},
-      {"name": "rapidash"},
-      {"name": "bellsprout"},
-      {"name": "woobat"}
-    ]
-  },
-  {
-    "name": "SilverGale",
-    "status": "shroom",
-    "shinies": [
-      {"name": "meowth"},
-      {"name": "gyarados"},
-      {"name": "ninetales"},
-      {"name": "nidoking"}
+      {"name": "axew"}
     ]
   },
   {
@@ -1739,7 +1703,10 @@
       {"name": "lapras","safari": true,"lost": true},
       {"name": "pidgeotto"},
       {"name": "wobbuffet"},
-      {"name": "altaria"}
+      {"name": "altaria"},
+      {"name": "mawile"},
+      {"name": "koffing"},
+      {"name": "graveler"}
     ]
   },
   {
@@ -1764,19 +1731,8 @@
     "status": "spore",
     "shinies": [
       {"name": "farfetchd"},
-      {"name": "miltank"}
-    ]
-  },
-  {
-    "name": "Splinterbrained",
-    "status": "spore",
-    "shinies": [
-      {"name": "chandelure"},
-      {"name": "pidgeot"},
-      {"name": "altaria"},
-      {"name": "graveler"},
-      {"name": "ponyta"},
-      {"name": "murkrow"}
+      {"name": "miltank"},
+      {"name": "tentacruel"}
     ]
   },
   {
@@ -1838,7 +1794,9 @@
       {"name": "pikachu"},
       {"name": "graveler"},
       {"name": "luxio"},
-      {"name": "golbat"}
+      {"name": "golbat"},
+      {"name": "venipede"},
+      {"name": "Furret","egg": true}
     ]
   },
   {
@@ -1973,7 +1931,8 @@
     "shinies": [
       {"name": "gyarados"},
       {"name": "pikachu"},
-      {"name": "gengar"}
+      {"name": "gengar"},
+      {"name": "poochyena"}
     ]
   },
   {
@@ -2064,7 +2023,9 @@
       {"name": "alakazam"},
       {"name": "slowbro"},
       {"name": "poliwrath"},
-      {"name": "cofagrigus"}
+      {"name": "cofagrigus"},
+      {"name": "zubat"},
+      {"name": "sneasel"}
     ]
   },
   {
@@ -2082,14 +2043,8 @@
       {"name": "boldore"},
       {"name": "chikorita","egg": true},
       {"name": "fearow"},
-      {"name": "carvanha"}
-    ]
-  },
-  {
-    "name": "Unesha",
-    "status": "shroom",
-    "shinies": [
-      {"name": "marill"}
+      {"name": "carvanha"},
+      {"name": "jigglypuff","lost": true,"safari": true}
     ]
   },
   {
@@ -2322,6 +2277,7 @@
     ]
   }
 ]
+
 
 
 
