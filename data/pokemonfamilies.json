@@ -1446,7 +1446,7 @@
     "tier": "Tier 3",
     "region": "Johto",
     "rarity": "",
-    "claimed": false
+    "claimed": "SubSpacePet"
   },
   {
     "#": 162,
@@ -2598,7 +2598,7 @@
     "tier": "Tier 1",
     "region": "Hoenn",
     "rarity": "",
-    "claimed": false
+    "claimed": "Johnerrr"
   },
   {
     "#": 290,
@@ -4794,7 +4794,7 @@
     "tier": "Tier 0",
     "region": "Unova",
     "rarity": "pheno",
-    "claimed": false
+    "claimed": "Kithri"
   },
   {
     "#": 532,
@@ -5859,6 +5859,7 @@
     "claimed": "NA"
   }
 ]
+
 
 
 
