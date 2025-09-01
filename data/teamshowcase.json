@@ -234,6 +234,27 @@
     ]
   },
   {
+    "name": "Cowdoy",
+    "status": "spore",
+    "shinies": [
+      {"name": "kingdra"},
+      {"name": "zubat"},
+      {"name": "smeargle"},
+      {"name": "weavile"},
+      {"name": "mareep"},
+      {"name": "nidoran-m"},
+      {"name": "klink"},
+      {"name": "politoed"},
+      {"name": "jumpluff"},
+      {"name": "pidgeot"},
+      {"name": "cubchoo"},
+      {"name": "tranquil"},
+      {"name": "grimer"},
+      {"name": "koffing"},
+      {"name": "stantler"}
+    ]
+  },
+  {
     "name": "CraazyHorse",
     "status": "shroom",
     "shinies": [
@@ -1670,6 +1691,10 @@
     "name": "shmattbean",
     "status": "spore",
     "shinies": [
+      {"name": "wooper"},
+      {"name": "horsea"},
+      {"name": "kingdra"},
+      {"name": "seadra"},
       {"name": "axew"}
     ]
   },
@@ -2048,6 +2073,25 @@
     ]
   },
   {
+    "name": "Tuna",
+    "status": "spore",
+    "shinies": [
+      {"name": "psyduck"},
+      {"name": "dusclops"},
+      {"name": "golurk"},
+      {"name": "haxorus"},
+      {"name": "aggron"},
+      {"name": "octillery"},
+      {"name": "joltik"},
+      {"name": "weezing"},
+      {"name": "scolipede"},
+      {"name": "whirlipede"},
+      {"name": "lilligant"},
+      {"name": "venipede"},
+      {"name": "parasect"}
+    ]
+  },
+  {
     "name": "Watcha",
     "status": "spore",
     "shinies": [
@@ -2277,6 +2321,7 @@
     ]
   }
 ]
+
 
 
 
