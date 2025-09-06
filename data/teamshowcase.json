@@ -1560,16 +1560,6 @@
     ]
   },
   {
-    "name": "Pucci",
-    "status": "spore",
-    "shinies": [
-      {"name": "rapidash"},
-      {"name": "weezing"},
-      {"name": "vanilluxe"},
-      {"name": "horsea"}
-    ]
-  },
-  {
     "name": "QuinJay",
     "status": "shroom",
     "shinies": [
@@ -2362,6 +2352,7 @@
     ]
   }
 ]
+
 
 
 
