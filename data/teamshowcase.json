@@ -619,6 +619,20 @@
     ]
   },
   {
+  "name": "jasmine",
+  "status": "spore",
+  "shinies": [
+    {"name": "lopunny"},
+    {"name": "golem"},
+    {"name": "pikachu"},
+    {"name": "oddish"},
+    {"name": "woobat"},
+    {"name": "karrablast"},
+    {"name": "swadloon"},
+    {"name": "oddish"}
+  ]
+},
+  {
     "name": "Jaspn",
     "status": "shroom",
     "shinies": [
@@ -1662,6 +1676,40 @@
     ]
   },
   {
+  "name": "Sage",
+  "status": "spore",
+  "shinies": [
+    {"name": "hydreigon"},
+    {"name": "joltik"},
+    {"name": "reuniclus"},
+    {"name": "pelipper"},
+    {"name": "golurk"},
+    {"name": "haxorus"},
+    {"name": "scolipede"},
+    {"name": "galvantula"},
+    {"name": "eelektross"},
+    {"name": "poliwhirl"},
+    {"name": "vullaby"},
+    {"name": "herdier"},
+    {"name": "mawile"},
+    {"name": "chandelure"},
+    {"name": "sandile"},
+    {"name": "darumaka"},
+    {"name": "zebstrika"},
+    {"name": "hoppip"},
+    {"name": "miltank", "safari": true},
+    {"name": "shelmet"},
+    {"name": "braviary"},
+    {"name": "emolga", "egg": true},
+    {"name": "heatmor"},
+    {"name": "basculin"},
+    {"name": "beheeyem"},
+    {"name": "bouffalant"},
+    {"name": "swanna", "egg": true},
+    {"name": "dodrio"}
+  ]
+},
+  {
     "name": "Sardelle",
     "status": "spore",
     "shinies": [
@@ -1855,6 +1903,23 @@
       {"name": "donphan"}
     ]
   },
+  {
+  "name": "StopEnvy",
+  "status": "shinyshroom",
+  "shinies": [
+    {"name": "tentacruel"},
+    {"name": "ponyta"},
+    {"name": "meowth"},
+    {"name": "gyarados"},
+    {"name": "horsea"},
+    {"name": "dratini"},
+    {"name": "krookodile"},
+    {"name": "scraggy"},
+    {"name": "breloom"},
+    {"name": "ditto"},
+    {"name": "hydreigon"}
+  ]
+},
   {
     "name": "SubSpacePet",
     "status": "spore",
@@ -2412,7 +2477,7 @@
     {"name": "dodrio"},
     {"name": "donphan"}
   ]
-}
+},
   {
     "name": "zDaarkraai",
     "status": "spore",
@@ -2440,3 +2505,4 @@
     ]
   }
 ]
+
