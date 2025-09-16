@@ -879,7 +879,7 @@
     "name": "Kolepls",
     "status": "spore",
     "shinies": [
-      {"name": "stantler"}
+      {"name": "stantler"},
       {"name": "vulpix"}
     ]
   },
@@ -2513,6 +2513,7 @@
     ]
   }
 ]
+
 
 
 
