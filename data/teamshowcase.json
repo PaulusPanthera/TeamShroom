@@ -490,6 +490,13 @@
       {"name": "lotad"}
     ]
   },
+   {
+    "name": "GeoPlays",
+    "status": "spore",
+    "shinies": [
+      {"name": "pidgey"}
+    ]
+  },
   {
     "name": "Geranxx",
     "status": "spore",
@@ -2505,4 +2512,5 @@
     ]
   }
 ]
+
 
