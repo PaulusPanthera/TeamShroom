@@ -879,6 +879,7 @@
     "name": "Kolepls",
     "status": "spore",
     "shinies": [
+      {"name": "stantler"}
       {"name": "vulpix"}
     ]
   },
@@ -2438,12 +2439,12 @@
     "name": "Yoboes",
     "status": "spore",
     "shinies": [
-      {"name": "sandslash"},
-      {"name": "tentacool"},
       {"name": "cubone"},
+      {"name": "haunter"},
+      {"name": "sandslash"},
       {"name": "primeape"},
       {"name": "arbok"},
-      {"name": "haunter"},
+      {"name": "tentacool"},
       {"name": "horsea"},
       {"name": "dratini"}
     ]
@@ -2512,5 +2513,6 @@
     ]
   }
 ]
+
 
 
