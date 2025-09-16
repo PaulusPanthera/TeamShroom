@@ -2387,6 +2387,33 @@
     ]
   },
   {
+  "name": "Yugi",
+  "status": "spore",
+  "shinies": [
+    {"name": "tentacruel", "lost": true},
+    {"name": "rapidash", "lost": true},
+    {"name": "nidoking"},
+    {"name": "meowth"},
+    {"name": "rhydon", "lost": true},
+    {"name": "poliwhirl", "lost": true},
+    {"name": "marill", "lost": true},
+    {"name": "ninetales"},
+    {"name": "tentacruel", "lost": true},
+    {"name": "rapidash", "lost": true},
+    {"name": "gastrodon-west"},
+    {"name": "mienfoo"},
+    {"name": "luxio", "lost": true},
+    {"name": "slowbro"},
+    {"name": "rhydon", "lost": true},
+    {"name": "durant"},
+    {"name": "deino"},
+    {"name": "dodrio", "lost": true},
+    {"name": "wingull"},
+    {"name": "dodrio"},
+    {"name": "donphan"}
+  ]
+}
+  {
     "name": "zDaarkraai",
     "status": "spore",
     "shinies": [
@@ -2413,45 +2440,3 @@
     ]
   }
 ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
