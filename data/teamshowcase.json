@@ -460,7 +460,7 @@
     "shinies": [
       {"name": "spearow","lost": true},
       {"name": "ponyta"},
-      {"name": "rapidash","lost": true},
+      {"name": "rapidash"},
       {"name": "bellsprout"},
       {"name": "tentacool"},
       {"name": "tentacruel","lost": true},
@@ -805,6 +805,28 @@
       {"name": "drifblim"},
       {"name": "pelipper"},
       {"name": "stunfisk"}
+    ]
+  },
+  {
+    "name": "Kimchinator",
+    "status": "spore",
+    "shinies": [
+      {"name": "bellossom"},
+      {"name": "tentacruel"},
+      {"name": "zigzagoon"},
+      {"name": "kricketune","secret": true},
+      {"name": "ferroseed"},
+      {"name": "donphan"},
+      {"name": "chandelure"},
+      {"name": "alakazam"},
+      {"name": "magmortar"},
+      {"name": "dodrio"},
+      {"name": "ponyta"},
+      {"name": "cubchoo"},
+      {"name": "arcanine"},
+      {"name": "bibarel"},
+      {"name": "vullaby"},
+      {"name": "luxray"}
     ]
   },
    {
@@ -2379,6 +2401,7 @@
     ]
   }
 ]
+
 
 
 
