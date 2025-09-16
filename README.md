@@ -81,6 +81,8 @@ Hosted on GitHub Pages.
 
 - [ ] Add Socials (Twitch, Youtube) for Members
 - [ ] Gastrodon fixen
+- [ ] Points Nincada Line fixen
+- [ ] Sawsbuck Line fixen
 - [ ] Add alternative Shiny View with shinies roaming around
 - [ ] Add Rarity Count to Living Dex
 - [ ] Add Summary section to Shinies
