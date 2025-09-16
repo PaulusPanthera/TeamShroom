@@ -744,7 +744,7 @@
     "tier": "Tier 2",
     "region": "Kanto",
     "rarity": "",
-    "claimed": false
+    "claimed": "maknaez"
   },
   {
     "#": 84,
@@ -2022,7 +2022,7 @@
     "tier": "Tier 5",
     "region": "Johto",
     "rarity": "",
-    "claimed": false
+    "claimed": "TTVxSenseiNESS"
   },
   {
     "#": 226,
@@ -2787,7 +2787,7 @@
     "tier": "Tier 5",
     "region": "Hoenn",
     "rarity": "",
-    "claimed": false
+    "claimed": "PaulusTFT"
   },
   {
     "#": 311,
@@ -2931,7 +2931,7 @@
     "tier": "Tier 4",
     "region": "Hoenn",
     "rarity": "",
-    "claimed": false
+    "claimed": "Scooty"
   },
   {
     "#": 327,
@@ -3048,7 +3048,7 @@
     "tier": "Tier 3",
     "region": "Hoenn",
     "rarity": "",
-    "claimed": false
+    "claimed": "Chestia"
   },
   {
     "#": 340,
@@ -3237,7 +3237,7 @@
     "tier": "Tier 6",
     "region": "Hoenn",
     "rarity": "Baby",
-    "claimed": false
+    "claimed": "PaulusTFT"
   },
   {
     "#": 361,
@@ -3750,7 +3750,7 @@
     "tier": "Tier 4",
     "region": "Sinnoh",
     "rarity": "",
-    "claimed": false
+    "claimed": "SirPrivacy"
   },
   {
     "#": 418,
@@ -4173,7 +4173,7 @@
     "tier": "Tier 6",
     "region": "Sinnoh",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "TTVxSenseiNESS"
   },
   {
     "#": 463,
@@ -4182,7 +4182,7 @@
     "tier": "Tier 6",
     "region": "Sinnoh",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "TTVxSenseiNESS"
   },
   {
     "#": 464,
@@ -4272,7 +4272,7 @@
     "tier": "Tier 6",
     "region": "Sinnoh",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "PaulusTFT"
   },
   {
     "#": 474,
@@ -4848,7 +4848,7 @@
     "tier": "Tier 6",
     "region": "Unova",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "TTVxSenseiNESS"
   },
   {
     "#": 538,
@@ -5028,7 +5028,7 @@
     "tier": "Tier 6",
     "region": "Unova",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "TTVxSenseiNESS"
   },
   {
     "#": 558,
@@ -5316,7 +5316,7 @@
     "tier": "Tier 4",
     "region": "Unova",
     "rarity": "",
-    "claimed": false
+    "claimed": "TTVxSenseiNESS"
   },
   {
     "#": 590,
@@ -5667,7 +5667,7 @@
     "tier": "Tier 5",
     "region": "Unova",
     "rarity": "",
-    "claimed": false
+    "claimed": "TTVxSenseiNESS"
   },
   {
     "#": 629,
@@ -5859,6 +5859,7 @@
     "claimed": "NA"
   }
 ]
+
 
 
 
