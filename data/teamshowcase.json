@@ -1884,6 +1884,18 @@
     ]
   },
   {
+    "name": "SwoleyCrusade",
+    "status": "spore",
+    "shinies": [
+      {"name": "tentacruel"},
+      {"name": "raticate"},
+      {"name": "pidgey"},
+      {"name": "phanpy"},
+      {"name": "spearow"},
+      {"name": "rapidash"}
+    ]
+  },
+  {
     "name": "TaCesa",
     "status": "spore",
     "shinies": [
@@ -2401,6 +2413,7 @@
     ]
   }
 ]
+
 
 
 
