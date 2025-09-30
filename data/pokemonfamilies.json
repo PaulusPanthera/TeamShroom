@@ -1725,7 +1725,7 @@
     "tier": "Tier 4",
     "region": "Johto",
     "rarity": "",
-    "claimed": false
+    "claimed": "TTVxSenseiNESS"
   },
   {
     "#": 193,
@@ -5181,7 +5181,7 @@
     "tier": "Tier 6",
     "region": "Unova",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "WinterIvy"
   },
   {
     "#": 575,
@@ -5859,6 +5859,7 @@
     "claimed": "NA"
   }
 ]
+
 
 
 
