@@ -305,16 +305,6 @@
   },
   {
     "name": "Difoolioo",
-    "status": "shroom",
-    "shinies": [
-      {"name": "gloom"},
-      {"name": "ponyta"},
-      {"name": "rapidash"},
-      {"name": "heatmor"}
-    ]
-  },
-  {
-    "name": "Difoolioo",
     "status": "spore",
     "shinies": [
       {"name": "magikarp"},
@@ -2537,6 +2527,7 @@
     ]
   }
 ]
+
 
 
 
