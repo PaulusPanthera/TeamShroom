@@ -174,14 +174,6 @@
     ]
   },
   {
-    "name": "ChimpExc",
-    "status": "shroom",
-    "shinies": [
-      {"name": "tentacool"},
-      {"name": "gastly"}
-    ]
-  },
-  {
     "name": "CigaretteMilk",
     "status": "shroom",
     "shinies": [
@@ -2527,6 +2519,7 @@
     ]
   }
 ]
+
 
 
 
