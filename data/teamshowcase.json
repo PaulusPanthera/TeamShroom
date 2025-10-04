@@ -296,19 +296,6 @@
     ]
   },
   {
-    "name": "Difoolioo",
-    "status": "spore",
-    "shinies": [
-      {"name": "magikarp"},
-      {"name": "smeargle"},
-      {"name": "jigglypuff"},
-      {"name": "minccino"},
-      {"name": "chandelure"},
-      {"name": "tentacruel"},
-      {"name": "shelmet"}
-    ]
-  },
-  {
     "name": "Drain",
     "status": "shroom",
     "shinies": [
@@ -2073,14 +2060,6 @@
     ]
   },
   {
-    "name": "TheStahlBayBay",
-    "status": "shroom",
-    "shinies": [
-      {"name": "psyduck"},
-      {"name": "sealeo"}
-    ]
-  },
-  {
     "name": "Tobias",
     "status": "spore",
     "shinies": [
@@ -2519,6 +2498,7 @@
     ]
   }
 ]
+
 
 
 
