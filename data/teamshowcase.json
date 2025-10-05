@@ -1791,23 +1791,6 @@
     ]
   },
   {
-    "name": "SmiigZ",
-    "status": "shroom",
-    "shinies": [
-      {"name": "tentacruel"},
-      {"name": "golduck"},
-      {"name": "lanturn"},
-      {"name": "meowth"},
-      {"name": "sandshrew"},
-      {"name": "parasect"},
-      {"name": "surskit"},
-      {"name": "smeargle"},
-      {"name": "swadloon"},
-      {"name": "litwick"},
-      {"name": "krokorok"}
-    ]
-  },
-  {
     "name": "Smough",
     "status": "spore",
     "shinies": [
@@ -2498,6 +2481,7 @@
     ]
   }
 ]
+
 
 
 
