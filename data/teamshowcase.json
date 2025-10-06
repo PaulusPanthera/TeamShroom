@@ -670,19 +670,6 @@
     ]
   },
   {
-    "name": "Jeakama",
-    "status": "shroom",
-    "shinies": [
-      {"name": "chandelure"},
-      {"name": "haxorus"},
-      {"name": "wurmple"},
-      {"name": "deino"},
-      {"name": "treecko"},
-      {"name": "poliwhirl"},
-      {"name": "girafarig"}
-    ]
-  },
-  {
     "name": "JGrenade",
     "status": "shroom",
     "shinies": [
@@ -1909,18 +1896,6 @@
     ]
   },
   {
-    "name": "SushiWhopperK",
-    "status": "spore",
-    "shinies": [
-      {"name": "smeargle"},
-      {"name": "conkeldurr"},
-      {"name": "heatmor"},
-      {"name": "pidgeotto"},
-      {"name": "swoobat"},
-      {"name": "fearow"}
-    ]
-  },
-  {
     "name": "SwoleyCrusade",
     "status": "spore",
     "shinies": [
@@ -2481,6 +2456,7 @@
     ]
   }
 ]
+
 
 
 
