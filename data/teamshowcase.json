@@ -496,14 +496,6 @@
     ]
   },
   {
-    "name": "Grayzxv",
-    "status": "spore",
-    "shinies": [
-      {"name": "camerupt"},
-      {"name": "fearow"}
-    ]
-  },
-  {
     "name": "Grrzzly",
     "status": "shroom",
     "shinies": [
@@ -2456,6 +2448,7 @@
     ]
   }
 ]
+
 
 
 
