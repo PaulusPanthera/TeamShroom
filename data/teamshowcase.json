@@ -120,6 +120,14 @@
     ]
   },
   {
+    "name": "bonseum",
+    "status": "shinyshroom",
+    "shinies": [
+      {"name": "cascoon"},
+      {"name": "shroomish"}
+    ]
+  },
+  {
     "name": "Bulkanator",
     "status": "shroom",
     "shinies": [
@@ -318,6 +326,16 @@
       {"name": "tentacruel"},
       {"name": "joltik"},
       {"name": "quagsire"}
+    ]
+  },
+  {
+    "name": "Difoolio",
+    "status": "spore",
+    "shinies": [
+      {"name": "heatmor"},
+      {"name": "rapidash"},
+      {"name": "gloom"},
+      {"name": "ponyta"}
     ]
   },
   {
@@ -1218,6 +1236,13 @@
     ]
   },
   {
+    "name": "Messpotter",
+    "status": "spore",
+    "shinies": [
+      {"name": "tentacruel", "lost": true}
+    ]
+  },
+  {
     "name": "MikeRunkZz",
     "status": "shroom",
     "shinies": [
@@ -1594,6 +1619,17 @@
     "shinies": [
       {"name": "pelipper"},
       {"name": "purugly"}
+    ]
+  },
+  {
+    "name": "RustySE",
+    "status": "spore",
+    "shinies": [
+      {"name": "smeargle"},
+      {"name": "chandelure"},
+      {"name": "meowth"},
+      {"name": "beedrill"},
+      {"name": "ponyta"}
     ]
   },
   {
@@ -1978,6 +2014,20 @@
     "shinies": [
       {"name": "dratini"},
       {"name": "mantine"}
+    ]
+  },
+  {
+    "name": "Teletubbiebaz",
+    "status": "spore",
+    "shinies": [
+      {"name": "gliscor"},
+      {"name": "swoobat"},
+      {"name": "growlithe"},
+      {"name": "mareep"},
+      {"name": "ralts"},
+      {"name": "bellsprout"},
+      {"name": "cascoon"},
+      {"name": "poochyena"}
     ]
   },
   {
@@ -2441,6 +2491,7 @@
     ]
   }
 ]
+
 
 
 
