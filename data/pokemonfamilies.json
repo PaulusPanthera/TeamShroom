@@ -1878,7 +1878,7 @@
     "tier": "Tier 4",
     "region": "Johto",
     "rarity": "",
-    "claimed": false
+    "claimed": "PaulusTFT"
   },
   {
     "#": 210,
@@ -3984,7 +3984,7 @@
     "tier": "Tier 3",
     "region": "Sinnoh",
     "rarity": "",
-    "claimed": false
+    "claimed": "TaCesa"
   },
   {
     "#": 442,
@@ -5145,7 +5145,7 @@
     "tier": "Tier 1",
     "region": "Unova",
     "rarity": "rare",
-    "claimed": false
+    "claimed": "Smough"
   },
   {
     "#": 571,
@@ -5859,6 +5859,7 @@
     "claimed": "NA"
   }
 ]
+
 
 
 
