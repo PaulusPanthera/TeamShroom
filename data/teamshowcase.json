@@ -143,7 +143,7 @@
   },
   {
     "name": "CheesasaurusRex",
-    "status": "spore",
+    "status": "shroom",
     "shinies": [
       {"name": "dragonite"},
       {"name": "vespiquen"},
@@ -636,7 +636,7 @@
   },
   {
     "name": "Jayyxxi",
-    "status": "spore",
+    "status": "shroom",
     "shinies": [
       {"name": "altaria"},
       {"name": "haxorus"},
@@ -986,7 +986,7 @@
   },
   {
     "name": "LuckiLeo",
-    "status": "spore",
+    "status": "shroom",
     "shinies": [
       {"name": "spearow"},
       {"name": "ponyta"}
@@ -1297,7 +1297,7 @@
   },
   {
     "name": "NoxxPrime",
-    "status": "spore",
+    "status": "shroom",
     "shinies": [
       {"name": "poliwhirl", "safari": true, "lost": true},
       {"name": "gastly"},
@@ -1750,7 +1750,7 @@
   },
   {
     "name": "Stathiskris",
-    "status": "spore",
+    "status": "shroom",
     "shinies": [
       {"name": "spearow","lost": true},
       {"name": "bellsprout","lost": true},
@@ -1778,7 +1778,7 @@
 },
   {
     "name": "SubSpacePet",
-    "status": "spore",
+    "status": "shroom",
     "shinies": [
       {"name": "tentacruel"},
       {"name": "bidoof"},
@@ -2115,7 +2115,7 @@
   },
   {
     "name": "Whamalicious",
-    "status": "spore",
+    "status": "shroom",
     "shinies": [
       {"name": "tentacruel"},
       {"name": "poliwhirl"},
@@ -2346,13 +2346,14 @@
   },
   {
     "name": "zzxyami",
-    "status": "spore",
+    "status": "shroom",
     "shinies": [
       {"name": "bagon"},
       {"name": "sharpedo"}
     ]
   }
 ]
+
 
 
 
