@@ -92,6 +92,14 @@
     ]
   },
   {
+    "name": "BitscapeYT",
+    "status": "spore",
+    "shinies": [
+      {"name": "diglett", "lost": true},
+      {"name": "smeargle"}
+    ]
+  },
+  {
     "name": "BlistiK",
     "status": "shroom",
     "shinies": [
@@ -153,7 +161,8 @@
       {"name": "steelix"},
       {"name": "cascoon"},
       {"name": "mightyena"},
-      {"name": "poochyena"}
+      {"name": "poochyena"},
+      {"name": "linoone"}
     ]
   },
    {
@@ -194,7 +203,8 @@
       {"name": "swablu"},
       {"name": "duosion"},
       {"name": "horsea"},
-      {"name": "shroomish"}
+      {"name": "shroomish"},
+      {"name": "koffing"}
     ]
   },
   {
@@ -220,6 +230,20 @@
       {"name": "seedot"},
       {"name": "sealeo"},
       {"name": "rapidash"}
+    ]
+  },
+  {
+    "name": "Cordeiroxi",
+    "status": "spore",
+    "shinies": [
+      {"name": "donphan"},
+      {"name": "spinda"},
+      {"name": "onix"},
+      {"name": "venonat"},
+      {"name": "magikarp"},
+      {"name": "rapidash"},
+      {"name": "squirtle","egg": true},
+      {"name": "ditto"}
     ]
   },
   {
@@ -269,7 +293,8 @@
       {"name": "druddigon"},
       {"name": "machoke"},
       {"name": "cryogonal"},
-      {"name": "bibarel"}
+      {"name": "bibarel"},
+      {"name": "liepard"}
     ]
   },
   {
@@ -390,7 +415,8 @@
       {"name": "geodude","lost": true},
       {"name": "sigilyph"},
       {"name": "ninetales"},
-      {"name": "cofagrigus"}
+      {"name": "cofagrigus"},
+      {"name": "donphan"}
     ]
   },
   {
@@ -545,7 +571,8 @@
     "name": "highpokeman",
     "status": "spore",
     "shinies": [
-      {"name": "rapidash"}
+      {"name": "rapidash"},
+      {"name": "ponyta"}
     ]
   },
   {
@@ -599,6 +626,21 @@
     ]
   },
   {
+    "name": "ItsKitas",
+    "status": "spore",
+    "shinies": [
+      {"name": "vanillish"},
+      {"name": "pidgey", "secret": true},
+      {"name": "donphan"},
+      {"name": "tranquill"},
+      {"name": "smeargle"},
+      {"name": "wooper"},
+      {"name": "koffing"},
+      {"name": "torkoal"},
+      {"name": "golett"}
+    ]
+  },
+  {
   "name": "jasmine",
   "status": "spore",
   "shinies": [
@@ -649,7 +691,8 @@
       {"name": "kingdra"},
       {"name": "roselia"},
       {"name": "magikarp"},
-      {"name": "purugly"}
+      {"name": "purugly"},
+      {"name": "swablu"}
     ]
   },
   {
@@ -772,7 +815,8 @@
       {"name": "tranquill"},
       {"name": "jigglypuff","safari": true,"clip": "https://www.youtube.com/watch?v=Nl3Vb5NdkrU"},
       {"name": "zigzagoon"},
-      {"name": "miltank","safari": true,"lost": true,"clip": "https://www.youtube.com/watch?v=PNrHhzpmmBM"}
+      {"name": "miltank","safari": true,"lost": true,"clip": "https://www.youtube.com/watch?v=PNrHhzpmmBM"},
+      {"name": "jigglypuff","safari": true, "secret": true, "lost": true,"clip": "https://www.youtube.com/watch?v=-7Na1k-LV8M"}
     ]
   },
   {
@@ -950,7 +994,7 @@
     "shinies": [
       {"name": "cacnea"},
       {"name": "slugma"},
-      {"name": "sneasel"},
+      {"name": "weavile"},
       {"name": "abomasnow"},
       {"name": "roserade"},
       {"name": "haunter"},
@@ -989,7 +1033,8 @@
     "status": "shroom",
     "shinies": [
       {"name": "spearow"},
-      {"name": "ponyta"}
+      {"name": "ponyta"},
+      {"name": "donphan"}
     ]
   },
   {
@@ -1027,12 +1072,14 @@
       {"name": "floatzel","clip": "https://www.youtube.com/watch?v=IAZX1NHCgRA"},
       {"name": "garchomp","clip": "https://www.youtube.com/watch?v=IAZX1NHCgRA"},
       {"name": "poochyena","clip": "https://www.youtube.com/watch?v=-WqZSHjX_C0"},
-      {"name": "rhyperior"},
-      {"name": "metapod"},
-      {"name": "bronzong"},
-      {"name": "loudred"},
+      {"name": "rhyperior","clip": "https://www.youtube.com/watch?v=ZpMDP0NbSmk"},
+      {"name": "metapod","clip": "https://www.youtube.com/watch?v=DQJnzPChgpo"},
+      {"name": "bronzong","clip": "https://www.youtube.com/watch?v=iHtTnhJrdXM"},
+      {"name": "loudred","clip": "https://www.youtube.com/watch?v=6Iatmhe5aP0"},
       {"name": "beheeyem"},
-      {"name": "krokorok"}
+      {"name": "krokorok"},
+      {"name": "ludicolo","clip": "https://youtu.be/Vp_A9Hmva2M?si=ix0gCWzP_4WD9Q_L"},
+      {"name": "lotad","clip": "https://www.youtube.com/watch?v=aVilrd_GpA0"}
     ]
   },
   {
@@ -1292,7 +1339,9 @@
       {"name": "torkoal"},
       {"name": "duskull"},
       {"name": "smeargle"},
-      {"name": "horsea"}
+      {"name": "horsea"},
+      {"name": "tentacruel"},
+      {"name": "pelipper"}
     ]
   },
   {
@@ -1338,7 +1387,8 @@
       {"name": "swablu"},
       {"name": "rhydon"},
       {"name": "carvanha"},
-      {"name": "gabite"}
+      {"name": "gabite"},
+      {"name": "budew"}
     ]
   },
   {
@@ -1368,7 +1418,8 @@
       {"name": "mienshao"},
       {"name": "dodrio"},
       {"name": "donphan"},
-      {"name": "teddiursa","safari": true,"clip": "https://www.youtube.com/watch?v=PNrHhzpmmBM"}
+      {"name": "teddiursa","safari": true,"clip": "https://www.youtube.com/watch?v=PNrHhzpmmBM"},
+      {"name": "dodrio"}
     ]
   },
   {
@@ -1421,7 +1472,8 @@
       {"name": "manectric"},
       {"name": "wobbuffet","clip": "https://www.twitch.tv/paulustft/clip/ScaryPluckyCheeseImGlitch-e3rmgA_0OsITe_Lm"},
       {"name": "piloswine","clip": "https://www.twitch.tv/paulustft/clip/OddStrongBasenjiAsianGlow-ZgX4764wfEXQ9UW3"},
-      {"name": "bibarel"}
+      {"name": "bibarel"},
+      {"name": "snubbull"}
     ]
   },
   {
@@ -1442,7 +1494,8 @@
       {"name": "caterpie"},
       {"name": "caterpie"},
       {"name": "shinx"},
-      {"name": "dratini"}
+      {"name": "dratini"},
+      {"name": "venipede"}
     ]
   },
   {
@@ -1531,7 +1584,8 @@
     "name": "RicRiley",
     "status": "spore",
     "shinies": [
-      {"name": "poliwhirl"}
+      {"name": "poliwhirl"},
+      {"name": "golduck"}
     ]
   },
   {
@@ -1560,7 +1614,9 @@
       {"name": "gyarados"},
       {"name": "dragonite"},
       {"name": "weezing"},
-      {"name": "poliwhirl"}
+      {"name": "poliwhirl"},
+      {"name": "mienfoo"},
+      {"name": "mienfoo"}
     ]
   },
   {
@@ -1594,7 +1650,8 @@
     {"name": "beheeyem"},
     {"name": "bouffalant"},
     {"name": "swanna", "egg": true},
-    {"name": "dodrio"}
+    {"name": "dodrio"},
+    {"name": "ninetales"}
   ]
 },
   {
@@ -1634,7 +1691,9 @@
       {"name": "dusknoir"},
       {"name": "poliwhirl"},
       {"name": "spoink"},
-      {"name": "kingdra"}
+      {"name": "kingdra"},
+      {"name": "voltorb"},
+      {"name": "bibarel", "safari": true}
     ]
   },
   {
@@ -1675,6 +1734,26 @@
     ]
   },
   {
+    "name": "Smokee",
+    "status": "spore",
+    "shinies": [
+      {"name": "zigzagoon","lost": true},
+      {"name": "jigglypuff"},
+      {"name": "smeargle"},
+      {"name": "banette"},
+      {"name": "politoed"},
+      {"name": "golurk"},
+      {"name": "poochyena","lost": true},
+      {"name": "slakoth"},
+      {"name": "poochyena"},
+      {"name": "joltik"},
+      {"name": "magikarp"},
+      {"name": "snover"},
+      {"name": "joltik"},
+      {"name": "snover"}
+    ]
+  },
+  {
     "name": "Smough",
     "status": "spore",
     "shinies": [
@@ -1696,7 +1775,12 @@
       {"name": "magikarp"},
       {"name": "horsea"},
       {"name": "dratini"},
-      {"name": "koffing"}
+      {"name": "koffing"},
+      {"name": "venipede"},
+      {"name": "petilil"},
+      {"name": "cottonee"},
+      {"name": "venipede"},
+      {"name": "zoroark"}
     ]
   },
   {
@@ -1801,7 +1885,8 @@
       {"name": "pidgey"},
       {"name": "phanpy"},
       {"name": "spearow"},
-      {"name": "rapidash"}
+      {"name": "rapidash"},
+      {"name": "bouffalant"}
     ]
   },
   {
@@ -1817,7 +1902,8 @@
       {"name": "horsea"},
       {"name": "delibird"},
       {"name": "smeargle"},
-      {"name": "nidoking"}
+      {"name": "nidoking"},
+      {"name": "chatot"}
     ]
   },
   {
@@ -2073,7 +2159,8 @@
       {"name": "tentacruel"},
       {"name": "smeargle"},
       {"name": "tentacruel"},
-      {"name": "Golett"}
+      {"name": "golett"}.
+      {"name": "shelmet"}
     ]
   },
   {
@@ -2284,7 +2371,8 @@
       {"name": "arbok"},
       {"name": "tentacool"},
       {"name": "horsea"},
-      {"name": "dratini"}
+      {"name": "dratini"},
+      {"name": "carvanha"}
     ]
   },
   {
@@ -2353,6 +2441,7 @@
     ]
   }
 ]
+
 
 
 
