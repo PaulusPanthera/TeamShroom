@@ -394,15 +394,6 @@
     ]
   },
   {
-    "name": "ElMannun",
-    "status": "spore",
-    "shinies": [
-      {"name": "seedot"},
-      {"name": "nidorino"},
-      {"name": "pidgey"}
-    ]
-  },
-  {
     "name": "Emmy",
     "status": "spore",
     "shinies": [
@@ -1002,17 +993,6 @@
     ]
   },
   {
-    "name": "lucaswatko",
-    "status": "spore",
-    "shinies": [
-      {"name": "pidgey","lost": true},
-      {"name": "bellossom"},
-      {"name": "crobat"},
-      {"name": "rattata"},
-      {"name": "snorunt"}
-    ]
-  },
-  {
     "name": "Luna",
     "status": "mushcap",
     "shinies": [
@@ -1216,42 +1196,6 @@
     ]
   },
   {
-    "name": "mikesbob",
-    "status": "spore",
-    "shinies": [
-      {"name": "tentacruel","lost": true},
-      {"name": "ponyta"},
-      {"name": "hydreigon"},
-      {"name": "duskull"},
-      {"name": "magikarp"},
-      {"name": "poliwag"},
-      {"name": "cubchoo"},
-      {"name": "sneasel"},
-      {"name": "luxio"},
-      {"name": "litwick"},
-      {"name": "steelix"},
-      {"name": "onix"},
-      {"name": "donphan","lost": true},
-      {"name": "rhydon"},
-      {"name": "throh"},
-      {"name": "patrat"},
-      {"name": "gastrodon-west"},
-      {"name": "slowpoke"},
-      {"name": "nidorino"},
-      {"name": "goldeen"},
-      {"name": "haunter"},
-      {"name": "snover"},
-      {"name": "swadloon"},
-      {"name": "poochyena"},
-      {"name": "axew"},
-      {"name": "dodrio"},
-      {"name": "donphan"},
-      {"name": "phanpy"},
-      {"name": "dodrio"},
-      {"name": "magikarp"}
-    ]
-  },
-  {
     "name": "Mileage",
     "status": "shroom",
     "shinies": [
@@ -1395,20 +1339,6 @@
       {"name": "rhydon"},
       {"name": "carvanha"},
       {"name": "gabite"}
-    ]
-  },
-  {
-    "name": "Othryx",
-    "status": "spore",
-    "shinies": [
-      {"name": "gengar"},
-      {"name": "cofagrigus"},
-      {"name": "krabby"},
-      {"name": "glaceon"},
-      {"name": "vanilluxe"},
-      {"name": "poliwhirl"},
-      {"name": "larvitar"},
-      {"name": "bronzong"}
     ]
   },
   {
@@ -1559,16 +1489,6 @@
     ]
   },
   {
-    "name": "Prttyflxcko",
-    "status": "spore",
-    "shinies": [
-      {"name": "arbok"},
-      {"name": "persian"},
-      {"name": "treecko"},
-      {"name": "smeargle"}
-    ]
-  },
-  {
     "name": "QuinJay",
     "status": "shroom",
     "shinies": [
@@ -1585,13 +1505,6 @@
       {"name": "woobat"},
       {"name": "magikarp"},
       {"name": "machoke"}
-    ]
-  },
-  {
-    "name": "Rakiza",
-    "status": "spore",
-    "shinies": [
-      {"name": "larvesta"}
     ]
   },
   {
@@ -1684,14 +1597,6 @@
     {"name": "dodrio"}
   ]
 },
-  {
-    "name": "Sardelle",
-    "status": "spore",
-    "shinies": [
-      {"name": "drifloon","event": true},
-      {"name": "donphan"}
-    ]
-  },
   {
     "name": "Scooby",
     "status": "shroom",
@@ -2448,6 +2353,7 @@
     ]
   }
 ]
+
 
 
 
