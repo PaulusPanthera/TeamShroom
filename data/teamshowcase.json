@@ -2159,7 +2159,7 @@
       {"name": "tentacruel"},
       {"name": "smeargle"},
       {"name": "tentacruel"},
-      {"name": "golett"}.
+      {"name": "golett"},
       {"name": "shelmet"}
     ]
   },
@@ -2441,6 +2441,7 @@
     ]
   }
 ]
+
 
 
 
