@@ -639,7 +639,7 @@
 {"name": "Raichu"},
 {"name": "Sandslash"},
 {"name": "Nidoqueen"},
-{"name": "NidoKing"},
+{"name": "Nidoking"},
 {"name": "Clefable"},
 {"name": "Ninetales"},
 {"name": "Wigglytuff"},
@@ -652,7 +652,7 @@
 {"name": "Golduck"},
 {"name": "Primeape"},
 {"name": "Arcanine"},
-{"name": "Poliwraith"},
+{"name": "Poliwrath"},
 {"name": "Alakazam"},
 {"name": "Machamp"},
 {"name": "Victreebel"},
@@ -662,7 +662,7 @@
 {"name": "Rapidash"},
 {"name": "slowbro"},
 {"name": "Magneton"},
-{"name": "Dodtrio"},
+{"name": "dodrio"},
 {"name": "Dewgong"},
 {"name": "Muk"},
 {"name": "Gengar"},
@@ -671,11 +671,11 @@
 {"name": "Weezing"},
 {"name": "Magikarp"},
 {"name": "Gyarados"},
-{"name": "Gyarado"},
+{"name": "Gyarados"},
 {"name": "Ditto"},
 {"name": "Dragonite"},
 {"name": "Crobat"},
-{"name": "Lantern"},
+{"name": "lanturn"},
 {"name": "Donphan"},
 {"name": "Smeargle"},
 {"name": "Tyranitar"},
@@ -683,7 +683,7 @@
 {"name": "Mawile"},
 {"name": "Camerupt"},
 {"name": "Altaria"},
-{"name": "Stunky"},
+{"name": "skuntank"},
 {"name": "Dusknoir"},
 {"name": "Leavanny"},
 {"name": "Chandelure"},
@@ -2561,6 +2561,7 @@
     ]
   }
 ]
+
 
 
 
