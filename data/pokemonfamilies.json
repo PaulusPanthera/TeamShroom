@@ -1806,7 +1806,7 @@
     "tier": "Tier 3",
     "region": "Johto",
     "rarity": "",
-    "claimed": false
+    "claimed": "Skullz"
   },
   {
     "#": 202,
@@ -5859,6 +5859,7 @@
     "claimed": "NA"
   }
 ]
+
 
 
 
