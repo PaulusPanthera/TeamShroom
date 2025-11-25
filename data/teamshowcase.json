@@ -434,7 +434,8 @@
       {"name": "sigilyph"},
       {"name": "ninetales"},
       {"name": "cofagrigus"},
-      {"name": "donphan"}
+      {"name": "donphan"},
+      {"name": "clamperl"}
     ]
   },
   {
@@ -1052,7 +1053,8 @@
       {"name": "metang"},
       {"name": "cubchoo","lost": true},
       {"name": "garbodor"},
-      {"name": "weezing","safari": true}
+      {"name": "weezing","safari": true},
+      {"name": "unown-p"}
     ]
   },
   {
@@ -2410,7 +2412,8 @@
       {"name": "nidorina"},
       {"name": "dunsparce"},
       {"name": "totodile","egg": true},
-      {"name": "solrock"}
+      {"name": "solrock"},
+      {"name": "wooper","safari": true} 
     ]
   },
   {
@@ -2572,6 +2575,7 @@
     ]
   }
 ]
+
 
 
 
