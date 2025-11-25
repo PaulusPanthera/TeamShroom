@@ -2289,7 +2289,7 @@
       {"name": "fearow"},
       {"name": "carvanha"},
       {"name": "jigglypuff","lost": true,"safari": true},
-      {"name": "riolu","safari"}
+      {"name": "riolu","safari": true}
     ]
   },
   {
@@ -2592,6 +2592,7 @@
     ]
   }
 ]
+
 
 
 
