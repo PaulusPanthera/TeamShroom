@@ -1914,7 +1914,7 @@
     "tier": "Tier 2",
     "region": "Johto",
     "rarity": "",
-    "claimed": false
+    "claimed": "Jutskaa"
   },
   {
     "#": 214,
@@ -2823,7 +2823,7 @@
     "tier": "Tier 3",
     "region": "Hoenn",
     "rarity": "",
-    "claimed": false
+    "claimed": "Jutskaa"
   },
   {
     "#": 315,
@@ -4038,7 +4038,7 @@
     "tier": "Tier 0",
     "region": "Sinnoh",
     "rarity": "Baby",
-    "claimed": false
+    "claimed": "tulicreme"
   },
   {
     "#": 448,
@@ -5859,6 +5859,7 @@
     "claimed": "NA"
   }
 ]
+
 
 
 
