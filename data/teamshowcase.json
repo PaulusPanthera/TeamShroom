@@ -1080,7 +1080,7 @@
       {"name": "oddish"},
       {"name": "altaria"},
       {"name": "cubchoo"},
-      {"name": "cascoon"}
+      {"name": "cascoon","clip": "https://medal.tv/fr/games/pokemmo/clips/lmsuPJsG235sCq-eF?invite=cr-MSxsT1UsMjI0NTQ4NDE2&v=35"}
     ]
   },
   {
@@ -2423,7 +2423,7 @@
       {"name": "dunsparce"},
       {"name": "totodile","egg": true},
       {"name": "solrock"},
-      {"name": "wooper","safari": true} 
+      {"name": "wooper","safari": true,"clip":"https://www.youtube.com/watch?v=E7DUr5d-dcs"} 
     ]
   },
   {
@@ -2592,6 +2592,7 @@
     ]
   }
 ]
+
 
 
 
