@@ -60,7 +60,8 @@
     "shinies": [
       {"name": "rattata"},
       {"name": "magikarp"},
-      {"name": "rhydon"}
+      {"name": "rhydon"},
+      {"name": "smeargle"}
     ]
   },
   {
@@ -905,7 +906,9 @@
       {"name": "jigglypuff","safari": true,"clip": "https://www.youtube.com/watch?v=Nl3Vb5NdkrU"},
       {"name": "zigzagoon"},
       {"name": "miltank","safari": true,"lost": true,"clip": "https://www.youtube.com/watch?v=PNrHhzpmmBM"},
-      {"name": "jigglypuff","safari": true, "secret": true, "lost": true,"clip": "https://www.youtube.com/watch?v=-7Na1k-LV8M"}
+      {"name": "jigglypuff","safari": true, "secret": true, "lost": true,"clip": "https://www.youtube.com/watch?v=-7Na1k-LV8M"},
+      {"name": "illumise"},
+      {"name": "shuckle","safari": true}
     ]
   },
   {
@@ -1392,7 +1395,8 @@
       {"name": "duskull"},
       {"name": "grimer"},
       {"name": "krabby"},
-      {"name": "mienfoo"}
+      {"name": "mienfoo"},
+      {"name": "poliwhirl"}
     ]
   },
   {
@@ -1735,6 +1739,7 @@
       {"name": "weezing"},
       {"name": "poliwhirl"},
       {"name": "mienfoo"},
+      {"name": "mienfoo"},
       {"name": "mienfoo"}
     ]
   },
@@ -1869,7 +1874,9 @@
       {"name": "magikarp"},
       {"name": "snover"},
       {"name": "joltik"},
-      {"name": "snover"}
+      {"name": "snover"},
+      {"name": "slowpoke","secret": true},
+      {"name": "venipede"}
     ]
   },
   {
@@ -1992,7 +1999,8 @@
       {"name": "golbat"},
       {"name": "venipede"},
       {"name": "Furret","egg": true},
-      {"name": "girafarig"}
+      {"name": "girafarig"},
+      {"name": "petilil"}
     ]
   },
   {
@@ -2260,7 +2268,8 @@
       {"name": "delibird","clip": "https://www.twitch.tv/videos/2567844604"},
       {"name": "crustle"},
       {"name": "cottonee","clip": "https://www.twitch.tv/videos/2571125087"},
-      {"name": "sunflora","clip": "https://www.twitch.tv/videos/2578766963"}
+      {"name": "sunflora","clip": "https://www.twitch.tv/videos/2578766963"},
+      {"name": "venipede"} 
     ]
   },
   {
@@ -2279,7 +2288,8 @@
       {"name": "chikorita","egg": true},
       {"name": "fearow"},
       {"name": "carvanha"},
-      {"name": "jigglypuff","lost": true,"safari": true}
+      {"name": "jigglypuff","lost": true,"safari": true},
+      {"name": "riolu","safari"}
     ]
   },
   {
@@ -2451,6 +2461,13 @@
       {"name": "hoppip"}
     ]
   },
+    {
+     "name": "XxArtamielxX",
+    "status": "spore",
+    "shinies": [
+      {"name": "slowbro"}
+    ]
+  },
   {
     "name": "XxEmperiorxX",
     "status": "shroom",
@@ -2575,6 +2592,7 @@
     ]
   }
 ]
+
 
 
 
