@@ -1701,7 +1701,8 @@
       {"name": "chandelure"},
       {"name": "meowth"},
       {"name": "beedrill"},
-      {"name": "ponyta"}
+      {"name": "ponyta"},
+       {"name": "gligar"}
     ]
   },
   {
@@ -2563,6 +2564,7 @@
     ]
   }
 ]
+
 
 
 
