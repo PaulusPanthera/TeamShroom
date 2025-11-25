@@ -1074,7 +1074,8 @@
       {"name": "hariyama"},
       {"name": "oddish"},
       {"name": "altaria"},
-      {"name": "cubchoo"}
+      {"name": "cubchoo"},
+      {"name": "cascoon"}
     ]
   },
   {
@@ -1169,6 +1170,13 @@
       {"name": "krokorok"},
       {"name": "ludicolo","clip": "https://youtu.be/Vp_A9Hmva2M?si=ix0gCWzP_4WD9Q_L"},
       {"name": "lotad","clip": "https://www.youtube.com/watch?v=aVilrd_GpA0"}
+    ]
+  },
+  {
+     "name": "Lyptus",
+    "status": "spore"
+    "shinies": [
+     {"name": "poliwag"}
     ]
   },
   {
@@ -1702,7 +1710,7 @@
       {"name": "meowth"},
       {"name": "beedrill"},
       {"name": "ponyta"},
-       {"name": "gligar"}
+      {"name": "gligar"}
     ]
   },
   {
@@ -2564,6 +2572,7 @@
     ]
   }
 ]
+
 
 
 
