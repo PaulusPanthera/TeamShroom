@@ -779,7 +779,8 @@
       {"name": "roselia"},
       {"name": "magikarp"},
       {"name": "purugly"},
-      {"name": "swablu"}
+      {"name": "swablu"},
+      {"name": "whismur"}
     ]
   },
   {
@@ -1680,7 +1681,8 @@
     "status": "spore",
     "shinies": [
       {"name": "poliwhirl"},
-      {"name": "golduck"}
+      {"name": "golduck"},
+      {"name": "pelipper"}
     ]
   },
   {
@@ -2561,6 +2563,7 @@
     ]
   }
 ]
+
 
 
 
