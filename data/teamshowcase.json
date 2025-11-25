@@ -1416,7 +1416,7 @@
       {"name": "krabby"},
       {"name": "mienfoo"},
       {"name": "poliwhirl"},
-      {"name": "golurk","alpha": true}
+      {"name": "golurk","alpha": true, "clip": "https://medal.tv/fr/games/pokemmo/clips/lrM6iX5R3mZX_LZtS?invite=cr-MSxubFEsMzYxNTYyNDI3&v=51"}
     ]
   },
   {
@@ -2625,6 +2625,7 @@
     ]
   }
 ]
+
 
 
 
