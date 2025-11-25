@@ -1834,7 +1834,7 @@
       {"name": "magneton"},
       {"name": "beedrill"},
       {"name": "dusknoir"},
-      {"name": "poliwhirl"},
+      {"name": "poliwrath"},
       {"name": "spoink"},
       {"name": "kingdra"},
       {"name": "voltorb"},
@@ -2625,6 +2625,7 @@
     ]
   }
 ]
+
 
 
 
