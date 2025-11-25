@@ -1174,7 +1174,7 @@
   },
   {
      "name": "Lyptus",
-    "status": "spore"
+    "status": "spore",
     "shinies": [
      {"name": "poliwag"}
     ]
@@ -2572,6 +2572,7 @@
     ]
   }
 ]
+
 
 
 
