@@ -908,7 +908,7 @@
       {"name": "miltank","safari": true,"lost": true,"clip": "https://www.youtube.com/watch?v=PNrHhzpmmBM"},
       {"name": "jigglypuff","safari": true, "secret": true, "lost": true,"clip": "https://www.youtube.com/watch?v=-7Na1k-LV8M"},
       {"name": "illumise"},
-      {"name": "shuckle","safari": true}
+      {"name": "shuckle","safari": true,"clip": "https://youtu.be/RcriHaxg6TU"}
     ]
   },
   {
@@ -1181,7 +1181,7 @@
      "name": "Lyptus",
     "status": "spore",
     "shinies": [
-     {"name": "poliwag"}
+     {"name": "politoed"}
     ]
   },
   {
@@ -2592,6 +2592,7 @@
     ]
   }
 ]
+
 
 
 
