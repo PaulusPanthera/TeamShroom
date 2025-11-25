@@ -1765,41 +1765,6 @@
     ]
   },
   {
-  "name": "Sage",
-  "status": "spore",
-  "shinies": [
-    {"name": "hydreigon"},
-    {"name": "joltik"},
-    {"name": "reuniclus"},
-    {"name": "pelipper"},
-    {"name": "golurk"},
-    {"name": "haxorus"},
-    {"name": "scolipede"},
-    {"name": "galvantula"},
-    {"name": "eelektross"},
-    {"name": "poliwhirl"},
-    {"name": "vullaby"},
-    {"name": "herdier"},
-    {"name": "mawile"},
-    {"name": "chandelure"},
-    {"name": "sandile"},
-    {"name": "darumaka"},
-    {"name": "zebstrika"},
-    {"name": "hoppip"},
-    {"name": "miltank", "safari": true},
-    {"name": "shelmet"},
-    {"name": "braviary"},
-    {"name": "emolga", "egg": true},
-    {"name": "heatmor"},
-    {"name": "basculin"},
-    {"name": "beheeyem"},
-    {"name": "bouffalant"},
-    {"name": "swanna", "egg": true},
-    {"name": "dodrio"},
-    {"name": "ninetales"}
-  ]
-},
-  {
     "name": "Scooby",
     "status": "shroom",
     "shinies": [
@@ -2625,6 +2590,7 @@
     ]
   }
 ]
+
 
 
 
