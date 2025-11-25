@@ -1230,7 +1230,7 @@
     "tier": "Tier 0",
     "region": "Kanto",
     "rarity": "rare",
-    "claimed": false
+    "claimed": "Kithri"
   },
   {
     "#": 138,
@@ -1770,7 +1770,7 @@
     "tier": "Tier 1",
     "region": "Johto",
     "rarity": "",
-    "claimed": false
+    "claimed": "Scooby"
   },
   {
     "#": 198,
@@ -2769,7 +2769,7 @@
     "tier": "Tier 5",
     "region": "Hoenn",
     "rarity": "",
-    "claimed": false
+    "claimed": "WillyPS"
   },
   {
     "#": 309,
@@ -4074,7 +4074,7 @@
     "tier": "Tier 1",
     "region": "Sinnoh",
     "rarity": "rare",
-    "claimed": false
+    "claimed": "KaoZPrime"
   },
   {
     "#": 452,
@@ -5199,7 +5199,7 @@
     "tier": "Tier 6",
     "region": "Unova",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Cordeiroxi"
   },
   {
     "#": 577,
@@ -5859,6 +5859,7 @@
     "claimed": "NA"
   }
 ]
+
 
 
 
