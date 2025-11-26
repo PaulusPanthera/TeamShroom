@@ -189,7 +189,8 @@
       {"name": "accelgor"},
       {"name": "wurmple"},
       {"name": "hoppip"},
-      {"name": "barboach"}
+      {"name": "barboach"},
+      {"name": "slakoth"}
     ]
   },
   {
@@ -254,7 +255,8 @@
       {"name": "rapidash"},
       {"name": "squirtle","egg": true},
       {"name": "ditto"},
-      {"name": "gothorita"}
+      {"name": "gothorita"},
+      {"name": "donphan"}
     ]
   },
   {
@@ -339,6 +341,13 @@
       {"name": "rapidash"},
       {"name": "gloom"},
       {"name": "ponyta"}
+    ]
+  },
+  {
+    "name": "Domingsss",
+    "status": "spore",
+    "shinies": [
+      {"name": "machoke"}
     ]
   },
   {
@@ -595,7 +604,8 @@
     "status": "spore",
     "shinies": [
       {"name": "rapidash"},
-      {"name": "ponyta"}
+      {"name": "ponyta"},
+      {"name": "ekans"}
     ]
   },
   {
@@ -717,7 +727,9 @@
       {"name": "woobat"},
       {"name": "swoobat"},
       {"name": "woobat"},
-      {"name": "jigglypuff"}
+      {"name": "jigglypuff"},
+      {"name": "smeargle"},
+      {"name": "haunter"}
     ]
   },
   {
@@ -819,7 +831,8 @@
       {"name": "magikarp"},
       {"name": "smeargle"},
       {"name": "dratini"},
-      {"name": "slakoth"}
+      {"name": "slakoth"},
+      {"name": "cascoon"}
     ]
   },
   {
@@ -939,7 +952,9 @@
     "status": "spore",
     "shinies": [
       {"name": "trapinch"},
-      {"name": "skorupi"}
+      {"name": "skorupi"},
+      {"name": "mienfoo"},
+      {"name": "meditite"}
     ]
   },
   {
@@ -1099,7 +1114,13 @@
       {"name": "oddish"},
       {"name": "altaria"},
       {"name": "cubchoo"},
-      {"name": "cascoon","clip": "https://medal.tv/fr/games/pokemmo/clips/lmsuPJsG235sCq-eF?invite=cr-MSxsT1UsMjI0NTQ4NDE2&v=35"}
+      {"name": "cascoon","clip": "https://medal.tv/fr/games/pokemmo/clips/lmsuPJsG235sCq-eF?invite=cr-MSxsT1UsMjI0NTQ4NDE2&v=35"},
+      {"name": "venipede"},
+      {"name": "magikarp","clip": "https://medal.tv/fr/games/pokemmo/clips/lwQgtgJfwFIOuZTT2?invite=cr-MSw1ZVcsMjI0NTQ4NDE2&v=29"},
+      {"name": "horsea","clip": "https://medal.tv/fr/games/pokemmo/clips/lxifkayenUNxf4itz?invite=cr-MSxvZEEsMjI0NTQ4NDE2&v=43"},
+      {"name": "mareep","clip": "https://medal.tv/fr/games/pokemmo/clips/lxZfs89bj0nexm208?invite=cr-MSxja04sMjI0NTQ4NDE2&v=57"},
+      {"name": "sneasel","clip": "https://medal.tv/fr/games/pokemmo/clips/ly94TtBVVCGtV9H7m?invite=cr-MSxicDUsMjI0NTQ4NDE2&v=43"},
+      {"name": "koffing","clip": "https://medal.tv/fr/games/pokemmo/clips/lyX94tiNOXu7YyiRW?invite=cr-MSx5dUksMjI0NTQ4NDE2&v=42"}
     ]
   },
   {
@@ -1342,7 +1363,8 @@
     "name": "Messpotter",
     "status": "spore",
     "shinies": [
-      {"name": "tentacruel", "lost": true}
+      {"name": "tentacruel", "lost": true},
+      {"name": "axew"}
     ]
   },
   {
@@ -1387,7 +1409,8 @@
       {"name": "magikarp"},
       {"name": "torkoal"},
       {"name": "clamperl"},
-      {"name": "spinda"}
+      {"name": "spinda"},
+      {"name": "buneary"}
     ]
   },
   {
@@ -1604,7 +1627,8 @@
       {"name": "wobbuffet","clip": "https://www.twitch.tv/paulustft/clip/ScaryPluckyCheeseImGlitch-e3rmgA_0OsITe_Lm"},
       {"name": "piloswine","clip": "https://www.twitch.tv/paulustft/clip/OddStrongBasenjiAsianGlow-ZgX4764wfEXQ9UW3"},
       {"name": "bibarel"},
-      {"name": "snubbull"}
+      {"name": "snubbull"},
+      {"name": "bibarel"}
     ]
   },
   {
@@ -1729,6 +1753,13 @@
     ]
   },
   {
+    "name": "Ripz",
+    "status": "spore",
+    "shinies": [
+      {"name": "cascoon"}
+    ]
+  },
+  {
     "name": "RustySE",
     "status": "spore",
     "shinies": [
@@ -1803,7 +1834,8 @@
       {"name": "spoink"},
       {"name": "kingdra"},
       {"name": "voltorb"},
-      {"name": "bibarel", "safari": true}
+      {"name": "bibarel", "safari": true},
+      {"name": "luvdisc","clip": "https://www.youtube.com/watch?v=lm5Do9NAv_c"}
     ]
   },
   {
@@ -1840,7 +1872,15 @@
       {"name": "mawile"},
       {"name": "koffing"},
       {"name": "graveler"},
-      {"name": "pachirisu"}
+      {"name": "pachirisu"},
+      {"name": "sandile"}
+    ]
+  },
+  {
+    "name": "slaydounet",
+    "status": "spore",
+    "shinies": [
+      {"name": "murkrow"}
     ]
   },
   {
@@ -1863,7 +1903,8 @@
       {"name": "snover"},
       {"name": "slowpoke","secret": true},
       {"name": "venipede"},
-      {"name": "sableye"}
+      {"name": "sableye"},
+      {"name": "lillipup"}
     ]
   },
   {
@@ -1942,7 +1983,8 @@
       {"name": "vulpix"},
       {"name": "graveler"},
       {"name": "poliwrath"},
-      {"name": "noctowl"}
+      {"name": "noctowl"},
+      {"name": "fearow"}
     ]
   },
   {
@@ -2108,7 +2150,8 @@
       {"name": "bellsprout"},
       {"name": "cascoon"},
       {"name": "poochyena"},
-      {"name": "minccino"}
+      {"name": "minccino"},
+      {"name": "psyduck"}
     ]
   },
   {
@@ -2193,7 +2236,8 @@
       {"name": "luvdisc"},
       {"name": "horsea"},
       {"name": "cofagrigus"},
-      {"name": "torkoal"}
+      {"name": "torkoal"},
+      {"name": "sneasel"}
     ]
   },
   {
@@ -2261,8 +2305,10 @@
       {"name": "cottonee","clip": "https://www.twitch.tv/videos/2571125087"},
       {"name": "sunflora","clip": "https://www.twitch.tv/videos/2578766963"},
       {"name": "venipede"},
-      {"name": "venipede"},
-      {"name": "petilil"},
+      {"name": "venipede","clip": "https://www.twitch.tv/videos/2603609525"},
+      {"name": "petilil","clip": "https://www.twitch.tv/videos/2605666494"},
+      {"name": "venipede","clip": "https://www.twitch.tv/videos/2605671318"},
+      {"name": "petilil","clip": "https://www.twitch.tv/videos/2621130276"},
       {"name": "venipede"}
     ]
   },
@@ -2283,7 +2329,10 @@
       {"name": "fearow"},
       {"name": "carvanha"},
       {"name": "jigglypuff","lost": true,"safari": true},
-      {"name": "riolu","safari": true}
+      {"name": "riolu","safari": true},
+      {"name": "carvanha"},
+      {"name": "dodrio"},
+      {"name": "sewaddle","secret": true}
     ]
   },
   {
@@ -2560,7 +2609,8 @@
     {"name": "dodrio"},
     {"name": "donphan"},
     {"name": "milotic", "egg": true},
-    {"name": "horsea"}
+    {"name": "horsea"},
+    {"name": "lunatone","clip": "https://www.youtube.com/watch?v=S93yKrZCUG8"}
   ]
 },
   {
@@ -2590,6 +2640,7 @@
     ]
   }
 ]
+
 
 
 
