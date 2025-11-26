@@ -46,6 +46,27 @@
     ]
   },
   {
+    "name": "Alphy",
+    "status": "spore",
+    "shinies": [
+      {"name": "sandslash"},
+      {"name": "rapidash"},
+      {"name": "ralts"},
+      {"name": "litwick"},
+      {"name": "marill"},
+      {"name": "politoed"},
+      {"name": "noctowl"},
+      {"name": "ninetales"},
+      {"name": "vanillite"},
+      {"name": "accelgor"},
+      {"name": "bronzong"},
+      {"name": "cacnea"},
+      {"name": "krabby"},
+      {"name": "kingler"},
+      {"name": "mothim"}
+    ]
+  },
+  {
     "name": "Aokiza",
     "status": "spore",
     "shinies": [
@@ -194,6 +215,13 @@
     ]
   },
   {
+    "name": "ChipHazardBB",
+    "status": "spore",
+    "shinies": [
+      {"name": "graveler"}
+    ]
+  },
+  {
     "name": "CigaretteMilk",
     "status": "shroom",
     "shinies": [
@@ -331,6 +359,13 @@
       {"name": "tentacruel"},
       {"name": "joltik"},
       {"name": "quagsire"}
+    ]
+  },
+  {
+    "name": "Deuporus",
+    "status": "spore",
+    "shinies": [
+      {"name": "heatmor"}
     ]
   },
   {
@@ -1756,6 +1791,12 @@
     "name": "Ripz",
     "status": "spore",
     "shinies": [
+      {"name": "shelmet"},
+      {"name": "durant"},
+      {"name": "zigzagoon"},
+      {"name": "smeargle"},
+      {"name": "meowth"},
+      {"name": "mareep","safari": true},
       {"name": "cascoon"}
     ]
   },
@@ -1880,6 +1921,19 @@
     "name": "slaydounet",
     "status": "spore",
     "shinies": [
+      {"name": "rapidash"},
+      {"name": "wooper"},
+      {"name": "duosion"},
+      {"name": "rattata"},
+      {"name": "joltik"},
+      {"name": "metapod"},
+      {"name": "beheeyem"},
+      {"name": "lombre"},
+      {"name": "tangela"},
+      {"name": "fearow"},
+      {"name": "mantine"},
+      {"name": "lunatone"},
+      {"name": "bibarel"},
       {"name": "murkrow"}
     ]
   },
@@ -2640,6 +2694,7 @@
     ]
   }
 ]
+
 
 
 
