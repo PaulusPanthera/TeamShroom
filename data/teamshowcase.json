@@ -2227,6 +2227,10 @@
     "name": "Tazmaster",
     "status": "spore",
     "shinies": [
+      {"name": "poliwag"},
+      {"name": "ponyta"},
+      {"name": "gloom"},
+      {"name": "magikarp"},
       {"name": "dratini"},
       {"name": "mantine"}
     ]
@@ -2740,6 +2744,7 @@
     ]
   }
 ]
+
 
 
 
