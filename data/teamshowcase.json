@@ -304,6 +304,23 @@
     ]
   },
   {
+    "name": "cuteasduckk",
+    "status": "spore",
+    "shinies": [
+      {"name": "rapidash","lost": true},
+      {"name": "ditto","lost": true},
+      {"name": "ninetales","lost": true},
+      {"name": "smeargle"},
+      {"name": "dodrio","lost": true},
+      {"name": "chandelure"},
+      {"name": "spinarak"},
+      {"name": "weezing"},
+      {"name": "gallade"},
+      {"name": "crustle"},
+      {"name": "axew"}
+    ]
+  },
+  {
     "name": "DaddyMolo",
     "status": "shroom",
     "shinies": [
@@ -2543,6 +2560,13 @@
     ]
   },
   {
+    "name": "winlip",
+    "status": "spore",
+    "shinies": [
+      {"name": "zigzagoon"}
+    ]
+  },
+  {
     "name": "WinterIvy",
     "status": "shroom",
     "shinies": [
@@ -2710,6 +2734,7 @@
     ]
   }
 ]
+
 
 
 
