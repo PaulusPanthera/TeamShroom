@@ -1985,7 +1985,7 @@
       {"name": "poochyena"},
       {"name": "joltik"},
       {"name": "magikarp"},
-      {"name": "snover"},
+      {"name": "abomasnow"},
       {"name": "joltik"},
       {"name": "snover"},
       {"name": "slowpoke","secret": true},
@@ -2734,6 +2734,7 @@
     ]
   }
 ]
+
 
 
 
