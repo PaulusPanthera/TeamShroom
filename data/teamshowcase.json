@@ -1,12 +1,4 @@
 [
-  {
-    "name": "akaFlexy",
-    "status": "spore",
-    "shinies": [
-      {"name": "claydol"},
-      {"name": "ponyta"}
-    ]
-  },
    {
     "name": "AKatharina",
     "status": "spore",
@@ -148,6 +140,43 @@
     "shinies": [
       {"name": "cascoon"},
       {"name": "shroomish"}
+    ]
+  },
+  {
+    "name": "Brownerthan",
+    "status": "spore",
+    "shinies": [
+      {"name": "magikarp"},
+      {"name": "makikarp","lost": true},
+      {"name": "makikarp","lost": true},
+      {"name": "tentacruel","lost": true},
+      {"name": "smeargle"},
+      {"name": "wurmple","lost": true},
+      {"name": "nidoran-m","lost": true},
+      {"name": "rapidash","lost": true},
+      {"name": "haxorus"},
+      {"name": "magikarp","lost": true},
+      {"name": "makikarp","lost": true},
+      {"name": "makikarp","lost": true},
+      {"name": "magikarp","lost": true},
+      {"name": "weezing","lost": true},
+      {"name": "krokorok","lost": true},
+      {"name": "breloom"},
+      {"name": "gloom","lost": true},
+      {"name": "gloom","lost": true},
+      {"name": "bibarel","lost": true},
+      {"name": "bibarel","lost": true},
+      {"name": "bibarel","lost": true},
+      {"name": "pikachu"},
+      {"name": "bibarel","lost": true},
+      {"name": "bibarel","lost": true},
+      {"name": "bibarel","lost": true},
+      {"name": "bibarel","lost": true},
+      {"name": "ralts"},
+      {"name": "psyduck","lost": true"},
+      {"name": "psyduck","lost": true},
+      {"name": "seaking","lost": true},
+      {"name": "psyduck","lost": true}
     ]
   },
   {
@@ -2744,6 +2773,7 @@
     ]
   }
 ]
+
 
 
 
