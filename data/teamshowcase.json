@@ -175,7 +175,7 @@
       {"name": "bibarel","lost": true},
       {"name": "bibarel","lost": true},
       {"name": "ralts"},
-      {"name": "psyduck","lost": true"},
+      {"name": "psyduck","lost": true},
       {"name": "psyduck","lost": true},
       {"name": "seaking","lost": true},
       {"name": "psyduck","lost": true}
@@ -2790,6 +2790,7 @@
     ]
   }
 ]
+
 
 
 
