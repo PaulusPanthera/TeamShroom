@@ -102,7 +102,9 @@
       {"name": "weezing","clip": "https://medal.tv/de/games/pokemmo/clips/kJ5r3DUmhmWsHi96s?invite=cr-MSx1Q1UsNDE4MTk5NDMw&v=0"},
       {"name": "graveler"},
       {"name": "sharpedo","clip": "https://medal.tv/fr/games/pokemmo/clips/kXM9z54zk1EAdY68K?invite=cr-MSxOY3MsNDE4MTk5NDMw&v=0"},
-      {"name": "politoed"}
+      {"name": "politoed"},
+      {"name": "larvitar"},
+      {"name": "onix"}
     ]
   },
   {
@@ -396,6 +398,13 @@
       {"name": "beautifly"},
       {"name": "zigzagoon"},
       {"name": "woobat"}
+    ]
+  },
+   {
+    "name": "DComp",
+    "status": "spore",
+    "shinies": [
+      {"name": "tentacruel"}
     ]
   },
   {
@@ -1016,7 +1025,8 @@
       {"name": "jigglypuff","safari": true, "secret": true, "lost": true,"clip": "https://www.youtube.com/watch?v=-7Na1k-LV8M"},
       {"name": "illumise"},
       {"name": "shuckle","safari": true,"clip": "https://youtu.be/RcriHaxg6TU"},
-      {"name": "purrloin"}
+      {"name": "purrloin"},
+      {"name": "cacnea"}
     ]
   },
   {
@@ -1159,7 +1169,9 @@
       {"name": "hydreigon"},
       {"name": "poliwrath"},
       {"name": "poliwhirl"},
-      {"name": "cofagrigus"}
+      {"name": "cofagrigus"},
+      {"name": "staryu"},
+      {"name": "joltik"}
     ]
   },
   {
@@ -1944,7 +1956,8 @@
       {"name": "kingdra"},
       {"name": "voltorb"},
       {"name": "bibarel", "safari": true},
-      {"name": "luvdisc","clip": "https://www.youtube.com/watch?v=lm5Do9NAv_c"}
+      {"name": "luvdisc","clip": "https://www.youtube.com/watch?v=lm5Do9NAv_c"},
+      {"name": "krabby"}
     ]
   },
   {
@@ -2277,7 +2290,10 @@
       {"name": "cascoon"},
       {"name": "poochyena"},
       {"name": "minccino"},
-      {"name": "psyduck"}
+      {"name": "psyduck"},
+      {"name": "duskull"},
+      {"name": "swablu"},
+      {"name": "buneary"}
     ]
   },
   {
@@ -2312,7 +2328,8 @@
       {"name": "golurk"},
       {"name": "taillow"},
       {"name": "beautifly"},
-      {"name": "wurmple"}
+      {"name": "wurmple"},
+      {"name": "zigzagoon"}
     ]
   },
   {
@@ -2773,6 +2790,7 @@
     ]
   }
 ]
+
 
 
 
