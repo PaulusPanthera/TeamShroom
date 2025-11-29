@@ -2135,23 +2135,6 @@
     ]
   },
   {
-  "name": "StopEnvy",
-  "status": "shinyshroom",
-  "shinies": [
-    {"name": "tentacruel"},
-    {"name": "ponyta"},
-    {"name": "meowth"},
-    {"name": "gyarados"},
-    {"name": "horsea"},
-    {"name": "dratini"},
-    {"name": "krookodile"},
-    {"name": "scraggy"},
-    {"name": "breloom"},
-    {"name": "ditto"},
-    {"name": "hydreigon"}
-  ]
-},
-  {
     "name": "SubSpacePet",
     "status": "shroom",
     "shinies": [
@@ -2790,6 +2773,7 @@
     ]
   }
 ]
+
 
 
 
