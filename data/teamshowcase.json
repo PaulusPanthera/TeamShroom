@@ -859,7 +859,7 @@
   ]
 },
   {
-    "name": "Jaspn",
+    "name": "jaspn",
     "status": "shroom",
     "shinies": [
       {"name": "whirlipede"},
@@ -2759,6 +2759,7 @@
     ]
   }
 ]
+
 
 
 
