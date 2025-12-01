@@ -1227,7 +1227,8 @@
       {"name": "horsea","clip": "https://medal.tv/fr/games/pokemmo/clips/lxifkayenUNxf4itz?invite=cr-MSxvZEEsMjI0NTQ4NDE2&v=43"},
       {"name": "mareep","clip": "https://medal.tv/fr/games/pokemmo/clips/lxZfs89bj0nexm208?invite=cr-MSxja04sMjI0NTQ4NDE2&v=57"},
       {"name": "sneasel","clip": "https://medal.tv/fr/games/pokemmo/clips/ly94TtBVVCGtV9H7m?invite=cr-MSxicDUsMjI0NTQ4NDE2&v=43"},
-      {"name": "koffing","clip": "https://medal.tv/fr/games/pokemmo/clips/lyX94tiNOXu7YyiRW?invite=cr-MSx5dUksMjI0NTQ4NDE2&v=42"}
+      {"name": "koffing","clip": "https://medal.tv/fr/games/pokemmo/clips/lyX94tiNOXu7YyiRW?invite=cr-MSx5dUksMjI0NTQ4NDE2&v=42"},
+      {"name": "swadloon","clip": "https://medal.tv/fr/games/pokemmo/clips/lBs3jq5Yuzfw7xwfR?invite=cr-MSxiTmcsMjI0NTQ4NDE2&v=34"}
     ]
   },
   {
@@ -1421,7 +1422,8 @@
       {"name": "conkeldurr"},
       {"name": "golurk"},
       {"name": "weezing"},
-      {"name": "mienfoo"}
+      {"name": "mienfoo"},
+      {"name": "snorunt"}
     ]
   },
   {
@@ -1517,7 +1519,8 @@
       {"name": "torkoal"},
       {"name": "clamperl"},
       {"name": "spinda"},
-      {"name": "buneary"}
+      {"name": "buneary"},
+      {"name": "parasect"}
     ]
   },
   {
@@ -1589,7 +1592,8 @@
       {"name": "smeargle"},
       {"name": "horsea"},
       {"name": "tentacruel"},
-      {"name": "pelipper"}
+      {"name": "pelipper"},
+      {"name": "Koffing"}
     ]
   },
   {
@@ -2019,7 +2023,8 @@
       {"name": "slowpoke","secret": true},
       {"name": "venipede"},
       {"name": "sableye"},
-      {"name": "lillipup"}
+      {"name": "lillipup"},
+      {"name": "meowth"}
     ]
   },
   {
@@ -2617,7 +2622,8 @@
       {"name": "venipede"},
       {"name": "whismur"},
       {"name": "charmander","egg": true},
-      {"name": "hoppip"}
+      {"name": "hoppip"},
+      {"name": "larvitar"}
     ]
   },
     {
@@ -2753,6 +2759,7 @@
     ]
   }
 ]
+
 
 
 
