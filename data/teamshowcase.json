@@ -146,11 +146,11 @@
   },
   {
     "name": "Brownerthan",
-    "status": "spore",
+    "status": "shinyshroom",
     "shinies": [
-      {"name": "magikarp"},
-      {"name": "makikarp","lost": true},
-      {"name": "makikarp","lost": true},
+      {"name": "magikarp","lost": true},
+      {"name": "magikarp","lost": true},
+      {"name": "magikarp","lost": true},
       {"name": "tentacruel","lost": true},
       {"name": "smeargle"},
       {"name": "wurmple","lost": true},
@@ -158,11 +158,11 @@
       {"name": "rapidash","lost": true},
       {"name": "haxorus"},
       {"name": "magikarp","lost": true},
-      {"name": "makikarp","lost": true},
-      {"name": "makikarp","lost": true},
       {"name": "magikarp","lost": true},
+      {"name": "magikarp","lost": true},
+      {"name": "magikarp"},
       {"name": "weezing","lost": true},
-      {"name": "krokorok","lost": true},
+      {"name": "sandile"},
       {"name": "breloom"},
       {"name": "gloom","lost": true},
       {"name": "gloom","lost": true},
@@ -1559,26 +1559,6 @@
     ]
   },
   {
-    "name": "MrJawster",
-    "status": "shroom",
-    "shinies": [
-      {"name": "nidoking"},
-      {"name": "amoonguss"}
-    ]
-  },
-  {
-    "name": "MrsJawster",
-    "status": "shroom",
-    "shinies": [
-      {"name": "sandile"},
-      {"name": "scolipede"},
-      {"name": "natu"},
-      {"name": "smeargle"},
-      {"name": "petilil"},
-      {"name": "amoonguss"}
-    ]
-  },
-  {
     "name": "Narrayah",
     "status": "spore",
     "shinies": [
@@ -2773,6 +2753,7 @@
     ]
   }
 ]
+
 
 
 
