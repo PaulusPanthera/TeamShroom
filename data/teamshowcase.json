@@ -780,7 +780,7 @@
       {"name": "onix","clip": "https://www.twitch.tv/h0keymon/clip/GrotesqueAggressiveGrasshopperPartyTime-emL5hMUFjND2c6Bs"},
       {"name": "hypno"},
       {"name": "kingler"},
-      {"name": "electrobe","clip": "https://www.twitch.tv/h0keymon/clip/ImpossibleBitterZebraJebaited-3X-fdJ30tQHCJ7hK"},
+      {"name": "electrode","clip": "https://www.twitch.tv/h0keymon/clip/ImpossibleBitterZebraJebaited-3X-fdJ30tQHCJ7hK"},
       {"name": "koffing"},
       {"name": "weezing","clip":"https://www.twitch.tv/h0keymon/clip/TastyHyperAyeayeAMPTropPunch-gMFOeC9a_WrqrTVv?filter=clips&range=all&sort=time"},
       {"name": "magikarp","clip":"https://www.twitch.tv/h0keymon/clip/PuzzledEnchantingPistachioStoneLightning-iJJi21zSO_NS27V2?filter=clips&range=all&sort=time"},
@@ -2760,6 +2760,7 @@
     ]
   }
 ]
+
 
 
 
