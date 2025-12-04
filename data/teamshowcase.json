@@ -2462,44 +2462,6 @@
     ]
   },
   {
-    "name": "Watcha",
-    "status": "spore",
-    "shinies": [
-      {"name": "rapidash"},
-      {"name": "tentacruel"},
-      {"name": "vanillite"},
-      {"name": "donphan"},
-      {"name": "donphan"},
-      {"name": "seaking"},
-      {"name": "smeargle"},
-      {"name": "litwick"},
-      {"name": "dusclops"},
-      {"name": "ninetales"},
-      {"name": "torkoal"},
-      {"name": "cottonee"},
-      {"name": "gyarados"},
-      {"name": "donphan"},
-      {"name": "spinda"},
-      {"name": "scraggy"},
-      {"name": "cryogonal"},
-      {"name": "linoone"},
-      {"name": "trapinch"},
-      {"name": "dodrio"},
-      {"name": "donphan"},
-      {"name": "poliwhirl"},
-      {"name": "amoonguss"},
-      {"name": "ditto"},
-      {"name": "marill","lost": true,"safari": true},
-      {"name": "magikarp","safari": true},
-      {"name": "luvdisc"},
-      {"name": "marowak"},
-      {"name": "klink"},
-      {"name": "cubchoo"},
-      {"name": "gyarados"},
-      {"name": "gyarados"}
-    ]
-  },
-  {
     "name": "Whamalicious",
     "status": "shroom",
     "shinies": [
@@ -2760,6 +2722,7 @@
     ]
   }
 ]
+
 
 
 
