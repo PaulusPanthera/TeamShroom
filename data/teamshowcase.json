@@ -60,7 +60,7 @@
   },
   {
     "name": "Aokiza",
-    "status": "spore",
+    "status": "shroom",
     "shinies": [
       {"name": "psyduck"},
       {"name": "rapidash"},
@@ -549,7 +549,7 @@
   },
   {
     "name": "Emmy",
-    "status": "spore",
+    "status": "shroom",
     "shinies": [
       { "name": "tentacruel" },
       { "name": "pelipper" },
@@ -604,7 +604,7 @@
   },
   {
     "name": "fisplant",
-    "status": "spore",
+    "status": "shroom",
     "shinies": [
       {"name": "hariyama"},
       {"name": "graveler"}
@@ -697,7 +697,7 @@
   },
       {
     "name": "highpokeman",
-    "status": "spore",
+    "status": "shroom",
     "shinies": [
       {"name": "rapidash"},
       {"name": "ponyta"},
@@ -1837,7 +1837,7 @@
   },
   {
     "name": "RicRiley",
-    "status": "spore",
+    "status": "shroom",
     "shinies": [
       {"name": "poliwhirl"},
       {"name": "golduck"},
@@ -1923,7 +1923,7 @@
   },
   {
     "name": "Scooty",
-    "status": "spore",
+    "status": "shroom",
     "shinies": [
       {"name": "rapidash"},
       {"name": "tympole"},
@@ -2722,6 +2722,7 @@
     ]
   }
 ]
+
 
 
 
