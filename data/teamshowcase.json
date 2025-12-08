@@ -2059,7 +2059,15 @@
       {"name": "venipede"},
       {"name": "zoroark"}
     ]
-  },
+      },
+   {
+    "name": "Soxzzz",
+    "status": "spore",
+    "shinies": [
+   {"name": "gyarados"},
+   {"name": "litwick"}
+    ]
+      },
   {
     "name": "SparkleButt",
     "status": "spore",
@@ -2068,7 +2076,7 @@
       {"name": "miltank"},
       {"name": "tentacruel"}
     ]
-  },
+      },
   {
     "name": "srysu",
     "status": "shroom",
@@ -2727,6 +2735,7 @@
     ]
   }
 ]
+
 
 
 
