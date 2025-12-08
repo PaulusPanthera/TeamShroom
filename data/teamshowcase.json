@@ -2328,6 +2328,21 @@
     ]
   },
   {
+    "name": "Tollewolle",
+    "status": "spore",
+    "shinies": [
+       {"name": "ponyta"},
+       {"name": "meowth"},
+       {"name": "abra"},
+       {"name": "tentacruel"},
+       {"name": "banette"},
+       {"name": "camerupt"},
+       {"name": "poliwag"},
+       {"name": "magcargo"},
+       {"name": "bellsprout"}
+       ]
+  },
+  {
     "name": "TorontoKid",
     "status": "shroom",
     "shinies": [
@@ -2735,6 +2750,7 @@
     ]
   }
 ]
+
 
 
 
