@@ -842,7 +842,8 @@
       {"name": "koffing"},
       {"name": "torkoal"},
       {"name": "golett"},
-      {"name": "shuppet"}
+      {"name": "shuppet"},
+      {"name": "krokorok"}
     ]
   },
   {
@@ -1980,7 +1981,8 @@
       {"name": "koffing"},
       {"name": "graveler"},
       {"name": "pachirisu"},
-      {"name": "krookodile"}
+      {"name": "krookodile"},
+      {"name": "torkoal"}
     ]
   },
   {
@@ -2148,7 +2150,8 @@
       {"name": "spearow"},
       {"name": "rapidash"},
       {"name": "bouffalant"},
-      {"name": "poliwhirl"}
+      {"name": "poliwhirl"},
+      {"name": "donphan"}
     ]
   },
   {
@@ -2223,7 +2226,8 @@
       {"name": "piloswine"},
       {"name": "stantler"},
       {"name": "gigalith"},
-      {"name": "wurmple"}
+      {"name": "wurmple"},
+      {"name": "silcoon"}
     ]
   },
   {
@@ -2444,7 +2448,8 @@
       {"name": "riolu","safari": true},
       {"name": "carvanha"},
       {"name": "dodrio"},
-      {"name": "sewaddle","secret": true}
+      {"name": "sewaddle","secret": true},
+      {"name": "sharpedo"}
     ]
   },
   {
@@ -2722,6 +2727,7 @@
     ]
   }
 ]
+
 
 
 
