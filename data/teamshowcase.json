@@ -1065,28 +1065,6 @@
     ]
   },
   {
-    "name": "Kimchinator",
-    "status": "spore",
-    "shinies": [
-      {"name": "bellossom"},
-      {"name": "tentacruel"},
-      {"name": "zigzagoon"},
-      {"name": "kricketune","secret": true},
-      {"name": "ferroseed"},
-      {"name": "donphan"},
-      {"name": "chandelure"},
-      {"name": "alakazam"},
-      {"name": "magmortar"},
-      {"name": "dodrio"},
-      {"name": "ponyta"},
-      {"name": "cubchoo"},
-      {"name": "arcanine"},
-      {"name": "bibarel"},
-      {"name": "vullaby"},
-      {"name": "luxray"}
-    ]
-  },
-   {
     "name": "Kithri",
     "status": "spore",
     "shinies": [
@@ -1526,14 +1504,6 @@
     ]
   },
   {
-    "name": "mossballetje",
-    "status": "shroom",
-    "shinies": [
-      {"name": "machoke"},
-      {"name": "rapidash"}
-    ]
-  },
-    {
     "name": "MrBiscottes",
     "status": "spore",
     "shinies": [
@@ -2750,6 +2720,7 @@
     ]
   }
 ]
+
 
 
 
