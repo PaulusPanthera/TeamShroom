@@ -103,8 +103,8 @@
       {"name": "graveler"},
       {"name": "sharpedo","clip": "https://medal.tv/fr/games/pokemmo/clips/kXM9z54zk1EAdY68K?invite=cr-MSxOY3MsNDE4MTk5NDMw&v=0"},
       {"name": "politoed"},
-      {"name": "larvitar"},
-      {"name": "onix"}
+      {"name": "tyranitar"},
+      {"name": "steelix"}
     ]
   },
   {
@@ -413,7 +413,8 @@
     "shinies": [
       {"name": "tentacruel"},
       {"name": "joltik"},
-      {"name": "quagsire"}
+      {"name": "quagsire"},
+      {"name": "litwick"}
     ]
   },
   {
@@ -544,7 +545,8 @@
       {"name": "cofagrigus"},
       {"name": "donphan"},
       {"name": "clamperl"},
-      {"name": "mankey"}
+      {"name": "mankey"},
+      {"name": "piloswine"}
     ]
   },
   {
@@ -1007,7 +1009,7 @@
       {"name": "magikarp","safari": true,"clip": "https://www.youtube.com/watch?v=EbT6IgplWSI"},
       {"name": "machamp"},
       {"name": "beautifly"},
-      {"name": "venipede"},
+      {"name": "scolipede"},
       {"name": "jigglypuff","safari": true,"clip": "https://www.youtube.com/watch?v=rQoGBqv68Hg"},
       {"name": "starmie","clip": "https://www.youtube.com/watch?v=4kv70V3D6pQ"},
       {"name": "clefairy"},
@@ -1151,7 +1153,9 @@
       {"name": "poliwhirl"},
       {"name": "cofagrigus"},
       {"name": "staryu"},
-      {"name": "joltik"}
+      {"name": "joltik"},
+      {"name": "voltorb"},
+      {"name": "weavile"}
     ]
   },
   {
@@ -1699,7 +1703,8 @@
       {"name": "piloswine","clip": "https://www.twitch.tv/paulustft/clip/OddStrongBasenjiAsianGlow-ZgX4764wfEXQ9UW3"},
       {"name": "bibarel"},
       {"name": "snubbull"},
-      {"name": "bibarel"}
+      {"name": "bibarel"},
+      {"name": "poliwag","safari":true}
     ]
   },
   {
@@ -1812,7 +1817,8 @@
     "shinies": [
       {"name": "poliwhirl"},
       {"name": "golduck"},
-      {"name": "pelipper"}
+      {"name": "pelipper"},
+      {"name": "vileplume"}
     ]
   },
   {
@@ -2205,7 +2211,8 @@
       {"name": "stantler"},
       {"name": "gigalith"},
       {"name": "wurmple"},
-      {"name": "silcoon"}
+      {"name": "silcoon"},
+      {"name": "poochyena"}
     ]
   },
   {
@@ -2692,7 +2699,8 @@
     {"name": "donphan"},
     {"name": "milotic", "egg": true},
     {"name": "horsea"},
-    {"name": "lunatone","clip": "https://www.youtube.com/watch?v=S93yKrZCUG8"}
+    {"name": "lunatone","clip": "https://www.youtube.com/watch?v=S93yKrZCUG8"},
+    {"name": "starmie","secret":true}
   ]
 },
   {
@@ -2722,6 +2730,7 @@
     ]
   }
 ]
+
 
 
 
