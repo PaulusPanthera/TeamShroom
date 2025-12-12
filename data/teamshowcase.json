@@ -1154,7 +1154,7 @@
       {"name": "cofagrigus"},
       {"name": "staryu"},
       {"name": "joltik"},
-      {"name": "voltorb"},
+      {"name": "electrode"},
       {"name": "weavile"}
     ]
   },
@@ -2173,7 +2173,7 @@
       {"name": "bibarel","lost": true},
       {"name": "Gallade"},
       {"name": "magikarp"},
-      {"name": "cascoon"},
+      {"name": "cascoon","clip":"https://medal.tv/fr/games/pokemmo/clips/lG489dTsQ4AJ7Areh?invite=cr-MSxrS0ksMzU0NDc1OTg0&v=23"},
       {"name": "politoed"},
       {"name": "reuniclus"},
       {"name": "walrein"},
@@ -2189,30 +2189,30 @@
       {"name": "solrock"},
       {"name": "solrock"},
       {"name": "golbat"},
-      {"name": "salamence"},
+      {"name": "salamence",:"clip":"https://medal.tv/fr/games/pokemmo/clips/kf1awNrfLjI5po37e?invite=cr-MSxkZGQsMzU0NDc1OTg0&v=34"},
       {"name": "slowbro"},
       {"name": "azumarill"},
       {"name": "minccino"},
-      {"name": "pawniard","secret": true},
+      {"name": "pawniard","secret": true,"clip":"https://medal.tv/fr/games/pokemmo/clips/kf12qWDNelhEBeBTV?invite=cr-MSxRQ2ksMzU0NDc1OTg0&v=25"},
       {"name": "gliscor"},
-      {"name": "darmanitan"},
+      {"name": "darmanitan","clip":"https://medal.tv/fr/games/pokemmo/clips/kf1e8tmkK7XW3iJNM?invite=cr-MSxMbTEsMzU0NDc1OTg0&v=28"},
       {"name": "dustox"},
       {"name": "slakoth"},
       {"name": "zigzagoon"},
-      {"name": "wurmple"},
-      {"name": "beautifly"},
-      {"name": "cascoon"},
-      {"name": "zigzagoon"},
-      {"name": "magcargo"},
-      {"name": "vibrava"},
-      {"name": "electrode"},
-      {"name": "wobbuffet"},
-      {"name": "piloswine"},
-      {"name": "stantler"},
-      {"name": "gigalith"},
-      {"name": "wurmple"},
-      {"name": "silcoon"},
-      {"name": "poochyena"}
+      {"name": "wurmple","clip":"https://medal.tv/fr/games/pokemmo/clips/kgpl8e6dt5f5yezTn?invite=cr-MSxHVWYsMzU0NDc1OTg0&v=26"},
+      {"name": "beautifly","clip":"https://medal.tv/fr/games/pokemmo/clips/kh26uaPs0vCpNvBph?invite=cr-MSxTWjgsMzU0NDc1OTg0&v=44"},
+      {"name": "cascoon","clip":"https://medal.tv/fr/games/pokemmo/clips/kuHP0UDeKN9j3TkEO?invite=cr-MSw2RDUsMzU0NDc1OTg0&v=34"},
+      {"name": "linoone"},
+      {"name": "magcargo","clip":"https://medal.tv/fr/games/pokemmo/clips/kKe1OWziYZi6VLgEv?invite=cr-MSw0VkQsMzU0NDc1OTg0&v=44"},
+      {"name": "vibrava","clip":"https://medal.tv/fr/games/pokemmo/clips/kIeWwnlcsJ1XLy7AN?invite=cr-MSx6ZmUsMzU0NDc1OTg0&v=36"},
+      {"name": "electrode","clip":"https://medal.tv/fr/games/pokemmo/clips/kJ7WFOQuyqO5SWCtM?invite=cr-MSxveVMsMzU0NDc1OTg0&v=30"},
+      {"name": "wobbuffet","clip":"https://medal.tv/fr/games/pokemmo/clips/kJVJlmrXewtn5MlVX?invite=cr-MSxreEMsMzU0NDc1OTg0&v=34"},
+      {"name": "piloswine","clip":"https://medal.tv/fr/games/pokemmo/clips/kKNCIcuOEeRM_oGPE?invite=cr-MSxCRnQsMzU0NDc1OTg0&v=23"},
+      {"name": "stantler","clip":"https://medal.tv/fr/games/pokemmo/clips/kM0Y6xHjJ5ckOzal4?invite=cr-MSxBeGosMzU0NDc1OTg0&v=27"},
+      {"name": "gigalith","clip":"https://medal.tv/fr/games/pokemmo/clips/kNF5rXaKOYa83a_F1?invite=cr-MSxOTVEsMzU0NDc1OTg0&v=33"},
+      {"name": "wurmple","clip":"https://medal.tv/fr/games/pokemmo/clips/l2rsxHzoYfkOzvgqr?invite=cr-MSxLQlUsMzU0NDc1OTg0&v=30"},
+      {"name": "silcoon","clip":"https://medal.tv/fr/games/pokemmo/clips/lELsHmNTOhVDt7sY2?invite=cr-MSw1elUsMzU0NDc1OTg0&v=20"},
+      {"name": "poochyena","clip":"https://medal.tv/fr/games/pokemmo/clips/lG489dTsQ4AJ7Areh?invite=cr-MSxrS0ksMzU0NDc1OTg0&v=23"}
     ]
   },
   {
@@ -2730,6 +2730,7 @@
     ]
   }
 ]
+
 
 
 
