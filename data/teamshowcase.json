@@ -2189,7 +2189,7 @@
       {"name": "solrock"},
       {"name": "solrock"},
       {"name": "golbat"},
-      {"name": "salamence",:"clip":"https://medal.tv/fr/games/pokemmo/clips/kf1awNrfLjI5po37e?invite=cr-MSxkZGQsMzU0NDc1OTg0&v=34"},
+      {"name": "salamence","clip":"https://medal.tv/fr/games/pokemmo/clips/kf1awNrfLjI5po37e?invite=cr-MSxkZGQsMzU0NDc1OTg0&v=34"},
       {"name": "slowbro"},
       {"name": "azumarill"},
       {"name": "minccino"},
@@ -2730,6 +2730,7 @@
     ]
   }
 ]
+
 
 
 
