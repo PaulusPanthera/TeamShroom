@@ -2464,8 +2464,9 @@
       {"name": "tentacruel"},
       {"name": "golett"},
       {"name": "shelmet"},
-      {"name": "vanilluxe"},
-      {"name": "hoothoot"}
+      {"name": "hoothoot"},
+      {"name": "vanilluxe"}
+
     ]
   },
   {
@@ -2730,6 +2731,7 @@
     ]
   }
 ]
+
 
 
 
