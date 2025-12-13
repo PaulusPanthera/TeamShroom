@@ -2135,7 +2135,8 @@
       {"name": "rapidash"},
       {"name": "bouffalant"},
       {"name": "poliwhirl"},
-      {"name": "donphan"}
+      {"name": "donphan"},
+       {"name": "poliwhirl"}
     ]
   },
   {
@@ -2731,6 +2732,7 @@
     ]
   }
 ]
+
 
 
 
