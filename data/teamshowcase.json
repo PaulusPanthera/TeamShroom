@@ -1716,7 +1716,8 @@
       {"name": "bibarel"},
       {"name": "snubbull"},
       {"name": "bibarel"},
-      {"name": "poliwag","safari":true}
+      {"name": "poliwag","safari":true},
+      {"name": "joltik"}
     ]
   },
   {
@@ -2744,6 +2745,7 @@
     ]
   }
 ]
+
 
 
 
