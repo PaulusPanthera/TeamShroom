@@ -212,6 +212,18 @@
     ]
   },
   {
+    "name": "Charizapedia",
+    "status": "spore",
+    "shinies": [
+      {"name": "ledyba"},
+      {"name": "magikarp"},
+      {"name": "ponyta"},
+      {"name": "ponyta"},
+      {"name": "ponyta"},
+      {"name": "ponyta"}
+    ]
+  },
+  {
     "name": "CheesasaurusRex",
     "status": "shroom",
     "shinies": [
@@ -227,7 +239,7 @@
       {"name": "linoone"}
     ]
   },
-   {
+  {
     "name": "Chestia",
     "status": "spore",
     "shinies": [
@@ -2732,6 +2744,7 @@
     ]
   }
 ]
+
 
 
 
