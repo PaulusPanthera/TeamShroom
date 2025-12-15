@@ -2692,6 +2692,7 @@
   "status": "spore",
   "shinies": [
     {"name": "tentacruel", "lost": true},
+    {"name": "pidgeotto", "lost": true},
     {"name": "rapidash", "lost": true},
     {"name": "nidoking"},
     {"name": "meowth"},
@@ -2702,12 +2703,12 @@
     {"name": "tentacruel", "lost": true},
     {"name": "rapidash", "lost": true},
     {"name": "gastrodon-west"},
-    {"name": "mienfoo"},
-    {"name": "luxio", "lost": true},
+    {"name": "mienshao"},
+    {"name": "luxio"},
     {"name": "slowbro"},
     {"name": "rhydon", "lost": true},
     {"name": "durant"},
-    {"name": "deino"},
+    {"name": "hydreigon"},
     {"name": "dodrio", "lost": true},
     {"name": "wingull"},
     {"name": "dodrio"},
@@ -2745,6 +2746,7 @@
     ]
   }
 ]
+
 
 
 
