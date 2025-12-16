@@ -104,7 +104,8 @@
       {"name": "sharpedo","clip": "https://medal.tv/fr/games/pokemmo/clips/kXM9z54zk1EAdY68K?invite=cr-MSxOY3MsNDE4MTk5NDMw&v=0"},
       {"name": "politoed"},
       {"name": "tyranitar"},
-      {"name": "steelix"}
+      {"name": "steelix"},
+      {"name": "graveler"}
     ]
   },
   {
@@ -426,7 +427,8 @@
       {"name": "tentacruel"},
       {"name": "joltik"},
       {"name": "quagsire"},
-      {"name": "litwick"}
+      {"name": "litwick"},
+      {"name": "horsea"}
     ]
   },
   {
@@ -1273,7 +1275,8 @@
     "shinies": [
       {"name": "spearow"},
       {"name": "ponyta"},
-      {"name": "donphan"}
+      {"name": "donphan"},
+      {"name": "dodrio"}
     ]
   },
   {
@@ -2016,7 +2019,8 @@
       {"name": "venipede"},
       {"name": "sableye"},
       {"name": "lillipup"},
-      {"name": "meowth"}
+      {"name": "meowth"},
+      {"name": "magikarp","safari":true}
     ]
   },
   {
@@ -2439,7 +2443,9 @@
       {"name": "petilil","clip": "https://www.twitch.tv/videos/2605666494"},
       {"name": "venipede","clip": "https://www.twitch.tv/videos/2605671318"},
       {"name": "petilil","clip": "https://www.twitch.tv/videos/2621130276"},
-      {"name": "venipede"}
+      {"name": "venipede"},
+      {"name": "cottonee"},
+      {"name": "petlil"}
     ]
   },
   {
@@ -2463,7 +2469,8 @@
       {"name": "carvanha"},
       {"name": "dodrio"},
       {"name": "sewaddle","secret": true},
-      {"name": "sharpedo"}
+      {"name": "sharpedo"},
+      {"name": "poliwhirl","lost":true}
     ]
   },
   {
@@ -2479,7 +2486,8 @@
       {"name": "golett"},
       {"name": "shelmet"},
       {"name": "hoothoot"},
-      {"name": "vanilluxe"}
+      {"name": "vanilluxe"},
+      {"name": "pelipper"}
 
     ]
   },
@@ -2746,6 +2754,7 @@
     ]
   }
 ]
+
 
 
 
