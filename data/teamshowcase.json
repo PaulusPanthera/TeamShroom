@@ -1534,12 +1534,12 @@
       {"name": "zigzagoon", "lost": true},
       {"name": "poochyena"},
       {"name": "rattata"},
-      {"name": "durant"},
-      {"name": "duskull"},
-      {"name": "grimer"},
-      {"name": "krabby"},
-      {"name": "mienfoo"},
-      {"name": "poliwhirl"},
+      {"name": "durant","clip":"https://medal.tv/fr/games/pokemmo/clips/lH4Cxrhcw3eirl2z0?invite=cr-MSxTeUgsMzYxNTYyNDI3&v=79"},
+      {"name": "duskull","clip":"https://medal.tv/fr/games/pokemmo/clips/lHS8Mw7H5UYuu77Jz?invite=cr-MSw2SkEsMzYxNTYyNDI3&v=147"},
+      {"name": "grimer","clip":"https://medal.tv/fr/games/pokemmo/clips/lH4RqwOhuyDasj9kv?invite=cr-MSx6dHEsMzYxNTYyNDI3&v=182"},
+      {"name": "krabby","clip":"https://medal.tv/fr/games/pokemmo/clips/lHS541Qgk9yZ3zOJn?invite=cr-MSxpVnIsMzYxNTYyNDI3&v=197"},
+      {"name": "mienfoo","clip":"https://medal.tv/fr/games/pokemmo/clips/lHSqEG7oXpNj9YwCk?invite=cr-MSxWcFAsMzYxNTYyNDI3&v=213"},
+      {"name": "poliwhirl","clip":"https://medal.tv/fr/games/pokemmo/clips/lHSzVceM4cZ1qdZ8r?invite=cr-MSxUWTIsMzYxNTYyNDI3&v=141"},
       {"name": "golurk","alpha": true, "clip": "https://medal.tv/fr/games/pokemmo/clips/lrM6iX5R3mZX_LZtS?invite=cr-MSxubFEsMzYxNTYyNDI3&v=51"}
     ]
   },
@@ -2444,7 +2444,7 @@
       {"name": "venipede","clip": "https://www.twitch.tv/videos/2605671318"},
       {"name": "petilil","clip": "https://www.twitch.tv/videos/2621130276"},
       {"name": "venipede"},
-      {"name": "cottonee"},
+      {"name": "cottonee","clip":"https://www.twitch.tv/videos/2644364288"},
       {"name": "petlil"}
     ]
   },
@@ -2754,6 +2754,7 @@
     ]
   }
 ]
+
 
 
 
