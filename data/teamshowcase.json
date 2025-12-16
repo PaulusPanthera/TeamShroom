@@ -2483,8 +2483,8 @@
       {"name": "tentacruel"},
       {"name": "smeargle"},
       {"name": "tentacruel"},
-      {"name": "golett"},
-      {"name": "shelmet"},
+      {"name": "golurk"},
+      {"name": "accelgor"},
       {"name": "hoothoot"},
       {"name": "vanilluxe"},
       {"name": "pelipper"}
@@ -2754,6 +2754,7 @@
     ]
   }
 ]
+
 
 
 
