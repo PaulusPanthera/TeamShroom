@@ -109,14 +109,6 @@
     ]
   },
   {
-    "name": "BitscapeYT",
-    "status": "spore",
-    "shinies": [
-      {"name": "diglett", "lost": true},
-      {"name": "smeargle"}
-    ]
-  },
-  {
     "name": "BlistiK",
     "status": "shroom",
     "shinies": [
@@ -2754,6 +2746,7 @@
     ]
   }
 ]
+
 
 
 
