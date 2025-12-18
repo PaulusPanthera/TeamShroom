@@ -3309,7 +3309,7 @@
     "tier": "Tier 6",
     "region": "Hoenn",
     "rarity": "5x100%",
-    "claimed": false
+    "claimed": "Eerie"
   },
   {
     "#": 369,
@@ -5859,6 +5859,7 @@
     "claimed": "NA"
   }
 ]
+
 
 
 
