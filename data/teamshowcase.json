@@ -2064,44 +2064,10 @@
     ]
       },
   {
-    "name": "srysu",
+    "name": "spells",
     "status": "shroom",
     "shinies": [
-      {"name": "piloswine"},
-      {"name": "clamperl"},
-      {"name": "meowth"},
-      {"name": "pelipper"},
-      {"name": "sableye"},
-      {"name": "dewgong"},
-      {"name": "bibarel"},
-      {"name": "heatmor"},
-      {"name": "accelgor"},
-      {"name": "octillery","secret": true},
-      {"name": "hypno"},
-      {"name": "scolipede"},
-      {"name": "linoone"},
-      {"name": "gloom"},
-      {"name": "venipede"},
-      {"name": "geodude","lost": true},
-      {"name": "graveler","lost": true},
-      {"name": "graveler"},
-      {"name": "beedrill"},
-      {"name": "rapidash"},
-      {"name": "rapidash"},
-      {"name": "cubchoo"},
-      {"name": "cubchoo"},
-      {"name": "roselia"},
-      {"name": "purugly"},
-      {"name": "roselia"},
-      {"name": "pachirisu"},
-      {"name": "lopunny"},
-      {"name": "paras"},
-      {"name": "donphan"},
-      {"name": "vulpix"},
-      {"name": "graveler"},
-      {"name": "poliwrath"},
-      {"name": "noctowl"},
-      {"name": "fearow"}
+      {"name": "lickilicky","alpha": true}
     ]
   },
   {
@@ -2747,6 +2713,7 @@
     ]
   }
 ]
+
 
 
 
