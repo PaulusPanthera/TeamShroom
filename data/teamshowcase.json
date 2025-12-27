@@ -2118,23 +2118,6 @@
     ]
   },
   {
-    "name": "SwoleyCrusade",
-    "status": "spore",
-    "shinies": [
-      {"name": "tentacruel"},
-      {"name": "raticate"},
-      {"name": "pidgey"},
-      {"name": "phanpy"},
-      {"name": "spearow"},
-      {"name": "rapidash"},
-      {"name": "bouffalant"},
-      {"name": "poliwhirl"},
-      {"name": "donphan"},
-      {"name": "poliwhirl"},
-      {"name": "poliwhirl"}
-    ]
-  },
-  {
     "name": "TaCesa",
     "status": "spore",
     "shinies": [
@@ -2735,6 +2718,7 @@
     ]
   }
 ]
+
 
 
 
