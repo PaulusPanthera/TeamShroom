@@ -826,20 +826,6 @@
     ]
   },
   {
-  "name": "jasmine",
-  "status": "spore",
-  "shinies": [
-    {"name": "lopunny"},
-    {"name": "golem"},
-    {"name": "pikachu"},
-    {"name": "oddish"},
-    {"name": "woobat"},
-    {"name": "karrablast"},
-    {"name": "swadloon"},
-    {"name": "oddish"}
-  ]
-},
-  {
     "name": "jaspn",
     "status": "shroom",
     "shinies": [
@@ -2662,6 +2648,7 @@
     ]
   }
 ]
+
 
 
 
