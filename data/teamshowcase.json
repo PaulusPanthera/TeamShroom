@@ -564,45 +564,6 @@
     ]
   },
   {
-    "name": "Emmy",
-    "status": "shroom",
-    "shinies": [
-      { "name": "tentacruel" },
-      { "name": "pelipper" },
-      { "name": "geodude" },
-      { "name": "linoone" },
-      { "name": "vanilluxe" },
-      { "name": "litwick" },
-      { "name": "klink" },
-      { "name": "minccino" },
-      { "name": "darumaka" },
-      { "name": "donphan" },
-      { "name": "donphan" },
-      { "name": "donphan" },
-      { "name": "duskull" },
-      { "name": "wynaut" },
-      { "name": "boldore" },
-      { "name": "smeargle" },
-      { "name": "liepard" },
-      { "name": "crustle" },
-      { "name": "mawile" },
-      { "name": "bronzong" },
-      { "name": "nosepass" },
-      { "name": "klang" },
-      { "name": "durant" },
-      { "name": "ferrothorn" },
-      { "name": "cubone" },
-      { "name": "beldum", "egg": true },
-      { "name": "pidgey" },
-      {"name": "magneton"},
-      {"name": "aggron"},
-      {"name": "tyranitar"},
-      {"name": "escavalier"},
-      {"name": "steelix"},
-      {"name": "liepard"}
-    ]
-  },
-  {
     "name": "Freenox",
     "status": "spore",
     "shinies": [
@@ -2101,23 +2062,6 @@
     ]
   },
   {
-    "name": "SubSpacePet",
-    "status": "shroom",
-    "shinies": [
-      {"name": "tentacruel"},
-      {"name": "bidoof"},
-      {"name": "milotic","egg": true},
-      {"name": "pikachu"},
-      {"name": "graveler"},
-      {"name": "luxio"},
-      {"name": "golbat"},
-      {"name": "venipede"},
-      {"name": "Furret","egg": true},
-      {"name": "girafarig"},
-      {"name": "petilil"}
-    ]
-  },
-  {
     "name": "TaCesa",
     "status": "spore",
     "shinies": [
@@ -2718,6 +2662,7 @@
     ]
   }
 ]
+
 
 
 
