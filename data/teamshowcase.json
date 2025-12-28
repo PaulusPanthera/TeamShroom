@@ -1660,9 +1660,9 @@
       {"name": "cacnea","clip": "https://www.twitch.tv/paulustft/clip/RacyLongPlumberWow-KHSAlktvr91Au4Ge"},
       {"name": "stantler","clip": "https://www.twitch.tv/paulustft/clip/BraveObeseDonkeyCharlietheUnicorn-62pBPxmTvBzOwGl4"},
       {"name": "snorunt"},
-      {"name": "growlithe","clip": "https://www.twitch.tv/paulustft/clip/TransparentGrotesqueQueleaItsBoshyTime-hOwUtYzanWj2KvbH"},
+      {"name": "arcanine","clip": "https://www.twitch.tv/paulustft/clip/TransparentGrotesqueQueleaItsBoshyTime-hOwUtYzanWj2KvbH"},
       {"name": "jigglypuff","clip": "https://www.twitch.tv/paulustft/clip/CarefulExcitedRatRlyTho-h7Ewli2Y63xLD8xP"},
-      {"name": "herdier","clip": "https://www.twitch.tv/paulustft/clip/RamshackleFancyCockroachChocolateRain-Ic-ueAhNanriwUHm"},
+      {"name": "stoutland","clip": "https://www.twitch.tv/paulustft/clip/RamshackleFancyCockroachChocolateRain-Ic-ueAhNanriwUHm"},
       {"name": "hariyama","clip": "https://www.twitch.tv/paulustft/clip/ImpossibleCheerfulOwlANELE-J7BImmTRFwhUQOkS"},
       {"name": "zebstrika","clip": "https://www.twitch.tv/paulustft/clip/UnsightlyEnchantingAmazonTwitchRPG-G3Pry1zXtvyRKbik"},
       {"name": "mudkip","egg": true,"clip": "https://www.twitch.tv/paulustft/clip/DependableThoughtfulHawkKlappa-AoWxrVpBv6tqq7Mc"},
@@ -1672,12 +1672,14 @@
       {"name": "cascoon","clip": "https://www.twitch.tv/paulustft/clip/BetterPleasantMilkOptimizePrime-DHQsKKK3rUDk1yYE"},
       {"name": "manectric"},
       {"name": "wobbuffet","clip": "https://www.twitch.tv/paulustft/clip/ScaryPluckyCheeseImGlitch-e3rmgA_0OsITe_Lm"},
-      {"name": "piloswine","clip": "https://www.twitch.tv/paulustft/clip/OddStrongBasenjiAsianGlow-ZgX4764wfEXQ9UW3"},
-      {"name": "bibarel"},
+      {"name": "mamoswine","clip": "https://www.twitch.tv/paulustft/clip/OddStrongBasenjiAsianGlow-ZgX4764wfEXQ9UW3"},
+      {"name": "bidoof"},
       {"name": "snubbull"},
       {"name": "bibarel"},
       {"name": "poliwag","safari":true},
-      {"name": "joltik"}
+      {"name": "joltik"},
+      {"name": "galvantula"}.
+      {"name": "ninetales"}
     ]
   },
   {
@@ -2648,6 +2650,7 @@
     ]
   }
 ]
+
 
 
 
