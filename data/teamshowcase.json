@@ -1678,7 +1678,7 @@
       {"name": "bibarel"},
       {"name": "poliwag","safari":true},
       {"name": "joltik"},
-      {"name": "galvantula"}.
+      {"name": "galvantula"},
       {"name": "ninetales"}
     ]
   },
@@ -2650,6 +2650,7 @@
     ]
   }
 ]
+
 
 
 
