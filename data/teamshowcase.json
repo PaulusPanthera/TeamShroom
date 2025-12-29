@@ -143,22 +143,22 @@
       {"name": "floatzel"},
       {"name": "rapidash","lost":true},
       {"name": "beartic"},
-      {"name": "duskoll"},
+      {"name": "duskull"},
       {"name": "smeargle"},
       {"name": "alakazam"},
       {"name": "golurk"},
-      {"name": "politoad"},
+      {"name": "politoed"},
       {"name": "poliwrath"},
       {"name": "weezing"},
       {"name": "parasect"},
-      {"name": "kekcleon"},
+      {"name": "kecleon"},
       {"name": "combee"},
       {"name": "raticate"},
       {"name": "ferroseed"},
-      {"name": "driflbloom"},
+      {"name": "drifloon"},
       {"name": "vullaby"},
       {"name": "clefairy"},
-      {"name": "bannette"},
+      {"name": "banette"},
       {"name": "misdreavus"},
       {"name": "pelipper"},
       {"name": "ninetails"},
@@ -2720,6 +2720,7 @@
     ]
   }
 ]
+
 
 
 
