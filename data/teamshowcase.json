@@ -75,7 +75,9 @@
       {"name": "magikarp"},
       {"name": "rhydon"},
       {"name": "smeargle"},
-      {"name": "magikarp"}
+      {"name": "magikarp"},
+      {"name": "snorunt","secret":true},
+      {"name": "litwick"}
     ]
   },
   {
@@ -107,7 +109,9 @@
       {"name": "tyranitar"},
       {"name": "steelix"},
       {"name": "graveler"},
-      {"name": "poliwrath"}
+      {"name": "poliwrath"},
+      {"name": "graveler"},
+      {"name": "gligar"}
     ]
   },
   {
@@ -207,6 +211,13 @@
       {"name": "marill"},
       {"name": "marowak"}
     ]
+  },
+  {
+    "name": "CelineCeline",
+    "status": "spore",
+    "shinies": [
+   {"name": "snover"}
+   ]
   },
   {
     "name": "Charizapedia",
@@ -328,7 +339,8 @@
       {"name": "ditto"},
       {"name": "gothorita"},
       {"name": "donphan"},
-      {"name": "mareep"}
+      {"name": "mareep"},
+      {"name": "snorunt"}
     ]
   },
   {
@@ -396,7 +408,8 @@
       {"name": "machoke"},
       {"name": "cryogonal"},
       {"name": "bibarel"},
-      {"name": "liepard"}
+      {"name": "liepard"},
+      {"name": "pawniard"}
     ]
   },
   {
@@ -531,7 +544,8 @@
       {"name": "venonat"},
       {"name": "golduck"},
       {"name": "meowth"},
-      {"name": "rhydon"}
+      {"name": "rhydon"},
+      {"name": "arbok"}
     ]
   },
   {
@@ -596,7 +610,8 @@
       {"name": "mankey"},
       {"name": "flygon"},
       {"name": "sandslash"},
-      {"name": "lotad"}
+      {"name": "lotad"},
+      {"name": "mankey"}
     ]
   },
    {
@@ -985,16 +1000,17 @@
       {"name": "meowth"},
       {"name": "liepard"},
       {"name": "sandslash"},
-      {"name": "mothim","egg": true},
+      {"name": "mothim","egg":true},
       {"name": "tranquill"},
-      {"name": "jigglypuff","safari": true,"clip": "https://www.youtube.com/watch?v=Nl3Vb5NdkrU"},
+      {"name": "jigglypuff","safari":true,"clip": "https://www.youtube.com/watch?v=Nl3Vb5NdkrU"},
       {"name": "zigzagoon"},
       {"name": "miltank","safari": true,"lost": true,"clip": "https://www.youtube.com/watch?v=PNrHhzpmmBM"},
       {"name": "jigglypuff","safari": true, "secret": true, "lost": true,"clip": "https://www.youtube.com/watch?v=-7Na1k-LV8M"},
       {"name": "illumise"},
       {"name": "shuckle","safari": true,"clip": "https://youtu.be/RcriHaxg6TU"},
       {"name": "purrloin"},
-      {"name": "cacnea"}
+      {"name": "cacnea"},
+      {"name": "bellsprout","safari":true}
     ]
   },
   {
@@ -1122,7 +1138,8 @@
       {"name": "weavile"},
       {"name": "gengar"},
       {"name": "abomasnow"},
-      {"name": "lopunny"}
+      {"name": "lopunny"},
+      {"name": "snorunt"}
     ]
   },
   {
@@ -1149,7 +1166,8 @@
       {"name": "garbodor"},
       {"name": "weezing","safari": true},
       {"name": "unown-p"},
-      {"name": "drifloon"}
+      {"name": "drifloon"},
+      {"name": "petilil"}
     ]
   },
   {
@@ -1497,7 +1515,9 @@
       {"name": "mienfoo","clip":"https://medal.tv/fr/games/pokemmo/clips/lHSqEG7oXpNj9YwCk?invite=cr-MSxWcFAsMzYxNTYyNDI3&v=213"},
       {"name": "poliwhirl","clip":"https://medal.tv/fr/games/pokemmo/clips/lHSzVceM4cZ1qdZ8r?invite=cr-MSxUWTIsMzYxNTYyNDI3&v=141"},
       {"name": "golurk","alpha": true, "clip": "https://medal.tv/fr/games/pokemmo/clips/lrM6iX5R3mZX_LZtS?invite=cr-MSxubFEsMzYxNTYyNDI3&v=51"},
-      {"name": "koffing","clip":"https://medal.tv/fr/games/pokemmo/clips/lGIu2UZsK1rZRSpRW?invite=cr-MSxqZmksMzYxNTYyNDI3"}
+      {"name": "koffing","clip":"https://medal.tv/fr/games/pokemmo/clips/lGIu2UZsK1rZRSpRW?invite=cr-MSxqZmksMzYxNTYyNDI3"},
+      {"name": "deino"},
+      {"name": "horsea"}
     ]
   },
   {
@@ -1679,7 +1699,9 @@
       {"name": "poliwag","safari":true},
       {"name": "joltik"},
       {"name": "galvantula"},
-      {"name": "ninetales"}
+      {"name": "ninetales"},
+      {"name": "joltik"},
+      {"name": "ninetails"}
     ]
   },
   {
@@ -1953,7 +1975,8 @@
       {"name": "mantine"},
       {"name": "lunatone"},
       {"name": "bibarel"},
-      {"name": "murkrow"}
+      {"name": "murkrow"},
+      {"name": "vanillish"}
     ]
   },
   {
@@ -1980,7 +2003,8 @@
       {"name": "lillipup"},
       {"name": "meowth"},
       {"name": "magikarp","safari":true},
-      {"name": "taillow"}
+      {"name": "taillow"},
+      {"name": "swablu"}
     ]
   },
   {
@@ -2123,7 +2147,8 @@
       {"name": "gigalith","clip":"https://medal.tv/fr/games/pokemmo/clips/kNF5rXaKOYa83a_F1?invite=cr-MSxOTVEsMzU0NDc1OTg0&v=33"},
       {"name": "silcoon","clip":"https://medal.tv/fr/games/pokemmo/clips/l2rsxHzoYfkOzvgqr?invite=cr-MSxLQlUsMzU0NDc1OTg0&v=30"},
       {"name": "silcoon","clip":"https://medal.tv/fr/games/pokemmo/clips/lELsHmNTOhVDt7sY2?invite=cr-MSw1elUsMzU0NDc1OTg0&v=20"},
-      {"name": "poochyena","clip":"https://medal.tv/fr/games/pokemmo/clips/lG489dTsQ4AJ7Areh?invite=cr-MSxrS0ksMzU0NDc1OTg0&v=23"}
+      {"name": "poochyena","clip":"https://medal.tv/fr/games/pokemmo/clips/lG489dTsQ4AJ7Areh?invite=cr-MSxrS0ksMzU0NDc1OTg0&v=23"},
+      {"name": "cascoon"}
     ]
   },
   {
@@ -2229,7 +2254,9 @@
        {"name": "poliwag"},
        {"name": "magcargo"},
        {"name": "bellsprout"},
-       {"name": "tranquill"}
+       {"name": "tranquill"},
+       {"name": "vanillish"},
+       {"name": "magikarp"}
        ]
   },
   {
@@ -2340,7 +2367,8 @@
       {"name": "petilil","clip": "https://www.twitch.tv/videos/2621130276"},
       {"name": "venipede"},
       {"name": "cottonee","clip":"https://www.twitch.tv/videos/2644364288"},
-      {"name": "petilil"}
+      {"name": "petilil"},
+      {"name": "cottonee"}
     ]
   },
   {
@@ -2370,6 +2398,13 @@
     ]
   },
   {
+      "name": "Visari",
+    "status": "spore",
+    "shinies": [
+   {"name": "ditto"}
+    ]
+  },
+  {
     "name": "WailynXD",
     "status": "spore",
     "shinies": [
@@ -2384,7 +2419,9 @@
       {"name": "hoothoot"},
       {"name": "vanilluxe"},
       {"name": "pelipper"},
-      {"name": "parasect"}
+      {"name": "parasect"},
+      {"name": "misdrevous"},
+      {"name": "buneary"}
     ]
   },
   {
@@ -2638,7 +2675,8 @@
       {"name": "victreebel"},
       {"name": "gyarados"},
       {"name": "machamp"},
-      {"name": "rhyperior"}
+      {"name": "rhyperior"},
+      {"name": "vanillish"}
     ]
   },
   {
@@ -2650,6 +2688,7 @@
     ]
   }
 ]
+
 
 
 
