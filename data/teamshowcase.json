@@ -34,7 +34,7 @@
       {"name": "pikachu"},
       {"name": "stoutland"},
       {"name": "vanilluxe"},
-      {"name": "pelipper","clip":"https://medal.tv/fr/games/pokemmo/clips/lLfJ0AEUp6ZC4basg?invite=cr-MSxlY1osMzg0MDg5NTkz&v=0"}
+      {"name": "pelipper","clip":"https://medal.tv/fr/games/pokemmo/clips/lLfJ0AEUp6ZC4basg?invite=cr-MSxlY1osMzg0MDg5NTkz&v=0"},
       {"name": "pelipper"}
     ]
   },
@@ -2689,6 +2689,7 @@
     ]
   }
 ]
+
 
 
 
