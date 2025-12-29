@@ -137,6 +137,37 @@
     ]
   },
   {
+   "name": "BojanglesisHere",
+    "status": "shroom",
+    "shinies": [
+      {"name": "floatzel"},
+      {"name": "rapidash","lost":true},
+      {"name": "beartic"},
+      {"name": "duskoll"},
+      {"name": "smeargle"},
+      {"name": "alakazam"},
+      {"name": "golurk"},
+      {"name": "politoad"},
+      {"name": "poliwrath"},
+      {"name": "weezing"},
+      {"name": "parasect"},
+      {"name": "kekcleon"},
+      {"name": "combee"},
+      {"name": "raticate"},
+      {"name": "ferroseed"},
+      {"name": "driflbloom"},
+      {"name": "vullaby"},
+      {"name": "clefairy"},
+      {"name": "bannette"},
+      {"name": "misdreavus"},
+      {"name": "pelipper"},
+      {"name": "ninetails"},
+      {"name": "noctowl"},
+      {"name": "pidgeotto"},
+      {"name": "rapidash"},
+    ]
+  },
+  {   
     "name": "bonseum",
     "status": "shinyshroom",
     "shinies": [
@@ -2689,6 +2720,7 @@
     ]
   }
 ]
+
 
 
 
