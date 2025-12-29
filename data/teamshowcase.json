@@ -161,7 +161,7 @@
       {"name": "banette"},
       {"name": "misdreavus"},
       {"name": "pelipper"},
-      {"name": "ninetails"},
+      {"name": "ninetales"},
       {"name": "noctowl"},
       {"name": "pidgeotto"},
       {"name": "rapidash"}
@@ -2720,6 +2720,7 @@
     ]
   }
 ]
+
 
 
 
