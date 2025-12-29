@@ -35,6 +35,7 @@
       {"name": "stoutland"},
       {"name": "vanilluxe"},
       {"name": "pelipper","clip":"https://medal.tv/fr/games/pokemmo/clips/lLfJ0AEUp6ZC4basg?invite=cr-MSxlY1osMzg0MDg5NTkz&v=0"}
+      {"name": "pelipper"}
     ]
   },
   {
@@ -111,7 +112,7 @@
       {"name": "graveler"},
       {"name": "poliwrath"},
       {"name": "graveler"},
-      {"name": "gligar"}
+      {"name": "gliscor"}
     ]
   },
   {
@@ -223,7 +224,7 @@
     "name": "Charizapedia",
     "status": "spore",
     "shinies": [
-      {"name": "ledyba"},
+      {"name": "ledyba","secret":true},
       {"name": "magikarp"},
       {"name": "ponyta"},
       {"name": "ponyta"},
@@ -1139,7 +1140,7 @@
       {"name": "gengar"},
       {"name": "abomasnow"},
       {"name": "lopunny"},
-      {"name": "snorunt"}
+      {"name": "glalie"}
     ]
   },
   {
@@ -1700,7 +1701,7 @@
       {"name": "joltik"},
       {"name": "galvantula"},
       {"name": "ninetales"},
-      {"name": "joltik"},
+      {"name": "galvantula"},
       {"name": "ninetails"}
     ]
   },
@@ -2421,7 +2422,7 @@
       {"name": "pelipper"},
       {"name": "parasect"},
       {"name": "misdrevous"},
-      {"name": "buneary"}
+      {"name": "lopunny"}
     ]
   },
   {
@@ -2688,6 +2689,7 @@
     ]
   }
 ]
+
 
 
 
