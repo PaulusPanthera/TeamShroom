@@ -1732,9 +1732,7 @@
       {"name": "poliwag","safari":true},
       {"name": "joltik"},
       {"name": "galvantula"},
-      {"name": "ninetales"},
-      {"name": "galvantula"},
-      {"name": "ninetails"}
+      {"name": "ninetales"}
     ]
   },
   {
@@ -2721,6 +2719,7 @@
     ]
   }
 ]
+
 
 
 
