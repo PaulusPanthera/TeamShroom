@@ -1043,7 +1043,7 @@
       {"name": "shuckle","safari": true,"clip": "https://youtu.be/RcriHaxg6TU"},
       {"name": "purrloin"},
       {"name": "cacnea"},
-      {"name": "bellsprout","safari":true}
+      {"name": "bellsprout","safari":true,"clip":"https://youtu.be/z5Q6PutaA9A"}
     ]
   },
   {
@@ -1549,8 +1549,8 @@
       {"name": "poliwhirl","clip":"https://medal.tv/fr/games/pokemmo/clips/lHSzVceM4cZ1qdZ8r?invite=cr-MSxUWTIsMzYxNTYyNDI3&v=141"},
       {"name": "golurk","alpha": true, "clip": "https://medal.tv/fr/games/pokemmo/clips/lrM6iX5R3mZX_LZtS?invite=cr-MSxubFEsMzYxNTYyNDI3&v=51"},
       {"name": "koffing","clip":"https://medal.tv/fr/games/pokemmo/clips/lGIu2UZsK1rZRSpRW?invite=cr-MSxqZmksMzYxNTYyNDI3"},
-      {"name": "deino"},
-      {"name": "horsea"}
+      {"name": "deino","clip":"https://medal.tv/fr/games/pokemmo/clips/lMsDMh9OMmmRKFcyY?invite=cr-MSxiQ2MsMzYxNTYyNDI3"},
+      {"name": "horsea","clip":"https://medal.tv/fr/games/pokemmo/clips/lMUt6Lk4wTIDXnBX_?invite=cr-MSxzRWosMzYxNTYyNDI3&v=176"}
     ]
   },
   {
@@ -2709,7 +2709,7 @@
       {"name": "gyarados"},
       {"name": "machamp"},
       {"name": "rhyperior"},
-      {"name": "vanillish"}
+      {"name": "vanillish","clip":"https://www.youtube.com/watch?v=VqHJsAQ4d6M"}
     ]
   },
   {
@@ -2721,6 +2721,7 @@
     ]
   }
 ]
+
 
 
 
