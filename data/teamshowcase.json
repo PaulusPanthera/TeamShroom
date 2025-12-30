@@ -1871,18 +1871,6 @@
     ]
   },
   {
-    "name": "RustySE",
-    "status": "spore",
-    "shinies": [
-      {"name": "smeargle"},
-      {"name": "chandelure"},
-      {"name": "meowth"},
-      {"name": "beedrill"},
-      {"name": "ponyta"},
-      {"name": "gligar"}
-    ]
-  },
-  {
     "name": "RuthlessZ",
     "status": "shroom",
     "shinies": [
@@ -2719,6 +2707,7 @@
     ]
   }
 ]
+
 
 
 
