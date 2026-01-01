@@ -807,6 +807,7 @@
       {"name": "kingler"},
       {"name": "electrode","clip": "https://www.twitch.tv/h0keymon/clip/ImpossibleBitterZebraJebaited-3X-fdJ30tQHCJ7hK"},
       {"name": "marowak"},
+      {"name": "lickitung"},
       {"name": "koffing"},
       {"name": "weezing","clip":"https://www.twitch.tv/h0keymon/clip/TastyHyperAyeayeAMPTropPunch-gMFOeC9a_WrqrTVv?filter=clips&range=all&sort=time"},
       {"name": "magikarp","clip":"https://www.twitch.tv/h0keymon/clip/PuzzledEnchantingPistachioStoneLightning-iJJi21zSO_NS27V2?filter=clips&range=all&sort=time"},
@@ -2707,6 +2708,7 @@
     ]
   }
 ]
+
 
 
 
