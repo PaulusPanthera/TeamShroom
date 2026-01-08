@@ -17,9 +17,23 @@ function getPokemonGif(name) {
 export function renderShinyWeekly(weeklyData, container) {
   if (!container) return;
 
+  // Debug helper to see what we received
+  // console.log('renderShinyWeekly input:', weeklyData);
+
+  // Normalize input:
+  // - If weeklyData is an object with a .data array, use that.
+  // - If weeklyData is already an array, use it directly.
+  // - Allow the top-level object to signal maintenance via .maintenance flag.
+  const isObject = weeklyData && typeof weeklyData === "object" && !Array.isArray(weeklyData);
+  const dataArray = Array.isArray(weeklyData)
+    ? weeklyData
+    : isObject && Array.isArray(weeklyData.data)
+    ? weeklyData.data
+    : [];
+
   // --- MAINTENANCE SUPPORT ---
-  // If weeklyData is an object and has a .maintenance flag, show only "soon to be" message
-  if (weeklyData && typeof weeklyData === "object" && !Array.isArray(weeklyData) && weeklyData.maintenance) {
+  // If top-level object has a .maintenance flag, show only message
+  if (isObject && weeklyData.maintenance) {
     container.innerHTML = `
       <div style="font-size:1.6em;color:var(--accent);margin:3em 0;text-align:center;">
         ${weeklyData.message || "Shiny Weekly is soon to be. Stay tuned!"}
@@ -30,13 +44,13 @@ export function renderShinyWeekly(weeklyData, container) {
 
   // If array with first element as { maintenance: true }, also show maintenance message
   if (
-    Array.isArray(weeklyData) &&
-    weeklyData.length &&
-    weeklyData[0] &&
-    typeof weeklyData[0] === "object" &&
-    weeklyData[0].maintenance
+    Array.isArray(dataArray) &&
+    dataArray.length &&
+    dataArray[0] &&
+    typeof dataArray[0] === "object" &&
+    dataArray[0].maintenance
   ) {
-    const msg = weeklyData[0].message || "Shiny Weekly is soon to be. Stay tuned!";
+    const msg = dataArray[0].message || "Shiny Weekly is soon to be. Stay tuned!";
     container.innerHTML = `
       <div style="font-size:1.6em;color:var(--accent);margin:3em 0;text-align:center;">
         ${msg}
@@ -55,7 +69,7 @@ export function renderShinyWeekly(weeklyData, container) {
   const cardsDiv = container.querySelector('.weekly-cards');
 
   // Show weeks in reverse order (newest first)
-  [...weeklyData].reverse().forEach((week, idx) => {
+  [...dataArray].reverse().forEach((week, idx) => {
     const btn = document.createElement('button');
     btn.className = 'week-btn';
     btn.textContent = week.label || week.week;
@@ -72,7 +86,7 @@ export function renderShinyWeekly(weeklyData, container) {
       <button class="back-btn">← Back to weeks</button>
     `;
     const grid = cardsDiv.querySelector('.dex-grid');
-    week.shinies.forEach(mon => {
+    (week.shinies || []).forEach(mon => {
       grid.innerHTML += renderUnifiedCard({
         name: prettifyPokemonName(mon.name),
         img: getPokemonGif(mon.name),
