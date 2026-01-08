@@ -1,5 +1,5 @@
-/* shinyweekly.ui.js */
-/* Renders Shiny Weekly UI only */
+// shinyweekly.ui.js
+// Renders Shiny Weekly UI only (ES Module)
 
 import { buildWeeklyViewModel } from './shinyweekly.js';
 import { renderUnifiedCard } from './unifiedcard.js';
@@ -21,10 +21,8 @@ export function renderShinyWeekly(rawWeeklyData, container) {
     header.innerHTML = `
       <div class="weekly-title">${week.label}</div>
       <div class="weekly-meta">
-        ⭐ ${week.shinyCount} Shinies
-        &nbsp;•&nbsp;
-        👥 ${week.hunterCount} Hunters
-        ${week.topHunter ? `&nbsp;•&nbsp; 🏆 ${week.topHunter}` : ""}
+        ⭐ ${week.shinyCount} Shinies • 👥 ${week.hunterCount} Hunters
+        ${week.topHunter ? ` • 🏆 ${week.topHunter}` : ""}
       </div>
     `;
 
@@ -39,33 +37,19 @@ export function renderShinyWeekly(rawWeeklyData, container) {
 
       const memberHeader = document.createElement("div");
       memberHeader.className = "weekly-member-header";
-
-      // SPRITE WITH FALLBACK
-      const spriteKey = member.toLowerCase().replace(/[^a-z0-9]/g, '');
-      const img = document.createElement("img");
-      img.className = "weekly-member-sprite";
-      img.src = `img/membersprites/${spriteKey}sprite.png`;
-      img.onerror = () => {
-        img.src = "img/membersprites/examplesprite.png";
-      };
-
-      const nameSpan = document.createElement("span");
-      nameSpan.textContent = member;
-
-      const countSpan = document.createElement("span");
-      countSpan.className = "weekly-member-count";
-      countSpan.textContent = shinies.length;
-
-      memberHeader.appendChild(img);
-      memberHeader.appendChild(nameSpan);
-      memberHeader.appendChild(countSpan);
+      memberHeader.innerHTML = `
+        <img class="weekly-member-sprite"
+          src="img/membersprites/${member.toLowerCase()}sprite.png"
+          onerror="this.src='img/membersprites/examplesprite.png'">
+        <span>${member}</span>
+        <span class="weekly-member-count">${shinies.length}</span>
+      `;
 
       const shinyGrid = document.createElement("div");
       shinyGrid.className = "weekly-shiny-grid";
 
       shinies.forEach(shiny => {
-        const card = renderUnifiedCard(shiny);
-        shinyGrid.appendChild(card);
+        shinyGrid.appendChild(renderUnifiedCard(shiny));
       });
 
       memberRow.appendChild(memberHeader);
@@ -73,9 +57,9 @@ export function renderShinyWeekly(rawWeeklyData, container) {
       body.appendChild(memberRow);
     });
 
-    header.addEventListener("click", () => {
+    header.onclick = () => {
       body.style.display = body.style.display === "none" ? "block" : "none";
-    });
+    };
 
     weekCard.appendChild(header);
     weekCard.appendChild(body);
