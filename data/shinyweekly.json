@@ -17,7 +17,7 @@
     "week": "2024-03-11_to_2024-03-17",
     "label": "March 11th - 17th 2024",
     "shinies": [
-      { "member": "Cometsan", "name": "palpitoad" },
+      { "member": "Drizzle", "name": "palpitoad" },
       { "member": "KenGriffsuJr", "name": "shelmet" },
       { "member": "Hokeymon", "name": "swablu" },
       { "member": "JazxB", "name": "ponyta" },
@@ -42,9 +42,9 @@
       { "member": "BUSTHETHOMAS", "name": "graveler" },
       { "member": "BUSTHETHOMAS", "name": "graveler" },
       { "member": "Slowshiny", "name": "clefairy" },
-      { "member": "Maknaez", "name": "beldum", "egg": true },
-      { "member": "Maknaez", "name": "poliwhirl" },
-      { "member": "Maknaez", "name": "onix" }
+      { "member": "maknaez", "name": "beldum", "egg": true },
+      { "member": "maknaez", "name": "poliwhirl" },
+      { "member": "maknaez", "name": "onix" }
     ]
   },
   {
@@ -53,7 +53,7 @@
     "shinies": [
       { "member": "DaddyMolo", "name": "ekans" },
       { "member": "BUSTHETHOMAS", "name": "gligar" },
-      { "member": "Cometsan", "name": "klink" },
+      { "member": "Drizzle", "name": "klink" },
       { "member": "drownsyy", "name": "mankey" },
       { "member": "JazxB", "name": "ponyta" },
       { "member": "slowshiny", "name": "rhyhorn" },
@@ -64,7 +64,7 @@
       { "member": "Instintooo", "name": "ditto" },
       { "member": "qtAlice", "name": "zigzagoon" },
       { "member": "Splinterbrained", "name": "graveler" },
-      { "member": "lilAF", "name": "joltik" }
+      { "member": "LilAF", "name": "joltik" }
     ]
   },
   {
@@ -84,8 +84,8 @@
       { "member": "CraazyHorse", "name": "smeargle" },
       { "member": "CraazyHorse", "name": "magikarp" },
       { "member": "CraazyHorse", "name": "horsea" },
-      { "member": "Draind", "name": "bibarel" },
-      { "member": "Draind", "name": "ralts" },
+      { "member": "Drain", "name": "bibarel" },
+      { "member": "Drain", "name": "ralts" },
       { "member": "TrainerBartos", "name": "sandslash" }
     ]
   },
@@ -298,8 +298,8 @@
     "week": "2024-06-10_to_2024-06-10",
     "label": "June 10th - June16th 2024",
     "shinies": [
-      { "member": "mbarren", "name": "nidorina" },
-      { "member": "mbarren", "name": "nidorina" },
+      { "member": "Dupe", "name": "nidorina" },
+      { "member": "Dupe", "name": "nidorina" },
       { "member": "DaddyMolo", "name": "mareep" },
       { "member": "Sirbeyy", "name": "corphish" },
       { "member": "Sirbeyy", "name": "wurmple" },
@@ -320,7 +320,7 @@
       { "member": "Darktrench", "name": "horsea" },
       { "member": "Sirbeyy", "name": "cottonee" },
       { "member": "JulieJewel", "name": "koffing" },
-      { "member": "Draind", "name": "chansey" },
+      { "member": "Drain", "name": "chansey" },
       { "member": "skyeatsme", "name": "magikarp" },
       { "member": "Hokeymon", "name": "koffing" },
       { "member": "LilAF", "name": "silcoon" },
@@ -356,7 +356,7 @@
       { "member": "SkiddyPoo", "name": "absol", "egg": true },
       { "member": "SkiddyPoo", "name": "parasect" },
       { "member": "brdleys", "name": "magikarp" },
-      { "member": "LunaLost", "name": "rattata" },
+      { "member": "Luna", "name": "rattata" },
       { "member": "Slowshiny", "name": "pidgey" }
     ]
   },
@@ -410,7 +410,7 @@
       { "member": "LilAF", "name": "gligar" },
       { "member": "Darktrench", "name": "mienfoo" },
       { "member": "Darktrench", "name": "duosion" },
-      { "member": "OrllandoV", "name": "seaking" }
+      { "member": "Orllando", "name": "seaking" }
     ]
   },
   {
@@ -423,7 +423,7 @@
       { "member": "PokeTrainerNoxx", "name": "poliwag" },
       { "member": "TTVxSenseiNESS", "name": "gastrodon" },
       { "member": "GTGxR", "name": "tentacruel" },
-      { "member": "Serako", "name": "fearow" },
+      { "member": "Scooby", "name": "fearow" },
       { "member": "TorontoKid", "name": "koffing" },
       { "member": "kitsucupid", "name": "muna", "event": true },
       { "member": "Sirbeyy", "name": "heracross" },
@@ -446,8 +446,8 @@
       { "member": "DaddyMolo", "name": "ducklett", "egg": true },
       { "member": "SphealMyWrath", "name": "clamperl" },
       { "member": "PokeTrainerNoxx", "name": "ponyta" },
-      { "member": "OrllandoV", "name": "golduck" },
-      { "member": "OrllandoV", "name": "poliwhirl" },
+      { "member": "Orllando", "name": "golduck" },
+      { "member": "Orllando", "name": "poliwhirl" },
       { "member": "WillyPS", "name": "phanphy" },
       { "member": "MrsJawster", "name": "natu" },
       { "member": "TorontoKid", "name": "slugma" },
@@ -463,7 +463,7 @@
     "week": "2024-07-29_to_2024-08-04",
     "label": "July 29th - August 4th 2024",
     "shinies": [
-      { "member": "Serako", "name": "larvitar" },
+      { "member": "Scooby", "name": "larvitar" },
       { "member": "MrsJawster", "name": "smeargle" },
       { "member": "stevenchill", "name": "cyndaquil", "egg": true },
       { "member": "Hjordi", "name": "trapinch" },
@@ -478,7 +478,7 @@
       { "member": "SphealMyWrath", "name": "torkoal" },
       { "member": "SphealMyWrath", "name": "spoink" },
       { "member": "TTVxSenseiNESS", "name": "petilil" },
-      { "member": "Draind", "name": "drilbur", "egg": true },
+      { "member": "Drain", "name": "drilbur", "egg": true },
       { "member": "qtAlice", "name": "taillow" },
       { "member": "qtAlice", "name": "zigzagoon" },
       { "member": "Grrzzly", "name": "poochyena" },
@@ -501,7 +501,7 @@
       { "member": "Bulkanator", "name": "machoke" },
       { "member": "Hjordi", "name": "pinsir" },
       { "member": "Slow", "name": "raticate" },
-      { "member": "OrllandoV", "name": "zigzagoon" },
+      { "member": "Orllando", "name": "zigzagoon" },
       { "member": "Gumbasketball", "name": "bibarel" },
       { "member": "Darktrench", "name": "koffing" },
       { "member": "Grrzzly", "name": "cottone" },
@@ -512,13 +512,13 @@
       { "member": "OhitsDunco", "name": "spinda" },
       { "member": "OhitsDunco", "name": "venipede" },
       { "member": "SkiddyPoo", "name": "cryogonal" },
-      { "member": "mbarren", "name": "ducklett", "egg": true },
-      { "member": "mbarren", "name": "sandslash" },
-      { "member": "mbarren", "name": "magikarp" },
-      { "member": "mbarren", "name": "scraggy" },
-      { "member": "mbarren", "name": "mienfoo" },
-      { "member": "mbarren", "name": "cubchoo" },
-      { "member": "mbarren", "name": "onix" },
+      { "member": "Dupe", "name": "ducklett", "egg": true },
+      { "member": "Dupe", "name": "sandslash" },
+      { "member": "Dupe", "name": "magikarp" },
+      { "member": "Dupe", "name": "scraggy" },
+      { "member": "Dupe", "name": "mienfoo" },
+      { "member": "Dupe", "name": "cubchoo" },
+      { "member": "Dupe", "name": "onix" },
       { "member": "jaspn", "name": "donphan" },
       { "member": "SilverGale", "name": "vulpix" },
       { "member": "LordGangis", "name": "koffing" },
@@ -537,7 +537,7 @@
       { "member": "DaddyMolo", "name": "vanilluxe" },
       { "member": "Prttyflxcko", "name": "treecko" },
       { "member": "Grzzly", "name": "zigzagoon" },
-      { "member": "mbarren", "name": "graveler" },
+      { "member": "Dupe", "name": "graveler" },
       { "member": "BojanglesisHere", "name": "cubchoo" },
       { "member": "PokeTrainerNoxx", "name": "venipede" },
       { "member": "PokeTrainerNoxx", "name": "cryogonal" },
@@ -603,8 +603,8 @@
       { "member": "Gumbasketball", "name": "raticate" },
       { "member": "PaulusTFT", "name": "metapod" },
       { "member": "PaulusTFT", "name": "donphan" },
-      { "member": "TerminusDT", "name": "jigglypuff" },
-      { "member": "TerminusDT", "name": "rattata" },
+      { "member": "Terminus", "name": "jigglypuff" },
+      { "member": "Terminus", "name": "rattata" },
       { "member": "SkiddyPoo", "name": "onix" }
     ]
   },
@@ -612,8 +612,8 @@
     "week": "2024-09-09_to_2024-09-15",
     "label": "September 9th - September 15th 2024",
     "shinies": [
-      { "member": "mbarren", "name": "gloom" },
-      { "member": "mbarren", "name": "weepinbell" },
+      { "member": "Dupe", "name": "gloom" },
+      { "member": "Dupe", "name": "weepinbell" },
       { "member": "pearishx", "name": "shedinja" }
     ]
   },
@@ -695,7 +695,7 @@
     "week": "2024-10-28_to_2024-11-03",
     "label": "October 28st - November 3rd 2024",
     "shinies": [
-      { "member": "OrllandoV", "name": "spinda" },
+      { "member": "Orllando", "name": "spinda" },
       { "member": "MELVZZY", "name": "onix" }
     ]
   },
@@ -736,15 +736,15 @@
       { "member": "skyeatsme", "name": "golett" },
       { "member": "skyeatsme", "name": "magikarp" },
       { "member": "skyeatsme", "name": "kadabra" },
-      { "member": "Draind", "name": "squirtle", "egg": true },
+      { "member": "Drain", "name": "squirtle", "egg": true },
       { "member": "stevenchill", "name": "magikarp" },
       { "member": "stevenchill", "name": "dratini" },
       { "member": "stevenchill", "name": "magikarp" },
       { "member": "TrainerBartos", "name": "graveler" },
       { "member": "WillyPS", "name": "eevee", "egg": true },
       { "member": "SmiigZ", "name": "krokorok" },
-      { "member": "LunaLost", "name": "magikarp" },
-      { "member": "LunaLost", "name": "shelgon" },
+      { "member": "Luna", "name": "magikarp" },
+      { "member": "Luna", "name": "shelgon" },
       { "member": "stevenchill", "name": "mankey" },
       { "member": "SkiddyPoo", "name": "larvitar" },
       { "member": "SkiddyPoo", "name": "dratini" },
@@ -774,11 +774,11 @@
     "label": "December 9th - December 15th 2024",
     "shinies": [
       { "member": "Bulkanator", "name": "deino" },
-      { "member": "LunaLost", "name": "woobat" },
+      { "member": "Luna", "name": "woobat" },
       { "member": "MikeRunkZz", "name": "girafarig" },
       { "member": "Jeakama", "name": "girafarig" },
       { "member": "Hjordi", "name": "jigglypuff" },
-      { "member": "TerminusDT", "name": "mareep" },
+      { "member": "Terminus", "name": "mareep" },
       { "member": "Smokycat", "name": "sudowoodo" },
       { "member": "Smokycat", "name": "marill" }
     ]
@@ -796,13 +796,13 @@
     "week": "2024-12-23_to_2024-12-29",
     "label": "December 23th - December 29th 2024",
     "shinies": [
-      { "member": "LunaLost", "name": "axew" },
+      { "member": "Luna", "name": "axew" },
       { "member": "RuthlessZ", "name": "magikarp" },
       { "member": "JulieJewel", "name": "venipede" },
       { "member": "JulieJewel", "name": "magcargo" },
       { "member": "TTVxSenseiNESS", "name": "venipede" },
       { "member": "TTVxSenseiNESS", "name": "graveler" },
-      { "member": "OrllandoV", "name": "camerupt" },
+      { "member": "Orllando", "name": "camerupt" },
       { "member": "JGrenade", "name": "wailmer" },
       { "member": "clairo", "name": "koffing" },
       { "member": "clairo", "name": "petilil" },
@@ -822,7 +822,7 @@
       { "member": "PaulusTFT", "name": "paras" },
       { "member": "TheJuanNonly", "name": "nidoran f" },
       { "member": "TheJuanNonly", "name": "woobat" },
-      { "member": "TerminusDT", "name": "pikachu" }
+      { "member": "Terminus", "name": "pikachu" }
     ]
   },
   {
@@ -832,17 +832,17 @@
       { "member": "Gumbasketball", "name": "slakoth" },
       { "member": "GTGxR", "name": "vulpix" },
       { "member": "GTGxR", "name": "ralts" },
-      { "member": "Serako", "name": "donphan" },
+      { "member": "Scooby", "name": "donphan" },
       { "member": "CraazyHorse", "name": "rapidash" },
       { "member": "ashash", "name": "rhydon" },
       { "member": "MechanicalHippo", "name": "deino" },
-      { "member": "TerminusDT", "name": "slugma" },
+      { "member": "Terminus", "name": "slugma" },
       { "member": "DaddyMolo", "name": "raticate" },
       { "member": "DaddyMolo", "name": "noctowl" },
-      { "member": "OrllandoV", "name": "golett" },
-      { "member": "OrllandoV", "name": "duskull" },
-      { "member": "OrllandoV", "name": "onix" },
-      { "member": "OrllandoV", "name": "onix" },
+      { "member": "Orllando", "name": "golett" },
+      { "member": "Orllando", "name": "duskull" },
+      { "member": "Orllando", "name": "onix" },
+      { "member": "Orllando", "name": "onix" },
       { "member": "MELVZZY", "name": "pikachu" },
       { "member": "Hjordi", "name": "mantine" },
       { "member": "Hjordi", "name": "rapidash" },
@@ -881,7 +881,7 @@
       { "member": "PaulusTFT", "name": "amoonguss" },
       { "member": "GTGxR", "name": "smeargle" },
       { "member": "BojanglesisHere", "name": "golett" },
-      { "member": "LunaLost", "name": "magikarp" },
+      { "member": "Luna", "name": "magikarp" },
       { "member": "ShonoMcD", "name": "silcoon" },
       { "member": "JulieJewel", "name": "donphan" },
       { "member": "Loundemon", "name": "tentacruel" },
@@ -894,11 +894,11 @@
     "week": "2025-01-13_to_2025-01-19",
     "label": "January 13th - January 19th 2025",
     "shinies": [
-      { "member": "QueenEmmy", "name": "smeargle" },
+      { "member": "Emmy", "name": "smeargle" },
       { "member": "SecretSlowshiny", "name": "woobat" },
       { "member": "BojanglesisHere", "name": "poliwhirl" },
       { "member": "WillyPS", "name": "tangela" },
-      { "member": "LunaLost", "name": "dratini" },
+      { "member": "Luna", "name": "dratini" },
       { "member": "DaddyMolo", "name": "wooper" },
       { "member": "ItsKitas", "name": "pidgey", "secret": true },
       { "member": "Smokycat", "name": "charmander", "egg": true },
@@ -912,14 +912,14 @@
     "shinies": [
       { "member": "SecretSlowshiny", "name": "axew" },
       { "member": "WillyPS", "name": "krabby" },
-      { "member": "QueenEmmy", "name": "liepard" },
+      { "member": "Emmy", "name": "liepard" },
       { "member": "ChimpExC", "name": "gastly" },
       { "member": "XxEmperiorxX", "name": "fearow" },
       { "member": "Smokycat", "name": "donphan" },
       { "member": "Jutskaa", "name": "golbat" },
       { "member": "RuthlessZ", "name": "magikarp" },
-      { "member": "Eerierie", "name": "slowpoke" },
-      { "member": "Eerierie", "name": "lanturn" }
+      { "member": "Eerie", "name": "slowpoke" },
+      { "member": "Eerie", "name": "lanturn" }
     ]
   },
   {
@@ -945,7 +945,7 @@
       { "member": "RuthlessZ", "name": "teddiursa" },
       { "member": "DaddyMolo", "name": "zigzagoon" },
       { "member": "DaddyMolo", "name": "pikachu" },
-      { "member": "Serako", "name": "magikarp" }
+      { "member": "Scooby", "name": "magikarp" }
     ]
   },
   {
@@ -956,7 +956,7 @@
       { "member": "PokeBodega", "name": "meowth" },
       { "member": "Splinterbrained", "name": "murkrow" },
       { "member": "RuthlessZ", "name": "rapidash" },
-      { "member": "Serako", "name": "durant" },
+      { "member": "Scooby", "name": "durant" },
       { "member": "GTGxR", "name": "poliwhirl" },
       { "member": "BojanglesisHere", "name": "poliwhirl" },
       { "member": "tulicreme", "name": "onix" },
@@ -967,13 +967,13 @@
     "week": "2025-02-24_to_2025-03-02",
     "label": "February 24th - March 2nd 2025",
     "shinies": [
-      { "member": "KrikaDoce", "name": "dodrio" },
+      { "member": "Skullz", "name": "dodrio" },
       { "member": "Smokycat", "name": "ditto" },
       { "member": "LoDarko", "name": "roselia" },
       { "member": "tulicreme", "name": "onix" },
       { "member": "Jutskaa", "name": "lillipup" },
-      { "member": "Eerierie", "name": "girafarig" },
-      { "member": "Eerierie", "name": "staravia" },
+      { "member": "Eerie", "name": "girafarig" },
+      { "member": "Eerie", "name": "staravia" },
       { "member": "clairo", "name": "sandslash" }
     ]
   },
@@ -984,16 +984,16 @@
       { "member": "clairo", "name": "aipom", "safari": true },
       { "member": "ElMannun", "name": "pidgey" },
       { "member": "RuthlessZ", "name": "magikarp" },
-      { "member": "mbarren", "name": "wurmple" },
+      { "member": "Dupe", "name": "wurmple" },
       { "member": "srysu", "name": "paras" },
-      { "member": "LunaLost", "name": "paras" },
+      { "member": "Luna", "name": "paras" },
       { "member": "Jutskaa", "name": "parasect" },
-      { "member": "OrllandoV", "name": "paras" },
-      { "member": "Serako", "name": "paras" },
+      { "member": "Orllando", "name": "paras" },
+      { "member": "Scooby", "name": "paras" },
       { "member": "PokeBodega", "name": "paras" },
       { "member": "JulieJewel", "name": "spinda" },
       { "member": "WillyPS", "name": "shroomish" },
-      { "member": "KrikaDoce", "name": "paras" },
+      { "member": "Skullz", "name": "paras" },
       { "member": "GTGxR", "name": "paras" }
     ]
   },
@@ -1001,7 +1001,7 @@
     "week": "2025-03-10_to_2025-03-16",
     "label": "March 10th - March 16th 2025",
     "shinies": [
-      { "member": "Serako", "name": "growlithe" },
+      { "member": "Scooby", "name": "growlithe" },
       { "member": "casethecase", "name": "growlithe" },
       { "member": "TTVxSenseiN3SS", "name": "vulpix" },
       { "member": "WillyPS", "name": "vulpix" },
@@ -1010,13 +1010,13 @@
       { "member": "RuthlessZ", "name": "ponyta" },
       { "member": "Tortuponchy", "name": "weedle" },
       { "member": "Tortuponchy", "name": "amoongus" },
-      { "member": "OrllandoV", "name": "amoongus" },
+      { "member": "Orllando", "name": "amoongus" },
       { "member": "MrsJawster", "name": "petilil" },
       { "member": "MrsJawster", "name": "amoongus" },
       { "member": "JulieJewel", "name": "amoongus" },
-      { "member": "LunaLost", "name": "amoongus" },
+      { "member": "Luna", "name": "amoongus" },
       { "member": "WinterIvy", "name": "poochyena" },
-      { "member": "Glizcor", "name": "shroomish" },
+      { "member": "Pangeaa", "name": "shroomish" },
       { "member": "MechanicalHippo", "name": "wurmple" },
       { "member": "BojanglesisHere", "name": "koffing" },
       { "member": "BojanglesisHere", "name": "parasect" },
@@ -1029,19 +1029,19 @@
     "week": "2025-03-17_to_2025-03-23",
     "label": "March 17th - March 23th 2025",
     "shinies": [
-      { "member": "Glizcor", "name": "accelgor" },
-      { "member": "LunaLost", "name": "floatzel" },
-      { "member": "LunaLost", "name": "gabite" },
+      { "member": "Pangeaa", "name": "accelgor" },
+      { "member": "Luna", "name": "floatzel" },
+      { "member": "Luna", "name": "gabite" },
       { "member": "Yoyoyoshie", "name": "diglett" },
       { "member": "BojanglesisHere", "name": "kecleon" },
-      { "member": "OrllandoV", "name": "shroomish", "egg": true },
+      { "member": "Orllando", "name": "shroomish", "egg": true },
       { "member": "clairo", "name": "wailmer" },
       { "member": "JulieJewel", "name": "whismur" },
-      { "member": "KrikaDoce", "name": "mudkip", "egg": true },
-      { "member": "xMileage", "name": "absol", "egg": true },
-      { "member": "Eerierie", "name": "golbat" },
-      { "member": "Eerierie", "name": "claydole" },
-      { "member": "Eerierie", "name": "parasect" },
+      { "member": "Skullz", "name": "mudkip", "egg": true },
+      { "member": "Mileage", "name": "absol", "egg": true },
+      { "member": "Eerie", "name": "golbat" },
+      { "member": "Eerie", "name": "claydole" },
+      { "member": "Eerie", "name": "parasect" },
       { "member": "tulicreme", "name": "tangela" },
       { "member": "Bulkanator", "name": "metapod" },
       { "member": "RicRiley", "name": "poliwhirl" },
@@ -1056,10 +1056,10 @@
       { "member": "WhosWill", "name": "vulpix" },
       { "member": "WhosWill", "name": "litwick" },
       { "member": "WhosWill", "name": "krokorok" },
-      { "member": "KrikaDoce", "name": "banette" },
+      { "member": "Skullz", "name": "banette" },
       { "member": "srysu", "name": "donphan" },
       { "member": "srysu", "name": "vulpix" },
-      { "member": "Eerierie", "name": "koffing" }
+      { "member": "Eerie", "name": "koffing" }
     ]
   },
   {
@@ -1079,10 +1079,10 @@
     "shinies": [
       { "member": "Jutskaa", "name": "poochyena" },
       { "member": "Jutskaa", "name": "watchog" },
-      { "member": "OrllandoV", "name": "axew" },
+      { "member": "Orllando", "name": "axew" },
       { "member": "GTGxR", "name": "donphan" },
-      { "member": "Glizcor", "name": "koffing" },
-      { "member": "Eerierie", "name": "togetic" },
+      { "member": "Pangeaa", "name": "koffing" },
+      { "member": "Eerie", "name": "togetic" },
       { "member": "srysu", "name": "poliwrath" }
     ]
   },
@@ -1090,31 +1090,31 @@
     "week": "2025-04-14_to_2025-04-20",
     "label": "April 14th - April 20th 2025",
     "shinies": [
-      { "member": "Eerierie", "name": "floatzel" },
-      { "member": "Eerierie", "name": "gabite" },
-      { "member": "OrllandoV", "name": "onix" },
-      { "member": "TerminusDT", "name": "mareep" },
+      { "member": "Eerie", "name": "floatzel" },
+      { "member": "Eerie", "name": "gabite" },
+      { "member": "Orllando", "name": "onix" },
+      { "member": "Terminus", "name": "mareep" },
       { "member": "tulicreme", "name": "tentacool" },
       { "member": "RuthlessZ", "name": "weedle" },
       { "member": "CheesasaurusRex", "name": "onix" },
       { "member": "CheesasaurusRex", "name": "onix" },
-      { "member": "ANNlLlATION", "name": "larvesta" },
-      { "member": "Glizcor", "name": "pikachu" },
-      { "member": "Glizcor", "name": "smeargle" }
+      { "member": "Rakiza", "name": "larvesta" },
+      { "member": "Pangeaa", "name": "pikachu" },
+      { "member": "Pangeaa", "name": "smeargle" }
     ]
   },
   {
     "week": "2025-04-21_to_2025-04-27",
     "label": "April 21st - April 27th 2025",
     "shinies": [
-      { "member": "Glizcor", "name": "parasect" },
-      { "member": "Glizcor", "name": "kadabra" },
-      { "member": "Eerierie", "name": "buneary" },
+      { "member": "Pangeaa", "name": "parasect" },
+      { "member": "Pangeaa", "name": "kadabra" },
+      { "member": "Eerie", "name": "buneary" },
       { "member": "casethecase", "name": "marill" },
       { "member": "Jutskaa", "name": "magikarp", "safari": true },
       { "member": "Jutskaa", "name": "machoke" },
-      { "member": "Nercylla", "name": "litwick" },
-      { "member": "xMileage", "name": "poliwhirl" }
+      { "member": "Clairbear", "name": "litwick" },
+      { "member": "Mileage", "name": "poliwhirl" }
     ]
   },
   {
@@ -1123,12 +1123,12 @@
     "shinies": [
       { "member": "Jutskaa", "name": "wurmple" },
       { "member": "tulicreme", "name": "carvanha" },
-      { "member": "OrllandoV", "name": "larvitar" },
-      { "member": "OrllandoV", "name": "pikachu" },
+      { "member": "Orllando", "name": "larvitar" },
+      { "member": "Orllando", "name": "pikachu" },
       { "member": "kitsucupid", "name": "smeargle" },
-      { "member": "Glizcor", "name": "bibarel" },
-      { "member": "Glizcor", "name": "dugtrio" },
-      { "member": "Glizcor", "name": "snorlax" }
+      { "member": "Pangeaa", "name": "bibarel" },
+      { "member": "Pangeaa", "name": "dugtrio" },
+      { "member": "Pangeaa", "name": "snorlax" }
     ]
   },
   {
@@ -1145,10 +1145,10 @@
     "week": "2025-05-12_to_2025-05-18",
     "label": "May 12th - May 18th 2025",
     "shinies": [
-      { "member": "OrllandoV", "name": "misdreavus" },
+      { "member": "Orllando", "name": "misdreavus" },
       { "member": "Jayyxxi", "name": "mienfoo" },
       { "member": "Jayyxxi", "name": "deino" },
-      { "member": "Eerierie", "name": "ekans", "secret": true },
+      { "member": "Eerie", "name": "ekans", "secret": true },
       { "member": "BojanglesisHere", "name": "combee" },
       { "member": "maknaez", "name": "onix" }
     ]
@@ -1158,7 +1158,7 @@
     "label": "May 19th - May 25th 2025",
     "shinies": [
       { "member": "akaFlexy", "name": "ponyta" },
-      { "member": "Draind", "name": "haunter" },
+      { "member": "Drain", "name": "haunter" },
       { "member": "RuthlessZ", "name": "magikarp" },
       { "member": "maknaez", "name": "larvitar" },
       { "member": "DaddyMolo", "name": "maril" },
@@ -1174,8 +1174,8 @@
       { "member": "Quinjay", "name": "kakuna" },
       { "member": "BojanglesisHere", "name": "raticate" },
       { "member": "MechanicalHippo", "name": "koffing" },
-      { "member": "OrllandoV", "name": "lunatone" },
-      { "member": "OrllandoV", "name": "murkrow" },
+      { "member": "Orllando", "name": "lunatone" },
+      { "member": "Orllando", "name": "murkrow" },
       { "member": "Whamalicious", "name": "tentacruel" },
       { "member": "tulicreme", "name": "sharpedo" },
       { "member": "XxEmperiorxX", "name": "ralts" },
@@ -1198,7 +1198,7 @@
     "week": "2025-06-09_to_2025-06-15",
     "label": "June 9th - June 15th 2025",
     "shinies": [
-      { "member": "LunaLost", "name": "poochyena" },
+      { "member": "Luna", "name": "poochyena" },
       { "member": "Mileage", "name": "ditto" },
       { "member": "Whamalicious", "name": "poliwhirl" },
       { "member": "maknaez", "name": "shelgon" },
@@ -1300,7 +1300,7 @@
       { "member": "Yoyoyoshie", "name": "ss loudred" },
       { "member": "JulieJewel", "name": "whismur" },
       { "member": "Rintuu", "name": "purugly" },
-      { "member": "Nercylla", "name": "swablu" },
+      { "member": "Clairbear", "name": "swablu" },
       { "member": "kitsucupid", "name": "magmar" },
       { "member": "MELVZZY", "name": "feebas" },
       { "member": "TorontoKid", "name": "mawile" },
@@ -1956,7 +1956,7 @@
       { "member": "Cordeiroxi", "name": "snorunt" },
       { "member": "tollewolle", "name": "vanillish" },
       { "member": "tollewolle", "name": "magikarp" },
-      { "member": "WailynXD", "name": "misdreavous" },
+      { "member": "WailynXD", "name": "misdreavus" },
       { "member": "Smokee", "name": "swablu" },
       { "member": "MrBiscottes", "name": "deino" },
       { "member": "MrBiscottes", "name": "horsea" },
