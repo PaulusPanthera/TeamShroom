@@ -749,7 +749,7 @@
       { "member": "stevenchill", "name": "mankey" },
       { "member": "SkiddyPoo", "name": "larvitar" },
       { "member": "SkiddyPoo", "name": "dratini" },
-      { "member": "SkiddyPoo", "name": "lapras", "lost": true },
+      { "member": "SkiddyPoo", "name": "lapras", "lost": true, "safari": true },
       { "member": "BrodyBones", "name": "koffing" },
       { "member": "BrodyBones", "name": "camerupt" },
       { "member": "BrodyBones", "name": "venipede" },
@@ -1222,7 +1222,7 @@
       { "member": "Dupe", "name": "staryu" },
       { "member": "CheesasaurusRex", "name": "poochyena" },
       { "member": "zzxyami", "name": "sharpedo" },
-      { "member": "NoxxPrime", "name": "poliwhirl", "lost": true }
+      { "member": "NoxxPrime", "name": "poliwhirl", "lost": true, "safari": true }
     ]
   },
   {
@@ -1231,7 +1231,7 @@
     "shinies": [
       { "member": "XxEmperiorxX", "name": "claydol" },
       { "member": "WillyPS", "name": "pineco", "safari": true },
-      { "member": "WillyPS", "name": "jigglypuff" },
+      { "member": "WillyPS", "name": "jigglypuff", "safari": true, "lost": true, "secret": true },
       { "member": "Pangeaa", "name": "marill", "safari": true },
       { "member": "PaulusTFT", "name": "venonat" },
       { "member": "PaulusTFT", "name": "roselia" },
@@ -1549,7 +1549,7 @@
       { "member": "Scooby", "name": "nidorina" },
       { "member": "SparkleButt", "name": "tentacruel" },
       { "member": "AKatharina", "name": "pelipper" },
-      { "member": "tulicreme", "name": "jigglypuff" },
+      { "member": "tulicreme", "name": "jigglypuff", "safari": true, "lost": true },
       { "member": "GTGxR", "name": "golduck" },
       { "member": "Kynnyto", "name": "poliwhirl" },
       { "member": "Kynnyto", "name": "parasect" },
@@ -1913,6 +1913,7 @@
       { "member": "WailynXD", "name": "pelipper" },
       { "member": "PaulusTFT", "name": "poliwag", "safari": true },
       { "member": "PaulusTFT", "name": "joltik" },
+      { "member": "tulicreme", "name": "poliwhirl", "safari": true, "lost": true },
       { "member": "TTVxSenseiNESS", "name": "cottonee" },
       { "member": "TTVxSenseiNESS", "name": "petilil" }
     ]
@@ -1923,6 +1924,7 @@
     "shinies": [
       { "member": "TeletubbieBaz", "name": "golett" },
       { "member": "Smokee", "name": "taillow" },
+      { "member": "tulicreme", "name": "pineco", "safari": true, "lost": true },
       { "member": "itsEasy", "name": "pikachu" },
       { "member": "spells", "name": "lickilicky" },
       { "member": "SwoleyCrusade", "name": "poliwhirl" },
