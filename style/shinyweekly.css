@@ -1,76 +1,73 @@
-/* =========================
-   SHINY WEEKLY (CLEAN)
-   Active production styles
-   ========================= */
+/* === SHINY WEEKLY CLEAN BASE === */
 
-:root {
-  --weekly-bg: #14162a;
-  --weekly-panel: #1c1f3a;
-  --weekly-border: rgba(255, 204, 51, 0.35);
-}
-
-/* Wrapper */
 #shinyweekly-container {
-  max-width: 1400px;
-  margin: 1.5rem auto;
-  padding: 0 1rem;
-}
-
-/* Weekly Card */
-.weekly-card {
-  background: linear-gradient(180deg, #1a1d35, #14162a);
-  border-radius: 14px;
-  border: 2px solid var(--weekly-border);
-  margin-bottom: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-  overflow: hidden;
-}
-
-/* Header */
-.weekly-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 18px;
-  cursor: pointer;
-  background: linear-gradient(90deg, #23265a, #2e3172);
-  transition: background 0.15s ease;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
 }
 
-.weekly-header:hover {
-  background: linear-gradient(90deg, #2c3075, #3a3f96);
+/* === WEEK CARD === */
+
+.weekly-card {
+  background: linear-gradient(180deg, #1b1f2b, #141824);
+  border: 2px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+}
+
+/* === HEADER === */
+
+.weekly-header {
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  background: linear-gradient(90deg, #2a2f44, #1e2233);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 
 .weekly-title {
   font-family: 'Press Start 2P', monospace;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: var(--accent);
 }
 
 .weekly-meta {
-  font-size: 0.9rem;
-  opacity: 0.85;
-  color: var(--text);
+  font-size: 0.85rem;
+  opacity: 0.75;
 }
 
-/* Body */
+/* === BODY === */
+
 .weekly-body {
-  padding: 16px;
+  padding: 1.25rem;
+  background: rgba(0,0,0,0.2);
 }
 
-/* Member block */
+/* === MEMBER BLOCK === */
+
 .weekly-member-row {
-  margin-bottom: 22px;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed rgba(255,255,255,0.08);
 }
 
-/* Member header */
+.weekly-member-row:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+/* === MEMBER HEADER === */
+
 .weekly-member-header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
   font-weight: bold;
-  color: var(--accent);
+  font-size: 0.95rem;
 }
 
 .weekly-member-sprite {
@@ -78,46 +75,21 @@
   height: 28px;
   image-rendering: pixelated;
   border-radius: 4px;
-  background: #000;
+  background: rgba(0,0,0,0.4);
 }
 
 .weekly-member-count {
   margin-left: auto;
   font-size: 0.85rem;
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
-/* Grid for shinies */
+/* === SHINY GRID === */
+
 .weekly-shiny-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.8rem;
 }
 
-/* Make unified cards fit nicely */
-.weekly-shiny-grid .unified-card {
-  margin: 0;
-}
-
-/* Lost shinies emphasis */
-.weekly-shiny-grid .unified-card.lost {
-  opacity: 0.6;
-  filter: grayscale(60%);
-}
-
-/* Mobile tweaks */
-@media (max-width: 768px) {
-  .weekly-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-  }
-
-  .weekly-title {
-    font-size: 0.95rem;
-  }
-
-  .weekly-shiny-grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  }
-}
+/* Unified cards fit naturally — no override needed */
