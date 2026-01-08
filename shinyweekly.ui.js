@@ -1,13 +1,13 @@
 /* shinyweekly.ui.js */
 /* Renders Shiny Weekly UI only */
 
-function renderShinyWeekly(containerId, rawWeeklyData) {
+export function renderShinyWeekly(containerId, rawWeeklyData) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
   container.innerHTML = "";
 
-  const weeks = buildWeeklyViewModel(rawWeeklyData);
+  const weeks = window.buildWeeklyViewModel(rawWeeklyData);
 
   weeks.forEach((week, idx) => {
     const weekCard = document.createElement("div");
@@ -29,7 +29,7 @@ function renderShinyWeekly(containerId, rawWeeklyData) {
     // BODY
     const body = document.createElement("div");
     body.className = "weekly-body";
-    body.style.display = idx === 0 ? "block" : "none"; // latest expanded
+    body.style.display = idx === 0 ? "block" : "none";
 
     Object.entries(week.members).forEach(([member, shinies]) => {
       const memberRow = document.createElement("div");
@@ -49,7 +49,7 @@ function renderShinyWeekly(containerId, rawWeeklyData) {
       shinyGrid.className = "weekly-shiny-grid";
 
       shinies.forEach(shiny => {
-        const card = buildUnifiedCard(shiny); // existing system
+        const card = buildUnifiedCard(shiny);
         shinyGrid.appendChild(card);
       });
 
@@ -68,10 +68,3 @@ function renderShinyWeekly(containerId, rawWeeklyData) {
     container.appendChild(weekCard);
   });
 }
-
-// auto-init
-document.addEventListener("DOMContentLoaded", () => {
-  if (window.shinyWeeklyData) {
-    renderShinyWeekly("shiny-weekly-root", shinyWeeklyData);
-  }
-});
