@@ -1,17 +1,23 @@
 // shinyweekly.ui.js
-// Shiny Weekly UI
-// Unified MEMBER card ⇄ Pokémon cards (1-by-1 shuffle)
+// Shiny Weekly — Unified Cards Version
+// Member card ⇄ Pokémon cards (1-by-1 shuffle)
 
 import { renderUnifiedCard } from "./unifiedcard.js";
-import { prettifyPokemonName, getPokemonGifUrl } from "./utils.js";
+import { prettifyPokemonName, normalizePokemonName } from "./utils.js";
 
-const MEMBER_FALLBACK = "img/membersprites/placeholder.png";
+/* =========================
+   CONFIG
+   ========================= */
+const MEMBER_FALLBACK = "img/membersprites/examplesprite.png";
 
-function createMemberSprite(name) {
+/* =========================
+   Member sprite resolution
+   (.png → .gif → fallback)
+   ========================= */
+function getMemberSprite(member) {
+  const base = `img/membersprites/${member.toLowerCase()}sprite`;
+
   const img = document.createElement("img");
-  img.alt = name;
-
-  const base = `img/membersprites/${name.toLowerCase()}sprite`;
   img.src = `${base}.png`;
 
   img.onerror = () => {
@@ -26,11 +32,23 @@ function createMemberSprite(name) {
   return img.src;
 }
 
+/* =========================
+   Pokémon GIF resolution
+   (same naming logic everywhere)
+   ========================= */
+function getPokemonGif(name) {
+  const norm = normalizePokemonName(name);
+  return `img/pokemon/${norm}.gif`;
+}
+
+/* =========================
+   Main render
+   ========================= */
 export function renderShinyWeekly(weeklyData, container) {
   if (!container || !Array.isArray(weeklyData)) return;
   container.innerHTML = "";
 
-  // newest week first
+  // Newest week first
   const weeks = [...weeklyData].reverse();
 
   weeks.forEach((week, weekIndex) => {
@@ -54,6 +72,9 @@ export function renderShinyWeekly(weeklyData, container) {
     body.className = "weekly-body";
     body.style.display = weekIndex === 0 ? "block" : "none";
 
+    const grid = document.createElement("div");
+    grid.className = "dex-grid";
+
     /* Group shinies by member */
     const byMember = {};
     week.shinies.forEach(shiny => {
@@ -61,16 +82,12 @@ export function renderShinyWeekly(weeklyData, container) {
       byMember[shiny.member].push(shiny);
     });
 
-    /* Grid */
-    const grid = document.createElement("div");
-    grid.className = "dex-grid";
-
     Object.entries(byMember).forEach(([member, shinies]) => {
       const slot = document.createElement("div");
       slot.className = "weekly-member-slot";
 
       const state = {
-        mode: "member",
+        mode: "member", // "member" | "pokemon"
         index: 0
       };
 
@@ -80,7 +97,7 @@ export function renderShinyWeekly(weeklyData, container) {
         if (state.mode === "member") {
           slot.innerHTML = renderUnifiedCard({
             name: member,
-            img: createMemberSprite(member),
+            img: getMemberSprite(member),
             info: `Shinies: ${shinies.length}`,
             cardType: "member"
           });
@@ -89,7 +106,7 @@ export function renderShinyWeekly(weeklyData, container) {
 
           slot.innerHTML = renderUnifiedCard({
             name: prettifyPokemonName(shiny.name),
-            img: getPokemonGifUrl(shiny.name),
+            img: getPokemonGif(shiny.name),
             cardType: "pokemon",
             lost: shiny.lost,
             symbols: {
@@ -123,6 +140,7 @@ export function renderShinyWeekly(weeklyData, container) {
 
     body.appendChild(grid);
 
+    /* Toggle week */
     header.onclick = () => {
       body.style.display = body.style.display === "none" ? "block" : "none";
     };
