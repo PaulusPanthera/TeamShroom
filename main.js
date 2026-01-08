@@ -9,6 +9,7 @@ import { renderUnifiedCard } from './unifiedcard.js';
 import { normalizePokemonName, prettifyPokemonName, normalizeMemberName, prettifyMemberName } from './utils.js';
 
 // ADD: Import Shiny Weekly
+import './shinyweekly.js';
 import { renderShinyWeekly } from './shinyweekly.ui.js';
 
 // Global data caches
