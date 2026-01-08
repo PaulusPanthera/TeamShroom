@@ -250,3 +250,61 @@
   .week-chip { min-width: 160px; font-size: 0.82rem; }
   .dex-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap:8px; }
 }
+.weekly-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.weekly-header {
+  padding: 12px 16px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #1e1e2e, #2a2a40);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weekly-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.weekly-meta {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.weekly-body {
+  padding: 12px;
+}
+
+.weekly-member-row {
+  margin-bottom: 18px;
+}
+
+.weekly-member-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.weekly-member-sprite {
+  width: 28px;
+  height: 28px;
+  image-rendering: pixelated;
+}
+
+.weekly-member-count {
+  margin-left: auto;
+  opacity: 0.6;
+}
+
+.weekly-shiny-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
