@@ -1,91 +1,108 @@
 // shinyweekly.ui.js
-// Clean, purpose-built Shiny Weekly UI
-// Uses DB Pokémon GIFs and proper name normalization
-// NO unified cards, NO broken fallbacks, NO console spam
+// Shiny Weekly UI using UNIFIED CARDS
+// Member card ⇄ Pokémon cards (shuffle swap, no expansion)
 
-import { normalizePokemonName, prettifyPokemonName } from './utils.js';
+import { renderUnifiedCard } from './unifiedcard.js';
+import { prettifyPokemonName } from './utils.js';
 
 export function renderShinyWeekly(weeklyData, container) {
   if (!container || !Array.isArray(weeklyData)) return;
-
   container.innerHTML = "";
 
-  [...weeklyData].reverse().forEach((week, idx) => {
+  // newest week first
+  const weeks = [...weeklyData].reverse();
+
+  weeks.forEach((week, weekIndex) => {
     const weekCard = document.createElement("div");
     weekCard.className = "weekly-card";
 
     /* ===== HEADER ===== */
     const header = document.createElement("div");
     header.className = "weekly-header";
-
-    const uniqueHunters = new Set(
-      (week.shinies || []).map(s => s.member)
-    ).size;
-
     header.innerHTML = `
       <div class="weekly-title">${week.label || week.week}</div>
       <div class="weekly-meta">
-        ⭐ ${(week.shinies || []).length} Shinies • 👥 ${uniqueHunters} Hunters
+        ⭐ ${week.shinies.length} Shinies • 👥 ${
+          new Set(week.shinies.map(s => s.member)).size
+        } Hunters
       </div>
     `;
 
     /* ===== BODY ===== */
     const body = document.createElement("div");
     body.className = "weekly-body";
-    body.style.display = idx === 0 ? "block" : "none";
+    body.style.display = weekIndex === 0 ? "block" : "none";
 
-    /* ===== GROUP SHINIES BY MEMBER ===== */
+    /* Group shinies by member */
     const byMember = {};
-    (week.shinies || []).forEach(shiny => {
+    week.shinies.forEach(shiny => {
       if (!byMember[shiny.member]) byMember[shiny.member] = [];
       byMember[shiny.member].push(shiny);
     });
 
+    /* Member grid */
+    const memberGrid = document.createElement("div");
+    memberGrid.className = "dex-grid";
+
     Object.entries(byMember).forEach(([member, shinies]) => {
-      const memberBlock = document.createElement("div");
-      memberBlock.className = "weekly-member-row";
+      const slot = document.createElement("div");
+      slot.className = "weekly-member-slot";
+      slot.dataset.member = member;
+      slot.dataset.open = "false";
 
-      memberBlock.innerHTML = `
-        <div class="weekly-member-header">
-          <img
-            class="weekly-member-sprite"
-            src="img/membersprites/${member.toLowerCase()}sprite.png"
-            onerror="this.onerror=null;this.src='img/membersprites/examplesprite.png';"
-          >
-          <span class="weekly-member-name">${member}</span>
-          <span class="weekly-member-count">${shinies.length}</span>
-        </div>
-        <div class="weekly-shiny-grid"></div>
-      `;
-
-      const grid = memberBlock.querySelector(".weekly-shiny-grid");
-
-      shinies.forEach(shiny => {
-        const tile = document.createElement("div");
-        tile.className = "weekly-shiny-tile";
-
-        const normalized = normalizePokemonName(shiny.name);
-        const displayName = prettifyPokemonName(normalized);
-
-        tile.innerHTML = `
-          <img
-            src="https://img.pokemondb.net/sprites/black-white/anim/shiny/${normalized}.gif"
-            alt="${displayName}"
-            loading="lazy"
-          >
-          <div class="weekly-shiny-name">${displayName}</div>
-        `;
-
-        grid.appendChild(tile);
+      /* MEMBER CARD */
+      const memberCardHTML = renderUnifiedCard({
+        name: member,
+        img: `img/membersprites/${member.toLowerCase()}sprite.png`,
+        info: `Shinies: ${shinies.length}`,
+        cardType: "member"
       });
 
-      body.appendChild(memberBlock);
+      slot.innerHTML = memberCardHTML;
+
+      slot.onclick = () => {
+        const isOpen = slot.dataset.open === "true";
+        slot.innerHTML = "";
+
+        if (!isOpen) {
+          // show Pokémon cards
+          const pokeGrid = document.createElement("div");
+          pokeGrid.className = "dex-grid";
+
+          shinies.forEach(shiny => {
+            pokeGrid.innerHTML += renderUnifiedCard({
+              name: prettifyPokemonName(shiny.name),
+              img: `img/pokemon/${shiny.name.toLowerCase()}.png`,
+              cardType: "pokemon",
+              lost: shiny.lost,
+              symbols: {
+                secret: shiny.secret,
+                safari: shiny.safari,
+                egg: shiny.egg,
+                event: shiny.event,
+                alpha: shiny.alpha
+              }
+            });
+          });
+
+          slot.appendChild(pokeGrid);
+          slot.dataset.open = "true";
+        } else {
+          // restore member card
+          slot.innerHTML = memberCardHTML;
+          slot.dataset.open = "false";
+        }
+      };
+
+      memberGrid.appendChild(slot);
     });
 
-    /* ===== TOGGLE WEEK ===== */
-    header.addEventListener("click", () => {
+    body.appendChild(memberGrid);
+
+    /* Toggle week */
+    header.onclick = () => {
       body.style.display = body.style.display === "none" ? "block" : "none";
-    });
+    };
 
     weekCard.appendChild(header);
     weekCard.appendChild(body);
