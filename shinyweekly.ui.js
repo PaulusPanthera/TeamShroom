@@ -1,15 +1,15 @@
-/* shinyweekly.ui.js */
-/* Renders Shiny Weekly UI only */
+// shinyweekly.ui.js
+// Renders Shiny Weekly UI (ES MODULE VERSION)
 
-function renderShinyWeekly(containerId, rawWeeklyData) {
+import { renderUnifiedCard } from './unifiedcard.js';
+
+export function renderShinyWeekly(containerId, rawWeeklyData) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
   container.innerHTML = "";
 
-  const weeks = buildWeeklyViewModel(rawWeeklyData);
-
-  weeks.forEach((week, idx) => {
+  rawWeeklyData.forEach((week, idx) => {
     const weekCard = document.createElement("div");
     weekCard.className = "weekly-card";
 
@@ -17,25 +17,28 @@ function renderShinyWeekly(containerId, rawWeeklyData) {
     const header = document.createElement("div");
     header.className = "weekly-header";
     header.innerHTML = `
-      <div class="weekly-title">${week.label}</div>
+      <div class="weekly-title">${week.label || week.week}</div>
       <div class="weekly-meta">
-        ⭐ ${week.shinyCount} Shinies
-        &nbsp;•&nbsp;
-        👥 ${week.hunterCount} Hunters
-        ${week.topHunter ? `&nbsp;•&nbsp; 🏆 ${week.topHunter}` : ""}
+        ⭐ ${week.shinies.length} Shinies
       </div>
     `;
 
     /* ===== BODY ===== */
     const body = document.createElement("div");
     body.className = "weekly-body";
-    body.style.display = idx === 0 ? "block" : "none"; // latest open
+    body.style.display = idx === 0 ? "block" : "none";
 
-    Object.entries(week.members).forEach(([member, shinies]) => {
-      const memberBlock = document.createElement("div");
-      memberBlock.className = "weekly-member-row";
+    /* Group by member */
+    const members = {};
+    week.shinies.forEach(shiny => {
+      if (!members[shiny.member]) members[shiny.member] = [];
+      members[shiny.member].push(shiny);
+    });
 
-      /* Member header */
+    Object.entries(members).forEach(([member, shinies]) => {
+      const memberRow = document.createElement("div");
+      memberRow.className = "weekly-member-row";
+
       const memberHeader = document.createElement("div");
       memberHeader.className = "weekly-member-header";
       memberHeader.innerHTML = `
@@ -46,12 +49,12 @@ function renderShinyWeekly(containerId, rawWeeklyData) {
         <span class="weekly-member-count">${shinies.length}</span>
       `;
 
-      /* Shiny grid */
       const grid = document.createElement("div");
       grid.className = "weekly-shiny-grid";
 
       shinies.forEach(shiny => {
-        const cardHTML = renderUnifiedCard({
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = renderUnifiedCard({
           name: shiny.name,
           img: `img/pokemon/${shiny.name.toLowerCase()}.png`,
           info: "",
@@ -64,18 +67,15 @@ function renderShinyWeekly(containerId, rawWeeklyData) {
             event: shiny.event
           }
         });
-
-        const wrapper = document.createElement("div");
-        wrapper.innerHTML = cardHTML;
         grid.appendChild(wrapper.firstElementChild);
       });
 
-      memberBlock.appendChild(memberHeader);
-      memberBlock.appendChild(grid);
-      body.appendChild(memberBlock);
+      memberRow.appendChild(memberHeader);
+      memberRow.appendChild(grid);
+      body.appendChild(memberRow);
     });
 
-    /* Toggle open/close */
+    /* Toggle */
     header.addEventListener("click", () => {
       body.style.display = body.style.display === "none" ? "block" : "none";
     });
@@ -85,6 +85,3 @@ function renderShinyWeekly(containerId, rawWeeklyData) {
     container.appendChild(weekCard);
   });
 }
-
-/* Export globally */
-window.renderShinyWeekly = renderShinyWeekly;
