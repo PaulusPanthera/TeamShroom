@@ -163,21 +163,29 @@ async function renderPage() {
   } else if (page === 'donators') {
     renderDonators(donationsData);
   } else if (page === 'shinyweekly') {
-    // NEW: Render Shiny Weekly
-    content.innerHTML = `<div id="shinyweekly-container"></div>`;
-    if (shinyWeeklyData && Array.isArray(shinyWeeklyData)) {
-      renderShinyWeekly(
-  'shinyweekly-container',
-  shinyWeeklyData.data || shinyWeeklyData
-);
+  content.innerHTML = `<div id="shinyweekly-container"></div>`;
 
-    } else {
-      content.innerHTML = `<div style="font-size:1.4em;color:var(--accent);margin:2em;text-align:center;">Could not load shiny weekly data.</div>`;
-    }
+  // Normalize weekly data to always be an array
+  const weeks = Array.isArray(shinyWeeklyData)
+    ? shinyWeeklyData
+    : Array.isArray(shinyWeeklyData?.data)
+      ? shinyWeeklyData.data
+      : null;
+
+  if (weeks) {
+    renderShinyWeekly(
+      weeks,
+      document.getElementById('shinyweekly-container')
+    );
   } else {
-    content.innerHTML = `<div style="font-size:1.3em;color:var(--accent);margin:2em;text-align:center;">Page not found.</div>`;
+    content.innerHTML = `
+      <div style="font-size:1.4em;color:var(--accent);margin:2em;text-align:center;">
+        Could not load shiny weekly data.
+      </div>
+    `;
   }
 }
+
 
 // --- Listen for hash changes (routing) ---
 window.addEventListener('hashchange', renderPage);
