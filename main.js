@@ -167,8 +167,8 @@ async function renderPage() {
     content.innerHTML = `<div id="shinyweekly-container"></div>`;
     if (shinyWeeklyData && Array.isArray(shinyWeeklyData)) {
       renderShinyWeekly(
-  shinyWeeklyData.data || shinyWeeklyData,
-  document.getElementById('shinyweekly-container')
+  'shinyweekly-container',
+  shinyWeeklyData.data || shinyWeeklyData
 );
 
     } else {
