@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Team Shroom Shiny Pages</title>
-
-  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
-  <!-- Existing site styles -->
   <link rel="stylesheet" href="style/base.css">
   <link rel="stylesheet" href="style/layout.css">
   <link rel="stylesheet" href="style/cards.css">
@@ -16,12 +12,7 @@
   <link rel="stylesheet" href="style/tooltip.css">
   <link rel="stylesheet" href="style/darkmode.css">
   <link rel="stylesheet" href="style/donators.css">
-
-  <!-- Shiny weekly styles (new) -->
-  <link rel="stylesheet" href="style/shinyweekly.css">
-
   <link rel="icon" href="data:,">
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
 </head>
 <body>
   <div class="nav">
@@ -30,65 +21,10 @@
     <a href="#shinyweekly" id="nav-shinyweekly">Shiny Weekly</a>
     <a href="#donators" id="nav-donators">Donators</a>
   </div>
-
   <button id="darkmode-toggle" style="position: absolute; top: 1rem; right: 1.5rem; z-index: 1000; background: var(--card); color: var(--accent); border: 2px solid var(--accent); border-radius: 8px; font-family: 'Press Start 2P', monospace; font-size: 1em; padding: 0.4em 1em; cursor: pointer; box-shadow: 0 2px 10px #000a; transition: background 0.2s, color 0.2s;">
     🌙 Dark Mode
   </button>
-
-  <main id="page-content">
-    <!-- Other page sections... -->
-
-    <!-- Shiny weekly section -->
-    <section id="shinyweekly" style="padding:1.25rem;">
-      <h1 style="margin:0 0 1rem 0;color:var(--accent-2)">Shiny Weekly</h1>
-
-      <!-- Container used by the renderer -->
-      <div id="shiny-container"></div>
-    </section>
-
-    <!-- Donators and other sections... -->
-  </main>
-
-  <!-- Your app bootstrap — keep your existing main logic -->
+  <div id="page-content"></div>
   <script type="module" src="main.js"></script>
-
-  <!-- Shiny weekly bootstrap (ES module) -->
-  <script type="module">
-    // Adjust paths below if you put the files in other folders.
-    // Expects:
-    //  - general/shinyweekly.ui.js (the module we provided)
-    //  - general/utils.js (exports prettifyPokemonName)
-    //  - data/shiny-weekly-final-clean-1.json (rename to remove spaces/parentheses)
-    import { renderShinyWeekly } from './general/shinyweekly.ui.js';
-
-    const JSON_PATH = '/data/shiny-weekly-final-clean-1.json'; // change if needed
-    const container = document.querySelector('#shiny-container');
-
-    async function initShinyWeekly() {
-      if (!container) {
-        console.error('Missing #shiny-container in DOM.');
-        return;
-      }
-
-      try {
-        // Use encodeURI so filenames with spaces (if any) don't break the request
-        const res = await fetch(encodeURI(JSON_PATH));
-        if (!res.ok) throw new Error('Failed to fetch JSON: ' + res.status + ' ' + res.statusText);
-        const payload = await res.json();
-        // renderShinyWeekly accepts either an array or { data: [...] }
-        renderShinyWeekly(payload, container);
-      } catch (err) {
-        console.error('Could not load shiny weekly data.', err);
-        container.innerHTML = '<div style="padding:1rem;color:var(--accent);">Could not load shiny weekly data.</div>';
-      }
-    }
-
-    // Initialize after DOM ready (module scripts run after parsing, but be defensive)
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initShinyWeekly);
-    } else {
-      initShinyWeekly();
-    }
-  </script>
 </body>
 </html>
