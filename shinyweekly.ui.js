@@ -10,7 +10,7 @@ export function renderShinyWeekly(weeklyData, container) {
 
   container.innerHTML = "";
 
-  weeklyData.forEach((week, idx) => {
+  [...weeklyData].reverse().forEach((week, idx) => {
     const weekCard = document.createElement("div");
     weekCard.className = "weekly-card";
 
