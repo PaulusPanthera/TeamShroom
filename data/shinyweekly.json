@@ -1677,7 +1677,7 @@
       { "member": "Dupe", "name": "rhyhorn" },
       { "member": "PaulusTFT", "name": "bibarel" },
       { "member": "Stathiskris", "name": "magikarp" },
-      { "member": "Jutskaa", "name": "miltank" },
+      { "member": "Jutskaa", "name": "miltank", "safari": true, "lost": true },
       { "member": "Pangeaa", "name": "teddiursa", "safari": true },
       { "member": "Yugi", "name": "feebas", "egg": true },
       { "member": "Yugi", "name": "horsea" }
@@ -1688,7 +1688,7 @@
     "label": "September 29th - October 5th 2025",
     "shinies": [
       { "member": "TaCesa", "name": "chatot" },
-      { "member": "Jutskaa", "name": "jigglypuff" },
+      { "member": "Jutskaa", "name": "jigglypuff", "safari": true, "lost": true, "secret": true },
       { "member": "Orllando", "name": "budew" },
       { "member": "Cordeiroxi", "name": "ditto" },
       { "member": "Yoboes", "name": "carvanha" },
