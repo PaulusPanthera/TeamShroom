@@ -1,5 +1,7 @@
 // shinyweekly.ui.js
-// STEP 1: Text-only renderer to validate data flow (NO cards, NO sprites)
+// STEP 2: Shiny Weekly renderer with unified cards (string-based, safe)
+
+import { renderUnifiedCard } from './unifiedcard.js';
 
 export function renderShinyWeekly(rawWeeklyData, container) {
   if (!container) {
@@ -21,7 +23,7 @@ export function renderShinyWeekly(rawWeeklyData, container) {
     weekBlock.style.padding = "1em";
     weekBlock.style.background = "var(--card)";
 
-    // Week header
+    // ---- WEEK HEADER ----
     const header = document.createElement("h2");
     header.textContent = week.label || week.week || `Week ${weekIndex + 1}`;
     header.style.marginBottom = "0.5em";
@@ -35,7 +37,7 @@ export function renderShinyWeekly(rawWeeklyData, container) {
       return;
     }
 
-    // Group by member
+    // ---- GROUP BY MEMBER ----
     const byMember = {};
     week.shinies.forEach(shiny => {
       if (!byMember[shiny.member]) byMember[shiny.member] = [];
@@ -51,26 +53,34 @@ export function renderShinyWeekly(rawWeeklyData, container) {
       memberBlock.appendChild(memberTitle);
 
       const list = document.createElement("ul");
-      list.style.marginLeft = "1.5em";
+      list.style.marginLeft = "1.2em";
+      list.style.padding = "0";
+      list.style.listStyle = "none";
 
+      // ---- SHINY CARDS ----
       shinies.forEach(shiny => {
-        const li = document.createElement("li");
-
-        let label = shiny.name;
-
-        const tags = [];
-        if (shiny.secret) tags.push("secret");
-        if (shiny.safari) tags.push("safari");
-        if (shiny.egg) tags.push("egg");
-        if (shiny.event) tags.push("event");
-        if (shiny.lost) tags.push("lost");
-
-        if (tags.length) {
-          label += ` (${tags.join(", ")})`;
-        }
-
-        li.textContent = label;
-        list.appendChild(li);
+        list.insertAdjacentHTML(
+          "beforeend",
+          `
+            <li style="margin: 0.4em 0;">
+              ${renderUnifiedCard({
+                name: shiny.name,
+                img: `img/pokemon/${shiny.name}.gif`,
+                info: "",
+                lost: shiny.lost,
+                cardType: "pokemon",
+                symbols: {
+                  secret: shiny.secret,
+                  safari: shiny.safari,
+                  egg: shiny.egg,
+                  event: shiny.event,
+                  alpha: shiny.alpha,
+                  clip: shiny.clip
+                }
+              })}
+            </li>
+          `
+        );
       });
 
       memberBlock.appendChild(list);
@@ -80,5 +90,5 @@ export function renderShinyWeekly(rawWeeklyData, container) {
     container.appendChild(weekBlock);
   });
 
-  console.log("✅ ShinyWeekly STEP 1 render complete");
+  console.log("✅ ShinyWeekly STEP 2 render complete");
 }
