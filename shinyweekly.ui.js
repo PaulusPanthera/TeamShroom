@@ -1,15 +1,15 @@
 /* shinyweekly.ui.js */
 /* Renders Shiny Weekly UI only */
 
+import { buildWeeklyViewModel } from './shinyweekly.js';
 import { renderUnifiedCard } from './unifiedcard.js';
 
-export function renderShinyWeekly(containerId, rawWeeklyData) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
+export function renderShinyWeekly(rawWeeklyData, container) {
+  if (!container || !Array.isArray(rawWeeklyData)) return;
 
   container.innerHTML = "";
 
-  const weeks = window.buildWeeklyViewModel(rawWeeklyData);
+  const weeks = buildWeeklyViewModel(rawWeeklyData);
 
   weeks.forEach((week, idx) => {
     const weekCard = document.createElement("div");
@@ -39,13 +39,26 @@ export function renderShinyWeekly(containerId, rawWeeklyData) {
 
       const memberHeader = document.createElement("div");
       memberHeader.className = "weekly-member-header";
-      memberHeader.innerHTML = `
-        <img class="weekly-member-sprite"
-             src="img/membersprites/${member.toLowerCase()}sprite.png"
-             onerror="this.style.display='none'">
-        <span>${member}</span>
-        <span class="weekly-member-count">${shinies.length}</span>
-      `;
+
+      // SPRITE WITH FALLBACK
+      const spriteKey = member.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const img = document.createElement("img");
+      img.className = "weekly-member-sprite";
+      img.src = `img/membersprites/${spriteKey}sprite.png`;
+      img.onerror = () => {
+        img.src = "img/membersprites/examplesprite.png";
+      };
+
+      const nameSpan = document.createElement("span");
+      nameSpan.textContent = member;
+
+      const countSpan = document.createElement("span");
+      countSpan.className = "weekly-member-count";
+      countSpan.textContent = shinies.length;
+
+      memberHeader.appendChild(img);
+      memberHeader.appendChild(nameSpan);
+      memberHeader.appendChild(countSpan);
 
       const shinyGrid = document.createElement("div");
       shinyGrid.className = "weekly-shiny-grid";
@@ -60,7 +73,6 @@ export function renderShinyWeekly(containerId, rawWeeklyData) {
       body.appendChild(memberRow);
     });
 
-    // TOGGLE
     header.addEventListener("click", () => {
       body.style.display = body.style.display === "none" ? "block" : "none";
     });
