@@ -166,7 +166,11 @@ async function renderPage() {
     // NEW: Render Shiny Weekly
     content.innerHTML = `<div id="shinyweekly-container"></div>`;
     if (shinyWeeklyData && Array.isArray(shinyWeeklyData)) {
-      renderShinyWeekly('shinyweekly-container', shinyWeeklyData.data || shinyWeeklyData);
+      renderShinyWeekly(
+  shinyWeeklyData.data || shinyWeeklyData,
+  document.getElementById('shinyweekly-container')
+);
+
     } else {
       content.innerHTML = `<div style="font-size:1.4em;color:var(--accent);margin:2em;text-align:center;">Could not load shiny weekly data.</div>`;
     }
