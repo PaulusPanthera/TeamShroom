@@ -1,10 +1,10 @@
 // general/shinyweekly.ui.js
-// Improved shiny weekly renderer — full patched file ready to paste.
-// Exports: renderShinyWeekly(weeklyData, container)
-// - uses utils.js for name normalization/display
-// - lazy-loads images via IntersectionObserver
-// - shows cards grid, badges, and a modal preview
-// - improved showWeek behavior: scroll active week into view and bring cards into view
+// Full updated renderer implementing:
+// - horizontal week selector (with counts)
+// - week summary panel (totals, unique hunters, top hunter, attribute counts)
+// - responsive card grid grouped by member or by pokemon
+// - toggles to switch grouping mode
+// - uses utils.js exports: prettifyPokemonName, prettifyMemberName, normalizePokemonName
 
 import { prettifyPokemonName, prettifyMemberName, normalizePokemonName } from './utils.js';
 
@@ -12,60 +12,107 @@ const PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABA
 
 function getPokemonGif(rawName) {
   if (!rawName) return '';
-  // Use normalizePokemonName to generate canonical token
-  let token = normalizePokemonName(rawName);
-
-  // map a few legacy oddities
-  const extraMap = {
-    'magikar': 'magikarp',
-    'cryognal': 'cryogonal',
-    'wurmpel': 'wurmple',
-    'farfetchd': 'farfetchd',
-    'nidoranf': 'nidoran-f',
-    'nidoranm': 'nidoran-m',
-    'mrmime': 'mr-mime',
-    'mimejr': 'mime-jr'
-  };
-  if (extraMap[token]) token = extraMap[token];
-
+  const token = normalizePokemonName(rawName);
   if (!token) return '';
-
-  // Some tokens require a custom path (mr-mime etc)
-  if (token === 'mr-mime') return 'https://img.pokemondb.net/sprites/black-white/anim/shiny/mr-mime.gif';
-  if (token === 'mime-jr') return 'https://img.pokemondb.net/sprites/black-white/anim/shiny/mime-jr.gif';
-  if (token === 'nidoran-f') return 'https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-f.gif';
-  if (token === 'nidoran-m') return 'https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-m.gif';
-
-  // default to PokemonDB shiny animated gif path
+  const map = {
+    'mr-mime': 'mr-mime',
+    'mime-jr': 'mime-jr',
+    'nidoran-f': 'nidoran-f',
+    'nidoran-m': 'nidoran-m'
+  };
+  if (map[token]) return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${map[token]}.gif`;
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${token}.gif`;
+}
+
+function summarizeWeek(week) {
+  const shinies = Array.isArray(week.shinies) ? week.shinies : [];
+  const total = shinies.length;
+  const hunters = new Map();
+  const attrs = { egg:0, safari:0, secret:0, lost:0 };
+
+  for (const s of shinies) {
+    const m = String(s.member || 'Unknown').trim();
+    hunters.set(m, (hunters.get(m) || 0) + 1);
+    if (s.egg) attrs.egg++;
+    if (s.safari) attrs.safari++;
+    if (s.secret) attrs.secret++;
+    if (s.lost) attrs.lost++;
+  }
+
+  // Unique hunters
+  const unique = hunters.size;
+
+  // Top hunter (first by count, tie -> lexicographic)
+  let top = '';
+  let topCount = 0;
+  for (const [name, count] of hunters.entries()) {
+    if (count > topCount || (count === topCount && name.toLowerCase() < (top||'').toLowerCase())) {
+      top = name;
+      topCount = count;
+    }
+  }
+
+  return { total, unique, top, topCount, attrs };
 }
 
 export function renderShinyWeekly(weeklyData, container) {
   if (!container) return;
-  // normalize input
   if (!Array.isArray(weeklyData) && weeklyData && Array.isArray(weeklyData.data)) weeklyData = weeklyData.data;
   if (!Array.isArray(weeklyData)) {
     container.innerHTML = '<div style="padding:1rem;color:var(--accent);">No weekly shiny data found.</div>';
     return;
   }
 
-  // Basic container and structure
   container.classList.add('shiny-weekly');
+
+  // Build base layout: top row (strip + summary + controls) + cards area
   container.innerHTML = `
-    <div class="layout">
-      <aside class="weekly-calendar">
-        <h2>Weeks</h2>
-        <div class="week-list"></div>
+    <div class="top-row">
+      <div>
+        <div class="week-strip" role="tablist" aria-label="Weeks"></div>
+      </div>
+      <aside class="week-summary" aria-live="polite">
+        <h4>Week Summary</h4>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <div class="label">Total Shinies</div>
+            <div class="value total">—</div>
+          </div>
+          <div class="summary-item">
+            <div class="label">Unique Hunters</div>
+            <div class="value unique">—</div>
+          </div>
+          <div class="summary-item">
+            <div class="label">Top Hunter</div>
+            <div class="value top">—</div>
+          </div>
+          <div class="summary-item">
+            <div class="label">Top Count</div>
+            <div class="value topcount">—</div>
+          </div>
+        </div>
+        <div style="height:8px"></div>
+        <div class="summary-grid">
+          <div class="summary-item"><div class="label">Egg</div><div class="value egg">0</div></div>
+          <div class="summary-item"><div class="label">Safari</div><div class="value safari">0</div></div>
+          <div class="summary-item"><div class="label">Secret</div><div class="value secret">0</div></div>
+          <div class="summary-item"><div class="label">Lost</div><div class="value lost">0</div></div>
+        </div>
+
+        <div class="controls" style="margin-top:10px;">
+          <label class="toggle"><input type="radio" name="groupby" value="member" checked /> Group by member</label>
+          <label class="toggle"><input type="radio" name="groupby" value="pokemon" /> Group by Pokémon</label>
+        </div>
       </aside>
-      <section class="weekly-cards">
-        <h3 class="week-title"></h3>
-        <div class="dex-grid" aria-live="polite"></div>
-        <button class="back-btn" style="display:none">← Back to weeks</button>
-      </section>
     </div>
 
+    <section class="weekly-cards" aria-live="polite">
+      <h3 class="week-title"></h3>
+      <div class="content-area"></div>
+    </section>
+
     <div class="shiny-modal" role="dialog" aria-hidden="true">
-      <div class="panel" role="document">
+      <div class="panel" role="document" tabindex="-1">
         <img alt="" />
         <div class="modal-meta">
           <div class="modal-meta-left"></div>
@@ -75,15 +122,13 @@ export function renderShinyWeekly(weeklyData, container) {
     </div>
   `;
 
-  const weekList = container.querySelector('.week-list');
+  const weeks = Array.from(weeklyData).slice().reverse(); // newest first
+  const strip = container.querySelector('.week-strip');
+  const summary = container.querySelector('.week-summary');
   const titleEl = container.querySelector('.week-title');
-  const grid = container.querySelector('.dex-grid');
-  const backBtn = container.querySelector('.back-btn');
+  const contentArea = container.querySelector('.content-area');
 
-  // Keep a reversed copy where index 0 is most recent
-  const weeks = Array.from(weeklyData).slice().reverse();
-
-  // IntersectionObserver for lazy-loading images
+  // IntersectionObserver for lazy images
   const io = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
     for (const e of entries) {
       if (!e.isIntersecting) continue;
@@ -111,14 +156,13 @@ export function renderShinyWeekly(weeklyData, container) {
       mon.secret ? '<span class="badge secret">secret</span>' : '',
       mon.egg ? '<span class="badge egg">egg</span>' : '',
       mon.safari ? '<span class="badge safari">safari</span>' : '',
-      mon.event ? '<span class="badge event">event</span>' : ''
+      mon.lost ? '<span class="badge lost">lost</span>' : ''
     ].join(' ');
     modal.classList.add('open');
     modal.setAttribute('aria-hidden','false');
-    // focus for accessibility
     modal.querySelector('.panel').focus?.();
   }
-  function closeModal(){
+  function closeModal() {
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden','true');
     modalImg.src = '';
@@ -130,118 +174,157 @@ export function renderShinyWeekly(weeklyData, container) {
     if (ev.key === 'Escape') closeModal();
   });
 
-  // Show week - builds cards and handles UI behavior
-  function showWeek(week, triggeringButton = null) {
-    titleEl.textContent = week.label || week.week || '';
-    grid.innerHTML = ''; // clear
+  // Helper to render a group heading and a grid for its items
+  function renderGroup(title, subtitle, items) {
+    const g = document.createElement('div');
+    g.className = 'group';
+    const header = document.createElement('div');
+    header.className = 'group-title';
+    header.innerHTML = `<div>${title}</div><div class="sub">${subtitle || ''}</div>`;
+    g.appendChild(header);
 
-    const shinies = Array.isArray(week.shinies) ? week.shinies : [];
+    const grid = document.createElement('div');
+    grid.className = 'dex-grid';
 
-    if (shinies.length === 0) {
-      grid.innerHTML = `<div style="padding:1rem;color:var(--muted)">No shinies logged this week.</div>`;
-    } else {
-      shinies.forEach(mon => {
-        const name = prettifyPokemonName(mon.name || '');
-        const imgUrl = getPokemonGif(mon.name || name) || '';
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.innerHTML = `
-          <div class="img-wrap">
-            <img src="${PLACEHOLDER}" alt="${name}" data-src="${imgUrl}" loading="lazy" />
+    for (const mon of items) {
+      const name = prettifyPokemonName(mon.name || '');
+      const imgUrl = getPokemonGif(mon.name || name) || '';
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.innerHTML = `
+        <div class="img-wrap">
+          <img src="${PLACEHOLDER}" alt="${name}" data-src="${imgUrl}" loading="lazy"/>
+        </div>
+        <div class="card-title">
+          <div>
+            <div class="name">${name}</div>
+            <div class="member">${prettifyMemberName(mon.member || '')}</div>
           </div>
-          <div class="card-title">
-            <div>
-              <div class="name">${name}</div>
-              <div class="member">${prettifyMemberName(mon.member || '')}</div>
-            </div>
-            <div></div>
-          </div>
-          <div class="badges">
-            ${mon.secret ? '<span class="badge secret">secret</span>' : ''}
-            ${mon.egg ? '<span class="badge egg">egg</span>' : ''}
-            ${mon.safari ? '<span class="badge safari">safari</span>' : ''}
-            ${mon.event ? '<span class="badge event">event</span>' : ''}
-          </div>
-        `;
-
-        const img = card.querySelector('img');
-        img.addEventListener('error', () => {
-          // fallback to static png sprites when gif missing
-          if (img.dataset.src && img.dataset.src.includes('/anim/')) {
-            img.src = img.dataset.src.replace('/anim/shiny/', '/sprites/black-white/').replace('.gif','.png');
-          } else {
-            img.src = PLACEHOLDER;
-          }
-        });
-        img.addEventListener('click', () => openModal(img.dataset.src || img.src, mon));
-
-        grid.appendChild(card);
-        if (io && img.dataset.src) io.observe(img);
+        </div>
+        <div class="attr-row">
+          ${mon.egg ? '<div class="attr egg">🥚 Egg</div>' : ''}
+          ${mon.safari ? '<div class="attr safari">🌵 Safari</div>' : ''}
+          ${mon.secret ? '<div class="attr secret">🔒 Secret</div>' : ''}
+          ${mon.lost ? '<div class="attr lost">⚠️ Lost</div>' : ''}
+        </div>
+      `;
+      const img = card.querySelector('img');
+      img.addEventListener('error', () => {
+        if (img.dataset.src && img.dataset.src.includes('/anim/')) {
+          img.src = img.dataset.src.replace('/anim/shiny/', '/sprites/black-white/').replace('.gif','.png');
+        } else {
+          img.src = PLACEHOLDER;
+        }
       });
+      img.addEventListener('click', () => openModal(img.dataset.src || img.src, mon));
+
+      grid.appendChild(card);
+      if (io && img.dataset.src) io.observe(img);
     }
 
-    // Show back button and set its behavior
-    backBtn.style.display = 'inline-block';
-    backBtn.onclick = () => {
-      titleEl.textContent = '';
-      grid.innerHTML = '';
-      weekList.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
-      backBtn.style.display = 'none';
-    };
-
-    // Ensure triggering button is visible and focused
-    if (triggeringButton) {
-      try {
-        triggeringButton.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
-        triggeringButton.focus({ preventScroll: true });
-      } catch (e) { /* ignore */ }
-    }
-
-    // Bring the cards area into view on long pages (nice UX)
-    try {
-      const cardsSection = container.querySelector('.weekly-cards');
-      if (cardsSection) cardsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } catch (e) { /* ignore */ }
+    g.appendChild(grid);
+    return g;
   }
 
-  // Build week buttons
-  weeks.forEach((week, idx) => {
-    const btn = document.createElement('button');
-    btn.className = 'week-btn';
-    btn.type = 'button';
-    btn.textContent = week.label || week.week || `Week ${idx+1}`;
-    btn.dataset.index = idx;
+  // main show function — accepts a week and grouping mode
+  function showWeek(week, groupBy = 'member', triggeringChip = null) {
+    // update title
+    titleEl.textContent = week.label || week.week || '';
 
-    btn.addEventListener('click', () => {
-      weekList.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      showWeek(week, btn);
+    // update summary
+    const s = summarizeWeek(week);
+    summary.querySelector('.total').textContent = s.total;
+    summary.querySelector('.unique').textContent = s.unique;
+    summary.querySelector('.top').textContent = s.top || '—';
+    summary.querySelector('.topcount').textContent = s.topCount || '—';
+    summary.querySelector('.egg').textContent = s.attrs.egg;
+    summary.querySelector('.safari').textContent = s.attrs.safari;
+    summary.querySelector('.secret').textContent = s.attrs.secret;
+    summary.querySelector('.lost').textContent = s.attrs.lost;
+
+    // build groups
+    contentArea.innerHTML = ''; // clear
+    const shinies = Array.isArray(week.shinies) ? week.shinies : [];
+
+    if (groupBy === 'member') {
+      // group by member
+      const map = new Map();
+      for (const s of shinies) {
+        const key = String(s.member || 'Unknown').trim();
+        if (!map.has(key)) map.set(key, []);
+        map.get(key).push(s);
+      }
+      // order by top contributors first
+      const ordered = Array.from(map.entries()).sort((a,b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+      for (const [member, items] of ordered) {
+        const grp = renderGroup(member, `${items.length} shiny${items.length===1?'':'ies'}`, items);
+        contentArea.appendChild(grp);
+      }
+    } else {
+      // group by pokemon
+      const map = new Map();
+      for (const s of shinies) {
+        const key = prettifyPokemonName(s.name || 'Unknown');
+        if (!map.has(key)) map.set(key, []);
+        map.get(key).push(s);
+      }
+      const ordered = Array.from(map.entries()).sort((a,b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+      for (const [poke, items] of ordered) {
+        const grp = renderGroup(poke, `${items.length} found`, items);
+        contentArea.appendChild(grp);
+      }
+    }
+
+    // scroll chip into view if provided
+    if (triggeringChip) {
+      try {
+        triggeringChip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+        triggeringChip.focus({ preventScroll: true });
+      } catch (e) { /* ignore */ }
+    }
+    // bring cards into view for better UX on long pages
+    try { contentArea.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch(e){}
+  }
+
+  // Build week chips
+  strip.innerHTML = '';
+  weeks.forEach((week, i) => {
+    const total = Array.isArray(week.shinies) ? week.shinies.length : 0;
+    const chip = document.createElement('button');
+    chip.className = 'week-chip';
+    chip.type = 'button';
+    chip.innerHTML = `<div style="display:flex;flex-direction:column;align-items:flex-start;">
+                        <div style="font-weight:800">${week.label || week.week || 'Week'}</div>
+                        <div style="font-size:0.8rem;color:var(--muted);margin-top:6px;">${new Date(0).toString()/*placeholder not shown*/}</div>
+                      </div>
+                      <div class="count">${total}</div>`;
+    // replace the pointless date line above with none; label is sufficient — keep HTML small
+    // wire click
+    chip.addEventListener('click', () => {
+      // set active visual
+      strip.querySelectorAll('.week-chip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      // show week with current grouping
+      const current = container.querySelector('input[name="groupby"]:checked')?.value || 'member';
+      showWeek(week, current, chip);
     });
+    strip.appendChild(chip);
 
-    weekList.appendChild(btn);
-
-    // auto-select the most recent (index 0)
-    if (idx === 0) {
-      btn.classList.add('active');
-      // Slight delay to allow layout paint; not necessary but smoother for some browsers
-      setTimeout(() => showWeek(week, btn), 0);
+    // auto-select most recent week
+    if (i === 0) {
+      chip.classList.add('active');
+      setTimeout(()=>showWeek(week, container.querySelector('input[name="groupby"]:checked')?.value || 'member', chip), 0);
     }
   });
 
-  // Accessibility: allow keyboard navigation for week list
-  weekList.addEventListener('keydown', (ev) => {
-    const active = weekList.querySelector('.week-btn.active');
-    const buttons = Array.from(weekList.querySelectorAll('.week-btn'));
-    if (!buttons.length) return;
-
-    if (ev.key === 'ArrowDown' || ev.key === 'ArrowRight') {
-      ev.preventDefault();
-      const nextIndex = Math.min(buttons.indexOf(active) + 1 || 0, buttons.length -1);
-      buttons[nextIndex].click();
-    } else if (ev.key === 'ArrowUp' || ev.key === 'ArrowLeft') {
-      ev.preventDefault();
-      const prevIndex = Math.max((buttons.indexOf(active) || 0) - 1, 0);
-      buttons[prevIndex].click();
-    }
+  // Wire group toggles
+  container.querySelectorAll('input[name="groupby"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const group = radio.value;
+      const activeChip = strip.querySelector('.week-chip.active') || strip.querySelector('.week-chip');
+      const idx = Array.from(strip.children).indexOf(activeChip);
+      const week = weeks[idx] || weeks[0];
+      if (week) showWeek(week, group, activeChip);
+    });
   });
 }
