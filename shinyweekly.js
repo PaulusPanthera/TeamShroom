@@ -1,5 +1,5 @@
-/* shinyweekly.js */
-/* Responsible ONLY for data normalization & stats */
+// shinyweekly.js
+// Responsible ONLY for data normalization & stats
 
 export function buildWeeklyViewModel(rawWeeks) {
   return rawWeeks.map((week, index) => {
@@ -7,18 +7,13 @@ export function buildWeeklyViewModel(rawWeeks) {
     let shinyCount = 0;
 
     week.shinies.forEach(shiny => {
-      if (!members[shiny.member]) {
-        members[shiny.member] = [];
-      }
+      if (!members[shiny.member]) members[shiny.member] = [];
       members[shiny.member].push(shiny);
       shinyCount++;
     });
 
     const memberStats = Object.entries(members)
-      .map(([name, shinies]) => ({
-        name,
-        count: shinies.length
-      }))
+      .map(([name, shinies]) => ({ name, count: shinies.length }))
       .sort((a, b) => b.count - a.count);
 
     return {
