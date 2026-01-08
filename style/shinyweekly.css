@@ -1,155 +1,123 @@
-/* shinyweekly.css */
-/* Polished visuals for Shiny Weekly */
+/* ================================
+   SHINY WEEKLY – FULL STYLES
+   ================================ */
 
-/* ===== CONTAINER ===== */
-.shiny-weekly {
+#shinyweekly-container {
   max-width: 1200px;
-  margin: 1.5rem auto;
-  padding: 0 14px;
-  color: var(--text);
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 /* ===== WEEK CARD ===== */
 .weekly-card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.05);
+  background: var(--card);
+  border: 3px solid var(--accent);
   border-radius: 14px;
-  margin-bottom: 18px;
+  box-shadow: 0 6px 18px #000a;
   overflow: hidden;
-  box-shadow: 0 10px 28px rgba(0,0,0,0.45);
 }
 
 /* ===== HEADER ===== */
 .weekly-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 18px;
   cursor: pointer;
-  background: linear-gradient(90deg, rgba(255,204,51,0.12), rgba(102,217,255,0.06));
+  padding: 1rem 1.4rem;
+  background: linear-gradient(
+    90deg,
+    rgba(0,0,0,0.35),
+    rgba(0,0,0,0.1)
+  );
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
 .weekly-title {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.9rem;
+  font-size: 1.15rem;
   color: var(--accent);
+  text-shadow: 0 0 6px #000;
 }
 
 .weekly-meta {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--muted);
-  white-space: nowrap;
+  font-size: 0.8rem;
+  color: #ffd966;
+  opacity: 0.9;
 }
 
 /* ===== BODY ===== */
 .weekly-body {
-  padding: 16px 18px 20px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-/* ===== MEMBER BLOCK ===== */
+/* ===== MEMBER ROW ===== */
 .weekly-member-row {
-  margin-bottom: 20px;
-}
-
-.weekly-member-row:last-child {
-  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
 /* ===== MEMBER HEADER ===== */
 .weekly-member-header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
-  padding: 6px 8px;
-  background: rgba(0,0,0,0.25);
-  border-radius: 10px;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: #ffeaa7;
 }
 
 .weekly-member-sprite {
-  width: 28px;
-  height: 28px;
+  width: 34px;
+  height: 34px;
   image-rendering: pixelated;
-  border-radius: 6px;
 }
 
-.weekly-member-name {
-  font-weight: 800;
-  font-size: 0.95rem;
-  color: var(--text);
+.member-name {
+  font-weight: bold;
 }
 
 .weekly-member-count {
   margin-left: auto;
-  font-weight: 800;
-  font-size: 0.85rem;
-  color: var(--accent-2);
+  font-size: 0.75rem;
+  opacity: 0.8;
 }
 
 /* ===== SHINY GRID ===== */
 .weekly-shiny-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
-  gap: 10px;
-  padding: 8px 4px 0;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 0.8rem;
 }
 
 /* ===== SHINY TILE ===== */
 .weekly-shiny-tile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 4px 8px;
-  background: rgba(0,0,0,0.28);
+  background: rgba(0, 0, 0, 0.35);
+  border: 2px solid rgba(255, 255, 255, 0.15);
   border-radius: 10px;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  padding: 0.4rem;
+  text-align: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .weekly-shiny-tile:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px #000a;
 }
 
-/* Pokémon sprite */
 .weekly-shiny-tile img {
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   image-rendering: pixelated;
-  object-fit: contain;
+  margin-bottom: 0.25rem;
 }
 
-/* Pokémon name */
 .weekly-shiny-name {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--muted);
-  text-align: center;
+  font-size: 0.65rem;
   line-height: 1.1;
-  max-width: 72px;
+  color: #fff;
   word-break: break-word;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 640px) {
-  .weekly-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-  }
-
-  .weekly-meta {
-    font-size: 0.8rem;
-  }
-
-  .weekly-shiny-grid {
-    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
-    gap: 8px;
-  }
-
-  .weekly-shiny-tile img {
-    width: 48px;
-    height: 48px;
-  }
 }
