@@ -1,10 +1,13 @@
 // shinyweekly.ui.js
-// Clean, purpose-built Shiny Weekly UI (NO unified cards)
+// Clean, purpose-built Shiny Weekly UI
+// Uses DB Pokémon GIFs and proper name normalization
+// NO unified cards, NO broken fallbacks, NO console spam
 
-import { prettifyPokemonName } from './utils.js';
+import { normalizePokemonName, prettifyPokemonName } from './utils.js';
 
 export function renderShinyWeekly(weeklyData, container) {
-  if (!container) return;
+  if (!container || !Array.isArray(weeklyData)) return;
+
   container.innerHTML = "";
 
   weeklyData.forEach((week, idx) => {
@@ -14,12 +17,15 @@ export function renderShinyWeekly(weeklyData, container) {
     /* ===== HEADER ===== */
     const header = document.createElement("div");
     header.className = "weekly-header";
+
+    const uniqueHunters = new Set(
+      (week.shinies || []).map(s => s.member)
+    ).size;
+
     header.innerHTML = `
       <div class="weekly-title">${week.label || week.week}</div>
       <div class="weekly-meta">
-        ⭐ ${week.shinies.length} Shinies • 👥 ${
-          new Set(week.shinies.map(s => s.member)).size
-        } Hunters
+        ⭐ ${(week.shinies || []).length} Shinies • 👥 ${uniqueHunters} Hunters
       </div>
     `;
 
@@ -28,9 +34,9 @@ export function renderShinyWeekly(weeklyData, container) {
     body.className = "weekly-body";
     body.style.display = idx === 0 ? "block" : "none";
 
-    /* Group by member */
+    /* ===== GROUP SHINIES BY MEMBER ===== */
     const byMember = {};
-    week.shinies.forEach(shiny => {
+    (week.shinies || []).forEach(shiny => {
       if (!byMember[shiny.member]) byMember[shiny.member] = [];
       byMember[shiny.member].push(shiny);
     });
@@ -41,10 +47,12 @@ export function renderShinyWeekly(weeklyData, container) {
 
       memberBlock.innerHTML = `
         <div class="weekly-member-header">
-          <img class="weekly-member-sprite"
-               src="img/membersprites/${member.toLowerCase()}sprite.png"
-               onerror="this.src='img/membersprites/examplesprite.png'">
-          <span class="member-name">${member}</span>
+          <img
+            class="weekly-member-sprite"
+            src="img/membersprites/${member.toLowerCase()}sprite.png"
+            onerror="this.onerror=null;this.src='img/membersprites/examplesprite.png';"
+          >
+          <span class="weekly-member-name">${member}</span>
           <span class="weekly-member-count">${shinies.length}</span>
         </div>
         <div class="weekly-shiny-grid"></div>
@@ -56,13 +64,14 @@ export function renderShinyWeekly(weeklyData, container) {
         const tile = document.createElement("div");
         tile.className = "weekly-shiny-tile";
 
-        const displayName = prettifyPokemonName(shiny.name);
+        const normalized = normalizePokemonName(shiny.name);
+        const displayName = prettifyPokemonName(normalized);
 
         tile.innerHTML = `
           <img
-            src="img/pokemon/${shiny.name.toLowerCase()}.png"
+            src="https://img.pokemondb.net/sprites/black-white/anim/shiny/${normalized}.gif"
             alt="${displayName}"
-            onerror="this.src='img/pokemon/unknown.png'"
+            loading="lazy"
           >
           <div class="weekly-shiny-name">${displayName}</div>
         `;
@@ -73,10 +82,10 @@ export function renderShinyWeekly(weeklyData, container) {
       body.appendChild(memberBlock);
     });
 
-    /* Toggle */
-    header.onclick = () => {
+    /* ===== TOGGLE WEEK ===== */
+    header.addEventListener("click", () => {
       body.style.display = body.style.display === "none" ? "block" : "none";
-    };
+    });
 
     weekCard.appendChild(header);
     weekCard.appendChild(body);
