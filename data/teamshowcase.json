@@ -851,7 +851,7 @@
       {"name": "woobat"},
       {"name": "swoobat"},
       {"name": "woobat"},
-      {"name": "igglypuff"},
+      {"name": "igglybuff"},
       {"name": "smeargle"},
       {"name": "haunter"},
       {"name": "pichu"}
@@ -2708,6 +2708,7 @@
     ]
   }
 ]
+
 
 
 
