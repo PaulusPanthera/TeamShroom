@@ -9,7 +9,7 @@ import { renderUnifiedCard } from './unifiedcard.js';
 import { normalizePokemonName, prettifyPokemonName, normalizeMemberName, prettifyMemberName } from './utils.js';
 
 // ADD: Import Shiny Weekly
-import { renderShinyWeekly } from './shinyweekly.js';
+import { renderShinyWeekly } from './shinyweekly.ui.js';
 
 // Global data caches
 let teamShowcaseData = null;
@@ -165,7 +165,7 @@ async function renderPage() {
     // NEW: Render Shiny Weekly
     content.innerHTML = `<div id="shinyweekly-container"></div>`;
     if (shinyWeeklyData && Array.isArray(shinyWeeklyData)) {
-      renderShinyWeekly(shinyWeeklyData, document.getElementById('shinyweekly-container'));
+      renderShinyWeekly('shinyweekly-container', shinyWeeklyData.data || shinyWeeklyData);
     } else {
       content.innerHTML = `<div style="font-size:1.4em;color:var(--accent);margin:2em;text-align:center;">Could not load shiny weekly data.</div>`;
     }
