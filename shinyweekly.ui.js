@@ -1,6 +1,8 @@
 /* shinyweekly.ui.js */
 /* Renders Shiny Weekly UI only */
 
+import { renderUnifiedCard } from './unifiedcard.js';
+
 export function renderShinyWeekly(containerId, rawWeeklyData) {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -49,7 +51,7 @@ export function renderShinyWeekly(containerId, rawWeeklyData) {
       shinyGrid.className = "weekly-shiny-grid";
 
       shinies.forEach(shiny => {
-        const card = buildUnifiedCard(shiny);
+        const card = renderUnifiedCard(shiny);
         shinyGrid.appendChild(card);
       });
 
