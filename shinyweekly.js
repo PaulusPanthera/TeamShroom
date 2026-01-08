@@ -1,7 +1,7 @@
 /* shinyweekly.js */
 /* Responsible ONLY for data normalization & stats */
 
-function buildWeeklyViewModel(rawWeeks) {
+export function buildWeeklyViewModel(rawWeeks) {
   return rawWeeks.map((week, index) => {
     const members = {};
     let shinyCount = 0;
@@ -34,6 +34,3 @@ function buildWeeklyViewModel(rawWeeks) {
     };
   });
 }
-
-// expose globally (used by shinyweekly.ui.js)
-window.buildWeeklyViewModel = buildWeeklyViewModel;
