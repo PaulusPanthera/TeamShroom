@@ -500,7 +500,7 @@
       { "member": "TrainerBartos", "name": "graveler" },
       { "member": "Bulkanator", "name": "machoke" },
       { "member": "Hjordi", "name": "pinsir" },
-      { "member": "Slow", "name": "raticate" },
+      { "member": "Slowshiny", "name": "raticate" },
       { "member": "Orllando", "name": "zigzagoon" },
       { "member": "Gumbasketball", "name": "bibarel" },
       { "member": "Darktrench", "name": "koffing" },
@@ -536,7 +536,7 @@
       { "member": "EgoPraise", "name": "golbat" },
       { "member": "DaddyMolo", "name": "vanilluxe" },
       { "member": "Prttyflxcko", "name": "treecko" },
-      { "member": "Grzzly", "name": "zigzagoon" },
+      { "member": "Grrzzly", "name": "zigzagoon" },
       { "member": "Dupe", "name": "graveler" },
       { "member": "BojanglesisHere", "name": "cubchoo" },
       { "member": "PokeTrainerNoxx", "name": "venipede" },
@@ -827,7 +827,7 @@
     ]
   },
   {
-    "week": "2024-12-30_to_2024-01-05",
+    "week": "2024-12-30_to_2025-01-05",
     "label": "December 30th - January 5th 2024",
     "shinies": [
       { "member": "Gumbasketball", "name": "slakoth" },
@@ -1979,8 +1979,8 @@
     ]
   },
   {
-    "week": "2026-12-29_to_2026-01-04",
-    "label": "December 29th - January 4th 2026",
+    "week": "2025-12-29_to_2026-01-04",
+    "label": "December 29th - January 4th 2025",
     "shinies": [
       { "member": "XxEmperiorxX", "name": "deerling" },
       { "member": "Clairbear", "name": "buneary" },
