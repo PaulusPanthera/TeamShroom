@@ -1,144 +1,144 @@
-// donators.js (ES module)
+// donators.js
+// Donators — data + table rendering (Design System v1 stabilized)
+
+/* ---------------------------------------------------------
+   PARSING & FORMATTING
+--------------------------------------------------------- */
 
 export function parseDonationValue(str) {
-  return parseInt(str.replace(/\./g, "").replace(/,/g, ""));
+  if (!str) return 0;
+  return parseInt(String(str).replace(/[.,]/g, ''), 10) || 0;
 }
 
 function formatDonationDate(dt) {
-  if (!dt) return "";
+  if (!dt) return '-';
   const d = new Date(dt);
-  if (!isNaN(d.getTime())) return d.toISOString().slice(0, 10);
-  return dt;
+  return isNaN(d.getTime()) ? dt : d.toISOString().slice(0, 10);
 }
 
-const donatorTiers = {
-  top:      { icon: "img/symbols/topdonatorsprite.png",      label: "Top Donator",    desc: "Our #1 supporter! Thank you for your incredible generosity!" },
-  diamond:  { icon: "img/symbols/diamonddonatorsprite.png",  label: "Diamond",        desc: "Donated 50,000,000 or more. Legendary support!" },
-  platinum: { icon: "img/symbols/platinumdonatorsprite.png", label: "Platinum",       desc: "Donated 25,000,000 or more. Thank you for your amazing support!" },
-  gold:     { icon: "img/symbols/golddonatorsprite.png",     label: "Gold",           desc: "Donated 10,000,000 or more. Your generosity shines bright!" },
-  silver:   { icon: "img/symbols/silverdonatorsprite.png",   label: "Silver",         desc: "Donated 5,000,000 or more. Much appreciated!" },
-  bronze:   { icon: "img/symbols/bronzedonatorsprite.png",   label: "Bronze",         desc: "Donated 1,000,000 or more. Thank you for being awesome!" },
-  "":       { icon: "",                                      label: "",               desc: "" }
+/* ---------------------------------------------------------
+   TIERS
+--------------------------------------------------------- */
+
+const DONATOR_TIERS = {
+  top:      { icon: 'img/symbols/topdonatorsprite.png',      label: 'Top Donator', desc: 'Our #1 supporter.' },
+  diamond:  { icon: 'img/symbols/diamonddonatorsprite.png',  label: 'Diamond',     desc: '50,000,000+ donated.' },
+  platinum: { icon: 'img/symbols/platinumdonatorsprite.png', label: 'Platinum',    desc: '25,000,000+ donated.' },
+  gold:     { icon: 'img/symbols/golddonatorsprite.png',     label: 'Gold',        desc: '10,000,000+ donated.' },
+  silver:   { icon: 'img/symbols/silverdonatorsprite.png',   label: 'Silver',      desc: '5,000,000+ donated.' },
+  bronze:   { icon: 'img/symbols/bronzedonatorsprite.png',   label: 'Bronze',      desc: '1,000,000+ donated.' },
+  none:     { icon: '',                                     label: '',            desc: '' }
 };
 
-function getDonatorTier(value, isTop) {
-  if (isTop) return "top";
-  if (value >= 50_000_000) return "diamond";
-  if (value >= 25_000_000) return "platinum";
-  if (value >= 10_000_000) return "gold";
-  if (value >= 5_000_000)  return "silver";
-  if (value >= 1_000_000)  return "bronze";
-  return "";
+function resolveTier(total, isTop) {
+  if (isTop) return 'top';
+  if (total >= 50_000_000) return 'diamond';
+  if (total >= 25_000_000) return 'platinum';
+  if (total >= 10_000_000) return 'gold';
+  if (total >= 5_000_000)  return 'silver';
+  if (total >= 1_000_000)  return 'bronze';
+  return 'none';
 }
 
-function getLastDonations(donations, n = 5) {
-  if (!donations) return [];
-  let arr = donations.slice();
-  if (arr.length && arr[0].date) {
-    arr.sort((a, b) => new Date(b.date) - new Date(a.date));
-  }
-  return arr.slice(0, n);
+/* ---------------------------------------------------------
+   AGGREGATION
+--------------------------------------------------------- */
+
+function aggregateTotals(donations) {
+  const totals = {};
+  donations.forEach(d => {
+    const name = d.name?.trim();
+    if (!name) return;
+    totals[name] = (totals[name] || 0) + parseDonationValue(d.value);
+  });
+  return totals;
 }
 
-function renderLastDonationsCard(donations) {
-  const last = getLastDonations(donations, 5);
+function getTopDonator(totals) {
+  let topName = null;
+  let topValue = 0;
+  Object.entries(totals).forEach(([name, value]) => {
+    if (value > topValue) {
+      topName = name;
+      topValue = value;
+    }
+  });
+  return topName;
+}
+
+function getRecentDonations(donations, limit = 5) {
+  return [...donations]
+    .filter(d => d.date)
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, limit);
+}
+
+/* ---------------------------------------------------------
+   RENDERING
+--------------------------------------------------------- */
+
+function renderLastDonations(donations) {
+  const recent = getRecentDonations(donations);
+
+  const rows = recent.length
+    ? recent.map(d => `
+        <tr>
+          <td>${formatDonationDate(d.date)}</td>
+          <td>${d.name || '-'}</td>
+          <td>${(d.donation || d.item || 'Pokéyen')}</td>
+          <td>${parseDonationValue(d.value).toLocaleString('en-US')}</td>
+        </tr>
+      `).join('')
+    : `<tr><td colspan="4" style="text-align:center;opacity:0.6;">No recent donations.</td></tr>`;
+
   return `
     <div class="last-donations-fixed-box">
-      <h2>Last 5 Donations</h2>
-      <div>
-        <table class="last-donations-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Donator</th>
-              <th>Donation</th>
-              <th>Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${
-              last.length
-                ? last.map(d => `<tr>
-                  <td>${d.date ? formatDonationDate(d.date) : "-"}</td>
-                  <td>${d.name || "-"}</td>
-                  <td>${(d.donation || d.item || "").trim() ? (d.donation || d.item) : "Pokéyen"}</td>
-                  <td>${d.value ? parseDonationValue(d.value).toLocaleString("en-US") : (d.value || "-")}</td>
-                </tr>`).join("")
-                : `<tr><td colspan="4" style="text-align:center;color:#999;font-style:italic;">No recent donations.</td></tr>`
-            }
-          </tbody>
-        </table>
-      </div>
+      <h2>Last Donations</h2>
+      <table class="last-donations-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Donator</th>
+            <th>Donation</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
     </div>
   `;
-}
-
-export function renderDonatorsWhenReady(donations) {
-  const content = document.getElementById('page-content');
-  if (donations) {
-    renderDonators(donations);
-  } else {
-    content.innerHTML = "<div style='text-align:center;font-size:1.1em;color:var(--accent);'>Loading donations data...</div>";
-    setTimeout(() => renderDonatorsWhenReady(donations), 60);
-  }
 }
 
 export function renderDonators(donations) {
   const content = document.getElementById('page-content');
-  content.innerHTML = `
-    <div class="donators-top-flex">
-      ${renderLastDonationsCard(donations)}
-      <div class="how-to-donate-box" id="how-to-donate-box">
-        <h2>How to Donate</h2>
-        <div>
-          Support Team Shroom by sending Pokéyen or items via in-game mail in <b>PokeMMO</b> to:<br>
-          <span class="donate-highlight">TeamShroomBank</span>
-        </div>
-      </div>
-    </div>
-    <div id='donators-list'></div>
-  `;
-
-  // Make both boxes the same height
-  setTimeout(() => {
-    const donateBox = document.getElementById("how-to-donate-box");
-    const lastBox = document.querySelector(".last-donations-fixed-box");
-    if (donateBox && lastBox) {
-      const targetHeight = Math.max(donateBox.offsetHeight, lastBox.offsetHeight);
-      donateBox.style.minHeight = targetHeight + "px";
-      lastBox.style.minHeight = targetHeight + "px";
-    }
-  }, 30);
-
-  if (!donations) {
-    document.getElementById('donators-list').innerHTML = "Donations data not loaded.";
+  if (!donations || !donations.length) {
+    content.innerHTML = '<div style="text-align:center;">No donation data.</div>';
     return;
   }
 
-  const totals = {};
-  donations.forEach(entry => {
-    const name = entry.name.trim();
-    const value = parseDonationValue(entry.value);
-    totals[name] = (totals[name] || 0) + value;
-  });
+  const totals = aggregateTotals(donations);
+  const topName = getTopDonator(totals);
 
-  let maxName = null, maxValue = 0;
-  Object.entries(totals).forEach(([name, value]) => {
-    if (value > maxValue) {
-      maxName = name;
-      maxValue = value;
-    }
-  });
-
-  let donators = Object.entries(totals)
+  const ranked = Object.entries(totals)
     .map(([name, value]) => ({
       name,
       value,
-      tier: getDonatorTier(value, name === maxName && value > 0)
+      tier: resolveTier(value, name === topName && value > 0)
     }))
     .sort((a, b) => b.value - a.value);
 
-  let html = `
+  content.innerHTML = `
+    <div class="donators-top-flex">
+      ${renderLastDonations(donations)}
+      <div class="how-to-donate-box">
+        <h2>How to Donate</h2>
+        <div>
+          Send Pokéyen or items via in-game mail in <b>PokeMMO</b> to:
+          <div class="donate-highlight">TeamShroomBank</div>
+        </div>
+      </div>
+    </div>
+
     <table class="donators-table">
       <thead>
         <tr>
@@ -149,67 +149,44 @@ export function renderDonators(donations) {
         </tr>
       </thead>
       <tbody>
-        ${donators.map((d, i) => {
-          const tierData = donatorTiers[d.tier];
-          const rowClass = d.tier + (d.tier === "top" ? " top" : "");
-          let iconHtml = "";
-          if (tierData.icon) {
-            iconHtml = `<img class="tier-icon" src="${tierData.icon}" alt="${tierData.label}" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span style=&quot;font-size:1.1em;margin-right:0.2em&quot;>💎</span>')">`;
-          }
-          // CHANGE: Remove inline style for background/color, use a class for bold only
+        ${ranked.map((d, i) => {
+          const tier = DONATOR_TIERS[d.tier];
           return `
-            <tr class="${rowClass}">
+            <tr class="${d.tier}">
               <td class="placement">#${i + 1}</td>
-              <td>${iconHtml}${d.name}</td>
-              <td class="total-donated">${d.value.toLocaleString("en-US")}</td>
+              <td>
+                ${tier.icon ? `<img class="tier-icon" src="${tier.icon}" alt="">` : ''}
+                ${d.name}
+              </td>
+              <td>${d.value.toLocaleString('en-US')}</td>
               <td class="donator-tier donator-tier-tooltip">
-                ${tierData.label}
-                ${tierData.desc ? `<span class="tooltip-text">${tierData.desc}</span>` : ""}
+                ${tier.label}
+                ${tier.desc ? `<span class="tooltip-text">${tier.desc}</span>` : ''}
               </td>
             </tr>
           `;
-        }).join("")}
+        }).join('')}
       </tbody>
     </table>
   `;
-
-  document.getElementById('donators-list').innerHTML = html;
 }
 
-// Returns donator tier for a given name (or "" if not a donator)
-export function getDonatorTierByName(name, donations) {
-  if (!donations) return "";
-  let total = 0;
-  donations.forEach(entry => {
-    if (entry.name.trim().toLowerCase() === name.trim().toLowerCase()) {
-      total += parseDonationValue(entry.value);
-    }
-  });
-  // Is this the top donator?
-  let maxValue = 0, maxName = "";
-  let totals = {};
-  donations.forEach(entry => {
-    let n = entry.name.trim();
-    let v = parseDonationValue(entry.value);
-    totals[n] = (totals[n] || 0) + v;
-    if (totals[n] > maxValue) {
-      maxValue = totals[n];
-      maxName = n;
-    }
-  });
-  const isTop = maxName.trim().toLowerCase() === name.trim().toLowerCase() && total > 0;
-  return getDonatorTier(total, isTop);
-}
+/* ---------------------------------------------------------
+   MUTATION HELPERS
+--------------------------------------------------------- */
 
-// Assign donator tier to each member in teamShowcase/teamMembers (for card rendering)
+// Assigns donator tier onto existing member objects (explicit mutation)
 export function assignDonatorTiersToTeam(teamShowcase, teamMembers, donations) {
-  if (!teamShowcase || !donations || !getDonatorTierByName) return;
-  for (const member of teamShowcase) {
-    member.donator = getDonatorTierByName(member.name, donations);
+  if (!donations) return;
+
+  const totals = aggregateTotals(donations);
+  const topName = getTopDonator(totals);
+
+  function assign(member) {
+    const total = totals[member.name] || 0;
+    member.donator = resolveTier(total, member.name === topName && total > 0);
   }
-  if (teamMembers) {
-    for (const member of teamMembers) {
-      member.donator = getDonatorTierByName(member.name, donations);
-    }
-  }
+
+  teamShowcase?.forEach(assign);
+  teamMembers?.forEach(assign);
 }
