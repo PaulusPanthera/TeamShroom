@@ -1,90 +1,103 @@
-/* Tabs for Dex Mode */
+/* =========================================================
+   BUTTONS & TABS — RPG MENU CONTROLS
+   Design System v1
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   DEX TABS (MENU TABS, NOT PILLS)
+   --------------------------------------------------------- */
+
 .dex-tab {
-  background: var(--card);
-  color: var(--accent);
-  border: 2.5px solid var(--accent);
-  border-radius: 12px 12px 0 0;
+  padding: 8px 16px;
+
   font-family: inherit;
-  font-size: 1em;
+  font-size: var(--font-card-stat);
   font-weight: bold;
-  padding: 0.52em 1.45em;
-  cursor: pointer;
-  margin-bottom: -2px;
-  box-shadow: 0 2px 10px #f2593766;
-  transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s, opacity 0.2s, filter 0.2s, transform 0.19s;
   letter-spacing: 1px;
-  outline: none;
+
+  background: var(--bg-panel);
+  color: var(--text-muted);
+
+  border: 2px solid var(--bg-panel-alt);
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+
+  cursor: pointer;
   position: relative;
-  z-index: 10;
-}
-.dex-tab.active, .dex-tab:focus {
-  background: var(--success);
-  color: var(--card);
-  border-bottom: 3.5px solid var(--success);
-  border-top: 3.5px solid var(--success);
-  border-left: 2.5px solid var(--accent);
-  border-right: 2.5px solid var(--accent);
-  box-shadow: 0 6px 24px #67b35688, 0 0 0 2.5px #fffbe1, 0 8px 0 0 var(--success) inset;
-  font-weight: bold;
-  z-index: 12;
-  transform: translateY(-2px) scale(1.06);
-}
-.dex-tab:not(.active) {
-  opacity: 0.63;
-  filter: grayscale(0.23) brightness(0.9);
-  border-bottom: 2.5px solid var(--accent);
-  border-top: 2.5px solid var(--accent);
-  transform: none;
 }
 
-/* Removed the star icon overlay */
+.dex-tab:hover {
+  color: var(--text-main);
+}
+
+.dex-tab.active,
+.dex-tab:focus-visible {
+  background: var(--bg-panel-alt);
+  color: var(--accent);
+
+  border-color: var(--accent);
+  border-bottom: 2px solid var(--bg-panel-alt);
+
+  z-index: 2;
+}
+
+/* ---------------------------------------------------------
+   BACK BUTTON (MENU ACTION)
+   --------------------------------------------------------- */
 
 .back-btn {
-  background: var(--accent);
-  color: var(--bg);
-  border: 2.5px solid var(--accent);
-  border-radius: 11px;
-  font-family: 'Press Start 2P', monospace;
-  font-size: 1em;
-  font-weight: bold;
-  padding: 0.42em 1.4em;
-  cursor: pointer;
-  margin-bottom: 1em;
-  box-shadow: 0 2px 14px #f2593766;
-  transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
-  letter-spacing: 1px;
   display: inline-block;
-}
-.back-btn:hover,
-.back-btn:focus {
-  background: var(--unclaimed);
-  color: var(--card);
-  border-color: var(--unclaimed);
-  box-shadow: 0 4px 16px #f2593788;
-  outline: none;
+
+  padding: 8px 16px;
+
+  font-family: inherit;
+  font-size: var(--font-card-stat);
+  font-weight: bold;
+  letter-spacing: 1px;
+
+  background: var(--accent);
+  color: var(--text-dark);
+
+  border: none;
+  border-radius: 12px;
+
+  box-shadow: var(--shadow-depth);
+  cursor: pointer;
 }
 
-/* NAVIGATION BAR LINKS */
-.nav a {
-  color: var(--bg);
-  text-decoration: none;
-  font-weight: bold;
-  font-family: inherit;
-  background: var(--success);
-  padding: 0.7rem 1.3rem;
-  border-radius: 12px;
-  border: 2px solid var(--success);
-  font-size: 1em;
-  transition: background 0.25s, box-shadow 0.25s, color 0.18s, border 0.22s;
-  box-shadow: 0 2px 14px #67b35644;
-  letter-spacing: 1px;
-  text-shadow: 1px 1px 0 #fff9, 0 0 6px #fff8;
-  position: relative;
-  overflow: hidden;
+.back-btn:hover,
+.back-btn:focus-visible {
+  box-shadow: var(--shadow-hover);
 }
-.nav a.active, .nav a:hover {
-  background: var(--unclaimed);
-  color: var(--card);
-  box-shadow: 0 6px 32px #f2593788, 0 2px 20px #fffbe144;
-  border-color: #fffbe1;
+
+/* ---------------------------------------------------------
+   NAVIGATION LINKS (HEADER MENU)
+   --------------------------------------------------------- */
+
+.nav a {
+  padding: 8px 14px;
+
+  font-family: inherit;
+  font-size: var(--font-card-stat);
+  font-weight: bold;
+  letter-spacing: 1px;
+
+  background: var(--bg-panel-alt);
+  color: var(--text-main);
+
+  border: 2px solid var(--bg-panel-alt);
+  border-radius: 12px;
+
+  box-shadow: var(--shadow-depth);
+}
+
+.nav a:hover {
+  color: var(--accent);
+}
+
+/* ONE active item only */
+.nav a.active {
+  background: var(--accent);
+  color: var(--text-dark);
+  border-color: var(--accent);
 }
