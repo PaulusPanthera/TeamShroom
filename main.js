@@ -2,6 +2,16 @@
 // Entrypoint — HARD CONTRACT VERSION
 // No prettified names in data. Ever.
 
+import { loadShinyWeeklyFromCSV } from './shinyweekly.loader.js';
+
+const SHINY_WEEKLY_CSV =
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vTB6vHVjwL9_F3DVIVgXxP8rtWEDQyZaDTnG2yAw96j4_1DXU7317lBFaY0N5JnDhdvUnkvgAvb6p8o/pub?gid=0&single=true&output=csv';
+
+loadShinyWeeklyFromCSV(SHINY_WEEKLY_CSV).then(rows => {
+  console.log('Shiny Weekly rows:', rows);
+});
+
+
 import {
   buildPokemonData,
   POKEMON_POINTS,
