@@ -1,30 +1,42 @@
 // shinyweekly.js
-// Responsible ONLY for data normalization & stats
+// Shiny Weekly — data normalization & stats only
+// No rendering. No UI assumptions.
 
 export function buildWeeklyViewModel(rawWeeks) {
-  return rawWeeks.map((week, index) => {
+  return rawWeeks.map(week => {
     const members = {};
     let shinyCount = 0;
 
     week.shinies.forEach(shiny => {
-      if (!members[shiny.member]) members[shiny.member] = [];
+      members[shiny.member] ??= [];
       members[shiny.member].push(shiny);
       shinyCount++;
     });
 
     const memberStats = Object.entries(members)
-      .map(([name, shinies]) => ({ name, count: shinies.length }))
+      .map(([name, shinies]) => ({
+        name,
+        count: shinies.length
+      }))
       .sort((a, b) => b.count - a.count);
 
     return {
       week: week.week,
-      label: week.label,
-      index,
+      label: week.label || week.week,
+
+      // aggregate stats
       shinyCount,
-      hunterCount: Object.keys(members).length,
+      hunterCount: memberStats.length,
+
+      // derived highlights
       topHunter: memberStats.length
-        ? `${memberStats[0].name} (${memberStats[0].count})`
+        ? {
+            name: memberStats[0].name,
+            count: memberStats[0].count
+          }
         : null,
+
+      // raw grouped data (used by UI layer)
       members
     };
   });
