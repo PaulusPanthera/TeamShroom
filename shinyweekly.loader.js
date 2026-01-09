@@ -1,5 +1,6 @@
 // shinyweekly.loader.js
-// Loads Shiny Weekly data from Google Sheets CSV
+// Loads and sanitizes Shiny Weekly data from Google Sheets CSV
+// HARD CONTRACT: only real shiny rows survive
 
 export async function loadShinyWeeklyFromCSV(url) {
   const res = await fetch(url);
@@ -12,24 +13,36 @@ export async function loadShinyWeeklyFromCSV(url) {
 }
 
 function parseCSV(csvText) {
-  const lines = csvText.trim().split('\n');
-  const headers = lines[0].split(',').map(h => h.trim());
+  const lines = csvText.split('\n');
+  const headers = lines[0]
+    .replace(/\r/g, '')
+    .split(',')
+    .map(h => h.trim());
 
   const rows = [];
 
   for (let i = 1; i < lines.length; i++) {
-    const values = splitCSVLine(lines[i]);
+    const line = lines[i];
+    if (!line.trim()) continue;
+
+    const values = splitCSVLine(line);
     const row = {};
 
     headers.forEach((h, idx) => {
       let v = values[idx] ?? '';
 
-      // normalize booleans
+      if (typeof v === 'string') {
+        v = v.replace(/\r/g, '').trim();
+      }
+
       if (v === 'TRUE') v = true;
       else if (v === 'FALSE') v = false;
 
       row[h] = v;
     });
+
+    // HARD FILTER: real shiny rows only
+    if (!row.ot || !row.pokemon) continue;
 
     rows.push(row);
   }
