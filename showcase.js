@@ -1,12 +1,12 @@
 // showcase.js
 // Team Shroom — Showcase & Member Views
-// Design System v1 aligned: no inline styles, no inline events
+// Design System v1 — enforced contracts only
 
 import { renderUnifiedCard } from './unifiedcard.js';
 import {
   normalizeMemberName,
   normalizePokemonName,
-  prettifyMemberName
+  prettifyPokemonName
 } from './utils.js';
 
 /* ---------------------------------------------------------
@@ -105,13 +105,6 @@ export function renderShowcaseGallery(
 ) {
   container.innerHTML = '';
 
-  const header = document.createElement('div');
-  header.className = 'showcase-summary';
-  header.textContent = `Total Shinies: ${
-    teamShowcase.reduce((n, m) => n + (m.shinies?.filter(s => !s.lost).length || 0), 0)
-  }`;
-  container.appendChild(header);
-
   let groups;
   if (mode === 'shinies') groups = groupByCount(members);
   else if (mode === 'scoreboard') groups = groupByPoints(members, teamShowcase, POKEMON_POINTS);
@@ -136,8 +129,7 @@ export function renderShowcaseGallery(
             : `Shinies: ${member.shinies}`,
           cardType: 'member',
           states: {
-            member: true,
-            donator: !!member.donator
+            member: true
           }
         })
       );
@@ -153,13 +145,13 @@ export function renderShowcaseGallery(
    MEMBER DETAIL
 --------------------------------------------------------- */
 
-export function renderMemberShowcase(member, _, teamShowcase, POKEMON_POINTS) {
+export function renderMemberShowcase(member, sortMode, teamShowcase, POKEMON_POINTS) {
   const content = document.getElementById('page-content');
   const entry = teamShowcase.find(m => m.name === member.name);
   const shinies = entry?.shinies || [];
 
   content.innerHTML = `
-    <button class="back-btn" data-nav="showcase">Back</button>
+    <button class="back-btn" data-sort="${sortMode || 'alphabetical'}">Back</button>
 
     <div class="member-nameplate">
       <span class="member-name">${member.name}</span>
@@ -170,11 +162,14 @@ export function renderMemberShowcase(member, _, teamShowcase, POKEMON_POINTS) {
     <div class="dex-grid">
       ${shinies.map(mon =>
         renderUnifiedCard({
-          name: mon.name,
+          name: prettifyPokemonName(mon.name),
           img: getPokemonGif(mon.name),
-          info: mon.lost ? 'Lost' : `${getPointsForPokemon(mon.name, mon, POKEMON_POINTS)} Points`,
+          info: mon.lost
+            ? 'Lost'
+            : `${getPointsForPokemon(mon.name, mon, POKEMON_POINTS)} Points`,
           cardType: 'pokemon',
           states: {
+            pokemon: true,
             lost: mon.lost
           },
           symbols: {
@@ -201,14 +196,17 @@ export function renderMemberShowcase(member, _, teamShowcase, POKEMON_POINTS) {
 function bindShowcaseInteractions(root) {
   root.querySelectorAll('.unified-card[data-card-type="member"]').forEach(card => {
     card.addEventListener('click', () => {
-      location.hash = `#showcase-${card.dataset.name}`;
+      const name = normalizeMemberName(card.dataset.name);
+      location.hash = `#showcase-${name}`;
     });
   });
 }
 
 function bindMemberInteractions(root) {
-  root.querySelector('.back-btn')?.addEventListener('click', () => {
-    location.hash = '#showcase';
+  const back = root.querySelector('.back-btn');
+  back?.addEventListener('click', () => {
+    const sort = back.dataset.sort || 'alphabetical';
+    location.hash = `#showcase?sort=${sort}`;
   });
 
   root.querySelectorAll('.unified-card[data-clip]').forEach(card => {
@@ -248,7 +246,6 @@ export function setupShowcaseSearchAndSort(
   });
 
   const count = document.createElement('span');
-
   controls.append(input, select, count);
 
   function update(push) {
