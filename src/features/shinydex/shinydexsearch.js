@@ -2,8 +2,11 @@
 // Shiny Dex Hitlist & Living Dex — HARD CONTRACT
 // One card size. One layout. Full feature parity restored.
 
-import { renderUnifiedCard } from './unifiedcard.js';
-import { normalizePokemonName, prettifyPokemonName } from './utils.js';
+import { renderUnifiedCard } from '../../ui/unifiedcard.js';
+import {
+  normalizePokemonName,
+  prettifyPokemonName
+} from '../../utils/utils.js';
 
 /* ---------------------------------------------------------
    SPRITES
@@ -89,7 +92,8 @@ function renderHitlist(shinyDex, filter, POKEMON_POINTS) {
     grid.className = 'dex-grid';
 
     filtered.forEach(entry => {
-      grid.insertAdjacentHTML('beforeend',
+      grid.insertAdjacentHTML(
+        'beforeend',
         renderUnifiedCard({
           name: prettifyPokemonName(entry.name),
           img: getPokemonGif(entry.name),
@@ -133,7 +137,8 @@ function renderLivingDex(shinyDex, teamShowcase, filter, POKEMON_POINTS) {
 
     filtered.forEach(entry => {
       const key = normalizePokemonName(entry.name);
-      grid.insertAdjacentHTML('beforeend',
+      grid.insertAdjacentHTML(
+        'beforeend',
         renderUnifiedCard({
           name: prettifyPokemonName(entry.name),
           img: getPokemonGif(entry.name),
