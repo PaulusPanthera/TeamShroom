@@ -1,30 +1,24 @@
 // shinyweekly.ui.js
-// Shiny Weekly UI using unified cards + Hunter of the Week highlight
+// Shiny Weekly UI using unified cards only
+// Structure: expandable weeks → member card shuffles with pokemon cards
+// This version ONLY adds "Hunter of the Week" highlighting
 
 import { renderUnifiedCard } from './unifiedcard.js';
-import { normalizeMemberName } from './utils.js';
+import { prettifyPokemonName } from './utils.js';
 
-export function renderShinyWeekly(weeks, container) {
-  if (!container || !Array.isArray(weeks)) return;
+export function renderShinyWeekly(weeklyData, container) {
+  if (!container || !Array.isArray(weeklyData)) return;
   container.innerHTML = "";
 
-  // NEWEST week first
-  const sortedWeeks = [...weeks].reverse();
+  // Newest week first
+  const weeks = [...weeklyData].reverse();
 
-  sortedWeeks.forEach((week, weekIndex) => {
+  weeks.forEach((week, weekIndex) => {
+    /* ===============================
+       WEEK CARD
+    =============================== */
     const weekCard = document.createElement("div");
     weekCard.className = "weekly-card";
-
-    /* ===== WEEK STATS ===== */
-    const memberCounts = {};
-    week.shinies.forEach(s => {
-      memberCounts[s.member] = (memberCounts[s.member] || 0) + 1;
-    });
-
-    const maxCount = Math.max(...Object.values(memberCounts));
-    const huntersOfWeek = Object.entries(memberCounts)
-      .filter(([, count]) => count === maxCount)
-      .map(([name]) => name);
 
     /* ===== HEADER ===== */
     const header = document.createElement("div");
@@ -32,7 +26,9 @@ export function renderShinyWeekly(weeks, container) {
     header.innerHTML = `
       <div class="weekly-title">${week.label || week.week}</div>
       <div class="weekly-meta">
-        ⭐ ${week.shinies.length} Shinies · 👥 ${Object.keys(memberCounts).length} Hunters
+        ⭐ ${week.shinies.length} Shinies • 👥 ${
+          new Set(week.shinies.map(s => s.member)).size
+        } Hunters
       </div>
     `;
 
@@ -41,77 +37,87 @@ export function renderShinyWeekly(weeks, container) {
     body.className = "weekly-body";
     body.style.display = weekIndex === 0 ? "block" : "none";
 
-    /* ===== GROUP BY MEMBER ===== */
+    /* ===============================
+       GROUP SHINIES BY MEMBER
+    =============================== */
     const byMember = {};
     week.shinies.forEach(shiny => {
       if (!byMember[shiny.member]) byMember[shiny.member] = [];
       byMember[shiny.member].push(shiny);
     });
 
+    /* ===============================
+       DETERMINE HUNTER OF THE WEEK
+    =============================== */
+    let hunterOfTheWeek = null;
+    let maxCount = 0;
+
     Object.entries(byMember).forEach(([member, shinies]) => {
-      const isHunterOfWeek = huntersOfWeek.includes(member);
-
-      /* MEMBER CARD */
-      const memberWrapper = document.createElement("div");
-      memberWrapper.className = "weekly-member-wrapper";
-
-      const memberCardHtml = renderUnifiedCard({
-        name: member,
-        img: "img/membersprites/examplesprite.png",
-        info: `Shinies: ${shinies.length}`,
-        cardType: "member"
-      });
-
-      memberWrapper.innerHTML = memberCardHtml;
-      const memberCard = memberWrapper.firstElementChild;
-
-      // Hunter of the Week hook
-      if (isHunterOfWeek) {
-        memberCard.classList.add("hunter-of-week");
-        memberCard.dataset.hunter = "true";
-        memberCard.title = "Hunter of the Week";
+      if (shinies.length > maxCount) {
+        maxCount = shinies.length;
+        hunterOfTheWeek = member;
       }
-
-      /* SHUFFLE STATE */
-      let index = -1;
-      const cards = [
-        memberCard,
-        ...shinies.map(shiny => {
-          const wrap = document.createElement("div");
-          wrap.innerHTML = renderUnifiedCard({
-            name: shiny.name,
-            img: `https://img.pokemondb.net/sprites/black-white/anim/shiny/${shiny.name
-              .toLowerCase()
-              .replace(/♀/g, "-f")
-              .replace(/♂/g, "-m")
-              .replace(/[\s.'’]/g, "")}.gif`,
-            info: "",
-            cardType: "pokemon",
-            symbols: {
-              secret: shiny.secret,
-              safari: shiny.safari,
-              egg: shiny.egg,
-              event: shiny.event
-            }
-          });
-          return wrap.firstElementChild;
-        })
-      ];
-
-      const slot = document.createElement("div");
-      slot.className = "weekly-card-slot";
-      slot.appendChild(memberCard);
-
-      slot.onclick = () => {
-        index = (index + 1) % cards.length;
-        slot.replaceChildren(cards[index]);
-      };
-
-      memberWrapper.appendChild(slot);
-      body.appendChild(memberWrapper);
     });
 
-    /* TOGGLE WEEK */
+    /* ===============================
+       MEMBER ROWS
+    =============================== */
+    Object.entries(byMember).forEach(([member, shinies]) => {
+      const row = document.createElement("div");
+      row.className = "weekly-member-row";
+
+      /* --- Card shuffle state --- */
+      let index = -1; // -1 = member card
+
+      const cards = [];
+
+      // MEMBER CARD (first)
+      cards.push(() =>
+        renderUnifiedCard({
+          name: member,
+          img: `img/membersprites/${member.toLowerCase()}sprite.gif`,
+          info: `${shinies.length} shinies`,
+          cardType: "member",
+          memberStatus: null,
+          donatorStatus: null
+        })
+      );
+
+      // POKEMON CARDS
+      shinies.forEach(shiny => {
+        cards.push(() =>
+          renderUnifiedCard({
+            name: prettifyPokemonName(shiny.name),
+            img: `img/pokemon/${shiny.name.toLowerCase()}.gif`,
+            info: member,
+            cardType: "pokemon",
+            symbols: shiny.symbols || {}
+          })
+        );
+      });
+
+      /* --- Render container --- */
+      const cardContainer = document.createElement("div");
+      cardContainer.className = "weekly-card-slot";
+
+      // Hunter of the Week highlight
+      if (member === hunterOfTheWeek) {
+        cardContainer.classList.add("hunter-of-the-week");
+      }
+
+      function renderNext() {
+        index = (index + 1) % cards.length;
+        cardContainer.innerHTML = cards[index]();
+      }
+
+      renderNext();
+      cardContainer.onclick = renderNext;
+
+      row.appendChild(cardContainer);
+      body.appendChild(row);
+    });
+
+    /* ===== TOGGLE WEEK ===== */
     header.onclick = () => {
       body.style.display = body.style.display === "none" ? "block" : "none";
     };
