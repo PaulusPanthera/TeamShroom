@@ -1,6 +1,6 @@
 /* =========================================================
    UNIFIED CARD SYSTEM — DESIGN SYSTEM v1
-   Cards are collectibles on a dark table
+   ONE CARD SIZE • ONE BEHAVIOR • EVERYWHERE
    ========================================================= */
 
 /* ---------------------------------------------------------
@@ -30,13 +30,15 @@
 
   text-align: center;
   position: relative;
+
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* Hover = subtle lift, not spectacle */
+/* Subtle lift only */
 .unified-card:hover,
 .unified-card:focus-within {
-  box-shadow: var(--shadow-hover);
   transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
 }
 
 /* ---------------------------------------------------------
@@ -107,14 +109,12 @@
 }
 
 /* ---------------------------------------------------------
-   CARD STATES (MODIFIERS ONLY)
+   CARD STATES
+   Supports BOTH legacy + v1 naming
    --------------------------------------------------------- */
 
-/* Pokémon vs Member (future extensibility) */
-.unified-card.is-pokemon {}
-.unified-card.is-member {}
-
 /* Unclaimed Pokémon */
+.unified-card.unclaimed,
 .unified-card.is-unclaimed {
   opacity: 0.6;
   filter: grayscale(0.6);
@@ -122,42 +122,24 @@
 }
 
 /* Lost Shinies */
+.unified-card.lost,
 .unified-card.is-lost {
   opacity: 0.65;
   filter: grayscale(0.75);
   border-color: #a44;
 }
 
+.unified-info.lost,
 .unified-info.is-lost {
   color: #a44;
 }
 
-/* Highlighted (Hunter of the Week, Top Donator) */
+/* Highlighted cards (future use) */
 .unified-card.is-highlighted {
   border-color: var(--highlight);
   box-shadow:
     0 0 0 2px var(--highlight),
     var(--shadow-hover);
-}
-
-/* Compact variant (Weekly / Dense views) */
-.unified-card.is-compact {
-  max-width: 160px;
-  height: 210px;
-  padding: var(--space-1);
-}
-
-.unified-card.is-compact .unified-img {
-  width: 96px;
-  height: 96px;
-}
-
-.unified-card.is-compact .unified-name {
-  font-size: 13px;
-}
-
-.unified-card.is-compact .unified-info {
-  font-size: 12px;
 }
 
 /* ---------------------------------------------------------
@@ -219,7 +201,7 @@
 }
 
 /* ---------------------------------------------------------
-   MEMBER NAMEPLATE (SEPARATE UI PANEL)
+   MEMBER NAMEPLATE
    --------------------------------------------------------- */
 
 .member-nameplate {
