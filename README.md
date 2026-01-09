@@ -109,7 +109,8 @@ Not affiliated with Nintendo, Game Freak, or PokeMMO.
 
 ## 📁 Project Structure
 
-/
+```txt
+|
 ├── index.html            # Main HTML entry
 ├── main.js               # App bootstrap, routing, orchestration
 │
