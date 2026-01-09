@@ -1,37 +1,36 @@
 // unifiedcard.js
-// Unified Card Renderer — Design System v1
-// Structure is fixed. State is declarative.
+// Unified Card Renderer — HARD CONTRACT
+// Structure and size are immutable
 
 export function renderUnifiedCard({
   name,
   img,
   info = '',
   cardType,               // 'member' | 'pokemon'
-  states = {},            // { member, pokemon, lost, unclaimed, highlighted, compact }
+  unclaimed = false,
+  lost = false,
+  highlighted = false,
   symbols = {},           // { secret, event, safari, egg, alpha, clip }
   clip
 }) {
   /* -------------------------------------------------------
-     STATE CLASSES
+     CLASS LIST — MUST MATCH CSS EXACTLY
   ------------------------------------------------------- */
 
-  const stateClasses = [
+  const classes = [
     'unified-card',
-    states.member && 'is-member',
-    states.pokemon && 'is-pokemon',
-    states.unclaimed && 'is-unclaimed',
-    states.lost && 'is-lost',
-    states.highlighted && 'is-highlighted',
-    states.compact && 'is-compact'
+    unclaimed && 'unclaimed',
+    lost && 'lost',
+    highlighted && 'highlighted'
   ].filter(Boolean).join(' ');
 
   /* -------------------------------------------------------
-     DATA ATTRIBUTES
+     ATTRIBUTES
   ------------------------------------------------------- */
 
   let attributes = `
-    class="${stateClasses}"
-    data-card-type="${cardType}"
+    class="${classes}"
+    data-card-type="${cardType || ''}"
     data-name="${escapeAttr(name)}"
   `;
 
@@ -68,21 +67,13 @@ export function renderUnifiedCard({
     : '';
 
   /* -------------------------------------------------------
-     NAME SIZE LOGIC
-  ------------------------------------------------------- */
-
-  let nameClass = 'unified-name';
-  if (name.length > 13) nameClass += ' long-name';
-  if (name.length > 16) nameClass += ' very-long-name';
-
-  /* -------------------------------------------------------
-     OUTPUT
+     OUTPUT — ORDER IS FIXED
   ------------------------------------------------------- */
 
   return `
     <div ${attributes}>
       ${overlay}
-      <span class="${nameClass}">${name}</span>
+      <span class="unified-name">${name}</span>
       <img class="unified-img" src="${img}" alt="${name}">
       <span class="unified-info">${info}</span>
     </div>
