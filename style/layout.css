@@ -1,5 +1,6 @@
 /* =========================================================
    LAYOUT — STRUCTURE & RHYTHM ONLY
+   HARD CONTRACT: NEVER RESIZE CARDS
    ========================================================= */
 
 /* ---------------------------------------------------------
@@ -84,20 +85,20 @@
 }
 
 /* ---------------------------------------------------------
-   CARD GRIDS (GLOBAL)
+   CARD GRIDS — PLACEMENT ONLY
    --------------------------------------------------------- */
 
 .showcase-gallery,
 .dex-grid {
   display: grid;
 
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(210px, max-content));
   gap: var(--space-2);
 
   margin-top: var(--space-2);
   margin-bottom: var(--space-4);
 
-  justify-items: center;
+  justify-content: start;
   align-content: start;
 }
 
@@ -124,27 +125,8 @@
 }
 
 /* ---------------------------------------------------------
-   RESPONSIVE DENSITY (LAYOUT ONLY)
+   RESPONSIVE — NO CARD RESIZING
    --------------------------------------------------------- */
-
-@media (max-width: 1400px) {
-  .showcase-gallery,
-  .dex-grid {
-    grid-template-columns: repeat(6, 1fr);
-  }
-}
-
-@media (max-width: 900px) {
-  .showcase-gallery,
-  .dex-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .region-section,
-  .scoreboard-member-section {
-    padding: var(--space-3) var(--space-2);
-  }
-}
 
 @media (max-width: 600px) {
   body {
@@ -153,11 +135,6 @@
 
   .nav {
     padding: var(--space-2);
-  }
-
-  .showcase-gallery,
-  .dex-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 
   #page-content {
