@@ -1,139 +1,92 @@
-/* ============================= */
-/* SHINY WEEKLY – VISUAL POLISH  */
-/* ============================= */
+/* =========================================================
+   SHINY WEEKLY — LAYOUT & DENSITY ONLY
+   Design System v1 compliant
+   ========================================================= */
 
-/* --- Week container --- */
+/* ---------------------------------------------------------
+   WEEK PANEL (RPG MENU CONTAINER)
+   --------------------------------------------------------- */
+
 .weekly-card {
-  margin: 2.5rem auto;
-  padding: 1.5rem 1.8rem 2rem;
   max-width: 1600px;
+  margin: var(--space-4) auto;
+  padding: var(--space-3);
+
+  background: var(--bg-panel);
   border: 2px solid var(--accent);
   border-radius: 16px;
-  background: linear-gradient(180deg, #15191f, #0f1318);
-  box-shadow: 0 10px 35px #000c;
+
+  box-shadow: var(--shadow-depth);
 }
 
-/* --- Header --- */
+/* ---------------------------------------------------------
+   WEEK HEADER
+   --------------------------------------------------------- */
+
 .weekly-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding-bottom: 1rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 2px solid #ffffff14;
-  cursor: pointer;
+  justify-content: space-between;
+
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+
+  border-bottom: var(--border-soft);
 }
 
 .weekly-title {
-  font-size: 1.4rem;
+  font-size: var(--font-section-title);
+  letter-spacing: 2px;
   color: var(--accent);
-  letter-spacing: 0.04em;
 }
 
 .weekly-meta {
-  font-size: 0.9rem;
-  color: #ddd;
-  opacity: 0.9;
+  font-size: var(--font-small);
+  color: var(--text-muted);
 }
 
-/* --- Body --- */
+/* ---------------------------------------------------------
+   WEEK BODY
+   --------------------------------------------------------- */
+
 .weekly-body {
   width: 100%;
 }
 
-/* --- GRID (full width, many cards) --- */
+/* ---------------------------------------------------------
+   GRID DENSITY OVERRIDE (USING SAME CARD SYSTEM)
+   --------------------------------------------------------- */
+
 .weekly-body .dex-grid {
-  display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 1.4rem;
-  justify-items: center;
+  gap: var(--space-2);
 }
 
-/* --- Unified card sizing consistency --- */
+/* ---------------------------------------------------------
+   COMPACT CARD MODE
+   --------------------------------------------------------- */
+
 .weekly-body .unified-card {
-  width: 160px;
-  height: 220px;
-  padding: 0.6rem 0.6rem 0.8rem;
-  background: linear-gradient(180deg, #fff6cc, #ffe28a);
-  border-radius: 14px;
-  box-shadow: 0 6px 16px #0007;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  /* Use the system-defined compact variant */
 }
 
-.weekly-body .unified-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 22px #000a;
+.weekly-body .unified-card.is-compact {
+  max-width: 160px;
+  height: 210px;
 }
 
-/* --- Card name (top) --- */
-.weekly-body .unified-name {
-  font-size: 0.85rem;
-  text-align: center;
-  margin-bottom: 0.3rem;
-  color: #2a1d00;
-}
+/* ---------------------------------------------------------
+   MOBILE DENSITY
+   --------------------------------------------------------- */
 
-/* --- Image --- */
-.weekly-body .unified-img {
-  width: 96px;
-  height: 96px;
-  object-fit: contain;
-  margin: 0.35rem auto 0.45rem;
-  display: block;
-}
-
-/* --- Info text --- */
-.weekly-body .unified-info {
-  font-size: 0.75rem;
-  text-align: center;
-  color: #4a3a00;
-}
-
-/* --- Symbol overlay (fix positioning) --- */
-.weekly-body .symbol-overlay {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.weekly-body .symbol {
-  width: 18px;
-  height: 18px;
-}
-
-/* --- Lost shinies --- */
-.weekly-body .unified-card.lost {
-  filter: grayscale(100%) brightness(0.85);
-  opacity: 0.75;
-}
-
-/* --- Member card tweaks --- */
-.weekly-body .unified-card[data-card-type="member"] {
-  background: linear-gradient(180deg, #f4f1e4, #e9dfb2);
-}
-
-.weekly-body .unified-card[data-card-type="member"] .unified-info {
-  font-weight: bold;
-  color: #5a4700;
-}
-
-/* --- Mobile --- */
 @media (max-width: 768px) {
   .weekly-body .dex-grid {
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 1rem;
+    gap: var(--space-2);
   }
 
-  .weekly-body .unified-card {
-    width: 130px;
+  .weekly-body .unified-card.is-compact {
+    max-width: 130px;
     height: 190px;
-  }
-
-  .weekly-body .unified-img {
-    width: 80px;
-    height: 80px;
   }
 }
