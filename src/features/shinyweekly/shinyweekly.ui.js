@@ -2,12 +2,12 @@
 // Shiny Weekly — HARD CONTRACT
 // UI ONLY. No shared state. One export.
 
-import { renderUnifiedCard } from './unifiedcard.js';
+import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import {
   normalizePokemonName,
   prettifyPokemonName,
   normalizeMemberName
-} from './utils.js';
+} from '../../utils/utils.js';
 
 /* ---------------------------------------------------------
    SPRITES
@@ -50,7 +50,7 @@ function applyMemberSprite(imgEl, memberName) {
 }
 
 /* ---------------------------------------------------------
-   EXPORT — THIS WAS THE PROBLEM
+   EXPORT
 --------------------------------------------------------- */
 
 export function renderShinyWeekly(weeks, container) {
@@ -102,7 +102,10 @@ export function renderShinyWeekly(weeks, container) {
             cardType: 'member',
             states: { member: true }
           });
-          applyMemberSprite(wrapper.querySelector('.unified-img'), member);
+          applyMemberSprite(
+            wrapper.querySelector('.unified-img'),
+            member
+          );
         } else {
           const mon = shinies[state];
           wrapper.innerHTML = renderUnifiedCard({
@@ -137,7 +140,8 @@ export function renderShinyWeekly(weeks, container) {
 
     body.appendChild(grid);
     header.onclick = () => {
-      body.style.display = body.style.display === 'none' ? 'block' : 'none';
+      body.style.display =
+        body.style.display === 'none' ? 'block' : 'none';
     };
 
     weekCard.append(header, body);
