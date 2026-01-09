@@ -2,12 +2,12 @@
 // Team Shroom — Showcase & Member Views
 // Design System v1 — enforced contracts only
 
-import { renderUnifiedCard } from './unifiedcard.js';
+import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import {
   normalizeMemberName,
   normalizePokemonName,
   prettifyPokemonName
-} from './utils.js';
+} from '../../utils/utils.js';
 
 /* ---------------------------------------------------------
    SPRITES
@@ -46,7 +46,11 @@ function getMemberPoints(member, teamShowcase, POKEMON_POINTS) {
 
   return entry.shinies
     .filter(mon => !mon.lost)
-    .reduce((sum, mon) => sum + getPointsForPokemon(mon.name, mon, POKEMON_POINTS), 0);
+    .reduce(
+      (sum, mon) =>
+        sum + getPointsForPokemon(mon.name, mon, POKEMON_POINTS),
+      0
+    );
 }
 
 /* ---------------------------------------------------------
@@ -60,10 +64,12 @@ function groupAlphabetically(members) {
     map[k] ??= [];
     map[k].push(m);
   });
-  return Object.keys(map).sort().map(k => ({
-    header: k,
-    members: map[k].sort((a, b) => a.name.localeCompare(b.name))
-  }));
+  return Object.keys(map)
+    .sort()
+    .map(k => ({
+      header: k,
+      members: map[k].sort((a, b) => a.name.localeCompare(b.name))
+    }));
 }
 
 function groupByCount(members) {
@@ -73,10 +79,13 @@ function groupByCount(members) {
     map[k] ??= [];
     map[k].push(m);
   });
-  return Object.keys(map).map(Number).sort((a, b) => b - a).map(k => ({
-    header: k,
-    members: map[k]
-  }));
+  return Object.keys(map)
+    .map(Number)
+    .sort((a, b) => b - a)
+    .map(k => ({
+      header: k,
+      members: map[k]
+    }));
 }
 
 function groupByPoints(members, teamShowcase, POKEMON_POINTS) {
@@ -86,10 +95,13 @@ function groupByPoints(members, teamShowcase, POKEMON_POINTS) {
     map[pts] ??= [];
     map[pts].push(m);
   });
-  return Object.keys(map).map(Number).sort((a, b) => b - a).map(k => ({
-    header: k,
-    members: map[k]
-  }));
+  return Object.keys(map)
+    .map(Number)
+    .sort((a, b) => b - a)
+    .map(k => ({
+      header: k,
+      members: map[k]
+    }));
 }
 
 /* ---------------------------------------------------------
@@ -106,8 +118,10 @@ export function renderShowcaseGallery(
   container.innerHTML = '';
 
   let groups;
-  if (mode === 'shinies') groups = groupByCount(members);
-  else if (mode === 'scoreboard') groups = groupByPoints(members, teamShowcase, POKEMON_POINTS);
+  if (mode === 'shinies')
+    groups = groupByCount(members);
+  else if (mode === 'scoreboard')
+    groups = groupByPoints(members, teamShowcase, POKEMON_POINTS);
   else groups = groupAlphabetically(members);
 
   groups.forEach(group => {
@@ -120,13 +134,19 @@ export function renderShowcaseGallery(
     grid.className = 'showcase-gallery';
 
     group.members.forEach(member => {
-      grid.insertAdjacentHTML('beforeend',
+      grid.insertAdjacentHTML(
+        'beforeend',
         renderUnifiedCard({
           name: member.name,
           img: getMemberSpriteUrl(),
-          info: mode === 'scoreboard'
-            ? `Points: ${getMemberPoints(member, teamShowcase, POKEMON_POINTS)}`
-            : `Shinies: ${member.shinies}`,
+          info:
+            mode === 'scoreboard'
+              ? `Points: ${getMemberPoints(
+                  member,
+                  teamShowcase,
+                  POKEMON_POINTS
+                )}`
+              : `Shinies: ${member.shinies}`,
           cardType: 'member',
           states: {
             member: true
@@ -145,7 +165,12 @@ export function renderShowcaseGallery(
    MEMBER DETAIL
 --------------------------------------------------------- */
 
-export function renderMemberShowcase(member, sortMode, teamShowcase, POKEMON_POINTS) {
+export function renderMemberShowcase(
+  member,
+  sortMode,
+  teamShowcase,
+  POKEMON_POINTS
+) {
   const content = document.getElementById('page-content');
   const entry = teamShowcase.find(m => m.name === member.name);
   const shinies = entry?.shinies || [];
@@ -155,34 +180,46 @@ export function renderMemberShowcase(member, sortMode, teamShowcase, POKEMON_POI
 
     <div class="member-nameplate">
       <span class="member-name">${member.name}</span>
-      <span class="shiny-count">Shinies: ${shinies.filter(s => !s.lost).length}</span>
-      <span class="point-count">Points: ${getMemberPoints(member, teamShowcase, POKEMON_POINTS)}</span>
+      <span class="shiny-count">Shinies: ${
+        shinies.filter(s => !s.lost).length
+      }</span>
+      <span class="point-count">Points: ${getMemberPoints(
+        member,
+        teamShowcase,
+        POKEMON_POINTS
+      )}</span>
     </div>
 
     <div class="dex-grid">
-      ${shinies.map(mon =>
-        renderUnifiedCard({
-          name: prettifyPokemonName(mon.name),
-          img: getPokemonGif(mon.name),
-          info: mon.lost
-            ? 'Lost'
-            : `${getPointsForPokemon(mon.name, mon, POKEMON_POINTS)} Points`,
-          cardType: 'pokemon',
-          states: {
-            pokemon: true,
-            lost: mon.lost
-          },
-          symbols: {
-            secret: mon.secret,
-            safari: mon.safari,
-            egg: mon.egg,
-            event: mon.event,
-            alpha: mon.alpha,
-            clip: !!mon.clip
-          },
-          clip: mon.clip
-        })
-      ).join('')}
+      ${shinies
+        .map(mon =>
+          renderUnifiedCard({
+            name: prettifyPokemonName(mon.name),
+            img: getPokemonGif(mon.name),
+            info: mon.lost
+              ? 'Lost'
+              : `${getPointsForPokemon(
+                  mon.name,
+                  mon,
+                  POKEMON_POINTS
+                )} Points`,
+            cardType: 'pokemon',
+            states: {
+              pokemon: true,
+              lost: mon.lost
+            },
+            symbols: {
+              secret: mon.secret,
+              safari: mon.safari,
+              egg: mon.egg,
+              event: mon.event,
+              alpha: mon.alpha,
+              clip: !!mon.clip
+            },
+            clip: mon.clip
+          })
+        )
+        .join('')}
     </div>
   `;
 
@@ -194,12 +231,14 @@ export function renderMemberShowcase(member, sortMode, teamShowcase, POKEMON_POI
 --------------------------------------------------------- */
 
 function bindShowcaseInteractions(root) {
-  root.querySelectorAll('.unified-card[data-card-type="member"]').forEach(card => {
-    card.addEventListener('click', () => {
-      const name = normalizeMemberName(card.dataset.name);
-      location.hash = `#showcase-${name}`;
+  root
+    .querySelectorAll('.unified-card[data-card-type="member"]')
+    .forEach(card => {
+      card.addEventListener('click', () => {
+        const name = normalizeMemberName(card.dataset.name);
+        location.hash = `#showcase-${name}`;
+      });
     });
-  });
 }
 
 function bindMemberInteractions(root) {
@@ -209,11 +248,13 @@ function bindMemberInteractions(root) {
     location.hash = `#showcase?sort=${sort}`;
   });
 
-  root.querySelectorAll('.unified-card[data-clip]').forEach(card => {
-    card.addEventListener('click', () => {
-      window.open(card.dataset.clip, '_blank');
+  root
+    .querySelectorAll('.unified-card[data-clip]')
+    .forEach(card => {
+      card.addEventListener('click', () => {
+        window.open(card.dataset.clip, '_blank');
+      });
     });
-  });
 }
 
 /* ---------------------------------------------------------
