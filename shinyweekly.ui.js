@@ -1,8 +1,12 @@
 // shinyweekly.ui.js
-// Stable Shiny Weekly – Unified Cards, safe paths, no experiments
+// Stable Shiny Weekly – Unified Cards + MULTIPLE Hunters of the Week
 
 import { renderUnifiedCard } from "./unifiedcard.js";
-import { normalizePokemonName, normalizeMemberName } from "./utils.js";
+import {
+  normalizePokemonName,
+  normalizeMemberName,
+  prettifyPokemonName
+} from "./utils.js";
 
 /* ============================= */
 /* HELPERS                       */
@@ -65,6 +69,16 @@ export function renderShinyWeekly(weeks, container) {
     const header = document.createElement("div");
     header.className = "weekly-header";
 
+    const hunterCounts = {};
+    week.shinies.forEach(s => {
+      hunterCounts[s.member] = (hunterCounts[s.member] || 0) + 1;
+    });
+
+    const maxCount = Math.max(...Object.values(hunterCounts));
+    const huntersOfWeek = Object.entries(hunterCounts)
+      .filter(([, count]) => count === maxCount)
+      .map(([name]) => name);
+
     const hunterCount = new Set(week.shinies.map(s => s.member)).size;
 
     header.innerHTML = `
@@ -104,12 +118,16 @@ export function renderShinyWeekly(weeks, container) {
       });
 
       const memberCard = memberWrapper.firstElementChild;
+
+      if (huntersOfWeek.includes(member)) {
+        memberCard.classList.add("hunter-of-week");
+      }
+
       grid.appendChild(memberCard);
 
       const memberImg = memberCard.querySelector(".unified-img");
       loadMemberSprite(memberImg, member);
 
-      /* CLICK LOGIC */
       memberCard.addEventListener("click", () => {
         if (showingMember) {
           currentIndex = 0;
@@ -122,7 +140,7 @@ export function renderShinyWeekly(weeks, container) {
 
         const pokeWrapper = document.createElement("div");
         pokeWrapper.innerHTML = renderUnifiedCard({
-          name: shiny.name,
+          name: prettifyPokemonName(shiny.name),
           img: getPokemonGif(shiny.name),
           info: member,
           lost: shiny.lost,
@@ -137,7 +155,7 @@ export function renderShinyWeekly(weeks, container) {
         });
 
         const pokeCard = pokeWrapper.firstElementChild;
-        grid.replaceChild(pokeCard, showingMember ? memberCard : grid.children[gridIndex()]);
+        grid.replaceChild(pokeCard, memberCard);
         showingMember = false;
 
         pokeCard.addEventListener("click", () => {
@@ -150,12 +168,6 @@ export function renderShinyWeekly(weeks, container) {
             showPokemon();
           }
         });
-      }
-
-      function gridIndex() {
-        return Array.from(grid.children).indexOf(
-          showingMember ? memberCard : grid.querySelector(`[data-name="${shinies[currentIndex - 1]?.name}"]`)
-        );
       }
     });
 
