@@ -1,284 +1,268 @@
+/* =========================================================
+   UNIFIED CARD SYSTEM — DESIGN SYSTEM v1
+   Cards are collectibles on a dark table
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   BASE CARD
+   --------------------------------------------------------- */
+
 .unified-card {
-  background: linear-gradient(132deg, #23243b 55%, #181a20 100%);
-  border: 2.5px solid var(--accent);
-  border-radius: 18px;
-  box-shadow: 0 8px 24px 0 rgba(80,50,10,0.26), 0 1.5px 12px #1a1a1a88, 0 2px 0 #181a20 inset;
-  padding: 1.2em 0.8em 1.2em 0.8em;
-  min-height: 180px;
-  min-width: 0;
-  max-width: 210px;
   width: 100%;
+  max-width: 210px;
   height: 230px;
-  overflow: hidden;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 0.7em;
+
+  padding: var(--space-2);
+  gap: var(--space-1);
+
+  background: var(--card-gradient);
+  color: var(--text-dark);
+
+  border: 2px solid var(--accent);
+  border-radius: 14px;
+
+  box-shadow: var(--shadow-depth);
+
   text-align: center;
   position: relative;
-  transition:
-    box-shadow 0.19s cubic-bezier(.4,2,.2,1),
-    border 0.19s,
-    background 0.22s cubic-bezier(.4,2,.2,1),
-    filter 0.22s cubic-bezier(.4,2,.2,1),
-    transform 0.22s cubic-bezier(.4,2,.2,1);
-  will-change: transform, box-shadow, background;
-  filter: drop-shadow(0 1px 4px #fff3);
-  z-index: 1;
-  color: #ffe595;
 }
 
-.unified-card:hover, .unified-card:focus-within {
-  box-shadow:
-    0 16px 40px 0 rgba(80,50,10,0.32),
-    0 3px 20px #23243b66,
-    0 2px 0 #23243b inset,
-    0 0px 32px 10px #23243b30;
-  border-color: var(--success);
-  background: linear-gradient(126deg, #2c2f50 80%, #23243b 100%);
-  filter: brightness(1.10) drop-shadow(0 2px 12px #fff9);
-  transform: translateY(-9px) scale(1.07) rotateZ(-2deg);
-  z-index: 10;
+/* Hover = subtle lift, not spectacle */
+.unified-card:hover,
+.unified-card:focus-within {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
 }
-.unified-card:active {
-  transform: scale(0.97) translateY(3px);
-  box-shadow: 0 5px 24px 0 rgba(80,50,10,0.24), 0 1.5px 12px #23243b77;
-}
-.unified-card::before {
-  content: "";
-  display: none;
-}
+
+/* ---------------------------------------------------------
+   CARD IMAGE
+   --------------------------------------------------------- */
 
 .unified-img {
   width: 120px;
   height: 120px;
+
   object-fit: contain;
-  display: block;
-  margin: 0.3em 0;
   image-rendering: pixelated;
-  filter: contrast(1.2) brightness(0.97) drop-shadow(0 0 6px #181a20aa);
-  background: #181a20;
-  border-radius: 14px;
-  border: 2.5px solid #23243b;
-  box-shadow: 0 1px 8px #23243b33;
-  transition: box-shadow 0.18s, border 0.18s;
+
+  background: var(--bg-panel);
+  border: 2px solid var(--bg-panel-alt);
+  border-radius: 12px;
+
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.4);
 }
+
+/* ---------------------------------------------------------
+   CARD NAME
+   --------------------------------------------------------- */
 
 .unified-name {
-  font-size: 1.13em;
-  font-weight: bold;
-  color: #ffe595;
-  background: rgba(34, 36, 59, 0.88);
-  border: 2px solid #ffe595aa;
-  border-radius: 9px;
-  padding: 0.27em 0.8em;
-  margin-bottom: 0.15em;
-  margin-top: 0.05em;
-  line-height: 1.15;
-  max-width: 90%;
-  box-shadow: 0 2px 8px #181a2077;
-  text-shadow: 2px 0 #222, -2px 0 #222, 0 2px #222, 0 -2px #222, 1px 1px 0 #ffe595;
-  transition: background 0.15s, border 0.15s, color 0.15s;
-  display: block;
+  max-width: 100%;
+  padding: 6px 10px;
+
+  font-size: var(--font-card-title);
+  line-height: 1.2;
+
+  background: var(--bg-panel);
+  color: var(--text-main);
+
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+
+  box-shadow: var(--shadow-depth);
+
   word-break: break-word;
 }
-.unified-name.long-name { font-size: 0.98em; }
-.unified-name.very-long-name { font-size: 0.85em; }
 
-.unified-card.unclaimed {
-  border-color: #444;
-  background: linear-gradient(132deg, #32344a 70%, #22242f 100%);
-  box-shadow: 0 4px 20px #222a, 0 1.5px 12px #23243b44;
-  filter: grayscale(0.42) brightness(0.78);
-  opacity: 0.70;
-  position: relative;
+.unified-name.long-name {
+  font-size: 13px;
 }
-.unified-card.unclaimed::after { display: none !important; }
-.unified-card.unclaimed:hover, .unified-card.unclaimed:focus-within {
-  border-color: #666;
-  background: linear-gradient(126deg, #3e405a 85%, #23243b 100%);
-  box-shadow: 0 8px 32px #23243b44, 0 2px 16px #23243b22;
-  filter: grayscale(0.33) brightness(0.88);
-  opacity: 0.82;
-}
-.unified-card.unclaimed::before { display: none !important; }
 
-/* --- LOST SHINY CARDS --- */
-.unified-card.lost {
-  border-color: #a44;
-  background: linear-gradient(132deg, #32344a 70%, #22242f 100%);
-  box-shadow: 0 4px 20px #a222, 0 1.5px 12px #a4423b44;
-  filter: grayscale(0.78) brightness(0.73);
-  opacity: 0.72;
-  position: relative;
+.unified-name.very-long-name {
+  font-size: 12px;
 }
-.unified-card.lost:hover, .unified-card.lost:focus-within {
-  border-color: #c66;
-  background: linear-gradient(126deg, #3e405a 85%, #23243b 100%);
-  box-shadow: 0 8px 32px #a4423b44, 0 2px 16px #a4423b22;
-  filter: grayscale(0.68) brightness(0.82);
-  opacity: 0.80;
-}
-.unified-card.lost::before { display: none !important; }
-/* .unified-card.lost::after {   <--- REMOVED (do not show faded LOST in lightmode)
-  content: "LOST";
-  position: absolute;
-  bottom: 10px;
-  left: 0; right: 0;
-  color: #a66;
-  font-size: 1.1em;
-  font-weight: bold;
-  letter-spacing: 2px;
-  opacity: 0.33;
-  pointer-events: none;
-  text-shadow: 0 2px 6px #fff, 0 1px 2px #e3e3e3;
-} */
+
+/* ---------------------------------------------------------
+   CARD INFO / STATS
+   --------------------------------------------------------- */
 
 .unified-info {
-  color: #ffe595;
-  font-size: 1em;
-  margin-top: 0.18em;
-  background: rgba(40,40,40,0.23);
-  padding: 0.27em 0.8em;
-  border-radius: 9px;
+  padding: 6px 10px;
+
+  font-size: var(--font-card-stat);
   font-weight: bold;
-  text-shadow: 0 1px 1px #000;
-  border: 2px solid #ffe59555;
-  box-shadow: 0 2px 8px #181a2077;
-}
-.unified-info.lost {
-  color: #ffc9c9;
-  font-weight: bold;
+
+  background: var(--bg-panel);
+  color: var(--text-main);
+
+  border: 2px solid var(--bg-panel-alt);
+  border-radius: 10px;
+
+  box-shadow: var(--shadow-depth);
 }
 
-/* --- SYMBOL OVERLAYS (Showcase cards, fixed placement & centering) --- */
+/* ---------------------------------------------------------
+   CARD STATES (MODIFIERS ONLY)
+   --------------------------------------------------------- */
+
+/* Pokémon vs Member (future extensibility) */
+.unified-card.is-pokemon {}
+.unified-card.is-member {}
+
+/* Unclaimed Pokémon */
+.unified-card.is-unclaimed {
+  opacity: 0.6;
+  filter: grayscale(0.6);
+  border-color: var(--bg-panel-alt);
+}
+
+/* Lost Shinies */
+.unified-card.is-lost {
+  opacity: 0.65;
+  filter: grayscale(0.75);
+  border-color: #a44;
+}
+
+.unified-info.is-lost {
+  color: #a44;
+}
+
+/* Highlighted (Hunter of the Week, Top Donator) */
+.unified-card.is-highlighted {
+  border-color: var(--highlight);
+  box-shadow:
+    0 0 0 2px var(--highlight),
+    var(--shadow-hover);
+}
+
+/* Compact variant (Weekly / Dense views) */
+.unified-card.is-compact {
+  max-width: 160px;
+  height: 210px;
+  padding: var(--space-1);
+}
+
+.unified-card.is-compact .unified-img {
+  width: 96px;
+  height: 96px;
+}
+
+.unified-card.is-compact .unified-name {
+  font-size: 13px;
+}
+
+.unified-card.is-compact .unified-info {
+  font-size: 12px;
+}
+
+/* ---------------------------------------------------------
+   SYMBOL OVERLAYS
+   --------------------------------------------------------- */
+
 .symbol-overlay {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  width: 100%; height: 100%;
+  inset: 0;
   pointer-events: none;
   z-index: 5;
 }
+
 .symbol {
-  width: 28px;
-  height: 28px;
   position: absolute;
-  background: rgba(34, 36, 59, 0.88); /* match .unified-name background */
-  border-radius: 9px; /* match .unified-name border-radius */
-  border: 2px solid #ffe595aa !important; /* match .unified-name border */
-  box-shadow: 0 2px 8px #181a2077; /* match .unified-name box-shadow */
-  opacity: 0.99;
-  pointer-events: auto;
-  display: block;
+
+  width: 26px;
+  height: 26px;
   padding: 2px;
-  filter: contrast(1.2) brightness(0.97) drop-shadow(0 0 6px #181a20aa);
-}
-/* Top left: secret */
-.symbol.secret {
-  left: var(--symbol-gap-x);
-  top: var(--symbol-top-y);
-}
-/* Top right: event */
-.symbol.event {
-  right: var(--symbol-gap-x);
-  top: var(--symbol-top-y);
-}
-/* Bottom left: safari */
-.symbol.safari {
-  left: var(--symbol-gap-x);
-  bottom: var(--symbol-bottom-y);
-}
-/* Bottom right: clip */
-.symbol.clip {
-  right: var(--symbol-gap-x);
-  bottom: var(--symbol-bottom-y);
-}
-/* Vertically centered left: egg */
-.symbol.egg {
-  left: var(--symbol-gap-x);
-  top: 50%;
-  transform: translateY(-50%);
-}
-/* Vertically centered right: alpha */
-.symbol.alpha {
-  right: var(--symbol-gap-x);
-  top: 50%;
-  transform: translateY(-50%);
-}
-/* Member status/donator (bottom left/right, like safari/clip) */
-.symbol.member-status {
-  left: var(--symbol-gap-x);
-  bottom: var(--symbol-bottom-y);
-  right: auto;
-  top: auto;
-}
-.symbol.donator-status {
-  right: var(--symbol-gap-x);
-  bottom: var(--symbol-bottom-y);
-  left: auto;
-  top: auto;
+
+  background: var(--bg-panel);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+
+  box-shadow: var(--shadow-depth);
 }
 
-/* --- MEMBER NAMEPLATE --- */
+/* Positions */
+.symbol.secret {
+  top: var(--symbol-top-y);
+  left: var(--symbol-gap-x);
+}
+
+.symbol.event {
+  top: var(--symbol-top-y);
+  right: var(--symbol-gap-x);
+}
+
+.symbol.safari {
+  bottom: var(--symbol-bottom-y);
+  left: var(--symbol-gap-x);
+}
+
+.symbol.clip {
+  bottom: var(--symbol-bottom-y);
+  right: var(--symbol-gap-x);
+}
+
+.symbol.egg {
+  top: 50%;
+  left: var(--symbol-gap-x);
+  transform: translateY(-50%);
+}
+
+.symbol.alpha {
+  top: 50%;
+  right: var(--symbol-gap-x);
+  transform: translateY(-50%);
+}
+
+/* ---------------------------------------------------------
+   MEMBER NAMEPLATE (SEPARATE UI PANEL)
+   --------------------------------------------------------- */
+
 .member-nameplate {
-  background: var(--card-gradient);
-  color: var(--accent);
-  border: 3px solid var(--accent);
-  border-radius: 14px;
-  box-shadow: 0 2px 14px #f2593744;
-  padding: 1.2em 2em 1.1em 2em;
-  font-size: 1.25em;
-  font-family: 'Press Start 2P', monospace;
+  margin-bottom: var(--space-4);
+  padding: var(--space-3);
+
   display: flex;
-  align-items: center;
-  gap: 2.5em;
-  justify-content: center;
-  margin-bottom: 2em;
-  margin-top: 0.5em;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+
+  background: var(--bg-panel);
+  border: 2px solid var(--accent);
+  border-radius: 16px;
+
+  box-shadow: var(--shadow-depth);
 }
+
 .member-nameplate .member-name {
-  font-size: 1.5em;
-  font-weight: bold;
+  padding: 8px 14px;
+
+  font-size: var(--font-section-title);
   color: var(--accent);
+
   background: var(--card);
-  border: 2.5px solid var(--success);
-  border-radius: 10px;
-  padding: 0.3em 1.1em;
-  box-shadow: 0 2px 10px #67b35655;
-  text-shadow: 1px 1px 0 #fffbe1, 0 0 6px #fff7;
-  margin-right: 1em;
-  margin-left: 0.2em;
-  letter-spacing: 1.5px;
+  border: 2px solid var(--accent);
+  border-radius: 12px;
 }
-.member-nameplate .shiny-count, .member-nameplate .point-count {
-  background: var(--success);
-  color: var(--card);
-  border-radius: 8px;
-  padding: 0.32em 1.2em;
-  font-size: 1.05em;
+
+.member-nameplate .shiny-count,
+.member-nameplate .point-count {
+  padding: 6px 12px;
+
+  font-size: var(--font-card-stat);
   font-weight: bold;
-  margin-right: 1em;
-  box-shadow: 0 1px 8px #67b35644;
-  border: 2px solid var(--success);
-  letter-spacing: 1px;
+
+  background: var(--success);
+  color: var(--text-dark);
+
+  border-radius: 10px;
 }
+
 .member-nameplate .point-count {
   background: var(--accent);
-  color: var(--card);
-  border-color: var(--accent);
-}
-@media (max-width: 700px) {
-  .member-nameplate {
-    flex-direction: column;
-    gap: 1em;
-    font-size: 1em;
-    padding: 1em 0.5em 1em 0.5em;
-  }
-  .member-nameplate .member-name {
-    font-size: 1.15em;
-    margin-right: 0;
-    margin-bottom: 0.4em;
-  }
 }
