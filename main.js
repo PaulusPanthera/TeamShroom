@@ -1,26 +1,26 @@
-// src/core/main.js
+// main.js (ROOT)
 // Entrypoint — HARD CONTRACT VERSION
 // Google Sheets is source of truth for Shiny Weekly
 
-import { loadShinyWeeklyFromCSV } from '../data/shinyweekly.loader.js';
-import { buildShinyWeeklyModel } from '../data/shinyweekly.model.js';
+import { loadShinyWeeklyFromCSV } from './src/data/shinyweekly.loader.js';
+import { buildShinyWeeklyModel } from './src/data/shinyweekly.model.js';
 
 import {
   buildPokemonData,
   POKEMON_POINTS,
   TIER_FAMILIES,
   pokemonFamilies
-} from '../data/pokemondatabuilder.js';
+} from './src/data/pokemondatabuilder.js';
 
 import {
   renderShowcaseGallery,
   setupShowcaseSearchAndSort,
   renderMemberShowcase
-} from '../features/showcase/showcase.js';
+} from './src/features/showcase/showcase.js';
 
-import { setupShinyDexHitlistSearch } from '../features/shinydex/shinydexsearch.js';
-import { renderDonators, assignDonatorTiersToTeam } from '../features/donators/donators.js';
-import { renderShinyWeekly } from '../features/shinyweekly/shinyweekly.ui.js';
+import { setupShinyDexHitlistSearch } from './src/features/shinydex/shinydexsearch.js';
+import { renderDonators, assignDonatorTiersToTeam } from './src/features/donators/donators.js';
+import { renderShinyWeekly } from './src/features/shinyweekly/shinyweekly.ui.js';
 
 // ---------------------------------------------------------
 // CONFIG
@@ -91,29 +91,27 @@ async function renderPage() {
   const content = document.getElementById('page-content');
   content.innerHTML = '';
 
-  // ---------- Load static JSON (legacy, for now) ----------
+  // ---------- Load legacy JSON ----------
   if (!teamShowcaseData) {
-    teamShowcaseData = await fetchJson('/src/data/teamshowcase.json');
+    teamShowcaseData = await fetchJson('./src/data/teamshowcase.json');
   }
 
   if (!pokemonFamiliesData) {
-    pokemonFamiliesData = await fetchJson('/src/data/pokemonfamilies.json');
+    pokemonFamiliesData = await fetchJson('./src/data/pokemonfamilies.json');
     buildPokemonData(pokemonFamiliesData);
   }
 
   if (!donationsData) {
-    donationsData = await fetchJson('/src/data/donations.json');
+    donationsData = await fetchJson('./src/data/donations.json');
   }
 
-  // ---------- Load Shiny Weekly from Google Sheets ----------
+  // ---------- Load Shiny Weekly (Google Sheets) ----------
   if (!shinyWeeklyWeeks) {
     const rows = await loadShinyWeeklyFromCSV(SHINY_WEEKLY_CSV);
     shinyWeeklyWeeks = buildShinyWeeklyModel(rows);
 
-    // Debug once (safe to remove later)
     console.log('CLEAN ROW COUNT:', rows.length);
     console.log('WEEK COUNT:', shinyWeeklyWeeks.length);
-    console.log('FIRST WEEK:', shinyWeeklyWeeks[0]);
   }
 
   assignDonatorTiersToTeam(teamShowcaseData, null, donationsData);
