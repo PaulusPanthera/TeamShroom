@@ -1,219 +1,223 @@
+/* =========================================================
+   DONATORS — DESIGN SYSTEM v1 (STABILIZED)
+   Tables now behave like system panels
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   TOP LAYOUT
+   --------------------------------------------------------- */
+
 .donators-top-flex {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1.2em;
-  margin: 2em 0 2.7em 0;
   flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
 }
+
+/* ---------------------------------------------------------
+   INFO PANEL — HOW TO DONATE
+   --------------------------------------------------------- */
 
 .how-to-donate-box {
-  background: var(--card-gradient);
-  color: var(--accent);
-  border-radius: 14px;
-  box-shadow: 0 2px 14px #f2593744;
-  padding: 1.25em 2em 1.5em 2em;
-  font-size: 1.23em;
-  text-align: left;
-  border: 2.5px solid var(--accent);
-  max-width: 500px;
-  min-width: 280px;
-  margin-left: auto;
-  margin-right: 0;
-  min-height: 228px;
-  box-sizing: border-box;
-}
-.how-to-donate-box h2 {
-  color: var(--success);
-  margin-bottom: 0.7em;
-  font-size: 1.22em;
-  letter-spacing: 1px;
-}
-.donate-highlight {
-  display: inline-block;
-  background: var(--accent);
-  color: var(--card);
-  font-weight: bold;
-  padding: 0.2em 0.7em;
-  border-radius: 8px;
-  margin-top: 0.6em;
-  font-size: 1.1em;
-  letter-spacing: 1.2px;
+  flex: 1 1 280px;
+  max-width: 520px;
+  min-height: 220px;
+
+  padding: var(--space-3);
+
+  background: var(--bg-panel);
+  color: var(--text-main);
+
+  border: 2px solid var(--accent);
+  border-radius: 16px;
+
+  box-shadow: var(--shadow-depth);
 }
 
-.last-donations-fixed-box {
-  background: var(--card-gradient);
+.how-to-donate-box h2 {
+  margin-bottom: var(--space-2);
+  font-size: var(--font-section-title);
+  letter-spacing: 1px;
   color: var(--accent);
-  border-radius: 14px;
-  box-shadow: 0 2px 14px #67b35633;
-  padding: 1.25em 2.6em 1.5em 2.6em;
-  font-size: 1.08em;
-  text-align: left;
-  border: 2.5px solid var(--success);
-  min-width: 540px;
-  max-width: 900px;
-  margin-right: auto;
-  margin-left: 0;
-  min-height: 228px;
-  box-sizing: border-box;
+}
+
+.donate-highlight {
+  display: inline-block;
+  margin-top: var(--space-1);
+
+  padding: 6px 10px;
+
+  background: var(--accent);
+  color: var(--text-dark);
+
+  font-size: var(--font-card-stat);
+  font-weight: bold;
+
+  border-radius: 10px;
+}
+
+/* ---------------------------------------------------------
+   LAST DONATIONS PANEL
+   --------------------------------------------------------- */
+
+.last-donations-fixed-box {
+  flex: 1 1 520px;
+  min-height: 220px;
+
+  padding: var(--space-3);
+
+  background: var(--bg-panel);
+  color: var(--text-main);
+
+  border: 2px solid var(--success);
+  border-radius: 16px;
+
+  box-shadow: var(--shadow-depth);
+
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
 }
+
 .last-donations-fixed-box h2 {
-  color: var(--success);
-  margin-bottom: 0.6em;
-  font-size: 1.13em;
+  margin-bottom: var(--space-2);
+  font-size: var(--font-section-title);
   letter-spacing: 1px;
+  color: var(--success);
 }
+
+/* ---------------------------------------------------------
+   LAST DONATIONS TABLE (QUIET)
+   --------------------------------------------------------- */
+
 .last-donations-table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 0.18em;
-  background: transparent;
-  font-size: 1em;
-  min-width: 460px;
-  table-layout: fixed;
+  border-spacing: 0 var(--space-1);
+  font-size: var(--font-card-stat);
 }
+
 .last-donations-table th,
 .last-donations-table td {
-  padding: 0.36em 0.7em;
-  text-align: left;
-  background: var(--card-gradient);
-  color: var(--accent);
-  border: none;
-  font-family: inherit;
-  font-size: 0.98em;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  padding: 6px 10px;
+  background: var(--bg-panel-alt);
+  color: var(--text-main);
+  border-radius: 8px;
   white-space: nowrap;
 }
+
 .last-donations-table th {
-  color: var(--card);
-  background: var(--success);
   font-weight: bold;
-  font-size: 1em;
-  border-radius: 12px 12px 0 0;
+  color: var(--text-muted);
 }
-.last-donations-table td {
-  border-radius: 9px;
-}
-.last-donations-table td:nth-child(1) { width: 120px; }
-.last-donations-table td:nth-child(2) { width: 170px; }
-.last-donations-table td:nth-child(3) { width: 200px; }
-.last-donations-table td:nth-child(4) { width: 120px; }
+
 .last-donations-table .donation-item {
   color: var(--success);
   font-weight: bold;
-  margin-left: 0.3em;
-  font-size: 0.97em;
 }
 
-/* Donators Table Fixes (keep backgrounds) */
+/* ---------------------------------------------------------
+   DONATORS TABLE (PRIMARY LIST)
+   --------------------------------------------------------- */
+
 .donators-table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 0.4em;
-  background: transparent;
-  font-size: 1.08em;
-  margin-bottom: 2.5em;
+  border-spacing: 0 var(--space-1);
+  margin-bottom: var(--space-4);
+
+  font-size: var(--font-card-stat);
 }
+
 .donators-table th,
 .donators-table td {
-  padding: 0.75em 1.2em;
-  text-align: left;
-  background: var(--card-gradient);
-  color: var(--accent);
-  border: none;
-  font-family: inherit;
+  padding: 8px 12px;
+  background: var(--bg-panel-alt);
+  color: var(--text-main);
+  border-radius: 10px;
 }
+
 .donators-table th {
   position: sticky;
   top: 0;
-  background: var(--accent);
-  color: var(--card);
-  z-index: 3;
-  font-size: 1.05em;
+  z-index: 2;
+
+  background: var(--bg-panel);
+  color: var(--text-muted);
   letter-spacing: 1px;
-  border-radius: 16px 16px 0 0;
 }
-.donators-table tr.top {
-  background: linear-gradient(90deg, #ffe595 70%, #f25937 120%);
+
+/* ---------------------------------------------------------
+   HIGHLIGHTS & TIERS (RESTRAINED)
+   --------------------------------------------------------- */
+
+/* Top Donator — ONLY place gold is allowed */
+.donators-table tr.top td {
+  border: 2px solid var(--highlight);
+  color: var(--highlight);
   font-weight: bold;
-  box-shadow: 0 2px 12px #f2593766;
-  border-radius: 20px;
 }
-.donators-table tr.diamond td { background: linear-gradient(90deg, #b8f0ff 60%, #6ef 120%);}
-.donators-table tr.platinum td { background: linear-gradient(90deg, #e9e9e9 60%, #bdbdbd 120%);}
-.donators-table tr.gold td { background: linear-gradient(90deg, #ffe595 60%, #ffd700 120%);}
-.donators-table tr.silver td { background: linear-gradient(90deg, #e6e6e6 60%, #cccccc 120%);}
-.donators-table tr.bronze td { background: linear-gradient(90deg, #ffdfb0 60%, #c97 120%);}
-.donators-table tr td {
-  vertical-align: middle;
-  border-radius: 12px;
-  background-clip: padding-box;
+
+/* Tier emphasis (no gradients) */
+.donators-table tr.diamond td,
+.donators-table tr.platinum td,
+.donators-table tr.gold td,
+.donators-table tr.silver td,
+.donators-table tr.bronze td {
+  opacity: 0.9;
 }
-.donators-table td.donator-tier {
-  font-weight: bold;
-  font-size: 1em;
-  position: relative;
-}
+
+/* ---------------------------------------------------------
+   TIER ICONS & TOOLTIP
+   --------------------------------------------------------- */
+
 .donators-table .tier-icon {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
+  margin-right: var(--space-1);
   vertical-align: middle;
-  margin-right: 0.3em;
-  margin-bottom: -5px;
 }
-.donators-table .placement {
-  font-weight: bold;
-  color: var(--accent);
-}
+
 .donator-tier-tooltip {
   position: relative;
   cursor: help;
 }
+
 .donator-tier-tooltip .tooltip-text {
   visibility: hidden;
   opacity: 0;
-  width: 180px;
-  background: #222;
-  color: #ffe595;
-  text-align: center;
-  border-radius: 8px;
-  padding: 0.6em 1em;
+
   position: absolute;
-  z-index: 10;
+  bottom: 130%;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 130%;
-  font-size: 0.98em;
-  box-shadow: 0 2px 12px #181a2088;
-  pointer-events: none;
-  transition: opacity 0.16s;
+
+  padding: 6px 10px;
+  width: 180px;
+
+  background: var(--bg-panel);
+  color: var(--text-main);
+
+  border: var(--border-soft);
+  border-radius: 8px;
+
+  box-shadow: var(--shadow-depth);
+  font-size: var(--font-small);
+
+  transition: opacity 0.15s ease;
 }
+
 .donator-tier-tooltip:hover .tooltip-text,
-.donator-tier-tooltip:focus .tooltip-text {
+.donator-tier-tooltip:focus-visible .tooltip-text {
   visibility: visible;
   opacity: 1;
 }
 
-/* Responsive for stacked on mobile */
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+
 @media (max-width: 1100px) {
-  .last-donations-fixed-box {
-    min-width: 320px;
-    max-width: 99vw;
-    font-size: 1em;
-    padding: 1em 0.5em 1em 0.5em;
-  }
-  .how-to-donate-box {
-    max-width: 100%;
-    min-width: 0;
-    font-size: 1.1em;
-  }
   .donators-top-flex {
     flex-direction: column-reverse;
-    gap: 1.6em;
-    align-items: stretch;
   }
 }
