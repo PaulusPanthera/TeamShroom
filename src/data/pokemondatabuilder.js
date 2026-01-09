@@ -1,8 +1,8 @@
-// pokemondatabuilder.js
+// src/data/pokemondatabuilder.js
 // Pokémon tier, family, and point data builder
 // Design System v1 — pure data layer
 
-import { normalizePokemonName } from './utils.js';
+import { normalizePokemonName } from '../utils/utils.js';
 
 /* ---------------------------------------------------------
    STATIC CONFIG
