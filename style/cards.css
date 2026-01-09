@@ -1,24 +1,39 @@
 /* =========================================================
-   UNIFIED CARD SYSTEM — DESIGN SYSTEM v1
-   ONE CARD SIZE • ONE BEHAVIOR • EVERYWHERE
+   UNIFIED CARD SYSTEM — HARD CONTRACT
+   ONE SIZE • ONE STRUCTURE • ALL PAGES
    ========================================================= */
+
+/* ---------------------------------------------------------
+   CARD DIMENSIONS — NON-NEGOTIABLE
+   --------------------------------------------------------- */
+
+:root {
+  --card-width: 210px;
+  --card-height: 260px;
+
+  --card-img-size: 120px;
+  --card-name-height: 40px;
+  --card-info-height: 32px;
+}
 
 /* ---------------------------------------------------------
    BASE CARD
    --------------------------------------------------------- */
 
 .unified-card {
-  width: 100%;
-  max-width: 210px;
-  height: 230px;
+  width: var(--card-width);
+  height: var(--card-height);
 
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows:
+    var(--card-name-height)
+    1fr
+    var(--card-info-height);
+
   align-items: center;
-  justify-content: space-between;
+  justify-items: center;
 
   padding: var(--space-2);
-  gap: var(--space-1);
 
   background: var(--card-gradient);
   color: var(--text-dark);
@@ -27,27 +42,55 @@
   border-radius: 14px;
 
   box-shadow: var(--shadow-depth);
-
   text-align: center;
-  position: relative;
 
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Subtle lift only */
-.unified-card:hover,
-.unified-card:focus-within {
-  transform: translateY(-4px);
+/* Hover = lift only */
+.unified-card:hover {
   box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
 }
 
 /* ---------------------------------------------------------
-   CARD IMAGE
+   CARD NAME — FIXED HEIGHT, CLIPPED
+   --------------------------------------------------------- */
+
+.unified-name {
+  width: 100%;
+  height: var(--card-name-height);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 8px;
+
+  font-size: var(--font-card-title);
+  line-height: 1.1;
+
+  background: var(--bg-panel);
+  color: var(--text-main);
+
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+
+  box-shadow: var(--shadow-depth);
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------
+   CARD IMAGE — FIXED BOX
    --------------------------------------------------------- */
 
 .unified-img {
-  width: 120px;
-  height: 120px;
+  width: var(--card-img-size);
+  height: var(--card-img-size);
 
   object-fit: contain;
   image-rendering: pixelated;
@@ -60,41 +103,18 @@
 }
 
 /* ---------------------------------------------------------
-   CARD NAME
-   --------------------------------------------------------- */
-
-.unified-name {
-  max-width: 100%;
-  padding: 6px 10px;
-
-  font-size: var(--font-card-title);
-  line-height: 1.2;
-
-  background: var(--bg-panel);
-  color: var(--text-main);
-
-  border: 2px solid var(--accent);
-  border-radius: 10px;
-
-  box-shadow: var(--shadow-depth);
-
-  word-break: break-word;
-}
-
-.unified-name.long-name {
-  font-size: 13px;
-}
-
-.unified-name.very-long-name {
-  font-size: 12px;
-}
-
-/* ---------------------------------------------------------
-   CARD INFO / STATS
+   CARD INFO — FIXED HEIGHT
    --------------------------------------------------------- */
 
 .unified-info {
-  padding: 6px 10px;
+  width: 100%;
+  height: var(--card-info-height);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 4px 8px;
 
   font-size: var(--font-card-stat);
   font-weight: bold;
@@ -106,44 +126,33 @@
   border-radius: 10px;
 
   box-shadow: var(--shadow-depth);
+
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 /* ---------------------------------------------------------
-   CARD STATES
-   Supports BOTH legacy + v1 naming
+   CARD STATES (VISUAL ONLY)
    --------------------------------------------------------- */
 
-/* Unclaimed Pokémon */
-.unified-card.unclaimed,
-.unified-card.is-unclaimed {
+.unified-card.unclaimed {
   opacity: 0.6;
   filter: grayscale(0.6);
   border-color: var(--bg-panel-alt);
 }
 
-/* Lost Shinies */
-.unified-card.lost,
-.unified-card.is-lost {
+.unified-card.lost {
   opacity: 0.65;
   filter: grayscale(0.75);
   border-color: #a44;
 }
 
-.unified-info.lost,
-.unified-info.is-lost {
+.unified-info.lost {
   color: #a44;
 }
 
-/* Highlighted cards (future use) */
-.unified-card.is-highlighted {
-  border-color: var(--highlight);
-  box-shadow:
-    0 0 0 2px var(--highlight),
-    var(--shadow-hover);
-}
-
 /* ---------------------------------------------------------
-   SYMBOL OVERLAYS
+   SYMBOL OVERLAYS — FIXED POSITIONS
    --------------------------------------------------------- */
 
 .symbol-overlay {
@@ -155,7 +164,6 @@
 
 .symbol {
   position: absolute;
-
   width: 26px;
   height: 26px;
   padding: 2px;
@@ -167,84 +175,14 @@
   box-shadow: var(--shadow-depth);
 }
 
-/* Positions */
-.symbol.secret {
-  top: var(--symbol-top-y);
-  left: var(--symbol-gap-x);
-}
+/* Top row */
+.symbol.secret { top: 52px; left: 10px; }
+.symbol.event  { top: 52px; right: 10px; }
 
-.symbol.event {
-  top: var(--symbol-top-y);
-  right: var(--symbol-gap-x);
-}
+/* Middle row */
+.symbol.egg   { top: 50%; left: 10px; transform: translateY(-50%); }
+.symbol.alpha { top: 50%; right: 10px; transform: translateY(-50%); }
 
-.symbol.safari {
-  bottom: var(--symbol-bottom-y);
-  left: var(--symbol-gap-x);
-}
-
-.symbol.clip {
-  bottom: var(--symbol-bottom-y);
-  right: var(--symbol-gap-x);
-}
-
-.symbol.egg {
-  top: 50%;
-  left: var(--symbol-gap-x);
-  transform: translateY(-50%);
-}
-
-.symbol.alpha {
-  top: 50%;
-  right: var(--symbol-gap-x);
-  transform: translateY(-50%);
-}
-
-/* ---------------------------------------------------------
-   MEMBER NAMEPLATE
-   --------------------------------------------------------- */
-
-.member-nameplate {
-  margin-bottom: var(--space-4);
-  padding: var(--space-3);
-
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-3);
-
-  background: var(--bg-panel);
-  border: 2px solid var(--accent);
-  border-radius: 16px;
-
-  box-shadow: var(--shadow-depth);
-}
-
-.member-nameplate .member-name {
-  padding: 8px 14px;
-
-  font-size: var(--font-section-title);
-  color: var(--accent);
-
-  background: var(--card);
-  border: 2px solid var(--accent);
-  border-radius: 12px;
-}
-
-.member-nameplate .shiny-count,
-.member-nameplate .point-count {
-  padding: 6px 12px;
-
-  font-size: var(--font-card-stat);
-  font-weight: bold;
-
-  background: var(--success);
-  color: var(--text-dark);
-
-  border-radius: 10px;
-}
-
-.member-nameplate .point-count {
-  background: var(--accent);
-}
+/* Bottom row */
+.symbol.safari { bottom: 52px; left: 10px; }
+.symbol.clip   { bottom: 52px; right: 10px; }
