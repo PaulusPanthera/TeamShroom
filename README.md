@@ -29,7 +29,8 @@ The sheet is published as CSV
 
 The website fetches the CSV directly at runtime
 
-This allows any team member to add or update shinies safely without editing JSON or JavaScript.
+This allows any team member to add or update shinies safely —
+no JSON edits, no code changes, no GitHub knowledge required.
 
 🧠 Data Philosophy
 
@@ -73,7 +74,7 @@ Each feature is isolated and composable
 
 Commit and push to the main branch
 
-GitHub Pages is enabled (source: main / root /)
+GitHub Pages is enabled (source: main, root /)
 
 The site updates automatically
 
@@ -124,7 +125,7 @@ Exportable stats
 
 Discord bot integration
 
-Automated sheet validation warnings
+Automated Google Sheet validation warnings
 
 Inspired by Pokémon.
 Not affiliated with Nintendo, Game Freak, or PokeMMO.
