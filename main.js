@@ -3,13 +3,21 @@
 // No prettified names in data. Ever.
 
 import { loadShinyWeeklyFromCSV } from './shinyweekly.loader.js';
+import { buildShinyWeeklyModel } from './shinyweekly.model.js';
 
 const SHINY_WEEKLY_CSV =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vTB6vHVjwL9_F3DVIVgXxP8rtWEDQyZaDTnG2yAw96j4_1DXU7317lBFaY0N5JnDhdvUnkvgAvb6p8o/pub?gid=0&single=true&output=csv';
 
 loadShinyWeeklyFromCSV(SHINY_WEEKLY_CSV).then(rows => {
-  console.log('Shiny Weekly rows:', rows);
+  console.log('CLEAN ROW COUNT:', rows.length);
+  console.log('FIRST ROW:', rows[0]);
+  console.log('LAST ROW:', rows.at(-1));
+
+  const weeks = buildShinyWeeklyModel(rows);
+  console.log('WEEK COUNT:', weeks.length);
+  console.log('FIRST WEEK:', weeks[0]);
 });
+
 
 
 import {
