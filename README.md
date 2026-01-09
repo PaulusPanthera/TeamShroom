@@ -109,39 +109,40 @@ Not affiliated with Nintendo, Game Freak, or PokeMMO.
 
 ## 📁 Project Structure
 
-```txt
 /
-├── index.html            # Main entry point
-├── main.js               # App bootstrap & routing
+├── index.html            # Main HTML entry
+├── main.js               # App bootstrap, routing, orchestration
 │
-├── src/                  # Application source code
-│   ├── core/             # App shell, routing, init
-│   │   └── router.js
-│   │
-│   ├── data/             # Data loaders & models
+├── src/                  # Application logic
+│   ├── data/             # Data loading & normalization
 │   │   ├── shinyweekly.loader.js
 │   │   ├── shinyweekly.model.js
-│   │   └── csv.utils.js
+│   │   └── csv.utils.js          # (we will add this or inline it)
 │   │
 │   ├── features/         # Feature modules
-│   │   ├── shinyweekly/  # Weekly shiny feature
+│   │   ├── shinyweekly/
 │   │   │   ├── shinyweekly.js
 │   │   │   └── shinyweekly.ui.js
 │   │   │
-│   │   ├── shinydex/     # Living Dex & hitlist
-│   │   └── showcase/    # Member showcase & stats
+│   │   ├── shinydex/
+│   │   │   └── shinydexsearch.js
+│   │   │
+│   │   ├── showcase/
+│   │   │   └── showcase.js
+│   │   │
+│   │   └── donators/
+│   │       └── donators.js
 │   │
-│   ├── ui/               # Shared UI components
+│   ├── ui/
 │   │   └── unifiedcard.js
 │   │
-│   └── utils/            # Helpers & normalization
+│   └── utils/
 │       └── utils.js
 │
-├── style/                # All CSS (static)
-│
+├── style/                # CSS
 ├── img/                  # Static assets
-│   ├── membersprites/
-│   └── symbols/
 │
+├── CNAME
 └── README.md
+
 
