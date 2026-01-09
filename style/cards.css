@@ -55,7 +55,7 @@
 }
 
 /* ---------------------------------------------------------
-   CARD NAME — FIXED HEIGHT, CLIPPED
+   CARD NAME — FIXED HEIGHT, CONTROLLED OVERFLOW
    --------------------------------------------------------- */
 
 .unified-name {
@@ -80,8 +80,17 @@
   box-shadow: var(--shadow-depth);
 
   overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Optional visual tuning only */
+.unified-name.long-name {
+  font-size: 13px;
+}
+
+.unified-name.very-long-name {
+  font-size: 12px;
 }
 
 /* ---------------------------------------------------------
@@ -132,23 +141,26 @@
 }
 
 /* ---------------------------------------------------------
-   CARD STATES (VISUAL ONLY)
+   CARD STATES — MATCH JS EXACTLY
    --------------------------------------------------------- */
 
-.unified-card.unclaimed {
+.unified-card.is-unclaimed {
   opacity: 0.6;
   filter: grayscale(0.6);
   border-color: var(--bg-panel-alt);
 }
 
-.unified-card.lost {
+.unified-card.is-lost {
   opacity: 0.65;
   filter: grayscale(0.75);
   border-color: #a44;
 }
 
-.unified-info.lost {
-  color: #a44;
+.unified-card.is-highlighted {
+  border-color: var(--highlight);
+  box-shadow:
+    0 0 0 2px var(--highlight),
+    var(--shadow-hover);
 }
 
 /* ---------------------------------------------------------
