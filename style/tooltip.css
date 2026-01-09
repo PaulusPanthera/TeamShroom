@@ -1,58 +1,89 @@
-/* Custom tooltip for shiny owners */
+/* =========================================================
+   TOOLTIP — IN-GAME INFO POPUP
+   Design System v1
+   ========================================================= */
+
 .dex-owner-tooltip {
   position: fixed;
-  z-index: 99999;
-  background: rgba(255, 251, 225, 0.98);
-  color: var(--accent);
-  border: 2.5px solid var(--accent);
-  border-radius: 12px;
-  box-shadow: 0 4px 32px #000a, 0 2px 16px #f2593777;
-  padding: 1.1em 1.6em;
-  font-family: 'Press Start 2P', monospace;
-  font-size: 1em;
-  pointer-events: none;
+  z-index: 9999;
+
   min-width: 200px;
-  max-width: 500px;
+  max-width: 420px;
   max-height: 180px;
-  overflow: hidden;
-  transition: opacity 0.18s;
+
+  padding: var(--space-2) var(--space-3);
+
+  background: var(--bg-panel);
+  color: var(--text-main);
+
+  border: var(--border-soft);
+  border-radius: 12px;
+
+  box-shadow: var(--shadow-depth);
+
+  font-family: 'Press Start 2P', monospace;
+  font-size: var(--font-card-stat);
+
+  pointer-events: none;
   opacity: 0;
-  display: block;
-  /* Removed flex, use block for consistency */
+  transition: opacity 0.15s ease;
 }
+
 .dex-owner-tooltip.show {
   opacity: 1;
-  transition: opacity 0.18s;
 }
+
+/* ---------------------------------------------------------
+   TITLE
+   --------------------------------------------------------- */
+
 .dex-owner-tooltip .owners-title {
-  font-size: 1.07em;
-  font-weight: bold;
-  margin-bottom: 0.5em;
+  margin-bottom: var(--space-1);
+
+  font-size: var(--font-card-stat);
+  letter-spacing: 1px;
+
   color: var(--accent);
-  letter-spacing: 0.5px;
-  text-shadow: 0 1px 0 #fff, 0 0 7px #f2593733;
 }
+
+/* ---------------------------------------------------------
+   OWNER LIST (SCROLLING)
+   --------------------------------------------------------- */
+
 .dex-owner-tooltip .owners-list {
-  display: block;
-  width: 100%;
-  overflow: hidden;
   position: relative;
   height: 2.5em;
-  color: var(--accent);
+  overflow: hidden;
+
+  color: var(--text-muted);
 }
+
+/* Subtle vertical scroll — informational, not decorative */
 .dex-owner-tooltip .scrolling-names {
-  display: block;
   position: absolute;
-  left: 0; right: 0;
-  top: 0;
-  animation: tooltip-scroll 7s linear infinite;
-  white-space: pre-line;
+  inset: 0;
+
   text-align: center;
-  color: var(--accent);
+  white-space: pre-line;
+
+  animation: tooltip-scroll 8s linear infinite;
 }
+
+/* ---------------------------------------------------------
+   SCROLL ANIMATION (RESTRAINED)
+   --------------------------------------------------------- */
+
 @keyframes tooltip-scroll {
-  0% { transform: translateY(0); }
-  10% { transform: translateY(0);}
-  90% { transform: translateY(calc(-100% + 2.5em)); }
-  100% { transform: translateY(calc(-100% + 2.5em)); }
+  0% {
+    transform: translateY(0);
+  }
+  15% {
+    transform: translateY(0);
+  }
+  85% {
+    transform: translateY(calc(-100% + 2.5em));
+  }
+  100% {
+    transform: translateY(calc(-100% + 2.5em));
+  }
 }
