@@ -1,91 +1,61 @@
-# Team Shroom Shiny Dex & Weekly Tracker 🍄✨
+🍄✨ Team Shroom Shiny Dex & Weekly Tracker
 
-This website tracks **Team Shroom’s PokeMMO shiny progress**, including:
+This website tracks Team Shroom’s PokeMMO shiny progress, including:
 
-- 🧬 Living Shiny Dex & Hitlist  
-- 📅 Weekly Shiny Events (“Shiny Weekly”)  
-- 🧍 Member Shiny Collections & Showcase  
-- 💖 Donators & Community Support  
+🧬 Living Shiny Dex & Hitlist
 
-The site is **fully static**, hosted on **GitHub Pages**, and powered by **Google Sheets** as the primary data source — allowing the entire team to contribute without touching code.
+📅 Weekly Shiny Events (“Shiny Weekly”)
 
----
+🧍 Member Shiny Collections & Showcase
 
-## 🌍 Live Site
+💖 Donators & Community Support
 
-Hosted on GitHub Pages:  
-`https://<username>.github.io/<repo>/`
+The site is fully static, hosted on GitHub Pages, and powered by Google Sheets as the primary data source — allowing the entire team to contribute without touching code.
 
----
+🌍 Live Site
 
-## ✏️ How to Update Data (No Code Required)
+Hosted on GitHub Pages:
+https://<username>.github.io/<repo>/
 
-All main data is managed via **Google Sheets**.
+✏️ How to Update Data (No Code Required)
 
-### Shiny Weekly (Primary Source of Truth)
-- Shiny Weekly data is edited collaboratively in Google Sheets
-- The sheet is published as CSV
-- The website fetches the CSV directly at runtime
+All main data is managed via Google Sheets.
 
-This allows **any team member** to add or update shinies safely without editing JSON or JavaScript.
+Shiny Weekly (Primary Source of Truth)
 
----
+Shiny Weekly data is edited collaboratively in Google Sheets
 
-## 🧠 Data Philosophy
+The sheet is published as CSV
 
-- **Google Sheets = Source of Truth**
-- **No manual JSON editing**
-- Data is:
-  - validated
-  - normalized
-  - grouped
-  - rendered dynamically
+The website fetches the CSV directly at runtime
+
+This allows any team member to add or update shinies safely without editing JSON or JavaScript.
+
+🧠 Data Philosophy
+
+Google Sheets = Source of Truth
+
+No manual JSON editing
+
+All data is:
+
+validated
+
+normalized
+
+grouped
+
+rendered dynamically
 
 This makes the site:
-- safer
-- scalable
-- contributor-friendly
-- future-proof
 
----
+safer
 
-## 📁 Project Structure
+scalable
 
-```txt
-/
-├── index.html            # Main entry point
-├── main.js               # App bootstrap & routing
-│
-├── src/                  # Application source code
-│   ├── core/             # App shell, routing, initialization
-│   │   └── router.js
-│   │
-│   ├── data/             # Data loaders & models
-│   │   ├── shinyweekly.loader.js   # CSV fetching & parsing
-│   │   ├── shinyweekly.model.js    # Normalization & grouping
-│   │   └── csv.utils.js             # Shared CSV helpers
-│   │
-│   ├── features/         # Feature modules
-│   │   ├── shinyweekly/  # Weekly shiny feature
-│   │   │   ├── shinyweekly.js
-│   │   │   └── shinyweekly.ui.js
-│   │   │
-│   │   ├── shinydex/     # Living Dex & hitlist logic
-│   │   └── showcase/    # Member showcase & stats
-│   │
-│   ├── ui/               # Shared UI components
-│   │   └── unifiedcard.js
-│   │
-│   └── utils/            # Helpers & normalization
-│       └── utils.js
-│
-├── style/                # All CSS files
-│
-├── img/                  # Static assets
-│   ├── membersprites/    # Member avatars
-│   └── symbols/          # Icons & overlays
-│
-└── README.md
+contributor-friendly
+
+future-proof
 
 🧩 Architecture Principles
 
@@ -95,7 +65,7 @@ No global variables
 
 No inline JavaScript in HTML
 
-Data → Model → UI separation
+Clear Data → Model → UI separation
 
 Each feature is isolated and composable
 
@@ -103,26 +73,26 @@ Each feature is isolated and composable
 
 Commit and push to the main branch
 
-GitHub Pages is enabled (root /)
+GitHub Pages is enabled (source: main / root /)
 
 The site updates automatically
 
 No build step required.
 
 🛣️ Roadmap
-In Progress
+🚧 In Progress
 
- Migrate Shiny Weekly JSON → Google Sheets
+Migrate Shiny Weekly from JSON → Google Sheets
 
- CSV loader & normalization
+CSV loader & normalization
 
- Weekly aggregation & stats
+Weekly aggregation & stats
 
- Remove remaining JSON data sources
+Remove remaining JSON data sources
 
- Connect Living Dex & Hitlist to Weekly data
+Connect Living Dex & Hitlist to Weekly data
 
-Planned
+📌 Planned
 
 📊 Weekly trends & graphs
 
@@ -144,7 +114,7 @@ Planned
 
 💡 Future Ideas
 
-“Shiny of the Week” spotlight
+Shiny of the Week spotlight
 
 Member profile pages with history timelines
 
