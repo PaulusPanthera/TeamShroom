@@ -1,57 +1,65 @@
 // shinyweekly.ui.js
-// Shiny Weekly — Unified Cards (stable asset paths)
+// Shiny Weekly — Unified Card Version with Shuffle Logic
+// Member card → Pokémon cards → back to member
 
-import { renderUnifiedCard } from "./unifiedcard.js";
-import { normalizePokemonName, prettifyPokemonName } from "./utils.js";
+import { renderUnifiedCard } from './unifiedcard.js';
+import { normalizePokemonName, prettifyPokemonName, normalizeMemberName } from './utils.js';
 
-/* =========================
-   CONSTANTS
-   ========================= */
-const MEMBER_FALLBACK = "/img/membersprites/examplesprite.png";
+/* ===== Helpers ===== */
 
-/* =========================
-   Member sprite resolution
-   ========================= */
-function getMemberSprite(member) {
-  const base = `/img/membersprites/${member.toLowerCase()}sprite`;
-
-  const img = new Image();
-  img.src = `${base}.png`;
-
-  img.onerror = () => {
-    img.onerror = null;
-    img.src = `${base}.gif`;
-    img.onerror = () => {
-      img.src = MEMBER_FALLBACK;
-    };
-  };
-
-  return img.src;
-}
-
-/* =========================
-   Pokémon GIF (PokémonDB)
-   ========================= */
+// Same Pokémon GIF logic as showcase
 function getPokemonGif(name) {
-  const norm = normalizePokemonName(name);
-  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${norm}.gif`;
+  const n = name.replace(/[\s.'’\-]/g, "").toLowerCase();
+  if (n === "mrmime") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mr-mime.gif";
+  if (n === "mimejr") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/mime-jr.gif";
+  if (n === "nidoranf") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-f.gif";
+  if (n === "nidoranm") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/nidoran-m.gif";
+  if (n === "typenull") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/type-null.gif";
+  if (n === "porygonz") return "https://img.pokemondb.net/sprites/black-white/anim/shiny/porygon-z.gif";
+
+  const urlName = normalizePokemonName(name);
+  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${urlName}.gif`;
 }
 
-/* =========================
-   MAIN RENDER
-   ========================= */
-export function renderShinyWeekly(weeklyData, container) {
-  if (!container || !Array.isArray(weeklyData)) return;
+// Member sprite fallback logic (png → gif → jpg)
+function applyMemberSprite(imgEl, memberName) {
+  const base = normalizeMemberName(memberName);
+  const formats = ['png', 'gif', 'jpg'];
+  let idx = 0;
+
+  function tryNext() {
+    if (idx >= formats.length) return;
+    const url = `img/membersprites/${base}sprite.${formats[idx]}`;
+    const testImg = new Image();
+    testImg.onload = () => {
+      imgEl.src = url;
+    };
+    testImg.onerror = () => {
+      idx++;
+      tryNext();
+    };
+    testImg.src = url;
+  }
+
+  // start with placeholder
+  imgEl.src = "img/membersprites/examplesprite.png";
+  tryNext();
+}
+
+/* ===== Main Render ===== */
+
+export function renderShinyWeekly(weeks, container) {
+  if (!container || !Array.isArray(weeks)) return;
   container.innerHTML = "";
 
   // Newest week first
-  const weeks = [...weeklyData].reverse();
+  const orderedWeeks = [...weeks].reverse();
 
-  weeks.forEach((week, weekIndex) => {
+  orderedWeeks.forEach((week, weekIndex) => {
     const weekCard = document.createElement("div");
     weekCard.className = "weekly-card";
 
-    /* ===== HEADER ===== */
+    /* ===== Header ===== */
     const header = document.createElement("div");
     header.className = "weekly-header";
     header.innerHTML = `
@@ -63,15 +71,15 @@ export function renderShinyWeekly(weeklyData, container) {
       </div>
     `;
 
-    /* ===== BODY ===== */
+    /* ===== Body ===== */
     const body = document.createElement("div");
     body.className = "weekly-body";
     body.style.display = weekIndex === 0 ? "block" : "none";
 
     const grid = document.createElement("div");
-    grid.className = "dex-grid";
+    grid.className = "dex-grid"; // reuse existing grid styling
 
-    /* Group by member */
+    /* Group shinies by member */
     const byMember = {};
     week.shinies.forEach(shiny => {
       if (!byMember[shiny.member]) byMember[shiny.member] = [];
@@ -79,55 +87,60 @@ export function renderShinyWeekly(weeklyData, container) {
     });
 
     Object.entries(byMember).forEach(([member, shinies]) => {
-      const slot = document.createElement("div");
-      slot.className = "weekly-member-slot";
+      let stateIndex = -1; // -1 = member card, >=0 = pokemon index
 
-      const state = { mode: "member", index: 0 };
+      const wrapper = document.createElement("div");
 
-      function render() {
-        slot.innerHTML = "";
+      function renderState() {
+        wrapper.innerHTML = "";
 
-        if (state.mode === "member") {
-          slot.innerHTML = renderUnifiedCard({
+        // MEMBER CARD
+        if (stateIndex === -1) {
+          wrapper.innerHTML = renderUnifiedCard({
             name: member,
-            img: getMemberSprite(member),
+            img: "img/membersprites/examplesprite.png",
             info: `Shinies: ${shinies.length}`,
             cardType: "member"
           });
-        } else {
-          const shiny = shinies[state.index];
-          slot.innerHTML = renderUnifiedCard({
-            name: prettifyPokemonName(shiny.name),
+
+          const img = wrapper.querySelector(".unified-img");
+          applyMemberSprite(img, member);
+        }
+        // POKÉMON CARD
+        else {
+          const shiny = shinies[stateIndex];
+          const displayName = prettifyPokemonName(shiny.name);
+
+          wrapper.innerHTML = renderUnifiedCard({
+            name: displayName,
             img: getPokemonGif(shiny.name),
-            cardType: "pokemon",
+            info: "",
             lost: shiny.lost,
+            cardType: "pokemon",
             symbols: {
-              secret: shiny.secret,
-              safari: shiny.safari,
-              egg: shiny.egg,
-              event: shiny.event,
-              alpha: shiny.alpha
+              secret: !!shiny.secret,
+              safari: !!shiny.safari,
+              egg: !!shiny.egg,
+              event: !!shiny.event,
+              alpha: !!shiny.alpha
             }
           });
         }
+
+        const card = wrapper.firstElementChild;
+        card.style.cursor = "pointer";
+
+        card.onclick = () => {
+          stateIndex++;
+          if (stateIndex >= shinies.length) {
+            stateIndex = -1; // back to member
+          }
+          renderState();
+        };
       }
 
-      slot.onclick = () => {
-        if (state.mode === "member") {
-          state.mode = "pokemon";
-          state.index = 0;
-        } else {
-          state.index++;
-          if (state.index >= shinies.length) {
-            state.mode = "member";
-            state.index = 0;
-          }
-        }
-        render();
-      };
-
-      render();
-      grid.appendChild(slot);
+      renderState();
+      grid.appendChild(wrapper);
     });
 
     body.appendChild(grid);
