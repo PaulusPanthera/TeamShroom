@@ -1,38 +1,41 @@
 // main.js
-// Entrypoint for Team Shroom Shiny Pages — ES Modules, centralized helpers.
-// Design System v1: Dark mode only. No theme toggling.
+// Entrypoint — HARD CONTRACT VERSION
+// No prettified names in data. Ever.
 
-import { buildPokemonData, POKEMON_POINTS, TIER_FAMILIES, pokemonFamilies } from './pokemondatabuilder.js';
-import { renderShowcaseGallery, setupShowcaseSearchAndSort, renderMemberShowcase } from './showcase.js';
+import {
+  buildPokemonData,
+  POKEMON_POINTS,
+  TIER_FAMILIES,
+  pokemonFamilies
+} from './pokemondatabuilder.js';
+
+import {
+  renderShowcaseGallery,
+  setupShowcaseSearchAndSort,
+  renderMemberShowcase
+} from './showcase.js';
+
 import { setupShinyDexHitlistSearch } from './shinydexsearch.js';
 import { renderDonators, assignDonatorTiersToTeam } from './donators.js';
-import { prettifyPokemonName } from './utils.js';
-
-// Shiny Weekly
 import { renderShinyWeekly } from './shinyweekly.ui.js';
 
 // ---------------------------------------------------------
-// GLOBAL DATA CACHES
+// DATA CACHES
 // ---------------------------------------------------------
 
-let teamShowcaseData = null;
-let pokemonFamiliesData = null;
-let donationsData = null;
-let shinyWeeklyData = null;
+let teamShowcaseData;
+let pokemonFamiliesData;
+let donationsData;
+let shinyWeeklyData;
 
 // ---------------------------------------------------------
-// DATA LOADING
+// FETCH
 // ---------------------------------------------------------
 
 async function fetchJson(path) {
-  try {
-    const resp = await fetch(path);
-    if (!resp.ok) throw new Error(`Failed to fetch ${path}`);
-    return await resp.json();
-  } catch (e) {
-    console.error(e);
-    return null;
-  }
+  const r = await fetch(path);
+  if (!r.ok) throw new Error(`Failed to fetch ${path}`);
+  return r.json();
 }
 
 // ---------------------------------------------------------
@@ -40,42 +43,35 @@ async function fetchJson(path) {
 // ---------------------------------------------------------
 
 function getRoute() {
-  const hash = location.hash || '#showcase';
+  const h = location.hash || '#showcase';
 
-  if (hash.startsWith('#showcase-')) {
+  if (h.startsWith('#showcase-')) {
     return {
       page: 'member',
-      member: decodeURIComponent(hash.replace('#showcase-', '').split('?')[0])
+      member: decodeURIComponent(h.replace('#showcase-', '').split('?')[0])
     };
   }
 
-  if (hash.startsWith('#showcase')) return { page: 'showcase' };
-  if (hash.startsWith('#hitlist')) return { page: 'hitlist' };
-  if (hash.startsWith('#shinyweekly')) return { page: 'shinyweekly' };
-  if (hash.startsWith('#donators')) return { page: 'donators' };
-
+  if (h.startsWith('#hitlist')) return { page: 'hitlist' };
+  if (h.startsWith('#shinyweekly')) return { page: 'shinyweekly' };
+  if (h.startsWith('#donators')) return { page: 'donators' };
   return { page: 'showcase' };
 }
 
 function setActiveNav(page) {
   document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
-
-  if (page === 'showcase' || page === 'member') {
-    document.getElementById('nav-showcase')?.classList.add('active');
-  }
-  if (page === 'hitlist') {
-    document.getElementById('nav-hitlist')?.classList.add('active');
-  }
-  if (page === 'shinyweekly') {
-    document.getElementById('nav-shinyweekly')?.classList.add('active');
-  }
-  if (page === 'donators') {
-    document.getElementById('nav-donators')?.classList.add('active');
-  }
+  const map = {
+    showcase: 'nav-showcase',
+    member: 'nav-showcase',
+    hitlist: 'nav-hitlist',
+    shinyweekly: 'nav-shinyweekly',
+    donators: 'nav-donators'
+  };
+  document.getElementById(map[page])?.classList.add('active');
 }
 
 // ---------------------------------------------------------
-// PAGE RENDERING
+// RENDER
 // ---------------------------------------------------------
 
 async function renderPage() {
@@ -83,33 +79,22 @@ async function renderPage() {
   setActiveNav(page);
 
   const content = document.getElementById('page-content');
-  content.innerHTML = `<div style="text-align:center;margin:2em;">Loading…</div>`;
+  content.innerHTML = '';
 
-  if (!teamShowcaseData) {
-    teamShowcaseData = await fetchJson('data/teamshowcase.json');
-  }
-  if (!pokemonFamiliesData) {
-    pokemonFamiliesData = await fetchJson('data/pokemonfamilies.json');
-  }
-  if (!donationsData) {
-    donationsData = await fetchJson('data/donations.json');
-  }
+  if (!teamShowcaseData) teamShowcaseData = await fetchJson('data/teamshowcase.json');
+  if (!pokemonFamiliesData) pokemonFamiliesData = await fetchJson('data/pokemonfamilies.json');
+  if (!donationsData) donationsData = await fetchJson('data/donations.json');
   if (page === 'shinyweekly' && !shinyWeeklyData) {
     shinyWeeklyData = await fetchJson('data/shinyweekly.json');
   }
 
-  if (pokemonFamiliesData) {
-    buildPokemonData(pokemonFamiliesData);
-  }
+  buildPokemonData(pokemonFamiliesData);
 
-  // Expose for legacy modules
   window.POKEMON_POINTS = POKEMON_POINTS;
   window.TIER_FAMILIES = TIER_FAMILIES;
   window.pokemonFamilies = pokemonFamilies;
 
-  if (teamShowcaseData && donationsData) {
-    assignDonatorTiersToTeam(teamShowcaseData, null, donationsData);
-  }
+  assignDonatorTiersToTeam(teamShowcaseData, null, donationsData);
 
   // -------------------------------------------------------
   // SHOWCASE
@@ -121,7 +106,7 @@ async function renderPage() {
       <div id="showcase-gallery-container"></div>
     `;
 
-    const teamMembers = teamShowcaseData.map(m => ({
+    const members = teamShowcaseData.map(m => ({
       name: m.name,
       shinies: m.shinies?.filter(s => !s.lost).length || 0,
       status: m.status,
@@ -129,41 +114,31 @@ async function renderPage() {
     }));
 
     setupShowcaseSearchAndSort(
-      teamMembers,
+      members,
       renderShowcaseGallery,
       null,
       teamShowcaseData,
-      POKEMON_POINTS,
-      TIER_FAMILIES,
-      pokemonFamilies
+      POKEMON_POINTS
     );
   }
 
   // -------------------------------------------------------
-  // MEMBER DETAIL
+  // MEMBER
   // -------------------------------------------------------
 
-  else if (page === 'member' && member) {
-    const memData = teamShowcaseData.find(
-      m => m.name.toLowerCase() === member.toLowerCase()
+  else if (page === 'member') {
+    const m = teamShowcaseData.find(
+      x => x.name.toLowerCase() === member.toLowerCase()
     );
-
-    if (!memData) {
-      content.innerHTML = `<div style="text-align:center;margin:2em;">Member not found.</div>`;
-    } else {
-      renderMemberShowcase(
-        memData,
-        null,
-        teamShowcaseData,
-        POKEMON_POINTS,
-        TIER_FAMILIES,
-        pokemonFamilies
-      );
+    if (!m) {
+      content.textContent = 'Member not found.';
+      return;
     }
+    renderMemberShowcase(m, null, teamShowcaseData, POKEMON_POINTS);
   }
 
   // -------------------------------------------------------
-  // HITLIST
+  // HITLIST / LIVING DEX
   // -------------------------------------------------------
 
   else if (page === 'hitlist') {
@@ -174,7 +149,7 @@ async function renderPage() {
       const region = entry.region || 'Other';
       shinyDex[region] ??= [];
       shinyDex[region].push({
-        name: prettifyPokemonName(entry.pokemon || entry.name),
+        name: entry.name,       // RAW NAME ONLY
         claimed: entry.claimed,
         region
       });
@@ -197,30 +172,18 @@ async function renderPage() {
 
   else if (page === 'shinyweekly') {
     content.innerHTML = `<div id="shinyweekly-container"></div>`;
-
-    const weeks = Array.isArray(shinyWeeklyData)
-      ? shinyWeeklyData
-      : Array.isArray(shinyWeeklyData?.data)
+    renderShinyWeekly(
+      Array.isArray(shinyWeeklyData?.data)
         ? shinyWeeklyData.data
-        : null;
-
-    if (weeks) {
-      renderShinyWeekly(
-        weeks,
-        document.getElementById('shinyweekly-container')
-      );
-    } else {
-      content.innerHTML = `<div style="text-align:center;margin:2em;">Could not load shiny weekly data.</div>`;
-    }
+        : shinyWeeklyData,
+      document.getElementById('shinyweekly-container')
+    );
   }
 }
 
 // ---------------------------------------------------------
-// EVENT BINDINGS
+// EVENTS
 // ---------------------------------------------------------
 
 window.addEventListener('hashchange', renderPage);
-
-window.addEventListener('DOMContentLoaded', () => {
-  renderPage();
-});
+window.addEventListener('DOMContentLoaded', renderPage);
