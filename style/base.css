@@ -1,38 +1,132 @@
 :root {
-  /* Colors */
-  --bg: #f4e2b2;
-  --bg2: #f9e7b0;
-  --card: #fffbe1;
-  --card-gradient: linear-gradient(132deg, #fffbe1 65%, #ffe595 100%);
-  --accent: #f25937;
-  --success: #67b356;
-  --claimed: #67b356;
-  --unclaimed: #f25937;
-  --text-main: #222;
-  --text-muted: #679a56;
-  --shadow-main: 0 6px 32px #0003, 0 1.5px 12px #f2593733;
-  --shadow-hover: 0 10px 32px #f2593788, 0 4px 26px #0003;
+  /* =========================================================
+     COLOR SYSTEM — DESIGN SYSTEM v1 (LOCKED)
+     ========================================================= */
 
-  /* Symbol overlay variables for showcase cards */
+  /* Neutral Dark Backgrounds */
+  --bg: #0f1318;
+  --bg-panel: #15191f;
+  --bg-panel-alt: #1b2027;
+
+  /* Card Interior (warm, collectible feel) */
+  --card: #fff6cc;
+  --card-alt: #ffe9a8;
+  --card-gradient: linear-gradient(
+    180deg,
+    var(--card),
+    var(--card-alt)
+  );
+
+  /* Accents */
+  --accent: #f25c2a;      /* Shroom Orange */
+  --success: #7fd36b;     /* Shroom Green */
+  --highlight: #ffd86b;   /* Shiny Gold */
+
+  /* Text */
+  --text-main: #ffe9a8;
+  --text-muted: #a89f7a;
+  --text-dark: #1a1a1a;   /* for text on card interiors */
+
+  /* Borders & Shadows */
+  --border-strong: 2px solid var(--accent);
+  --border-soft: 1px solid #ffffff14;
+
+  --shadow-depth:
+    0 6px 20px rgba(0, 0, 0, 0.45),
+    0 2px 8px rgba(0, 0, 0, 0.35);
+
+  --shadow-hover:
+    0 10px 28px rgba(0, 0, 0, 0.6),
+    0 4px 14px rgba(0, 0, 0, 0.4);
+
+  /* =========================================================
+     SPACING SYSTEM — 8px GRID (NON-NEGOTIABLE)
+     ========================================================= */
+
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+
+  /* =========================================================
+     TYPOGRAPHY SCALE — 8-BIT DISCIPLINE
+     ========================================================= */
+
+  --font-page-title: 24px;
+  --font-section-title: 18px;
+  --font-card-title: 15px;
+  --font-card-stat: 13px;
+  --font-small: 12px;
+
+  /* =========================================================
+     SYMBOL / OVERLAY POSITIONING
+     ========================================================= */
+
   --symbol-gap-x: 12px;
   --symbol-top-y: 54px;
   --symbol-bottom-y: 54px;
 }
 
+/* =========================================================
+   GLOBAL DOCUMENT RULES
+   ========================================================= */
+
+html {
+  /* 125% baseline scaling for pixel font readability */
+  font-size: 125%;
+}
+
 body {
+  margin: 0;
+  padding: 0;
+
+  font-family: 'Press Start 2P', Consolas, monospace;
+  font-size: var(--font-card-stat);
+  letter-spacing: 0.5px;
+
+  color: var(--text-main);
+
   background-color: var(--bg);
   background-image: url('https://www.transparenttextures.com/patterns/square-bg.png');
   background-size: 120px 120px;
   background-attachment: fixed;
-  color: var(--text-main);
-  font-family: 'Press Start 2P', 'Consolas', 'monospace';
-  margin: 0;
-  padding: 0;
-  font-size: 14px;
-  letter-spacing: 0.5px;
-  transition: background 0.4s, color 0.4s;
+
+  /* No transitions for theme changes — dark mode is default */
 }
-html {
-  /* 125% font size for the whole document */
-  font-size: 125%;
+
+/* =========================================================
+   BASE ELEMENT NORMALIZATION
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
