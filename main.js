@@ -10,7 +10,7 @@ import {
   POKEMON_POINTS
 } from './src/data/pokemondatabuilder.js';
 
-import { loadPokemonFromCSV } from './src/data/pokemon.loader.js';
+import { loadDonatorsFromCSV } from './src/data/donators.loader.js';
 
 import {
   renderShowcaseGallery,
@@ -32,20 +32,12 @@ const SHINY_WEEKLY_CSV =
 const DONATORS_CSV =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vTB6vHVjwL9_F3DVIVgXxP8rtWEDQyZaDTnG2yAw96j4_1DXU7317lBFaY0N5JnDhdvUnkvgAvb6p8o/pub?gid=2068008843&single=true&output=csv';
 
-const SHINYSHOWCASE_CSV =
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vTB6vHVjwL9_F3DVIVgXxP8rtWEDQyZaDTnG2yAw96j4_1DXU7317lBFaY0N5JnDhdvUnkvgAvb6p8o/pub?gid=1708435858&single=true&output=csv';
-
-const MEMBER_CSV =
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vTB6vHVjwL9_F3DVIVgXxP8rtWEDQyZaDTnG2yAw96j4_1DXU7317lBFaY0N5JnDhdvUnkvgAvb6p8o/pub?gid=1649506714&single=true&output=csv';
-
-const POKEMON_CSV =
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vTB6vHVjwL9_F3DVIVgXxP8rtWEDQyZaDTnG2yAw96j4_1DXU7317lBFaY0N5JnDhdvUnkvgAvb6p8o/pub?gid=890281184&single=true&output=csv';
-
 // ---------------------------------------------------------
 // DATA CACHES
 // ---------------------------------------------------------
 
 let shinyWeeklyWeeks = null;
+let donatorsData = null;
 let pokemonDataLoaded = false;
 
 // ---------------------------------------------------------
@@ -97,24 +89,32 @@ async function renderPage() {
   content.innerHTML = '';
 
   // -------------------------------------------------------
-  // POKÉMON DATA (CSV — FOUNDATIONAL)
+  // POKÉMON DATA (FOUNDATIONAL)
   // -------------------------------------------------------
 
   if (!pokemonDataLoaded) {
-    const pokemonRows = await loadPokemonFromCSV(POKEMON_CSV);
-    buildPokemonData(pokemonRows);
+    await buildPokemonData();
     pokemonDataLoaded = true;
-    console.log('✔ Pokémon data loaded:', pokemonRows.length);
+    console.log('✔ Pokémon data loaded');
   }
 
   // -------------------------------------------------------
-  // SHINY WEEKLY (CSV)
+  // SHINY WEEKLY
   // -------------------------------------------------------
 
   if (!shinyWeeklyWeeks) {
     const rows = await loadShinyWeeklyFromCSV(SHINY_WEEKLY_CSV);
     shinyWeeklyWeeks = buildShinyWeeklyModel(rows);
-    console.log('✔ Shiny Weekly loaded:', rows.length, 'rows');
+    console.log('✔ Shiny Weekly loaded:', rows.length);
+  }
+
+  // -------------------------------------------------------
+  // DONATORS
+  // -------------------------------------------------------
+
+  if (!donatorsData) {
+    donatorsData = await loadDonatorsFromCSV(DONATORS_CSV);
+    console.log('✔ Donators loaded:', donatorsData.length);
   }
 
   // -------------------------------------------------------
@@ -154,11 +154,11 @@ async function renderPage() {
   }
 
   // -------------------------------------------------------
-  // DONATORS (STUB)
+  // DONATORS (FIXED)
   // -------------------------------------------------------
 
   else if (page === 'donators') {
-    renderDonators([]);
+    renderDonators(donatorsData);
   }
 
   // -------------------------------------------------------
