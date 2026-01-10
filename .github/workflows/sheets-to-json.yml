@@ -1,0 +1,31 @@
+name: Sheets to JSON
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  build-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm install csv-parse
+
+      - run: node scripts/shinyweekly.mjs
+        env:
+          SHINY_WEEKLY_CSV: ${{ secrets.SHINY_WEEKLY_CSV }}
+
+      - name: Commit generated JSON
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add data/*.json
+          git commit -m "chore(data): regenerate shiny weekly JSON" || exit 0
+          git push
