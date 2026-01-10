@@ -1,6 +1,6 @@
 // shinydexsearch.js
 // Shiny Dex Hitlist & Living Dex — HARD CONTRACT
-// One card size. One layout. Full feature parity restored.
+// CSV-backed Pokémon data (no globals, no JSON assumptions)
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import {
@@ -32,14 +32,14 @@ function getPokemonGif(name) {
 
 function getPoints(name, POKEMON_POINTS) {
   const pts = POKEMON_POINTS?.[normalizePokemonName(name)];
-  return !pts || pts === 'NA' ? 0 : pts;
+  return !pts || pts === 'NA' ? 0 : Number(pts);
 }
 
 function buildLivingCounts(teamShowcase, POKEMON_POINTS) {
   const counts = {};
   teamShowcase.forEach(member => {
     member.shinies?.forEach(mon => {
-      if (mon.lost) return;
+      if (mon.lost || mon.sold) return;
       const pts = getPoints(mon.name, POKEMON_POINTS);
       if (!pts) return;
       const key = normalizePokemonName(mon.name);
@@ -51,7 +51,7 @@ function buildLivingCounts(teamShowcase, POKEMON_POINTS) {
 
 function filterEntry(entry, filter, POKEMON_POINTS) {
   const pts = getPoints(entry.name, POKEMON_POINTS);
-  if (!pts || entry.claimed === 'NA') return false;
+  if (!pts || entry.show === false) return false;
   if (!filter) return true;
 
   const f = filter.toLowerCase();
@@ -61,10 +61,7 @@ function filterEntry(entry, filter, POKEMON_POINTS) {
 
   if (entry.region?.toLowerCase() === f) return true;
 
-  return (
-    entry.name.toLowerCase().includes(f) ||
-    entry.claimed?.toLowerCase().includes(f)
-  );
+  return entry.name.toLowerCase().includes(f);
 }
 
 /* ---------------------------------------------------------
@@ -97,12 +94,9 @@ function renderHitlist(shinyDex, filter, POKEMON_POINTS) {
         renderUnifiedCard({
           name: prettifyPokemonName(entry.name),
           img: getPokemonGif(entry.name),
-          info: entry.claimed || 'Unclaimed',
+          info: entry.claimed ? 'Claimed' : 'Unclaimed',
           cardType: 'pokemon',
-          states: {
-            pokemon: true,
-            unclaimed: !entry.claimed
-          }
+          unclaimed: !entry.claimed
         })
       );
     });
@@ -143,10 +137,7 @@ function renderLivingDex(shinyDex, teamShowcase, filter, POKEMON_POINTS) {
           name: prettifyPokemonName(entry.name),
           img: getPokemonGif(entry.name),
           info: `Owned: ${counts[key] || 0}`,
-          cardType: 'pokemon',
-          states: {
-            pokemon: true
-          }
+          cardType: 'pokemon'
         })
       );
     });
@@ -162,15 +153,17 @@ function renderLivingDex(shinyDex, teamShowcase, filter, POKEMON_POINTS) {
    ENTRY POINT
 --------------------------------------------------------- */
 
-export function setupShinyDexHitlistSearch(shinyDex, teamShowcase) {
-  const POKEMON_POINTS = window.POKEMON_POINTS || {};
-
+export function setupShinyDexHitlistSearch(
+  shinyDex,
+  teamShowcase,
+  POKEMON_POINTS
+) {
   const container = document.getElementById('shiny-dex-container');
+
   const controls = document.createElement('div');
   controls.className = 'search-controls';
-
   controls.innerHTML = `
-    <input type="text" placeholder="Search">
+    <input type="text" placeholder="Search Pokémon or Region">
     <button class="dex-tab active" data-mode="hitlist">Hitlist</button>
     <button class="dex-tab" data-mode="living">Living Dex</button>
     <span class="result-count"></span>
@@ -186,12 +179,11 @@ export function setupShinyDexHitlistSearch(shinyDex, teamShowcase) {
   const count = controls.querySelector('.result-count');
 
   function render() {
-    let shown = 0;
-    if (mode === 'hitlist') {
-      shown = renderHitlist(shinyDex, filter, POKEMON_POINTS);
-    } else {
-      shown = renderLivingDex(shinyDex, teamShowcase, filter, POKEMON_POINTS);
-    }
+    const shown =
+      mode === 'hitlist'
+        ? renderHitlist(shinyDex, filter, POKEMON_POINTS)
+        : renderLivingDex(shinyDex, teamShowcase, filter, POKEMON_POINTS);
+
     count.textContent = `${shown} Pokémon`;
   }
 
