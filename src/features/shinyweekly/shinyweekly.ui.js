@@ -5,9 +5,9 @@
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import {
   normalizePokemonName,
-  prettifyPokemonName,
-  normalizeMemberName
+  prettifyPokemonName
 } from '../../utils/utils.js';
+import { getMemberSprite } from '../../utils/membersprite.js';
 
 /* ---------------------------------------------------------
    SPRITES
@@ -27,26 +27,11 @@ function getPokemonGif(name) {
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
 }
 
-function applyMemberSprite(imgEl, memberName) {
-  const spriteMap = window.MEMBER_SPRITES || {};
-  const base = normalizeMemberName(memberName);
-  const ext = spriteMap[base];
-
-  // Always start with fallback
-  imgEl.src = 'img/membersprites/examplesprite.png';
-
-  // No sprite registered → stop immediately
-  if (!ext) return;
-
-  // Exactly one deterministic request
-  imgEl.src = `img/membersprites/${base}sprite.${ext}`;
-}
-
 /* ---------------------------------------------------------
    EXPORT
 --------------------------------------------------------- */
 
-export function renderShinyWeekly(weeks, container) {
+export function renderShinyWeekly(weeks, container, membersData = []) {
   if (!Array.isArray(weeks) || !container) return;
 
   container.innerHTML = '';
@@ -90,16 +75,11 @@ export function renderShinyWeekly(weeks, container) {
         if (state === -1) {
           wrapper.innerHTML = renderUnifiedCard({
             name: member,
-            img: 'img/membersprites/examplesprite.png',
+            img: getMemberSprite(member, membersData),
             info: `Shinies: ${shinies.length}`,
             cardType: 'member',
             states: { member: true }
           });
-
-          applyMemberSprite(
-            wrapper.querySelector('.unified-img'),
-            member
-          );
         } else {
           const mon = shinies[state];
           wrapper.innerHTML = renderUnifiedCard({
