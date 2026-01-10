@@ -1,6 +1,6 @@
 // main.js (ROOT)
 // Entrypoint — Google Sheets is source of truth
-// HARD CONTRACT VERSION
+// HARD CONTRACT VERSION (Showcase + Member wired, Hitlist excluded)
 
 import { loadShinyWeeklyFromCSV } from './src/data/shinyweekly.loader.js';
 import { buildShinyWeeklyModel } from './src/data/shinyweekly.model.js';
@@ -11,6 +11,9 @@ import {
 } from './src/data/pokemondatabuilder.js';
 
 import { loadDonatorsFromCSV } from './src/data/donators.loader.js';
+import { loadMembersFromCSV } from './src/data/member.loader.js';
+import { loadShinyShowcaseFromCSV } from './src/data/shinyshowcase.loader.js';
+import { buildMemberModel } from './src/data/member.model.js';
 
 import {
   renderShowcaseGallery,
@@ -18,7 +21,6 @@ import {
   renderMemberShowcase
 } from './src/features/showcase/showcase.js';
 
-import { setupShinyDexHitlistSearch } from './src/features/shinydex/shinydexsearch.js';
 import { renderDonators } from './src/features/donators/donators.js';
 import { renderShinyWeekly } from './src/features/shinyweekly/shinyweekly.ui.js';
 
@@ -32,12 +34,19 @@ const SHINY_WEEKLY_CSV =
 const DONATORS_CSV =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vTB6vHVjwL9_F3DVIVgXxP8rtWEDQyZaDTnG2yAw96j4_1DXU7317lBFaY0N5JnDhdvUnkvgAvb6p8o/pub?gid=2068008843&single=true&output=csv';
 
+const MEMBERS_CSV =
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vTB6vHVjwL9_F3DVIVgXxP8rtWEDQyZaDTnG2yAw96j4_1DXU7317lBFaY0N5JnDhdvUnkvgAvb6p8o/pub?gid=1649506714&single=true&output=csv';
+
+const SHINYSHOWCASE_CSV =
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vTB6vHVjwL9_F3DVIVgXxP8rtWEDQyZaDTnG2yAw96j4_1DXU7317lBFaY0N5JnDhdvUnkvgAvb6p8o/pub?gid=1708435858&single=true&output=csv';
+
 // ---------------------------------------------------------
 // DATA CACHES
 // ---------------------------------------------------------
 
 let shinyWeeklyWeeks = null;
 let donatorsData = null;
+let teamShowcase = null;
 let pokemonDataLoaded = false;
 
 // ---------------------------------------------------------
@@ -54,7 +63,6 @@ function getRoute() {
     };
   }
 
-  if (h.startsWith('#hitlist')) return { page: 'hitlist' };
   if (h.startsWith('#shinyweekly')) return { page: 'shinyweekly' };
   if (h.startsWith('#donators')) return { page: 'donators' };
 
@@ -69,7 +77,6 @@ function setActiveNav(page) {
   const map = {
     showcase: 'nav-showcase',
     member: 'nav-showcase',
-    hitlist: 'nav-hitlist',
     shinyweekly: 'nav-shinyweekly',
     donators: 'nav-donators'
   };
@@ -89,7 +96,7 @@ async function renderPage() {
   content.innerHTML = '';
 
   // -------------------------------------------------------
-  // POKÉMON DATA (FOUNDATIONAL)
+  // POKÉMON DATA
   // -------------------------------------------------------
 
   if (!pokemonDataLoaded) {
@@ -118,7 +125,21 @@ async function renderPage() {
   }
 
   // -------------------------------------------------------
-  // SHOWCASE (STUB)
+  // TEAM SHOWCASE (MEMBERS + SHINIES)
+  // -------------------------------------------------------
+
+  if (!teamShowcase) {
+    const [members, shinies] = await Promise.all([
+      loadMembersFromCSV(MEMBERS_CSV),
+      loadShinyShowcaseFromCSV(SHINYSHOWCASE_CSV)
+    ]);
+
+    teamShowcase = buildMemberModel(members, shinies);
+    console.log('✔ Team Showcase built:', teamShowcase.length);
+  }
+
+  // -------------------------------------------------------
+  // SHOWCASE
   // -------------------------------------------------------
 
   if (page === 'showcase') {
@@ -127,34 +148,41 @@ async function renderPage() {
       <div id="showcase-gallery-container"></div>
     `;
 
+    const members = teamShowcase
+      .filter(m => m.active)
+      .map(m => ({
+        name: m.name,
+        shinies: m.shinies.filter(s => !s.lost && !s.sold).length
+      }));
+
     setupShowcaseSearchAndSort(
-      [],
+      members,
       renderShowcaseGallery,
       null,
-      [],
+      teamShowcase,
       POKEMON_POINTS
     );
   }
 
   // -------------------------------------------------------
-  // MEMBER DETAIL (STUB)
+  // MEMBER DETAIL
   // -------------------------------------------------------
 
   else if (page === 'member') {
-    content.textContent = 'Member data not loaded yet.';
+    const m = teamShowcase.find(
+      x => x.key === member.toLowerCase()
+    );
+
+    if (!m) {
+      content.textContent = 'Member not found.';
+      return;
+    }
+
+    renderMemberShowcase(m, null, teamShowcase, POKEMON_POINTS);
   }
 
   // -------------------------------------------------------
-  // HITLIST (STUB)
-  // -------------------------------------------------------
-
-  else if (page === 'hitlist') {
-    content.innerHTML = `<div id="shiny-dex-container"></div>`;
-    setupShinyDexHitlistSearch({}, []);
-  }
-
-  // -------------------------------------------------------
-  // DONATORS (FIXED)
+  // DONATORS
   // -------------------------------------------------------
 
   else if (page === 'donators') {
