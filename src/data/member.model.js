@@ -1,59 +1,67 @@
 // src/data/member.model.js
 // Member Model Builder — HARD CONTRACT
-// Pure data shaping. No DOM. No globals.
+// Combines members + shiny showcase into final teamShowcase structure
 
 import { normalizeMemberName } from '../utils/utils.js';
 
 /**
- * Build member models and indexes from loaded CSV rows.
+ * Build team showcase model.
  *
- * INPUT:
- * rows: Array<{
- *   name: string,
- *   key: string,
- *   active: boolean,
- *   sprite: string | null,
- *   role: string
- * }>
- *
- * OUTPUT:
- * {
- *   members: Array<Member>,
- *   memberIndex: Record<memberKey, Member>,
- *   spriteMap: Record<memberKey, spriteExtension>
- * }
+ * Output shape:
+ * [
+ *   {
+ *     name,
+ *     key,
+ *     active,
+ *     sprite,
+ *     role,
+ *     shinies: [ ... ]
+ *   }
+ * ]
  */
-export function buildMemberModel(rows) {
-  const members = [];
-  const memberIndex = {};
-  const spriteMap = {};
+export function buildMemberModel(members, shinyShowcase) {
+  const map = {};
 
-  rows.forEach(row => {
-    const key = row.key || normalizeMemberName(row.name);
-
-    const member = {
-      name: row.name,
-      key,
-      active: !!row.active,
-      role: row.role || '',
-      sprite: row.sprite || null
+  // Initialize members
+  members.forEach(m => {
+    map[m.key] = {
+      name: m.name,
+      key: m.key,
+      active: m.active,
+      sprite: m.sprite,
+      role: m.role,
+      shinies: []
     };
-
-    members.push(member);
-    memberIndex[key] = member;
-
-    // Sprite registration rules:
-    // - sprite === null → no entry
-    // - sprite === 'none' → explicit opt-out
-    // - sprite === png/gif/jpg → registered
-    if (member.sprite && member.sprite !== 'none') {
-      spriteMap[key] = member.sprite;
-    }
   });
 
-  return {
-    members,
-    memberIndex,
-    spriteMap
-  };
+  // Attach shinies
+  shinyShowcase.forEach(s => {
+    const key = s.memberKey;
+
+    // Allow ex-members to still appear
+    if (!map[key]) {
+      map[key] = {
+        name: s.member,
+        key,
+        active: false,
+        sprite: null,
+        role: '',
+        shinies: []
+      };
+    }
+
+    map[key].shinies.push({
+      name: s.name,
+      lost: s.lost,
+      sold: s.sold,
+      secret: s.secret,
+      safari: s.safari,
+      egg: s.egg,
+      event: s.event,
+      alpha: s.alpha,
+      clip: s.clip
+    });
+  });
+
+  return Object.values(map);
 }
