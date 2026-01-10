@@ -10,6 +10,8 @@ import {
   POKEMON_POINTS
 } from './src/data/pokemondatabuilder.js';
 
+import { loadPokemonFromCSV } from './src/data/pokemon.loader.js';
+
 import {
   renderShowcaseGallery,
   setupShowcaseSearchAndSort,
@@ -40,7 +42,7 @@ const POKEMON_CSV =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vTB6vHVjwL9_F3DVIVgXxP8rtWEDQyZaDTnG2yAw96j4_1DXU7317lBFaY0N5JnDhdvUnkvgAvb6p8o/pub?gid=890281184&single=true&output=csv';
 
 // ---------------------------------------------------------
-// DATA CACHES (IN-MEMORY)
+// DATA CACHES
 // ---------------------------------------------------------
 
 let shinyWeeklyWeeks = null;
@@ -99,9 +101,10 @@ async function renderPage() {
   // -------------------------------------------------------
 
   if (!pokemonDataLoaded) {
-    await buildPokemonData();
+    const pokemonRows = await loadPokemonFromCSV(POKEMON_CSV);
+    buildPokemonData(pokemonRows);
     pokemonDataLoaded = true;
-    console.log('✔ Pokémon data loaded');
+    console.log('✔ Pokémon data loaded:', pokemonRows.length);
   }
 
   // -------------------------------------------------------
