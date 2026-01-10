@@ -1,6 +1,7 @@
 // showcase.js
 // Team Shroom — Showcase & Member Views
 // Design System v1 — enforced contracts only
+// CSV-backed logic (lost vs sold handled correctly)
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import {
@@ -28,6 +29,7 @@ function getPokemonGif(name) {
 }
 
 function getMemberSpriteUrl() {
+  // future: sprite_type from member_data
   return 'img/membersprites/examplesprite.png';
 }
 
@@ -37,7 +39,8 @@ function getMemberSpriteUrl() {
 
 function getPointsForPokemon(name, extra, POKEMON_POINTS) {
   if (extra?.alpha) return 50;
-  return POKEMON_POINTS?.[normalizePokemonName(name)] || 1;
+  const pts = POKEMON_POINTS?.[normalizePokemonName(name)];
+  return !pts || pts === 'NA' ? 0 : pts;
 }
 
 function getMemberPoints(member, teamShowcase, POKEMON_POINTS) {
@@ -45,7 +48,7 @@ function getMemberPoints(member, teamShowcase, POKEMON_POINTS) {
   if (!entry?.shinies) return 0;
 
   return entry.shinies
-    .filter(mon => !mon.lost)
+    .filter(mon => !mon.lost && !mon.sold)
     .reduce(
       (sum, mon) =>
         sum + getPointsForPokemon(mon.name, mon, POKEMON_POINTS),
@@ -147,10 +150,7 @@ export function renderShowcaseGallery(
                   POKEMON_POINTS
                 )}`
               : `Shinies: ${member.shinies}`,
-          cardType: 'member',
-          states: {
-            member: true
-          }
+          cardType: 'member'
         })
       );
     });
@@ -181,7 +181,7 @@ export function renderMemberShowcase(
     <div class="member-nameplate">
       <span class="member-name">${member.name}</span>
       <span class="shiny-count">Shinies: ${
-        shinies.filter(s => !s.lost).length
+        shinies.filter(s => !s.lost && !s.sold).length
       }</span>
       <span class="point-count">Points: ${getMemberPoints(
         member,
@@ -196,7 +196,9 @@ export function renderMemberShowcase(
           renderUnifiedCard({
             name: prettifyPokemonName(mon.name),
             img: getPokemonGif(mon.name),
-            info: mon.lost
+            info: mon.sold
+              ? 'Sold'
+              : mon.lost
               ? 'Lost'
               : `${getPointsForPokemon(
                   mon.name,
@@ -204,10 +206,7 @@ export function renderMemberShowcase(
                   POKEMON_POINTS
                 )} Points`,
             cardType: 'pokemon',
-            states: {
-              pokemon: true,
-              lost: mon.lost
-            },
+            lost: mon.lost || mon.sold,
             symbols: {
               secret: mon.secret,
               safari: mon.safari,
