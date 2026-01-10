@@ -43,10 +43,8 @@ const POKEMON_CSV =
 // DATA CACHES (IN-MEMORY)
 // ---------------------------------------------------------
 
-let teamShowcaseData = [];
-let pokemonFamiliesData = [];
-let donationsData = [];
 let shinyWeeklyWeeks = null;
+let pokemonDataLoaded = false;
 
 // ---------------------------------------------------------
 // ROUTING
@@ -70,7 +68,9 @@ function getRoute() {
 }
 
 function setActiveNav(page) {
-  document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.nav a').forEach(a =>
+    a.classList.remove('active')
+  );
 
   const map = {
     showcase: 'nav-showcase',
@@ -95,18 +95,27 @@ async function renderPage() {
   content.innerHTML = '';
 
   // -------------------------------------------------------
-  // SHINY WEEKLY (CSV — ALREADY MIGRATED)
+  // POKÉMON DATA (CSV — FOUNDATIONAL)
+  // -------------------------------------------------------
+
+  if (!pokemonDataLoaded) {
+    await buildPokemonData();
+    pokemonDataLoaded = true;
+    console.log('✔ Pokémon data loaded');
+  }
+
+  // -------------------------------------------------------
+  // SHINY WEEKLY (CSV)
   // -------------------------------------------------------
 
   if (!shinyWeeklyWeeks) {
     const rows = await loadShinyWeeklyFromCSV(SHINY_WEEKLY_CSV);
     shinyWeeklyWeeks = buildShinyWeeklyModel(rows);
-
     console.log('✔ Shiny Weekly loaded:', rows.length, 'rows');
   }
 
   // -------------------------------------------------------
-  // SHOWCASE (TEMP EMPTY — CSV NEXT STEP)
+  // SHOWCASE (STUB)
   // -------------------------------------------------------
 
   if (page === 'showcase') {
@@ -125,7 +134,7 @@ async function renderPage() {
   }
 
   // -------------------------------------------------------
-  // MEMBER DETAIL
+  // MEMBER DETAIL (STUB)
   // -------------------------------------------------------
 
   else if (page === 'member') {
@@ -133,7 +142,7 @@ async function renderPage() {
   }
 
   // -------------------------------------------------------
-  // HITLIST
+  // HITLIST (STUB)
   // -------------------------------------------------------
 
   else if (page === 'hitlist') {
@@ -142,7 +151,7 @@ async function renderPage() {
   }
 
   // -------------------------------------------------------
-  // DONATORS
+  // DONATORS (STUB)
   // -------------------------------------------------------
 
   else if (page === 'donators') {
