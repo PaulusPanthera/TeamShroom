@@ -1,12 +1,12 @@
 name: Sheets to JSON
 
+permissions:
+  contents: write
+
 on:
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
-  
-permissions:
-  contents: write
 
 jobs:
   build-data:
