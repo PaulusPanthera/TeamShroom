@@ -1,5 +1,6 @@
 // donators.js
-// Donators — data + table rendering (Design System v1 stabilized)
+// Donators — data + table rendering
+// Google Sheets CSV–compatible (Design System v1 stabilized)
 
 /* ---------------------------------------------------------
    PARSING & FORMATTING
@@ -27,7 +28,7 @@ const DONATOR_TIERS = {
   gold:     { icon: 'img/symbols/golddonatorsprite.png',     label: 'Gold',        desc: '10,000,000+ donated.' },
   silver:   { icon: 'img/symbols/silverdonatorsprite.png',   label: 'Silver',      desc: '5,000,000+ donated.' },
   bronze:   { icon: 'img/symbols/bronzedonatorsprite.png',   label: 'Bronze',      desc: '1,000,000+ donated.' },
-  none:     { icon: '',                                     label: '',            desc: '' }
+  none:     { icon: '',                                      label: '',            desc: '' }
 };
 
 function resolveTier(total, isTop) {
@@ -57,12 +58,14 @@ function aggregateTotals(donations) {
 function getTopDonator(totals) {
   let topName = null;
   let topValue = 0;
+
   Object.entries(totals).forEach(([name, value]) => {
     if (value > topValue) {
       topName = name;
       topValue = value;
     }
   });
+
   return topName;
 }
 
@@ -85,7 +88,7 @@ function renderLastDonations(donations) {
         <tr>
           <td>${formatDonationDate(d.date)}</td>
           <td>${d.name || '-'}</td>
-          <td>${(d.donation || d.item || 'Pokéyen')}</td>
+          <td>${d.donation || 'Pokéyen'}</td>
           <td>${parseDonationValue(d.value).toLocaleString('en-US')}</td>
         </tr>
       `).join('')
@@ -111,6 +114,7 @@ function renderLastDonations(donations) {
 
 export function renderDonators(donations) {
   const content = document.getElementById('page-content');
+
   if (!donations || !donations.length) {
     content.innerHTML = '<div style="text-align:center;">No donation data.</div>';
     return;
@@ -169,24 +173,4 @@ export function renderDonators(donations) {
       </tbody>
     </table>
   `;
-}
-
-/* ---------------------------------------------------------
-   MUTATION HELPERS
---------------------------------------------------------- */
-
-// Assigns donator tier onto existing member objects (explicit mutation)
-export function assignDonatorTiersToTeam(teamShowcase, teamMembers, donations) {
-  if (!donations) return;
-
-  const totals = aggregateTotals(donations);
-  const topName = getTopDonator(totals);
-
-  function assign(member) {
-    const total = totals[member.name] || 0;
-    member.donator = resolveTier(total, member.name === topName && total > 0);
-  }
-
-  teamShowcase?.forEach(assign);
-  teamMembers?.forEach(assign);
 }
