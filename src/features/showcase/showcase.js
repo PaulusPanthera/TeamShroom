@@ -9,6 +9,7 @@ import {
   normalizePokemonName,
   prettifyPokemonName
 } from '../../utils/utils.js';
+import { getMemberSprite } from '../../utils/membersprite.js';
 
 /* ---------------------------------------------------------
    SPRITES
@@ -26,11 +27,6 @@ function getPokemonGif(name) {
   };
   const key = overrides[n] || normalizePokemonName(name);
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
-}
-
-function getMemberSpriteUrl() {
-  // future: sprite_type from member_data
-  return 'img/membersprites/examplesprite.png';
 }
 
 /* ---------------------------------------------------------
@@ -141,7 +137,7 @@ export function renderShowcaseGallery(
         'beforeend',
         renderUnifiedCard({
           name: member.name,
-          img: getMemberSpriteUrl(),
+          img: getMemberSprite(member.name, teamShowcase),
           info:
             mode === 'scoreboard'
               ? `Points: ${getMemberPoints(
@@ -150,7 +146,8 @@ export function renderShowcaseGallery(
                   POKEMON_POINTS
                 )}`
               : `Shinies: ${member.shinies}`,
-          cardType: 'member'
+          cardType: 'member',
+          states: { member: true }
         })
       );
     });
@@ -179,6 +176,11 @@ export function renderMemberShowcase(
     <button class="back-btn" data-sort="${sortMode || 'alphabetical'}">Back</button>
 
     <div class="member-nameplate">
+      <img
+        class="member-sprite"
+        src="${getMemberSprite(member.name, teamShowcase)}"
+        alt=""
+      >
       <span class="member-name">${member.name}</span>
       <span class="shiny-count">Shinies: ${
         shinies.filter(s => !s.lost && !s.sold).length
@@ -206,7 +208,10 @@ export function renderMemberShowcase(
                   POKEMON_POINTS
                 )} Points`,
             cardType: 'pokemon',
-            lost: mon.lost || mon.sold,
+            states: {
+              pokemon: true,
+              lost: mon.lost || mon.sold
+            },
             symbols: {
               secret: mon.secret,
               safari: mon.safari,
