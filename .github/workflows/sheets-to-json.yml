@@ -25,6 +25,23 @@ jobs:
         env:
           SHINY_WEEKLY_CSV: ${{ secrets.SHINY_WEEKLY_CSV }}
 
+          - run: node scripts/donators.mjs
+        env:
+          DONATORS_CSV: ${{ secrets.DONATORS_CSV }}
+
+      - run: node scripts/shinyshowcases.mjs
+        env:
+          SHINYSHOWCASES_CSV: ${{ secrets.SHINYSHOWCASES_CSV }}
+
+      - run: node scripts/members.mjs
+        env:
+          MEMBERS_CSV: ${{ secrets.MEMBERS_CSV }}
+
+      - run: node scripts/pokemon.mjs
+        env:
+          POKEMON_CSV: ${{ secrets.POKEMON_CSV }}
+
+
       - name: Commit generated JSON
         run: |
           git config user.name "github-actions"
