@@ -28,25 +28,18 @@ function getPokemonGif(name) {
 }
 
 function applyMemberSprite(imgEl, memberName) {
+  const spriteMap = window.MEMBER_SPRITES || {};
   const base = normalizeMemberName(memberName);
-  const formats = ['png', 'gif', 'jpg'];
-  let i = 0;
+  const ext = spriteMap[base];
 
+  // Always start with fallback
   imgEl.src = 'img/membersprites/examplesprite.png';
 
-  function tryNext() {
-    if (i >= formats.length) return;
-    const url = `img/membersprites/${base}sprite.${formats[i]}`;
-    const test = new Image();
-    test.onload = () => (imgEl.src = url);
-    test.onerror = () => {
-      i++;
-      tryNext();
-    };
-    test.src = url;
-  }
+  // No sprite registered → stop immediately
+  if (!ext) return;
 
-  tryNext();
+  // Exactly one deterministic request
+  imgEl.src = `img/membersprites/${base}sprite.${ext}`;
 }
 
 /* ---------------------------------------------------------
@@ -102,6 +95,7 @@ export function renderShinyWeekly(weeks, container) {
             cardType: 'member',
             states: { member: true }
           });
+
           applyMemberSprite(
             wrapper.querySelector('.unified-img'),
             member
