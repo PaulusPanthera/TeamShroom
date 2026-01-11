@@ -1,301 +1,206 @@
-Team Shroom Shiny Dex & Weekly Tracker 🍄✨
+# Team Shroom Shiny Dex & Weekly Tracker 🍄✨
 
-This website tracks Team Shroom’s PokeMMO shiny progress, including:
+This website tracks **Team Shroom’s PokeMMO shiny progress**, including:
 
-🧬 Living Shiny Dex & Hitlist
+- 🧬 Living Shiny Dex & Hitlist  
+- 📅 Weekly Shiny Events (“Shiny Weekly”)  
+- 🧍 Member Shiny Collections & Showcase  
+- 💖 Donators & Community Support  
 
-📅 Weekly Shiny Events (“Shiny Weekly”)
+The site is **fully static**, hosted on **GitHub Pages**, and powered by **Google Sheets** as the primary data source — allowing the entire team to contribute **without touching code**.
 
-🧍 Member Shiny Collections & Showcase
+---
 
-💖 Donators & Community Support
+## 🌍 Live Site
 
-The site is fully static, hosted on GitHub Pages, and powered by Google Sheets as the primary data source — allowing the entire team to contribute without touching code.
-
-🌍 Live Site
-
-Hosted on GitHub Pages:
+Hosted on GitHub Pages:  
 https://<username>.github.io/<repo>/
 
-✏️ How to Update Data (No Code Required)
+---
 
-All core data is managed via Google Sheets.
+## ✏️ How to Update Data (No Code Required)
 
-Google Sheets = Source of Truth
+All main data is managed via **Google Sheets**.
 
-Data is edited collaboratively in Google Sheets
+### Google Sheets = Source of Truth
 
-Sheets are published as CSV
+- Data is edited collaboratively in Google Sheets  
+- Sheets are published as CSV  
+- GitHub Actions automatically converts CSV → JSON  
+- The website consumes **only generated JSON at runtime**
 
-A GitHub Action converts CSV → JSON automatically
+➡ This allows **any team member** to add or update data safely without editing code or JSON files.
 
-The website consumes only generated JSON at runtime
+---
 
-➡ This allows any team member to contribute safely without editing code or JSON files.
+## 🧠 Data Philosophy
 
-🧠 Data Philosophy
-
-Google Sheets = Source of Truth
-
-No manual JSON editing
-
-CI-generated data only
-
-Runtime is read-only & deterministic
+- **Google Sheets = Source of Truth**  
+- **No manual JSON editing**  
+- **CI-generated data only**  
 
 All data is:
 
-validated
-
-normalized
-
-sanitized
-
-grouped
-
-rendered dynamically
+- validated  
+- normalized  
+- sanitized  
+- grouped  
+- rendered dynamically  
 
 This makes the site:
 
-✅ safer
+- safer  
+- scalable  
+- contributor-friendly  
+- future-proof  
 
-✅ scalable
+---
 
-✅ contributor-friendly
+## 🧩 Architecture Principles
 
-✅ future-proof
+- ES Modules only (`import / export`)  
+- No global variables  
+- No inline JavaScript in HTML  
+- Clear **Data → Model → UI** separation  
+- Each feature is isolated and composable  
+- UI never guesses or mutates data  
 
-🧩 Architecture Principles
+---
 
-ES Modules only (import / export)
+## 🧱 What We’ve Achieved
 
-No global variables
+### ✅ Major Milestones
 
-No inline JavaScript in HTML
+- Migrated all core data to **Google Sheets**  
+- Implemented a **CSV → JSON GitHub Actions pipeline**  
+- Removed runtime CSV parsing  
+- Introduced strict loaders and models  
+- Unified card rendering across the entire site  
+- Deterministic Pokémon normalization and scoring  
+- Robust handling of:
+  - lost shinies  
+  - sold shinies  
+  - secret shinies  
+  - alpha shinies  
+  - hunt methods  
+  - clips & highlights  
 
-Strict Data → Model → UI layering
+---
 
-Each feature is isolated and composable
+## 🚀 How Deployment Works
 
-UI never fetches or mutates raw data
+1. Edit Google Sheets  
+2. GitHub Actions runs automatically (or on schedule)  
+3. JSON is regenerated and committed  
+4. GitHub Pages updates the site  
 
-Business rules live in models, not UI
+No build step required.  
+No server required.
 
-Layering is enforced:
+---
 
-Data Loaders → Models → UI
+## 🛣️ Roadmap
 
-🧱 What We’ve Achieved So Far
-✅ Major Milestones
+### In Progress
 
-Migrated all core data to Google Sheets
+- Polish hunt method symbols  
+- Extend Shiny Weekly stats  
+- Improve Hitlist ↔ Weekly integration  
+- UI refinements & performance cleanup  
 
-Implemented CSV → JSON CI pipeline
+### Planned
 
-Removed runtime CSV parsing
+- 📊 Weekly trends & graphs  
+- 🏆 Long-term hunter leaderboards  
+- 🎣 Method analytics (Safari, Egg, Alpha, MPB, etc.)  
+- 🧪 Validation & error highlighting in Sheets  
+- 🏅 Badge case & achievements  
+- 🎥 Clip embedding & highlights  
+- 🌍 Public API-style data endpoints  
+- 📱 Improved mobile UX  
 
-Introduced strict loaders & models
+### Optional / Future
 
-Unified card rendering across the entire app
+- 🧱 React migration (only if needed)  
+- 🤖 Discord bot integration  
+- 📤 Exportable stats (CSV / JSON)  
 
-Deterministic Pokémon normalization & scoring
+---
 
-Robust handling of:
+## 💡 Design Goals
 
-lost shinies
+- Data should be boring  
+- Rules should be explicit  
+- UI should never guess  
+- Contributors should never break the site  
+- Sheets stay friendly, code stays strict  
 
-sold shinies
+---
 
-secret shinies
-
-alpha shinies
-
-hunt methods
-
-clips & highlights
-
-🔒 Stability Guarantees
-
-No runtime schema guessing
-
-No fragile CSV parsing in the browser
-
-No accidental sheet formatting crashes
-
-Empty rows are safely ignored
-
-Explicit, boring, predictable data contracts
-
-🚀 How Deployment Works
-
-Edit Google Sheets
-
-Push (or wait for scheduled CI)
-
-GitHub Actions:
-
-fetch CSV
-
-validate rows
-
-generate JSON
-
-commit results
-
-GitHub Pages updates automatically
-
-➡ No build step required
-➡ No server required
-
-🛣️ Roadmap
-In Progress
-
-Polish hunt method symbols
-
-Extend Shiny Weekly stats
-
-Improve hitlist ↔ weekly integration
-
-Minor UI refinements & performance cleanup
-
-Planned
-
-📊 Weekly trends & graphs
-
-🏆 Long-term hunter leaderboards
-
-🎣 Method analytics (Safari, Egg, Alpha, MPB, etc.)
-
-🧪 Sheet validation warnings & hints
-
-🏅 Badges & achievements
-
-🎥 Clip embedding & highlight reels
-
-🌍 Public read-only data endpoints
-
-📱 Improved mobile UX
-
-Optional / Long-Term
-
-🧱 React migration (only if needed)
-
-🤖 Discord bot integration
-
-📤 Exportable stats (CSV / JSON)
-
-💡 Design Goals (Non-Negotiable)
-
-Data should be boring
-
-Rules should be explicit
-
-UI should never guess
-
-Contributors should never break the site
-
-Sheets stay friendly, code stays strict
-
-Inspired by Pokémon.
+Inspired by Pokémon.  
 Not affiliated with Nintendo, Game Freak, or PokeMMO.
 
-PART 2 — 📁 PROJECT STRUCTURE (SEPARATE, SAFE TO PASTE)
+---
 
-Paste this section separately at the end of your README.
+## 📁 Project Structure
 
-📁 Project Structure
-Root
+### Root
 
-index.html
-Static HTML entry point
+- `index.html` — Main HTML entry  
+- `main.js` — App bootstrap, routing, orchestration  
+- `README.md` — Project documentation  
+- `CNAME` — Custom domain (GitHub Pages)  
 
-main.js
-App bootstrap, routing, orchestration
+---
 
-README.md
-Project documentation
+### Generated Data (CI Output — Do Not Edit)
 
-CNAME
-Custom domain (GitHub Pages)
+- `data/shinyweekly.json`  
+- `data/shinyshowcase.json`  
+- `data/members.json`  
+- `data/donators.json`  
+- `data/pokemon.json`  
 
-Generated Data (CI Output — DO NOT EDIT)
+---
 
-data/
+### CI Scripts (CSV → JSON)
 
-shinyweekly.json
+- `scripts/shinyweekly.mjs`  
+- `scripts/shinyshowcase.mjs`  
+- `scripts/members.mjs`  
+- `scripts/donators.mjs`  
+- `scripts/pokemon.mjs`  
 
-shinyshowcase.json
+---
 
-members.json
+### Application Source
 
-donators.json
+#### Data Layer
 
-pokemon.json
+- `src/data/`
+  - `*.loader.js` — JSON loaders  
+  - `*.model.js` — Data models  
+  - `pokemondatabuilder.js` — tiers, points, families  
 
-These files are auto-generated from Google Sheets via GitHub Actions.
+#### Feature Modules
 
-CI Scripts (CSV → JSON)
+- `src/features/showcase/` — Member gallery & profiles  
+- `src/features/shinyweekly/` — Weekly history & stats  
+- `src/features/shinydex/` — Living Dex & Hitlist  
+- `src/features/donators/` — Donations & tiers  
 
-scripts/
+#### UI Components
 
-shinyweekly.mjs
+- `src/ui/unifiedcard.js` — Reusable card renderer  
 
-shinyshowcase.mjs
+#### Utilities
 
-members.mjs
+- `src/utils/utils.js` — Normalization helpers  
+- `src/utils/membersprite.js` — Member sprite resolution  
 
-donators.mjs
+---
 
-pokemon.mjs
+### Styling & Assets
 
-Used only in CI, never in the browser.
-
-Application Source
-
-src/
-
-Data Layer
-
-src/data/
-
-*.loader.js — load generated JSON
-
-*.model.js — normalize & group data
-
-pokemondatabuilder.js — tiers, points, families
-
-Feature Modules
-
-src/features/
-
-showcase/ — member gallery & detail views
-
-shinyweekly/ — weekly history & stats
-
-shinydex/ — living dex & hitlist
-
-donators/ — donations & tiers
-
-UI Components
-
-src/ui/
-
-unifiedcard.js — reusable card renderer
-
-Utilities
-
-src/utils/
-
-utils.js — normalization & display helpers
-
-membersprite.js — sprite resolution
-
-Styling
-
-style/
-Locked Design System v1
-
-Assets
-
-img/
-Member sprites, symbols, UI assets
+- `style/` — Design System v1 & feature CSS  
+- `img/` — Sprites, symbols, UI assets  
