@@ -29,9 +29,9 @@ jobs:
         env:
           DONATORS_CSV: ${{ secrets.DONATORS_CSV }}
 
-      - run: node scripts/shinyshowcases.mjs
+      - run: node scripts/shinyshowcase.mjs
         env:
-          SHINYSHOWCASES_CSV: ${{ secrets.SHINYSHOWCASES_CSV }}
+          SHINYSHOWCASE_CSV: ${{ secrets.SHINYSHOWCASE_CSV }}
 
       - run: node scripts/members.mjs
         env:
