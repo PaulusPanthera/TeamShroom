@@ -19,10 +19,12 @@ export function renderUnifiedCard({
 
   const classes = [
     'unified-card',
-    unclaimed && 'unclaimed',
-    lost && 'lost',
-    highlighted && 'highlighted'
-  ].filter(Boolean).join(' ');
+    unclaimed && 'is-unclaimed',
+    lost && 'is-lost',
+    highlighted && 'is-highlighted'
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   /* -------------------------------------------------------
      ATTRIBUTES
@@ -43,41 +45,41 @@ export function renderUnifiedCard({
   ------------------------------------------------------- */
 
   const symbolMap = {
-  // status
-  secret: 'secretshinysprite.png',
-  alpha: 'alphasprite.png',
-  clip: 'clipsprite.png',
+    // status
+    secret: 'secretshinysprite.png',
+    alpha: 'alphasprite.png',
+    clip: 'clipsprite.png',
 
-  // methods
-  mpb: 'mpbsprite.png',
-  mgb: 'mgbsprite.png',
-  mub: 'mubsprite.png',
-  mcb: 'mcbsprite.png',
-  mdb: 'mdbsprite.png',
-  egg: 'eggsprite.png',
-  safari: 'safarisprite.png',
-  single: 'singlesprite.png',
-  swarm: 'swarmsprite.png',
-  raid: 'raidsprite.png',
-  fishing: 'fishingsprite.png',
-  headbutt: 'headbuttsprite.png',
-  rocksmash: 'rocksmashsprite.png',
-  honeytree: 'honeytreesprite.png',
-  event: 'eventsprite.png'
-};
-
+    // methods
+    mpb: 'mpbsprite.png',
+    mgb: 'mgbsprite.png',
+    mub: 'mubsprite.png',
+    mcb: 'mcbsprite.png',
+    mdb: 'mdbsprite.png',
+    egg: 'eggsprite.png',
+    safari: 'safarisprite.png',
+    single: 'singlesprite.png',
+    swarm: 'swarmsprite.png',
+    raid: 'raidsprite.png',
+    fishing: 'fishingsprite.png',
+    headbutt: 'headbuttsprite.png',
+    rocksmash: 'rocksmashsprite.png',
+    honeytree: 'honeytreesprite.png',
+    event: 'eventsprite.png'
+  };
 
   const symbolHtml = Object.entries(symbols)
     .filter(([, enabled]) => enabled)
-    .map(([key]) => symbolMap[key]
-      ? `
-        <img
-          class="symbol ${key}"
-          src="img/symbols/${symbolMap[key]}"
-          alt="${key}"
-        >
-      `
-      : ''
+    .map(([key]) =>
+      symbolMap[key]
+        ? `
+          <img
+            class="symbol ${key}"
+            src="img/symbols/${symbolMap[key]}"
+            alt="${key}"
+          >
+        `
+        : ''
     )
     .join('');
 
