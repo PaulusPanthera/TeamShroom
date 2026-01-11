@@ -1,15 +1,13 @@
-// shinydex.js
+// src/features/shinydex/shinydex.js
 // Shiny Dex — Hitlist & Living Dex
-// Rendering only. No aggregation. No derivation.
+// UI-only. Consumes fully derived data structures.
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
-import {
-  POKEMON_POINTS,
-  POKEMON_REGION,
-  POKEMON_SHOW,
-  LIVING_COUNTS
-} from '../../data/pokemondatabuilder.js';
+
+/* ---------------------------------------------------------
+   SPRITES
+--------------------------------------------------------- */
 
 function getPokemonGif(pokemonKey) {
   const overrides = {
@@ -26,25 +24,32 @@ function getPokemonGif(pokemonKey) {
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
 }
 
+/* ---------------------------------------------------------
+   FILTER
+--------------------------------------------------------- */
+
 function filterEntry(entry, filter) {
-  if (!POKEMON_POINTS[entry.pokemon]) return false;
-  if (!POKEMON_SHOW[entry.pokemon]) return false;
   if (!filter) return true;
 
   const f = filter.toLowerCase();
-  if (f === 'claimed') return !!entry.claimed;
-  if (f === 'unclaimed') return !entry.claimed;
-  if (POKEMON_REGION[entry.pokemon]?.toLowerCase() === f) return true;
+
+  if (f === 'claimed') return entry.claimed === true;
+  if (f === 'unclaimed') return entry.claimed === false;
 
   return entry.pokemon.includes(f);
 }
 
-function renderHitlist(shinyDex, filter) {
+/* ---------------------------------------------------------
+   HITLIST RENDER
+--------------------------------------------------------- */
+
+function renderHitlist(hitlistDex, filter) {
   const container = document.getElementById('shiny-dex-container');
   container.innerHTML = '';
+
   let shown = 0;
 
-  Object.entries(shinyDex).forEach(([region, entries]) => {
+  Object.entries(hitlistDex).forEach(([region, entries]) => {
     const filtered = entries.filter(e => filterEntry(e, filter));
     if (!filtered.length) return;
 
@@ -63,7 +68,9 @@ function renderHitlist(shinyDex, filter) {
         renderUnifiedCard({
           name: prettifyPokemonName(entry.pokemon),
           img: getPokemonGif(entry.pokemon),
-          info: entry.claimed ? 'Claimed' : 'Unclaimed',
+          info: entry.claimed
+            ? `Claimed by ${entry.claimer}`
+            : 'Unclaimed',
           cardType: 'pokemon',
           unclaimed: !entry.claimed
         })
@@ -77,12 +84,17 @@ function renderHitlist(shinyDex, filter) {
   return shown;
 }
 
-function renderLivingDex(shinyDex, filter) {
+/* ---------------------------------------------------------
+   LIVING DEX RENDER
+--------------------------------------------------------- */
+
+function renderLivingDex(livingDex, filter) {
   const container = document.getElementById('shiny-dex-container');
   container.innerHTML = '';
+
   let shown = 0;
 
-  Object.entries(shinyDex).forEach(([region, entries]) => {
+  Object.entries(livingDex).forEach(([region, entries]) => {
     const filtered = entries.filter(e => filterEntry(e, filter));
     if (!filtered.length) return;
 
@@ -101,7 +113,7 @@ function renderLivingDex(shinyDex, filter) {
         renderUnifiedCard({
           name: prettifyPokemonName(entry.pokemon),
           img: getPokemonGif(entry.pokemon),
-          info: `Owned: ${LIVING_COUNTS[entry.pokemon] || 0}`,
+          info: `Owned: ${entry.ownedCount}`,
           cardType: 'pokemon'
         })
       );
@@ -114,13 +126,20 @@ function renderLivingDex(shinyDex, filter) {
   return shown;
 }
 
-export function setupShinyDexHitlistSearch(shinyDex) {
+/* ---------------------------------------------------------
+   ENTRY POINT
+--------------------------------------------------------- */
+
+export function setupShinyDexHitlistSearch({
+  hitlistDex,
+  livingDex
+}) {
   const container = document.getElementById('shiny-dex-container');
 
   const controls = document.createElement('div');
   controls.className = 'search-controls';
   controls.innerHTML = `
-    <input type="text" placeholder="Search Pokémon or Region">
+    <input type="text" placeholder="Search Pokémon">
     <button class="dex-tab active" data-mode="hitlist">Hitlist</button>
     <button class="dex-tab" data-mode="living">Living Dex</button>
     <span class="result-count"></span>
@@ -138,8 +157,8 @@ export function setupShinyDexHitlistSearch(shinyDex) {
   function render() {
     const shown =
       mode === 'hitlist'
-        ? renderHitlist(shinyDex, filter)
-        : renderLivingDex(shinyDex, filter);
+        ? renderHitlist(hitlistDex, filter)
+        : renderLivingDex(livingDex, filter);
 
     count.textContent = `${shown} Pokémon`;
   }
