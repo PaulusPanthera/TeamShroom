@@ -1,5 +1,5 @@
 import { loadJson } from './json.loader.js';
 
-export function loadShinyWeekly() {
+export async function loadShinyWeekly() {
   return loadJson('/data/shinyweekly.json', 1);
 }
