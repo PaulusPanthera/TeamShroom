@@ -1,7 +1,7 @@
 // src/data/pokemondatabuilder.js
 // Pokémon derived data builder
-// Runtime consumes pre-normalized pokemon.json
-// SINGLE SOURCE OF TRUTH for dex-derived structures
+// Runtime consumes CI-normalized JSON only
+// SINGLE SOURCE OF TRUTH for all dex-derived state
 
 export const TIER_POINTS = {
   '6': 2,
@@ -15,7 +15,7 @@ export const TIER_POINTS = {
 };
 
 // ---------------------------------------------------------
-// DERIVED STATE (EXPORTED, READ-ONLY FOR UI)
+// DERIVED STATE (READ-ONLY FOR UI)
 // ---------------------------------------------------------
 
 export let POKEMON_POINTS = {};
@@ -31,7 +31,10 @@ export let LIVING_DEX = {};
 // ---------------------------------------------------------
 
 export function buildPokemonData(pokemonRows, teamMembers, shinyWeeklyRows) {
-  // Reset
+  // -------------------------------------------------------
+  // RESET STATE
+  // -------------------------------------------------------
+
   POKEMON_POINTS = {};
   POKEMON_REGION = {};
   POKEMON_SHOW = {};
@@ -39,50 +42,54 @@ export function buildPokemonData(pokemonRows, teamMembers, shinyWeeklyRows) {
   HITLIST_DEX = {};
   LIVING_DEX = {};
 
-  // -----------------------------
-  // Base Pokémon data
-  // -----------------------------
+  // -------------------------------------------------------
+  // PASS 1 — BASE POKÉMON MAPS (EXHAUSTIVE)
+  // -------------------------------------------------------
 
   pokemonRows.forEach(row => {
     const tier = String(row.tier);
     if (!TIER_POINTS[tier]) return;
 
-    const family = Array.isArray(row.family)
-      ? row.family
-      : String(row.family)
-          .split(',')
-          .map(s => s.trim().toLowerCase())
-          .filter(Boolean);
+    if (!Array.isArray(row.family) || !row.family.length) return;
 
-    family.forEach(name => {
-      POKEMON_POINTS[name] = TIER_POINTS[tier];
-      POKEMON_REGION[name] = row.region;
-      POKEMON_SHOW[name] = row.show === true;
-      POKEMON_FAMILIES[name] = family;
+    row.family.forEach(pokemon => {
+      POKEMON_POINTS[pokemon] = TIER_POINTS[tier];
+      POKEMON_REGION[pokemon] = row.region || 'unknown';
+      POKEMON_SHOW[pokemon] = row.show === true;
+      POKEMON_FAMILIES[pokemon] = row.family;
     });
   });
 
-  // -----------------------------
-  // Living Dex (counts only)
-  // -----------------------------
+  // -------------------------------------------------------
+  // PASS 2 — BASE DEX CONSTRUCTION (NO CLAIMS YET)
+  // -------------------------------------------------------
 
-  teamMembers.forEach(member => {
-    member.shinies.forEach(mon => {
-      if (mon.lost || mon.sold) return;
-      if (!POKEMON_POINTS[mon.pokemon]) return;
+  Object.keys(POKEMON_POINTS).forEach(pokemon => {
+    if (!POKEMON_SHOW[pokemon]) return;
 
-      const region = POKEMON_REGION[mon.pokemon] || 'unknown';
-      LIVING_DEX[region] ??= {};
-      LIVING_DEX[region][mon.pokemon] ??= { pokemon: mon.pokemon, count: 0 };
-      LIVING_DEX[region][mon.pokemon].count += 1;
-    });
+    const region = POKEMON_REGION[pokemon];
+
+    HITLIST_DEX[region] ??= {};
+    HITLIST_DEX[region][pokemon] = {
+      pokemon,
+      claimed: false,
+      member: null,
+      points: POKEMON_POINTS[pokemon]
+    };
+
+    LIVING_DEX[region] ??= {};
+    LIVING_DEX[region][pokemon] = {
+      pokemon,
+      count: 0,
+      owners: []
+    };
   });
 
-  // -----------------------------
-  // Hitlist claims (Shiny Weekly ONLY)
-  // -----------------------------
+  // -------------------------------------------------------
+  // PASS 3 — APPLY WEEKLY CLAIMS (ROW ORDER IS LAW)
+  // -------------------------------------------------------
 
-  const claimedByFamily = {};
+  const claimedStagesByFamily = {};
 
   shinyWeeklyRows.forEach(row => {
     const pokemon = row.pokemon;
@@ -91,50 +98,49 @@ export function buildPokemonData(pokemonRows, teamMembers, shinyWeeklyRows) {
     const family = POKEMON_FAMILIES[pokemon];
     if (!family) return;
 
-    claimedByFamily[pokemon] ??= {};
-
     const familyKey = family.join('|');
-    claimedByFamily[familyKey] ??= {};
+    claimedStagesByFamily[familyKey] ??= new Set();
 
-    const alreadyClaimed = claimedByFamily[familyKey];
+    const claimedStages = claimedStagesByFamily[familyKey];
 
-    let claimedStage = null;
+    // Determine which stage is claimed
+    let claimedPokemon = null;
 
-    if (!alreadyClaimed[pokemon]) {
-      claimedStage = pokemon;
+    if (!claimedStages.has(pokemon)) {
+      claimedPokemon = pokemon;
     } else {
-      claimedStage = family.find(p => !alreadyClaimed[p]);
+      claimedPokemon = family.find(p => !claimedStages.has(p));
     }
 
-    if (!claimedStage) return;
+    if (!claimedPokemon) return;
 
-    alreadyClaimed[claimedStage] = member;
+    claimedStages.add(claimedPokemon);
 
-    const region = POKEMON_REGION[claimedStage] || 'unknown';
-    HITLIST_DEX[region] ??= {};
-    HITLIST_DEX[region][claimedStage] = {
-      pokemon: claimedStage,
-      claimed: true,
-      member
-    };
+    const region = POKEMON_REGION[claimedPokemon];
+    const entry = HITLIST_DEX[region]?.[claimedPokemon];
+
+    if (!entry || entry.claimed) return;
+
+    entry.claimed = true;
+    entry.member = member;
   });
 
-  // -----------------------------
-  // Fill unclaimed
-  // -----------------------------
+  // -------------------------------------------------------
+  // PASS 4 — LIVING DEX COUNTS (MEMBERS → SHINIES)
+  // -------------------------------------------------------
 
-  Object.keys(POKEMON_POINTS).forEach(pokemon => {
-    if (!POKEMON_SHOW[pokemon]) return;
+  teamMembers.forEach(member => {
+    member.shinies.forEach(mon => {
+      if (mon.lost || mon.sold) return;
+      if (!POKEMON_POINTS[mon.pokemon]) return;
 
-    const region = POKEMON_REGION[pokemon] || 'unknown';
-    HITLIST_DEX[region] ??= {};
+      const region = POKEMON_REGION[mon.pokemon];
+      const entry = LIVING_DEX[region]?.[mon.pokemon];
 
-    if (!HITLIST_DEX[region][pokemon]) {
-      HITLIST_DEX[region][pokemon] = {
-        pokemon,
-        claimed: false,
-        member: null
-      };
-    }
+      if (!entry) return;
+
+      entry.count += 1;
+      entry.owners.push(member.name);
+    });
   });
 }
