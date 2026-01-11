@@ -1,5 +1,5 @@
-import { loadJson } from './json.loader.js';
+import { loadJson } from './loadJson.js';
 
-export async function loadPokemon() {
-  return loadJson('/data/pokemon.json');
+export function loadPokemon() {
+  return loadJson('/data/pokemon.json', 1);
 }
