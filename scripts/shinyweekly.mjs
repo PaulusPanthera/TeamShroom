@@ -60,10 +60,18 @@ const csvText = await fetchCsv(CSV_URL);
 const rows = parseCsv(csvText);
 
 // -----------------------------
+// Drop empty rows (PRIMARY FIELD = week)
+// -----------------------------
+
+const meaningfulRows = rows.filter(
+  row => row.week && row.week.trim() !== ''
+);
+
+// -----------------------------
 // Pre-normalize for validation
 // -----------------------------
 
-rows.forEach(row => {
+meaningfulRows.forEach(row => {
   if (row.method) row.method = row.method.toLowerCase().trim();
 });
 
@@ -72,7 +80,7 @@ rows.forEach(row => {
 // -----------------------------
 
 validateRows({
-  rows,
+  rows: meaningfulRows,
   schema: shinyWeeklyContract,
   sheet: 'shinyweekly',
 });
@@ -81,34 +89,31 @@ validateRows({
 // Normalize (CI owns correctness)
 // -----------------------------
 
-const data = rows
-  // primary field = week
-  .filter(r => r.week && r.week.trim() !== '')
-  .map((row, index) => {
-    const rowNum = index + 2;
+const data = meaningfulRows.map((row, index) => {
+  const rowNum = index + 2;
 
-    return {
-      week: row.week.trim(),
-      week_label: row.week_label.trim(),
+  return {
+    week: row.week.trim(),
+    week_label: row.week_label?.trim() || null,
 
-      date_start: normalizeDate(row.date_start, rowNum, 'date_start'),
-      date_end: normalizeDate(row.date_end, rowNum, 'date_end'),
+    date_start: normalizeDate(row.date_start, rowNum, 'date_start'),
+    date_end: normalizeDate(row.date_end, rowNum, 'date_end'),
 
-      ot: normalizeMember(row.ot),
-      pokemon: normalizePokemon(row.pokemon),
+    ot: normalizeMember(row.ot),
+    pokemon: normalizePokemon(row.pokemon),
 
-      method: row.method || null,
-      encounter: normalizeEncounter(row.encounter, rowNum),
+    method: row.method || null,
+    encounter: normalizeEncounter(row.encounter, rowNum),
 
-      secret: row.secret === 'TRUE',
-      alpha: row.alpha === 'TRUE',
-      run: row.run === 'TRUE',
-      lost: row.lost === 'TRUE',
+    secret: row.secret === 'TRUE',
+    alpha: row.alpha === 'TRUE',
+    run: row.run === 'TRUE',
+    lost: row.lost === 'TRUE',
 
-      clip: row.clip?.trim() || null,
-      notes: row.notes?.trim() || null,
-    };
-  });
+    clip: row.clip?.trim() || null,
+    notes: row.notes?.trim() || null,
+  };
+});
 
 // -----------------------------
 // Write versioned JSON
