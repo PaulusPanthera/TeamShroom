@@ -43,17 +43,29 @@ export function renderUnifiedCard({
   ------------------------------------------------------- */
 
   const symbolMap = {
-    secret: 'secretshinysprite.png',
-    alpha: 'alphasprite.png',
-    run: 'runsprite.png',
-    favorite: 'favoritesprite.png',
-    clip: 'clipsprite.png',
+  // status
+  secret: 'secretshinysprite.png',
+  alpha: 'alphasprite.png',
+  clip: 'clipsprite.png',
 
-    // method-derived symbols (passed in explicitly)
-    safari: 'safarisprite.png',
-    egg: 'eggsprite.png',
-    event: 'eventsprite.png'
-  };
+  // methods
+  mpb: 'mpbsprite.png',
+  mgb: 'mgbsprite.png',
+  mub: 'mubsprite.png',
+  mcb: 'mcbsprite.png',
+  mdb: 'mdbsprite.png',
+  egg: 'eggsprite.png',
+  safari: 'safarisprite.png',
+  single: 'singlesprite.png',
+  swarm: 'swarmsprite.png',
+  raid: 'raidsprite.png',
+  fishing: 'fishingsprite.png',
+  headbutt: 'headbuttsprite.png',
+  rocksmash: 'rocksmashsprite.png',
+  honeytree: 'honeytreesprite.png',
+  event: 'eventsprite.png'
+};
+
 
   const symbolHtml = Object.entries(symbols)
     .filter(([, enabled]) => enabled)
