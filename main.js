@@ -97,7 +97,7 @@ async function renderPage() {
   }
 
   // -------------------------------------------------------
-  // SHINY WEEKLY
+  // SHINY WEEKLY (SINGLE SOURCE)
   // -------------------------------------------------------
 
   if (!shinyWeeklyWeeks) {
@@ -187,19 +187,15 @@ async function renderPage() {
   // -------------------------------------------------------
 
   else if (page === 'shinyweekly') {
-  content.innerHTML = `<div id="shinyweekly-container"></div>`;
+    content.innerHTML = `<div id="shinyweekly-container"></div>`;
 
-  const rows = await loadShinyWeekly();               // flat rows
-  const weeks = buildShinyWeeklyModel(rows);          // AGGREGATED
-
-  renderShinyWeekly(
-    weeks,
-    document.getElementById('shinyweekly-container'),
-    membersData
-  );
-}
+    renderShinyWeekly(
+      shinyWeeklyWeeks,
+      document.getElementById('shinyweekly-container'),
+      membersData
+    );
   }
-
+}
 
 // ---------------------------------------------------------
 // EVENTS
