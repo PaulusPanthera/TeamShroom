@@ -1,149 +1,255 @@
-# Team Shroom Shiny Dex & Weekly Tracker 🍄✨
+Team Shroom — Shiny Dex & Weekly Tracker
 
-This website tracks **Team Shroom’s PokeMMO shiny progress**, including:
+A static website tracking Team Shroom’s PokeMMO shiny progress.
 
-- 🧬 Living Shiny Dex & Hitlist  
-- 📅 Weekly Shiny Events (“Shiny Weekly”)  
-- 🧍 Member Shiny Collections & Showcase  
-- 💖 Donators & Community Support  
+The project is built for:
 
-The site is **fully static**, hosted on **GitHub Pages**, and powered by **Google Sheets** as the main data source — allowing the entire team to contribute without touching code.
+non-technical contributors
 
----
+long-term maintainability
 
-## 🌍 Live Site
+zero paid infrastructure
 
-Hosted on GitHub Pages:  
-`https://<username>.github.io/<repo>/`
+deterministic data flow
 
----
+The site is hosted on GitHub Pages and uses Google Sheets as the collaborative source of truth, with all runtime data served as pre-generated JSON.
 
-## ✏️ How to Update Data (No Code Required)
+Live Site
 
-All main data is managed via **Google Sheets**.
+GitHub Pages
+https://<username>.github.io/<repo>/
 
-### Shiny Weekly (Primary Data Source)
+Core Features
 
-- Data is edited collaboratively in Google Sheets  
-- The sheet is published as CSV  
-- The website fetches it directly at runtime  
+Shiny Showcase
 
-➡ This allows **any team member** to add shinies safely without editing JSON or code.
+Member overview
 
----
+Individual member pages
 
-## 🧠 Data Philosophy
+Points & shiny counts
 
-- **Google Sheets = Source of Truth**
-- **No manual JSON editing**
-- Data is:
-  - validated
-  - normalized
-  - grouped
-  - rendered dynamically
+Living Shiny Dex
 
-This makes the site:
+Claimed / unclaimed tracking
 
-- safer
-- scalable
-- contributor-friendly
-- future-proof
+Region grouping
 
----
+Shiny Weekly
 
-## 🧩 Architecture Principles
+Historical weekly events
 
-- ES Modules only (import / export)
-- No global variables
-- No inline JavaScript in HTML
-- Clear Data → Model → UI separation
-- Each feature is isolated and composable
+Hunter participation
 
----
+Per-week shiny listings
 
-## 🚀 How Deployment Works
+Donators
 
-1. Push to the main branch
-2. GitHub Pages is enabled (root /)
-3. The site updates automatically
+Aggregated totals
 
-No build step required.
+Tier system
 
----
+Recent donations
 
-## 🛣️ Roadmap
+Search & Filtering
 
+Across showcase and dex views
+
+Data Philosophy (Non-Negotiable)
+
+Google Sheets is the source of truth
+
+Contributors never touch JSON or code
+
+No runtime CSV parsing
+
+No manual data conversion
+
+No fragile “remember to update this file” steps
+
+Data flow:
+
+Google Sheets
+    ↓
+Published CSV
+    ↓
+GitHub Actions (CI)
+    ↓
+Normalized JSON committed to repo
+    ↓
+Website loads local JSON only
+
+
+This guarantees:
+
+fast page loads
+
+predictable behavior
+
+versioned data
+
+zero dependency on Google availability at runtime
+
+How Data Is Updated (No Code Required)
+
+Edit the appropriate Google Sheet
+
+Save changes
+
+GitHub Actions runs automatically:
+
+fetches CSV
+
+validates rows
+
+normalizes fields
+
+generates JSON
+
+commits the result
+
+The site updates automatically after the commit.
+
+There are no manual steps.
+
+Architecture Overview
+
+Vanilla JavaScript only
+
+ES Modules only
+
+No frameworks
+
+No globals
+
+No inline JavaScript
+
+Clear separation of concerns
+
+Layering is enforced:
+
+Data Loaders → Models → UI
+
+
+Each feature is isolated and composable.
+
+Runtime Data Model (Key Idea)
+
+At runtime, the app works with one canonical structure:
+
+teamMembers = [
+  {
+    name,
+    active,
+    sprite,
+    role,
+    shinies: [ ... ]
+  }
+]
+
+
+All UI features (showcase, member pages, points, weekly views) consume this structure.
+
+Raw CSV rows and intermediate formats never reach the UI layer.
+
+Project Structure
+/
+├── index.html              # Static HTML entry
+├── main.js                 # App bootstrap, routing, orchestration
+│
+├── data/                   # Generated JSON (CI output only)
+│   ├── shinyweekly.json
+│   ├── shinyshowcase.json
+│   ├── members.json
+│   ├── donators.json
+│   └── pokemon.json
+│
+├── scripts/                # CI-only CSV → JSON converters
+│   ├── shinyweekly.mjs
+│   ├── shinyshowcase.mjs
+│   ├── members.mjs
+│   ├── donators.mjs
+│   └── pokemon.mjs
+│
+├── src/
+│   ├── data/               # JSON loaders & models
+│   │   ├── *.loader.js
+│   │   ├── *.model.js
+│   │   └── pokemondatabuilder.js
+│   │
+│   ├── features/           # Feature modules
+│   │   ├── showcase/
+│   │   ├── shinyweekly/
+│   │   ├── shinydex/
+│   │   └── donators/
+│   │
+│   ├── ui/                 # Shared UI components
+│   │   └── unifiedcard.js
+│   │
+│   └── utils/              # Normalization helpers
+│       ├── utils.js
+│       └── membersprite.js
+│
+├── style/                  # CSS (design system + feature styles)
+├── img/                    # Static assets & sprites
+├── .github/workflows/      # GitHub Actions (CSV → JSON)
+├── README.md
+└── CNAME
+
+Design Rules (Hard Contracts)
+
+JSON is read-only at runtime
+
+Loaders do not mutate data
+
+Models do not touch the DOM
+
+UI does not normalize data
+
+Special cases live at the rendering boundary only
+
+Symbols must be explicitly declared in unifiedcard.js
+
+Deployment
+
+Push to main
+
+GitHub Actions regenerates JSON (if sheets changed)
+
+GitHub Pages serves the site
+
+No build step
+
+No server
+
+No environment-specific config
+
+Roadmap
 In Progress
-- Migrate remaining JSON → Google Sheets
-- Shiny Weekly CSV loader
-- Weekly aggregation & stats
-- Replace remaining static data sources
-- Connect Living Dex & Hitlist to Weekly data
+
+Final hitlist wiring to dex data
+
+Data validation hardening
+
+Method analytics groundwork
 
 Planned
-- 📊 Weekly trends & graphs
-- 🏆 Long-term hunter leaderboards
-- 🎣 Method analytics (Safari, Egg, Alpha, MPB, etc.)
-- 🧪 Validation & error highlighting in Sheets
-- 🧱 React migration (optional, future)
-- 📱 Improved mobile UX
-- 🏅 Badge case & achievements
-- 🎥 Clip embedding & highlights
-- 🌍 Public API-style CSV endpoints
 
----
+Weekly and lifetime leaderboards
 
-## 💡 Suggested Future Ideas
+Member timelines
 
-- “Shiny of the Week” spotlight
-- Member profiles with history timelines
-- Community milestones & celebrations
-- Exportable stats (CSV / JSON)
-- Discord bot integration
-- Automated sheet validation warnings
+Achievements and badge cases
 
----
+Advanced stats views
+
+Clip embeds and highlights
+
+Public read-only data endpoints
+
+Optional React + Vite migration (only if UI complexity requires it)
+
+Legal
 
 Inspired by Pokémon.
 Not affiliated with Nintendo, Game Freak, or PokeMMO.
-
-## 📁 Project Structure
-
-```txt
-|
-├── index.html            # Main HTML entry
-├── main.js               # App bootstrap, routing, orchestration
-│
-├── src/                  # Application logic
-│   ├── data/             # Data loading & normalization
-│   │   ├── shinyweekly.loader.js
-│   │   ├── shinyweekly.model.js
-│   │   └── csv.utils.js          # (we will add this or inline it)
-│   │
-│   ├── features/         # Feature modules
-│   │   ├── shinyweekly/
-│   │   │   ├── shinyweekly.js
-│   │   │   └── shinyweekly.ui.js
-│   │   │
-│   │   ├── shinydex/
-│   │   │   └── shinydexsearch.js
-│   │   │
-│   │   ├── showcase/
-│   │   │   └── showcase.js
-│   │   │
-│   │   └── donators/
-│   │       └── donators.js
-│   │
-│   ├── ui/
-│   │   └── unifiedcard.js
-│   │
-│   └── utils/
-│       └── utils.js
-│
-├── style/                # CSS
-├── img/                  # Static assets
-│
-├── CNAME
-└── README.md
-
-
