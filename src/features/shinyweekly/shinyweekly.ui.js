@@ -1,29 +1,31 @@
 // shinyweekly.ui.js
-// Shiny Weekly — HARD CONTRACT
-// UI ONLY. No shared state. One export.
+// Shiny Weekly — UI ONLY
+// JSON-first runtime, CI-normalized identities
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
-import {
-  normalizePokemonName,
-  prettifyPokemonName
-} from '../../utils/utils.js';
+import { prettifyPokemonName } from '../../utils/utils.js';
 import { getMemberSprite } from '../../utils/membersprite.js';
 
 /* ---------------------------------------------------------
    SPRITES
 --------------------------------------------------------- */
 
-function getPokemonGif(name) {
-  const n = name.toLowerCase().replace(/[\s.'’\-]/g, '');
-  const map = {
+/**
+ * Resolve shiny Pokémon GIF from canonical pokemon key.
+ * Input is already normalized by CI.
+ */
+function getPokemonGif(pokemonKey) {
+  const overrides = {
     mrmime: 'mr-mime',
     mimejr: 'mime-jr',
-    nidoranf: 'nidoran-f',
-    nidoranm: 'nidoran-m',
+    'nidoran-f': 'nidoran-f',
+    'nidoran-m': 'nidoran-m',
     typenull: 'type-null',
-    porygonz: 'porygon-z'
+    'porygon-z': 'porygon-z'
   };
-  const key = map[n] || normalizePokemonName(name);
+
+  const key = overrides[pokemonKey] || pokemonKey;
+
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
 }
 
@@ -47,8 +49,8 @@ export function renderShinyWeekly(weeks, container, membersData = []) {
     header.innerHTML = `
       <div class="weekly-title">${week.label || week.week}</div>
       <div class="weekly-meta">
-        ${week.shinies.length} Shinies •
-        ${new Set(week.shinies.map(s => s.member)).size} Hunters
+        ${week.shinyCount} Shinies •
+        ${week.hunterCount} Hunters
       </div>
     `;
 
@@ -59,13 +61,7 @@ export function renderShinyWeekly(weeks, container, membersData = []) {
     const grid = document.createElement('div');
     grid.className = 'dex-grid';
 
-    const byMember = {};
-    week.shinies.forEach(s => {
-      byMember[s.member] ??= [];
-      byMember[s.member].push(s);
-    });
-
-    Object.entries(byMember).forEach(([member, shinies]) => {
+    Object.values(week.members).forEach(memberGroup => {
       let state = -1;
       const wrapper = document.createElement('div');
 
@@ -74,15 +70,14 @@ export function renderShinyWeekly(weeks, container, membersData = []) {
 
         if (state === -1) {
           wrapper.innerHTML = renderUnifiedCard({
-            name: member,
-            img: getMemberSprite(member, membersData),
-            info: `Shinies: ${shinies.length}`,
+            name: memberGroup.name,
+            img: getMemberSprite(memberGroup.key, membersData),
+            info: `Shinies: ${memberGroup.shinies.length}`,
             cardType: 'member'
           });
         } else {
-          const mon = shinies[state];
+          const mon = memberGroup.shinies[state];
 
-          // derive method symbol externally
           const symbols = {
             secret: !!mon.secret,
             alpha: !!mon.alpha,
@@ -107,7 +102,7 @@ export function renderShinyWeekly(weeks, container, membersData = []) {
 
         wrapper.firstElementChild.onclick = () => {
           state++;
-          if (state >= shinies.length) state = -1;
+          if (state >= memberGroup.shinies.length) state = -1;
           renderState();
         };
       }
@@ -117,6 +112,7 @@ export function renderShinyWeekly(weeks, container, membersData = []) {
     });
 
     body.appendChild(grid);
+
     header.onclick = () => {
       body.style.display =
         body.style.display === 'none' ? 'block' : 'none';
