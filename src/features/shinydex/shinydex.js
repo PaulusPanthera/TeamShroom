@@ -1,19 +1,16 @@
 // shinydex.js
 // Shiny Dex — Hitlist & Living Dex
-// JSON-first runtime, CI-normalized data only
+// Rendering only. No aggregation. No derivation.
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
+import {
+  POKEMON_POINTS,
+  POKEMON_REGION,
+  POKEMON_SHOW,
+  LIVING_COUNTS
+} from '../../data/pokemondatabuilder.js';
 
-/* ---------------------------------------------------------
-   SPRITES
---------------------------------------------------------- */
-
-/**
- * Resolve shiny Pokémon GIF from canonical pokemon key.
- *
- * Input MUST already be normalized by CI.
- */
 function getPokemonGif(pokemonKey) {
   const overrides = {
     mrmime: 'mr-mime',
@@ -29,60 +26,26 @@ function getPokemonGif(pokemonKey) {
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
 }
 
-/* ---------------------------------------------------------
-   HELPERS
---------------------------------------------------------- */
-
-function getPoints(pokemonKey, POKEMON_POINTS) {
-  const pts = POKEMON_POINTS?.[pokemonKey];
-  return typeof pts === 'number' ? pts : 0;
-}
-
-function buildLivingCounts(teamMembers, POKEMON_POINTS) {
-  const counts = {};
-
-  teamMembers.forEach(member => {
-    member.shinies?.forEach(mon => {
-      if (mon.lost || mon.sold) return;
-
-      const key = mon.pokemon;
-      if (!POKEMON_POINTS[key]) return;
-
-      counts[key] = (counts[key] || 0) + 1;
-    });
-  });
-
-  return counts;
-}
-
-function filterEntry(entry, filter, POKEMON_POINTS) {
-  const pts = getPoints(entry.pokemon, POKEMON_POINTS);
-  if (!pts || entry.show === false) return false;
+function filterEntry(entry, filter) {
+  if (!POKEMON_POINTS[entry.pokemon]) return false;
+  if (!POKEMON_SHOW[entry.pokemon]) return false;
   if (!filter) return true;
 
   const f = filter.toLowerCase();
-
   if (f === 'claimed') return !!entry.claimed;
   if (f === 'unclaimed') return !entry.claimed;
+  if (POKEMON_REGION[entry.pokemon]?.toLowerCase() === f) return true;
 
-  if (entry.region?.toLowerCase() === f) return true;
-
-  return entry.pokemon.toLowerCase().includes(f);
+  return entry.pokemon.includes(f);
 }
 
-/* ---------------------------------------------------------
-   RENDERERS
---------------------------------------------------------- */
-
-function renderHitlist(shinyDex, filter, POKEMON_POINTS) {
+function renderHitlist(shinyDex, filter) {
   const container = document.getElementById('shiny-dex-container');
   container.innerHTML = '';
   let shown = 0;
 
   Object.entries(shinyDex).forEach(([region, entries]) => {
-    const filtered = entries.filter(e =>
-      filterEntry(e, filter, POKEMON_POINTS)
-    );
+    const filtered = entries.filter(e => filterEntry(e, filter));
     if (!filtered.length) return;
 
     shown += filtered.length;
@@ -114,16 +77,13 @@ function renderHitlist(shinyDex, filter, POKEMON_POINTS) {
   return shown;
 }
 
-function renderLivingDex(shinyDex, teamMembers, filter, POKEMON_POINTS) {
+function renderLivingDex(shinyDex, filter) {
   const container = document.getElementById('shiny-dex-container');
   container.innerHTML = '';
-  const counts = buildLivingCounts(teamMembers, POKEMON_POINTS);
   let shown = 0;
 
   Object.entries(shinyDex).forEach(([region, entries]) => {
-    const filtered = entries.filter(e =>
-      filterEntry(e, filter, POKEMON_POINTS)
-    );
+    const filtered = entries.filter(e => filterEntry(e, filter));
     if (!filtered.length) return;
 
     shown += filtered.length;
@@ -141,7 +101,7 @@ function renderLivingDex(shinyDex, teamMembers, filter, POKEMON_POINTS) {
         renderUnifiedCard({
           name: prettifyPokemonName(entry.pokemon),
           img: getPokemonGif(entry.pokemon),
-          info: `Owned: ${counts[entry.pokemon] || 0}`,
+          info: `Owned: ${LIVING_COUNTS[entry.pokemon] || 0}`,
           cardType: 'pokemon'
         })
       );
@@ -154,15 +114,7 @@ function renderLivingDex(shinyDex, teamMembers, filter, POKEMON_POINTS) {
   return shown;
 }
 
-/* ---------------------------------------------------------
-   ENTRY POINT
---------------------------------------------------------- */
-
-export function setupShinyDexHitlistSearch(
-  shinyDex,
-  teamMembers,
-  POKEMON_POINTS
-) {
+export function setupShinyDexHitlistSearch(shinyDex) {
   const container = document.getElementById('shiny-dex-container');
 
   const controls = document.createElement('div');
@@ -186,8 +138,8 @@ export function setupShinyDexHitlistSearch(
   function render() {
     const shown =
       mode === 'hitlist'
-        ? renderHitlist(shinyDex, filter, POKEMON_POINTS)
-        : renderLivingDex(shinyDex, teamMembers, filter, POKEMON_POINTS);
+        ? renderHitlist(shinyDex, filter)
+        : renderLivingDex(shinyDex, filter);
 
     count.textContent = `${shown} Pokémon`;
   }
