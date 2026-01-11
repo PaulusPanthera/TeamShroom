@@ -28,10 +28,9 @@ import { renderDonators } from './src/features/donators/donators.js';
 import { renderShinyWeekly } from './src/features/shinyweekly/shinyweekly.ui.js';
 
 // ---------------------------------------------------------
-// DATA CACHES
+// DATA CACHES (RAW DATA ONLY)
 // ---------------------------------------------------------
 
-let shinyWeeklyWeeks = null;
 let donatorsData = null;
 let membersData = null;
 let shinyShowcaseRows = null;
@@ -94,15 +93,6 @@ async function renderPage() {
     const pokemonRows = await loadPokemon();
     buildPokemonData(pokemonRows);
     pokemonDataLoaded = true;
-  }
-
-  // -------------------------------------------------------
-  // SHINY WEEKLY (SINGLE SOURCE)
-  // -------------------------------------------------------
-
-  if (!shinyWeeklyWeeks) {
-    const rows = await loadShinyWeekly();
-    shinyWeeklyWeeks = buildShinyWeeklyModel(rows);
   }
 
   // -------------------------------------------------------
@@ -183,14 +173,17 @@ async function renderPage() {
   }
 
   // -------------------------------------------------------
-  // SHINY WEEKLY
+  // SHINY WEEKLY (NO CACHING)
   // -------------------------------------------------------
 
   else if (page === 'shinyweekly') {
     content.innerHTML = `<div id="shinyweekly-container"></div>`;
 
+    const rows = await loadShinyWeekly();
+    const weeks = buildShinyWeeklyModel(rows);
+
     renderShinyWeekly(
-      shinyWeeklyWeeks,
+      weeks,
       document.getElementById('shinyweekly-container'),
       membersData
     );
