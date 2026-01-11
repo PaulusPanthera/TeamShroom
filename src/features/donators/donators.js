@@ -1,15 +1,10 @@
 // donators.js
 // Donators — data + table rendering
-// Google Sheets CSV–compatible (Design System v1 stabilized)
+// JSON-first runtime (CI-normalized)
 
 /* ---------------------------------------------------------
-   PARSING & FORMATTING
+   FORMATTING
 --------------------------------------------------------- */
-
-export function parseDonationValue(str) {
-  if (!str) return 0;
-  return parseInt(String(str).replace(/[.,]/g, ''), 10) || 0;
-}
 
 function formatDonationDate(dt) {
   if (!dt) return '-';
@@ -48,9 +43,8 @@ function resolveTier(total, isTop) {
 function aggregateTotals(donations) {
   const totals = {};
   donations.forEach(d => {
-    const name = d.name?.trim();
-    if (!name) return;
-    totals[name] = (totals[name] || 0) + parseDonationValue(d.value);
+    if (!d.name) return;
+    totals[d.name] = (totals[d.name] || 0) + (d.value || 0);
   });
   return totals;
 }
@@ -89,7 +83,7 @@ function renderLastDonations(donations) {
           <td>${formatDonationDate(d.date)}</td>
           <td>${d.name || '-'}</td>
           <td>${d.donation || 'Pokéyen'}</td>
-          <td>${parseDonationValue(d.value).toLocaleString('en-US')}</td>
+          <td>${(d.value || 0).toLocaleString('en-US')}</td>
         </tr>
       `).join('')
     : `<tr><td colspan="4" style="text-align:center;opacity:0.6;">No recent donations.</td></tr>`;
