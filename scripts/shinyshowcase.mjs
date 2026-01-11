@@ -15,7 +15,7 @@ if (!CSV_URL) {
 }
 
 // -----------------------------
-// Normalization helpers
+// Helpers (normalization only)
 // -----------------------------
 
 function normalizeMember(name) {
@@ -30,28 +30,23 @@ function normalizePokemon(name) {
     .replace(/[\s.'’]/g, '');
 }
 
-function normalizeEncounter(value, rowNum) {
-  if (value === '' || value === undefined) return null;
-
-  const num = Number(value);
-  if (!Number.isInteger(num) || num < 0) {
-    throw new Error(
-      `[shinyshowcase] Row ${rowNum}: invalid encounter "${value}"`
-    );
-  }
-
-  return num;
-}
-
 // -----------------------------
 // Fetch + parse
 // -----------------------------
 
 const csvText = await fetchCsv(CSV_URL);
-const rows = parseCsv(csvText);
+const parsed = parseCsv(csvText);
 
 // -----------------------------
-// Pre-normalize (for validation)
+// EMPTY ROW FIX (PRIMARY FIELD = ot)
+// -----------------------------
+
+const rows = parsed.filter(
+  r => r.ot && r.ot.trim() !== ''
+);
+
+// -----------------------------
+// Pre-normalize for validation
 // -----------------------------
 
 rows.forEach(row => {
@@ -72,30 +67,21 @@ validateRows({
 // Normalize (CI owns correctness)
 // -----------------------------
 
-const data = rows
-  // PRIMARY FIELD = ot
-  .filter(r => r.ot && r.ot.trim() !== '')
-  .map((row, index) => {
-    const rowNum = index + 2;
+const data = rows.map(row => ({
+  ot: normalizeMember(row.ot),
+  pokemon: normalizePokemon(row.pokemon),
 
-    return {
-      ot: normalizeMember(row.ot),
-      pokemon: normalizePokemon(row.pokemon),
+  method: row.method || null,
 
-      method: row.method || null,
-      encounter: normalizeEncounter(row.encounter, rowNum),
+  secret: row.secret === 'TRUE',
+  alpha: row.alpha === 'TRUE',
+  run: row.run === 'TRUE',
+  lost: row.lost === 'TRUE',
+  sold: row.sold === 'TRUE',
 
-      secret: row.secret === 'TRUE',
-      alpha: row.alpha === 'TRUE',
-      run: row.run === 'TRUE',
-      lost: row.lost === 'TRUE',
-      sold: row.sold === 'TRUE',
-      favorite: row.favorite === 'TRUE',
-
-      clip: row.clip?.trim() || null,
-      notes: row.notes?.trim() || null,
-    };
-  });
+  clip: row.clip?.trim() || null,
+  notes: row.notes?.trim() || null,
+}));
 
 // -----------------------------
 // Write versioned JSON
