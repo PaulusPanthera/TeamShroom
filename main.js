@@ -1,21 +1,22 @@
-// main.js (ROOT)
+// main.js
 // Entrypoint — JSON-only runtime
-// All data preprocessed in CI
+// All normalization and derivation happens in CI or data builders
 
-import { loadShinyWeekly } from './src/data/shinyweekly.loader.js';
-import { buildShinyWeeklyModel } from './src/data/shinyweekly.model.js';
-
-import { loadShinyShowcase } from './src/data/shinyshowcase.loader.js';
 import { loadPokemon } from './src/data/pokemon.loader.js';
 import { loadMembers } from './src/data/members.loader.js';
+import { loadShinyShowcase } from './src/data/shinyshowcase.loader.js';
+import { loadShinyWeekly } from './src/data/shinyweekly.loader.js';
 import { loadDonators } from './src/data/donators.loader.js';
 
 import {
   buildPokemonData,
-  POKEMON_POINTS
+  HITLIST_DEX,
+  HITLIST_LEADERBOARD,
+  LIVING_COUNTS
 } from './src/data/pokemondatabuilder.js';
 
 import { buildMembersModel } from './src/data/members.model.js';
+import { buildShinyWeeklyModel } from './src/data/shinyweekly.model.js';
 
 import {
   renderShowcaseGallery,
@@ -28,14 +29,17 @@ import { renderDonators } from './src/features/donators/donators.js';
 import { renderShinyWeekly } from './src/features/shinyweekly/shinyweekly.ui.js';
 
 // ---------------------------------------------------------
-// DATA CACHES (RAW DATA ONLY)
+// DATA CACHES (RAW + DERIVED)
 // ---------------------------------------------------------
 
-let donatorsData = null;
-let membersData = null;
+let pokemonRows = null;
+let membersRows = null;
 let shinyShowcaseRows = null;
+let shinyWeeklyRows = null;
+let donatorsRows = null;
+
 let teamMembers = null;
-let pokemonDataLoaded = false;
+let shinyWeeklyWeeks = null;
 
 // ---------------------------------------------------------
 // ROUTING
@@ -86,41 +90,36 @@ async function renderPage() {
   content.innerHTML = '';
 
   // -------------------------------------------------------
-  // POKÉMON DATA
+  // LOAD RAW DATA (ONCE)
   // -------------------------------------------------------
 
-  if (!pokemonDataLoaded) {
-    const pokemonRows = await loadPokemon();
-    buildPokemonData(pokemonRows);
-    pokemonDataLoaded = true;
-  }
+  if (!pokemonRows) pokemonRows = await loadPokemon();
+  if (!membersRows) membersRows = await loadMembers();
+  if (!shinyShowcaseRows) shinyShowcaseRows = await loadShinyShowcase();
+  if (!shinyWeeklyRows) shinyWeeklyRows = await loadShinyWeekly();
+  if (!donatorsRows) donatorsRows = await loadDonators();
 
   // -------------------------------------------------------
-  // DONATORS
+  // BUILD MODELS (ORDER IS CRITICAL)
   // -------------------------------------------------------
-
-  if (!donatorsData) {
-    donatorsData = await loadDonators();
-  }
-
-  // -------------------------------------------------------
-  // MEMBERS + SHOWCASE → TEAM MODEL
-  // -------------------------------------------------------
-
-  if (!membersData) {
-    membersData = await loadMembers();
-  }
-
-  if (!shinyShowcaseRows) {
-    shinyShowcaseRows = await loadShinyShowcase();
-  }
 
   if (!teamMembers) {
-    teamMembers = buildMembersModel(membersData, shinyShowcaseRows);
+    teamMembers = buildMembersModel(membersRows, shinyShowcaseRows);
+  }
+
+  // Pokémon derived data (includes Hitlist + Living Dex)
+  buildPokemonData(
+    pokemonRows,
+    teamMembers,
+    shinyWeeklyRows
+  );
+
+  if (!shinyWeeklyWeeks) {
+    shinyWeeklyWeeks = buildShinyWeeklyModel(shinyWeeklyRows);
   }
 
   // -------------------------------------------------------
-  // SHOWCASE
+  // ROUTES
   // -------------------------------------------------------
 
   if (page === 'showcase') {
@@ -133,14 +132,9 @@ async function renderPage() {
       teamMembers.filter(m => m.active),
       renderShowcaseGallery,
       null,
-      teamMembers,
-      POKEMON_POINTS
+      teamMembers
     );
   }
-
-  // -------------------------------------------------------
-  // MEMBER DETAIL
-  // -------------------------------------------------------
 
   else if (page === 'member') {
     const m = teamMembers.find(
@@ -152,41 +146,31 @@ async function renderPage() {
       return;
     }
 
-    renderMemberShowcase(m, null, teamMembers, POKEMON_POINTS);
+    renderMemberShowcase(m, null, teamMembers);
   }
-
-  // -------------------------------------------------------
-  // HITLIST
-  // -------------------------------------------------------
 
   else if (page === 'hitlist') {
     content.innerHTML = `<div id="shiny-dex-container"></div>`;
-    setupShinyDexHitlistSearch({}, teamMembers, POKEMON_POINTS);
+
+    setupShinyDexHitlistSearch({
+      hitlistDex: HITLIST_DEX,
+      hitlistLeaderboard: HITLIST_LEADERBOARD,
+      livingDex: null
+    });
   }
-
-  // -------------------------------------------------------
-  // DONATORS
-  // -------------------------------------------------------
-
-  else if (page === 'donators') {
-    renderDonators(donatorsData);
-  }
-
-  // -------------------------------------------------------
-  // SHINY WEEKLY (NO CACHING)
-  // -------------------------------------------------------
 
   else if (page === 'shinyweekly') {
     content.innerHTML = `<div id="shinyweekly-container"></div>`;
 
-    const rows = await loadShinyWeekly();
-    const weeks = buildShinyWeeklyModel(rows);
-
     renderShinyWeekly(
-      weeks,
+      shinyWeeklyWeeks,
       document.getElementById('shinyweekly-container'),
-      membersData
+      teamMembers
     );
+  }
+
+  else if (page === 'donators') {
+    renderDonators(donatorsRows);
   }
 }
 
