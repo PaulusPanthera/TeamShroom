@@ -1,93 +1,109 @@
+// scripts/shinyshowcase.mjs
+// Shiny Showcase CSV → validated, normalized JSON
+// CI HARD CONTRACT
+
 import { fetchCsv } from './lib/fetchCsv.mjs';
 import { parseCsv } from './lib/parseCsv.mjs';
 import { writeJson } from './lib/writeJson.mjs';
+import { validateRows } from './lib/validateRows.mjs';
+import { shinyShowcaseContract } from './contracts/shinyshowcase.contract.mjs';
 
 const CSV_URL = process.env.SHINYSHOWCASE_CSV;
 
-const ALLOWED_METHODS = new Set([
-  'mpb',
-  'mgb',
-  'mub',
-  'mcb',
-  'mdb',
-  'egg',
-  'safari',
-  '5x100%',
-  '3x100%',
-  'single',
-  'swarm',
-  'alpha_spawn',
-  'raid',
-  'headbutt',
-  'rocksmash',
-  'sos',
-  'honeytree',
-  'fishing',
-  'event',
-]);
-
-function normalizeBool(v) {
-  return v === 'TRUE';
+if (!CSV_URL) {
+  throw new Error('SHINYSHOWCASE_CSV env variable missing');
 }
 
-function normalizeString(v) {
-  const s = v?.trim();
-  return s ? s : null;
+// -----------------------------
+// Normalization helpers
+// -----------------------------
+
+function normalizeMember(name) {
+  return name.trim().toLowerCase().replace(/\s+/g, '');
 }
 
-function normalizeDate(v, rowIndex) {
-  if (!v) return null;
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(v)) {
-    throw new Error(`Row ${rowIndex + 2}: invalid date_catch "${v}"`);
+function normalizePokemon(name) {
+  return name
+    .toLowerCase()
+    .replace(/♀/g, '-f')
+    .replace(/♂/g, '-m')
+    .replace(/[\s.'’]/g, '');
+}
+
+function normalizeEncounter(value, rowNum) {
+  if (value === '' || value === undefined) return null;
+
+  const num = Number(value);
+  if (!Number.isInteger(num) || num < 0) {
+    throw new Error(
+      `[shinyshowcase] Row ${rowNum}: invalid encounter "${value}"`
+    );
   }
-  return v;
+
+  return num;
 }
 
-function normalizeEncounter(v, rowIndex) {
-  if (!v) return null;
-  const n = Number(v);
-  if (!Number.isInteger(n) || n < 0) {
-    throw new Error(`Row ${rowIndex + 2}: invalid encounter "${v}"`);
-  }
-  return n;
-}
-
-function normalizeMethod(v, rowIndex) {
-  if (!v) return null;
-  const m = v.trim().toLowerCase();
-  if (!ALLOWED_METHODS.has(m)) {
-    throw new Error(`Row ${rowIndex + 2}: invalid method "${v}"`);
-  }
-  return m;
-}
-
-function normalizeClip(v) {
-  const s = v?.trim();
-  if (!s) return null;
-  if (!/^https?:\/\//i.test(s)) return null;
-  return s;
-}
+// -----------------------------
+// Fetch + parse
+// -----------------------------
 
 const csvText = await fetchCsv(CSV_URL);
 const rows = parseCsv(csvText);
 
-const normalized = rows
-  // ✅ PRIMARY FIELD FIX — OT
-  .filter(row => row.ot && row.ot.trim() !== '')
-  .map((row, index) => ({
-    date_catch: normalizeDate(row.date_catch, index),
-    ot: normalizeString(row.ot),
-    pokemon: row.pokemon?.trim().toLowerCase() || null,
-    method: normalizeMethod(row.method, index),
-    encounter: normalizeEncounter(row.encounter, index),
-    secret: normalizeBool(row.secret),
-    alpha: normalizeBool(row.alpha),
-    run: normalizeBool(row.run),
-    lost: normalizeBool(row.lost),
-    sold: normalizeBool(row.sold),
-    favorite: normalizeBool(row.favorite),
-    clip: normalizeClip(row.clip),
-    notes: normalizeString(row.notes),
-  }));
+// -----------------------------
+// Pre-normalize (for validation)
+// -----------------------------
 
-await writeJson('data/shinyshowcase.json', normalized);
+rows.forEach(row => {
+  if (row.method) row.method = row.method.toLowerCase().trim();
+});
+
+// -----------------------------
+// Validate against schema
+// -----------------------------
+
+validateRows({
+  rows,
+  schema: shinyShowcaseContract,
+  sheet: 'shinyshowcase',
+});
+
+// -----------------------------
+// Normalize (CI owns correctness)
+// -----------------------------
+
+const data = rows
+  // PRIMARY FIELD = ot
+  .filter(r => r.ot && r.ot.trim() !== '')
+  .map((row, index) => {
+    const rowNum = index + 2;
+
+    return {
+      ot: normalizeMember(row.ot),
+      pokemon: normalizePokemon(row.pokemon),
+
+      method: row.method || null,
+      encounter: normalizeEncounter(row.encounter, rowNum),
+
+      secret: row.secret === 'TRUE',
+      alpha: row.alpha === 'TRUE',
+      run: row.run === 'TRUE',
+      lost: row.lost === 'TRUE',
+      sold: row.sold === 'TRUE',
+      favorite: row.favorite === 'TRUE',
+
+      clip: row.clip?.trim() || null,
+      notes: row.notes?.trim() || null,
+    };
+  });
+
+// -----------------------------
+// Write versioned JSON
+// -----------------------------
+
+await writeJson('data/shinyshowcase.json', {
+  version: 1,
+  generatedAt: new Date().toISOString(),
+  source: 'google-sheets',
+  data,
+});
