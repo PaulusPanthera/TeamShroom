@@ -206,14 +206,19 @@ export function renderMemberShowcase(
             name: prettifyPokemonName(mon.pokemon),
             img: getPokemonGif(mon.pokemon),
             info: mon.sold
-              ? 'Sold'
-              : mon.lost
-              ? 'Lost'
-              : `${getPointsForPokemon(
-                  mon.pokemon,
-                  mon,
-                  POKEMON_POINTS
-                )} Points`,
+  ? 'Sold'
+  : mon.lost
+  ? (
+      mon.pokemon.toLowerCase() === 'cubchoo' &&
+      member.name.toLowerCase() === 'skullz'
+        ? 'R.I.P.'
+        : 'Lost'
+    )
+  : `${getPointsForPokemon(
+      mon.pokemon,
+      mon,
+      POKEMON_POINTS
+    )} Points`,
             cardType: 'pokemon',
             lost: mon.lost || mon.sold,
             symbols,
