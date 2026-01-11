@@ -1,28 +1,31 @@
 // shinydex.js
 // Shiny Dex — Hitlist & Living Dex
-// JSON-first runtime, data-driven
+// JSON-first runtime, CI-normalized data only
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
-import {
-  normalizePokemonName,
-  prettifyPokemonName
-} from '../../utils/utils.js';
+import { prettifyPokemonName } from '../../utils/utils.js';
 
 /* ---------------------------------------------------------
    SPRITES
 --------------------------------------------------------- */
 
-function getPokemonGif(name) {
-  const n = name.toLowerCase().replace(/[\s.'’\-]/g, '');
-  const map = {
+/**
+ * Resolve shiny Pokémon GIF from canonical pokemon key.
+ *
+ * Input MUST already be normalized by CI.
+ */
+function getPokemonGif(pokemonKey) {
+  const overrides = {
     mrmime: 'mr-mime',
     mimejr: 'mime-jr',
-    nidoranf: 'nidoran-f',
-    nidoranm: 'nidoran-m',
+    'nidoran-f': 'nidoran-f',
+    'nidoran-m': 'nidoran-m',
     typenull: 'type-null',
-    porygonz: 'porygon-z'
+    'porygon-z': 'porygon-z'
   };
-  const key = map[n] || normalizePokemonName(name);
+
+  const key = overrides[pokemonKey] || pokemonKey;
+
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
 }
 
@@ -30,8 +33,8 @@ function getPokemonGif(name) {
    HELPERS
 --------------------------------------------------------- */
 
-function getPoints(name, POKEMON_POINTS) {
-  const pts = POKEMON_POINTS?.[normalizePokemonName(name)];
+function getPoints(pokemonKey, POKEMON_POINTS) {
+  const pts = POKEMON_POINTS?.[pokemonKey];
   return typeof pts === 'number' ? pts : 0;
 }
 
@@ -42,9 +45,8 @@ function buildLivingCounts(teamMembers, POKEMON_POINTS) {
     member.shinies?.forEach(mon => {
       if (mon.lost || mon.sold) return;
 
-      const key = normalizePokemonName(mon.pokemon);
-      const pts = POKEMON_POINTS[key];
-      if (!pts) return;
+      const key = mon.pokemon;
+      if (!POKEMON_POINTS[key]) return;
 
       counts[key] = (counts[key] || 0) + 1;
     });
@@ -54,7 +56,7 @@ function buildLivingCounts(teamMembers, POKEMON_POINTS) {
 }
 
 function filterEntry(entry, filter, POKEMON_POINTS) {
-  const pts = getPoints(entry.name, POKEMON_POINTS);
+  const pts = getPoints(entry.pokemon, POKEMON_POINTS);
   if (!pts || entry.show === false) return false;
   if (!filter) return true;
 
@@ -65,7 +67,7 @@ function filterEntry(entry, filter, POKEMON_POINTS) {
 
   if (entry.region?.toLowerCase() === f) return true;
 
-  return entry.name.toLowerCase().includes(f);
+  return entry.pokemon.toLowerCase().includes(f);
 }
 
 /* ---------------------------------------------------------
@@ -96,8 +98,8 @@ function renderHitlist(shinyDex, filter, POKEMON_POINTS) {
       grid.insertAdjacentHTML(
         'beforeend',
         renderUnifiedCard({
-          name: prettifyPokemonName(entry.name),
-          img: getPokemonGif(entry.name),
+          name: prettifyPokemonName(entry.pokemon),
+          img: getPokemonGif(entry.pokemon),
           info: entry.claimed ? 'Claimed' : 'Unclaimed',
           cardType: 'pokemon',
           unclaimed: !entry.claimed
@@ -134,13 +136,12 @@ function renderLivingDex(shinyDex, teamMembers, filter, POKEMON_POINTS) {
     grid.className = 'dex-grid';
 
     filtered.forEach(entry => {
-      const key = normalizePokemonName(entry.name);
       grid.insertAdjacentHTML(
         'beforeend',
         renderUnifiedCard({
-          name: prettifyPokemonName(entry.name),
-          img: getPokemonGif(entry.name),
-          info: `Owned: ${counts[key] || 0}`,
+          name: prettifyPokemonName(entry.pokemon),
+          img: getPokemonGif(entry.pokemon),
+          info: `Owned: ${counts[entry.pokemon] || 0}`,
           cardType: 'pokemon'
         })
       );
