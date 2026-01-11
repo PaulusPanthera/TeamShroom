@@ -1,5 +1,5 @@
-import { loadJson } from './json.loader.js';
+import { loadJson } from './loadJson.js';
 
-export async function loadMembers() {
-  return loadJson('/data/members.json');
+export function loadMembers() {
+  return loadJson('/data/members.json', 1);
 }
