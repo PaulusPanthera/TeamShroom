@@ -30,8 +30,6 @@ function getPokemonGif(pokemonKey) {
 --------------------------------------------------------- */
 
 function renderShinyWeekly(weeks, container, membersData = []) {
-  if (!Array.isArray(weeks) || !container) return;
-
   container.innerHTML = '';
 
   const orderedWeeks = [...weeks].reverse();
@@ -77,8 +75,7 @@ function renderShinyWeekly(weeks, container, membersData = []) {
           const symbols = {
             secret: !!mon.secret,
             alpha: !!mon.alpha,
-            run: !!mon.run,
-            favorite: !!mon.favorite
+            run: !!mon.run
           };
 
           if (mon.method) {
