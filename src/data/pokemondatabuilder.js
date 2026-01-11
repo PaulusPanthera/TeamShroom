@@ -2,6 +2,33 @@
 // Pokémon derived data builder
 // Runtime consumes pre-normalized JSON only
 
+/*
+INTERNAL JSON API — DERIVED POKÉMON DATA
+
+HITLIST_DEX:
+{
+  [region: string]: Array<{
+    pokemon: string
+    family: string
+    stage: number
+    claimed: boolean
+    claimer: string | null
+    points: number
+  }>
+}
+
+HITLIST_LEADERBOARD:
+{
+  byClaims: Array<{ member: string, claims: number }>
+  byPoints: Array<{ member: string, points: number }>
+}
+
+LIVING_COUNTS:
+{
+  [pokemon: string]: number
+}
+*/
+
 export const TIER_POINTS = {
   '6': 2,
   '5': 3,
@@ -26,7 +53,6 @@ export let POKEMON_SHOW = {};
 export let pokemonFamilies = {};
 
 export let LIVING_COUNTS = {};
-
 export let HITLIST_DEX = {};
 export let HITLIST_LEADERBOARD = {
   byClaims: [],
@@ -38,7 +64,6 @@ export let HITLIST_LEADERBOARD = {
 // ---------------------------------------------------------
 
 export function buildPokemonData(pokemonRows, teamMembers = [], shinyWeeklyRows = []) {
-  // Reset state
   TIER_FAMILIES = {};
   POKEMON_POINTS = {};
   POKEMON_TIER = {};
@@ -50,10 +75,7 @@ export function buildPokemonData(pokemonRows, teamMembers = [], shinyWeeklyRows 
   HITLIST_DEX = {};
   HITLIST_LEADERBOARD = { byClaims: [], byPoints: [] };
 
-  // -------------------------------------------------------
-  // BASE POKÉMON MAPS
-  // -------------------------------------------------------
-
+  // Base Pokémon maps
   pokemonRows.forEach(row => {
     const tier = String(row.tier);
     if (!TIER_POINTS[tier]) return;
@@ -85,10 +107,7 @@ export function buildPokemonData(pokemonRows, teamMembers = [], shinyWeeklyRows 
     });
   });
 
-  // -------------------------------------------------------
-  // LIVING DEX COUNTS
-  // -------------------------------------------------------
-
+  // Living Dex counts
   teamMembers.forEach(member => {
     member.shinies.forEach(mon => {
       if (mon.lost || mon.sold) return;
@@ -97,11 +116,8 @@ export function buildPokemonData(pokemonRows, teamMembers = [], shinyWeeklyRows 
     });
   });
 
-  // -------------------------------------------------------
-  // HITLIST CLAIM ENGINE
-  // -------------------------------------------------------
-
-  const claimedStages = {}; // family -> Set(stageIndex)
+  // Hitlist claim engine
+  const claimedStages = {};
   const claimsByMember = {};
   const pointsByMember = {};
 
@@ -110,18 +126,15 @@ export function buildPokemonData(pokemonRows, teamMembers = [], shinyWeeklyRows 
     if (!family || !family.length) return;
 
     claimedStages[family[0]] ??= new Set();
-
     const claimedSet = claimedStages[family[0]];
     if (claimedSet.size >= family.length) return;
 
     const stageIndex = family.findIndex(
       (_, idx) => !claimedSet.has(idx)
     );
-
     if (stageIndex === -1) return;
 
     const stagePokemon = family[stageIndex];
-
     claimedSet.add(stageIndex);
 
     claimsByMember[event.ot] ??= 0;
@@ -131,10 +144,7 @@ export function buildPokemonData(pokemonRows, teamMembers = [], shinyWeeklyRows 
     pointsByMember[event.ot] += POKEMON_POINTS[stagePokemon] || 0;
   });
 
-  // -------------------------------------------------------
-  // BUILD HITLIST DEX
-  // -------------------------------------------------------
-
+  // Build Hitlist Dex
   Object.entries(pokemonFamilies).forEach(([pokemon, family]) => {
     if (!POKEMON_SHOW[pokemon]) return;
 
@@ -143,34 +153,20 @@ export function buildPokemonData(pokemonRows, teamMembers = [], shinyWeeklyRows 
 
     HITLIST_DEX[region] ??= [];
 
-    const familyKey = family[0];
-    const claimedSet = claimedStages[familyKey] || new Set();
+    const claimedSet = claimedStages[family[0]] || new Set();
     const claimed = claimedSet.has(stage);
-
-    let claimer = null;
-
-    if (claimed) {
-      for (const [member, count] of Object.entries(claimsByMember)) {
-        // resolved below via leaderboard
-        claimer = member;
-        break;
-      }
-    }
 
     HITLIST_DEX[region].push({
       pokemon,
-      family: familyKey,
+      family: family[0],
       stage,
       claimed,
-      claimer,
+      claimer: null,
       points: POKEMON_POINTS[pokemon] || 0
     });
   });
 
-  // -------------------------------------------------------
-  // LEADERBOARDS
-  // -------------------------------------------------------
-
+  // Leaderboards
   HITLIST_LEADERBOARD.byClaims = Object.entries(claimsByMember)
     .map(([member, claims]) => ({ member, claims }))
     .sort((a, b) => b.claims - a.claims);
