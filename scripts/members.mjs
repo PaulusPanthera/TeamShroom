@@ -1,49 +1,51 @@
+// scripts/members.mjs
+// Members CSV → validated, normalized JSON
+// CI HARD CONTRACT
+
 import { fetchCsv } from './lib/fetchCsv.mjs';
 import { parseCsv } from './lib/parseCsv.mjs';
 import { writeJson } from './lib/writeJson.mjs';
+import { validateRows } from './lib/validateRows.mjs';
+import { membersContract } from './contracts/members.contract.mjs';
 
 const CSV_URL = process.env.MEMBERS_CSV;
 
-const ALLOWED_ROLES = new Set([
-  'spore',
-  'shroom',
-  'shinyshroom',
-  'mushcap',
-]);
+if (!CSV_URL) {
+  throw new Error('MEMBERS_CSV env variable missing');
+}
 
-const ALLOWED_SPRITES = new Set([
-  'png',
-  'gif',
-  'jpg',
-  'none',
-  '',
-]);
-
+// fetch + parse
 const csvText = await fetchCsv(CSV_URL);
 const rows = parseCsv(csvText);
 
-const normalized = rows
-  .filter(row => row.name && row.name.trim() !== '')
-  .map((row, index) => {
-    const name = row.name.trim();
-
-
-  const role = row.role?.toLowerCase().trim();
-  if (!ALLOWED_ROLES.has(role)) {
-    throw new Error(`Row ${index + 2}: invalid role "${row.role}"`);
-  }
-
-  const spriteRaw = row.sprite?.toLowerCase().trim() ?? '';
-  if (!ALLOWED_SPRITES.has(spriteRaw)) {
-    throw new Error(`Row ${index + 2}: invalid sprite "${row.sprite}"`);
-  }
-
-  return {
-    name,
-    active: row.active === 'TRUE',
-    role,
-    sprite: spriteRaw === '' || spriteRaw === 'none' ? null : spriteRaw,
-  };
+// validate against schema
+validateRows({
+  rows,
+  schema: membersContract,
+  sheet: 'members',
 });
 
-await writeJson('data/members.json', normalized);
+// normalize (CI is source of truth)
+const data = rows
+  .filter(r => r.name && r.name.trim() !== '')
+  .map(row => {
+    const spriteRaw = row.sprite?.toLowerCase().trim() ?? '';
+
+    return {
+      name: row.name.trim(),
+      active: row.active === 'TRUE',
+      role: row.role.toLowerCase().trim(),
+      sprite:
+        spriteRaw === '' || spriteRaw === 'none'
+          ? null
+          : spriteRaw,
+    };
+  });
+
+// write versioned JSON
+await writeJson('data/members.json', {
+  version: 1,
+  generatedAt: new Date().toISOString(),
+  source: 'google-sheets',
+  data,
+});
