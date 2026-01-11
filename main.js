@@ -32,13 +32,17 @@ import { renderShinyWeekly } from './src/features/shinyweekly/shinyweekly.ui.js'
 // DATA CACHES
 // ---------------------------------------------------------
 
+let pokemonRows = null;
+let membersRows = null;
+let shinyShowcaseRows = null;
+let shinyWeeklyRows = null;
+let donatorsData = null;
+
+let teamMembers = null;
 let shinyWeeklyWeeks = null;
 let shinyDexData = null;
-let donatorsData = null;
-let membersData = null;
-let shinyShowcaseRows = null;
-let teamMembers = null;
-let pokemonDataLoaded = false;
+
+let runtimeBuilt = false;
 
 // ---------------------------------------------------------
 // ROUTING
@@ -78,6 +82,35 @@ function setActiveNav(page) {
 }
 
 // ---------------------------------------------------------
+// BOOTSTRAP (STRICT ORDER)
+// ---------------------------------------------------------
+
+async function ensureRuntimeBuilt() {
+  if (runtimeBuilt) return;
+
+  // 1. Load primary datasets
+  pokemonRows = await loadPokemon();
+  membersRows = await loadMembers();
+  shinyShowcaseRows = await loadShinyShowcase();
+  shinyWeeklyRows = await loadShinyWeekly();
+  donatorsData = await loadDonators();
+
+  // 2. Build members model (required by multiple systems)
+  teamMembers = buildMembersModel(membersRows, shinyShowcaseRows);
+
+  // 3. Build Pokémon-derived runtime state (needs teamMembers)
+  buildPokemonData(pokemonRows, teamMembers);
+
+  // 4. Build Shiny Weekly aggregation
+  shinyWeeklyWeeks = buildShinyWeeklyModel(shinyWeeklyRows);
+
+  // 5. Build Shiny Dex model (depends on Pokémon + Weekly)
+  shinyDexData = buildShinyDexModel(shinyWeeklyWeeks);
+
+  runtimeBuilt = true;
+}
+
+// ---------------------------------------------------------
 // PAGE RENDER
 // ---------------------------------------------------------
 
@@ -88,49 +121,7 @@ async function renderPage() {
   const content = document.getElementById('page-content');
   content.innerHTML = '';
 
-  // -------------------------------------------------------
-  // POKÉMON DATA
-  // -------------------------------------------------------
-
-  if (!pokemonDataLoaded) {
-    const pokemonRows = await loadPokemon();
-    buildPokemonData(pokemonRows, teamMembers || []);
-    pokemonDataLoaded = true;
-  }
-
-  // -------------------------------------------------------
-  // SHINY WEEKLY + SHINY DEX MODEL
-  // -------------------------------------------------------
-
-  if (!shinyWeeklyWeeks) {
-    const rows = await loadShinyWeekly();
-    shinyWeeklyWeeks = buildShinyWeeklyModel(rows);
-    shinyDexData = buildShinyDexModel(shinyWeeklyWeeks);
-  }
-
-  // -------------------------------------------------------
-  // DONATORS
-  // -------------------------------------------------------
-
-  if (!donatorsData) {
-    donatorsData = await loadDonators();
-  }
-
-  // -------------------------------------------------------
-  // MEMBERS + SHOWCASE → TEAM MODEL
-  // -------------------------------------------------------
-
-  if (!membersData) {
-    membersData = await loadMembers();
-  }
-
-  if (!shinyShowcaseRows) {
-    shinyShowcaseRows = await loadShinyShowcase();
-  }
-
-  if (!teamMembers) {
-    teamMembers = buildMembersModel(membersData, shinyShowcaseRows);
-  }
+  await ensureRuntimeBuilt();
 
   // -------------------------------------------------------
   // SHOWCASE
@@ -195,7 +186,7 @@ async function renderPage() {
     renderShinyWeekly(
       shinyWeeklyWeeks,
       document.getElementById('shinyweekly-container'),
-      membersData
+      membersRows
     );
   }
 }
