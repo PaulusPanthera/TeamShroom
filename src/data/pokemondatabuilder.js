@@ -24,12 +24,13 @@ export let POKEMON_REGION = {};
 export let POKEMON_RARITY = {};
 export let POKEMON_SHOW = {};
 export let pokemonFamilies = {};
+export let LIVING_COUNTS = {};
 
 // ---------------------------------------------------------
 // BUILDER
 // ---------------------------------------------------------
 
-export function buildPokemonData(rows) {
+export function buildPokemonData(rows, teamMembers = []) {
   // Reset maps
   TIER_FAMILIES = {};
   POKEMON_POINTS = {};
@@ -38,6 +39,7 @@ export function buildPokemonData(rows) {
   POKEMON_RARITY = {};
   POKEMON_SHOW = {};
   pokemonFamilies = {};
+  LIVING_COUNTS = {};
 
   rows.forEach(row => {
     const tier = String(row.tier);
@@ -67,6 +69,19 @@ export function buildPokemonData(rows) {
       POKEMON_REGION[name] = row.region;
       POKEMON_RARITY[name] = row.rarity;
       POKEMON_SHOW[name] = row.show === true;
+      LIVING_COUNTS[name] = 0;
+    });
+  });
+
+  // -------------------------------------------------------
+  // LIVING DEX COUNTS (DERIVED, SINGLE SOURCE OF TRUTH)
+  // -------------------------------------------------------
+
+  teamMembers.forEach(member => {
+    member.shinies.forEach(mon => {
+      if (mon.lost || mon.sold) return;
+      if (!POKEMON_POINTS[mon.pokemon]) return;
+      LIVING_COUNTS[mon.pokemon] += 1;
     });
   });
 }
