@@ -1,6 +1,6 @@
-// shinydexsearch.js
-// Shiny Dex Hitlist & Living Dex — HARD CONTRACT
-// CSV-backed Pokémon data (no globals, no JSON assumptions)
+// shinydex.js
+// Shiny Dex — Hitlist & Living Dex
+// JSON-first runtime, data-driven
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import {
@@ -32,20 +32,24 @@ function getPokemonGif(name) {
 
 function getPoints(name, POKEMON_POINTS) {
   const pts = POKEMON_POINTS?.[normalizePokemonName(name)];
-  return !pts || pts === 'NA' ? 0 : Number(pts);
+  return typeof pts === 'number' ? pts : 0;
 }
 
-function buildLivingCounts(teamShowcase, POKEMON_POINTS) {
+function buildLivingCounts(teamMembers, POKEMON_POINTS) {
   const counts = {};
-  teamShowcase.forEach(member => {
+
+  teamMembers.forEach(member => {
     member.shinies?.forEach(mon => {
       if (mon.lost || mon.sold) return;
-      const pts = getPoints(mon.name, POKEMON_POINTS);
+
+      const key = normalizePokemonName(mon.pokemon);
+      const pts = POKEMON_POINTS[key];
       if (!pts) return;
-      const key = normalizePokemonName(mon.name);
+
       counts[key] = (counts[key] || 0) + 1;
     });
   });
+
   return counts;
 }
 
@@ -108,10 +112,10 @@ function renderHitlist(shinyDex, filter, POKEMON_POINTS) {
   return shown;
 }
 
-function renderLivingDex(shinyDex, teamShowcase, filter, POKEMON_POINTS) {
+function renderLivingDex(shinyDex, teamMembers, filter, POKEMON_POINTS) {
   const container = document.getElementById('shiny-dex-container');
   container.innerHTML = '';
-  const counts = buildLivingCounts(teamShowcase, POKEMON_POINTS);
+  const counts = buildLivingCounts(teamMembers, POKEMON_POINTS);
   let shown = 0;
 
   Object.entries(shinyDex).forEach(([region, entries]) => {
@@ -155,7 +159,7 @@ function renderLivingDex(shinyDex, teamShowcase, filter, POKEMON_POINTS) {
 
 export function setupShinyDexHitlistSearch(
   shinyDex,
-  teamShowcase,
+  teamMembers,
   POKEMON_POINTS
 ) {
   const container = document.getElementById('shiny-dex-container');
@@ -182,7 +186,7 @@ export function setupShinyDexHitlistSearch(
     const shown =
       mode === 'hitlist'
         ? renderHitlist(shinyDex, filter, POKEMON_POINTS)
-        : renderLivingDex(shinyDex, teamShowcase, filter, POKEMON_POINTS);
+        : renderLivingDex(shinyDex, teamMembers, filter, POKEMON_POINTS);
 
     count.textContent = `${shown} Pokémon`;
   }
