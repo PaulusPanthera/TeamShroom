@@ -22,11 +22,11 @@ const ALLOWED_SPRITES = new Set([
 const csvText = await fetchCsv(CSV_URL);
 const rows = parseCsv(csvText);
 
-const normalized = rows.map((row, index) => {
-  const name = row.name?.trim();
-  if (!name) {
-    throw new Error(`Row ${index + 2}: missing name`);
-  }
+const normalized = rows
+  .filter(row => row.name && row.name.trim() !== '')
+  .map((row, index) => {
+    const name = row.name.trim();
+
 
   const role = row.role?.toLowerCase().trim();
   if (!ALLOWED_ROLES.has(role)) {
