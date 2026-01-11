@@ -1,4 +1,4 @@
-// src/features/showcase/showcase.js
+// showcase.js
 // Team Shroom — Showcase & Member Views
 // JSON-first runtime, enforced contracts only
 
@@ -10,11 +10,8 @@ import { getMemberSprite } from '../../utils/membersprite.js';
    SPRITES
 --------------------------------------------------------- */
 
-/**
- * Pokémon sprite resolver
- * INPUT: canonical pokemon key (from CI)
- */
 function getPokemonGif(pokemonKey) {
+  // pokemonKey is already canonical (CI-guaranteed)
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${pokemonKey}.gif`;
 }
 
@@ -24,8 +21,7 @@ function getPokemonGif(pokemonKey) {
 
 function getPointsForPokemon(pokemonKey, shiny, POKEMON_POINTS) {
   if (shiny.alpha) return 50;
-  const pts = POKEMON_POINTS?.[pokemonKey];
-  return typeof pts === 'number' ? pts : 0;
+  return POKEMON_POINTS?.[pokemonKey] ?? 0;
 }
 
 function getMemberPoints(memberName, teamMembers, POKEMON_POINTS) {
@@ -106,7 +102,8 @@ export function renderShowcaseGallery(
   container.innerHTML = '';
 
   let groups;
-  if (mode === 'shinies') groups = groupByCount(members);
+  if (mode === 'shinies')
+    groups = groupByCount(members);
   else if (mode === 'scoreboard')
     groups = groupByPoints(members, teamMembers, POKEMON_POINTS);
   else groups = groupAlphabetically(members);
@@ -163,7 +160,11 @@ export function renderMemberShowcase(
     <button class="back-btn" data-sort="${sortMode || 'alphabetical'}">Back</button>
 
     <div class="member-nameplate">
-      <img class="member-sprite" src="${getMemberSprite(member.name, teamMembers)}">
+      <img
+        class="member-sprite"
+        src="${getMemberSprite(member.name, teamMembers)}"
+        alt=""
+      >
       <span class="member-name">${member.name}</span>
       <span class="shiny-count">Shinies: ${
         shinies.filter(s => !s.lost && !s.sold).length
@@ -229,21 +230,26 @@ function bindShowcaseInteractions(root) {
     .querySelectorAll('.unified-card[data-card-type="member"]')
     .forEach(card => {
       card.addEventListener('click', () => {
-        location.hash = `#showcase-${encodeURIComponent(card.dataset.name)}`;
+        const name = card.dataset.name;
+        location.hash = `#showcase-${encodeURIComponent(name)}`;
       });
     });
 }
 
 function bindMemberInteractions(root) {
-  root.querySelector('.back-btn')?.addEventListener('click', e => {
-    location.hash = `#showcase?sort=${e.target.dataset.sort || 'alphabetical'}`;
+  const back = root.querySelector('.back-btn');
+  back?.addEventListener('click', () => {
+    const sort = back.dataset.sort || 'alphabetical';
+    location.hash = `#showcase?sort=${sort}`;
   });
 
-  root.querySelectorAll('.unified-card[data-clip]').forEach(card => {
-    card.addEventListener('click', () => {
-      window.open(card.dataset.clip, '_blank');
+  root
+    .querySelectorAll('.unified-card[data-clip]')
+    .forEach(card => {
+      card.addEventListener('click', () => {
+        window.open(card.dataset.clip, '_blank');
+      });
     });
-  });
 }
 
 /* ---------------------------------------------------------
