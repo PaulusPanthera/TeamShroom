@@ -187,14 +187,18 @@ async function renderPage() {
   // -------------------------------------------------------
 
   else if (page === 'shinyweekly') {
-    content.innerHTML = `<div id="shinyweekly-container"></div>`;
-    renderShinyWeekly(
-      shinyWeeklyWeeks,
-      document.getElementById('shinyweekly-container'),
-      teamMembers
-    );
-  }
+  content.innerHTML = `<div id="shinyweekly-container"></div>`;
+
+  const rows = await loadShinyWeekly();               // flat rows
+  const weeks = buildShinyWeeklyModel(rows);          // AGGREGATED
+
+  renderShinyWeekly(
+    weeks,
+    document.getElementById('shinyweekly-container'),
+    membersData
+  );
 }
+
 
 // ---------------------------------------------------------
 // EVENTS
