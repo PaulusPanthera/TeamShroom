@@ -1,9 +1,11 @@
 // main.js (ROOT)
 // Entrypoint — JSON-first migration in progress
-// Shiny Weekly migrated to JSON
+// Shiny Weekly + Shiny Showcase migrated to JSON
 
 import { loadShinyWeekly } from './src/data/shinyweekly.loader.js';
 import { buildShinyWeeklyModel } from './src/data/shinyweekly.model.js';
+
+import { loadShinyShowcase } from './src/data/shinyshowcase.loader.js';
 
 import { buildPokemonData, POKEMON_POINTS } from './src/data/pokemondatabuilder.js';
 import { loadDonatorsFromCSV } from './src/data/donators.loader.js';
@@ -21,7 +23,8 @@ import { renderDonators } from './src/features/donators/donators.js';
 import { renderShinyWeekly } from './src/features/shinyweekly/shinyweekly.ui.js';
 
 // ---------------------------------------------------------
-// CONFIG — GOOGLE SHEETS (CSV)  ❗ still used by other features
+// CONFIG - GOOGLE SHEETS (CSV)
+// Still used by non-migrated features
 // ---------------------------------------------------------
 
 const DONATORS_CSV =
@@ -29,9 +32,6 @@ const DONATORS_CSV =
 
 const MEMBERS_CSV =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vTB6vHVjwL9_F3DVIVgXxP8rtWEDQyZaDTnG2yAw96j4_1DXU7317lBFaY0N5JnDhdvUnkvgAvb6p8o/pub?gid=1649506714&single=true&output=csv';
-
-const SHINYSHOWCASE_CSV =
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vTB6vHVjwL9_F3DVIVgXxP8rtWEDQyZaDTnG2yAw96j4_1DXU7317lBFaY0N5JnDhdvUnkvgAvb6p8o/pub?gid=1708435858&single=true&output=csv';
 
 const POKEMON_CSV =
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vTB6vHVjwL9_F3DVIVgXxP8rtWEDQyZaDTnG2yAw96j4_1DXU7317lBFaY0N5JnDhdvUnkvgAvb6p8o/pub?gid=890281184&single=true&output=csv';
@@ -95,7 +95,7 @@ async function renderPage() {
   content.innerHTML = '';
 
   // -------------------------------------------------------
-  // POKÉMON DATA (still CSV)
+  // POKEMON DATA (still CSV)
   // -------------------------------------------------------
 
   if (!pokemonDataLoaded) {
@@ -105,7 +105,7 @@ async function renderPage() {
   }
 
   // -------------------------------------------------------
-  // SHINY WEEKLY (JSON ✅)
+  // SHINY WEEKLY (JSON)
   // -------------------------------------------------------
 
   if (!shinyWeeklyWeeks) {
@@ -130,11 +130,11 @@ async function renderPage() {
   }
 
   // -------------------------------------------------------
-  // SHINY SHOWCASE (CSV for now)
+  // SHINY SHOWCASE (JSON)
   // -------------------------------------------------------
 
   if (!showcaseRows) {
-    showcaseRows = await loadCSV(SHINYSHOWCASE_CSV);
+    showcaseRows = await loadShinyShowcase();
   }
 
   // -------------------------------------------------------
