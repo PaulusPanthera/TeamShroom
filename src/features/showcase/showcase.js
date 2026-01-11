@@ -1,39 +1,30 @@
-// showcase.js
+// src/features/showcase/showcase.js
 // Team Shroom — Showcase & Member Views
 // JSON-first runtime, enforced contracts only
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
-import {
-  normalizePokemonName,
-  prettifyPokemonName
-} from '../../utils/utils.js';
+import { prettifyPokemonName } from '../../utils/utils.js';
 import { getMemberSprite } from '../../utils/membersprite.js';
 
 /* ---------------------------------------------------------
    SPRITES
 --------------------------------------------------------- */
 
-function getPokemonGif(name) {
-  const n = name.replace(/[\s.'’\-]/g, '').toLowerCase();
-  const overrides = {
-    mrmime: 'mr-mime',
-    mimejr: 'mime-jr',
-    nidoranf: 'nidoran-f',
-    nidoranm: 'nidoran-m',
-    typenull: 'type-null',
-    porygonz: 'porygon-z'
-  };
-  const key = overrides[n] || normalizePokemonName(name);
-  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
+/**
+ * Pokémon sprite resolver
+ * INPUT: canonical pokemon key (from CI)
+ */
+function getPokemonGif(pokemonKey) {
+  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${pokemonKey}.gif`;
 }
 
 /* ---------------------------------------------------------
    POINTS
 --------------------------------------------------------- */
 
-function getPointsForPokemon(pokemon, shiny, POKEMON_POINTS) {
+function getPointsForPokemon(pokemonKey, shiny, POKEMON_POINTS) {
   if (shiny.alpha) return 50;
-  const pts = POKEMON_POINTS?.[normalizePokemonName(pokemon)];
+  const pts = POKEMON_POINTS?.[pokemonKey];
   return typeof pts === 'number' ? pts : 0;
 }
 
@@ -115,8 +106,7 @@ export function renderShowcaseGallery(
   container.innerHTML = '';
 
   let groups;
-  if (mode === 'shinies')
-    groups = groupByCount(members);
+  if (mode === 'shinies') groups = groupByCount(members);
   else if (mode === 'scoreboard')
     groups = groupByPoints(members, teamMembers, POKEMON_POINTS);
   else groups = groupAlphabetically(members);
@@ -173,11 +163,7 @@ export function renderMemberShowcase(
     <button class="back-btn" data-sort="${sortMode || 'alphabetical'}">Back</button>
 
     <div class="member-nameplate">
-      <img
-        class="member-sprite"
-        src="${getMemberSprite(member.name, teamMembers)}"
-        alt=""
-      >
+      <img class="member-sprite" src="${getMemberSprite(member.name, teamMembers)}">
       <span class="member-name">${member.name}</span>
       <span class="shiny-count">Shinies: ${
         shinies.filter(s => !s.lost && !s.sold).length
@@ -202,23 +188,25 @@ export function renderMemberShowcase(
 
           if (mon.method) symbols[mon.method] = true;
 
+          const info = mon.sold
+            ? 'Sold'
+            : mon.lost
+            ? (
+                mon.pokemon === 'cubchoo' &&
+                member.name.toLowerCase() === 'skullz'
+                  ? 'R.I.P.'
+                  : 'Lost'
+              )
+            : `${getPointsForPokemon(
+                mon.pokemon,
+                mon,
+                POKEMON_POINTS
+              )} Points`;
+
           return renderUnifiedCard({
             name: prettifyPokemonName(mon.pokemon),
             img: getPokemonGif(mon.pokemon),
-            info: mon.sold
-  ? 'Sold'
-  : mon.lost
-  ? (
-      mon.pokemon.toLowerCase() === 'cubchoo' &&
-      member.name.toLowerCase() === 'skullz'
-        ? 'R.I.P.'
-        : 'Lost'
-    )
-  : `${getPointsForPokemon(
-      mon.pokemon,
-      mon,
-      POKEMON_POINTS
-    )} Points`,
+            info,
             cardType: 'pokemon',
             lost: mon.lost || mon.sold,
             symbols,
@@ -241,26 +229,21 @@ function bindShowcaseInteractions(root) {
     .querySelectorAll('.unified-card[data-card-type="member"]')
     .forEach(card => {
       card.addEventListener('click', () => {
-        const name = card.dataset.name;
-        location.hash = `#showcase-${encodeURIComponent(name)}`;
+        location.hash = `#showcase-${encodeURIComponent(card.dataset.name)}`;
       });
     });
 }
 
 function bindMemberInteractions(root) {
-  const back = root.querySelector('.back-btn');
-  back?.addEventListener('click', () => {
-    const sort = back.dataset.sort || 'alphabetical';
-    location.hash = `#showcase?sort=${sort}`;
+  root.querySelector('.back-btn')?.addEventListener('click', e => {
+    location.hash = `#showcase?sort=${e.target.dataset.sort || 'alphabetical'}`;
   });
 
-  root
-    .querySelectorAll('.unified-card[data-clip]')
-    .forEach(card => {
-      card.addEventListener('click', () => {
-        window.open(card.dataset.clip, '_blank');
-      });
+  root.querySelectorAll('.unified-card[data-clip]').forEach(card => {
+    card.addEventListener('click', () => {
+      window.open(card.dataset.clip, '_blank');
     });
+  });
 }
 
 /* ---------------------------------------------------------
