@@ -1,7 +1,7 @@
 // src/data/pokemondatabuilder.js
 // Pokémon derived data builder
-// Runtime consumes CI-normalized JSON only
-// SINGLE SOURCE OF TRUTH for all dex-derived state
+// Runtime consumes pre-normalized pokemon.json
+// HARD DATA PROVIDER — SHARED MODEL DEPENDENCY
 
 export const TIER_POINTS = {
   '6': 2,
@@ -15,132 +15,74 @@ export const TIER_POINTS = {
 };
 
 // ---------------------------------------------------------
-// DERIVED STATE (READ-ONLY FOR UI)
+// RUNTIME STATE (EXPLICITLY EXPORTED)
 // ---------------------------------------------------------
 
+export let TIER_FAMILIES = {};
 export let POKEMON_POINTS = {};
+export let POKEMON_TIER = {};
 export let POKEMON_REGION = {};
+export let POKEMON_RARITY = {};
 export let POKEMON_SHOW = {};
-export let POKEMON_FAMILIES = {};
-
-export let HITLIST_DEX = {};
-export let LIVING_DEX = {};
+export let pokemonFamilies = {};
+export let LIVING_COUNTS = {};
 
 // ---------------------------------------------------------
-// BUILDER
+// BUILDER (MUTATES EXPORTED STATE ONLY)
 // ---------------------------------------------------------
 
-export function buildPokemonData(pokemonRows, teamMembers, shinyWeeklyRows) {
-  // -------------------------------------------------------
-  // RESET STATE
-  // -------------------------------------------------------
-
+export function buildPokemonData(rows, teamMembers = []) {
+  // Reset maps
+  TIER_FAMILIES = {};
   POKEMON_POINTS = {};
+  POKEMON_TIER = {};
   POKEMON_REGION = {};
+  POKEMON_RARITY = {};
   POKEMON_SHOW = {};
-  POKEMON_FAMILIES = {};
-  HITLIST_DEX = {};
-  LIVING_DEX = {};
+  pokemonFamilies = {};
+  LIVING_COUNTS = {};
 
-  // -------------------------------------------------------
-  // PASS 1 — BASE POKÉMON MAPS (EXHAUSTIVE)
-  // -------------------------------------------------------
-
-  pokemonRows.forEach(row => {
+  rows.forEach(row => {
     const tier = String(row.tier);
     if (!TIER_POINTS[tier]) return;
 
-    if (!Array.isArray(row.family) || !row.family.length) return;
+    const familyRaw = row.family;
+    if (!familyRaw) return;
 
-    row.family.forEach(pokemon => {
-      POKEMON_POINTS[pokemon] = TIER_POINTS[tier];
-      POKEMON_REGION[pokemon] = row.region || 'unknown';
-      POKEMON_SHOW[pokemon] = row.show === true;
-      POKEMON_FAMILIES[pokemon] = row.family;
+    const family = familyRaw
+      .split(',')
+      .map(s => s.trim().toLowerCase())
+      .filter(Boolean);
+
+    if (!family.length) return;
+
+    const base = family[0];
+
+    TIER_FAMILIES[tier] ??= [];
+    if (!TIER_FAMILIES[tier].includes(base)) {
+      TIER_FAMILIES[tier].push(base);
+    }
+
+    family.forEach(name => {
+      pokemonFamilies[name] = family;
+      POKEMON_POINTS[name] = TIER_POINTS[tier];
+      POKEMON_TIER[name] = tier;
+      POKEMON_REGION[name] = row.region || 'Unknown';
+      POKEMON_RARITY[name] = row.rarity || null;
+      POKEMON_SHOW[name] = row.show === true;
+      LIVING_COUNTS[name] = 0;
     });
   });
 
   // -------------------------------------------------------
-  // PASS 2 — BASE DEX CONSTRUCTION (NO CLAIMS YET)
-  // -------------------------------------------------------
-
-  Object.keys(POKEMON_POINTS).forEach(pokemon => {
-    if (!POKEMON_SHOW[pokemon]) return;
-
-    const region = POKEMON_REGION[pokemon];
-
-    HITLIST_DEX[region] ??= {};
-    HITLIST_DEX[region][pokemon] = {
-      pokemon,
-      claimed: false,
-      member: null,
-      points: POKEMON_POINTS[pokemon]
-    };
-
-    LIVING_DEX[region] ??= {};
-    LIVING_DEX[region][pokemon] = {
-      pokemon,
-      count: 0,
-      owners: []
-    };
-  });
-
-  // -------------------------------------------------------
-  // PASS 3 — APPLY WEEKLY CLAIMS (ROW ORDER IS LAW)
-  // -------------------------------------------------------
-
-  const claimedStagesByFamily = {};
-
-  shinyWeeklyRows.forEach(row => {
-    const pokemon = row.pokemon;
-    const member = row.ot;
-
-    const family = POKEMON_FAMILIES[pokemon];
-    if (!family) return;
-
-    const familyKey = family.join('|');
-    claimedStagesByFamily[familyKey] ??= new Set();
-
-    const claimedStages = claimedStagesByFamily[familyKey];
-
-    // Determine which stage is claimed
-    let claimedPokemon = null;
-
-    if (!claimedStages.has(pokemon)) {
-      claimedPokemon = pokemon;
-    } else {
-      claimedPokemon = family.find(p => !claimedStages.has(p));
-    }
-
-    if (!claimedPokemon) return;
-
-    claimedStages.add(claimedPokemon);
-
-    const region = POKEMON_REGION[claimedPokemon];
-    const entry = HITLIST_DEX[region]?.[claimedPokemon];
-
-    if (!entry || entry.claimed) return;
-
-    entry.claimed = true;
-    entry.member = member;
-  });
-
-  // -------------------------------------------------------
-  // PASS 4 — LIVING DEX COUNTS (MEMBERS → SHINIES)
+  // LIVING DEX COUNTS (DERIVED, SINGLE SOURCE)
   // -------------------------------------------------------
 
   teamMembers.forEach(member => {
     member.shinies.forEach(mon => {
       if (mon.lost || mon.sold) return;
       if (!POKEMON_POINTS[mon.pokemon]) return;
-
-      const region = POKEMON_REGION[mon.pokemon];
-      const entry = LIVING_DEX[region]?.[mon.pokemon];
-
-      if (!entry) return;
-
-      entry.count += 1;
-      entry.owners.push(member.name);
+      LIVING_COUNTS[mon.pokemon] += 1;
     });
   });
 }
