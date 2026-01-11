@@ -14,35 +14,58 @@ if (!CSV_URL) {
   throw new Error('MEMBERS_CSV env variable missing');
 }
 
-// fetch + parse
-const csvText = await fetchCsv(CSV_URL);
-const rows = parseCsv(csvText);
+// -----------------------------
+// Fetch + parse
+// -----------------------------
 
-// validate against schema
+const csvText = await fetchCsv(CSV_URL);
+const rawRows = parseCsv(csvText);
+
+// -----------------------------
+// Strip empty rows (PRIMARY KEY = name)
+// -----------------------------
+
+const rows = rawRows.filter(
+  r => r.name && r.name.trim() !== ''
+);
+
+// -----------------------------
+// Pre-normalize for validation
+// -----------------------------
+
+rows.forEach(row => {
+  if (row.role) row.role = row.role.toLowerCase().trim();
+  if (row.sprite) row.sprite = row.sprite.toLowerCase().trim();
+});
+
+// -----------------------------
+// Validate against schema
+// -----------------------------
+
 validateRows({
   rows,
   schema: membersContract,
   sheet: 'members',
 });
 
-// normalize (CI is source of truth)
-const data = rows
-  .filter(r => r.name && r.name.trim() !== '')
-  .map(row => {
-    const spriteRaw = row.sprite?.toLowerCase().trim() ?? '';
+// -----------------------------
+// Normalize (CI owns correctness)
+// -----------------------------
 
-    return {
-      name: row.name.trim(),
-      active: row.active === 'TRUE',
-      role: row.role.toLowerCase().trim(),
-      sprite:
-        spriteRaw === '' || spriteRaw === 'none'
-          ? null
-          : spriteRaw,
-    };
-  });
+const data = rows.map(row => ({
+  name: row.name.trim(),
+  active: row.active === 'TRUE',
+  role: row.role,
+  sprite:
+    row.sprite === '' || row.sprite === 'none'
+      ? null
+      : row.sprite,
+}));
 
-// write versioned JSON
+// -----------------------------
+// Write versioned JSON
+// -----------------------------
+
 await writeJson('data/members.json', {
   version: 1,
   generatedAt: new Date().toISOString(),
