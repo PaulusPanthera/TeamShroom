@@ -23,31 +23,24 @@ function parseTier(value, rowIndex) {
 const csvText = await fetchCsv(CSV_URL);
 const rows = parseCsv(csvText);
 
-const normalized = rows.map((row, index) => {
-  const dex = row.dex?.trim();
-  if (!dex) {
-    throw new Error(`Row ${index + 2}: missing dex`);
-  }
+const normalized = rows
+  // ✅ EMPTY ROW FIX
+  .filter(row => row.dex && row.dex.trim() !== '')
+  .map((row, index) => {
+    const region = row.region?.trim().toLowerCase();
+    if (!ALLOWED_REGIONS.has(region)) {
+      throw new Error(`Row ${index + 2}: invalid region "${row.region}"`);
+    }
 
-  const pokemon = row.pokemon?.trim().toLowerCase();
-  if (!pokemon) {
-    throw new Error(`Row ${index + 2}: missing pokemon name`);
-  }
-
-  const region = row.region?.trim().toLowerCase();
-  if (!ALLOWED_REGIONS.has(region)) {
-    throw new Error(`Row ${index + 2}: invalid region "${row.region}"`);
-  }
-
-  return {
-    dex,
-    pokemon,
-    family: row.family?.trim().toLowerCase() || null,
-    tier: parseTier(row.tier, index),
-    region,
-    rarity: row.rarity?.trim() || null,
-    show: row.show === 'TRUE',
-  };
-});
+    return {
+      dex: row.dex.trim(),
+      pokemon: row.pokemon?.trim().toLowerCase(),
+      family: row.family?.trim().toLowerCase() || null,
+      tier: parseTier(row.tier, index),
+      region,
+      rarity: row.rarity?.trim() || null,
+      show: row.show === 'TRUE',
+    };
+  });
 
 await writeJson('data/pokemon.json', normalized);
