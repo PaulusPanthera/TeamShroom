@@ -1,8 +1,6 @@
 // membersprite.js
-// Member Sprite Resolver — HARD CONTRACT
+// Member Sprite Resolver
 // Pure, synchronous, data-driven
-
-import { normalizeMemberName } from './utils.js';
 
 /**
  * Resolve a member sprite URL.
@@ -13,9 +11,6 @@ import { normalizeMemberName } from './utils.js';
  * - Never throws
  * - Never returns Promise
  *
- * Data source of truth:
- * - teamShowcase / members data (from Google Sheets)
- *
  * Expected member entry shape:
  * {
  *   name: "Paulus",
@@ -23,17 +18,21 @@ import { normalizeMemberName } from './utils.js';
  * }
  */
 export function getMemberSprite(memberName, membersData = []) {
-  const base = normalizeMemberName(memberName);
+  if (!memberName) {
+    return 'img/membersprites/examplesprite.png';
+  }
+
+  const nameLower = memberName.toLowerCase();
 
   const entry = membersData.find(
-    m => normalizeMemberName(m.name) === base
+    m => m.name && m.name.toLowerCase() === nameLower
   );
 
-  // Explicit opt-out or missing entry
   if (!entry || entry.sprite === 'none' || !entry.sprite) {
     return 'img/membersprites/examplesprite.png';
   }
 
-  // Explicit, trusted format
+  const base = entry.name.toLowerCase();
+
   return `img/membersprites/${base}sprite.${entry.sprite}`;
 }
