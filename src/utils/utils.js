@@ -1,39 +1,33 @@
-// utils.js
-// Centralized display helpers
-// Runtime-safe, CSV-free
+// src/utils/utils.js
+// Display helpers only
+// Runtime-safe, logic-free
 
 /* ---------------------------------------------------------
-   POKÉMON NAME HELPERS
+   POKÉMON DISPLAY HELPERS
 --------------------------------------------------------- */
-
-/**
- * Normalize a Pokémon name into a canonical lookup key.
- *
- * NOTE:
- * - Mostly legacy
- * - Kept for safety during migration
- */
-export function normalizePokemonName(name) {
-  if (!name) return "";
-  return name
-    .toLowerCase()
-    .replace(/♀/g, "-f")
-    .replace(/♂/g, "-m")
-    .replace(/[\s.'’]/g, "");
-}
 
 /**
  * Prettify a Pokémon name for display only.
  *
- * NEVER use this for logic or lookups.
+ * INPUT:
+ * - canonical Pokémon key (from CI)
+ *
+ * OUTPUT:
+ * - human-readable label
+ *
+ * NEVER use for:
+ * - lookups
+ * - comparisons
+ * - normalization
  */
 export function prettifyPokemonName(input) {
   if (!input) return "";
 
   const raw = input.toLowerCase();
 
-  if (raw === "nidoran-f" || raw === "nidoranf") return "Nidoran♀";
-  if (raw === "nidoran-m" || raw === "nidoranm") return "Nidoran♂";
+  // Explicit exceptions (stable)
+  if (raw === "nidoran-f") return "Nidoran♀";
+  if (raw === "nidoran-m") return "Nidoran♂";
   if (raw === "mr.mime" || raw === "mrmime") return "Mr. Mime";
   if (raw === "mime-jr" || raw === "mimejr") return "Mime Jr.";
   if (raw === "type-null" || raw === "typenull") return "Type: Null";
