@@ -23,9 +23,15 @@ HITLIST_LEADERBOARD:
   byPoints: Array<{ member: string, points: number }>
 }
 
-LIVING_COUNTS:
+LIVING_DEX:
 {
-  [pokemon: string]: number
+  [region: string]: Array<{
+    pokemon: string
+    family: string
+    stage: number
+    ownedCount: number
+    owners: Array<string>
+  }>
 }
 */
 
@@ -41,7 +47,7 @@ export const TIER_POINTS = {
 };
 
 // ---------------------------------------------------------
-// RUNTIME STATE (DERIVED, SINGLE SOURCE OF TRUTH)
+// RUNTIME STATE
 // ---------------------------------------------------------
 
 export let TIER_FAMILIES = {};
@@ -52,12 +58,13 @@ export let POKEMON_RARITY = {};
 export let POKEMON_SHOW = {};
 export let pokemonFamilies = {};
 
-export let LIVING_COUNTS = {};
 export let HITLIST_DEX = {};
 export let HITLIST_LEADERBOARD = {
   byClaims: [],
   byPoints: []
 };
+
+export let LIVING_DEX = {};
 
 // ---------------------------------------------------------
 // BUILDER
@@ -71,11 +78,14 @@ export function buildPokemonData(pokemonRows, teamMembers = [], shinyWeeklyRows 
   POKEMON_RARITY = {};
   POKEMON_SHOW = {};
   pokemonFamilies = {};
-  LIVING_COUNTS = {};
   HITLIST_DEX = {};
   HITLIST_LEADERBOARD = { byClaims: [], byPoints: [] };
+  LIVING_DEX = {};
 
-  // Base Pokémon maps
+  // -------------------------------------------------------
+  // BASE MAPS
+  // -------------------------------------------------------
+
   pokemonRows.forEach(row => {
     const tier = String(row.tier);
     if (!TIER_POINTS[tier]) return;
@@ -103,59 +113,79 @@ export function buildPokemonData(pokemonRows, teamMembers = [], shinyWeeklyRows 
       POKEMON_REGION[name] = row.region;
       POKEMON_RARITY[name] = row.rarity;
       POKEMON_SHOW[name] = row.show === true;
-      LIVING_COUNTS[name] = 0;
     });
   });
 
-  // Living Dex counts
+  // -------------------------------------------------------
+  // LIVING DEX (OWNERSHIP)
+  // -------------------------------------------------------
+
+  const ownersByPokemon = {};
+
   teamMembers.forEach(member => {
     member.shinies.forEach(mon => {
       if (mon.lost || mon.sold) return;
-      if (!POKEMON_POINTS[mon.pokemon]) return;
-      LIVING_COUNTS[mon.pokemon] += 1;
+      if (!pokemonFamilies[mon.pokemon]) return;
+
+      ownersByPokemon[mon.pokemon] ??= [];
+      ownersByPokemon[mon.pokemon].push(member.name);
     });
   });
 
-  // Hitlist claim engine
+  Object.entries(pokemonFamilies).forEach(([pokemon, family]) => {
+    if (!POKEMON_SHOW[pokemon]) return;
+
+    const region = POKEMON_REGION[pokemon] || 'unknown';
+    const owners = ownersByPokemon[pokemon] || [];
+
+    LIVING_DEX[region] ??= [];
+    LIVING_DEX[region].push({
+      pokemon,
+      family: family[0],
+      stage: family.indexOf(pokemon),
+      ownedCount: owners.length,
+      owners
+    });
+  });
+
+  // -------------------------------------------------------
+  // HITLIST CLAIM ENGINE
+  // -------------------------------------------------------
+
   const claimedStages = {};
   const claimsByMember = {};
   const pointsByMember = {};
 
   shinyWeeklyRows.forEach(event => {
     const family = pokemonFamilies[event.pokemon];
-    if (!family || !family.length) return;
+    if (!family) return;
 
     claimedStages[family[0]] ??= new Set();
-    const claimedSet = claimedStages[family[0]];
-    if (claimedSet.size >= family.length) return;
+    const set = claimedStages[family[0]];
 
-    const stageIndex = family.findIndex(
-      (_, idx) => !claimedSet.has(idx)
-    );
+    if (set.size >= family.length) return;
+
+    const stageIndex = family.findIndex((_, i) => !set.has(i));
     if (stageIndex === -1) return;
 
-    const stagePokemon = family[stageIndex];
-    claimedSet.add(stageIndex);
+    const claimedPokemon = family[stageIndex];
+    set.add(stageIndex);
 
     claimsByMember[event.ot] ??= 0;
     pointsByMember[event.ot] ??= 0;
 
     claimsByMember[event.ot] += 1;
-    pointsByMember[event.ot] += POKEMON_POINTS[stagePokemon] || 0;
+    pointsByMember[event.ot] += POKEMON_POINTS[claimedPokemon] || 0;
   });
 
-  // Build Hitlist Dex
   Object.entries(pokemonFamilies).forEach(([pokemon, family]) => {
     if (!POKEMON_SHOW[pokemon]) return;
 
     const region = POKEMON_REGION[pokemon] || 'unknown';
     const stage = family.indexOf(pokemon);
+    const claimed = claimedStages[family[0]]?.has(stage) ?? false;
 
     HITLIST_DEX[region] ??= [];
-
-    const claimedSet = claimedStages[family[0]] || new Set();
-    const claimed = claimedSet.has(stage);
-
     HITLIST_DEX[region].push({
       pokemon,
       family: family[0],
@@ -166,7 +196,6 @@ export function buildPokemonData(pokemonRows, teamMembers = [], shinyWeeklyRows 
     });
   });
 
-  // Leaderboards
   HITLIST_LEADERBOARD.byClaims = Object.entries(claimsByMember)
     .map(([member, claims]) => ({ member, claims }))
     .sort((a, b) => b.claims - a.claims);
