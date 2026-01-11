@@ -1,99 +1,122 @@
+// scripts/shinyweekly.mjs
+// Shiny Weekly CSV → validated, normalized JSON
+// CI HARD CONTRACT
+
 import { fetchCsv } from './lib/fetchCsv.mjs';
 import { parseCsv } from './lib/parseCsv.mjs';
 import { writeJson } from './lib/writeJson.mjs';
+import { validateRows } from './lib/validateRows.mjs';
+import { shinyWeeklyContract } from './contracts/shinyweekly.contract.mjs';
 
 const CSV_URL = process.env.SHINY_WEEKLY_CSV;
 
-const ALLOWED_METHODS = new Set([
-  'mpb',
-  'mgb',
-  'mub',
-  'mcb',
-  'mdb',
-  'egg',
-  'safari',
-  '5x100%',
-  '3x100%',
-  'single',
-  'swarm',
-  'alpha_spawn',
-  'raid',
-  'event',
-  'headbutt',
-  'rocksmash',
-  'sos',
-  'honeytree',
-  'fishing',
-]);
-
-function normalizeBool(value) {
-  return value === 'TRUE';
+if (!CSV_URL) {
+  throw new Error('SHINY_WEEKLY_CSV env variable missing');
 }
 
-function normalizeString(value) {
-  const v = value?.trim();
-  return v === '' || v == null ? null : v;
+// -----------------------------
+// Helpers (normalization only)
+// -----------------------------
+
+function normalizeMember(name) {
+  return name.trim().toLowerCase().replace(/\s+/g, '');
 }
 
-function normalizeDate(value, rowIndex, field) {
-  if (!value) return null;
+function normalizePokemon(name) {
+  return name
+    .toLowerCase()
+    .replace(/♀/g, '-f')
+    .replace(/♂/g, '-m')
+    .replace(/[\s.'’]/g, '');
+}
+
+function normalizeDate(value, rowNum, field) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-    throw new Error(`Row ${rowIndex + 2}: invalid ${field} "${value}"`);
+    throw new Error(
+      `[shinyweekly] Row ${rowNum}: invalid ${field} "${value}"`
+    );
   }
   return value;
 }
 
-function normalizeEncounter(value, rowIndex) {
-  if (!value) return null;
+function normalizeEncounter(value, rowNum) {
+  if (value === '' || value === undefined) return null;
+
   const num = Number(value);
   if (!Number.isInteger(num) || num < 0) {
-    throw new Error(`Row ${rowIndex + 2}: invalid encounter "${value}"`);
+    throw new Error(
+      `[shinyweekly] Row ${rowNum}: invalid encounter "${value}"`
+    );
   }
+
   return num;
 }
 
-function normalizeMethod(value, rowIndex) {
-  if (!value) return null;
-  const method = value.trim().toLowerCase();
-  if (!ALLOWED_METHODS.has(method)) {
-    throw new Error(`Row ${rowIndex + 2}: invalid method "${value}"`);
-  }
-  return method;
-}
-
-function normalizeClip(value) {
-  const v = value?.trim();
-  if (!v) return null;
-  if (!/^https?:\/\//i.test(v)) return null;
-  return v;
-}
+// -----------------------------
+// Fetch + parse
+// -----------------------------
 
 const csvText = await fetchCsv(CSV_URL);
 const rows = parseCsv(csvText);
 
-const normalized = rows
-  .filter(row => row.week && row.week.trim() !== '')
+// -----------------------------
+// Pre-normalize for validation
+// -----------------------------
+
+rows.forEach(row => {
+  if (row.method) row.method = row.method.toLowerCase().trim();
+});
+
+// -----------------------------
+// Validate against schema
+// -----------------------------
+
+validateRows({
+  rows,
+  schema: shinyWeeklyContract,
+  sheet: 'shinyweekly',
+});
+
+// -----------------------------
+// Normalize (CI owns correctness)
+// -----------------------------
+
+const data = rows
+  // primary field = week
+  .filter(r => r.week && r.week.trim() !== '')
   .map((row, index) => {
-    const week = row.week.trim();
+    const rowNum = index + 2;
 
     return {
-      week,
-      week_label: normalizeString(row.week_label),
-      date_start: normalizeDate(row.date_start, index, 'date_start'),
-      date_end: normalizeDate(row.date_end, index, 'date_end'),
-      date_catch: normalizeDate(row.date_catch, index, 'date_catch'),
-      ot: normalizeString(row.ot),
-      pokemon: row.pokemon?.trim().toLowerCase() || null,
-      method: normalizeMethod(row.method, index),
-      encounter: normalizeEncounter(row.encounter, index),
-      secret: normalizeBool(row.secret),
-      alpha: normalizeBool(row.alpha),
-      run: normalizeBool(row.run),
-      lost: normalizeBool(row.lost),
-      clip: normalizeClip(row.clip),
-      notes: normalizeString(row.notes),
+      week: row.week.trim(),
+      week_label: row.week_label.trim(),
+
+      date_start: normalizeDate(row.date_start, rowNum, 'date_start'),
+      date_end: normalizeDate(row.date_end, rowNum, 'date_end'),
+
+      ot: normalizeMember(row.ot),
+      pokemon: normalizePokemon(row.pokemon),
+
+      method: row.method || null,
+      encounter: normalizeEncounter(row.encounter, rowNum),
+
+      secret: row.secret === 'TRUE',
+      alpha: row.alpha === 'TRUE',
+      run: row.run === 'TRUE',
+      lost: row.lost === 'TRUE',
+
+      clip: row.clip?.trim() || null,
+      notes: row.notes?.trim() || null,
     };
   });
 
+// -----------------------------
+// Write versioned JSON
+// -----------------------------
 
-await writeJson('data/shinyweekly.json', normalized);
+await writeJson('data/shinyweekly.json', {
+  version: 1,
+  generatedAt: new Date().toISOString(),
+  source: 'google-sheets',
+  data,
+});
