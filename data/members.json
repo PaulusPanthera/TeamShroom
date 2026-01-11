@@ -1,599 +1,824 @@
 [
   {
-    "name": "AKatharina"
+    "name": "AKatharina",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Alphy"
+    "name": "Alphy",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Aokiza"
+    "name": "Aokiza",
+    "active": true,
+    "role": "shroom",
+    "sprite": "gif"
   },
   {
-    "name": "ashash"
+    "name": "ashash",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "azili"
+    "name": "azili",
+    "active": true,
+    "role": "spore",
+    "sprite": null
   },
   {
-    "name": "Biiidou"
+    "name": "Biiidou",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "BlistiK"
+    "name": "BlistiK",
+    "active": true,
+    "role": "shroom",
+    "sprite": "jpg"
   },
   {
-    "name": "BojanglesisHere"
+    "name": "BojanglesisHere",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "bonseum"
+    "name": "bonseum",
+    "active": true,
+    "role": "shinyshroom",
+    "sprite": "png"
   },
   {
-    "name": "Brownerthan"
+    "name": "Brownerthan",
+    "active": true,
+    "role": "shinyshroom",
+    "sprite": "png"
   },
   {
-    "name": "Bulkanator"
+    "name": "Bulkanator",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "casethecase"
+    "name": "casethecase",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "CelineCeline"
+    "name": "CelineCeline",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Charizapedia"
+    "name": "Charizapedia",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "CheesasaurusRex"
+    "name": "CheesasaurusRex",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Chestia"
+    "name": "Chestia",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "ChipHazardBB"
+    "name": "ChipHazardBB",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "CigaretteMilk"
+    "name": "CigaretteMilk",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Clairbear"
+    "name": "Clairbear",
+    "active": true,
+    "role": "shinyshroom",
+    "sprite": "png"
   },
   {
-    "name": "clairo"
+    "name": "clairo",
+    "active": true,
+    "role": "shinyshroom",
+    "sprite": "png"
   },
   {
-    "name": "Cordeiroxi"
+    "name": "Cordeiroxi",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "CraazyHorse"
+    "name": "CraazyHorse",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "cuteasduckk"
+    "name": "cuteasduckk",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "DaddyMolo"
+    "name": "DaddyMolo",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "DamoNll"
+    "name": "DamoNll",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "DComp"
+    "name": "DComp",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "DelPieroSenpai"
+    "name": "DelPieroSenpai",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Deuporus"
+    "name": "Deuporus",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Difoolio"
+    "name": "Difoolio",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Domingsss"
+    "name": "Domingsss",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Drain"
+    "name": "Drain",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Drizzle"
+    "name": "Drizzle",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Dupe"
+    "name": "Dupe",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Eerie"
+    "name": "Eerie",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "fisplant"
+    "name": "fisplant",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Freenox"
+    "name": "Freenox",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Gaudjo"
+    "name": "Gaudjo",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "GeoPlays"
+    "name": "GeoPlays",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Geranxx"
+    "name": "Geranxx",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Grrzzly"
+    "name": "Grrzzly",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Gumbasketball"
+    "name": "Gumbasketball",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "HennyD"
+    "name": "HennyD",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "highpokeman"
+    "name": "highpokeman",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Hjordi"
+    "name": "Hjordi",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Hokeymon"
+    "name": "Hokeymon",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "iMonchi"
+    "name": "iMonchi",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "itsEasy"
+    "name": "itsEasy",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "ItsKitas"
+    "name": "ItsKitas",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "jaspn"
+    "name": "jaspn",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Jayyxxi"
+    "name": "Jayyxxi",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "JGrenade"
+    "name": "JGrenade",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Johnerrr"
+    "name": "Johnerrr",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "JokageZero"
+    "name": "JokageZero",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "JulieJewel"
+    "name": "JulieJewel",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Jutskaa"
+    "name": "Jutskaa",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Kaaflaa"
+    "name": "Kaaflaa",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "KaoZPrime"
+    "name": "KaoZPrime",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Kithri"
+    "name": "Kithri",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "kitsucupid"
+    "name": "kitsucupid",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Kolepls"
+    "name": "Kolepls",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Kynnyto"
+    "name": "Kynnyto",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "locobounty"
+    "name": "locobounty",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "LoDarko"
+    "name": "LoDarko",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "LordGangis"
+    "name": "LordGangis",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "LuckiLeo"
+    "name": "LuckiLeo",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Luna"
+    "name": "Luna",
+    "active": true,
+    "role": "mushcap",
+    "sprite": "png"
   },
   {
-    "name": "Lyptus"
+    "name": "Lyptus",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Macarene"
+    "name": "Macarene",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "maknaez"
+    "name": "maknaez",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Mattmattoux"
+    "name": "Mattmattoux",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "MechanicalHippo"
+    "name": "MechanicalHippo",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "MELVZZY"
+    "name": "MELVZZY",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Messpotter"
+    "name": "Messpotter",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "MikeRunkZz"
+    "name": "MikeRunkZz",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Mileage"
+    "name": "Mileage",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "MrBiscottes"
+    "name": "MrBiscottes",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "MrChooch"
+    "name": "MrChooch",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Narrayah"
+    "name": "Narrayah",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Navy"
+    "name": "Navy",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "NotAHumanSure"
+    "name": "NotAHumanSure",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "NoxxPrime"
+    "name": "NoxxPrime",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Orllando"
+    "name": "Orllando",
+    "active": true,
+    "role": "shinyshroom",
+    "sprite": "png"
   },
   {
-    "name": "Pangeaa"
+    "name": "Pangeaa",
+    "active": true,
+    "role": "shinyshroom",
+    "sprite": "png"
   },
   {
-    "name": "PaulusTFT"
+    "name": "PaulusTFT",
+    "active": true,
+    "role": "mushcap",
+    "sprite": "png"
   },
   {
-    "name": "pawmu"
+    "name": "pawmu",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "pearishx"
+    "name": "pearishx",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "PokeBodega"
+    "name": "PokeBodega",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "PolarisGoon"
+    "name": "PolarisGoon",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "QuinJay"
+    "name": "QuinJay",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Raiketsu"
+    "name": "Raiketsu",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "realjuckpop"
+    "name": "realjuckpop",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "riahC"
+    "name": "riahC",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "RicRiley"
+    "name": "RicRiley",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Rintuu"
+    "name": "Rintuu",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Ripz"
+    "name": "Ripz",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "RuthlessZ"
+    "name": "RuthlessZ",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Scooby"
+    "name": "Scooby",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Scooty"
+    "name": "Scooty",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Sirbeyy"
+    "name": "Sirbeyy",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "SirPrivacy"
+    "name": "SirPrivacy",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Skullz"
+    "name": "Skullz",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "slaydounet"
+    "name": "slaydounet",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Smokee"
+    "name": "Smokee",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Smough"
+    "name": "Smough",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Soxzzz"
+    "name": "Soxzzz",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "SparkleButt"
+    "name": "SparkleButt",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "spells"
+    "name": "spells",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Stathiskris"
+    "name": "Stathiskris",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "TaCesa"
+    "name": "TaCesa",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "TakeOnMeh"
+    "name": "TakeOnMeh",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "tardigreat"
+    "name": "tardigreat",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Tazmaster"
+    "name": "Tazmaster",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Teletubbiebaz"
+    "name": "Teletubbiebaz",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Terminus"
+    "name": "Terminus",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Tobias"
+    "name": "Tobias",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Togadh"
+    "name": "Togadh",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "tollewolle"
+    "name": "tollewolle",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "TorontoKid"
+    "name": "TorontoKid",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Tortuponchy"
+    "name": "Tortuponchy",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "TTVxSenseiNESS"
+    "name": "TTVxSenseiNESS",
+    "active": true,
+    "role": "mushcap",
+    "sprite": "png"
   },
   {
-    "name": "tulicreme"
+    "name": "tulicreme",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Visari"
+    "name": "Visari",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "WailynXD"
+    "name": "WailynXD",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Whamalicious"
+    "name": "Whamalicious",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "WhosWill"
+    "name": "WhosWill",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "WillyPS"
+    "name": "WillyPS",
+    "active": true,
+    "role": "shinyshroom",
+    "sprite": "png"
   },
   {
-    "name": "winlip"
+    "name": "winlip",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "WinterIvy"
+    "name": "WinterIvy",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "xCOPYCATx"
+    "name": "xCOPYCATx",
+    "active": true,
+    "role": "shinyshroom",
+    "sprite": "png"
   },
   {
-    "name": "XxArtamielxX"
+    "name": "XxArtamielxX",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "XxEmperiorxX"
+    "name": "XxEmperiorxX",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Yoboes"
+    "name": "Yoboes",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "Yoyoyoshie"
+    "name": "Yoyoyoshie",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   },
   {
-    "name": "Yugi"
+    "name": "Yugi",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "zDaarkraai"
+    "name": "zDaarkraai",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "ZekTV"
+    "name": "ZekTV",
+    "active": true,
+    "role": "spore",
+    "sprite": "png"
   },
   {
-    "name": "zzxyami"
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
-  },
-  {
-    "name": ""
+    "name": "zzxyami",
+    "active": true,
+    "role": "shroom",
+    "sprite": "png"
   }
 ]
