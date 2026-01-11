@@ -18,6 +18,7 @@ const ALLOWED_METHODS = new Set([
   'swarm',
   'alpha_spawn',
   'raid',
+  'event',
   'headbutt',
   'rocksmash',
   'sos',
