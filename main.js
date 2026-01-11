@@ -1,16 +1,16 @@
 // main.js (ROOT)
-// Entrypoint — JSON-first migration in progress
-// Shiny Weekly + Shiny Showcase migrated to JSON
+// Entrypoint — JSON-only runtime
+// All data preprocessed in CI
 
 import { loadShinyWeekly } from './src/data/shinyweekly.loader.js';
 import { buildShinyWeeklyModel } from './src/data/shinyweekly.model.js';
 
 import { loadShinyShowcase } from './src/data/shinyshowcase.loader.js';
+import { loadPokemon } from './src/data/pokemon.loader.js';
+import { loadMembers } from './src/data/members.loader.js';
+import { loadDonators } from './src/data/donators.loader.js';
 
 import { buildPokemonData, POKEMON_POINTS } from './src/data/pokemondatabuilder.js';
-import { loadDonatorsFromCSV } from './src/data/donators.loader.js';
-import { loadMembersFromCSV } from './src/data/member.loader.js';
-import { loadCSV } from './src/data/csv.loader.js';
 
 import {
   renderShowcaseGallery,
@@ -21,20 +21,6 @@ import {
 import { setupShinyDexHitlistSearch } from './src/features/shinydex/shinydexsearch.js';
 import { renderDonators } from './src/features/donators/donators.js';
 import { renderShinyWeekly } from './src/features/shinyweekly/shinyweekly.ui.js';
-
-// ---------------------------------------------------------
-// CONFIG - GOOGLE SHEETS (CSV)
-// Still used by non-migrated features
-// ---------------------------------------------------------
-
-const DONATORS_CSV =
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vTB6vHVjwL9_F3DVIVgXxP8rtWEDQyZaDTnG2yAw96j4_1DXU7317lBFaY0N5JnDhdvUnkvgAvb6p8o/pub?gid=2068008843&single=true&output=csv';
-
-const MEMBERS_CSV =
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vTB6vHVjwL9_F3DVIVgXxP8rtWEDQyZaDTnG2yAw96j4_1DXU7317lBFaY0N5JnDhdvUnkvgAvb6p8o/pub?gid=1649506714&single=true&output=csv';
-
-const POKEMON_CSV =
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vTB6vHVjwL9_F3DVIVgXxP8rtWEDQyZaDTnG2yAw96j4_1DXU7317lBFaY0N5JnDhdvUnkvgAvb6p8o/pub?gid=890281184&single=true&output=csv';
 
 // ---------------------------------------------------------
 // DATA CACHES
@@ -95,11 +81,11 @@ async function renderPage() {
   content.innerHTML = '';
 
   // -------------------------------------------------------
-  // POKEMON DATA (still CSV)
+  // POKEMON DATA (JSON)
   // -------------------------------------------------------
 
   if (!pokemonDataLoaded) {
-    const pokemonRows = await loadCSV(POKEMON_CSV);
+    const pokemonRows = await loadPokemon();
     buildPokemonData(pokemonRows);
     pokemonDataLoaded = true;
   }
@@ -114,19 +100,19 @@ async function renderPage() {
   }
 
   // -------------------------------------------------------
-  // DONATORS (CSV for now)
+  // DONATORS (JSON)
   // -------------------------------------------------------
 
   if (!donatorsData) {
-    donatorsData = await loadDonatorsFromCSV(DONATORS_CSV);
+    donatorsData = await loadDonators();
   }
 
   // -------------------------------------------------------
-  // MEMBERS (CSV for now)
+  // MEMBERS (JSON)
   // -------------------------------------------------------
 
   if (!membersData) {
-    membersData = await loadMembersFromCSV(MEMBERS_CSV);
+    membersData = await loadMembers();
   }
 
   // -------------------------------------------------------
