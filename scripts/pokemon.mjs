@@ -39,7 +39,15 @@ function normalizeFamily(value) {
 // -----------------------------
 
 const csvText = await fetchCsv(CSV_URL);
-const rows = parseCsv(csvText);
+const rawRows = parseCsv(csvText);
+
+// -----------------------------
+// Strip empty rows (PRIMARY KEY = dex)
+// -----------------------------
+
+const rows = rawRows.filter(
+  r => r.dex && r.dex.trim() !== ''
+);
 
 // -----------------------------
 // Pre-normalize for validation
@@ -64,19 +72,15 @@ validateRows({
 // Normalize (CI owns correctness)
 // -----------------------------
 
-const data = rows
-  .filter(r => r.dex && r.dex.trim() !== '')
-  .map(row => {
-    return {
-      dex: row.dex.trim(),
-      pokemon: normalizePokemonName(row.pokemon),
-      family: normalizeFamily(row.family),
-      tier: row.tier,
-      region: row.region || null,
-      rarity: row.rarity?.trim() || null,
-      show: row.show !== 'FALSE',
-    };
-  });
+const data = rows.map(row => ({
+  dex: row.dex.trim(),
+  pokemon: normalizePokemonName(row.pokemon),
+  family: normalizeFamily(row.family),
+  tier: row.tier,
+  region: row.region || null,
+  rarity: row.rarity?.trim() || null,
+  show: row.show !== 'FALSE',
+}));
 
 // -----------------------------
 // Write versioned JSON
