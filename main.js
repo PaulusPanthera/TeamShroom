@@ -149,15 +149,18 @@ async function renderPage() {
     renderMemberShowcase(m, null, teamMembers);
   }
 
-  else if (page === 'hitlist') {
-    content.innerHTML = `<div id="shiny-dex-container"></div>`;
+  // inside the hitlist route
 
-    setupShinyDexHitlistSearch({
-      hitlistDex: HITLIST_DEX,
-      hitlistLeaderboard: HITLIST_LEADERBOARD,
-      livingDex: null
-    });
-  }
+else if (page === 'hitlist') {
+  content.innerHTML = `<div id="shiny-dex-container"></div>`;
+
+  setupShinyDexHitlistSearch({
+    hitlistDex: HITLIST_DEX,
+    hitlistLeaderboard: HITLIST_LEADERBOARD,
+    livingDex: LIVING_DEX
+  });
+}
+
 
   else if (page === 'shinyweekly') {
     content.innerHTML = `<div id="shinyweekly-container"></div>`;
