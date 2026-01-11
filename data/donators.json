@@ -1,1370 +1,1375 @@
-[
-  {
-    "date": "2024-03-08",
-    "name": "AbruptAlpaca",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-03-08",
-    "name": "BabyLime",
-    "donation": null,
-    "value": 100000
-  },
-  {
-    "date": "2024-03-08",
-    "name": "Jaspn",
-    "donation": "Beldum",
-    "value": 60000
-  },
-  {
-    "date": "2024-03-08",
-    "name": "OhitsDunco",
-    "donation": null,
-    "value": 2000000
-  },
-  {
-    "date": "2024-03-08",
-    "name": "PaulusTFT",
-    "donation": null,
-    "value": 1000000
-  },
-  {
-    "date": "2024-03-08",
-    "name": "PaulusTFT",
-    "donation": "Breloom",
-    "value": 700000
-  },
-  {
-    "date": "2024-03-08",
-    "name": "skyeatsme",
-    "donation": null,
-    "value": 400000
-  },
-  {
-    "date": "2024-03-08",
-    "name": "maknaez",
-    "donation": "Volcarona",
-    "value": 550000
-  },
-  {
-    "date": "2024-03-08",
-    "name": "BlistiK",
-    "donation": null,
-    "value": 1700000
-  },
-  {
-    "date": "2024-03-10",
-    "name": "MELVZZY",
-    "donation": "Articuno",
-    "value": 500000
-  },
-  {
-    "date": "2024-03-10",
-    "name": "PokeBodega",
-    "donation": "Lucky Gold Dragon",
-    "value": 5000000
-  },
-  {
-    "date": "2024-03-11",
-    "name": "Bulkanator",
-    "donation": "500 Leppas",
-    "value": 400000
-  },
-  {
-    "date": "2024-03-12",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 100000
-  },
-  {
-    "date": "2024-03-14",
-    "name": "qtalice",
-    "donation": "Shuckle",
-    "value": 600000
-  },
-  {
-    "date": "2024-03-14",
-    "name": "qtalice",
-    "donation": "Alakazam",
-    "value": 1060000
-  },
-  {
-    "date": "2024-03-14",
-    "name": "qtalice",
-    "donation": "Altaria",
-    "value": 620000
-  },
-  {
-    "date": "2024-03-14",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 200000
-  },
-  {
-    "date": "2024-03-15",
-    "name": "OhitsDunco",
-    "donation": null,
-    "value": 5000000
-  },
-  {
-    "date": "2024-03-15",
-    "name": "qtalice",
-    "donation": "Typhlosion",
-    "value": 240000
-  },
-  {
-    "date": "2024-03-15",
-    "name": "Wisqi",
-    "donation": "Typhlosion",
-    "value": 900000
-  },
-  {
-    "date": "2024-03-15",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 5000000
-  },
-  {
-    "date": "2024-03-15",
-    "name": "llelementll",
-    "donation": "4x Shiny Charm",
-    "value": 960000
-  },
-  {
-    "date": "2024-03-15",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 200000
-  },
-  {
-    "date": "2024-03-16",
-    "name": "PumpActionWang",
-    "donation": null,
-    "value": 5000000
-  },
-  {
-    "date": "2024-03-16",
-    "name": "PumpActionWang",
-    "donation": "1500 Leppas",
-    "value": 1200000
-  },
-  {
-    "date": "2024-03-16",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 100000
-  },
-  {
-    "date": "2024-03-16",
-    "name": "BabyLime",
-    "donation": null,
-    "value": 1250000
-  },
-  {
-    "date": "2024-03-17",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 100000
-  },
-  {
-    "date": "2024-03-20",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 100000
-  },
-  {
-    "date": "2024-03-20",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 10000000
-  },
-  {
-    "date": "2024-03-20",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 100000
-  },
-  {
-    "date": "2024-03-20",
-    "name": "stevenchill",
-    "donation": "100RP",
-    "value": 240000
-  },
-  {
-    "date": "2024-03-20",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 300000
-  },
-  {
-    "date": "2024-03-23",
-    "name": "Chucklesworth",
-    "donation": "500RP/Sandile",
-    "value": 1550000
-  },
-  {
-    "date": "2024-03-26",
-    "name": "DaddyMolo",
-    "donation": null,
-    "value": 100000
-  },
-  {
-    "date": "2024-03-27",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 2750000
-  },
-  {
-    "date": "2024-03-28",
-    "name": "Loundemon",
-    "donation": "500 Leppas",
-    "value": 400000
-  },
-  {
-    "date": "2024-03-29",
-    "name": "DaddyMolo",
-    "donation": null,
-    "value": 200000
-  },
-  {
-    "date": "2024-03-30",
-    "name": "PKMNTrainerEvo",
-    "donation": "Pikachu, Ralts, Ralts",
-    "value": 160000
-  },
-  {
-    "date": "2024-03-30",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 6000000
-  },
-  {
-    "date": "2024-03-30",
-    "name": "MELVZZY",
-    "donation": "7 Day Dono Voucher",
-    "value": 1200000
-  },
-  {
-    "date": "2024-04-03",
-    "name": "stevenchill",
-    "donation": "Deino",
-    "value": 2000000
-  },
-  {
-    "date": "2024-04-07",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 1000000
-  },
-  {
-    "date": "2024-04-07",
-    "name": "stevenchill",
-    "donation": "1000RP",
-    "value": 2400000
-  },
-  {
-    "date": "2024-04-07",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 1000000
-  },
-  {
-    "date": "2024-04-07",
-    "name": "OhitsDunco",
-    "donation": "7500RP",
-    "value": 18000000
-  },
-  {
-    "date": "2024-04-10",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-04-13",
-    "name": "stevenchill",
-    "donation": "2x Gible",
-    "value": 400000
-  },
-  {
-    "date": "2024-04-20",
-    "name": "LordGangis",
-    "donation": "Lucky Gold Dragon",
-    "value": 5300000
-  },
-  {
-    "date": "2024-04-22",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 2500000
-  },
-  {
-    "date": "2024-04-25",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-04-25",
-    "name": "DaddyMolo",
-    "donation": null,
-    "value": 300000
-  },
-  {
-    "date": "2024-04-25",
-    "name": "TzKalZuk",
-    "donation": null,
-    "value": 250000
-  },
-  {
-    "date": "2024-04-25",
-    "name": "Wisqi",
-    "donation": null,
-    "value": 300000
-  },
-  {
-    "date": "2024-04-26",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 10000000
-  },
-  {
-    "date": "2024-04-26",
-    "name": "Wisqi",
-    "donation": null,
-    "value": 300000
-  },
-  {
-    "date": "2024-04-26",
-    "name": "Wisqi",
-    "donation": "Magikarp",
-    "value": 700000
-  },
-  {
-    "date": "2024-04-28",
-    "name": "Wisqi",
-    "donation": null,
-    "value": 800000
-  },
-  {
-    "date": "2024-04-28",
-    "name": "Highschoolme",
-    "donation": null,
-    "value": 300000
-  },
-  {
-    "date": "2024-04-28",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-04-30",
-    "name": "Wisqi",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-04-30",
-    "name": "TTVxSenseiNESS",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-04-30",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-05-04",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-05-04",
-    "name": "pitcheronly",
-    "donation": null,
-    "value": 750000
-  },
-  {
-    "date": "2024-05-04",
-    "name": "casethecase",
-    "donation": null,
-    "value": 250000
-  },
-  {
-    "date": "2024-05-07",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 5000000
-  },
-  {
-    "date": "2024-05-07",
-    "name": "ziastitch",
-    "donation": null,
-    "value": 100000
-  },
-  {
-    "date": "2024-05-07",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-05-08",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-05-10",
-    "name": "TTVxSenseiNESS",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-05-10",
-    "name": "ziastitch",
-    "donation": null,
-    "value": 100000
-  },
-  {
-    "date": "2024-05-15",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-05-15",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-05-15",
-    "name": "PKMNTrainerEvo",
-    "donation": null,
-    "value": 70000
-  },
-  {
-    "date": "2024-05-15",
-    "name": "ziastitch",
-    "donation": null,
-    "value": 100000
-  },
-  {
-    "date": "2024-05-20",
-    "name": "ziastitch",
-    "donation": null,
-    "value": 200000
-  },
-  {
-    "date": "2024-05-20",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-05-20",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-05-22",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-05-23",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-05-24",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 5000000
-  },
-  {
-    "date": "2024-05-24",
-    "name": "stevenchill",
-    "donation": "1000RP",
-    "value": 2400000
-  },
-  {
-    "date": "2024-05-24",
-    "name": "stevenchill",
-    "donation": "500RP",
-    "value": 1200000
-  },
-  {
-    "date": "2024-05-24",
-    "name": "stevenchill",
-    "donation": "Shiny Charm (2x)",
-    "value": 460000
-  },
-  {
-    "date": "2024-05-24",
-    "name": "stevenchill",
-    "donation": "Charizard 5x31",
-    "value": 800000
-  },
-  {
-    "date": "2024-05-24",
-    "name": "stevenchill",
-    "donation": "Shiny Woobat",
-    "value": 1450000
-  },
-  {
-    "date": "2024-05-24",
-    "name": "Instinto",
-    "donation": "Shiny Spearow",
-    "value": 2500000
-  },
-  {
-    "date": "2024-05-24",
-    "name": "ziastitch",
-    "donation": null,
-    "value": 200000
-  },
-  {
-    "date": "2024-06-05",
-    "name": "TTVxSenseiNESS",
-    "donation": null,
-    "value": 1000000
-  },
-  {
-    "date": "2024-06-05",
-    "name": "ziastitch",
-    "donation": null,
-    "value": 200000
-  },
-  {
-    "date": "2024-06-05",
-    "name": "Sirbeyy",
-    "donation": null,
-    "value": 350000
-  },
-  {
-    "date": "2024-06-05",
-    "name": "Sirbeyy",
-    "donation": "Cottonee",
-    "value": 600000
-  },
-  {
-    "date": "2024-06-05",
-    "name": "OhitsDunco",
-    "donation": null,
-    "value": 10500000
-  },
-  {
-    "date": "2024-06-05",
-    "name": "Drain",
-    "donation": null,
-    "value": 6000000
-  },
-  {
-    "date": "2024-06-05",
-    "name": "DaddyMolo",
-    "donation": null,
-    "value": 459625
-  },
-  {
-    "date": "2024-06-05",
-    "name": "PKMNTrainerEvo",
-    "donation": null,
-    "value": 150000
-  },
-  {
-    "date": "2024-06-05",
-    "name": "skyeatsme",
-    "donation": null,
-    "value": 2000000
-  },
-  {
-    "date": "2024-06-05",
-    "name": "MitchOsu",
-    "donation": null,
-    "value": 1600000
-  },
-  {
-    "date": "2024-06-05",
-    "name": "PaulusTFT",
-    "donation": null,
-    "value": 250000
-  },
-  {
-    "date": "2024-06-05",
-    "name": "stevenchill",
-    "donation": "1500RP",
-    "value": 3600000
-  },
-  {
-    "date": "2024-06-05",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 2950000
-  },
-  {
-    "date": "2024-06-05",
-    "name": "stevenchill",
-    "donation": "Absol",
-    "value": 700000
-  },
-  {
-    "date": "2024-06-05",
-    "name": "SphealMyWrath",
-    "donation": null,
-    "value": 1000000
-  },
-  {
-    "date": "2024-06-05",
-    "name": "SphealMyWrath",
-    "donation": "Breloom",
-    "value": 250000
-  },
-  {
-    "date": "2024-06-27",
-    "name": "DaddyMolo",
-    "donation": null,
-    "value": 200000
-  },
-  {
-    "date": "2024-06-27",
-    "name": "stevenchill",
-    "donation": "Machamp",
-    "value": 950000
-  },
-  {
-    "date": "2024-06-30",
-    "name": "MitchOsu",
-    "donation": null,
-    "value": 200000
-  },
-  {
-    "date": "2024-06-30",
-    "name": "UltraKingRom",
-    "donation": "Shiny Floatzel",
-    "value": 2400000
-  },
-  {
-    "date": "2024-06-30",
-    "name": "UltraKingRom",
-    "donation": "Shiny Woobat",
-    "value": 1800000
-  },
-  {
-    "date": "2024-06-30",
-    "name": "AbruptAlpaca",
-    "donation": null,
-    "value": 14000000
-  },
-  {
-    "date": "2024-06-30",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 15000000
-  },
-  {
-    "date": "2024-07-01",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-07-01",
-    "name": "WillyPS",
-    "donation": null,
-    "value": 2000000
-  },
-  {
-    "date": "2024-07-01",
-    "name": "TTVxSenseiNESS",
-    "donation": null,
-    "value": 1000000
-  },
-  {
-    "date": "2024-07-01",
-    "name": "OhitsDunco",
-    "donation": "4k Leppa 1k Exp. Lure",
-    "value": 4600000
-  },
-  {
-    "date": "2024-07-01",
-    "name": "TheStahlBayBay",
-    "donation": "Shiny Charm (5x)",
-    "value": 1200000
-  },
-  {
-    "date": "2024-07-01",
-    "name": "BojanglesisHere",
-    "donation": null,
-    "value": 150000
-  },
-  {
-    "date": "2024-07-01",
-    "name": "MitchOsu",
-    "donation": null,
-    "value": 100000
-  },
-  {
-    "date": "2024-07-01",
-    "name": "maknaez",
-    "donation": "Shiny Floatzel",
-    "value": 2500000
-  },
-  {
-    "date": "2024-07-01",
-    "name": "maknaez",
-    "donation": null,
-    "value": 2000000
-  },
-  {
-    "date": "2024-07-08",
-    "name": "DaddyMolo",
-    "donation": null,
-    "value": 200000
-  },
-  {
-    "date": "2024-07-08",
-    "name": "JulieJewel",
-    "donation": "Shiny Charm (5x)",
-    "value": 1200000
-  },
-  {
-    "date": "2024-07-08",
-    "name": "stevenchill",
-    "donation": "Milotic",
-    "value": 375000
-  },
-  {
-    "date": "2024-07-08",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 1250000
-  },
-  {
-    "date": "2024-07-08",
-    "name": "OhitsDunco",
-    "donation": null,
-    "value": 750000
-  },
-  {
-    "date": "2024-07-08",
-    "name": "MitchOsu",
-    "donation": "Shiny Charm (40x)",
-    "value": 9600000
-  },
-  {
-    "date": "2024-07-08",
-    "name": "PaulusTFT",
-    "donation": "Wingull",
-    "value": 225000
-  },
-  {
-    "date": "2024-07-08",
-    "name": "Raiketsu",
-    "donation": null,
-    "value": 5000000
-  },
-  {
-    "date": "2024-07-08",
-    "name": "TTVxSenseiNESS",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-07-27",
-    "name": "TheStahlBayBay",
-    "donation": "Shiny Charm (10x)",
-    "value": 2400000
-  },
-  {
-    "date": "2024-07-27",
-    "name": "OhitsDunco",
-    "donation": null,
-    "value": 6000000
-  },
-  {
-    "date": "2024-08-31",
-    "name": "Reymine",
-    "donation": "Shiny Charm (3x)",
-    "value": 720000
-  },
-  {
-    "date": "2024-08-31",
-    "name": "TheStahlBayBay",
-    "donation": "Shiny Charm (20x)",
-    "value": 4800000
-  },
-  {
-    "date": "2024-08-31",
-    "name": "qtalice",
-    "donation": "Shiny Charm (5x)",
-    "value": 1200000
-  },
-  {
-    "date": "2024-08-31",
-    "name": "stevenchill",
-    "donation": "Shiny Charm (10x)",
-    "value": 2400000
-  },
-  {
-    "date": "2024-08-31",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 2000000
-  },
-  {
-    "date": "2024-08-31",
-    "name": "stevenchill",
-    "donation": "15 Day Dono Voucher",
-    "value": 2400000
-  },
-  {
-    "date": "2024-08-31",
-    "name": "Drain",
-    "donation": "Shiny Charm (9x)",
-    "value": 2160000
-  },
-  {
-    "date": "2024-08-31",
-    "name": "Drain",
-    "donation": null,
-    "value": 2000000
-  },
-  {
-    "date": "2024-08-31",
-    "name": "WillyPS",
-    "donation": null,
-    "value": 2000000
-  },
-  {
-    "date": "2024-08-31",
-    "name": "TTVxSenseiNESS",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-08-31",
-    "name": "Hokeymon",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-08-31",
-    "name": "MitchOsu",
-    "donation": "Shiny Charm (40x)",
-    "value": 9600000
-  },
-  {
-    "date": "2024-08-31",
-    "name": "MELVZZY",
-    "donation": null,
-    "value": 1000000
-  },
-  {
-    "date": "2024-08-31",
-    "name": "MELVZZY",
-    "donation": "Shiny Charm",
-    "value": 240000
-  },
-  {
-    "date": "2024-08-31",
-    "name": "NSxPRODIGY",
-    "donation": null,
-    "value": 1500000
-  },
-  {
-    "date": "2024-09-30",
-    "name": "BabyLime",
-    "donation": null,
-    "value": 300000
-  },
-  {
-    "date": "2024-09-30",
-    "name": "Prttyflxcko",
-    "donation": null,
-    "value": 1000000
-  },
-  {
-    "date": "2024-09-30",
-    "name": "PaulusTFT",
-    "donation": null,
-    "value": 1000000
-  },
-  {
-    "date": "2024-09-30",
-    "name": "BojanglesisHere",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-09-30",
-    "name": "skyeatsme",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-09-30",
-    "name": "clairo",
-    "donation": null,
-    "value": 1000000
-  },
-  {
-    "date": "2024-10-31",
-    "name": "BojanglesisHere",
-    "donation": null,
-    "value": 550000
-  },
-  {
-    "date": "2024-10-31",
-    "name": "JulieJewel",
-    "donation": null,
-    "value": 250000
-  },
-  {
-    "date": "2024-10-31",
-    "name": "Orllando",
-    "donation": null,
-    "value": 250000
-  },
-  {
-    "date": "2024-10-31",
-    "name": "pearishx",
-    "donation": null,
-    "value": 250000
-  },
-  {
-    "date": "2024-10-31",
-    "name": "Difoolioo",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-10-31",
-    "name": "JulieJewel",
-    "donation": null,
-    "value": 5000000
-  },
-  {
-    "date": "2024-10-31",
-    "name": "stevenchill",
-    "donation": null,
-    "value": 10000000
-  },
-  {
-    "date": "2024-10-31",
-    "name": "stevenchill",
-    "donation": "1500RP",
-    "value": 3600000
-  },
-  {
-    "date": "2024-10-31",
-    "name": "BabyLime",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2024-11-30",
-    "name": "Drain",
-    "donation": null,
-    "value": 2000000
-  },
-  {
-    "date": "2024-12-24",
-    "name": "WillyPS",
-    "donation": null,
-    "value": 12000000
-  },
-  {
-    "date": "2024-12-24",
-    "name": "LoDarko",
-    "donation": null,
-    "value": 1000000
-  },
-  {
-    "date": "2024-12-29",
-    "name": "Luna",
-    "donation": null,
-    "value": 5000000
-  },
-  {
-    "date": "2024-12-31",
-    "name": "PokeBodega",
-    "donation": "300 Leppa",
-    "value": 240000
-  },
-  {
-    "date": "2024-12-31",
-    "name": "PokeBodega",
-    "donation": "500 RP",
-    "value": 1200000
-  },
-  {
-    "date": "2024-12-31",
-    "name": "PokeBodega",
-    "donation": "1000 RP",
-    "value": 2400000
-  },
-  {
-    "date": "2024-12-31",
-    "name": "bluezforlife",
-    "donation": null,
-    "value": 2000000
-  },
-  {
-    "date": "2025-01-01",
-    "name": "PokeBodega",
-    "donation": null,
-    "value": 50000
-  },
-  {
-    "date": "2025-01-01",
-    "name": "DaddyMolo",
-    "donation": null,
-    "value": 100000
-  },
-  {
-    "date": "2025-01-20",
-    "name": "PokeBodega",
-    "donation": null,
-    "value": 10000000
-  },
-  {
-    "date": "2025-01-20",
-    "name": "WillyPS",
-    "donation": null,
-    "value": 400000
-  },
-  {
-    "date": "2025-01-20",
-    "name": "DaddyMolo",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2025-01-20",
-    "name": "Loundemon",
-    "donation": null,
-    "value": 100000
-  },
-  {
-    "date": "2025-01-22",
-    "name": "BojanglesisHere",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2025-01-26",
-    "name": "PokeBodega",
-    "donation": null,
-    "value": 15000000
-  },
-  {
-    "date": "2025-01-27",
-    "name": "PokeBodega",
-    "donation": null,
-    "value": 10000000
-  },
-  {
-    "date": "2025-01-27",
-    "name": "PokeBodega",
-    "donation": "Shiny Charm (50x)",
-    "value": 12000000
-  },
-  {
-    "date": "2025-01-27",
-    "name": "PokeBodega",
-    "donation": "Shiny Charm (50x)",
-    "value": 12000000
-  },
-  {
-    "date": "2025-02-01",
-    "name": "Loundemon",
-    "donation": null,
-    "value": 75000
-  },
-  {
-    "date": "2025-02-01",
-    "name": "LoDarko",
-    "donation": null,
-    "value": 1000000
-  },
-  {
-    "date": "2025-03-07",
-    "name": "Smokycat",
-    "donation": null,
-    "value": 2000000
-  },
-  {
-    "date": "2025-03-08",
-    "name": "srysu",
-    "donation": "40 Mysterious Cherishball",
-    "value": 3800000
-  },
-  {
-    "date": "2025-03-08",
-    "name": "srysu",
-    "donation": "Teal Wishmaker Robe",
-    "value": 3200000
-  },
-  {
-    "date": "2025-03-11",
-    "name": "Loundemon",
-    "donation": null,
-    "value": 200000
-  },
-  {
-    "date": "2025-04-11",
-    "name": "Jaspn",
-    "donation": null,
-    "value": 75000
-  },
-  {
-    "date": "2025-04-11",
-    "name": "Skullz",
-    "donation": null,
-    "value": 25000
-  },
-  {
-    "date": "2025-05-01",
-    "name": "LoDarko",
-    "donation": null,
-    "value": 3000000
-  },
-  {
-    "date": "2025-05-01",
-    "name": "LoDarko",
-    "donation": "Alpha Shroomish",
-    "value": 150000
-  },
-  {
-    "date": "2025-05-01",
-    "name": "LoDarko",
-    "donation": "300 Leppa",
-    "value": 216000
-  },
-  {
-    "date": "2025-06-13",
-    "name": "Difoolioo",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2025-06-13",
-    "name": "LoDarko",
-    "donation": null,
-    "value": 500000
-  },
-  {
-    "date": "2025-06-17",
-    "name": "Watcha",
-    "donation": null,
-    "value": 1000000
-  },
-  {
-    "date": "2025-07-01",
-    "name": "PokeBodega",
-    "donation": "Shiny Charm (50x)",
-    "value": 11000000
-  },
-  {
-    "date": "2025-07-01",
-    "name": "PokeBodega",
-    "donation": "20000 Leppa",
-    "value": 16000000
-  },
-  {
-    "date": "2025-07-01",
-    "name": "XxEmperiorxX",
-    "donation": null,
-    "value": 2000000
-  },
-  {
-    "date": "2025-07-01",
-    "name": "Stathiskris",
-    "donation": "Shiny Charm (15x)",
-    "value": 3300000
-  },
-  {
-    "date": "2025-07-01",
-    "name": "Orllando",
-    "donation": "Shiny Charm (50x)",
-    "value": 11000000
-  },
-  {
-    "date": "2025-07-01",
-    "name": "Pangeaa",
-    "donation": null,
-    "value": 200000
-  },
-  {
-    "date": "2025-07-01",
-    "name": "Aokiza",
-    "donation": null,
-    "value": 200000
-  },
-  {
-    "date": "2025-07-01",
-    "name": "NoxxPrime",
-    "donation": "Shiny Charm (12x)",
-    "value": 2640000
-  },
-  {
-    "date": "2025-07-01",
-    "name": "MELVVZY",
-    "donation": "Shiny Charm (1x)",
-    "value": 220000
-  },
-  {
-    "date": "2025-07-01",
-    "name": "Eerie",
-    "donation": "Shiny Charm (2x)",
-    "value": 440000
-  },
-  {
-    "date": "2025-07-01",
-    "name": "Eerie",
-    "donation": "Shiny Charm (5x)",
-    "value": 1100000
-  },
-  {
-    "date": "2025-07-01",
-    "name": "RuthlessZ",
-    "donation": "Shiny Charm (10x)",
-    "value": 2200000
-  },
-  {
-    "date": "2025-07-01",
-    "name": "Orllando",
-    "donation": "Shiny Charm (50x)",
-    "value": 11000000
-  },
-  {
-    "date": "2025-07-01",
-    "name": "PokeBodega",
-    "donation": "5000 Leppa",
-    "value": 4000000
-  },
-  {
-    "date": "2025-08-01",
-    "name": "PaulusTFT",
-    "donation": null,
-    "value": 30000
-  },
-  {
-    "date": "2025-08-23",
-    "name": "Tazmaster",
-    "donation": "1500 Leppa",
-    "value": 1200000
-  },
-  {
-    "date": "2025-08-23",
-    "name": "JulieJewel",
-    "donation": null,
-    "value": 3550000
-  },
-  {
-    "date": "2025-08-23",
-    "name": "BlistiK",
-    "donation": "Shiny Charm (5x)",
-    "value": 1100000
-  },
-  {
-    "date": "2025-08-23",
-    "name": "Togadh",
-    "donation": null,
-    "value": 5000000
-  },
-  {
-    "date": "2025-08-24",
-    "name": "Togadh",
-    "donation": "Shiny Charm (3x)",
-    "value": 660000
-  },
-  {
-    "date": "2025-08-24",
-    "name": "BlistiK",
-    "donation": "Shiny Charm (5x)",
-    "value": 1100000
-  },
-  {
-    "date": "2025-08-24",
-    "name": "Grrzzly",
-    "donation": null,
-    "value": 1000000
-  },
-  {
-    "date": "2025-08-24",
-    "name": "LoDarko",
-    "donation": "Shiny Charm (10x)",
-    "value": 2200000
-  },
-  {
-    "date": "2025-08-24",
-    "name": "Togadh",
-    "donation": "Shiny Charm (10x)",
-    "value": 2200000
-  },
-  {
-    "date": "2025-08-25",
-    "name": "JulieJewel",
-    "donation": null,
-    "value": 1450000
-  },
-  {
-    "date": "2025-08-25",
-    "name": "Orllando",
-    "donation": "Shiny Charm (50x)",
-    "value": 11000000
-  },
-  {
-    "date": "2025-08-29",
-    "name": "SirPrivacy",
-    "donation": null,
-    "value": 2700000
-  },
-  {
-    "date": "2025-08-29",
-    "name": "SirPrivacy",
-    "donation": null,
-    "value": 1000000
-  },
-  {
-    "date": "2025-10-04",
-    "name": "SmiigZ",
-    "donation": "3 Ditto Boxes",
-    "value": 900000
-  },
-  {
-    "date": "2025-10-08",
-    "name": "Luna",
-    "donation": "1 Charm",
-    "value": 220000
-  },
-  {
-    "date": "2025-10-08",
-    "name": "Luna",
-    "donation": null,
-    "value": 2200000
-  },
-  {
-    "date": "2025-10-26",
-    "name": "Pangeaa",
-    "donation": "4.500 RP",
-    "value": 9900000
-  },
-  {
-    "date": "2025-10-26",
-    "name": "Pangeaa",
-    "donation": null,
-    "value": 3500000
-  }
-]
+{
+  "version": 1,
+  "generatedAt": "2026-01-11T09:45:28.731Z",
+  "source": "google-sheets",
+  "data": [
+    {
+      "date": "2024-03-08",
+      "name": "AbruptAlpaca",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-03-08",
+      "name": "BabyLime",
+      "donation": null,
+      "value": 100000
+    },
+    {
+      "date": "2024-03-08",
+      "name": "Jaspn",
+      "donation": "Beldum",
+      "value": 60000
+    },
+    {
+      "date": "2024-03-08",
+      "name": "OhitsDunco",
+      "donation": null,
+      "value": 2000000
+    },
+    {
+      "date": "2024-03-08",
+      "name": "PaulusTFT",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2024-03-08",
+      "name": "PaulusTFT",
+      "donation": "Breloom",
+      "value": 700000
+    },
+    {
+      "date": "2024-03-08",
+      "name": "skyeatsme",
+      "donation": null,
+      "value": 400000
+    },
+    {
+      "date": "2024-03-08",
+      "name": "maknaez",
+      "donation": "Volcarona",
+      "value": 550000
+    },
+    {
+      "date": "2024-03-08",
+      "name": "BlistiK",
+      "donation": null,
+      "value": 1700000
+    },
+    {
+      "date": "2024-03-10",
+      "name": "MELVZZY",
+      "donation": "Articuno",
+      "value": 500000
+    },
+    {
+      "date": "2024-03-10",
+      "name": "PokeBodega",
+      "donation": "Lucky Gold Dragon",
+      "value": 5000000
+    },
+    {
+      "date": "2024-03-11",
+      "name": "Bulkanator",
+      "donation": "500 Leppas",
+      "value": 400000
+    },
+    {
+      "date": "2024-03-12",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 100000
+    },
+    {
+      "date": "2024-03-14",
+      "name": "qtalice",
+      "donation": "Shuckle",
+      "value": 600000
+    },
+    {
+      "date": "2024-03-14",
+      "name": "qtalice",
+      "donation": "Alakazam",
+      "value": 1060000
+    },
+    {
+      "date": "2024-03-14",
+      "name": "qtalice",
+      "donation": "Altaria",
+      "value": 620000
+    },
+    {
+      "date": "2024-03-14",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 200000
+    },
+    {
+      "date": "2024-03-15",
+      "name": "OhitsDunco",
+      "donation": null,
+      "value": 5000000
+    },
+    {
+      "date": "2024-03-15",
+      "name": "qtalice",
+      "donation": "Typhlosion",
+      "value": 240000
+    },
+    {
+      "date": "2024-03-15",
+      "name": "Wisqi",
+      "donation": "Typhlosion",
+      "value": 900000
+    },
+    {
+      "date": "2024-03-15",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 5000000
+    },
+    {
+      "date": "2024-03-15",
+      "name": "llelementll",
+      "donation": "4x Shiny Charm",
+      "value": 960000
+    },
+    {
+      "date": "2024-03-15",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 200000
+    },
+    {
+      "date": "2024-03-16",
+      "name": "PumpActionWang",
+      "donation": null,
+      "value": 5000000
+    },
+    {
+      "date": "2024-03-16",
+      "name": "PumpActionWang",
+      "donation": "1500 Leppas",
+      "value": 1200000
+    },
+    {
+      "date": "2024-03-16",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 100000
+    },
+    {
+      "date": "2024-03-16",
+      "name": "BabyLime",
+      "donation": null,
+      "value": 1250000
+    },
+    {
+      "date": "2024-03-17",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 100000
+    },
+    {
+      "date": "2024-03-20",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 100000
+    },
+    {
+      "date": "2024-03-20",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 10000000
+    },
+    {
+      "date": "2024-03-20",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 100000
+    },
+    {
+      "date": "2024-03-20",
+      "name": "stevenchill",
+      "donation": "100RP",
+      "value": 240000
+    },
+    {
+      "date": "2024-03-20",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 300000
+    },
+    {
+      "date": "2024-03-23",
+      "name": "Chucklesworth",
+      "donation": "500RP/Sandile",
+      "value": 1550000
+    },
+    {
+      "date": "2024-03-26",
+      "name": "DaddyMolo",
+      "donation": null,
+      "value": 100000
+    },
+    {
+      "date": "2024-03-27",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 2750000
+    },
+    {
+      "date": "2024-03-28",
+      "name": "Loundemon",
+      "donation": "500 Leppas",
+      "value": 400000
+    },
+    {
+      "date": "2024-03-29",
+      "name": "DaddyMolo",
+      "donation": null,
+      "value": 200000
+    },
+    {
+      "date": "2024-03-30",
+      "name": "PKMNTrainerEvo",
+      "donation": "Pikachu, Ralts, Ralts",
+      "value": 160000
+    },
+    {
+      "date": "2024-03-30",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 6000000
+    },
+    {
+      "date": "2024-03-30",
+      "name": "MELVZZY",
+      "donation": "7 Day Dono Voucher",
+      "value": 1200000
+    },
+    {
+      "date": "2024-04-03",
+      "name": "stevenchill",
+      "donation": "Deino",
+      "value": 2000000
+    },
+    {
+      "date": "2024-04-07",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2024-04-07",
+      "name": "stevenchill",
+      "donation": "1000RP",
+      "value": 2400000
+    },
+    {
+      "date": "2024-04-07",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2024-04-07",
+      "name": "OhitsDunco",
+      "donation": "7500RP",
+      "value": 18000000
+    },
+    {
+      "date": "2024-04-10",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-04-13",
+      "name": "stevenchill",
+      "donation": "2x Gible",
+      "value": 400000
+    },
+    {
+      "date": "2024-04-20",
+      "name": "LordGangis",
+      "donation": "Lucky Gold Dragon",
+      "value": 5300000
+    },
+    {
+      "date": "2024-04-22",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 2500000
+    },
+    {
+      "date": "2024-04-25",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-04-25",
+      "name": "DaddyMolo",
+      "donation": null,
+      "value": 300000
+    },
+    {
+      "date": "2024-04-25",
+      "name": "TzKalZuk",
+      "donation": null,
+      "value": 250000
+    },
+    {
+      "date": "2024-04-25",
+      "name": "Wisqi",
+      "donation": null,
+      "value": 300000
+    },
+    {
+      "date": "2024-04-26",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 10000000
+    },
+    {
+      "date": "2024-04-26",
+      "name": "Wisqi",
+      "donation": null,
+      "value": 300000
+    },
+    {
+      "date": "2024-04-26",
+      "name": "Wisqi",
+      "donation": "Magikarp",
+      "value": 700000
+    },
+    {
+      "date": "2024-04-28",
+      "name": "Wisqi",
+      "donation": null,
+      "value": 800000
+    },
+    {
+      "date": "2024-04-28",
+      "name": "Highschoolme",
+      "donation": null,
+      "value": 300000
+    },
+    {
+      "date": "2024-04-28",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-04-30",
+      "name": "Wisqi",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-04-30",
+      "name": "TTVxSenseiNESS",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-04-30",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-05-04",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-05-04",
+      "name": "pitcheronly",
+      "donation": null,
+      "value": 750000
+    },
+    {
+      "date": "2024-05-04",
+      "name": "casethecase",
+      "donation": null,
+      "value": 250000
+    },
+    {
+      "date": "2024-05-07",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 5000000
+    },
+    {
+      "date": "2024-05-07",
+      "name": "ziastitch",
+      "donation": null,
+      "value": 100000
+    },
+    {
+      "date": "2024-05-07",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-05-08",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-05-10",
+      "name": "TTVxSenseiNESS",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-05-10",
+      "name": "ziastitch",
+      "donation": null,
+      "value": 100000
+    },
+    {
+      "date": "2024-05-15",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-05-15",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-05-15",
+      "name": "PKMNTrainerEvo",
+      "donation": null,
+      "value": 70000
+    },
+    {
+      "date": "2024-05-15",
+      "name": "ziastitch",
+      "donation": null,
+      "value": 100000
+    },
+    {
+      "date": "2024-05-20",
+      "name": "ziastitch",
+      "donation": null,
+      "value": 200000
+    },
+    {
+      "date": "2024-05-20",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-05-20",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-05-22",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-05-23",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-05-24",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 5000000
+    },
+    {
+      "date": "2024-05-24",
+      "name": "stevenchill",
+      "donation": "1000RP",
+      "value": 2400000
+    },
+    {
+      "date": "2024-05-24",
+      "name": "stevenchill",
+      "donation": "500RP",
+      "value": 1200000
+    },
+    {
+      "date": "2024-05-24",
+      "name": "stevenchill",
+      "donation": "Shiny Charm (2x)",
+      "value": 460000
+    },
+    {
+      "date": "2024-05-24",
+      "name": "stevenchill",
+      "donation": "Charizard 5x31",
+      "value": 800000
+    },
+    {
+      "date": "2024-05-24",
+      "name": "stevenchill",
+      "donation": "Shiny Woobat",
+      "value": 1450000
+    },
+    {
+      "date": "2024-05-24",
+      "name": "Instinto",
+      "donation": "Shiny Spearow",
+      "value": 2500000
+    },
+    {
+      "date": "2024-05-24",
+      "name": "ziastitch",
+      "donation": null,
+      "value": 200000
+    },
+    {
+      "date": "2024-06-05",
+      "name": "TTVxSenseiNESS",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2024-06-05",
+      "name": "ziastitch",
+      "donation": null,
+      "value": 200000
+    },
+    {
+      "date": "2024-06-05",
+      "name": "Sirbeyy",
+      "donation": null,
+      "value": 350000
+    },
+    {
+      "date": "2024-06-05",
+      "name": "Sirbeyy",
+      "donation": "Cottonee",
+      "value": 600000
+    },
+    {
+      "date": "2024-06-05",
+      "name": "OhitsDunco",
+      "donation": null,
+      "value": 10500000
+    },
+    {
+      "date": "2024-06-05",
+      "name": "Drain",
+      "donation": null,
+      "value": 6000000
+    },
+    {
+      "date": "2024-06-05",
+      "name": "DaddyMolo",
+      "donation": null,
+      "value": 459625
+    },
+    {
+      "date": "2024-06-05",
+      "name": "PKMNTrainerEvo",
+      "donation": null,
+      "value": 150000
+    },
+    {
+      "date": "2024-06-05",
+      "name": "skyeatsme",
+      "donation": null,
+      "value": 2000000
+    },
+    {
+      "date": "2024-06-05",
+      "name": "MitchOsu",
+      "donation": null,
+      "value": 1600000
+    },
+    {
+      "date": "2024-06-05",
+      "name": "PaulusTFT",
+      "donation": null,
+      "value": 250000
+    },
+    {
+      "date": "2024-06-05",
+      "name": "stevenchill",
+      "donation": "1500RP",
+      "value": 3600000
+    },
+    {
+      "date": "2024-06-05",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 2950000
+    },
+    {
+      "date": "2024-06-05",
+      "name": "stevenchill",
+      "donation": "Absol",
+      "value": 700000
+    },
+    {
+      "date": "2024-06-05",
+      "name": "SphealMyWrath",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2024-06-05",
+      "name": "SphealMyWrath",
+      "donation": "Breloom",
+      "value": 250000
+    },
+    {
+      "date": "2024-06-27",
+      "name": "DaddyMolo",
+      "donation": null,
+      "value": 200000
+    },
+    {
+      "date": "2024-06-27",
+      "name": "stevenchill",
+      "donation": "Machamp",
+      "value": 950000
+    },
+    {
+      "date": "2024-06-30",
+      "name": "MitchOsu",
+      "donation": null,
+      "value": 200000
+    },
+    {
+      "date": "2024-06-30",
+      "name": "UltraKingRom",
+      "donation": "Shiny Floatzel",
+      "value": 2400000
+    },
+    {
+      "date": "2024-06-30",
+      "name": "UltraKingRom",
+      "donation": "Shiny Woobat",
+      "value": 1800000
+    },
+    {
+      "date": "2024-06-30",
+      "name": "AbruptAlpaca",
+      "donation": null,
+      "value": 14000000
+    },
+    {
+      "date": "2024-06-30",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 15000000
+    },
+    {
+      "date": "2024-07-01",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-07-01",
+      "name": "WillyPS",
+      "donation": null,
+      "value": 2000000
+    },
+    {
+      "date": "2024-07-01",
+      "name": "TTVxSenseiNESS",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2024-07-01",
+      "name": "OhitsDunco",
+      "donation": "4k Leppa 1k Exp. Lure",
+      "value": 4600000
+    },
+    {
+      "date": "2024-07-01",
+      "name": "TheStahlBayBay",
+      "donation": "Shiny Charm (5x)",
+      "value": 1200000
+    },
+    {
+      "date": "2024-07-01",
+      "name": "BojanglesisHere",
+      "donation": null,
+      "value": 150000
+    },
+    {
+      "date": "2024-07-01",
+      "name": "MitchOsu",
+      "donation": null,
+      "value": 100000
+    },
+    {
+      "date": "2024-07-01",
+      "name": "maknaez",
+      "donation": "Shiny Floatzel",
+      "value": 2500000
+    },
+    {
+      "date": "2024-07-01",
+      "name": "maknaez",
+      "donation": null,
+      "value": 2000000
+    },
+    {
+      "date": "2024-07-08",
+      "name": "DaddyMolo",
+      "donation": null,
+      "value": 200000
+    },
+    {
+      "date": "2024-07-08",
+      "name": "JulieJewel",
+      "donation": "Shiny Charm (5x)",
+      "value": 1200000
+    },
+    {
+      "date": "2024-07-08",
+      "name": "stevenchill",
+      "donation": "Milotic",
+      "value": 375000
+    },
+    {
+      "date": "2024-07-08",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 1250000
+    },
+    {
+      "date": "2024-07-08",
+      "name": "OhitsDunco",
+      "donation": null,
+      "value": 750000
+    },
+    {
+      "date": "2024-07-08",
+      "name": "MitchOsu",
+      "donation": "Shiny Charm (40x)",
+      "value": 9600000
+    },
+    {
+      "date": "2024-07-08",
+      "name": "PaulusTFT",
+      "donation": "Wingull",
+      "value": 225000
+    },
+    {
+      "date": "2024-07-08",
+      "name": "Raiketsu",
+      "donation": null,
+      "value": 5000000
+    },
+    {
+      "date": "2024-07-08",
+      "name": "TTVxSenseiNESS",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-07-27",
+      "name": "TheStahlBayBay",
+      "donation": "Shiny Charm (10x)",
+      "value": 2400000
+    },
+    {
+      "date": "2024-07-27",
+      "name": "OhitsDunco",
+      "donation": null,
+      "value": 6000000
+    },
+    {
+      "date": "2024-08-31",
+      "name": "Reymine",
+      "donation": "Shiny Charm (3x)",
+      "value": 720000
+    },
+    {
+      "date": "2024-08-31",
+      "name": "TheStahlBayBay",
+      "donation": "Shiny Charm (20x)",
+      "value": 4800000
+    },
+    {
+      "date": "2024-08-31",
+      "name": "qtalice",
+      "donation": "Shiny Charm (5x)",
+      "value": 1200000
+    },
+    {
+      "date": "2024-08-31",
+      "name": "stevenchill",
+      "donation": "Shiny Charm (10x)",
+      "value": 2400000
+    },
+    {
+      "date": "2024-08-31",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 2000000
+    },
+    {
+      "date": "2024-08-31",
+      "name": "stevenchill",
+      "donation": "15 Day Dono Voucher",
+      "value": 2400000
+    },
+    {
+      "date": "2024-08-31",
+      "name": "Drain",
+      "donation": "Shiny Charm (9x)",
+      "value": 2160000
+    },
+    {
+      "date": "2024-08-31",
+      "name": "Drain",
+      "donation": null,
+      "value": 2000000
+    },
+    {
+      "date": "2024-08-31",
+      "name": "WillyPS",
+      "donation": null,
+      "value": 2000000
+    },
+    {
+      "date": "2024-08-31",
+      "name": "TTVxSenseiNESS",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-08-31",
+      "name": "Hokeymon",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-08-31",
+      "name": "MitchOsu",
+      "donation": "Shiny Charm (40x)",
+      "value": 9600000
+    },
+    {
+      "date": "2024-08-31",
+      "name": "MELVZZY",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2024-08-31",
+      "name": "MELVZZY",
+      "donation": "Shiny Charm",
+      "value": 240000
+    },
+    {
+      "date": "2024-08-31",
+      "name": "NSxPRODIGY",
+      "donation": null,
+      "value": 1500000
+    },
+    {
+      "date": "2024-09-30",
+      "name": "BabyLime",
+      "donation": null,
+      "value": 300000
+    },
+    {
+      "date": "2024-09-30",
+      "name": "Prttyflxcko",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2024-09-30",
+      "name": "PaulusTFT",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2024-09-30",
+      "name": "BojanglesisHere",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-09-30",
+      "name": "skyeatsme",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-09-30",
+      "name": "clairo",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2024-10-31",
+      "name": "BojanglesisHere",
+      "donation": null,
+      "value": 550000
+    },
+    {
+      "date": "2024-10-31",
+      "name": "JulieJewel",
+      "donation": null,
+      "value": 250000
+    },
+    {
+      "date": "2024-10-31",
+      "name": "Orllando",
+      "donation": null,
+      "value": 250000
+    },
+    {
+      "date": "2024-10-31",
+      "name": "pearishx",
+      "donation": null,
+      "value": 250000
+    },
+    {
+      "date": "2024-10-31",
+      "name": "Difoolioo",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-10-31",
+      "name": "JulieJewel",
+      "donation": null,
+      "value": 5000000
+    },
+    {
+      "date": "2024-10-31",
+      "name": "stevenchill",
+      "donation": null,
+      "value": 10000000
+    },
+    {
+      "date": "2024-10-31",
+      "name": "stevenchill",
+      "donation": "1500RP",
+      "value": 3600000
+    },
+    {
+      "date": "2024-10-31",
+      "name": "BabyLime",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2024-11-30",
+      "name": "Drain",
+      "donation": null,
+      "value": 2000000
+    },
+    {
+      "date": "2024-12-24",
+      "name": "WillyPS",
+      "donation": null,
+      "value": 12000000
+    },
+    {
+      "date": "2024-12-24",
+      "name": "LoDarko",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2024-12-29",
+      "name": "Luna",
+      "donation": null,
+      "value": 5000000
+    },
+    {
+      "date": "2024-12-31",
+      "name": "PokeBodega",
+      "donation": "300 Leppa",
+      "value": 240000
+    },
+    {
+      "date": "2024-12-31",
+      "name": "PokeBodega",
+      "donation": "500 RP",
+      "value": 1200000
+    },
+    {
+      "date": "2024-12-31",
+      "name": "PokeBodega",
+      "donation": "1000 RP",
+      "value": 2400000
+    },
+    {
+      "date": "2024-12-31",
+      "name": "bluezforlife",
+      "donation": null,
+      "value": 2000000
+    },
+    {
+      "date": "2025-01-01",
+      "name": "PokeBodega",
+      "donation": null,
+      "value": 50000
+    },
+    {
+      "date": "2025-01-01",
+      "name": "DaddyMolo",
+      "donation": null,
+      "value": 100000
+    },
+    {
+      "date": "2025-01-20",
+      "name": "PokeBodega",
+      "donation": null,
+      "value": 10000000
+    },
+    {
+      "date": "2025-01-20",
+      "name": "WillyPS",
+      "donation": null,
+      "value": 400000
+    },
+    {
+      "date": "2025-01-20",
+      "name": "DaddyMolo",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2025-01-20",
+      "name": "Loundemon",
+      "donation": null,
+      "value": 100000
+    },
+    {
+      "date": "2025-01-22",
+      "name": "BojanglesisHere",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2025-01-26",
+      "name": "PokeBodega",
+      "donation": null,
+      "value": 15000000
+    },
+    {
+      "date": "2025-01-27",
+      "name": "PokeBodega",
+      "donation": null,
+      "value": 10000000
+    },
+    {
+      "date": "2025-01-27",
+      "name": "PokeBodega",
+      "donation": "Shiny Charm (50x)",
+      "value": 12000000
+    },
+    {
+      "date": "2025-01-27",
+      "name": "PokeBodega",
+      "donation": "Shiny Charm (50x)",
+      "value": 12000000
+    },
+    {
+      "date": "2025-02-01",
+      "name": "Loundemon",
+      "donation": null,
+      "value": 75000
+    },
+    {
+      "date": "2025-02-01",
+      "name": "LoDarko",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2025-03-07",
+      "name": "Smokycat",
+      "donation": null,
+      "value": 2000000
+    },
+    {
+      "date": "2025-03-08",
+      "name": "srysu",
+      "donation": "40 Mysterious Cherishball",
+      "value": 3800000
+    },
+    {
+      "date": "2025-03-08",
+      "name": "srysu",
+      "donation": "Teal Wishmaker Robe",
+      "value": 3200000
+    },
+    {
+      "date": "2025-03-11",
+      "name": "Loundemon",
+      "donation": null,
+      "value": 200000
+    },
+    {
+      "date": "2025-04-11",
+      "name": "Jaspn",
+      "donation": null,
+      "value": 75000
+    },
+    {
+      "date": "2025-04-11",
+      "name": "Skullz",
+      "donation": null,
+      "value": 25000
+    },
+    {
+      "date": "2025-05-01",
+      "name": "LoDarko",
+      "donation": null,
+      "value": 3000000
+    },
+    {
+      "date": "2025-05-01",
+      "name": "LoDarko",
+      "donation": "Alpha Shroomish",
+      "value": 150000
+    },
+    {
+      "date": "2025-05-01",
+      "name": "LoDarko",
+      "donation": "300 Leppa",
+      "value": 216000
+    },
+    {
+      "date": "2025-06-13",
+      "name": "Difoolioo",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2025-06-13",
+      "name": "LoDarko",
+      "donation": null,
+      "value": 500000
+    },
+    {
+      "date": "2025-06-17",
+      "name": "Watcha",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2025-07-01",
+      "name": "PokeBodega",
+      "donation": "Shiny Charm (50x)",
+      "value": 11000000
+    },
+    {
+      "date": "2025-07-01",
+      "name": "PokeBodega",
+      "donation": "20000 Leppa",
+      "value": 16000000
+    },
+    {
+      "date": "2025-07-01",
+      "name": "XxEmperiorxX",
+      "donation": null,
+      "value": 2000000
+    },
+    {
+      "date": "2025-07-01",
+      "name": "Stathiskris",
+      "donation": "Shiny Charm (15x)",
+      "value": 3300000
+    },
+    {
+      "date": "2025-07-01",
+      "name": "Orllando",
+      "donation": "Shiny Charm (50x)",
+      "value": 11000000
+    },
+    {
+      "date": "2025-07-01",
+      "name": "Pangeaa",
+      "donation": null,
+      "value": 200000
+    },
+    {
+      "date": "2025-07-01",
+      "name": "Aokiza",
+      "donation": null,
+      "value": 200000
+    },
+    {
+      "date": "2025-07-01",
+      "name": "NoxxPrime",
+      "donation": "Shiny Charm (12x)",
+      "value": 2640000
+    },
+    {
+      "date": "2025-07-01",
+      "name": "MELVVZY",
+      "donation": "Shiny Charm (1x)",
+      "value": 220000
+    },
+    {
+      "date": "2025-07-01",
+      "name": "Eerie",
+      "donation": "Shiny Charm (2x)",
+      "value": 440000
+    },
+    {
+      "date": "2025-07-01",
+      "name": "Eerie",
+      "donation": "Shiny Charm (5x)",
+      "value": 1100000
+    },
+    {
+      "date": "2025-07-01",
+      "name": "RuthlessZ",
+      "donation": "Shiny Charm (10x)",
+      "value": 2200000
+    },
+    {
+      "date": "2025-07-01",
+      "name": "Orllando",
+      "donation": "Shiny Charm (50x)",
+      "value": 11000000
+    },
+    {
+      "date": "2025-07-01",
+      "name": "PokeBodega",
+      "donation": "5000 Leppa",
+      "value": 4000000
+    },
+    {
+      "date": "2025-08-01",
+      "name": "PaulusTFT",
+      "donation": null,
+      "value": 30000
+    },
+    {
+      "date": "2025-08-23",
+      "name": "Tazmaster",
+      "donation": "1500 Leppa",
+      "value": 1200000
+    },
+    {
+      "date": "2025-08-23",
+      "name": "JulieJewel",
+      "donation": null,
+      "value": 3550000
+    },
+    {
+      "date": "2025-08-23",
+      "name": "BlistiK",
+      "donation": "Shiny Charm (5x)",
+      "value": 1100000
+    },
+    {
+      "date": "2025-08-23",
+      "name": "Togadh",
+      "donation": null,
+      "value": 5000000
+    },
+    {
+      "date": "2025-08-24",
+      "name": "Togadh",
+      "donation": "Shiny Charm (3x)",
+      "value": 660000
+    },
+    {
+      "date": "2025-08-24",
+      "name": "BlistiK",
+      "donation": "Shiny Charm (5x)",
+      "value": 1100000
+    },
+    {
+      "date": "2025-08-24",
+      "name": "Grrzzly",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2025-08-24",
+      "name": "LoDarko",
+      "donation": "Shiny Charm (10x)",
+      "value": 2200000
+    },
+    {
+      "date": "2025-08-24",
+      "name": "Togadh",
+      "donation": "Shiny Charm (10x)",
+      "value": 2200000
+    },
+    {
+      "date": "2025-08-25",
+      "name": "JulieJewel",
+      "donation": null,
+      "value": 1450000
+    },
+    {
+      "date": "2025-08-25",
+      "name": "Orllando",
+      "donation": "Shiny Charm (50x)",
+      "value": 11000000
+    },
+    {
+      "date": "2025-08-29",
+      "name": "SirPrivacy",
+      "donation": null,
+      "value": 2700000
+    },
+    {
+      "date": "2025-08-29",
+      "name": "SirPrivacy",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2025-10-04",
+      "name": "SmiigZ",
+      "donation": "3 Ditto Boxes",
+      "value": 900000
+    },
+    {
+      "date": "2025-10-08",
+      "name": "Luna",
+      "donation": "1 Charm",
+      "value": 220000
+    },
+    {
+      "date": "2025-10-08",
+      "name": "Luna",
+      "donation": null,
+      "value": 2200000
+    },
+    {
+      "date": "2025-10-26",
+      "name": "Pangeaa",
+      "donation": "4.500 RP",
+      "value": 9900000
+    },
+    {
+      "date": "2025-10-26",
+      "name": "Pangeaa",
+      "donation": null,
+      "value": 3500000
+    }
+  ]
+}
