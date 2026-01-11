@@ -71,29 +71,29 @@ function normalizeClip(value) {
 const csvText = await fetchCsv(CSV_URL);
 const rows = parseCsv(csvText);
 
-const normalized = rows.map((row, index) => {
-  const week = row.week?.trim();
-  if (!week) {
-    throw new Error(`Row ${index + 2}: missing week`);
-  }
+const normalized = rows
+  .filter(row => row.week && row.week.trim() !== '')
+  .map((row, index) => {
+    const week = row.week.trim();
 
-  return {
-    week,
-    week_label: normalizeString(row.week_label),
-    date_start: normalizeDate(row.date_start, index, 'date_start'),
-    date_end: normalizeDate(row.date_end, index, 'date_end'),
-    date_catch: normalizeDate(row.date_catch, index, 'date_catch'),
-    ot: normalizeString(row.ot),
-    pokemon: row.pokemon?.trim().toLowerCase() || null,
-    method: normalizeMethod(row.method, index),
-    encounter: normalizeEncounter(row.encounter, index),
-    secret: normalizeBool(row.secret),
-    alpha: normalizeBool(row.alpha),
-    run: normalizeBool(row.run),
-    lost: normalizeBool(row.lost),
-    clip: normalizeClip(row.clip),
-    notes: normalizeString(row.notes),
-  };
-});
+    return {
+      week,
+      week_label: normalizeString(row.week_label),
+      date_start: normalizeDate(row.date_start, index, 'date_start'),
+      date_end: normalizeDate(row.date_end, index, 'date_end'),
+      date_catch: normalizeDate(row.date_catch, index, 'date_catch'),
+      ot: normalizeString(row.ot),
+      pokemon: row.pokemon?.trim().toLowerCase() || null,
+      method: normalizeMethod(row.method, index),
+      encounter: normalizeEncounter(row.encounter, index),
+      secret: normalizeBool(row.secret),
+      alpha: normalizeBool(row.alpha),
+      run: normalizeBool(row.run),
+      lost: normalizeBool(row.lost),
+      clip: normalizeClip(row.clip),
+      notes: normalizeString(row.notes),
+    };
+  });
+
 
 await writeJson('data/shinyweekly.json', normalized);
