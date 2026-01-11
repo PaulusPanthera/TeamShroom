@@ -1,34 +1,80 @@
 // src/data/shinyweekly.model.js
 // Shiny Weekly — aggregation model
-// CI-normalized input → UI-ready output
+// CI-normalized flat rows → UI-ready weekly structure
+
+/*
+INTERNAL JSON API — SHINY WEEKLY MODEL OUTPUT
+
+Array<{
+  week: string
+  label: string
+  shinyCount: number
+  hunterCount: number
+  members: {
+    [memberKey: string]: {
+      key: string
+      name: string
+      shinies: Array<{
+        member: string
+        pokemon: string
+        method: string | null
+        encounter: number | null
+        secret: boolean
+        alpha: boolean
+        run: boolean
+        lost: boolean
+        clip: string | null
+        notes: string | null
+      }>
+    }
+  }
+}>
+*/
 
 export function buildShinyWeeklyModel(rows) {
   const weeks = {};
 
   rows.forEach(row => {
-    const key = row.week;
+    const weekKey = row.week;
+    const memberKey = row.ot;
 
-    if (!weeks[key]) {
-      weeks[key] = {
+    if (!weeks[weekKey]) {
+      weeks[weekKey] = {
         week: row.week,
         label: row.week_label || row.week,
+        members: {},
+        shinyCount: 0
+      };
+    }
+
+    const week = weeks[weekKey];
+
+    if (!week.members[memberKey]) {
+      week.members[memberKey] = {
+        key: memberKey,
+        name: memberKey,
         shinies: []
       };
     }
 
-    weeks[key].shinies.push({
+    week.members[memberKey].shinies.push({
       member: row.ot,
       pokemon: row.pokemon,
-      method: row.method,
-      encounter: row.encounter,
-      secret: row.secret,
-      alpha: row.alpha,
-      run: row.run,
-      lost: row.lost,
-      clip: row.clip,
-      notes: row.notes
+      method: row.method ?? null,
+      encounter: row.encounter ?? null,
+      secret: !!row.secret,
+      alpha: !!row.alpha,
+      run: !!row.run,
+      lost: !!row.lost,
+      clip: row.clip ?? null,
+      notes: row.notes ?? null
     });
+
+    week.shinyCount++;
   });
 
-  return Object.values(weeks);
+  return Object.values(weeks).map(week => ({
+    ...week,
+    hunterCount: Object.keys(week.members).length
+  }));
 }
