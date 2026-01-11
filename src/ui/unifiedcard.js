@@ -10,7 +10,7 @@ export function renderUnifiedCard({
   unclaimed = false,
   lost = false,
   highlighted = false,
-  symbols = {},           // { secret, event, safari, egg, alpha, clip }
+  symbols = {},           // { secret, alpha, run, favorite, clip, safari, egg, event }
   clip
 }) {
   /* -------------------------------------------------------
@@ -44,22 +44,29 @@ export function renderUnifiedCard({
 
   const symbolMap = {
     secret: 'secretshinysprite.png',
-    event: 'eventsprite.png',
+    alpha: 'alphasprite.png',
+    run: 'runsprite.png',
+    favorite: 'favoritesprite.png',
+    clip: 'clipsprite.png',
+
+    // method-derived symbols (passed in explicitly)
     safari: 'safarisprite.png',
     egg: 'eggsprite.png',
-    alpha: 'alphasprite.png',
-    clip: 'clipsprite.png'
+    event: 'eventsprite.png'
   };
 
   const symbolHtml = Object.entries(symbols)
     .filter(([, enabled]) => enabled)
-    .map(([key]) => `
-      <img
-        class="symbol ${key}"
-        src="img/symbols/${symbolMap[key]}"
-        alt="${key}"
-      >
-    `)
+    .map(([key]) => symbolMap[key]
+      ? `
+        <img
+          class="symbol ${key}"
+          src="img/symbols/${symbolMap[key]}"
+          alt="${key}"
+        >
+      `
+      : ''
+    )
     .join('');
 
   const overlay = symbolHtml
