@@ -77,27 +77,31 @@ export function renderShinyWeekly(weeks, container, membersData = []) {
             name: member,
             img: getMemberSprite(member, membersData),
             info: `Shinies: ${shinies.length}`,
-            cardType: 'member',
-            states: { member: true }
+            cardType: 'member'
           });
         } else {
           const mon = shinies[state];
+
+          // derive method symbol externally
+          const symbols = {
+            secret: !!mon.secret,
+            alpha: !!mon.alpha,
+            run: !!mon.run,
+            favorite: !!mon.favorite
+          };
+
+          if (mon.method) {
+            symbols[mon.method] = true;
+          }
+
           wrapper.innerHTML = renderUnifiedCard({
-            name: prettifyPokemonName(mon.name),
-            img: getPokemonGif(mon.name),
+            name: prettifyPokemonName(mon.pokemon),
+            img: getPokemonGif(mon.pokemon),
             info: '',
             cardType: 'pokemon',
-            states: {
-              pokemon: true,
-              lost: !!mon.lost
-            },
-            symbols: {
-              secret: !!mon.secret,
-              safari: !!mon.safari,
-              egg: !!mon.egg,
-              event: !!mon.event,
-              alpha: !!mon.alpha
-            }
+            lost: !!mon.lost,
+            symbols,
+            clip: mon.clip || null
           });
         }
 
