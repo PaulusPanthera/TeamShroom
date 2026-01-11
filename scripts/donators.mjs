@@ -50,7 +50,15 @@ function normalizeOptionalString(value) {
 // -----------------------------
 
 const csvText = await fetchCsv(CSV_URL);
-const rows = parseCsv(csvText);
+const rawRows = parseCsv(csvText);
+
+// -----------------------------
+// Strip empty rows (PRIMARY KEY = date)
+// -----------------------------
+
+const rows = rawRows.filter(
+  r => r.date && r.date.trim() !== ''
+);
 
 // -----------------------------
 // Validate against schema
@@ -66,19 +74,16 @@ validateRows({
 // Normalize (CI owns correctness)
 // -----------------------------
 
-const data = rows
-  // primary field = date
-  .filter(r => r.date && r.date.trim() !== '')
-  .map((row, index) => {
-    const rowNum = index + 2;
+const data = rows.map((row, index) => {
+  const rowNum = index + 2;
 
-    return {
-      date: normalizeDate(row.date.trim(), rowNum),
-      name: row.name.trim(),
-      donation: normalizeOptionalString(row.donation),
-      value: normalizeValue(row.value, rowNum),
-    };
-  });
+  return {
+    date: normalizeDate(row.date.trim(), rowNum),
+    name: row.name.trim(),
+    donation: normalizeOptionalString(row.donation),
+    value: normalizeValue(row.value, rowNum),
+  };
+});
 
 // -----------------------------
 // Write versioned JSON
