@@ -12,7 +12,7 @@ import {
   buildPokemonData,
   HITLIST_DEX,
   HITLIST_LEADERBOARD,
-  LIVING_COUNTS
+  LIVING_DEX
 } from './src/data/pokemondatabuilder.js';
 
 import { buildMembersModel } from './src/data/members.model.js';
@@ -29,7 +29,7 @@ import { renderDonators } from './src/features/donators/donators.js';
 import { renderShinyWeekly } from './src/features/shinyweekly/shinyweekly.ui.js';
 
 // ---------------------------------------------------------
-// DATA CACHES (RAW + DERIVED)
+// DATA CACHES
 // ---------------------------------------------------------
 
 let pokemonRows = null;
@@ -107,7 +107,6 @@ async function renderPage() {
     teamMembers = buildMembersModel(membersRows, shinyShowcaseRows);
   }
 
-  // Pokémon derived data (includes Hitlist + Living Dex)
   buildPokemonData(
     pokemonRows,
     teamMembers,
@@ -149,18 +148,15 @@ async function renderPage() {
     renderMemberShowcase(m, null, teamMembers);
   }
 
-  // inside the hitlist route
+  else if (page === 'hitlist') {
+    content.innerHTML = `<div id="shiny-dex-container"></div>`;
 
-else if (page === 'hitlist') {
-  content.innerHTML = `<div id="shiny-dex-container"></div>`;
-
-  setupShinyDexHitlistSearch({
-    hitlistDex: HITLIST_DEX,
-    hitlistLeaderboard: HITLIST_LEADERBOARD,
-    livingDex: LIVING_DEX
-  });
-}
-
+    setupShinyDexHitlistSearch({
+      hitlistDex: HITLIST_DEX,
+      hitlistLeaderboard: HITLIST_LEADERBOARD,
+      livingDex: LIVING_DEX
+    });
+  }
 
   else if (page === 'shinyweekly') {
     content.innerHTML = `<div id="shinyweekly-container"></div>`;
