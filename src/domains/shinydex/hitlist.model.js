@@ -1,7 +1,7 @@
 // src/domains/shinydex/hitlist.model.js
 // Shiny Dex — HITLIST CLAIM MODEL
 // PURE FUNCTION — deterministic, order-dependent
-// Source of truth: Shiny Weekly model ONLY
+// SINGLE SOURCE OF TRUTH for hitlist ownership
 
 import {
   pokemonFamilies,
@@ -23,7 +23,37 @@ Array<{
 
 export function buildShinyDexModel(weeklyModel) {
   // -------------------------------------------------------
-  // FLATTEN WEEKLY MODEL → EVENTS (ORDER PRESERVED)
+  // 1. BUILD FAMILY → ORDERED STAGES (ONCE)
+  // -------------------------------------------------------
+
+  const familyStages = {};
+  const pokemonToFamily = {};
+
+  Object.entries(pokemonFamilies).forEach(([pokemon, family]) => {
+    const root = family[0];
+
+    familyStages[root] ??= [];
+    familyStages[root].push(pokemon);
+
+    pokemonToFamily[pokemon] = root;
+  });
+
+  // ensure deterministic stage order
+  Object.values(familyStages).forEach(stages => stages.sort());
+
+  // -------------------------------------------------------
+  // 2. INITIALIZE FAMILY CURSORS
+  // -------------------------------------------------------
+
+  const familyCursor = {};
+  const claimedByPokemon = {};
+
+  Object.keys(familyStages).forEach(root => {
+    familyCursor[root] = 0;
+  });
+
+  // -------------------------------------------------------
+  // 3. FLATTEN WEEKLY MODEL → CLAIM EVENTS (ORDER PRESERVED)
   // -------------------------------------------------------
 
   const events = [];
@@ -42,48 +72,38 @@ export function buildShinyDexModel(weeklyModel) {
   });
 
   // -------------------------------------------------------
-  // CLAIM RESOLUTION (FAMILY → STAGE, PROGRESSIVE)
+  // 4. RESOLVE CLAIMS (STRICT STAGE PROGRESSION)
   // -------------------------------------------------------
 
-  const claimedByPokemon = {};
-  const claimedStagesByFamily = {};
-
   events.forEach(event => {
-    // Find family for this Pokémon
-    const familyId = Object.keys(pokemonFamilies).find(id =>
-      pokemonFamilies[id].includes(event.pokemon)
-    );
+    const root = pokemonToFamily[event.pokemon];
+    if (!root) return;
 
-    if (!familyId) return;
+    const stages = familyStages[root];
+    const index = familyCursor[root];
 
-    const familyStages = pokemonFamilies[familyId];
+    if (index >= stages.length) return;
 
-    claimedStagesByFamily[familyId] ??= {};
+    const stagePokemon = stages[index];
 
-    // Find next unclaimed stage in this family
-    const nextStage = familyStages.find(
-      stage => !claimedStagesByFamily[familyId][stage]
-    );
-
-    if (!nextStage) return; // family fully claimed
-
-    // Assign claim
-    claimedStagesByFamily[familyId][nextStage] = event.member;
-    claimedByPokemon[nextStage] = event.member;
+    claimedByPokemon[stagePokemon] = event.member;
+    familyCursor[root] += 1;
   });
 
   // -------------------------------------------------------
-  // FINAL DEX LIST (ORDER = POKÉMON DATA ORDER)
+  // 5. FINAL DEX SNAPSHOT (POKÉDEX ORDER)
   // -------------------------------------------------------
 
-  return Object.keys(POKEMON_POINTS).map(pokemon => ({
-    pokemon,
-    family:
-      Object.keys(pokemonFamilies)
-        .find(id => pokemonFamilies[id].includes(pokemon)) || pokemon,
-    region: POKEMON_REGION[pokemon] || 'unknown',
-    points: POKEMON_POINTS[pokemon],
-    claimed: !!claimedByPokemon[pokemon],
-    claimedBy: claimedByPokemon[pokemon] || null
-  }));
+  return Object.keys(POKEMON_POINTS).map(pokemon => {
+    const root = pokemonToFamily[pokemon] || pokemon;
+
+    return {
+      pokemon,
+      family: root,
+      region: POKEMON_REGION[pokemon] || 'unknown',
+      points: POKEMON_POINTS[pokemon],
+      claimed: pokemon in claimedByPokemon,
+      claimedBy: claimedByPokemon[pokemon] || null
+    };
+  });
 }
