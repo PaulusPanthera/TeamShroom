@@ -1,5 +1,5 @@
 /* =========================================================
-   BUTTON SYSTEM — DESIGN SYSTEM v1 (LOCKED)
+   BUTTON SYSTEM — SEMANTIC SPLIT (LOCKED)
    ========================================================= */
 
 button {
@@ -12,10 +12,11 @@ button {
 }
 
 /* ---------------------------------------------------------
-   ACTION TOGGLES (BOOLEAN STATE)
+   TOGGLES / ACTIONS
 --------------------------------------------------------- */
 
-.dex-toggle {
+.dex-toggle,
+.dex-action {
   padding: 6px 14px;
   font-weight: bold;
 
@@ -28,14 +29,26 @@ button {
   box-shadow: var(--shadow-depth);
 }
 
+.dex-toggle:hover,
+.dex-action:hover {
+  filter: brightness(1.05);
+}
+
 .dex-toggle.active {
   background: var(--accent);
   color: var(--text-dark);
   border-color: var(--accent);
 }
 
+.dex-toggle:disabled,
+.dex-action:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: none;
+}
+
 /* ---------------------------------------------------------
-   DEX TABS (VIEW SWITCHERS ONLY)
+   DEX TABS (VIEW NAVIGATION ONLY)
 --------------------------------------------------------- */
 
 .dex-tab {
@@ -55,20 +68,27 @@ button {
   box-shadow: var(--shadow-depth);
 }
 
+.dex-tab:hover {
+  color: var(--text-main);
+}
+
 .dex-tab.active {
   background: var(--accent);
   color: var(--text-dark);
+
   border-color: var(--accent);
   border-bottom: 2px solid var(--accent);
+
   z-index: 2;
 }
 
 /* ---------------------------------------------------------
-   NAV BUTTONS
+   NAV BUTTONS (TOP NAV)
 --------------------------------------------------------- */
 
 .nav a {
   padding: 8px 14px;
+
   font-size: var(--font-card-stat);
   font-weight: bold;
   letter-spacing: 1px;
@@ -80,6 +100,10 @@ button {
   border-radius: 12px;
 
   box-shadow: var(--shadow-depth);
+}
+
+.nav a:hover {
+  color: var(--accent);
 }
 
 .nav a.active {
