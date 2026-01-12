@@ -23,7 +23,7 @@ import {
   renderMemberShowcase
 } from './src/features/showcase/showcase.js';
 
-import { renderShinyDexHitlist } from './src/features/shinydex/shinydex.js';
+import { setupShinyPokedexPage } from './src/features/shinydex/shinydex.page.js';
 import { renderDonators } from './src/features/donators/donators.js';
 import { renderShinyWeekly } from './src/features/shinyweekly/shinyweekly.ui.js';
 
@@ -170,9 +170,14 @@ async function renderPage() {
   // -------------------------------------------------------
 
   else if (page === 'hitlist') {
-    content.innerHTML = `<div id="shiny-dex-container"></div>`;
-    renderShinyDexHitlist(shinyWeeklyWeeks);
-  }
+  content.innerHTML = `<div id="shiny-dex-container"></div>`;
+
+  setupShinyPokedexPage(
+    shinyWeeklyWeeks,
+    shinyShowcaseRows
+  );
+}
+
 
   // -------------------------------------------------------
   // DONATORS
