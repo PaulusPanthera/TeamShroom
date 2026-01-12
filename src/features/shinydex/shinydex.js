@@ -1,6 +1,6 @@
 // src/features/shinydex/shinydex.js
 // Shiny Dex — HITLIST VIEW
-// Render-only. No claim logic. UI-only search.
+// Render-only. Advanced search grammar. No model mutation.
 
 import { buildShinyDexModel } from '../../data/shinydex.model.js';
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
@@ -16,7 +16,15 @@ function getPokemonGif(pokemonKey) {
 }
 
 /**
- * Render Shiny Dex Hitlist with search
+ * Render Shiny Dex Hitlist with advanced search
+ *
+ * Search grammar (AND-combined tokens):
+ * - pokemon name (default)
+ * - @Member
+ * - +pokemon / pokemon+
+ * - claimed | unclaimed
+ * - region:<region>
+ * - tier:<tier>
  *
  * @param {Array} weeklyModel Output of buildShinyWeeklyModel()
  */
@@ -30,9 +38,8 @@ export function renderShinyDexHitlist(weeklyModel) {
 
   const searchInput = document.createElement('input');
   searchInput.type = 'text';
-  searchInput.placeholder = 'Search Pokémon…';
+  searchInput.placeholder = 'Search…';
   searchInput.className = 'dex-search';
-
   container.appendChild(searchInput);
 
   // -------------------------------------------------------
@@ -49,10 +56,9 @@ export function renderShinyDexHitlist(weeklyModel) {
 
   const dex = buildShinyDexModel(weeklyModel);
 
-  function render(filtered) {
+  function render(list) {
     grid.innerHTML = '';
-
-    filtered.forEach(entry => {
+    list.forEach(entry => {
       grid.insertAdjacentHTML(
         'beforeend',
         renderUnifiedCard({
@@ -67,26 +73,104 @@ export function renderShinyDexHitlist(weeklyModel) {
     });
   }
 
-  // Initial render
   render(dex);
 
   // -------------------------------------------------------
-  // SEARCH HANDLER
+  // SEARCH PARSER
   // -------------------------------------------------------
 
   searchInput.addEventListener('input', () => {
-    const q = searchInput.value.trim().toLowerCase();
-
-    if (!q) {
+    const raw = searchInput.value.trim();
+    if (!raw) {
       render(dex);
       return;
     }
 
-    const filtered = dex.filter(entry =>
-      prettifyPokemonName(entry.pokemon)
-        .toLowerCase()
-        .includes(q)
-    );
+    const tokens = raw.split(/\s+/);
+
+    let filtered = dex.slice();
+
+    tokens.forEach(token => {
+      const t = token.toLowerCase();
+
+      // -----------------------------------------------
+      // Claimer
+      // -----------------------------------------------
+      if (t.startsWith('@')) {
+        const q = token.slice(1).toLowerCase();
+        filtered = filtered.filter(
+          e => e.claimedBy && e.claimedBy.toLowerCase().includes(q)
+        );
+        return;
+      }
+
+      // -----------------------------------------------
+      // Claim state
+      // -----------------------------------------------
+      if (t === 'claimed') {
+        filtered = filtered.filter(e => e.claimed);
+        return;
+      }
+
+      if (t === 'unclaimed') {
+        filtered = filtered.filter(e => !e.claimed);
+        return;
+      }
+
+      // -----------------------------------------------
+      // Region
+      // -----------------------------------------------
+      if (t.startsWith('region:')) {
+        const region = t.split(':')[1];
+        filtered = filtered.filter(
+          e => e.region && e.region.toLowerCase() === region
+        );
+        return;
+      }
+
+      // -----------------------------------------------
+      // Tier
+      // -----------------------------------------------
+      if (t.startsWith('tier:')) {
+        const tier = t.split(':')[1];
+        filtered = filtered.filter(
+          e => String(e.tier).toLowerCase() === tier
+        );
+        return;
+      }
+
+      // -----------------------------------------------
+      // Family expansion
+      // -----------------------------------------------
+      const isFamily =
+        token.startsWith('+') || token.endsWith('+');
+
+      if (isFamily) {
+        const q = token.replace(/\+/g, '').toLowerCase();
+
+        const families = dex
+          .filter(e =>
+            prettifyPokemonName(e.pokemon)
+              .toLowerCase()
+              .includes(q)
+          )
+          .map(e => e.family);
+
+        filtered = filtered.filter(e =>
+          families.includes(e.family)
+        );
+        return;
+      }
+
+      // -----------------------------------------------
+      // Default: Pokémon name
+      // -----------------------------------------------
+      filtered = filtered.filter(e =>
+        prettifyPokemonName(e.pokemon)
+          .toLowerCase()
+          .includes(t)
+      );
+    });
 
     render(filtered);
   });
