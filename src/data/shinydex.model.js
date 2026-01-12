@@ -43,15 +43,23 @@ export function buildShinyDexModel(weeklyModel) {
     });
   });
 
-  // Order is guaranteed by weekly model construction
-  // Do NOT sort
-
   // -------------------------------------------------------
-  // CLAIM RESOLUTION (FAMILY-STAGE BASED)
+  // FAMILY STAGE STATE
   // -------------------------------------------------------
 
-  const familyClaims = {};
+  const familyState = {};
   const pokemonClaims = {};
+
+  Object.keys(pokemonFamilies).forEach(familyId => {
+    familyState[familyId] = pokemonFamilies[familyId].map(pokemon => ({
+      pokemon,
+      claimedBy: null
+    }));
+  });
+
+  // -------------------------------------------------------
+  // CLAIM RESOLUTION (STRICT STAGE ORDER)
+  // -------------------------------------------------------
 
   events.forEach(event => {
     const familyId = Object.keys(pokemonFamilies)
@@ -59,25 +67,23 @@ export function buildShinyDexModel(weeklyModel) {
 
     if (!familyId) return;
 
-    familyClaims[familyId] ??= {};
+    const stages = familyState[familyId];
 
-    let claimedStage = null;
+    // 1. Exact stage if free
+    let stage =
+      stages.find(
+        s => s.pokemon === event.pokemon && s.claimedBy === null
+      ) || null;
 
-    // Exact stage free
-    if (!familyClaims[familyId][event.pokemon]) {
-      claimedStage = event.pokemon;
-    } else {
-      // First unclaimed stage
-      claimedStage =
-        pokemonFamilies[familyId].find(
-          p => !familyClaims[familyId][p]
-        ) || null;
+    // 2. First free stage fallback
+    if (!stage) {
+      stage = stages.find(s => s.claimedBy === null) || null;
     }
 
-    if (!claimedStage) return;
+    if (!stage) return;
 
-    familyClaims[familyId][claimedStage] = event.member;
-    pokemonClaims[claimedStage] = event.member;
+    stage.claimedBy = event.member;
+    pokemonClaims[stage.pokemon] = event.member;
   });
 
   // -------------------------------------------------------
