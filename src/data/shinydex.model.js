@@ -1,11 +1,10 @@
 // src/data/shinydex.model.js
 // Shiny Dex — HITLIST MODEL
-// Claim logic + Pokémon metadata enrichment (region)
+// Claim logic only. No region enrichment.
 
 import {
   pokemonFamilies,
-  POKEMON_POINTS,
-  pokemonData
+  POKEMON_POINTS
 } from './pokemondatabuilder.js';
 
 /**
@@ -15,15 +14,6 @@ import {
  * @returns {Array}
  */
 export function buildShinyDexModel(weeklyModel) {
-  // -------------------------------------------------------
-  // BUILD POKÉMON → REGION MAP (LOCAL, SAFE)
-  // -------------------------------------------------------
-
-  const pokemonRegionMap = {};
-  pokemonData.forEach(p => {
-    pokemonRegionMap[p.pokemon] = p.region;
-  });
-
   // -------------------------------------------------------
   // FLATTEN WEEKLY MODEL → STRICT CHRONOLOGICAL EVENTS
   // -------------------------------------------------------
@@ -62,7 +52,7 @@ export function buildShinyDexModel(weeklyModel) {
   });
 
   // -------------------------------------------------------
-  // CLAIM RESOLUTION (AUTHORITATIVE)
+  // CLAIM RESOLUTION
   // -------------------------------------------------------
 
   events.forEach(event => {
@@ -87,7 +77,7 @@ export function buildShinyDexModel(weeklyModel) {
   });
 
   // -------------------------------------------------------
-  // BUILD FINAL HITLIST MODEL (WITH REGION)
+  // BUILD FINAL HITLIST MODEL
   // -------------------------------------------------------
 
   return Object.keys(POKEMON_POINTS).map(pokemon => {
@@ -100,7 +90,6 @@ export function buildShinyDexModel(weeklyModel) {
     return {
       pokemon,
       family,
-      region: pokemonRegionMap[pokemon] || 'unknown',
       points: POKEMON_POINTS[pokemon],
       claimed: !!slot?.claimedBy,
       claimedBy: slot?.claimedBy || null
