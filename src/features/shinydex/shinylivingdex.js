@@ -1,6 +1,5 @@
 // src/features/shinydex/shinylivingdex.js
 // Shiny Dex — LIVING DEX VIEW
-// Render-only. No claims. No history. Snapshot of current ownership.
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
@@ -13,15 +12,6 @@ function getPokemonGif(pokemonKey) {
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${pokemonKey}.gif`;
 }
 
-/**
- * Render Shiny Living Dex
- *
- * @param {Object} params
- * @param {Array} params.showcaseRows shinyshowcase.json rows
- * @param {string} params.search search query (lowercase)
- * @param {HTMLElement} params.container target container
- * @param {HTMLElement} params.totalCounter counter element
- */
 export function renderShinyLivingDex({
   showcaseRows,
   search = '',
@@ -29,8 +19,6 @@ export function renderShinyLivingDex({
   totalCounter
 }) {
   container.innerHTML = '';
-
-  /* ---------------- COUNT OWNERSHIP ---------------- */
 
   const counts = {};
 
@@ -47,6 +35,10 @@ export function renderShinyLivingDex({
     count: counts[pokemon]
   }));
 
+  entries.sort((a, b) =>
+    a.pokemon.localeCompare(b.pokemon)
+  );
+
   if (search) {
     entries = entries.filter(e =>
       prettifyPokemonName(e.pokemon)
@@ -57,8 +49,6 @@ export function renderShinyLivingDex({
 
   totalCounter.textContent = `${entries.length} Pokémon`;
 
-  /* ---------------- GROUP BY REGION ---------------- */
-
   const byRegion = {};
 
   entries.forEach(e => {
@@ -67,8 +57,6 @@ export function renderShinyLivingDex({
     byRegion[region] ??= [];
     byRegion[region].push(e);
   });
-
-  /* ---------------- RENDER ---------------- */
 
   Object.entries(byRegion).forEach(([region, list]) => {
     const section = document.createElement('section');
