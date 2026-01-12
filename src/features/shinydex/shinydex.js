@@ -1,6 +1,5 @@
 // src/features/shinydex/shinydex.js
-// Shiny Dex — PAGE CONTROLLER
-// Owns ALL state + controls. Renderers are pure.
+// Shiny Dex Page Controller
 
 import { renderShinyDexHitlist } from './shinydex.hitlist.js';
 import { renderShinyLivingDex } from './shinylivingdex.js';
@@ -10,17 +9,10 @@ export function setupShinyDexPage({
   shinyShowcaseRows
 }) {
   const container = document.getElementById('page-content');
-  if (!container) {
-    throw new Error('[ShinyDex] page-content not found');
-  }
-
-  // -------------------------------------------------------
-  // INITIAL MARKUP
-  // -------------------------------------------------------
 
   container.innerHTML = `
-    <div class="search-controls" id="dex-controls">
-      <input type="text" id="dex-search" placeholder="Search…" />
+    <div class="search-controls">
+      <input id="dex-search" type="text" placeholder="Search…" />
 
       <button id="dex-unclaimed" class="dex-tab">
         Unclaimed
@@ -43,83 +35,50 @@ export function setupShinyDexPage({
     <div id="shiny-dex-container"></div>
   `;
 
-  // -------------------------------------------------------
-  // ELEMENTS
-  // -------------------------------------------------------
+  const searchInput = container.querySelector('#dex-search');
+  const unclaimedBtn = container.querySelector('#dex-unclaimed');
+  const sortSelect = container.querySelector('#dex-sort');
+  const countLabel = container.querySelector('#dex-count');
 
-  const searchInput = document.getElementById('dex-search');
-  const unclaimedBtn = document.getElementById('dex-unclaimed');
-  const sortSelect = document.getElementById('dex-sort');
-  const countLabel = document.getElementById('dex-count');
+  const tabHitlist = container.querySelector('#tab-hitlist');
+  const tabLiving = container.querySelector('#tab-living');
 
-  const tabHitlist = document.getElementById('tab-hitlist');
-  const tabLiving = document.getElementById('tab-living');
-
-  // -------------------------------------------------------
-  // STATE (single source of truth)
-  // -------------------------------------------------------
-
-  const state = {
-    view: 'hitlist',          // 'hitlist' | 'living'
+  let state = {
+    view: 'hitlist',
     search: '',
-    unclaimedOnly: false,     // DEFAULT = claimed shown
+    unclaimed: false,
     sort: 'standard'
   };
 
-  // -------------------------------------------------------
-  // SORT OPTION CONFIGS
-  // -------------------------------------------------------
+  function setupSortOptions() {
+    sortSelect.innerHTML = '';
 
-  const HITLIST_SORTS = `
-    <option value="standard">Standard</option>
-    <option value="claims">Total Claims</option>
-    <option value="points">Total Claim Points</option>
-  `;
-
-  const LIVINGDEX_SORTS = `
-    <option value="standard">Standard</option>
-    <option value="total">Total Shinies</option>
-  `;
-
-  // -------------------------------------------------------
-  // HELPERS
-  // -------------------------------------------------------
-
-  function setActive(el, active) {
-    el.classList.toggle('active', active);
-  }
-
-  function applyButtonState() {
-    setActive(unclaimedBtn, state.unclaimedOnly);
-    setActive(tabHitlist, state.view === 'hitlist');
-    setActive(tabLiving, state.view === 'living');
-  }
-
-  function configureSortDropdown() {
     if (state.view === 'hitlist') {
-      sortSelect.innerHTML = HITLIST_SORTS;
+      sortSelect.innerHTML = `
+        <option value="standard">Standard</option>
+        <option value="claims">Total Claims</option>
+        <option value="points">Total Claim Points</option>
+      `;
       state.sort = 'standard';
-      unclaimedBtn.style.display = '';
+      state.unclaimed = false;
     } else {
-      sortSelect.innerHTML = LIVINGDEX_SORTS;
+      sortSelect.innerHTML = `
+        <option value="standard">Standard</option>
+        <option value="total">Total Shinies</option>
+      `;
       state.sort = 'standard';
-      unclaimedBtn.style.display = '';
+      state.unclaimed = false;
     }
-    sortSelect.value = state.sort;
-  }
 
-  // -------------------------------------------------------
-  // RENDER PIPELINE
-  // -------------------------------------------------------
+    unclaimedBtn.classList.toggle('active', state.unclaimed);
+  }
 
   function render() {
-    applyButtonState();
-
     if (state.view === 'hitlist') {
       renderShinyDexHitlist({
         weeklyModel,
         search: state.search,
-        unclaimedOnly: state.unclaimedOnly,
+        unclaimedOnly: state.unclaimed,
         sort: state.sort,
         countLabel
       });
@@ -127,16 +86,14 @@ export function setupShinyDexPage({
       renderShinyLivingDex({
         showcaseRows: shinyShowcaseRows,
         search: state.search,
-        unclaimedOnly: state.unclaimedOnly,
+        unclaimedOnly: state.unclaimed,
         sort: state.sort,
         countLabel
       });
     }
   }
 
-  // -------------------------------------------------------
-  // EVENTS
-  // -------------------------------------------------------
+  // ---------------- EVENTS ----------------
 
   searchInput.addEventListener('input', e => {
     state.search = e.target.value.toLowerCase();
@@ -144,7 +101,8 @@ export function setupShinyDexPage({
   });
 
   unclaimedBtn.addEventListener('click', () => {
-    state.unclaimedOnly = !state.unclaimedOnly;
+    state.unclaimed = !state.unclaimed;
+    unclaimedBtn.classList.toggle('active', state.unclaimed);
     render();
   });
 
@@ -154,25 +112,21 @@ export function setupShinyDexPage({
   });
 
   tabHitlist.addEventListener('click', () => {
-    if (state.view === 'hitlist') return;
     state.view = 'hitlist';
-    state.unclaimedOnly = false;
-    configureSortDropdown();
+    tabHitlist.classList.add('active');
+    tabLiving.classList.remove('active');
+    setupSortOptions();
     render();
   });
 
   tabLiving.addEventListener('click', () => {
-    if (state.view === 'living') return;
     state.view = 'living';
-    state.unclaimedOnly = false;
-    configureSortDropdown();
+    tabLiving.classList.add('active');
+    tabHitlist.classList.remove('active');
+    setupSortOptions();
     render();
   });
 
-  // -------------------------------------------------------
-  // INIT
-  // -------------------------------------------------------
-
-  configureSortDropdown();
+  setupSortOptions();
   render();
 }
