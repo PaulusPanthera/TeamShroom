@@ -1,6 +1,7 @@
 // src/features/shinydex/shinydex.js
 // Shiny Dex Page Controller
 // Owns ALL DOM under #page-content
+// View-scoped state. No leakage.
 
 import { renderShinyDexHitlist } from './shinydex.hitlist.js';
 import { renderShinyLivingDex } from './shinylivingdex.js';
@@ -20,7 +21,7 @@ export function setupShinyDexPage({
     <div class="search-controls">
       <input id="dex-search" type="text" placeholder="Search…" />
 
-      <button id="dex-unclaimed" class="dex-tab">
+      <button id="dex-unclaimed" class="dex-toggle">
         Unclaimed
       </button>
 
@@ -54,18 +55,29 @@ export function setupShinyDexPage({
   const tabLiving = root.querySelector('#tab-living');
 
   // --------------------------------------------------
-  // STATE (SINGLE SOURCE OF TRUTH)
+  // STATE (VIEW-SCOPED)
   // --------------------------------------------------
 
   const state = {
-    view: 'hitlist',        // 'hitlist' | 'living'
-    search: '',
-    unclaimed: false,
-    sort: 'standard'
+    view: 'hitlist',
+    hitlist: {
+      search: '',
+      sort: 'standard',
+      showUnclaimed: false
+    },
+    livingdex: {
+      search: '',
+      sort: 'standard',
+      showUnclaimed: false
+    }
   };
 
+  function activeState() {
+    return state[state.view];
+  }
+
   // --------------------------------------------------
-  // SORT OPTIONS (PER VIEW)
+  // SORT CONFIGURATION
   // --------------------------------------------------
 
   function configureSort() {
@@ -77,41 +89,44 @@ export function setupShinyDexPage({
         <option value="claims">Total Claims</option>
         <option value="points">Total Claim Points</option>
       `;
-      state.sort = 'standard';
-      state.unclaimed = false;
+      unclaimedBtn.disabled = false;
     } else {
       sortSelect.innerHTML = `
         <option value="standard">Standard</option>
         <option value="total">Total Shinies</option>
       `;
-      state.sort = 'standard';
-      state.unclaimed = false;
+      unclaimedBtn.disabled = false;
     }
 
-    unclaimedBtn.classList.toggle('active', state.unclaimed);
+    sortSelect.value = activeState().sort;
+    unclaimedBtn.classList.toggle('active', activeState().showUnclaimed);
   }
 
   // --------------------------------------------------
-  // RENDER PIPELINE
+  // RENDER
   // --------------------------------------------------
 
   function render() {
-    unclaimedBtn.classList.toggle('active', state.unclaimed);
+    const viewState = activeState();
+
+    searchInput.value = viewState.search;
+    sortSelect.value = viewState.sort;
+    unclaimedBtn.classList.toggle('active', viewState.showUnclaimed);
 
     if (state.view === 'hitlist') {
       renderShinyDexHitlist({
         weeklyModel,
-        search: state.search,
-        unclaimedOnly: state.unclaimed,
-        sort: state.sort,
+        search: viewState.search,
+        unclaimedOnly: viewState.showUnclaimed,
+        sort: viewState.sort,
         countLabel
       });
     } else {
       renderShinyLivingDex({
         showcaseRows: shinyShowcaseRows,
-        search: state.search,
-        unclaimedOnly: state.unclaimed,
-        sort: state.sort,
+        search: viewState.search,
+        unclaimedOnly: viewState.showUnclaimed,
+        sort: viewState.sort,
         countLabel
       });
     }
@@ -122,17 +137,18 @@ export function setupShinyDexPage({
   // --------------------------------------------------
 
   searchInput.addEventListener('input', e => {
-    state.search = e.target.value.toLowerCase();
+    activeState().search = e.target.value.toLowerCase();
     render();
   });
 
   unclaimedBtn.addEventListener('click', () => {
-    state.unclaimed = !state.unclaimed;
+    const viewState = activeState();
+    viewState.showUnclaimed = !viewState.showUnclaimed;
     render();
   });
 
   sortSelect.addEventListener('change', e => {
-    state.sort = e.target.value;
+    activeState().sort = e.target.value;
     render();
   });
 
@@ -148,9 +164,9 @@ export function setupShinyDexPage({
   });
 
   tabLiving.addEventListener('click', () => {
-    if (state.view === 'living') return;
+    if (state.view === 'livingdex') return;
 
-    state.view = 'living';
+    state.view = 'livingdex';
     tabLiving.classList.add('active');
     tabHitlist.classList.remove('active');
 
