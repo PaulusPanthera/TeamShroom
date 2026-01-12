@@ -1,6 +1,6 @@
 // src/features/shinydex/shinylivingdex.js
-// Shiny Living Dex — species ownership view
-// Render-only. No controls. No state ownership.
+// Shiny Living Dex — species ownership snapshot
+// Render-only. No state. No side effects.
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
@@ -24,17 +24,17 @@ export function renderShinyLivingDex({
   const container = document.getElementById('shiny-dex-container');
   container.innerHTML = '';
 
-  // --------------------------------------------------
-  // BUILD MODEL (DEX ORDER PRESERVED)
-  // --------------------------------------------------
+  // -------------------------------------------------------
+  // DATA
+  // -------------------------------------------------------
 
   let dex = buildShinyLivingDexModel(showcaseRows).filter(
     e => POKEMON_SHOW[e.pokemon] !== false
   );
 
-  // --------------------------------------------------
+  // -------------------------------------------------------
   // SEARCH
-  // --------------------------------------------------
+  // -------------------------------------------------------
 
   if (search) {
     dex = dex.filter(e =>
@@ -44,37 +44,37 @@ export function renderShinyLivingDex({
     );
   }
 
-  // --------------------------------------------------
+  // -------------------------------------------------------
   // UNCLAIMED FILTER
-  // --------------------------------------------------
+  // -------------------------------------------------------
 
   if (unclaimedOnly) {
     dex = dex.filter(e => e.count === 0);
   }
 
-  // --------------------------------------------------
+  // -------------------------------------------------------
   // SORTING
-  // --------------------------------------------------
+  // -------------------------------------------------------
 
   if (sort === 'total') {
-    dex = [...dex].sort((a, b) => b.count - a.count);
+    dex.sort((a, b) => b.count - a.count);
   }
-  // else: natural dex order preserved
+  // else: preserve CI pokédex order
 
-  // --------------------------------------------------
+  // -------------------------------------------------------
   // GROUP BY REGION
-  // --------------------------------------------------
+  // -------------------------------------------------------
 
   const byRegion = {};
-  dex.forEach(e => {
-    const region = POKEMON_REGION[e.pokemon] || 'unknown';
+  dex.forEach(entry => {
+    const region = POKEMON_REGION[entry.pokemon] || 'unknown';
     byRegion[region] ??= [];
-    byRegion[region].push(e);
+    byRegion[region].push(entry);
   });
 
-  // --------------------------------------------------
+  // -------------------------------------------------------
   // RENDER
-  // --------------------------------------------------
+  // -------------------------------------------------------
 
   let totalSpecies = 0;
   let ownedSpecies = 0;
@@ -90,8 +90,7 @@ export function renderShinyLivingDex({
     ownedSpecies += owned;
 
     const header = document.createElement('h2');
-    header.textContent =
-      `${region.toUpperCase()} (${owned} / ${total})`;
+    header.textContent = `${region.toUpperCase()} (${owned} / ${total})`;
 
     const grid = document.createElement('div');
     grid.className = 'dex-grid';
@@ -103,11 +102,14 @@ export function renderShinyLivingDex({
           name: prettifyPokemonName(entry.pokemon),
           img: getPokemonGif(entry.pokemon),
           info:
-            entry.count === 1
-              ? '1 Shiny'
-              : `${entry.count} Shinies`,
+            entry.count === 0
+              ? 'Unowned'
+              : entry.count === 1
+                ? '1 Shiny'
+                : `${entry.count} Shinies`,
           unclaimed: entry.count === 0,
           highlighted: entry.count > 0,
+          owners: entry.owners,
           cardType: 'pokemon'
         })
       );
@@ -117,10 +119,5 @@ export function renderShinyLivingDex({
     container.appendChild(section);
   });
 
-  // --------------------------------------------------
-  // TOTAL COUNTER
-  // --------------------------------------------------
-
-  countLabel.textContent =
-    `${ownedSpecies} / ${totalSpecies} Species`;
+  countLabel.textContent = `${ownedSpecies} / ${totalSpecies} Species`;
 }
