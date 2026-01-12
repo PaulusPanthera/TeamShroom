@@ -38,7 +38,7 @@ let donatorsData = null;
 let membersData = null;
 let shinyShowcaseRows = null;
 let teamMembers = null;
-let pokemonRows = null;
+let pokemonDataLoaded = false;
 
 // ---------------------------------------------------------
 // ROUTING
@@ -89,12 +89,8 @@ async function renderPage() {
   content.innerHTML = '';
 
   // -------------------------------------------------------
-  // LOAD BASE DATA (ONCE)
+  // LOAD MEMBERS + SHOWCASE FIRST (FOUNDATION)
   // -------------------------------------------------------
-
-  if (!pokemonRows) {
-    pokemonRows = await loadPokemon();
-  }
 
   if (!membersData) {
     membersData = await loadMembers();
@@ -109,13 +105,17 @@ async function renderPage() {
   }
 
   // -------------------------------------------------------
-  // BUILD POKÉMON RUNTIME MAPS (AFTER TEAM EXISTS)
+  // POKÉMON DATA (DEPENDS ON TEAM MEMBERS)
   // -------------------------------------------------------
 
-  buildPokemonData(pokemonRows, teamMembers);
+  if (!pokemonDataLoaded) {
+    const pokemonRows = await loadPokemon();
+    buildPokemonData(pokemonRows, teamMembers);
+    pokemonDataLoaded = true;
+  }
 
   // -------------------------------------------------------
-  // SHINY WEEKLY + DEX MODEL
+  // SHINY WEEKLY + SHINY DEX MODEL
   // -------------------------------------------------------
 
   if (!shinyWeeklyWeeks) {
