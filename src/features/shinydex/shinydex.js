@@ -1,44 +1,51 @@
 // src/features/shinydex/shinydex.js
-// Shiny Dex — PHASE 1 VISIBILITY CHECK
-// Render Pokémon cards only. No claims. No weekly logic.
+// Shiny Dex — HITLIST VIEW
+// Render-only layer
+//
+// Rules:
+// - No claim logic
+// - No weekly parsing
+// - No data mutation
+// - Uses buildShinyDexModel
+// - Uses renderUnifiedCard only
 
+import { buildShinyDexModel } from '../../data/shinydex.model.js';
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
-import {
-  POKEMON_POINTS
-} from '../../data/pokemondatabuilder.js';
 
 function getPokemonGif(pokemonKey) {
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${pokemonKey}.gif`;
 }
 
-export function setupShinyDexHitlistSearch() {
+/**
+ * Render Shiny Dex Hitlist
+ *
+ * @param {Array} weeklyModel Output of buildShinyWeeklyModel()
+ */
+export function renderShinyDexHitlist(weeklyModel) {
   const container = document.getElementById('shiny-dex-container');
   container.innerHTML = '';
 
   const grid = document.createElement('div');
   grid.className = 'dex-grid';
 
-  let rendered = 0;
+  const dex = buildShinyDexModel(weeklyModel);
 
-  Object.keys(POKEMON_POINTS).forEach(pokemon => {
-    rendered++;
-
+  dex.forEach(entry => {
     grid.insertAdjacentHTML(
       'beforeend',
       renderUnifiedCard({
-        name: prettifyPokemonName(pokemon),
-        img: getPokemonGif(pokemon),
-        info: 'Visible',
+        name: prettifyPokemonName(entry.pokemon),
+        img: getPokemonGif(entry.pokemon),
+        info: entry.claimed
+          ? `Claimed by ${entry.claimedBy}`
+          : 'Unclaimed',
+        points: entry.points,
+        claimed: entry.claimed,
         cardType: 'pokemon'
       })
     );
   });
-
-  if (rendered === 0) {
-    container.innerHTML = '<p>No Pokémon rendered.</p>';
-    return;
-  }
 
   container.appendChild(grid);
 }
