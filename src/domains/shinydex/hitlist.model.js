@@ -1,6 +1,6 @@
 // src/domains/shinydex/hitlist.model.js
 // Shiny Dex — HITLIST CLAIM MODEL
-// PURE FUNCTION — deterministic, order-dependent
+// Deterministic, order-dependent, family-aware
 // Source of truth: Shiny Weekly model ONLY
 
 import {
@@ -23,7 +23,7 @@ Array<{
 
 export function buildShinyDexModel(weeklyModel) {
   // -------------------------------------------------------
-  // 1. FLATTEN WEEKLY MODEL → CLAIM EVENTS (ORDER PRESERVED)
+  // FLATTEN WEEKLY MODEL → EVENTS (ORDER PRESERVED)
   // -------------------------------------------------------
 
   const events = [];
@@ -42,50 +42,51 @@ export function buildShinyDexModel(weeklyModel) {
   });
 
   // -------------------------------------------------------
-  // 2. PREPARE FAMILY STATE (DEX ORDER IS AUTHORITATIVE)
+  // PREPARE FAMILY STATE
   // -------------------------------------------------------
 
   const familyState = {};
-  const pokemonClaims = {};
-
-  Object.entries(pokemonFamilies).forEach(([familyId, stages]) => {
-    familyState[familyId] = {
-      stages,
-      claimed: {}
+  Object.entries(pokemonFamilies).forEach(([family, stages]) => {
+    familyState[family] = {
+      stages: [...stages],
+      claimed: {} // pokemon → member
     };
   });
 
+  const pokemonClaims = {};
+
   // -------------------------------------------------------
-  // 3. RESOLVE CLAIMS — FIRST UNCLAIMED STAGE PER EVENT
+  // RESOLVE CLAIMS (ORDER MATTERS)
   // -------------------------------------------------------
 
-  events.forEach(event => {
-    const familyId = Object.keys(familyState).find(id =>
-      familyState[id].stages.includes(event.pokemon)
+  events.forEach(({ member, pokemon }) => {
+    const family = Object.keys(pokemonFamilies).find(f =>
+      pokemonFamilies[f].includes(pokemon)
     );
 
-    if (!familyId) return;
+    if (!family) return;
 
-    const family = familyState[familyId];
+    const state = familyState[family];
 
-    const nextStage = family.stages.find(
-      p => !family.claimed[p]
+    // find next unclaimed stage
+    const nextStage = state.stages.find(
+      p => !state.claimed[p]
     );
 
     if (!nextStage) return;
 
-    family.claimed[nextStage] = event.member;
-    pokemonClaims[nextStage] = event.member;
+    state.claimed[nextStage] = member;
+    pokemonClaims[nextStage] = member;
   });
 
   // -------------------------------------------------------
-  // 4. FINAL DEX LIST (FULL, STABLE, ORDERED)
+  // FINAL DEX LIST (FULL, STABLE)
   // -------------------------------------------------------
 
   return Object.keys(POKEMON_POINTS).map(pokemon => {
     const family =
       Object.keys(pokemonFamilies)
-        .find(id => pokemonFamilies[id].includes(pokemon)) ||
+        .find(f => pokemonFamilies[f].includes(pokemon)) ||
       pokemon;
 
     return {
