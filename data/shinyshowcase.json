@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-01-12T06:19:50.549Z",
+  "generatedAt": "2026-01-12T12:21:18.153Z",
   "source": "google-sheets",
   "data": [
     {
@@ -4025,7 +4025,7 @@
     },
     {
       "ot": "Drain",
-      "pokemon": "glir",
+      "pokemon": "gligar",
       "method": null,
       "secret": false,
       "alpha": false,
