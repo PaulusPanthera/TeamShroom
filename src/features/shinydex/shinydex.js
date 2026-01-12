@@ -1,5 +1,6 @@
 // src/features/shinydex/shinydex.js
 // Shiny Dex Page Controller
+// SINGLE OWNER of DOM + STATE below #page-content
 
 import { renderShinyDexHitlist } from './shinydex.hitlist.js';
 import { renderShinyLivingDex } from './shinylivingdex.js';
@@ -8,9 +9,8 @@ export function setupShinyDexPage({
   weeklyModel,
   shinyShowcaseRows
 }) {
-  const container = document.getElementById('page-content');
-
-  container.innerHTML = `
+  const root = document.getElementById('page-content');
+  root.innerHTML = `
     <div class="search-controls">
       <input id="dex-search" type="text" placeholder="Search…" />
 
@@ -35,20 +35,32 @@ export function setupShinyDexPage({
     <div id="shiny-dex-container"></div>
   `;
 
-  const searchInput = container.querySelector('#dex-search');
-  const unclaimedBtn = container.querySelector('#dex-unclaimed');
-  const sortSelect = container.querySelector('#dex-sort');
-  const countLabel = container.querySelector('#dex-count');
+  // --------------------------------------------------
+  // STATE (single source of truth)
+  // --------------------------------------------------
 
-  const tabHitlist = container.querySelector('#tab-hitlist');
-  const tabLiving = container.querySelector('#tab-living');
-
-  let state = {
-    view: 'hitlist',
+  const state = {
+    view: 'hitlist',      // 'hitlist' | 'living'
     search: '',
     unclaimed: false,
     sort: 'standard'
   };
+
+  // --------------------------------------------------
+  // ELEMENTS
+  // --------------------------------------------------
+
+  const searchInput = root.querySelector('#dex-search');
+  const unclaimedBtn = root.querySelector('#dex-unclaimed');
+  const sortSelect  = root.querySelector('#dex-sort');
+  const countLabel  = root.querySelector('#dex-count');
+
+  const tabHitlist = root.querySelector('#tab-hitlist');
+  const tabLiving  = root.querySelector('#tab-living');
+
+  // --------------------------------------------------
+  // SORT OPTIONS (per tab)
+  // --------------------------------------------------
 
   function setupSortOptions() {
     sortSelect.innerHTML = '';
@@ -70,8 +82,22 @@ export function setupShinyDexPage({
       state.unclaimed = false;
     }
 
-    unclaimedBtn.classList.toggle('active', state.unclaimed);
+    updateButtonStates();
   }
+
+  // --------------------------------------------------
+  // BUTTON VISUAL STATE (FIXED)
+  // --------------------------------------------------
+
+  function updateButtonStates() {
+    unclaimedBtn.classList.toggle('active', state.unclaimed);
+    tabHitlist.classList.toggle('active', state.view === 'hitlist');
+    tabLiving.classList.toggle('active', state.view === 'living');
+  }
+
+  // --------------------------------------------------
+  // RENDER PIPELINE
+  // --------------------------------------------------
 
   function render() {
     if (state.view === 'hitlist') {
@@ -93,7 +119,9 @@ export function setupShinyDexPage({
     }
   }
 
-  // ---------------- EVENTS ----------------
+  // --------------------------------------------------
+  // EVENTS
+  // --------------------------------------------------
 
   searchInput.addEventListener('input', e => {
     state.search = e.target.value.toLowerCase();
@@ -102,7 +130,7 @@ export function setupShinyDexPage({
 
   unclaimedBtn.addEventListener('click', () => {
     state.unclaimed = !state.unclaimed;
-    unclaimedBtn.classList.toggle('active', state.unclaimed);
+    updateButtonStates();
     render();
   });
 
@@ -113,19 +141,19 @@ export function setupShinyDexPage({
 
   tabHitlist.addEventListener('click', () => {
     state.view = 'hitlist';
-    tabHitlist.classList.add('active');
-    tabLiving.classList.remove('active');
     setupSortOptions();
     render();
   });
 
   tabLiving.addEventListener('click', () => {
     state.view = 'living';
-    tabLiving.classList.add('active');
-    tabHitlist.classList.remove('active');
     setupSortOptions();
     render();
   });
+
+  // --------------------------------------------------
+  // INIT
+  // --------------------------------------------------
 
   setupSortOptions();
   render();
