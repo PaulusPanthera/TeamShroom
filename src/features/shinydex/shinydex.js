@@ -1,11 +1,11 @@
 // src/features/shinydex/shinydex.js
 // Shiny Dex — HITLIST VIEW
-// Render-only. Advanced search + region grouping.
-// No claim logic. No model mutation.
+// Finalized Hitlist v1. Render-only.
 
 import { buildShinyDexModel } from '../../data/shinydex.model.js';
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
+import { POKEMON_SHOW } from '../../data/pokemondatabuilder.js';
 
 function getPokemonGif(pokemonKey) {
   const spriteKey = pokemonKey
@@ -19,18 +19,6 @@ function getPokemonGif(pokemonKey) {
 /**
  * Render Shiny Dex Hitlist
  *
- * Sorting:
- * - Primary: region
- * - Secondary: Pokédex order (implicit from data)
- *
- * Search grammar (AND-combined tokens):
- * - pokemon name
- * - @Member
- * - +pokemon / pokemon+
- * - claimed | unclaimed
- * - region:<region>
- * - tier:<tier>
- *
  * @param {Array} weeklyModel Output of buildShinyWeeklyModel()
  */
 export function renderShinyDexHitlist(weeklyModel) {
@@ -38,14 +26,38 @@ export function renderShinyDexHitlist(weeklyModel) {
   container.innerHTML = '';
 
   // -------------------------------------------------------
-  // SEARCH INPUT
+  // CONTROLS
   // -------------------------------------------------------
+
+  const controls = document.createElement('div');
+  controls.className = 'dex-controls';
 
   const searchInput = document.createElement('input');
   searchInput.type = 'text';
   searchInput.placeholder = 'Search…';
   searchInput.className = 'dex-search';
-  container.appendChild(searchInput);
+
+  const unclaimedToggle = document.createElement('button');
+  unclaimedToggle.className = 'dex-toggle';
+  unclaimedToggle.textContent = 'Unclaimed';
+  unclaimedToggle.dataset.active = 'false';
+
+  const sortSelect = document.createElement('select');
+  sortSelect.className = 'dex-sort';
+  sortSelect.innerHTML = `
+    <option value="standard">Standard</option>
+    <option value="claims">Total Claims</option>
+    <option value="points">Total Claim Points</option>
+  `;
+
+  const totalCounter = document.createElement('div');
+  totalCounter.className = 'dex-total';
+
+  controls.appendChild(searchInput);
+  controls.appendChild(unclaimedToggle);
+  controls.appendChild(sortSelect);
+  controls.appendChild(totalCounter);
+  container.appendChild(controls);
 
   // -------------------------------------------------------
   // CONTENT ROOT
@@ -55,17 +67,41 @@ export function renderShinyDexHitlist(weeklyModel) {
   container.appendChild(content);
 
   // -------------------------------------------------------
-  // DATA
+  // DATA (FILTERED BY SHOW FLAG)
   // -------------------------------------------------------
 
-  const dex = buildShinyDexModel(weeklyModel);
+  const dex = buildShinyDexModel(weeklyModel).filter(
+    entry => POKEMON_SHOW[entry.pokemon] !== false
+  );
 
   // -------------------------------------------------------
-  // RENDER (GROUPED BY REGION)
+  // SORTING
+  // -------------------------------------------------------
+
+  function sortDex(list, mode) {
+    if (mode === 'claims') {
+      return [...list].sort((a, b) =>
+        Number(b.claimed) - Number(a.claimed)
+      );
+    }
+
+    if (mode === 'points') {
+      return [...list].sort((a, b) =>
+        (b.claimed ? b.points : 0) -
+        (a.claimed ? a.points : 0)
+      );
+    }
+
+    return list;
+  }
+
+  // -------------------------------------------------------
+  // RENDER (REGION + PROGRESS)
   // -------------------------------------------------------
 
   function render(list) {
     content.innerHTML = '';
+    totalCounter.textContent = `${list.length} Pokémon`;
 
     const byRegion = {};
 
@@ -76,26 +112,28 @@ export function renderShinyDexHitlist(weeklyModel) {
     });
 
     Object.keys(byRegion).forEach(region => {
+      const entries = byRegion[region];
+      const claimedCount = entries.filter(e => e.claimed).length;
+
       const section = document.createElement('section');
       section.className = 'dex-region-section';
 
       const header = document.createElement('h2');
       header.className = 'dex-region-header';
-      header.textContent =
-        region.charAt(0).toUpperCase() + region.slice(1);
+      header.textContent = `${region.charAt(0).toUpperCase() + region.slice(1)} (${claimedCount} / ${entries.length})`;
 
       const grid = document.createElement('div');
       grid.className = 'dex-grid';
 
-      byRegion[region].forEach(entry => {
+      entries.forEach(entry => {
         grid.insertAdjacentHTML(
           'beforeend',
           renderUnifiedCard({
             name: prettifyPokemonName(entry.pokemon),
             img: getPokemonGif(entry.pokemon),
             info: entry.claimed ? entry.claimedBy : 'Unclaimed',
-            points: entry.points,
-            claimed: entry.claimed,
+            unclaimed: !entry.claimed,
+            highlighted: entry.claimed && entry.points >= 15,
             cardType: 'pokemon'
           })
         );
@@ -107,92 +145,102 @@ export function renderShinyDexHitlist(weeklyModel) {
     });
   }
 
-  render(dex);
-
   // -------------------------------------------------------
-  // SEARCH PARSER
+  // FILTER PIPELINE
   // -------------------------------------------------------
 
-  searchInput.addEventListener('input', () => {
+  function applyFilters() {
+    let filtered = dex.slice();
     const raw = searchInput.value.trim();
-    if (!raw) {
-      render(dex);
-      return;
+
+    if (unclaimedToggle.dataset.active === 'true') {
+      filtered = filtered.filter(e => !e.claimed);
     }
 
-    const tokens = raw.split(/\s+/);
-    let filtered = dex.slice();
+    if (raw) {
+      const tokens = raw.split(/\s+/);
 
-    tokens.forEach(token => {
-      const t = token.toLowerCase();
+      tokens.forEach(token => {
+        const t = token.toLowerCase();
 
-      // Claimer
-      if (t.startsWith('@')) {
-        const q = token.slice(1).toLowerCase();
-        filtered = filtered.filter(
-          e => e.claimedBy && e.claimedBy.toLowerCase().includes(q)
-        );
-        return;
-      }
+        if (t.startsWith('@')) {
+          const q = token.slice(1).toLowerCase();
+          filtered = filtered.filter(
+            e => e.claimedBy && e.claimedBy.toLowerCase().includes(q)
+          );
+          return;
+        }
 
-      // Claim state
-      if (t === 'claimed') {
-        filtered = filtered.filter(e => e.claimed);
-        return;
-      }
+        if (t === 'claimed') {
+          filtered = filtered.filter(e => e.claimed);
+          return;
+        }
 
-      if (t === 'unclaimed') {
-        filtered = filtered.filter(e => !e.claimed);
-        return;
-      }
+        if (t === 'unclaimed') {
+          filtered = filtered.filter(e => !e.claimed);
+          return;
+        }
 
-      // Region
-      if (t.startsWith('region:')) {
-        const region = t.split(':')[1];
-        filtered = filtered.filter(
-          e => e.region && e.region.toLowerCase() === region
-        );
-        return;
-      }
+        if (t.startsWith('region:')) {
+          const region = t.split(':')[1];
+          filtered = filtered.filter(
+            e => e.region && e.region.toLowerCase() === region
+          );
+          return;
+        }
 
-      // Tier
-      if (t.startsWith('tier:')) {
-        const tier = t.split(':')[1];
-        filtered = filtered.filter(
-          e => String(e.tier).toLowerCase() === tier
-        );
-        return;
-      }
+        if (t.startsWith('tier:')) {
+          const tier = t.split(':')[1];
+          filtered = filtered.filter(
+            e => String(e.tier).toLowerCase() === tier
+          );
+          return;
+        }
 
-      // Family expansion
-      const isFamily =
-        token.startsWith('+') || token.endsWith('+');
+        const isFamily =
+          token.startsWith('+') || token.endsWith('+');
 
-      if (isFamily) {
-        const q = token.replace(/\+/g, '').toLowerCase();
+        if (isFamily) {
+          const q = token.replace(/\+/g, '').toLowerCase();
+          const families = dex
+            .filter(e =>
+              prettifyPokemonName(e.pokemon)
+                .toLowerCase()
+                .includes(q)
+            )
+            .map(e => e.family);
 
-        const families = dex
-          .filter(e =>
-            prettifyPokemonName(e.pokemon)
-              .toLowerCase()
-              .includes(q)
-          )
-          .map(e => e.family);
+          filtered = filtered.filter(e =>
+            families.includes(e.family)
+          );
+          return;
+        }
 
         filtered = filtered.filter(e =>
-          families.includes(e.family)
+          prettifyPokemonName(e.pokemon)
+            .toLowerCase()
+            .includes(t)
         );
-        return;
-      }
+      });
+    }
 
-      // Default: Pokémon name
-      filtered = filtered.filter(e =>
-        prettifyPokemonName(e.pokemon)
-          .toLowerCase()
-          .includes(t)
-      );
-    });
+    render(sortDex(filtered, sortSelect.value));
+  }
 
-    render(filtered);
+  // -------------------------------------------------------
+  // EVENTS
+  // -------------------------------------------------------
+
+  searchInput.addEventListener('input', applyFilters);
+  sortSelect.addEventListener('change', applyFilters);
+
+  unclaimedToggle.addEventListener('click', () => {
+    const active = unclaimedToggle.dataset.active === 'true';
+    unclaimedToggle.dataset.active = String(!active);
+    unclaimedToggle.classList.toggle('active', !active);
+    applyFilters();
   });
+
+  // Initial render
+  render(dex);
 }
