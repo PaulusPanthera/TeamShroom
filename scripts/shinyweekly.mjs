@@ -15,11 +15,11 @@ if (!CSV_URL) {
 }
 
 // -----------------------------
-// Helpers (normalization only)
+// Helpers
 // -----------------------------
 
-function normalizeMember(name) {
-  return name.trim().toLowerCase().replace(/\s+/g, '');
+function preserveMember(name) {
+  return name.trim();
 }
 
 function normalizePokemon(name) {
@@ -99,7 +99,7 @@ const data = meaningfulRows.map((row, index) => {
     date_start: normalizeDate(row.date_start, rowNum, 'date_start'),
     date_end: normalizeDate(row.date_end, rowNum, 'date_end'),
 
-    ot: normalizeMember(row.ot),
+    ot: preserveMember(row.ot),
     pokemon: normalizePokemon(row.pokemon),
 
     method: row.method || null,
