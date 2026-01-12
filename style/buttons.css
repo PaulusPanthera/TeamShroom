@@ -1,103 +1,93 @@
 /* =========================================================
-   BUTTONS & TABS — RPG MENU CONTROLS
-   Design System v1
+   BUTTONS — DESIGN SYSTEM v1
+   Stateful buttons with correct active semantics
    ========================================================= */
 
 /* ---------------------------------------------------------
-   DEX TABS (MENU TABS, NOT PILLS)
-   --------------------------------------------------------- */
+   BASE BUTTON (INACTIVE DEFAULT)
+--------------------------------------------------------- */
 
-.dex-tab {
-  padding: 8px 16px;
+button,
+.search-controls button,
+.showcase-search-controls button {
+  padding: 6px 14px;
 
   font-family: inherit;
   font-size: var(--font-card-stat);
   font-weight: bold;
-  letter-spacing: 1px;
 
-  background: var(--bg-panel);
+  background: var(--bg-panel-alt);   /* INACTIVE */
+  color: var(--text-main);
+
+  border: 2px solid var(--bg-panel-alt);
+  border-radius: 10px;
+
+  cursor: pointer;
+  box-shadow: var(--shadow-depth);
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+/* ---------------------------------------------------------
+   HOVER (NON-ACTIVE)
+--------------------------------------------------------- */
+
+button:hover,
+.search-controls button:hover,
+.showcase-search-controls button:hover {
+  filter: brightness(1.05);
+}
+
+/* ---------------------------------------------------------
+   ACTIVE / SELECTED STATE  ✅
+--------------------------------------------------------- */
+
+button.active,
+.search-controls button.active,
+.showcase-search-controls button.active {
+  background: var(--accent);
+  color: var(--text-dark);
+  border-color: var(--accent);
+}
+
+/* ---------------------------------------------------------
+   DISABLED
+--------------------------------------------------------- */
+
+button:disabled,
+.search-controls button:disabled,
+.showcase-search-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   DEX TABS (Hitlist / Living Dex)
+   ========================================================= */
+
+.dex-tab {
+  background: var(--bg-panel-alt);
   color: var(--text-muted);
 
   border: 2px solid var(--bg-panel-alt);
   border-bottom: none;
   border-radius: 12px 12px 0 0;
 
-  cursor: pointer;
-  position: relative;
+  letter-spacing: 1px;
 }
 
 .dex-tab:hover {
   color: var(--text-main);
 }
 
-.dex-tab.active,
-.dex-tab:focus-visible {
-  background: var(--bg-panel-alt);
-  color: var(--accent);
+/* ACTIVE TAB */
+.dex-tab.active {
+  background: var(--accent);
+  color: var(--text-dark);
 
   border-color: var(--accent);
-  border-bottom: 2px solid var(--bg-panel-alt);
-
   z-index: 2;
-}
-
-/* ---------------------------------------------------------
-   BACK BUTTON (MENU ACTION)
-   --------------------------------------------------------- */
-
-.back-btn {
-  display: inline-block;
-
-  padding: 8px 16px;
-
-  font-family: inherit;
-  font-size: var(--font-card-stat);
-  font-weight: bold;
-  letter-spacing: 1px;
-
-  background: var(--accent);
-  color: var(--text-dark);
-
-  border: none;
-  border-radius: 12px;
-
-  box-shadow: var(--shadow-depth);
-  cursor: pointer;
-}
-
-.back-btn:hover,
-.back-btn:focus-visible {
-  box-shadow: var(--shadow-hover);
-}
-
-/* ---------------------------------------------------------
-   NAVIGATION LINKS (HEADER MENU)
-   --------------------------------------------------------- */
-
-.nav a {
-  padding: 8px 14px;
-
-  font-family: inherit;
-  font-size: var(--font-card-stat);
-  font-weight: bold;
-  letter-spacing: 1px;
-
-  background: var(--bg-panel-alt);
-  color: var(--text-main);
-
-  border: 2px solid var(--bg-panel-alt);
-  border-radius: 12px;
-
-  box-shadow: var(--shadow-depth);
-}
-
-.nav a:hover {
-  color: var(--accent);
-}
-
-/* ONE active item only */
-.nav a.active {
-  background: var(--accent);
-  color: var(--text-dark);
-  border-color: var(--accent);
 }
