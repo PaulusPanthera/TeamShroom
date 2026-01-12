@@ -1,31 +1,33 @@
 // src/data/shinydex.model.js
 // Shiny Dex — HITLIST MODEL
-// Derives claim state EXCLUSIVELY from Shiny Weekly
+// Authoritative claiming logic derived exclusively from Shiny Weekly
 //
 // INTERNAL JSON API — SHINYDEX MODEL OUTPUT
 //
 // Array<{
-//   pokemon: string
-//   family: string
-//   claimed: boolean
+//   pokemon: string,
+//   family: string,
+//   tier: string,
+//   points: number,
+//   claimed: boolean,
 //   claimedBy: string | null
-//   points: number
 // }>
 
 import {
   pokemonFamilies,
-  POKEMON_POINTS
+  POKEMON_POINTS,
+  POKEMON_TIERS
 } from './pokemondatabuilder.js';
 
 /**
  * Build Shiny Dex Hitlist model
  *
  * @param {Array} weeklyModel Output of buildShinyWeeklyModel()
- * @returns {Array} flat shiny dex entries
+ * @returns {Array}
  */
 export function buildShinyDexModel(weeklyModel) {
   // -------------------------------------------------------
-  // FLATTEN WEEKLY MODEL → CHRONOLOGICAL EVENTS
+  // FLATTEN WEEKLY MODEL → STRICT CHRONOLOGICAL EVENTS
   // -------------------------------------------------------
 
   const events = [];
@@ -44,21 +46,20 @@ export function buildShinyDexModel(weeklyModel) {
   });
 
   // -------------------------------------------------------
-  // FAMILY STAGE STATE
+  // FAMILY → STAGE SLOT STATE (SOURCE OF TRUTH)
   // -------------------------------------------------------
 
-  const familyState = {};
-  const pokemonClaims = {};
+  const familySlots = {};
 
   Object.keys(pokemonFamilies).forEach(familyId => {
-    familyState[familyId] = pokemonFamilies[familyId].map(pokemon => ({
+    familySlots[familyId] = pokemonFamilies[familyId].map(pokemon => ({
       pokemon,
       claimedBy: null
     }));
   });
 
   // -------------------------------------------------------
-  // CLAIM RESOLUTION (STRICT STAGE ORDER)
+  // CLAIM RESOLUTION (AUTHORITATIVE SPEC)
   // -------------------------------------------------------
 
   events.forEach(event => {
@@ -67,36 +68,45 @@ export function buildShinyDexModel(weeklyModel) {
 
     if (!familyId) return;
 
-    const stages = familyState[familyId];
+    const slots = familySlots[familyId];
 
-    // 1. Exact stage if free
-    let stage =
-      stages.find(
-        s => s.pokemon === event.pokemon && s.claimedBy === null
-      ) || null;
+    // Case A — exact stage free
+    let slot = slots.find(
+      s => s.pokemon === event.pokemon && s.claimedBy === null
+    );
 
-    // 2. First free stage fallback
-    if (!stage) {
-      stage = stages.find(s => s.claimedBy === null) || null;
+    // Case B — fallback to first free stage
+    if (!slot) {
+      slot = slots.find(s => s.claimedBy === null);
     }
 
-    if (!stage) return;
+    // Case C — family complete
+    if (!slot) return;
 
-    stage.claimedBy = event.member;
-    pokemonClaims[stage.pokemon] = event.member;
+    slot.claimedBy = event.member;
   });
 
   // -------------------------------------------------------
-  // BUILD FINAL DEX LIST
+  // BUILD FINAL HITLIST MODEL
   // -------------------------------------------------------
 
-  return Object.keys(POKEMON_POINTS).map(pokemon => ({
-    pokemon,
-    family:
+  return Object.keys(POKEMON_POINTS).map(pokemon => {
+    const family =
       Object.keys(pokemonFamilies)
-        .find(id => pokemonFamilies[id].includes(pokemon)) || pokemon,
-    claimed: !!pokemonClaims[pokemon],
-    claimedBy: pokemonClaims[pokemon] || null,
-    points: POKEMON_POINTS[pokemon]
-  }));
+        .find(id => pokemonFamilies[id].includes(pokemon)) || pokemon;
+
+    const slot =
+      familySlots[family]?.find(s => s.pokemon === pokemon) || null;
+
+    const claimed = !!slot?.claimedBy;
+
+    return {
+      pokemon,
+      family,
+      tier: POKEMON_TIERS[pokemon],
+      points: POKEMON_POINTS[pokemon],
+      claimed,
+      claimedBy: claimed ? slot.claimedBy : null
+    };
+  });
 }
