@@ -1,3 +1,28 @@
+/**
+ * SHINY POKEDEX — SEARCH LEGEND (v1)
+ *
+ * Global:
+ * - Search never changes truth; only filters visibility.
+ * - Search is applied LAST, after view+mode filters.
+ *
+ * HITLIST (claim-driven):
+ * - Query matches Pokémon species name only (prettifyPokemonName), case-insensitive substring.
+ * - No member/owner matching. No fuzzy.
+ * - Standard: supports search + unclaimed-only.
+ * - Leaderboards (Total Claims / Total Claim Points): search DISABLED, unclaimed DISABLED.
+ *
+ * LIVING DEX (ownership snapshot):
+ * - Query matches Pokémon species name only, case-insensitive substring.
+ * - No owner matching. No fuzzy.
+ * - Standard: dex/region order, includes unowned species.
+ * - Total Shinies: sort by count desc, tie-break by dex order.
+ * - Unclaimed-only: show count=0 species in dex order (sorting irrelevant).
+ *
+ * Counters:
+ * - Hitlist: report species counts based on mode dataset (not post-search).
+ * - Living Dex: show ownedSpecies/totalSpecies (mode dataset), region headers show owned/total.
+ */
+
 // src/features/shinydex/shinydex.js
 // Shiny Dex Page Controller
 // Owns ALL DOM under #page-content
@@ -7,7 +32,8 @@ import { buildShinyDexModel } from '../../domains/shinydex/hitlist.model.js';
 import { buildShinyLivingDexModel } from '../../domains/shinydex/livingdex.model.js';
 import {
   POKEMON_REGION,
-  POKEMON_SHOW
+  POKEMON_SHOW,
+  POKEMON_POINTS
 } from '../../data/pokemondatabuilder.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
 
@@ -60,33 +86,54 @@ export function setupShinyDexPage({
 
   const active = () => state[state.view];
 
-  function normalizeQuery(raw) {
-    const q = String(raw || '').toLowerCase().trim().replace(/\s+/g, ' ');
-    if (!q) return null;
+  const dexOrder = Object.keys(POKEMON_POINTS);
+  const dexIndex = Object.fromEntries(dexOrder.map((k, i) => [k, i]));
 
-    return {
-      name: q,
-      key: q.replace(/ /g, '-')
-    };
+  function normalizeForSearch(s) {
+    return String(s || '')
+      .toLowerCase()
+      .replace(/♀/g, 'f')
+      .replace(/♂/g, 'm')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/-/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
   }
 
-  function updateUnclaimedAvailability() {
-    if (state.view === 'hitlist') {
-      const scoreboardMode =
-        active().sort === 'claims' || active().sort === 'points';
+  function matchesPokemonDisplay(pokemonKey, queryRaw) {
+    const q = normalizeForSearch(queryRaw);
+    if (!q) return true;
 
-      if (scoreboardMode) {
+    const display = normalizeForSearch(prettifyPokemonName(pokemonKey));
+    const key = normalizeForSearch(pokemonKey);
+
+    return display.includes(q) || key.includes(q);
+  }
+
+  function isHitlistLeaderboardMode() {
+    return active().sort === 'claims' || active().sort === 'points';
+  }
+
+  function updateControlAvailability() {
+    if (state.view === 'hitlist') {
+      const leaderboard = isHitlistLeaderboardMode();
+
+      searchInput.disabled = leaderboard;
+      if (leaderboard) searchInput.value = '';
+
+      if (leaderboard) {
         active().showUnclaimed = false;
         unclaimedBtn.disabled = true;
         unclaimedBtn.classList.remove('active');
-        return;
+      } else {
+        unclaimedBtn.disabled = false;
+        unclaimedBtn.classList.toggle('active', active().showUnclaimed);
       }
 
-      unclaimedBtn.disabled = false;
-      unclaimedBtn.classList.toggle('active', active().showUnclaimed);
       return;
     }
 
+    searchInput.disabled = false;
     unclaimedBtn.disabled = false;
     unclaimedBtn.classList.toggle('active', active().showUnclaimed);
   }
@@ -108,40 +155,80 @@ export function setupShinyDexPage({
     }
 
     sortSelect.value = active().sort;
-    updateUnclaimedAvailability();
+    searchInput.value = active().search;
+    updateControlAvailability();
+  }
+
+  function applyHitlistFilters(snapshot, opts) {
+    const mode = opts.mode; // 'standard' | 'claims' | 'points'
+    const unclaimedOnly = !!opts.unclaimedOnly;
+
+    if (mode === 'claims' || mode === 'points') {
+      return {
+        visible: snapshot,
+        searchAllowed: false
+      };
+    }
+
+    let modeSet = snapshot;
+    if (unclaimedOnly) modeSet = modeSet.filter(e => !e.claimed);
+
+    const visible = opts.search
+      ? modeSet.filter(e => matchesPokemonDisplay(e.pokemon, opts.search))
+      : modeSet;
+
+    return {
+      visible,
+      searchAllowed: true
+    };
+  }
+
+  function applyLivingDexFilters(snapshot, opts) {
+    let modeSet = snapshot;
+
+    if (opts.mode === 'total') {
+      modeSet = [...modeSet].sort((a, b) => {
+        if (b.count !== a.count) return b.count - a.count;
+        return (dexIndex[a.pokemon] ?? 999999) - (dexIndex[b.pokemon] ?? 999999);
+      });
+    }
+
+    if (opts.unclaimedOnly) {
+      modeSet = modeSet.filter(e => e.count === 0);
+    }
+
+    const visible = opts.search
+      ? modeSet.filter(e => matchesPokemonDisplay(e.pokemon, opts.search))
+      : modeSet;
+
+    return { visible };
   }
 
   function prepareHitlist() {
     const view = active();
-    const q = normalizeQuery(view.search);
+    const mode = view.sort;
 
-    let baseDex = buildShinyDexModel(weeklyModel).filter(
+    const snapshot = buildShinyDexModel(weeklyModel).filter(
       e => POKEMON_SHOW[e.pokemon] !== false
     );
 
-    if (q) {
-      baseDex = baseDex.filter(e => {
-        const keyMatch = e.pokemon.includes(q.key);
-        const nameMatch = prettifyPokemonName(e.pokemon).toLowerCase().includes(q.name);
-        return keyMatch || nameMatch;
-      });
-    }
-
-    const totalSpecies = baseDex.length;
-    const claimedSpecies = baseDex.filter(e => e.claimed).length;
+    const totalSpecies = snapshot.length;
+    const claimedSpecies = snapshot.filter(e => e.claimed).length;
     const unclaimedSpecies = totalSpecies - claimedSpecies;
 
-    let dex = baseDex;
+    const regionStats = {};
+    snapshot.forEach(e => {
+      const region = POKEMON_REGION[e.pokemon] || 'unknown';
+      regionStats[region] ??= { total: 0, claimed: 0 };
+      regionStats[region].total += 1;
+      if (e.claimed) regionStats[region].claimed += 1;
+    });
 
-    if (view.showUnclaimed) {
-      dex = dex.filter(e => !e.claimed);
-    }
+    if (mode === 'claims' || mode === 'points') {
+      const claimed = snapshot.filter(e => e.claimed);
 
-    if (view.sort === 'claims' || view.sort === 'points') {
       const byMember = {};
-
-      dex.forEach(e => {
-        if (!e.claimed) return;
+      claimed.forEach(e => {
         byMember[e.claimedBy] ??= [];
         byMember[e.claimedBy].push(e);
       });
@@ -154,7 +241,7 @@ export function setupShinyDexPage({
           points: entries.reduce((s, e) => s + e.points, 0)
         }))
         .sort((a, b) =>
-          view.sort === 'claims'
+          mode === 'claims'
             ? b.claims - a.claims
             : b.points - a.points
         );
@@ -166,15 +253,22 @@ export function setupShinyDexPage({
           title: `${i + 1}. ${m.name} — ${m.claims} Claims · ${m.points} Points`,
           entries: m.entries.map(e => ({
             ...e,
-            highlighted: true
+            highlighted: true,
+            info: `${e.points} pts`
           }))
         })),
         countLabelText: `${members.length} Members`
       };
     }
 
+    const filtered = applyHitlistFilters(snapshot, {
+      search: view.search,
+      unclaimedOnly: view.showUnclaimed,
+      mode
+    });
+
     const byRegion = {};
-    dex.forEach(e => {
+    filtered.visible.forEach(e => {
       const region = POKEMON_REGION[e.pokemon] || 'unknown';
       byRegion[region] ??= [];
       byRegion[region].push(e);
@@ -182,14 +276,17 @@ export function setupShinyDexPage({
 
     return {
       mode: 'standard',
-      sections: Object.entries(byRegion).map(([region, entries]) => ({
-        key: region,
-        title: `${region.toUpperCase()} (${entries.filter(e => e.claimed).length} / ${entries.length})`,
-        entries: entries.map(e => ({
-          ...e,
-          highlighted: e.claimed && e.points >= 15
-        }))
-      })),
+      sections: Object.entries(byRegion).map(([region, entries]) => {
+        const stats = regionStats[region] || { claimed: 0, total: 0 };
+        return {
+          key: region,
+          title: `${region.toUpperCase()} (${stats.claimed} / ${stats.total})`,
+          entries: entries.map(e => ({
+            ...e,
+            highlighted: e.claimed && e.points >= 15
+          }))
+        };
+      }),
       countLabelText: view.showUnclaimed
         ? `${unclaimedSpecies} / ${claimedSpecies} Species`
         : `${claimedSpecies} / ${totalSpecies} Species`
@@ -198,47 +295,47 @@ export function setupShinyDexPage({
 
   function prepareLivingDex() {
     const view = active();
-    const q = normalizeQuery(view.search);
+    const mode = view.sort;
 
-    let baseDex = buildShinyLivingDexModel(shinyShowcaseRows);
+    const snapshot = buildShinyLivingDexModel(shinyShowcaseRows);
 
-    if (q) {
-      baseDex = baseDex.filter(e => {
-        const keyMatch = e.pokemon.includes(q.key);
-        const nameMatch = prettifyPokemonName(e.pokemon).toLowerCase().includes(q.name);
-        return keyMatch || nameMatch;
-      });
-    }
-
-    const totalSpecies = baseDex.length;
-    const ownedSpecies = baseDex.filter(e => e.count > 0).length;
+    const totalSpecies = snapshot.length;
+    const ownedSpecies = snapshot.filter(e => e.count > 0).length;
     const unownedSpecies = totalSpecies - ownedSpecies;
 
-    let dex = baseDex;
+    const regionStats = {};
+    snapshot.forEach(e => {
+      const region = e.region || 'unknown';
+      regionStats[region] ??= { total: 0, owned: 0 };
+      regionStats[region].total += 1;
+      if (e.count > 0) regionStats[region].owned += 1;
+    });
 
-    if (view.showUnclaimed) {
-      dex = dex.filter(e => e.count === 0);
-    }
-
-    if (view.sort === 'total') {
-      dex = [...dex].sort((a, b) => b.count - a.count);
-    }
+    const filtered = applyLivingDexFilters(snapshot, {
+      search: view.search,
+      unclaimedOnly: view.showUnclaimed,
+      mode
+    });
 
     const byRegion = {};
-    dex.forEach(e => {
-      byRegion[e.region] ??= [];
-      byRegion[e.region].push(e);
+    filtered.visible.forEach(e => {
+      const region = e.region || 'unknown';
+      byRegion[region] ??= [];
+      byRegion[region].push(e);
     });
 
     return {
-      sections: Object.entries(byRegion).map(([region, entries]) => ({
-        key: region,
-        title: `${region.toUpperCase()} (${entries.filter(e => e.count > 0).length} / ${entries.length})`,
-        entries: entries.map(e => ({
-          ...e,
-          highlighted: e.count > 0
-        }))
-      })),
+      sections: Object.entries(byRegion).map(([region, entries]) => {
+        const stats = regionStats[region] || { owned: 0, total: 0 };
+        return {
+          key: region,
+          title: `${region.toUpperCase()} (${stats.owned} / ${stats.total})`,
+          entries: entries.map(e => ({
+            ...e,
+            highlighted: e.count > 0
+          }))
+        };
+      }),
       countLabelText: view.showUnclaimed
         ? `${unownedSpecies} / ${totalSpecies} Species`
         : `${ownedSpecies} / ${totalSpecies} Species`
@@ -246,7 +343,7 @@ export function setupShinyDexPage({
   }
 
   function render() {
-    updateUnclaimedAvailability();
+    updateControlAvailability();
 
     if (state.view === 'hitlist') {
       renderShinyDexHitlist(prepareHitlist());
@@ -269,7 +366,7 @@ export function setupShinyDexPage({
 
   sortSelect.addEventListener('change', e => {
     active().sort = e.target.value;
-    updateUnclaimedAvailability();
+    updateControlAvailability();
     render();
   });
 
@@ -280,7 +377,6 @@ export function setupShinyDexPage({
     tabHitlist.classList.add('active');
     tabLiving.classList.remove('active');
 
-    searchInput.value = active().search;
     configureSort();
     render();
   });
@@ -292,7 +388,6 @@ export function setupShinyDexPage({
     tabLiving.classList.add('active');
     tabHitlist.classList.remove('active');
 
-    searchInput.value = active().search;
     configureSort();
     render();
   });
