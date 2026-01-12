@@ -1,16 +1,9 @@
 // src/features/shinydex/shinydex.page.js
 // Shiny Pokédex — PAGE CONTROLLER
-// Owns Hitlist <-> Living Dex switching locally
 
 import { renderShinyDexHitlist } from './shinydex.js';
 import { renderShinyLivingDex } from './shinylivingdex.js';
 
-/**
- * Setup Shiny Pokédex page
- *
- * @param {Array} shinyWeeklyModel
- * @param {Array} shinyShowcaseRows
- */
 export function setupShinyPokedexPage(
   shinyWeeklyModel,
   shinyShowcaseRows
@@ -18,18 +11,15 @@ export function setupShinyPokedexPage(
   const container = document.getElementById('shiny-dex-container');
   container.innerHTML = '';
 
-  // -------------------------------------------------------
-  // LOCAL VIEW TOGGLE
-  // -------------------------------------------------------
-
   const toggle = document.createElement('div');
   toggle.className = 'dex-view-toggle';
 
   const hitlistBtn = document.createElement('button');
+  hitlistBtn.className = 'dex-tab active';
   hitlistBtn.textContent = 'Hitlist';
-  hitlistBtn.className = 'active';
 
   const livingDexBtn = document.createElement('button');
+  livingDexBtn.className = 'dex-tab';
   livingDexBtn.textContent = 'Living Dex';
 
   toggle.append(hitlistBtn, livingDexBtn);
@@ -59,6 +49,5 @@ export function setupShinyPokedexPage(
   hitlistBtn.addEventListener('click', showHitlist);
   livingDexBtn.addEventListener('click', showLivingDex);
 
-  // default
   showHitlist();
 }
