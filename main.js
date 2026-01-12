@@ -23,7 +23,7 @@ import {
   renderMemberShowcase
 } from './src/features/showcase/showcase.js';
 
-import { renderShinyDexHitlist } from './src/features/shinydex/shinydex.js';
+import { setupShinyDexPage } from './src/features/shinydex/shinydex.js';
 import { renderDonators } from './src/features/donators/donators.js';
 import { renderShinyWeekly } from './src/features/shinyweekly/shinyweekly.ui.js';
 
@@ -166,14 +166,15 @@ async function renderPage() {
   }
 
   // -------------------------------------------------------
-  // HITLIST (CLAIM-DRIVEN)
+  // HITLIST + LIVING DEX (PAGE CONTROLLER)
   // -------------------------------------------------------
 
   else if (page === 'hitlist') {
-  content.innerHTML = `<div id="shiny-dex-container"></div>`;
-  renderShinyDexHitlist(shinyWeeklyWeeks, shinyShowcaseRows);
-}
-
+    setupShinyDexPage({
+      weeklyModel: shinyWeeklyWeeks,
+      shinyShowcaseRows
+    });
+  }
 
   // -------------------------------------------------------
   // DONATORS
