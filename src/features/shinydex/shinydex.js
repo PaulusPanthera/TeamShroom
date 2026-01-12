@@ -1,10 +1,14 @@
 // src/features/shinydex/shinydex.js
 // Shiny Dex — HITLIST VIEW
+// Page-level controller for Hitlist only
 
 import { buildShinyDexModel } from '../../data/shinydex.model.js';
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
-import { POKEMON_SHOW } from '../../data/pokemondatabuilder.js';
+import {
+  POKEMON_SHOW,
+  POKEMON_REGION
+} from '../../data/pokemondatabuilder.js';
 
 function getPokemonGif(pokemonKey) {
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${pokemonKey}.gif`;
@@ -25,7 +29,7 @@ export function renderShinyDexHitlist(weeklyModel) {
 
   const unclaimedBtn = document.createElement('button');
   unclaimedBtn.textContent = 'Unclaimed';
-  unclaimedBtn.dataset.active = 'false';
+  unclaimedBtn.className = 'dex-tab active';
 
   const viewSelect = document.createElement('select');
   viewSelect.innerHTML = `
@@ -48,16 +52,19 @@ export function renderShinyDexHitlist(weeklyModel) {
     e => POKEMON_SHOW[e.pokemon] !== false
   );
 
-  /* ---------------- STANDARD ---------------- */
+  /* ---------------- STANDARD VIEW ---------------- */
 
   function renderStandard(list) {
     content.innerHTML = '';
     totalCounter.textContent = `${list.length} Pokémon`;
 
     const byRegion = {};
+
     list.forEach(e => {
-      byRegion[e.region] ??= [];
-      byRegion[e.region].push(e);
+      const region =
+        (POKEMON_REGION[e.pokemon] || 'unknown').toUpperCase();
+      byRegion[region] ??= [];
+      byRegion[region].push(e);
     });
 
     Object.entries(byRegion).forEach(([region, entries]) => {
@@ -91,7 +98,7 @@ export function renderShinyDexHitlist(weeklyModel) {
     });
   }
 
-  /* ---------------- GROUPED ---------------- */
+  /* ---------------- GROUPED VIEWS ---------------- */
 
   function renderGrouped(mode) {
     content.innerHTML = '';
@@ -140,10 +147,7 @@ export function renderShinyDexHitlist(weeklyModel) {
           renderUnifiedCard({
             name: prettifyPokemonName(entry.pokemon),
             img: getPokemonGif(entry.pokemon),
-            info:
-              mode === 'claims'
-                ? entry.claimedBy
-                : `${entry.points} pts`,
+            info: `${entry.points} pts`,
             highlighted: true,
             cardType: 'pokemon'
           })
@@ -159,7 +163,7 @@ export function renderShinyDexHitlist(weeklyModel) {
 
   function apply() {
     const q = searchInput.value.toLowerCase();
-    const unclaimedOnly = unclaimedBtn.dataset.active === 'true';
+    const unclaimedOnly = unclaimedBtn.classList.contains('active');
     const mode = viewSelect.value;
 
     let list = dex.filter(e =>
@@ -180,8 +184,7 @@ export function renderShinyDexHitlist(weeklyModel) {
   searchInput.addEventListener('input', apply);
 
   unclaimedBtn.addEventListener('click', () => {
-    const active = unclaimedBtn.dataset.active === 'true';
-    unclaimedBtn.dataset.active = String(!active);
+    unclaimedBtn.classList.toggle('active');
     apply();
   });
 
