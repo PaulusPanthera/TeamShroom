@@ -18,7 +18,6 @@
 //     points: number
 //   }>
 // }
-//
 // ---------------------------------------------------------
 
 import {
@@ -29,15 +28,9 @@ import {
   POKEMON_SHOW
 } from './pokemondatabuilder.js';
 
-/**
- * Build Shiny Dex model (Hitlist + Living Dex base)
- *
- * @param {Array} weeklyModel  Output of buildShinyWeeklyModel()
- * @returns {Object} region-grouped shiny dex model
- */
 export function buildShinyDexModel(weeklyModel) {
   // -------------------------------------------------------
-  // FLATTEN SHINY WEEKLY → CHRONOLOGICAL CLAIM EVENTS
+  // FLATTEN SHINY WEEKLY → CHRONOLOGICAL EVENTS
   // -------------------------------------------------------
 
   const events = [];
@@ -55,37 +48,29 @@ export function buildShinyDexModel(weeklyModel) {
     });
   });
 
-  // Order is guaranteed by sheet row order → weekly model order
-  // DO NOT sort here
-
   // -------------------------------------------------------
-  // CLAIM RESOLUTION (FAMILY-STAGE BASED)
+  // CLAIM RESOLUTION (FAMILY → STAGE ORDER)
   // -------------------------------------------------------
 
   const familyClaims = {};
   const pokemonClaims = {};
 
-  events.forEach(event => {
-    const family = pokemonFamilies[event.pokemon];
-    if (!family) return;
+  events.forEach(({ member, pokemon }) => {
+    const family = pokemonFamilies[pokemon];
+    if (!family || !family.length) return;
 
-    familyClaims[family[0]] ??= {};
+    const familyKey = family[0];
+    familyClaims[familyKey] ??= {};
 
-    // Determine which stage is claimed
-    let claimedStage = null;
+    // Find first unclaimed stage in family order
+    const stageToClaim = family.find(
+      stage => !familyClaims[familyKey][stage]
+    );
 
-    if (!familyClaims[family[0]][event.pokemon]) {
-      // Exact stage free
-      claimedStage = event.pokemon;
-    } else {
-      // Find first unclaimed stage
-      claimedStage = family.find(p => !familyClaims[family[0]][p]) || null;
-    }
+    if (!stageToClaim) return;
 
-    if (!claimedStage) return;
-
-    familyClaims[family[0]][claimedStage] = event.member;
-    pokemonClaims[claimedStage] = event.member;
+    familyClaims[familyKey][stageToClaim] = member;
+    pokemonClaims[stageToClaim] = member;
   });
 
   // -------------------------------------------------------
@@ -110,6 +95,5 @@ export function buildShinyDexModel(weeklyModel) {
     });
   });
 
-  // Stable ordering inside regions (dex order via insertion)
   return dex;
 }
