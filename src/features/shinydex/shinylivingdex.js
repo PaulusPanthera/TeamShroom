@@ -1,96 +1,63 @@
 // src/features/shinydex/shinylivingdex.js
-// Shiny Living Dex — Render Only
+// Shiny Living Dex — CURRENT OWNERSHIP VIEW
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
 import {
-  POKEMON_REGION,
-  POKEMON_SHOW
+  POKEMON_SHOW,
+  POKEMON_REGION
 } from '../../data/pokemondatabuilder.js';
 
-function getPokemonGif(key) {
-  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
+function getPokemonGif(pokemonKey) {
+  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${pokemonKey}.gif`;
 }
 
-function attachOwnerTooltip(card, owners) {
-  if (owners.length <= 1) return;
-
-  let tooltip;
-
-  card.addEventListener('mouseenter', () => {
-    tooltip = document.createElement('div');
-    tooltip.className = 'dex-owner-tooltip show';
-    tooltip.innerHTML = `
-      <div class="owners-title">Owners</div>
-      <div class="owners-list">
-        <div class="scrolling-names">
-          ${owners.join('\n')}
-        </div>
-      </div>
-    `;
-    document.body.appendChild(tooltip);
-
-    const r = card.getBoundingClientRect();
-    tooltip.style.left = `${r.left + r.width / 2}px`;
-    tooltip.style.top = `${r.top - 10}px`;
-    tooltip.style.transform = 'translate(-50%, -100%)';
-  });
-
-  card.addEventListener('mouseleave', () => tooltip?.remove());
-}
-
-export function renderShinyLivingDex({
-  showcaseRows,
-  search,
-  sort,
-  unclaimedOnly,
-  container,
-  totalCounter
-}) {
+export function renderShinyLivingDex(showcaseRows, controlsState) {
+  const container = document.getElementById('shiny-dex-container');
   container.innerHTML = '';
 
+  // ---------------- BUILD FULL DEX ----------------
+  const allPokemon = Object.keys(POKEMON_SHOW).filter(
+    p => POKEMON_SHOW[p] !== false
+  );
+
   const map = {};
-
-  showcaseRows.forEach(r => {
-    if (r.lost || r.sold) return;
-    if (POKEMON_SHOW[r.pokemon] === false) return;
-
-    map[r.pokemon] ??= {
-      pokemon: r.pokemon,
-      region: POKEMON_REGION[r.pokemon] || 'unknown',
+  allPokemon.forEach(p => {
+    map[p] = {
+      pokemon: p,
+      region: POKEMON_REGION[p] || 'unknown',
       count: 0,
       owners: new Set()
     };
+  });
 
+  showcaseRows.forEach(r => {
+    if (r.lost || r.sold) return;
+    if (!map[r.pokemon]) return;
     map[r.pokemon].count++;
     map[r.pokemon].owners.add(r.ot);
   });
 
-  let entries = Object.values(map).map(e => ({
-    ...e,
-    owners: [...e.owners]
-  }));
+  let entries = Object.values(map);
 
-  if (unclaimedOnly) {
+  // ---------------- SEARCH ----------------
+  entries = entries.filter(e =>
+    prettifyPokemonName(e.pokemon)
+      .toLowerCase()
+      .includes(controlsState.search)
+  );
+
+  // ---------------- UNCLAIMED ----------------
+  if (controlsState.unclaimedOnly) {
     entries = entries.filter(e => e.count === 0);
   }
 
-  if (search) {
-    entries = entries.filter(e =>
-      e.pokemon.includes(search)
-    );
-  }
-
-  if (sort === 'total') {
+  // ---------------- SORT ----------------
+  if (controlsState.mode === 'total') {
     entries.sort((a, b) => b.count - a.count);
-  } else {
-    entries.sort((a, b) =>
-      a.pokemon.localeCompare(b.pokemon)
-    );
   }
 
-  totalCounter.textContent = `${entries.length} Pokémon`;
-
+  // ---------------- RENDER BY REGION ----------------
   const byRegion = {};
   entries.forEach(e => {
     byRegion[e.region] ??= [];
@@ -101,27 +68,31 @@ export function renderShinyLivingDex({
     const section = document.createElement('section');
     section.className = 'region-section';
 
-    const h = document.createElement('h2');
-    h.textContent = region.toUpperCase();
+    const ownedCount = list.filter(e => e.count > 0).length;
+
+    const header = document.createElement('h2');
+    header.textContent = `${region.toUpperCase()} (${ownedCount} / ${list.length})`;
 
     const grid = document.createElement('div');
     grid.className = 'dex-grid';
 
-    list.forEach(e => {
-      const wrap = document.createElement('div');
-      wrap.innerHTML = renderUnifiedCard({
-        name: prettifyPokemonName(e.pokemon),
-        img: getPokemonGif(e.pokemon),
-        info: e.count === 1 ? '1 Shiny' : `${e.count} Shinies`,
-        cardType: 'pokemon'
-      });
-
-      const card = wrap.firstElementChild;
-      attachOwnerTooltip(card, e.owners);
-      grid.appendChild(card);
+    list.forEach(entry => {
+      grid.insertAdjacentHTML(
+        'beforeend',
+        renderUnifiedCard({
+          name: prettifyPokemonName(entry.pokemon),
+          img: getPokemonGif(entry.pokemon),
+          info:
+            entry.count === 0
+              ? '0 Shinies'
+              : `${entry.count} ${entry.count === 1 ? 'Shiny' : 'Shinies'}`,
+          unclaimed: entry.count === 0,
+          cardType: 'pokemon'
+        })
+      );
     });
 
-    section.append(h, grid);
+    section.append(header, grid);
     container.appendChild(section);
   });
 }
