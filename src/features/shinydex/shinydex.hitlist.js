@@ -23,6 +23,7 @@ INPUT SHAPE (FROM CONTROLLER):
       claimedBy: string | null
       points: number
       highlighted: boolean
+      info?: string
     }>
   }>,
   countLabelText: string
@@ -54,14 +55,19 @@ export function renderShinyDexHitlist({
     grid.className = 'dex-grid';
 
     sectionData.entries.forEach(entry => {
+      const info =
+        typeof entry.info === 'string'
+          ? entry.info
+          : entry.claimed
+            ? entry.claimedBy || ''
+            : 'Unclaimed';
+
       grid.insertAdjacentHTML(
         'beforeend',
         renderUnifiedCard({
           name: prettifyPokemonName(entry.pokemon),
           img: getPokemonGif(entry.pokemon),
-          info: entry.claimed
-            ? entry.claimedBy || ''
-            : 'Unclaimed',
+          info,
           unclaimed: !entry.claimed,
           highlighted: !!entry.highlighted,
           cardType: 'pokemon'
