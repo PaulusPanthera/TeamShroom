@@ -1,64 +1,49 @@
 // src/data/pokemondatabuilder.js
-// Pokémon derived runtime data
-// Consumes CI-normalized pokemon.json (DEX CONTRACT)
+// Pokémon derived data builder
+// Runtime consumes CI-normalized pokemon.json
 //
-// pokemon.json.data[] shape:
-//
-// {
-//   id: number
-//   key: string
-//   name: string
-//   generation: number
-//   family: string
-//   stage: number
-//   points: number
-// }
+// SINGLE SOURCE OF TRUTH:
+// - pokemon.json already contains points, family, stage
+// - Runtime ONLY indexes and groups
+
+// ---------------------------------------------------------
+// RUNTIME STATE (REBUIILT FROM JSON)
+// ---------------------------------------------------------
 
 export let POKEMON_POINTS = {};
-export let pokemonFamilies = {};
+export let POKEMON_FAMILY = {};
+export let POKEMON_STAGE = {};
+export let POKEMON_SHOW = {};
+export let POKEMON_ORDER = [];
+
+// ---------------------------------------------------------
+// BUILDER
+// ---------------------------------------------------------
 
 /**
- * Build Pokémon runtime maps
+ * Build runtime Pokémon lookup tables
  *
- * @param {Array} rows        pokemon.json.data[]
- * @param {Array} teamMembers members model (for later living dex use)
+ * @param {Array} rows  pokemon.json.data[]
  */
-export function buildPokemonData(rows, teamMembers = []) {
-  // Reset runtime state
+export function buildPokemonData(rows) {
   POKEMON_POINTS = {};
-  pokemonFamilies = {};
-
-  // -------------------------------------------------------
-  // BUILD FAMILY MAPS + POINTS
-  // -------------------------------------------------------
+  POKEMON_FAMILY = {};
+  POKEMON_STAGE = {};
+  POKEMON_SHOW = {};
+  POKEMON_ORDER = [];
 
   rows.forEach(row => {
+    // Hard contract from CI
     const key = row.key;
 
-    if (!key) return;
-
-    // Points are explicit in the new contract
     POKEMON_POINTS[key] = row.points;
+    POKEMON_FAMILY[key] = row.family;
+    POKEMON_STAGE[key] = row.stage;
 
-    // Build family → ordered stages
-    const familyId = row.family;
-    if (!familyId) return;
+    // Visibility rule:
+    // points > 0 means it participates in shiny systems
+    POKEMON_SHOW[key] = row.points > 0;
 
-    pokemonFamilies[familyId] ??= [];
-    pokemonFamilies[familyId].push({
-      key,
-      stage: row.stage
-    });
-  });
-
-  // Sort family stages by evolution order
-  Object.values(pokemonFamilies).forEach(family => {
-    family.sort((a, b) => a.stage - b.stage);
-  });
-
-  // Replace family arrays with ordered key lists
-  Object.keys(pokemonFamilies).forEach(familyId => {
-    pokemonFamilies[familyId] =
-      pokemonFamilies[familyId].map(e => e.key);
+    POKEMON_ORDER.push(key);
   });
 }
