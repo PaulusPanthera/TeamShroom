@@ -1,20 +1,20 @@
 // src/features/shinydex/shinydex.js
 // Shiny Dex — HITLIST VIEW
-// Render-only layer
-//
-// Rules:
-// - No claim logic
-// - No weekly parsing
-// - No data mutation
-// - Uses buildShinyDexModel
-// - Uses renderUnifiedCard only
+// Render-only. No logic. No normalization of claims.
 
 import { buildShinyDexModel } from '../../data/shinydex.model.js';
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
 
 function getPokemonGif(pokemonKey) {
-  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${pokemonKey}.gif`;
+  // PokémonDB canonical sprite keys
+  // Explicit handling for known special cases
+  const spriteKey = pokemonKey
+    .toLowerCase()
+    .replace('. ', '-')   // Mr. Mime → mr-mime
+    .replace(' ', '-');
+
+  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${spriteKey}.gif`;
 }
 
 /**
@@ -37,9 +37,7 @@ export function renderShinyDexHitlist(weeklyModel) {
       renderUnifiedCard({
         name: prettifyPokemonName(entry.pokemon),
         img: getPokemonGif(entry.pokemon),
-        info: entry.claimed
-          ? `Claimed by ${entry.claimedBy}`
-          : 'Unclaimed',
+        info: entry.claimed ? entry.claimedBy : 'Unclaimed',
         points: entry.points,
         claimed: entry.claimed,
         cardType: 'pokemon'
