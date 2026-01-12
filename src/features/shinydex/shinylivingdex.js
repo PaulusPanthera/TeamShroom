@@ -1,7 +1,5 @@
 // src/features/shinydex/shinylivingdex.js
-// Shiny Living Dex — RENDER ONLY
-// Data source: shinyshowcase.json
-// No claiming, no family locking
+// Shiny Living Dex — Render Only
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
@@ -10,24 +8,16 @@ import {
   POKEMON_SHOW
 } from '../../data/pokemondatabuilder.js';
 
-/* ---------------------------------------------------------
-   SPRITES
---------------------------------------------------------- */
-
-function getPokemonGif(pokemonKey) {
-  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${pokemonKey}.gif`;
+function getPokemonGif(key) {
+  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
 }
 
-/* ---------------------------------------------------------
-   TOOLTIP
---------------------------------------------------------- */
-
 function attachOwnerTooltip(card, owners) {
-  if (!owners.length) return;
+  if (owners.length <= 1) return;
 
   let tooltip;
 
-  card.addEventListener('mouseenter', e => {
+  card.addEventListener('mouseenter', () => {
     tooltip = document.createElement('div');
     tooltip.className = 'dex-owner-tooltip show';
     tooltip.innerHTML = `
@@ -40,55 +30,50 @@ function attachOwnerTooltip(card, owners) {
     `;
     document.body.appendChild(tooltip);
 
-    const rect = card.getBoundingClientRect();
-    tooltip.style.left = `${rect.left + rect.width / 2}px`;
-    tooltip.style.top = `${rect.top - 10}px`;
+    const r = card.getBoundingClientRect();
+    tooltip.style.left = `${r.left + r.width / 2}px`;
+    tooltip.style.top = `${r.top - 10}px`;
     tooltip.style.transform = 'translate(-50%, -100%)';
   });
 
-  card.addEventListener('mouseleave', () => {
-    tooltip?.remove();
-  });
+  card.addEventListener('mouseleave', () => tooltip?.remove());
 }
-
-/* ---------------------------------------------------------
-   RENDER
---------------------------------------------------------- */
 
 export function renderShinyLivingDex({
   showcaseRows,
   search,
   sort,
+  unclaimedOnly,
   container,
   totalCounter
 }) {
   container.innerHTML = '';
 
-  /* ---------------- BUILD MODEL ---------------- */
-
   const map = {};
 
-  showcaseRows.forEach(row => {
-    if (row.lost || row.sold) return;
-    if (!POKEMON_SHOW[row.pokemon]) return;
+  showcaseRows.forEach(r => {
+    if (r.lost || r.sold) return;
+    if (POKEMON_SHOW[r.pokemon] === false) return;
 
-    map[row.pokemon] ??= {
-      pokemon: row.pokemon,
-      region: POKEMON_REGION[row.pokemon] || 'unknown',
+    map[r.pokemon] ??= {
+      pokemon: r.pokemon,
+      region: POKEMON_REGION[r.pokemon] || 'unknown',
       count: 0,
       owners: new Set()
     };
 
-    map[row.pokemon].count++;
-    map[row.pokemon].owners.add(row.ot);
+    map[r.pokemon].count++;
+    map[r.pokemon].owners.add(r.ot);
   });
 
   let entries = Object.values(map).map(e => ({
     ...e,
-    owners: Array.from(e.owners)
+    owners: [...e.owners]
   }));
 
-  /* ---------------- SEARCH ---------------- */
+  if (unclaimedOnly) {
+    entries = entries.filter(e => e.count === 0);
+  }
 
   if (search) {
     entries = entries.filter(e =>
@@ -96,21 +81,17 @@ export function renderShinyLivingDex({
     );
   }
 
-  /* ---------------- SORT ---------------- */
-
   if (sort === 'total') {
     entries.sort((a, b) => b.count - a.count);
   } else {
-    // Standard = dex / region order
-    entries.sort((a, b) => a.pokemon.localeCompare(b.pokemon));
+    entries.sort((a, b) =>
+      a.pokemon.localeCompare(b.pokemon)
+    );
   }
 
   totalCounter.textContent = `${entries.length} Pokémon`;
 
-  /* ---------------- GROUP BY REGION ---------------- */
-
   const byRegion = {};
-
   entries.forEach(e => {
     byRegion[e.region] ??= [];
     byRegion[e.region].push(e);
@@ -120,28 +101,27 @@ export function renderShinyLivingDex({
     const section = document.createElement('section');
     section.className = 'region-section';
 
-    const header = document.createElement('h2');
-    header.textContent = region.toUpperCase();
+    const h = document.createElement('h2');
+    h.textContent = region.toUpperCase();
 
     const grid = document.createElement('div');
     grid.className = 'dex-grid';
 
-    list.forEach(entry => {
-      const wrapper = document.createElement('div');
-      wrapper.innerHTML = renderUnifiedCard({
-        name: prettifyPokemonName(entry.pokemon),
-        img: getPokemonGif(entry.pokemon),
-        info: `${entry.count} shiny${entry.count > 1 ? 'ies' : ''}`,
+    list.forEach(e => {
+      const wrap = document.createElement('div');
+      wrap.innerHTML = renderUnifiedCard({
+        name: prettifyPokemonName(e.pokemon),
+        img: getPokemonGif(e.pokemon),
+        info: e.count === 1 ? '1 Shiny' : `${e.count} Shinies`,
         cardType: 'pokemon'
       });
 
-      const card = wrapper.firstElementChild;
-      attachOwnerTooltip(card, entry.owners);
-
+      const card = wrap.firstElementChild;
+      attachOwnerTooltip(card, e.owners);
       grid.appendChild(card);
     });
 
-    section.append(header, grid);
+    section.append(h, grid);
     container.appendChild(section);
   });
 }
