@@ -1,92 +1,89 @@
 // src/features/shinydex/shinylivingdex.js
-// Shiny Living Dex — CURRENT OWNERSHIP VIEW
+// Shiny Living Dex — RENDER ONLY
+// No DOM controls, no shared state, no side effects
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
-import {
-  POKEMON_SHOW,
-  POKEMON_REGION
-} from '../../data/pokemondatabuilder.js';
+import { buildShinyLivingDexModel } from '../../data/shinylivingdex.model.js';
+import { POKEMON_SHOW } from '../../data/pokemondatabuilder.js';
 
-function getPokemonGif(pokemonKey) {
-  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${pokemonKey}.gif`;
+function getPokemonGif(key) {
+  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
 }
 
-export function renderShinyLivingDex(showcaseRows, controlsState) {
+export function renderShinyLivingDex({
+  showcaseRows,
+  search,
+  unclaimedOnly,
+  sort,
+  countLabel
+}) {
   const container = document.getElementById('shiny-dex-container');
   container.innerHTML = '';
 
-  // ---------------- BUILD FULL DEX ----------------
-  const allPokemon = Object.keys(POKEMON_SHOW).filter(
-    p => POKEMON_SHOW[p] !== false
+  // ---------------------------------------------------------
+  // DATA
+  // ---------------------------------------------------------
+
+  let dex = buildShinyLivingDexModel(showcaseRows).filter(
+    e => POKEMON_SHOW[e.pokemon] !== false
   );
 
-  const map = {};
-  allPokemon.forEach(p => {
-    map[p] = {
-      pokemon: p,
-      region: POKEMON_REGION[p] || 'unknown',
-      count: 0,
-      owners: new Set()
-    };
-  });
-
-  showcaseRows.forEach(r => {
-    if (r.lost || r.sold) return;
-    if (!map[r.pokemon]) return;
-    map[r.pokemon].count++;
-    map[r.pokemon].owners.add(r.ot);
-  });
-
-  let entries = Object.values(map);
-
-  // ---------------- SEARCH ----------------
-  entries = entries.filter(e =>
-    prettifyPokemonName(e.pokemon)
-      .toLowerCase()
-      .includes(controlsState.search)
-  );
-
-  // ---------------- UNCLAIMED ----------------
-  if (controlsState.unclaimedOnly) {
-    entries = entries.filter(e => e.count === 0);
+  if (search) {
+    dex = dex.filter(e =>
+      prettifyPokemonName(e.pokemon).toLowerCase().includes(search)
+    );
   }
 
-  // ---------------- SORT ----------------
-  if (controlsState.mode === 'total') {
-    entries.sort((a, b) => b.count - a.count);
+  if (unclaimedOnly) {
+    dex = dex.filter(e => e.count === 0);
   }
 
-  // ---------------- RENDER BY REGION ----------------
+  // ---------------------------------------------------------
+  // SORTING
+  // ---------------------------------------------------------
+
+  if (sort === 'total') {
+    dex.sort((a, b) => b.count - a.count);
+  }
+  // standard = already dex / region ordered by model
+
+  countLabel.textContent = `${dex.length} Pokémon`;
+
+  // ---------------------------------------------------------
+  // GROUP BY REGION
+  // ---------------------------------------------------------
+
   const byRegion = {};
-  entries.forEach(e => {
+  dex.forEach(e => {
     byRegion[e.region] ??= [];
     byRegion[e.region].push(e);
   });
 
-  Object.entries(byRegion).forEach(([region, list]) => {
+  Object.entries(byRegion).forEach(([region, entries]) => {
     const section = document.createElement('section');
     section.className = 'region-section';
 
-    const ownedCount = list.filter(e => e.count > 0).length;
-
     const header = document.createElement('h2');
-    header.textContent = `${region.toUpperCase()} (${ownedCount} / ${list.length})`;
+    header.textContent = region.toUpperCase();
 
     const grid = document.createElement('div');
     grid.className = 'dex-grid';
 
-    list.forEach(entry => {
+    entries.forEach(entry => {
+      const shinyLabel =
+        entry.count === 1
+          ? '1 Shiny'
+          : `${entry.count} Shinies`;
+
       grid.insertAdjacentHTML(
         'beforeend',
         renderUnifiedCard({
           name: prettifyPokemonName(entry.pokemon),
           img: getPokemonGif(entry.pokemon),
-          info:
-            entry.count === 0
-              ? '0 Shinies'
-              : `${entry.count} ${entry.count === 1 ? 'Shiny' : 'Shinies'}`,
+          info: shinyLabel,
           unclaimed: entry.count === 0,
+          owners: entry.owners,
           cardType: 'pokemon'
         })
       );
