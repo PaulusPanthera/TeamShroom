@@ -1,11 +1,11 @@
 // src/data/shinydex.model.js
 // Shiny Dex — HITLIST MODEL
-// Claim logic + Pokémon metadata enrichment
+// Claim logic + Pokémon metadata enrichment (region)
 
 import {
   pokemonFamilies,
   POKEMON_POINTS,
-  pokemonDataByKey
+  pokemonData
 } from './pokemondatabuilder.js';
 
 /**
@@ -15,6 +15,15 @@ import {
  * @returns {Array}
  */
 export function buildShinyDexModel(weeklyModel) {
+  // -------------------------------------------------------
+  // BUILD POKÉMON → REGION MAP (LOCAL, SAFE)
+  // -------------------------------------------------------
+
+  const pokemonRegionMap = {};
+  pokemonData.forEach(p => {
+    pokemonRegionMap[p.pokemon] = p.region;
+  });
+
   // -------------------------------------------------------
   // FLATTEN WEEKLY MODEL → STRICT CHRONOLOGICAL EVENTS
   // -------------------------------------------------------
@@ -53,7 +62,7 @@ export function buildShinyDexModel(weeklyModel) {
   });
 
   // -------------------------------------------------------
-  // CLAIM RESOLUTION
+  // CLAIM RESOLUTION (AUTHORITATIVE)
   // -------------------------------------------------------
 
   events.forEach(event => {
@@ -88,12 +97,10 @@ export function buildShinyDexModel(weeklyModel) {
     const slot =
       familyStages[family]?.find(s => s.pokemon === pokemon) || null;
 
-    const meta = pokemonDataByKey[pokemon];
-
     return {
       pokemon,
       family,
-      region: meta?.region || 'unknown',
+      region: pokemonRegionMap[pokemon] || 'unknown',
       points: POKEMON_POINTS[pokemon],
       claimed: !!slot?.claimedBy,
       claimedBy: slot?.claimedBy || null
