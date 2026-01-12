@@ -1,6 +1,7 @@
 // src/features/shinydex/shinydex.js
 // Shiny Dex — HITLIST VIEW
-// Render-only. Advanced search grammar. No model mutation.
+// Render-only. Advanced search + region grouping.
+// No claim logic. No model mutation.
 
 import { buildShinyDexModel } from '../../data/shinydex.model.js';
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
@@ -16,10 +17,14 @@ function getPokemonGif(pokemonKey) {
 }
 
 /**
- * Render Shiny Dex Hitlist with advanced search
+ * Render Shiny Dex Hitlist
+ *
+ * Sorting:
+ * - Primary: region
+ * - Secondary: Pokédex order (implicit from data)
  *
  * Search grammar (AND-combined tokens):
- * - pokemon name (default)
+ * - pokemon name
  * - @Member
  * - +pokemon / pokemon+
  * - claimed | unclaimed
@@ -43,12 +48,11 @@ export function renderShinyDexHitlist(weeklyModel) {
   container.appendChild(searchInput);
 
   // -------------------------------------------------------
-  // GRID
+  // CONTENT ROOT
   // -------------------------------------------------------
 
-  const grid = document.createElement('div');
-  grid.className = 'dex-grid';
-  container.appendChild(grid);
+  const content = document.createElement('div');
+  container.appendChild(content);
 
   // -------------------------------------------------------
   // DATA
@@ -56,20 +60,50 @@ export function renderShinyDexHitlist(weeklyModel) {
 
   const dex = buildShinyDexModel(weeklyModel);
 
+  // -------------------------------------------------------
+  // RENDER (GROUPED BY REGION)
+  // -------------------------------------------------------
+
   function render(list) {
-    grid.innerHTML = '';
+    content.innerHTML = '';
+
+    const byRegion = {};
+
     list.forEach(entry => {
-      grid.insertAdjacentHTML(
-        'beforeend',
-        renderUnifiedCard({
-          name: prettifyPokemonName(entry.pokemon),
-          img: getPokemonGif(entry.pokemon),
-          info: entry.claimed ? entry.claimedBy : 'Unclaimed',
-          points: entry.points,
-          claimed: entry.claimed,
-          cardType: 'pokemon'
-        })
-      );
+      const region = entry.region || 'unknown';
+      byRegion[region] ??= [];
+      byRegion[region].push(entry);
+    });
+
+    Object.keys(byRegion).forEach(region => {
+      const section = document.createElement('section');
+      section.className = 'dex-region-section';
+
+      const header = document.createElement('h2');
+      header.className = 'dex-region-header';
+      header.textContent =
+        region.charAt(0).toUpperCase() + region.slice(1);
+
+      const grid = document.createElement('div');
+      grid.className = 'dex-grid';
+
+      byRegion[region].forEach(entry => {
+        grid.insertAdjacentHTML(
+          'beforeend',
+          renderUnifiedCard({
+            name: prettifyPokemonName(entry.pokemon),
+            img: getPokemonGif(entry.pokemon),
+            info: entry.claimed ? entry.claimedBy : 'Unclaimed',
+            points: entry.points,
+            claimed: entry.claimed,
+            cardType: 'pokemon'
+          })
+        );
+      });
+
+      section.appendChild(header);
+      section.appendChild(grid);
+      content.appendChild(section);
     });
   }
 
@@ -87,15 +121,12 @@ export function renderShinyDexHitlist(weeklyModel) {
     }
 
     const tokens = raw.split(/\s+/);
-
     let filtered = dex.slice();
 
     tokens.forEach(token => {
       const t = token.toLowerCase();
 
-      // -----------------------------------------------
       // Claimer
-      // -----------------------------------------------
       if (t.startsWith('@')) {
         const q = token.slice(1).toLowerCase();
         filtered = filtered.filter(
@@ -104,9 +135,7 @@ export function renderShinyDexHitlist(weeklyModel) {
         return;
       }
 
-      // -----------------------------------------------
       // Claim state
-      // -----------------------------------------------
       if (t === 'claimed') {
         filtered = filtered.filter(e => e.claimed);
         return;
@@ -117,9 +146,7 @@ export function renderShinyDexHitlist(weeklyModel) {
         return;
       }
 
-      // -----------------------------------------------
       // Region
-      // -----------------------------------------------
       if (t.startsWith('region:')) {
         const region = t.split(':')[1];
         filtered = filtered.filter(
@@ -128,9 +155,7 @@ export function renderShinyDexHitlist(weeklyModel) {
         return;
       }
 
-      // -----------------------------------------------
       // Tier
-      // -----------------------------------------------
       if (t.startsWith('tier:')) {
         const tier = t.split(':')[1];
         filtered = filtered.filter(
@@ -139,9 +164,7 @@ export function renderShinyDexHitlist(weeklyModel) {
         return;
       }
 
-      // -----------------------------------------------
       // Family expansion
-      // -----------------------------------------------
       const isFamily =
         token.startsWith('+') || token.endsWith('+');
 
@@ -162,9 +185,7 @@ export function renderShinyDexHitlist(weeklyModel) {
         return;
       }
 
-      // -----------------------------------------------
       // Default: Pokémon name
-      // -----------------------------------------------
       filtered = filtered.filter(e =>
         prettifyPokemonName(e.pokemon)
           .toLowerCase()
