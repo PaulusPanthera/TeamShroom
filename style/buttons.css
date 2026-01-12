@@ -1,93 +1,111 @@
 /* =========================================================
-   BUTTONS — DESIGN SYSTEM v1
-   Stateful buttons with correct active semantics
+   BUTTON SYSTEM — DESIGN SYSTEM v1 (LOCKED)
    ========================================================= */
 
 /* ---------------------------------------------------------
-   BASE BUTTON (INACTIVE DEFAULT)
+   BASE BUTTON RESET
 --------------------------------------------------------- */
 
-button,
-.search-controls button,
-.showcase-search-controls button {
+button {
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------
+   ACTION BUTTONS (e.g. Unclaimed toggle)
+--------------------------------------------------------- */
+
+.search-controls button:not(.dex-tab) {
   padding: 6px 14px;
 
-  font-family: inherit;
-  font-size: var(--font-card-stat);
   font-weight: bold;
 
-  background: var(--bg-panel-alt);   /* INACTIVE */
+  background: var(--bg-panel-alt);
   color: var(--text-main);
 
   border: 2px solid var(--bg-panel-alt);
   border-radius: 10px;
 
-  cursor: pointer;
   box-shadow: var(--shadow-depth);
-
-  transition:
-    background 0.15s ease,
-    color 0.15s ease,
-    border-color 0.15s ease;
 }
 
-/* ---------------------------------------------------------
-   HOVER (NON-ACTIVE)
---------------------------------------------------------- */
-
-button:hover,
-.search-controls button:hover,
-.showcase-search-controls button:hover {
+.search-controls button:not(.dex-tab):hover {
   filter: brightness(1.05);
 }
 
-/* ---------------------------------------------------------
-   ACTIVE / SELECTED STATE  ✅
---------------------------------------------------------- */
-
-button.active,
-.search-controls button.active,
-.showcase-search-controls button.active {
+.search-controls button:not(.dex-tab).active {
   background: var(--accent);
   color: var(--text-dark);
   border-color: var(--accent);
 }
 
 /* ---------------------------------------------------------
-   DISABLED
+   DEX TABS (VIEW SWITCHERS)
 --------------------------------------------------------- */
 
-button:disabled,
-.search-controls button:disabled,
-.showcase-search-controls button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* =========================================================
-   DEX TABS (Hitlist / Living Dex)
-   ========================================================= */
-
 .dex-tab {
-  background: var(--bg-panel-alt);
+  padding: 8px 16px;
+
+  font-size: var(--font-card-stat);
+  font-weight: bold;
+  letter-spacing: 1px;
+
+  background: var(--bg-panel);
   color: var(--text-muted);
 
   border: 2px solid var(--bg-panel-alt);
   border-bottom: none;
   border-radius: 12px 12px 0 0;
 
-  letter-spacing: 1px;
+  box-shadow: var(--shadow-depth);
 }
 
 .dex-tab:hover {
   color: var(--text-main);
 }
 
-/* ACTIVE TAB */
+/* ACTIVE TAB = ORANGE / RED */
 .dex-tab.active {
   background: var(--accent);
   color: var(--text-dark);
 
   border-color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+
   z-index: 2;
+}
+
+/* ---------------------------------------------------------
+   NAV BUTTONS (TOP NAV)
+--------------------------------------------------------- */
+
+.nav a {
+  padding: 8px 14px;
+
+  font-size: var(--font-card-stat);
+  font-weight: bold;
+  letter-spacing: 1px;
+
+  background: var(--bg-panel-alt);
+  color: var(--text-main);
+
+  border: 2px solid var(--bg-panel-alt);
+  border-radius: 12px;
+
+  box-shadow: var(--shadow-depth);
+}
+
+.nav a:hover {
+  color: var(--accent);
+}
+
+/* ONE ACTIVE NAV ITEM ONLY */
+.nav a.active {
+  background: var(--accent);
+  color: var(--text-dark);
+  border-color: var(--accent);
 }
