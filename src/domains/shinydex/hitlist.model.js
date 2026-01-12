@@ -1,22 +1,29 @@
-// src/data/shinydex.model.js
-// Shiny Dex — HITLIST MODEL
-// Claim logic + region enrichment (runtime-safe)
+// src/domains/shinydex/hitlist.model.js
+// Shiny Dex — HITLIST CLAIM MODEL
+// PURE FUNCTION — deterministic, order-dependent
+// Source of truth: Shiny Weekly model ONLY
 
 import {
   pokemonFamilies,
   POKEMON_POINTS,
   POKEMON_REGION
-} from './pokemondatabuilder.js';
+} from '../../data/pokemondatabuilder.js';
 
-/**
- * Build Shiny Dex Hitlist model
- *
- * @param {Array} weeklyModel Output of buildShinyWeeklyModel()
- * @returns {Array}
- */
+/*
+OUTPUT:
+Array<{
+  pokemon: string
+  family: string
+  region: string
+  points: number
+  claimed: boolean
+  claimedBy: string | null
+}>
+*/
+
 export function buildShinyDexModel(weeklyModel) {
   // -------------------------------------------------------
-  // FLATTEN WEEKLY MODEL → STRICT CHRONOLOGICAL EVENTS
+  // FLATTEN WEEKLY MODEL → EVENTS (ORDER PRESERVED)
   // -------------------------------------------------------
 
   const events = [];
@@ -35,66 +42,49 @@ export function buildShinyDexModel(weeklyModel) {
   });
 
   // -------------------------------------------------------
-  // BUILD FAMILY → STAGE CHAINS
+  // CLAIM RESOLUTION (FAMILY → STAGE)
   // -------------------------------------------------------
 
-  const familyStages = {};
-
-  Object.keys(POKEMON_POINTS).forEach(pokemon => {
-    const familyKeys = pokemonFamilies[pokemon];
-    if (!familyKeys || familyKeys.length === 0) return;
-
-    const familyKey = familyKeys[0];
-    familyStages[familyKey] ??= [];
-    familyStages[familyKey].push({
-      pokemon,
-      claimedBy: null
-    });
-  });
-
-  // -------------------------------------------------------
-  // CLAIM RESOLUTION (AUTHORITATIVE)
-  // -------------------------------------------------------
+  const familyClaims = {};
+  const pokemonClaims = {};
 
   events.forEach(event => {
-    const familyKeys = pokemonFamilies[event.pokemon];
-    if (!familyKeys || familyKeys.length === 0) return;
+    const familyId = Object.keys(pokemonFamilies)
+      .find(id => pokemonFamilies[id].includes(event.pokemon));
 
-    const familyKey = familyKeys[0];
-    const stages = familyStages[familyKey];
-    if (!stages) return;
+    if (!familyId) return;
 
-    let slot = stages.find(
-      s => s.pokemon === event.pokemon && s.claimedBy === null
-    );
+    familyClaims[familyId] ??= {};
 
-    if (!slot) {
-      slot = stages.find(s => s.claimedBy === null);
+    let claimedStage = null;
+
+    if (!familyClaims[familyId][event.pokemon]) {
+      claimedStage = event.pokemon;
+    } else {
+      claimedStage =
+        pokemonFamilies[familyId].find(
+          p => !familyClaims[familyId][p]
+        ) || null;
     }
 
-    if (!slot) return;
+    if (!claimedStage) return;
 
-    slot.claimedBy = event.member;
+    familyClaims[familyId][claimedStage] = event.member;
+    pokemonClaims[claimedStage] = event.member;
   });
 
   // -------------------------------------------------------
-  // BUILD FINAL HITLIST MODEL (WITH REGION)
+  // FINAL DEX LIST
   // -------------------------------------------------------
 
-  return Object.keys(POKEMON_POINTS).map(pokemon => {
-    const familyKeys = pokemonFamilies[pokemon];
-    const family = familyKeys?.[0] || pokemon;
-
-    const slot =
-      familyStages[family]?.find(s => s.pokemon === pokemon) || null;
-
-    return {
-      pokemon,
-      family,
-      region: POKEMON_REGION[pokemon] || 'unknown',
-      points: POKEMON_POINTS[pokemon],
-      claimed: !!slot?.claimedBy,
-      claimedBy: slot?.claimedBy || null
-    };
-  });
+  return Object.keys(POKEMON_POINTS).map(pokemon => ({
+    pokemon,
+    family:
+      Object.keys(pokemonFamilies)
+        .find(id => pokemonFamilies[id].includes(pokemon)) || pokemon,
+    region: POKEMON_REGION[pokemon] || 'unknown',
+    points: POKEMON_POINTS[pokemon],
+    claimed: !!pokemonClaims[pokemon],
+    claimedBy: pokemonClaims[pokemon] || null
+  }));
 }
