@@ -5,8 +5,7 @@
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
 import {
-  POKEMON_POINTS,
-  POKEMON_SHOW
+  POKEMON_POINTS
 } from '../../data/pokemondatabuilder.js';
 
 function getPokemonGif(pokemonKey) {
@@ -23,8 +22,6 @@ export function setupShinyDexHitlistSearch() {
   let rendered = 0;
 
   Object.keys(POKEMON_POINTS).forEach(pokemon => {
-    if (!POKEMON_SHOW[pokemon]) return;
-
     rendered++;
 
     grid.insertAdjacentHTML(
@@ -38,9 +35,10 @@ export function setupShinyDexHitlistSearch() {
     );
   });
 
-  container.appendChild(grid);
-
   if (rendered === 0) {
     container.innerHTML = '<p>No Pokémon rendered.</p>';
+    return;
   }
+
+  container.appendChild(grid);
 }
