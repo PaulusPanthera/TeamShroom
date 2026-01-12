@@ -4,7 +4,7 @@
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
 import { POKEMON_SHOW, POKEMON_REGION } from '../../data/pokemondatabuilder.js';
-import { buildShinyLivingDexModel } from '../../data/shinylivingdex.model.js';
+import { buildShinyLivingDexModel } from '../../domains/shinydex/livingdex.model.js';
 
 function getPokemonGif(pokemonKey) {
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${pokemonKey}.gif`;
