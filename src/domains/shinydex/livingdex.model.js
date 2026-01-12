@@ -1,9 +1,11 @@
 // src/domains/shinydex/livingdex.model.js
 // Shiny Dex — LIVING DEX MODEL
-// CURRENT OWNERSHIP SNAPSHOT
-// No claims. No family locking.
+// COMPLETE SPECIES SNAPSHOT (owned + unowned)
 
-import { POKEMON_REGION, POKEMON_SHOW } from '../../data/pokemondatabuilder.js';
+import {
+  POKEMON_REGION,
+  POKEMON_SHOW
+} from '../../data/pokemondatabuilder.js';
 
 /*
 OUTPUT:
@@ -16,24 +18,40 @@ Array<{
 */
 
 export function buildShinyLivingDexModel(showcaseRows) {
+  // -------------------------------------------------------
+  // 1. INIT ALL POKÉMON (UNOWNED BY DEFAULT)
+  // -------------------------------------------------------
+
   const map = {};
+
+  Object.keys(POKEMON_REGION).forEach(pokemon => {
+    if (POKEMON_SHOW[pokemon] === false) return;
+
+    map[pokemon] = {
+      pokemon,
+      region: POKEMON_REGION[pokemon] || 'unknown',
+      count: 0,
+      owners: []
+    };
+  });
+
+  // -------------------------------------------------------
+  // 2. APPLY OWNERSHIP FROM SHOWCASE
+  // -------------------------------------------------------
 
   showcaseRows.forEach(row => {
     if (row.lost || row.sold) return;
 
     const key = row.pokemon;
-    if (POKEMON_SHOW[key] === false) return;
+    if (!map[key]) return;
 
-    map[key] ??= {
-      pokemon: key,
-      region: POKEMON_REGION[key] || 'unknown',
-      count: 0,
-      owners: []
-    };
-
-    map[key].count++;
+    map[key].count += 1;
     map[key].owners.push(row.ot);
   });
+
+  // -------------------------------------------------------
+  // 3. RETURN FULL LIST (DEX ORDER PRESERVED)
+  // -------------------------------------------------------
 
   return Object.values(map);
 }
