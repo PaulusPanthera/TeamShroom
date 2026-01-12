@@ -23,37 +23,47 @@ Array<{
 
 export function buildShinyDexModel(weeklyModel) {
   // -------------------------------------------------------
-  // 1. BUILD FAMILY → ORDERED STAGES (ONCE)
+  // 1. DEX ORDER (DETERMINISTIC)
   // -------------------------------------------------------
 
-  const familyStages = {};
+  const dexOrder = Object.keys(POKEMON_POINTS);
+
+  // -------------------------------------------------------
+  // 2. FAMILY ROOT LOOKUP (ONCE)
+  // -------------------------------------------------------
+
   const pokemonToFamily = {};
-
   Object.entries(pokemonFamilies).forEach(([pokemon, family]) => {
-    const root = family[0];
-
-    familyStages[root] ??= [];
-    familyStages[root].push(pokemon);
-
+    const root = Array.isArray(family) && family.length ? family[0] : pokemon;
     pokemonToFamily[pokemon] = root;
   });
 
-  // ensure deterministic stage order
-  Object.values(familyStages).forEach(stages => stages.sort());
+  // -------------------------------------------------------
+  // 3. FAMILY → ORDERED STAGES (DEX ORDER)
+  // -------------------------------------------------------
+
+  const familyStages = {};
+  dexOrder.forEach(pokemon => {
+    const root = pokemonToFamily[pokemon];
+    if (!root) return;
+
+    familyStages[root] ??= [];
+    familyStages[root].push(pokemon);
+  });
 
   // -------------------------------------------------------
-  // 2. INITIALIZE FAMILY CURSORS
+  // 4. INITIALIZE FAMILY CURSORS
   // -------------------------------------------------------
 
   const familyCursor = {};
-  const claimedByPokemon = {};
-
   Object.keys(familyStages).forEach(root => {
     familyCursor[root] = 0;
   });
 
+  const claimedByPokemon = {};
+
   // -------------------------------------------------------
-  // 3. FLATTEN WEEKLY MODEL → CLAIM EVENTS (ORDER PRESERVED)
+  // 5. FLATTEN WEEKLY MODEL → CLAIM EVENTS (ORDER PRESERVED)
   // -------------------------------------------------------
 
   const events = [];
@@ -72,7 +82,7 @@ export function buildShinyDexModel(weeklyModel) {
   });
 
   // -------------------------------------------------------
-  // 4. RESOLVE CLAIMS (STRICT STAGE PROGRESSION)
+  // 6. RESOLVE CLAIMS (STRICT STAGE PROGRESSION)
   // -------------------------------------------------------
 
   events.forEach(event => {
@@ -80,21 +90,22 @@ export function buildShinyDexModel(weeklyModel) {
     if (!root) return;
 
     const stages = familyStages[root];
-    const index = familyCursor[root];
+    if (!stages) return;
 
+    const index = familyCursor[root];
     if (index >= stages.length) return;
 
     const stagePokemon = stages[index];
 
     claimedByPokemon[stagePokemon] = event.member;
-    familyCursor[root] += 1;
+    familyCursor[root] = index + 1;
   });
 
   // -------------------------------------------------------
-  // 5. FINAL DEX SNAPSHOT (POKÉDEX ORDER)
+  // 7. FINAL DEX SNAPSHOT (DEX ORDER)
   // -------------------------------------------------------
 
-  return Object.keys(POKEMON_POINTS).map(pokemon => {
+  return dexOrder.map(pokemon => {
     const root = pokemonToFamily[pokemon] || pokemon;
 
     return {
