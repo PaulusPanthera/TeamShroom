@@ -1,39 +1,47 @@
 /**
- * SHINY POKEDEX — SEARCH LEGEND (v1)
+ * SHINY POKEDEX — SEARCH LEGEND (v2)
  *
  * Global:
  * - Search never changes truth; only filters visibility.
  * - Search is applied LAST, after view+mode filters.
+ * - Forgiving matching: display name OR canonical key, case-insensitive substring.
  *
- * HITLIST (claim-driven):
- * - Query matches Pokémon species name only (prettifyPokemonName), case-insensitive substring.
- * - No member/owner matching. No fuzzy.
- * - Standard: supports search + unclaimed-only.
- * - Leaderboards (Total Claims / Total Claim Points): search DISABLED, unclaimed DISABLED.
+ * Syntax:
+ * - "text"      → species search (name/key)
+ * - "+text"     → family search (show all stages of any family matched by text)
+ * - "text+"     → family search (same as above)
+ * - "@name"     → member search
  *
- * LIVING DEX (ownership snapshot):
- * - Query matches Pokémon species name only, case-insensitive substring.
- * - No owner matching. No fuzzy.
- * - Standard: dex/region order, includes unowned species.
- * - Total Shinies: sort by count desc, tie-break by dex order.
- * - Unclaimed-only: show count=0 species in dex order (sorting irrelevant).
+ * HITLIST:
+ * - Standard:
+ *   - species search: filters species cards
+ *   - family search: filters to families matched by query
+ *   - member search (@): filters to species claimed by member
+ *   - unclaimed-only works
+ * - Leaderboards (Total Claims / Total Claim Points):
+ *   - species/family search ignored
+ *   - member search (@) filters members shown
+ *   - unclaimed disabled
+ *
+ * LIVING DEX:
+ * - species search: filters species cards
+ * - family search: filters to families matched by query
+ * - member search (@): filters to species owned by member
+ * - Standard: dex/region order
+ * - Total Shinies: sort by count desc, tie-break by dex order
  *
  * Counters:
- * - Hitlist: report species counts based on mode dataset (not post-search).
- * - Living Dex: show ownedSpecies/totalSpecies (mode dataset), region headers show owned/total.
+ * - Always computed from mode dataset (pre-search).
+ * - Region headers show region totals for mode dataset (pre-search).
  */
-
-// src/features/shinydex/shinydex.js
-// Shiny Dex Page Controller
-// Owns ALL DOM under #page-content
-// Central authority for counters and view logic
 
 import { buildShinyDexModel } from '../../domains/shinydex/hitlist.model.js';
 import { buildShinyLivingDexModel } from '../../domains/shinydex/livingdex.model.js';
 import {
   POKEMON_REGION,
   POKEMON_SHOW,
-  POKEMON_POINTS
+  POKEMON_POINTS,
+  pokemonFamilies
 } from '../../data/pokemondatabuilder.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
 
@@ -49,7 +57,7 @@ export function setupShinyDexPage({
 
   root.innerHTML = `
     <div class="search-controls">
-      <input id="dex-search" type="text" placeholder="Search…" />
+      <input id="dex-search" type="text" placeholder="Search… (Pokémon, +family, @member)" />
       <button id="dex-unclaimed" class="dex-toggle">Unclaimed</button>
       <select id="dex-sort"></select>
       <span id="dex-count"></span>
@@ -86,56 +94,115 @@ export function setupShinyDexPage({
 
   const active = () => state[state.view];
 
+  // --------------------------------------------------
+  // DEX ORDER + FAMILY ORDER (DEX-STABLE)
+  // --------------------------------------------------
+
   const dexOrder = Object.keys(POKEMON_POINTS);
   const dexIndex = Object.fromEntries(dexOrder.map((k, i) => [k, i]));
 
-  function normalizeForSearch(s) {
+  const rootByPokemon = {};
+  const stagesByRoot = {};
+
+  dexOrder.forEach(pokemon => {
+    const fam = pokemonFamilies[pokemon];
+    const root = Array.isArray(fam) && fam.length ? fam[0] : pokemon;
+
+    rootByPokemon[pokemon] = root;
+    stagesByRoot[root] ??= [];
+    stagesByRoot[root].push(pokemon);
+  });
+
+  // --------------------------------------------------
+  // SEARCH PARSING + MATCHING
+  // --------------------------------------------------
+
+  function normalizeText(s) {
     return String(s || '')
       .toLowerCase()
       .replace(/♀/g, 'f')
       .replace(/♂/g, 'm')
-      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/[.'":,!?()[\]{}]/g, '')
       .replace(/-/g, ' ')
       .replace(/\s+/g, ' ')
       .trim();
   }
 
-  function matchesPokemonDisplay(pokemonKey, queryRaw) {
-    const q = normalizeForSearch(queryRaw);
+  function parseSearch(raw) {
+    const s = String(raw || '').trim();
+    if (!s) return { kind: 'none', q: '' };
+
+    if (s.startsWith('@')) {
+      const q = normalizeText(s.slice(1));
+      return q ? { kind: 'member', q } : { kind: 'none', q: '' };
+    }
+
+    const trimmed = s.trim();
+    const familyMode =
+      trimmed.startsWith('+') || trimmed.endsWith('+');
+
+    if (familyMode) {
+      const q = normalizeText(trimmed.replace(/^\+/, '').replace(/\+$/, ''));
+      return q ? { kind: 'family', q } : { kind: 'none', q: '' };
+    }
+
+    const q = normalizeText(trimmed);
+    return q ? { kind: 'species', q } : { kind: 'none', q: '' };
+  }
+
+  function speciesMatches(pokemonKey, q) {
     if (!q) return true;
 
-    const display = normalizeForSearch(prettifyPokemonName(pokemonKey));
-    const key = normalizeForSearch(pokemonKey);
+    const display = normalizeText(prettifyPokemonName(pokemonKey));
+    const key = normalizeText(pokemonKey);
 
     return display.includes(q) || key.includes(q);
   }
 
+  function memberMatches(name, q) {
+    if (!q) return true;
+    return normalizeText(name).includes(q);
+  }
+
+  function resolveFamilyRootsByQuery(q) {
+    const roots = new Set();
+    if (!q) return roots;
+
+    Object.entries(stagesByRoot).forEach(([root, stages]) => {
+      const hit = stages.some(p => speciesMatches(p, q));
+      if (hit) roots.add(root);
+    });
+
+    return roots;
+  }
+
+  // --------------------------------------------------
+  // CONTROL AVAILABILITY
+  // --------------------------------------------------
+
   function isHitlistLeaderboardMode() {
-    return active().sort === 'claims' || active().sort === 'points';
+    return state.view === 'hitlist' &&
+      (active().sort === 'claims' || active().sort === 'points');
   }
 
   function updateControlAvailability() {
-    if (state.view === 'hitlist') {
-      const leaderboard = isHitlistLeaderboardMode();
+    const parsed = parseSearch(active().search);
 
-      searchInput.disabled = leaderboard;
-      if (leaderboard) searchInput.value = '';
+    // search input is always typeable; behavior depends on mode
+    searchInput.disabled = false;
 
-      if (leaderboard) {
-        active().showUnclaimed = false;
-        unclaimedBtn.disabled = true;
-        unclaimedBtn.classList.remove('active');
-      } else {
-        unclaimedBtn.disabled = false;
-        unclaimedBtn.classList.toggle('active', active().showUnclaimed);
-      }
-
+    if (isHitlistLeaderboardMode()) {
+      active().showUnclaimed = false;
+      unclaimedBtn.disabled = true;
+      unclaimedBtn.classList.remove('active');
       return;
     }
 
-    searchInput.disabled = false;
     unclaimedBtn.disabled = false;
     unclaimedBtn.classList.toggle('active', active().showUnclaimed);
+
+    // no further UI state needed; parsed is used in filter functions
+    void parsed;
   }
 
   function configureSort() {
@@ -159,50 +226,95 @@ export function setupShinyDexPage({
     updateControlAvailability();
   }
 
-  function applyHitlistFilters(snapshot, opts) {
-    const mode = opts.mode; // 'standard' | 'claims' | 'points'
-    const unclaimedOnly = !!opts.unclaimedOnly;
+  // --------------------------------------------------
+  // FILTER FUNCTIONS (VIEW-SCOPED)
+  // --------------------------------------------------
 
+  function applyHitlistFilters(snapshot, { searchRaw, unclaimedOnly, mode }) {
+    // mode: 'standard' | 'claims' | 'points'
+    // returns { visible, memberQueryForLeaderboard?: string }
+
+    const parsed = parseSearch(searchRaw);
+
+    // leaderboards: only @member filters members; species/family ignored
     if (mode === 'claims' || mode === 'points') {
       return {
         visible: snapshot,
-        searchAllowed: false
+        memberQueryForLeaderboard: parsed.kind === 'member' ? parsed.q : ''
       };
     }
 
     let modeSet = snapshot;
-    if (unclaimedOnly) modeSet = modeSet.filter(e => !e.claimed);
 
-    const visible = opts.search
-      ? modeSet.filter(e => matchesPokemonDisplay(e.pokemon, opts.search))
-      : modeSet;
+    if (unclaimedOnly) {
+      modeSet = modeSet.filter(e => !e.claimed);
+    }
 
+    // SEARCH LAST (visibility only)
+    if (parsed.kind === 'none') return { visible: modeSet };
+
+    if (parsed.kind === 'member') {
+      const q = parsed.q;
+      return {
+        visible: modeSet.filter(e => e.claimed && memberMatches(e.claimedBy || '', q))
+      };
+    }
+
+    if (parsed.kind === 'family') {
+      const roots = resolveFamilyRootsByQuery(parsed.q);
+      return {
+        visible: modeSet.filter(e => roots.has(rootByPokemon[e.pokemon] || e.pokemon))
+      };
+    }
+
+    // species
     return {
-      visible,
-      searchAllowed: true
+      visible: modeSet.filter(e => speciesMatches(e.pokemon, parsed.q))
     };
   }
 
-  function applyLivingDexFilters(snapshot, opts) {
+  function applyLivingDexFilters(snapshot, { searchRaw, unclaimedOnly, mode }) {
+    const parsed = parseSearch(searchRaw);
+
     let modeSet = snapshot;
 
-    if (opts.mode === 'total') {
+    if (mode === 'total') {
       modeSet = [...modeSet].sort((a, b) => {
         if (b.count !== a.count) return b.count - a.count;
         return (dexIndex[a.pokemon] ?? 999999) - (dexIndex[b.pokemon] ?? 999999);
       });
     }
 
-    if (opts.unclaimedOnly) {
+    if (unclaimedOnly) {
       modeSet = modeSet.filter(e => e.count === 0);
     }
 
-    const visible = opts.search
-      ? modeSet.filter(e => matchesPokemonDisplay(e.pokemon, opts.search))
-      : modeSet;
+    // SEARCH LAST (visibility only)
+    if (parsed.kind === 'none') return { visible: modeSet };
 
-    return { visible };
+    if (parsed.kind === 'member') {
+      const q = parsed.q;
+      return {
+        visible: modeSet.filter(e => Array.isArray(e.owners) && e.owners.some(o => memberMatches(o, q)))
+      };
+    }
+
+    if (parsed.kind === 'family') {
+      const roots = resolveFamilyRootsByQuery(parsed.q);
+      return {
+        visible: modeSet.filter(e => roots.has(rootByPokemon[e.pokemon] || e.pokemon))
+      };
+    }
+
+    // species
+    return {
+      visible: modeSet.filter(e => speciesMatches(e.pokemon, parsed.q))
+    };
   }
+
+  // --------------------------------------------------
+  // HITLIST PREP
+  // --------------------------------------------------
 
   function prepareHitlist() {
     const view = active();
@@ -224,7 +336,14 @@ export function setupShinyDexPage({
       if (e.claimed) regionStats[region].claimed += 1;
     });
 
+    // LEADERBOARD MODES
     if (mode === 'claims' || mode === 'points') {
+      const { memberQueryForLeaderboard } = applyHitlistFilters(snapshot, {
+        searchRaw: view.search,
+        unclaimedOnly: false,
+        mode
+      });
+
       const claimed = snapshot.filter(e => e.claimed);
 
       const byMember = {};
@@ -233,7 +352,7 @@ export function setupShinyDexPage({
         byMember[e.claimedBy].push(e);
       });
 
-      const members = Object.entries(byMember)
+      let members = Object.entries(byMember)
         .map(([name, entries]) => ({
           name,
           entries,
@@ -245,6 +364,10 @@ export function setupShinyDexPage({
             ? b.claims - a.claims
             : b.points - a.points
         );
+
+      if (memberQueryForLeaderboard) {
+        members = members.filter(m => memberMatches(m.name, memberQueryForLeaderboard));
+      }
 
       return {
         mode: 'scoreboard',
@@ -261,8 +384,9 @@ export function setupShinyDexPage({
       };
     }
 
+    // STANDARD MODE
     const filtered = applyHitlistFilters(snapshot, {
-      search: view.search,
+      searchRaw: view.search,
       unclaimedOnly: view.showUnclaimed,
       mode
     });
@@ -293,6 +417,10 @@ export function setupShinyDexPage({
     };
   }
 
+  // --------------------------------------------------
+  // LIVING DEX PREP
+  // --------------------------------------------------
+
   function prepareLivingDex() {
     const view = active();
     const mode = view.sort;
@@ -312,7 +440,7 @@ export function setupShinyDexPage({
     });
 
     const filtered = applyLivingDexFilters(snapshot, {
-      search: view.search,
+      searchRaw: view.search,
       unclaimedOnly: view.showUnclaimed,
       mode
     });
@@ -342,6 +470,10 @@ export function setupShinyDexPage({
     };
   }
 
+  // --------------------------------------------------
+  // RENDER
+  // --------------------------------------------------
+
   function render() {
     updateControlAvailability();
 
@@ -352,6 +484,10 @@ export function setupShinyDexPage({
 
     renderShinyLivingDex(prepareLivingDex());
   }
+
+  // --------------------------------------------------
+  // EVENTS
+  // --------------------------------------------------
 
   searchInput.addEventListener('input', e => {
     active().search = e.target.value;
