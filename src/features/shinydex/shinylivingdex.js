@@ -1,98 +1,98 @@
 // src/features/shinydex/shinylivingdex.js
-// Shiny Living Dex — VIEW
+// Shiny Dex — LIVING DEX VIEW
+// Render-only. No claims. No history. Snapshot of current ownership.
 
-import { buildShinyLivingDexModel } from '../../data/shinylivingdex.model.js';
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
-import { POKEMON_SHOW } from '../../data/pokemondatabuilder.js';
+import {
+  POKEMON_SHOW,
+  POKEMON_REGION
+} from '../../data/pokemondatabuilder.js';
 
 function getPokemonGif(pokemonKey) {
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${pokemonKey}.gif`;
 }
 
-export function renderShinyLivingDex(showcaseRows) {
-  const container = document.getElementById('shiny-dex-container');
+/**
+ * Render Shiny Living Dex
+ *
+ * @param {Object} params
+ * @param {Array} params.showcaseRows shinyshowcase.json rows
+ * @param {string} params.search search query (lowercase)
+ * @param {HTMLElement} params.container target container
+ * @param {HTMLElement} params.totalCounter counter element
+ */
+export function renderShinyLivingDex({
+  showcaseRows,
+  search = '',
+  container,
+  totalCounter
+}) {
   container.innerHTML = '';
 
-  const controls = document.createElement('div');
-  controls.className = 'search-controls';
+  /* ---------------- COUNT OWNERSHIP ---------------- */
 
-  const searchInput = document.createElement('input');
-  searchInput.type = 'text';
-  searchInput.placeholder = 'Search…';
+  const counts = {};
 
-  const sortSelect = document.createElement('select');
-  sortSelect.innerHTML = `
-    <option value="standard">Standard</option>
-    <option value="count">Total Shinies</option>
-  `;
+  showcaseRows.forEach(row => {
+    if (row.lost || row.sold) return;
+    if (POKEMON_SHOW[row.pokemon] === false) return;
 
-  const totalCounter = document.createElement('span');
+    counts[row.pokemon] ??= 0;
+    counts[row.pokemon]++;
+  });
 
-  controls.append(searchInput, sortSelect, totalCounter);
-  container.appendChild(controls);
+  let entries = Object.keys(counts).map(pokemon => ({
+    pokemon,
+    count: counts[pokemon]
+  }));
 
-  const content = document.createElement('div');
-  container.appendChild(content);
-
-  const dex = buildShinyLivingDexModel(showcaseRows).filter(
-    e => POKEMON_SHOW[e.pokemon] !== false
-  );
-
-  function render(list) {
-    content.innerHTML = '';
-
-    const total = list.reduce((s, e) => s + e.count, 0);
-    totalCounter.textContent = `Total Shinies: ${total}`;
-
-    const byRegion = {};
-    list.forEach(e => {
-      byRegion[e.region] ??= [];
-      byRegion[e.region].push(e);
-    });
-
-    Object.entries(byRegion).forEach(([region, entries]) => {
-      const section = document.createElement('section');
-      section.className = 'region-section';
-
-      const header = document.createElement('h2');
-      header.textContent = region;
-
-      const grid = document.createElement('div');
-      grid.className = 'dex-grid';
-
-      entries.forEach(entry => {
-        grid.insertAdjacentHTML(
-          'beforeend',
-          renderUnifiedCard({
-            name: prettifyPokemonName(entry.pokemon),
-            img: getPokemonGif(entry.pokemon),
-            info: String(entry.count),
-            cardType: 'pokemon'
-          })
-        );
-      });
-
-      section.append(header, grid);
-      content.appendChild(section);
-    });
-  }
-
-  function apply() {
-    const q = searchInput.value.toLowerCase();
-    let list = dex.filter(e =>
-      prettifyPokemonName(e.pokemon).toLowerCase().includes(q)
+  if (search) {
+    entries = entries.filter(e =>
+      prettifyPokemonName(e.pokemon)
+        .toLowerCase()
+        .includes(search)
     );
-
-    if (sortSelect.value === 'count') {
-      list = [...list].sort((a, b) => b.count - a.count);
-    }
-
-    render(list);
   }
 
-  searchInput.addEventListener('input', apply);
-  sortSelect.addEventListener('change', apply);
+  totalCounter.textContent = `${entries.length} Pokémon`;
 
-  apply();
+  /* ---------------- GROUP BY REGION ---------------- */
+
+  const byRegion = {};
+
+  entries.forEach(e => {
+    const region =
+      (POKEMON_REGION[e.pokemon] || 'unknown').toUpperCase();
+    byRegion[region] ??= [];
+    byRegion[region].push(e);
+  });
+
+  /* ---------------- RENDER ---------------- */
+
+  Object.entries(byRegion).forEach(([region, list]) => {
+    const section = document.createElement('section');
+    section.className = 'region-section';
+
+    const header = document.createElement('h2');
+    header.textContent = region;
+
+    const grid = document.createElement('div');
+    grid.className = 'dex-grid';
+
+    list.forEach(entry => {
+      grid.insertAdjacentHTML(
+        'beforeend',
+        renderUnifiedCard({
+          name: prettifyPokemonName(entry.pokemon),
+          img: getPokemonGif(entry.pokemon),
+          info: `${entry.count}`,
+          cardType: 'pokemon'
+        })
+      );
+    });
+
+    section.append(header, grid);
+    container.appendChild(section);
+  });
 }
