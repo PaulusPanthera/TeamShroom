@@ -1,18 +1,10 @@
 /* =========================================================
    SEARCH / FILTER CONTROLS
-   RPG SUBMENU PANEL — DESIGN SYSTEM v1
+   SEMANTIC SAFE
    ========================================================= */
-
-/* ---------------------------------------------------------
-   CONTAINER
-   --------------------------------------------------------- */
 
 .showcase-search-controls,
 .search-controls {
-  /* IMPORTANT:
-     Sticky REMOVED for v1 to avoid nav overlap.
-     Search behaves like an RPG submenu panel.
-  */
   position: relative;
 
   display: flex;
@@ -32,7 +24,7 @@
 
 /* ---------------------------------------------------------
    LABELS
-   --------------------------------------------------------- */
+--------------------------------------------------------- */
 
 .showcase-search-controls label,
 .search-controls label {
@@ -42,35 +34,11 @@
 }
 
 /* ---------------------------------------------------------
-   TEXT INPUT
-   --------------------------------------------------------- */
+   INPUTS
+--------------------------------------------------------- */
 
 .showcase-search-controls input[type="text"],
-.search-controls input[type="text"] {
-  padding: 6px 12px;
-
-  font-family: inherit;
-  font-size: var(--font-card-stat);
-
-  background: var(--bg-panel-alt);
-  color: var(--text-main);
-
-  border: 2px solid var(--bg-panel-alt);
-  border-radius: 10px;
-
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
-}
-
-.showcase-search-controls input[type="text"]:focus,
-.search-controls input[type="text"]:focus {
-  border-color: var(--accent);
-  outline: none;
-}
-
-/* ---------------------------------------------------------
-   SELECT DROPDOWNS
-   --------------------------------------------------------- */
-
+.search-controls input[type="text"],
 .showcase-search-controls select,
 .search-controls select {
   padding: 6px 12px;
@@ -88,6 +56,8 @@
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
+.showcase-search-controls input:focus,
+.search-controls input:focus,
 .showcase-search-controls select:focus,
 .search-controls select:focus {
   border-color: var(--accent);
@@ -95,50 +65,28 @@
 }
 
 /* ---------------------------------------------------------
-   RADIO INPUTS
-   --------------------------------------------------------- */
+   FILTER BUTTONS (NON-TOGGLE)
+--------------------------------------------------------- */
 
-.showcase-search-controls input[type="radio"],
-.search-controls input[type="radio"] {
-  accent-color: var(--accent);
-}
-
-/* ---------------------------------------------------------
-   BUTTONS (MENU ACTIONS)
-   --------------------------------------------------------- */
-
-.showcase-search-controls button,
-.search-controls button {
+.dex-filter {
   padding: 6px 14px;
 
-  font-family: inherit;
-  font-size: var(--font-card-stat);
-  font-weight: bold;
+  background: var(--bg-panel-alt);
+  color: var(--text-main);
 
-  background: var(--accent);
-  color: var(--text-dark);
-
-  border: none;
+  border: 2px solid var(--bg-panel-alt);
   border-radius: 10px;
 
-  cursor: pointer;
   box-shadow: var(--shadow-depth);
 }
 
-.showcase-search-controls button:hover,
-.search-controls button:hover {
+.dex-filter:hover {
   filter: brightness(1.05);
 }
 
-.showcase-search-controls button:disabled,
-.search-controls button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
 /* ---------------------------------------------------------
-   RESULT COUNT / STATUS TEXT
-   --------------------------------------------------------- */
+   STATUS TEXT
+--------------------------------------------------------- */
 
 .showcase-search-controls span,
 .search-controls span {
