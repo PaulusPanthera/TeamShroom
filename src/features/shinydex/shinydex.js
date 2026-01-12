@@ -1,6 +1,6 @@
 // src/features/shinydex/shinydex.js
 // Shiny Dex — PAGE CONTROLLER
-// Hitlist + Living Dex
+// Correct button highlighting logic
 
 import { buildShinyDexModel } from '../../data/shinydex.model.js';
 import { renderHitlistStandard } from './shinydex.hitlist.js';
@@ -22,7 +22,7 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
 
   const unclaimedBtn = document.createElement('button');
   unclaimedBtn.textContent = 'Unclaimed';
-  unclaimedBtn.className = 'dex-tab'; // default = inactive
+  unclaimedBtn.className = 'dex-tab'; // inactive by default
 
   const modeSelect = document.createElement('select');
   modeSelect.innerHTML = `
@@ -43,7 +43,7 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
 
   const hitlistTab = document.createElement('button');
   hitlistTab.textContent = 'Shiny Dex Hitlist';
-  hitlistTab.className = 'dex-tab active';
+  hitlistTab.className = 'dex-tab active'; // default
 
   const livingTab = document.createElement('button');
   livingTab.textContent = 'Shiny Living Dex';
@@ -66,18 +66,29 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
   const state = {
     view: 'hitlist',
     search: '',
-    unclaimed: false, // default = show claimed + unclaimed
+    unclaimed: false, // default: show all
     mode: 'standard'
   };
 
   /* ---------------- PIPELINE ---------------- */
 
+  function syncButtonStates() {
+    // tabs
+    hitlistTab.classList.toggle('active', state.view === 'hitlist');
+    livingTab.classList.toggle('active', state.view === 'living');
+
+    // unclaimed filter
+    unclaimedBtn.classList.toggle('active', state.unclaimed);
+
+    // hide hitlist-only controls
+    const showHitlistControls = state.view === 'hitlist';
+    unclaimedBtn.style.display = showHitlistControls ? '' : 'none';
+    modeSelect.style.display = showHitlistControls ? '' : 'none';
+  }
+
   function apply() {
     content.innerHTML = '';
-
-    const isHitlist = state.view === 'hitlist';
-    unclaimedBtn.style.display = isHitlist ? '' : 'none';
-    modeSelect.style.display = isHitlist ? '' : 'none';
+    syncButtonStates();
 
     if (state.view === 'living') {
       renderShinyLivingDex({
@@ -113,7 +124,6 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
 
   unclaimedBtn.addEventListener('click', () => {
     state.unclaimed = !state.unclaimed;
-    unclaimedBtn.classList.toggle('active', state.unclaimed);
     apply();
   });
 
@@ -124,15 +134,11 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
 
   hitlistTab.addEventListener('click', () => {
     state.view = 'hitlist';
-    hitlistTab.classList.add('active');
-    livingTab.classList.remove('active');
     apply();
   });
 
   livingTab.addEventListener('click', () => {
     state.view = 'living';
-    livingTab.classList.add('active');
-    hitlistTab.classList.remove('active');
     apply();
   });
 
