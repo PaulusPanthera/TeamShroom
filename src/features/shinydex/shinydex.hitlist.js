@@ -1,6 +1,6 @@
 // src/features/shinydex/shinydex.hitlist.js
 // Shiny Dex — HITLIST RENDERER
-// Render-only. No controls. No state ownership.
+// Render-only. Stateless. Controller owns UI & state.
 
 import { buildShinyDexModel } from '../../domains/shinydex/hitlist.model.js';
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
@@ -21,9 +21,9 @@ export function renderShinyDexHitlist({
   const container = document.getElementById('shiny-dex-container');
   container.innerHTML = '';
 
-  // ---------------------------------------------------------
+  // --------------------------------------------------
   // DATA
-  // ---------------------------------------------------------
+  // --------------------------------------------------
 
   let dex = buildShinyDexModel(weeklyModel).filter(
     e => POKEMON_SHOW[e.pokemon] !== false
@@ -39,9 +39,9 @@ export function renderShinyDexHitlist({
     dex = dex.filter(e => !e.claimed);
   }
 
-  // ---------------------------------------------------------
-  // GROUPED MODES (SCOREBOARD)
-  // ---------------------------------------------------------
+  // --------------------------------------------------
+  // SCOREBOARD MODES
+  // --------------------------------------------------
 
   if (sort === 'claims' || sort === 'points') {
     const byMember = {};
@@ -99,11 +99,15 @@ export function renderShinyDexHitlist({
     return;
   }
 
-  // ---------------------------------------------------------
-  // STANDARD MODE (REGION → DEX ORDER)
-  // ---------------------------------------------------------
+  // --------------------------------------------------
+  // STANDARD MODE (REGION / DEX)
+  // --------------------------------------------------
 
-  countLabel.textContent = `${dex.length} Pokémon`;
+  const totalSpecies = dex.length;
+  const claimedSpecies = dex.filter(e => e.claimed).length;
+
+  countLabel.textContent =
+    `${claimedSpecies} / ${totalSpecies} Species`;
 
   const byRegion = {};
   dex.forEach(e => {
@@ -115,11 +119,11 @@ export function renderShinyDexHitlist({
     const section = document.createElement('section');
     section.className = 'region-section';
 
-    const claimedCount = entries.filter(e => e.claimed).length;
+    const claimed = entries.filter(e => e.claimed).length;
 
     const header = document.createElement('h2');
     header.textContent =
-      `${region.toUpperCase()} (${claimedCount} / ${entries.length})`;
+      `${region.toUpperCase()} (${claimed} / ${entries.length})`;
 
     const grid = document.createElement('div');
     grid.className = 'dex-grid';
