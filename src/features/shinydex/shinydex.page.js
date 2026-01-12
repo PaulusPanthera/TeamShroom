@@ -1,12 +1,12 @@
 // src/features/shinydex/shinydex.page.js
-// Shiny Pokédex — PAGE WIRING
-// Hitlist <-> Living Dex switch
+// Shiny Pokédex — PAGE CONTROLLER
+// Owns Hitlist <-> Living Dex switching locally
 
 import { renderShinyDexHitlist } from './shinydex.js';
 import { renderShinyLivingDex } from './shinylivingdex.js';
 
 /**
- * Initialize Shiny Pokédex page
+ * Setup Shiny Pokédex page
  *
  * @param {Array} shinyWeeklyModel
  * @param {Array} shinyShowcaseRows
@@ -15,38 +15,49 @@ export function setupShinyPokedexPage(
   shinyWeeklyModel,
   shinyShowcaseRows
 ) {
-  const hitlistTab = document.getElementById('tab-hitlist');
-  const livingDexTab = document.getElementById('tab-livingdex');
+  const container = document.getElementById('shiny-dex-container');
+  container.innerHTML = '';
 
-  if (!hitlistTab || !livingDexTab) {
-    throw new Error('[ShinyDex] Tabs not found');
-  }
+  // -------------------------------------------------------
+  // LOCAL VIEW TOGGLE
+  // -------------------------------------------------------
 
-  function activate(tab) {
-    hitlistTab.classList.remove('active');
-    livingDexTab.classList.remove('active');
-    tab.classList.add('active');
+  const toggle = document.createElement('div');
+  toggle.className = 'dex-view-toggle';
+
+  const hitlistBtn = document.createElement('button');
+  hitlistBtn.textContent = 'Hitlist';
+  hitlistBtn.className = 'active';
+
+  const livingDexBtn = document.createElement('button');
+  livingDexBtn.textContent = 'Living Dex';
+
+  toggle.append(hitlistBtn, livingDexBtn);
+  container.appendChild(toggle);
+
+  const viewRoot = document.createElement('div');
+  container.appendChild(viewRoot);
+
+  function activate(btn) {
+    hitlistBtn.classList.remove('active');
+    livingDexBtn.classList.remove('active');
+    btn.classList.add('active');
   }
 
   function showHitlist() {
-    activate(hitlistTab);
+    activate(hitlistBtn);
+    viewRoot.innerHTML = '';
     renderShinyDexHitlist(shinyWeeklyModel);
   }
 
   function showLivingDex() {
-    activate(livingDexTab);
+    activate(livingDexBtn);
+    viewRoot.innerHTML = '';
     renderShinyLivingDex(shinyShowcaseRows);
   }
 
-  hitlistTab.addEventListener('click', e => {
-    e.preventDefault();
-    showHitlist();
-  });
-
-  livingDexTab.addEventListener('click', e => {
-    e.preventDefault();
-    showLivingDex();
-  });
+  hitlistBtn.addEventListener('click', showHitlist);
+  livingDexBtn.addEventListener('click', showLivingDex);
 
   // default
   showHitlist();
