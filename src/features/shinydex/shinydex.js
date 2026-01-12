@@ -1,5 +1,5 @@
 // src/features/shinydex/shinydex.js
-// Shiny Dex — PAGE CONTROLLER
+// Shiny Dex — Page Controller
 
 import { buildShinyDexModel } from '../../data/shinydex.model.js';
 import { renderHitlistStandard } from './shinydex.hitlist.js';
@@ -23,17 +23,22 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
   unclaimedBtn.textContent = 'Unclaimed';
   unclaimedBtn.className = 'dex-tab';
 
-  const modeSelect = document.createElement('select');
-  modeSelect.innerHTML = `
+  const hitlistSelect = document.createElement('select');
+  hitlistSelect.innerHTML = `
     <option value="standard">Standard</option>
     <option value="claims">Total Claims</option>
     <option value="points">Total Claim Points</option>
+  `;
+
+  const livingSelect = document.createElement('select');
+  livingSelect.innerHTML = `
+    <option value="standard">Standard</option>
     <option value="total">Total Shinies</option>
   `;
 
   const totalCounter = document.createElement('span');
 
-  controls.append(searchInput, unclaimedBtn, modeSelect, totalCounter);
+  controls.append(searchInput, unclaimedBtn, hitlistSelect, livingSelect, totalCounter);
   root.appendChild(controls);
 
   /* ---------------- TABS ---------------- */
@@ -52,8 +57,6 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
   tabs.append(hitlistTab, livingTab);
   root.appendChild(tabs);
 
-  /* ---------------- CONTENT ---------------- */
-
   const content = document.createElement('div');
   root.appendChild(content);
 
@@ -63,21 +66,37 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
     e => POKEMON_SHOW[e.pokemon] !== false
   );
 
+  /* ---------------- STATE ---------------- */
+
   const state = {
     view: 'hitlist',
-    search: '',
-    unclaimed: false,
-    mode: 'standard'
+
+    hitlist: {
+      mode: 'standard',
+      unclaimed: false
+    },
+
+    living: {
+      mode: 'standard',
+      unclaimed: false
+    },
+
+    search: ''
   };
 
   function syncControls() {
     hitlistTab.classList.toggle('active', state.view === 'hitlist');
     livingTab.classList.toggle('active', state.view === 'living');
-    unclaimedBtn.classList.toggle('active', state.unclaimed === true);
 
-    const hitlistOnly = state.view === 'hitlist';
-    unclaimedBtn.style.display = hitlistOnly ? '' : 'none';
-    modeSelect.style.display = '';
+    hitlistSelect.style.display = state.view === 'hitlist' ? '' : 'none';
+    livingSelect.style.display = state.view === 'living' ? '' : 'none';
+
+    unclaimedBtn.classList.toggle(
+      'active',
+      state.view === 'hitlist'
+        ? state.hitlist.unclaimed
+        : state.living.unclaimed
+    );
   }
 
   function apply() {
@@ -88,7 +107,8 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
       renderShinyLivingDex({
         showcaseRows,
         search: state.search,
-        sort: state.mode === 'total' ? 'total' : 'standard',
+        sort: state.living.mode,
+        unclaimedOnly: state.living.unclaimed,
         container: content,
         totalCounter
       });
@@ -99,14 +119,14 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
       e.pokemon.includes(state.search)
     );
 
-    if (state.unclaimed) {
+    if (state.hitlist.unclaimed) {
       list = list.filter(e => !e.claimed);
     }
 
-    if (state.mode === 'standard') {
+    if (state.hitlist.mode === 'standard') {
       renderHitlistStandard(list, content, totalCounter);
     } else {
-      renderHitlistScoreboard(list, state.mode, content, totalCounter);
+      renderHitlistScoreboard(list, state.hitlist.mode, content, totalCounter);
     }
   }
 
@@ -118,12 +138,21 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
   });
 
   unclaimedBtn.addEventListener('click', () => {
-    state.unclaimed = !state.unclaimed;
+    if (state.view === 'hitlist') {
+      state.hitlist.unclaimed = !state.hitlist.unclaimed;
+    } else {
+      state.living.unclaimed = !state.living.unclaimed;
+    }
     apply();
   });
 
-  modeSelect.addEventListener('change', e => {
-    state.mode = e.target.value;
+  hitlistSelect.addEventListener('change', e => {
+    state.hitlist.mode = e.target.value;
+    apply();
+  });
+
+  livingSelect.addEventListener('change', e => {
+    state.living.mode = e.target.value;
     apply();
   });
 
