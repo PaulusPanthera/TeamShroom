@@ -1,6 +1,6 @@
 // src/features/shinydex/shinydex.js
 // Shiny Dex Page Controller
-// SINGLE OWNER of DOM + STATE below #page-content
+// Owns ALL DOM under #page-content
 
 import { renderShinyDexHitlist } from './shinydex.hitlist.js';
 import { renderShinyLivingDex } from './shinylivingdex.js';
@@ -10,6 +10,12 @@ export function setupShinyDexPage({
   shinyShowcaseRows
 }) {
   const root = document.getElementById('page-content');
+  root.innerHTML = '';
+
+  // --------------------------------------------------
+  // UI SKELETON
+  // --------------------------------------------------
+
   root.innerHTML = `
     <div class="search-controls">
       <input id="dex-search" type="text" placeholder="Search…" />
@@ -36,33 +42,33 @@ export function setupShinyDexPage({
   `;
 
   // --------------------------------------------------
-  // STATE (single source of truth)
+  // ELEMENTS
+  // --------------------------------------------------
+
+  const searchInput = root.querySelector('#dex-search');
+  const unclaimedBtn = root.querySelector('#dex-unclaimed');
+  const sortSelect = root.querySelector('#dex-sort');
+  const countLabel = root.querySelector('#dex-count');
+
+  const tabHitlist = root.querySelector('#tab-hitlist');
+  const tabLiving = root.querySelector('#tab-living');
+
+  // --------------------------------------------------
+  // STATE (SINGLE SOURCE OF TRUTH)
   // --------------------------------------------------
 
   const state = {
-    view: 'hitlist',      // 'hitlist' | 'living'
+    view: 'hitlist',        // 'hitlist' | 'living'
     search: '',
     unclaimed: false,
     sort: 'standard'
   };
 
   // --------------------------------------------------
-  // ELEMENTS
+  // SORT OPTIONS (PER VIEW)
   // --------------------------------------------------
 
-  const searchInput = root.querySelector('#dex-search');
-  const unclaimedBtn = root.querySelector('#dex-unclaimed');
-  const sortSelect  = root.querySelector('#dex-sort');
-  const countLabel  = root.querySelector('#dex-count');
-
-  const tabHitlist = root.querySelector('#tab-hitlist');
-  const tabLiving  = root.querySelector('#tab-living');
-
-  // --------------------------------------------------
-  // SORT OPTIONS (per tab)
-  // --------------------------------------------------
-
-  function setupSortOptions() {
+  function configureSort() {
     sortSelect.innerHTML = '';
 
     if (state.view === 'hitlist') {
@@ -82,17 +88,7 @@ export function setupShinyDexPage({
       state.unclaimed = false;
     }
 
-    updateButtonStates();
-  }
-
-  // --------------------------------------------------
-  // BUTTON VISUAL STATE (FIXED)
-  // --------------------------------------------------
-
-  function updateButtonStates() {
     unclaimedBtn.classList.toggle('active', state.unclaimed);
-    tabHitlist.classList.toggle('active', state.view === 'hitlist');
-    tabLiving.classList.toggle('active', state.view === 'living');
   }
 
   // --------------------------------------------------
@@ -100,6 +96,8 @@ export function setupShinyDexPage({
   // --------------------------------------------------
 
   function render() {
+    unclaimedBtn.classList.toggle('active', state.unclaimed);
+
     if (state.view === 'hitlist') {
       renderShinyDexHitlist({
         weeklyModel,
@@ -130,7 +128,6 @@ export function setupShinyDexPage({
 
   unclaimedBtn.addEventListener('click', () => {
     state.unclaimed = !state.unclaimed;
-    updateButtonStates();
     render();
   });
 
@@ -140,14 +137,24 @@ export function setupShinyDexPage({
   });
 
   tabHitlist.addEventListener('click', () => {
+    if (state.view === 'hitlist') return;
+
     state.view = 'hitlist';
-    setupSortOptions();
+    tabHitlist.classList.add('active');
+    tabLiving.classList.remove('active');
+
+    configureSort();
     render();
   });
 
   tabLiving.addEventListener('click', () => {
+    if (state.view === 'living') return;
+
     state.view = 'living';
-    setupSortOptions();
+    tabLiving.classList.add('active');
+    tabHitlist.classList.remove('active');
+
+    configureSort();
     render();
   });
 
@@ -155,6 +162,6 @@ export function setupShinyDexPage({
   // INIT
   // --------------------------------------------------
 
-  setupSortOptions();
+  configureSort();
   render();
 }
