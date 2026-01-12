@@ -1,6 +1,6 @@
 // src/features/shinydex/shinydex.js
 // Shiny Dex — PAGE CONTROLLER
-// Owns controls, tabs, state, dispatch
+// Hitlist + Living Dex
 
 import { buildShinyDexModel } from '../../data/shinydex.model.js';
 import { renderHitlistStandard } from './shinydex.hitlist.js';
@@ -12,7 +12,7 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
   const root = document.getElementById('shiny-dex-container');
   root.innerHTML = '';
 
-  /* ---------- CONTROLS ---------- */
+  /* ---------------- CONTROLS ---------------- */
 
   const controls = document.createElement('div');
   controls.className = 'search-controls';
@@ -22,7 +22,7 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
 
   const unclaimedBtn = document.createElement('button');
   unclaimedBtn.textContent = 'Unclaimed';
-  unclaimedBtn.className = 'dex-tab active';
+  unclaimedBtn.className = 'dex-tab'; // default = inactive
 
   const modeSelect = document.createElement('select');
   modeSelect.innerHTML = `
@@ -36,28 +36,28 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
   controls.append(searchInput, unclaimedBtn, modeSelect, totalCounter);
   root.appendChild(controls);
 
-  /* ---------- TABS ---------- */
+  /* ---------------- TABS ---------------- */
 
   const tabs = document.createElement('div');
   tabs.className = 'search-controls';
 
-  const tabHitlist = document.createElement('button');
-  tabHitlist.textContent = 'Shiny Dex Hitlist';
-  tabHitlist.className = 'dex-tab active';
+  const hitlistTab = document.createElement('button');
+  hitlistTab.textContent = 'Shiny Dex Hitlist';
+  hitlistTab.className = 'dex-tab active';
 
-  const tabLiving = document.createElement('button');
-  tabLiving.textContent = 'Shiny Living Dex';
-  tabLiving.className = 'dex-tab';
+  const livingTab = document.createElement('button');
+  livingTab.textContent = 'Shiny Living Dex';
+  livingTab.className = 'dex-tab';
 
-  tabs.append(tabHitlist, tabLiving);
+  tabs.append(hitlistTab, livingTab);
   root.appendChild(tabs);
 
-  /* ---------- CONTENT ---------- */
+  /* ---------------- CONTENT ---------------- */
 
   const content = document.createElement('div');
   root.appendChild(content);
 
-  /* ---------- DATA ---------- */
+  /* ---------------- DATA ---------------- */
 
   const dex = buildShinyDexModel(weeklyModel).filter(
     e => POKEMON_SHOW[e.pokemon] !== false
@@ -66,14 +66,18 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
   const state = {
     view: 'hitlist',
     search: '',
-    unclaimed: true,
+    unclaimed: false, // default = show claimed + unclaimed
     mode: 'standard'
   };
 
-  /* ---------- PIPELINE ---------- */
+  /* ---------------- PIPELINE ---------------- */
 
   function apply() {
     content.innerHTML = '';
+
+    const isHitlist = state.view === 'hitlist';
+    unclaimedBtn.style.display = isHitlist ? '' : 'none';
+    modeSelect.style.display = isHitlist ? '' : 'none';
 
     if (state.view === 'living') {
       renderShinyLivingDex({
@@ -96,16 +100,11 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
     if (state.mode === 'standard') {
       renderHitlistStandard(list, content, totalCounter);
     } else {
-      renderHitlistScoreboard(
-        list,
-        state.mode,
-        content,
-        totalCounter
-      );
+      renderHitlistScoreboard(list, state.mode, content, totalCounter);
     }
   }
 
-  /* ---------- EVENTS ---------- */
+  /* ---------------- EVENTS ---------------- */
 
   searchInput.addEventListener('input', e => {
     state.search = e.target.value.toLowerCase();
@@ -123,17 +122,17 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
     apply();
   });
 
-  tabHitlist.addEventListener('click', () => {
+  hitlistTab.addEventListener('click', () => {
     state.view = 'hitlist';
-    tabHitlist.classList.add('active');
-    tabLiving.classList.remove('active');
+    hitlistTab.classList.add('active');
+    livingTab.classList.remove('active');
     apply();
   });
 
-  tabLiving.addEventListener('click', () => {
+  livingTab.addEventListener('click', () => {
     state.view = 'living';
-    tabLiving.classList.add('active');
-    tabHitlist.classList.remove('active');
+    livingTab.classList.add('active');
+    hitlistTab.classList.remove('active');
     apply();
   });
 
