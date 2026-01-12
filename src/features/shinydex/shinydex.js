@@ -5,7 +5,10 @@
 
 import { buildShinyDexModel } from '../../domains/shinydex/hitlist.model.js';
 import { buildShinyLivingDexModel } from '../../domains/shinydex/livingdex.model.js';
-import { POKEMON_REGION } from '../../data/pokemondatabuilder.js';
+import {
+  POKEMON_REGION,
+  POKEMON_SHOW
+} from '../../data/pokemondatabuilder.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
 
 import { renderShinyDexHitlist } from './shinydex.hitlist.js';
@@ -112,7 +115,9 @@ export function setupShinyDexPage({
     const view = active();
     const q = normalizeQuery(view.search);
 
-    let baseDex = buildShinyDexModel(weeklyModel);
+    let baseDex = buildShinyDexModel(weeklyModel).filter(
+      e => POKEMON_SHOW[e.pokemon] !== false
+    );
 
     if (q) {
       baseDex = baseDex.filter(e => {
