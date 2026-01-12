@@ -4,7 +4,6 @@
 
 import { loadShinyWeekly } from './src/data/shinyweekly.loader.js';
 import { buildShinyWeeklyModel } from './src/data/shinyweekly.model.js';
-import { buildShinyDexModel } from './src/data/shinydex.model.js';
 
 import { loadShinyShowcase } from './src/data/shinyshowcase.loader.js';
 import { loadPokemon } from './src/data/pokemon.loader.js';
@@ -33,7 +32,6 @@ import { renderShinyWeekly } from './src/features/shinyweekly/shinyweekly.ui.js'
 // ---------------------------------------------------------
 
 let shinyWeeklyWeeks = null;
-let shinyDexData = null;
 let donatorsData = null;
 let membersData = null;
 let shinyShowcaseRows = null;
@@ -89,7 +87,34 @@ async function renderPage() {
   content.innerHTML = '';
 
   // -------------------------------------------------------
-  // LOAD MEMBERS + SHOWCASE FIRST (FOUNDATION)
+  // POKÉMON DATA
+  // -------------------------------------------------------
+
+  if (!pokemonDataLoaded) {
+    const pokemonRows = await loadPokemon();
+    buildPokemonData(pokemonRows);
+    pokemonDataLoaded = true;
+  }
+
+  // -------------------------------------------------------
+  // SHINY WEEKLY
+  // -------------------------------------------------------
+
+  if (!shinyWeeklyWeeks) {
+    const rows = await loadShinyWeekly();
+    shinyWeeklyWeeks = buildShinyWeeklyModel(rows);
+  }
+
+  // -------------------------------------------------------
+  // DONATORS
+  // -------------------------------------------------------
+
+  if (!donatorsData) {
+    donatorsData = await loadDonators();
+  }
+
+  // -------------------------------------------------------
+  // MEMBERS + SHOWCASE → TEAM MODEL
   // -------------------------------------------------------
 
   if (!membersData) {
@@ -102,34 +127,6 @@ async function renderPage() {
 
   if (!teamMembers) {
     teamMembers = buildMembersModel(membersData, shinyShowcaseRows);
-  }
-
-  // -------------------------------------------------------
-  // POKÉMON DATA (DEPENDS ON TEAM MEMBERS)
-  // -------------------------------------------------------
-
-  if (!pokemonDataLoaded) {
-    const pokemonRows = await loadPokemon();
-    buildPokemonData(pokemonRows, teamMembers);
-    pokemonDataLoaded = true;
-  }
-
-  // -------------------------------------------------------
-  // SHINY WEEKLY + SHINY DEX MODEL
-  // -------------------------------------------------------
-
-  if (!shinyWeeklyWeeks) {
-    const rows = await loadShinyWeekly();
-    shinyWeeklyWeeks = buildShinyWeeklyModel(rows);
-    shinyDexData = buildShinyDexModel(shinyWeeklyWeeks);
-  }
-
-  // -------------------------------------------------------
-  // DONATORS
-  // -------------------------------------------------------
-
-  if (!donatorsData) {
-    donatorsData = await loadDonators();
   }
 
   // -------------------------------------------------------
@@ -169,7 +166,7 @@ async function renderPage() {
   }
 
   // -------------------------------------------------------
-  // HITLIST / LIVING DEX (PHASE 1)
+  // HITLIST (VISIBILITY PHASE)
   // -------------------------------------------------------
 
   else if (page === 'hitlist') {
