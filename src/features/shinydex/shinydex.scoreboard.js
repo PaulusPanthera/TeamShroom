@@ -44,10 +44,12 @@ export function renderHitlistScoreboard(
     const section = document.createElement('section');
     section.className = 'scoreboard-member-section';
 
-    section.innerHTML =
-      mode === 'claims'
-        ? `<h2>${i + 1}. ${m.name} — ${m.claims} claims</h2>`
-        : `<h2>${i + 1}. ${m.name} — ${m.points} points</h2>`;
+    section.innerHTML = `
+      <h2>
+        ${i + 1}. ${m.name}
+        — ${m.claims} claims / ${m.points} pts
+      </h2>
+    `;
 
     const grid = document.createElement('div');
     grid.className = 'dex-grid';
