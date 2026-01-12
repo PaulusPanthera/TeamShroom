@@ -1,88 +1,64 @@
 // src/data/pokemondatabuilder.js
-// Pokémon derived data builder
-// Runtime consumes pre-normalized pokemon.json
-// HARD DATA PROVIDER — SHARED MODEL DEPENDENCY
+// Pokémon derived runtime data
+// Consumes CI-normalized pokemon.json (DEX CONTRACT)
+//
+// pokemon.json.data[] shape:
+//
+// {
+//   id: number
+//   key: string
+//   name: string
+//   generation: number
+//   family: string
+//   stage: number
+//   points: number
+// }
 
-export const TIER_POINTS = {
-  '6': 2,
-  '5': 3,
-  '4': 6,
-  '3': 10,
-  '2': 15,
-  '1': 25,
-  '0': 30,
-  'LM': 100
-};
-
-// ---------------------------------------------------------
-// RUNTIME STATE (EXPLICITLY EXPORTED)
-// ---------------------------------------------------------
-
-export let TIER_FAMILIES = {};
 export let POKEMON_POINTS = {};
-export let POKEMON_TIER = {};
-export let POKEMON_REGION = {};
-export let POKEMON_RARITY = {};
-export let POKEMON_SHOW = {};
 export let pokemonFamilies = {};
-export let LIVING_COUNTS = {};
 
-// ---------------------------------------------------------
-// BUILDER (MUTATES EXPORTED STATE ONLY)
-// ---------------------------------------------------------
-
+/**
+ * Build Pokémon runtime maps
+ *
+ * @param {Array} rows        pokemon.json.data[]
+ * @param {Array} teamMembers members model (for later living dex use)
+ */
 export function buildPokemonData(rows, teamMembers = []) {
-  // Reset maps
-  TIER_FAMILIES = {};
+  // Reset runtime state
   POKEMON_POINTS = {};
-  POKEMON_TIER = {};
-  POKEMON_REGION = {};
-  POKEMON_RARITY = {};
-  POKEMON_SHOW = {};
   pokemonFamilies = {};
-  LIVING_COUNTS = {};
+
+  // -------------------------------------------------------
+  // BUILD FAMILY MAPS + POINTS
+  // -------------------------------------------------------
 
   rows.forEach(row => {
-    const tier = String(row.tier);
-    if (!TIER_POINTS[tier]) return;
+    const key = row.key;
 
-    const familyRaw = row.family;
-    if (!familyRaw) return;
+    if (!key) return;
 
-    const family = familyRaw
-      .split(',')
-      .map(s => s.trim().toLowerCase())
-      .filter(Boolean);
+    // Points are explicit in the new contract
+    POKEMON_POINTS[key] = row.points;
 
-    if (!family.length) return;
+    // Build family → ordered stages
+    const familyId = row.family;
+    if (!familyId) return;
 
-    const base = family[0];
-
-    TIER_FAMILIES[tier] ??= [];
-    if (!TIER_FAMILIES[tier].includes(base)) {
-      TIER_FAMILIES[tier].push(base);
-    }
-
-    family.forEach(name => {
-      pokemonFamilies[name] = family;
-      POKEMON_POINTS[name] = TIER_POINTS[tier];
-      POKEMON_TIER[name] = tier;
-      POKEMON_REGION[name] = row.region || 'Unknown';
-      POKEMON_RARITY[name] = row.rarity || null;
-      POKEMON_SHOW[name] = row.show === true;
-      LIVING_COUNTS[name] = 0;
+    pokemonFamilies[familyId] ??= [];
+    pokemonFamilies[familyId].push({
+      key,
+      stage: row.stage
     });
   });
 
-  // -------------------------------------------------------
-  // LIVING DEX COUNTS (DERIVED, SINGLE SOURCE)
-  // -------------------------------------------------------
+  // Sort family stages by evolution order
+  Object.values(pokemonFamilies).forEach(family => {
+    family.sort((a, b) => a.stage - b.stage);
+  });
 
-  teamMembers.forEach(member => {
-    member.shinies.forEach(mon => {
-      if (mon.lost || mon.sold) return;
-      if (!POKEMON_POINTS[mon.pokemon]) return;
-      LIVING_COUNTS[mon.pokemon] += 1;
-    });
+  // Replace family arrays with ordered key lists
+  Object.keys(pokemonFamilies).forEach(familyId => {
+    pokemonFamilies[familyId] =
+      pokemonFamilies[familyId].map(e => e.key);
   });
 }
