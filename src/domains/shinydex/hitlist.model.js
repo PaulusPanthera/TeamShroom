@@ -1,6 +1,6 @@
 // src/domains/shinydex/hitlist.model.js
 // Shiny Dex — HITLIST CLAIM MODEL
-// Deterministic, order-dependent, family-aware
+// PURE FUNCTION — deterministic, order-dependent
 // Source of truth: Shiny Weekly model ONLY
 
 import {
@@ -42,60 +42,48 @@ export function buildShinyDexModel(weeklyModel) {
   });
 
   // -------------------------------------------------------
-  // PREPARE FAMILY STATE
+  // CLAIM RESOLUTION (FAMILY → STAGE, PROGRESSIVE)
   // -------------------------------------------------------
 
-  const familyState = {};
-  Object.entries(pokemonFamilies).forEach(([family, stages]) => {
-    familyState[family] = {
-      stages: [...stages],
-      claimed: {} // pokemon → member
-    };
-  });
+  const claimedByPokemon = {};
+  const claimedStagesByFamily = {};
 
-  const pokemonClaims = {};
-
-  // -------------------------------------------------------
-  // RESOLVE CLAIMS (ORDER MATTERS)
-  // -------------------------------------------------------
-
-  events.forEach(({ member, pokemon }) => {
-    const family = Object.keys(pokemonFamilies).find(f =>
-      pokemonFamilies[f].includes(pokemon)
+  events.forEach(event => {
+    // Find family for this Pokémon
+    const familyId = Object.keys(pokemonFamilies).find(id =>
+      pokemonFamilies[id].includes(event.pokemon)
     );
 
-    if (!family) return;
+    if (!familyId) return;
 
-    const state = familyState[family];
+    const familyStages = pokemonFamilies[familyId];
 
-    // find next unclaimed stage
-    const nextStage = state.stages.find(
-      p => !state.claimed[p]
+    claimedStagesByFamily[familyId] ??= {};
+
+    // Find next unclaimed stage in this family
+    const nextStage = familyStages.find(
+      stage => !claimedStagesByFamily[familyId][stage]
     );
 
-    if (!nextStage) return;
+    if (!nextStage) return; // family fully claimed
 
-    state.claimed[nextStage] = member;
-    pokemonClaims[nextStage] = member;
+    // Assign claim
+    claimedStagesByFamily[familyId][nextStage] = event.member;
+    claimedByPokemon[nextStage] = event.member;
   });
 
   // -------------------------------------------------------
-  // FINAL DEX LIST (FULL, STABLE)
+  // FINAL DEX LIST (ORDER = POKÉMON DATA ORDER)
   // -------------------------------------------------------
 
-  return Object.keys(POKEMON_POINTS).map(pokemon => {
-    const family =
+  return Object.keys(POKEMON_POINTS).map(pokemon => ({
+    pokemon,
+    family:
       Object.keys(pokemonFamilies)
-        .find(f => pokemonFamilies[f].includes(pokemon)) ||
-      pokemon;
-
-    return {
-      pokemon,
-      family,
-      region: POKEMON_REGION[pokemon] || 'unknown',
-      points: POKEMON_POINTS[pokemon],
-      claimed: Boolean(pokemonClaims[pokemon]),
-      claimedBy: pokemonClaims[pokemon] || null
-    };
-  });
+        .find(id => pokemonFamilies[id].includes(pokemon)) || pokemon,
+    region: POKEMON_REGION[pokemon] || 'unknown',
+    points: POKEMON_POINTS[pokemon],
+    claimed: !!claimedByPokemon[pokemon],
+    claimedBy: claimedByPokemon[pokemon] || null
+  }));
 }
