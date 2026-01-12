@@ -1,183 +1,46 @@
-// shinydex.js
-// Shiny Dex — Hitlist & Living Dex
-// UI ONLY. Consumes shinydex.model output.
+// src/features/shinydex/shinydex.js
+// Shiny Dex — PHASE 1 VISIBILITY CHECK
+// Render Pokémon cards only. No claims. No weekly logic.
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
 import {
-  POKEMON_REGION,
-  POKEMON_SHOW,
-  LIVING_COUNTS
+  POKEMON_POINTS,
+  POKEMON_SHOW
 } from '../../data/pokemondatabuilder.js';
 
-/* ---------------------------------------------------------
-   SPRITES
---------------------------------------------------------- */
-
 function getPokemonGif(pokemonKey) {
-  const overrides = {
-    mrmime: 'mr-mime',
-    mimejr: 'mime-jr',
-    'nidoran-f': 'nidoran-f',
-    'nidoran-m': 'nidoran-m',
-    typenull: 'type-null',
-    'porygon-z': 'porygon-z'
-  };
-
-  const key = overrides[pokemonKey] || pokemonKey;
-  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
+  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${pokemonKey}.gif`;
 }
 
-/* ---------------------------------------------------------
-   FILTERING
---------------------------------------------------------- */
-
-function filterEntry(entry, filter) {
-  if (!POKEMON_SHOW[entry.pokemon]) return false;
-  if (!filter) return true;
-
-  const f = filter.toLowerCase();
-
-  if (f === 'claimed') return entry.claimed;
-  if (f === 'unclaimed') return !entry.claimed;
-
-  const region = POKEMON_REGION[entry.pokemon];
-  if (region && region.toLowerCase() === f) return true;
-
-  return entry.pokemon.includes(f);
-}
-
-/* ---------------------------------------------------------
-   RENDERERS
---------------------------------------------------------- */
-
-function renderHitlist(shinyDex, filter) {
+export function setupShinyDexHitlistSearch() {
   const container = document.getElementById('shiny-dex-container');
   container.innerHTML = '';
 
-  let shown = 0;
+  const grid = document.createElement('div');
+  grid.className = 'dex-grid';
 
-  Object.entries(shinyDex).forEach(([region, entries]) => {
-    const filtered = entries.filter(e => filterEntry(e, filter));
-    if (!filtered.length) return;
+  let rendered = 0;
 
-    shown += filtered.length;
+  Object.keys(POKEMON_POINTS).forEach(pokemon => {
+    if (!POKEMON_SHOW[pokemon]) return;
 
-    const section = document.createElement('section');
-    section.className = 'region-section';
-    section.innerHTML = `<h2>${region}</h2>`;
+    rendered++;
 
-    const grid = document.createElement('div');
-    grid.className = 'dex-grid';
-
-    filtered.forEach(entry => {
-      grid.insertAdjacentHTML(
-        'beforeend',
-        renderUnifiedCard({
-          name: prettifyPokemonName(entry.pokemon),
-          img: getPokemonGif(entry.pokemon),
-          info: entry.claimed
-            ? `Claimed by ${entry.claimedBy}`
-            : 'Unclaimed',
-          cardType: 'pokemon',
-          unclaimed: !entry.claimed,
-          highlighted: entry.claimed
-        })
-      );
-    });
-
-    section.appendChild(grid);
-    container.appendChild(section);
+    grid.insertAdjacentHTML(
+      'beforeend',
+      renderUnifiedCard({
+        name: prettifyPokemonName(pokemon),
+        img: getPokemonGif(pokemon),
+        info: 'Visible',
+        cardType: 'pokemon'
+      })
+    );
   });
 
-  return shown;
-}
+  container.appendChild(grid);
 
-function renderLivingDex(shinyDex, filter) {
-  const container = document.getElementById('shiny-dex-container');
-  container.innerHTML = '';
-
-  let shown = 0;
-
-  Object.entries(shinyDex).forEach(([region, entries]) => {
-    const filtered = entries.filter(e => filterEntry(e, filter));
-    if (!filtered.length) return;
-
-    shown += filtered.length;
-
-    const section = document.createElement('section');
-    section.className = 'region-section';
-    section.innerHTML = `<h2>${region}</h2>`;
-
-    const grid = document.createElement('div');
-    grid.className = 'dex-grid';
-
-    filtered.forEach(entry => {
-      grid.insertAdjacentHTML(
-        'beforeend',
-        renderUnifiedCard({
-          name: prettifyPokemonName(entry.pokemon),
-          img: getPokemonGif(entry.pokemon),
-          info: `Owned: ${LIVING_COUNTS[entry.pokemon] || 0}`,
-          cardType: 'pokemon'
-        })
-      );
-    });
-
-    section.appendChild(grid);
-    container.appendChild(section);
-  });
-
-  return shown;
-}
-
-/* ---------------------------------------------------------
-   ENTRY POINT
---------------------------------------------------------- */
-
-export function setupShinyDexHitlistSearch(shinyDex) {
-  const container = document.getElementById('shiny-dex-container');
-
-  const controls = document.createElement('div');
-  controls.className = 'search-controls';
-  controls.innerHTML = `
-    <input type="text" placeholder="Search Pokémon or Region">
-    <button class="dex-tab active" data-mode="hitlist">Hitlist</button>
-    <button class="dex-tab" data-mode="living">Living Dex</button>
-    <span class="result-count"></span>
-  `;
-
-  container.parentNode.insertBefore(controls, container);
-
-  let mode = 'hitlist';
-  let filter = '';
-
-  const input = controls.querySelector('input');
-  const tabs = controls.querySelectorAll('.dex-tab');
-  const count = controls.querySelector('.result-count');
-
-  function render() {
-    const shown =
-      mode === 'hitlist'
-        ? renderHitlist(shinyDex, filter)
-        : renderLivingDex(shinyDex, filter);
-
-    count.textContent = `${shown} Pokémon`;
+  if (rendered === 0) {
+    container.innerHTML = '<p>No Pokémon rendered.</p>';
   }
-
-  input.addEventListener('input', e => {
-    filter = e.target.value.trim().toLowerCase();
-    render();
-  });
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      mode = tab.dataset.mode;
-      render();
-    });
-  });
-
-  render();
 }
