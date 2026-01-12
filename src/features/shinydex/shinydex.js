@@ -1,130 +1,178 @@
 // src/features/shinydex/shinydex.js
-// Shiny Dex — HITLIST VIEW (CLAIM-BASED, IMMUTABLE)
+// Shiny Dex — PAGE CONTROLLER
+// Owns ALL state + controls. Renderers are pure.
 
-import { buildShinyDexModel } from '../../data/shinydex.model.js';
-import { renderUnifiedCard } from '../../ui/unifiedcard.js';
-import { prettifyPokemonName } from '../../utils/utils.js';
-import {
-  POKEMON_SHOW,
-  POKEMON_REGION
-} from '../../data/pokemondatabuilder.js';
+import { renderShinyDexHitlist } from './shinydex.hitlist.js';
+import { renderShinyLivingDex } from './shinylivingdex.js';
 
-function getPokemonGif(pokemonKey) {
-  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${pokemonKey}.gif`;
-}
-
-export function renderShinyDexHitlist(weeklyModel, controlsState) {
-  const container = document.getElementById('shiny-dex-container');
-  container.innerHTML = '';
-
-  const dex = buildShinyDexModel(weeklyModel).filter(
-    e => POKEMON_SHOW[e.pokemon] !== false
-  );
-
-  let list = dex.filter(e =>
-    prettifyPokemonName(e.pokemon)
-      .toLowerCase()
-      .includes(controlsState.search)
-  );
-
-  if (controlsState.unclaimedOnly) {
-    list = list.filter(e => !e.claimed);
+export function setupShinyDexPage({
+  weeklyModel,
+  shinyShowcaseRows
+}) {
+  const container = document.getElementById('page-content');
+  if (!container) {
+    throw new Error('[ShinyDex] page-content not found');
   }
 
-  // ---------------- STANDARD ----------------
-  if (controlsState.mode === 'standard') {
-    const byRegion = {};
+  // -------------------------------------------------------
+  // INITIAL MARKUP
+  // -------------------------------------------------------
 
-    list.forEach(e => {
-      const region = e.region || POKEMON_REGION[e.pokemon] || 'unknown';
-      byRegion[region] ??= [];
-      byRegion[region].push(e);
-    });
+  container.innerHTML = `
+    <div class="search-controls" id="dex-controls">
+      <input type="text" id="dex-search" placeholder="Search…" />
 
-    Object.entries(byRegion).forEach(([region, entries]) => {
-      const section = document.createElement('section');
-      section.className = 'region-section';
+      <button id="dex-unclaimed" class="dex-tab">
+        Unclaimed
+      </button>
 
-      const claimedCount = entries.filter(e => e.claimed).length;
+      <select id="dex-sort"></select>
 
-      const header = document.createElement('h2');
-      header.textContent = `${region.toUpperCase()} (${claimedCount} / ${entries.length})`;
+      <span id="dex-count"></span>
+    </div>
 
-      const grid = document.createElement('div');
-      grid.className = 'dex-grid';
+    <div class="search-controls">
+      <button id="tab-hitlist" class="dex-tab active">
+        Shiny Dex Hitlist
+      </button>
+      <button id="tab-living" class="dex-tab">
+        Shiny Living Dex
+      </button>
+    </div>
 
-      entries.forEach(entry => {
-        grid.insertAdjacentHTML(
-          'beforeend',
-          renderUnifiedCard({
-            name: prettifyPokemonName(entry.pokemon),
-            img: getPokemonGif(entry.pokemon),
-            info: entry.claimed ? entry.claimedBy : 'Unclaimed',
-            unclaimed: !entry.claimed,
-            highlighted: entry.claimed,
-            cardType: 'pokemon'
-          })
-        );
+    <div id="shiny-dex-container"></div>
+  `;
+
+  // -------------------------------------------------------
+  // ELEMENTS
+  // -------------------------------------------------------
+
+  const searchInput = document.getElementById('dex-search');
+  const unclaimedBtn = document.getElementById('dex-unclaimed');
+  const sortSelect = document.getElementById('dex-sort');
+  const countLabel = document.getElementById('dex-count');
+
+  const tabHitlist = document.getElementById('tab-hitlist');
+  const tabLiving = document.getElementById('tab-living');
+
+  // -------------------------------------------------------
+  // STATE (single source of truth)
+  // -------------------------------------------------------
+
+  const state = {
+    view: 'hitlist',          // 'hitlist' | 'living'
+    search: '',
+    unclaimedOnly: false,     // DEFAULT = claimed shown
+    sort: 'standard'
+  };
+
+  // -------------------------------------------------------
+  // SORT OPTION CONFIGS
+  // -------------------------------------------------------
+
+  const HITLIST_SORTS = `
+    <option value="standard">Standard</option>
+    <option value="claims">Total Claims</option>
+    <option value="points">Total Claim Points</option>
+  `;
+
+  const LIVINGDEX_SORTS = `
+    <option value="standard">Standard</option>
+    <option value="total">Total Shinies</option>
+  `;
+
+  // -------------------------------------------------------
+  // HELPERS
+  // -------------------------------------------------------
+
+  function setActive(el, active) {
+    el.classList.toggle('active', active);
+  }
+
+  function applyButtonState() {
+    setActive(unclaimedBtn, state.unclaimedOnly);
+    setActive(tabHitlist, state.view === 'hitlist');
+    setActive(tabLiving, state.view === 'living');
+  }
+
+  function configureSortDropdown() {
+    if (state.view === 'hitlist') {
+      sortSelect.innerHTML = HITLIST_SORTS;
+      state.sort = 'standard';
+      unclaimedBtn.style.display = '';
+    } else {
+      sortSelect.innerHTML = LIVINGDEX_SORTS;
+      state.sort = 'standard';
+      unclaimedBtn.style.display = '';
+    }
+    sortSelect.value = state.sort;
+  }
+
+  // -------------------------------------------------------
+  // RENDER PIPELINE
+  // -------------------------------------------------------
+
+  function render() {
+    applyButtonState();
+
+    if (state.view === 'hitlist') {
+      renderShinyDexHitlist({
+        weeklyModel,
+        search: state.search,
+        unclaimedOnly: state.unclaimedOnly,
+        sort: state.sort,
+        countLabel
       });
-
-      section.append(header, grid);
-      container.appendChild(section);
-    });
-
-    return;
+    } else {
+      renderShinyLivingDex({
+        showcaseRows: shinyShowcaseRows,
+        search: state.search,
+        unclaimedOnly: state.unclaimedOnly,
+        sort: state.sort,
+        countLabel
+      });
+    }
   }
 
-  // ---------------- GROUPED (CLAIMS / POINTS) ----------------
-  const byMember = {};
-  dex.forEach(e => {
-    if (!e.claimed) return;
-    byMember[e.claimedBy] ??= [];
-    byMember[e.claimedBy].push(e);
+  // -------------------------------------------------------
+  // EVENTS
+  // -------------------------------------------------------
+
+  searchInput.addEventListener('input', e => {
+    state.search = e.target.value.toLowerCase();
+    render();
   });
 
-  const members = Object.entries(byMember)
-    .map(([name, entries]) => ({
-      name,
-      entries,
-      claims: entries.length,
-      points: entries.reduce((s, e) => s + e.points, 0)
-    }))
-    .sort((a, b) =>
-      controlsState.mode === 'claims'
-        ? b.claims - a.claims
-        : b.points - a.points
-    );
-
-  members.forEach((m, index) => {
-    const section = document.createElement('section');
-    section.className = 'scoreboard-member-section';
-
-    const header = document.createElement('h2');
-    header.textContent =
-      controlsState.mode === 'claims'
-        ? `${index + 1}. ${m.name} — ${m.claims} claims • ${m.points} pts`
-        : `${index + 1}. ${m.name} — ${m.points} pts • ${m.claims} claims`;
-
-    const grid = document.createElement('div');
-    grid.className = 'dex-grid';
-
-    m.entries.forEach(entry => {
-      grid.insertAdjacentHTML(
-        'beforeend',
-        renderUnifiedCard({
-          name: prettifyPokemonName(entry.pokemon),
-          img: getPokemonGif(entry.pokemon),
-          info:
-            controlsState.mode === 'claims'
-              ? entry.claimedBy
-              : `${entry.points} pts`,
-          highlighted: true,
-          cardType: 'pokemon'
-        })
-      );
-    });
-
-    section.append(header, grid);
-    container.appendChild(section);
+  unclaimedBtn.addEventListener('click', () => {
+    state.unclaimedOnly = !state.unclaimedOnly;
+    render();
   });
+
+  sortSelect.addEventListener('change', e => {
+    state.sort = e.target.value;
+    render();
+  });
+
+  tabHitlist.addEventListener('click', () => {
+    if (state.view === 'hitlist') return;
+    state.view = 'hitlist';
+    state.unclaimedOnly = false;
+    configureSortDropdown();
+    render();
+  });
+
+  tabLiving.addEventListener('click', () => {
+    if (state.view === 'living') return;
+    state.view = 'living';
+    state.unclaimedOnly = false;
+    configureSortDropdown();
+    render();
+  });
+
+  // -------------------------------------------------------
+  // INIT
+  // -------------------------------------------------------
+
+  configureSortDropdown();
+  render();
 }
