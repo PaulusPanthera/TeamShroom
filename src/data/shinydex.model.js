@@ -1,36 +1,31 @@
 // src/data/shinydex.model.js
-// Shiny Dex — HITLIST + LIVING DEX MODEL
-// CI-normalized inputs → UI-ready, region-grouped structure
+// Shiny Dex — HITLIST MODEL
+// Derives claim state EXCLUSIVELY from Shiny Weekly
 //
-// SINGLE SOURCE OF TRUTH FOR CLAIMS
-// Claims are derived EXCLUSIVELY from Shiny Weekly model output
-//
-// ---------------------------------------------------------
 // INTERNAL JSON API — SHINYDEX MODEL OUTPUT
 //
-// {
-//   [region: string]: Array<{
-//     pokemon: string
-//     family: string
-//     tier: string
-//     claimed: boolean
-//     claimedBy: string | null
-//     points: number
-//   }>
-// }
-// ---------------------------------------------------------
+// Array<{
+//   pokemon: string
+//   family: string
+//   claimed: boolean
+//   claimedBy: string | null
+//   points: number
+// }>
 
 import {
   pokemonFamilies,
-  POKEMON_TIER,
-  POKEMON_REGION,
-  POKEMON_POINTS,
-  POKEMON_SHOW
+  POKEMON_POINTS
 } from './pokemondatabuilder.js';
 
+/**
+ * Build Shiny Dex Hitlist model
+ *
+ * @param {Array} weeklyModel Output of buildShinyWeeklyModel()
+ * @returns {Array} flat shiny dex entries
+ */
 export function buildShinyDexModel(weeklyModel) {
   // -------------------------------------------------------
-  // FLATTEN SHINY WEEKLY → CHRONOLOGICAL EVENTS
+  // FLATTEN WEEKLY MODEL → CHRONOLOGICAL EVENTS
   // -------------------------------------------------------
 
   const events = [];
@@ -48,52 +43,54 @@ export function buildShinyDexModel(weeklyModel) {
     });
   });
 
+  // Order is guaranteed by weekly model construction
+  // Do NOT sort
+
   // -------------------------------------------------------
-  // CLAIM RESOLUTION (FAMILY → STAGE ORDER)
+  // CLAIM RESOLUTION (FAMILY-STAGE BASED)
   // -------------------------------------------------------
 
   const familyClaims = {};
   const pokemonClaims = {};
 
-  events.forEach(({ member, pokemon }) => {
-    const family = pokemonFamilies[pokemon];
-    if (!family || !family.length) return;
+  events.forEach(event => {
+    const familyId = Object.keys(pokemonFamilies)
+      .find(id => pokemonFamilies[id].includes(event.pokemon));
 
-    const familyKey = family[0];
-    familyClaims[familyKey] ??= {};
+    if (!familyId) return;
 
-    // Find first unclaimed stage in family order
-    const stageToClaim = family.find(
-      stage => !familyClaims[familyKey][stage]
-    );
+    familyClaims[familyId] ??= {};
 
-    if (!stageToClaim) return;
+    let claimedStage = null;
 
-    familyClaims[familyKey][stageToClaim] = member;
-    pokemonClaims[stageToClaim] = member;
+    // Exact stage free
+    if (!familyClaims[familyId][event.pokemon]) {
+      claimedStage = event.pokemon;
+    } else {
+      // First unclaimed stage
+      claimedStage =
+        pokemonFamilies[familyId].find(
+          p => !familyClaims[familyId][p]
+        ) || null;
+    }
+
+    if (!claimedStage) return;
+
+    familyClaims[familyId][claimedStage] = event.member;
+    pokemonClaims[claimedStage] = event.member;
   });
 
   // -------------------------------------------------------
-  // BUILD REGION-GROUPED OUTPUT
+  // BUILD FINAL DEX LIST
   // -------------------------------------------------------
 
-  const dex = {};
-
-  Object.keys(POKEMON_POINTS).forEach(pokemon => {
-    if (!POKEMON_SHOW[pokemon]) return;
-
-    const region = POKEMON_REGION[pokemon] || 'unknown';
-    dex[region] ??= [];
-
-    dex[region].push({
-      pokemon,
-      family: pokemonFamilies[pokemon]?.[0] || pokemon,
-      tier: POKEMON_TIER[pokemon],
-      claimed: !!pokemonClaims[pokemon],
-      claimedBy: pokemonClaims[pokemon] || null,
-      points: POKEMON_POINTS[pokemon] || 0
-    });
-  });
-
-  return dex;
+  return Object.keys(POKEMON_POINTS).map(pokemon => ({
+    pokemon,
+    family:
+      Object.keys(pokemonFamilies)
+        .find(id => pokemonFamilies[id].includes(pokemon)) || pokemon,
+    claimed: !!pokemonClaims[pokemon],
+    claimedBy: pokemonClaims[pokemon] || null,
+    points: POKEMON_POINTS[pokemon]
+  }));
 }
