@@ -1,5 +1,5 @@
 /* =========================================================
-   BUTTON SYSTEM — DESIGN SYSTEM v1 (LOCKED)
+   BUTTON SYSTEM — SEMANTIC SPLIT (LOCKED)
    ========================================================= */
 
 /* ---------------------------------------------------------
@@ -16,10 +16,11 @@ button {
 }
 
 /* ---------------------------------------------------------
-   ACTION BUTTONS (e.g. Unclaimed toggle)
+   ACTION / TOGGLE BUTTONS
 --------------------------------------------------------- */
 
-.search-controls button:not(.dex-tab) {
+.dex-toggle,
+.dex-action {
   padding: 6px 14px;
 
   font-weight: bold;
@@ -33,18 +34,24 @@ button {
   box-shadow: var(--shadow-depth);
 }
 
-.search-controls button:not(.dex-tab):hover {
+.dex-toggle:hover,
+.dex-action:hover {
   filter: brightness(1.05);
 }
 
-.search-controls button:not(.dex-tab).active {
+.dex-toggle.active {
   background: var(--accent);
   color: var(--text-dark);
   border-color: var(--accent);
 }
 
+.dex-toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* ---------------------------------------------------------
-   DEX TABS (VIEW SWITCHERS)
+   DEX TABS (VIEW NAVIGATION ONLY)
 --------------------------------------------------------- */
 
 .dex-tab {
@@ -68,7 +75,6 @@ button {
   color: var(--text-main);
 }
 
-/* ACTIVE TAB = ORANGE / RED */
 .dex-tab.active {
   background: var(--accent);
   color: var(--text-dark);
@@ -103,7 +109,6 @@ button {
   color: var(--accent);
 }
 
-/* ONE ACTIVE NAV ITEM ONLY */
 .nav a.active {
   background: var(--accent);
   color: var(--text-dark);
