@@ -15,11 +15,11 @@ if (!CSV_URL) {
 }
 
 // -----------------------------
-// Helpers (normalization only)
+// Helpers
 // -----------------------------
 
-function normalizeMember(name) {
-  return name.trim().toLowerCase().replace(/\s+/g, '');
+function preserveMember(name) {
+  return name.trim();
 }
 
 function normalizePokemon(name) {
@@ -68,7 +68,7 @@ validateRows({
 // -----------------------------
 
 const data = rows.map(row => ({
-  ot: normalizeMember(row.ot),
+  ot: preserveMember(row.ot),
   pokemon: normalizePokemon(row.pokemon),
 
   method: row.method || null,
