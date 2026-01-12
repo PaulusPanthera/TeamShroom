@@ -1,7 +1,6 @@
 // main.js (ROOT)
 // Entrypoint — JSON-only runtime
 // All data preprocessed in CI
-// Runtime only wires models → UI
 
 import { loadShinyWeekly } from './src/data/shinyweekly.loader.js';
 import { buildShinyWeeklyModel } from './src/data/shinyweekly.model.js';
@@ -12,7 +11,11 @@ import { loadPokemon } from './src/data/pokemon.loader.js';
 import { loadMembers } from './src/data/members.loader.js';
 import { loadDonators } from './src/data/donators.loader.js';
 
-import { buildPokemonData, POKEMON_POINTS } from './src/data/pokemondatabuilder.js';
+import {
+  buildPokemonData,
+  POKEMON_POINTS
+} from './src/data/pokemondatabuilder.js';
+
 import { buildMembersModel } from './src/data/members.model.js';
 
 import {
@@ -26,7 +29,7 @@ import { renderDonators } from './src/features/donators/donators.js';
 import { renderShinyWeekly } from './src/features/shinyweekly/shinyweekly.ui.js';
 
 // ---------------------------------------------------------
-// RUNTIME STATE (SINGLE INITIALIZATION)
+// DATA CACHES
 // ---------------------------------------------------------
 
 let shinyWeeklyWeeks = null;
@@ -36,8 +39,6 @@ let membersData = null;
 let shinyShowcaseRows = null;
 let teamMembers = null;
 let pokemonRows = null;
-
-let initialized = false;
 
 // ---------------------------------------------------------
 // ROUTING
@@ -77,51 +78,59 @@ function setActiveNav(page) {
 }
 
 // ---------------------------------------------------------
-// ONE-TIME INITIALIZATION (CRITICAL FIX)
-// ---------------------------------------------------------
-
-async function initRuntime() {
-  if (initialized) return;
-
-  // Load ALL raw data first
-  [
-    pokemonRows,
-    membersData,
-    shinyShowcaseRows,
-    donatorsData
-  ] = await Promise.all([
-    loadPokemon(),
-    loadMembers(),
-    loadShinyShowcase(),
-    loadDonators()
-  ]);
-
-  // Build member model
-  teamMembers = buildMembersModel(membersData, shinyShowcaseRows);
-
-  // Build Pokémon derived data (AFTER members exist)
-  buildPokemonData(pokemonRows, teamMembers);
-
-  // Weekly → Dex pipeline
-  const weeklyRows = await loadShinyWeekly();
-  shinyWeeklyWeeks = buildShinyWeeklyModel(weeklyRows);
-  shinyDexData = buildShinyDexModel(shinyWeeklyWeeks);
-
-  initialized = true;
-}
-
-// ---------------------------------------------------------
 // PAGE RENDER
 // ---------------------------------------------------------
 
 async function renderPage() {
-  await initRuntime();
-
   const { page, member } = getRoute();
   setActiveNav(page);
 
   const content = document.getElementById('page-content');
   content.innerHTML = '';
+
+  // -------------------------------------------------------
+  // LOAD BASE DATA (ONCE)
+  // -------------------------------------------------------
+
+  if (!pokemonRows) {
+    pokemonRows = await loadPokemon();
+  }
+
+  if (!membersData) {
+    membersData = await loadMembers();
+  }
+
+  if (!shinyShowcaseRows) {
+    shinyShowcaseRows = await loadShinyShowcase();
+  }
+
+  if (!teamMembers) {
+    teamMembers = buildMembersModel(membersData, shinyShowcaseRows);
+  }
+
+  // -------------------------------------------------------
+  // BUILD POKÉMON RUNTIME MAPS (AFTER TEAM EXISTS)
+  // -------------------------------------------------------
+
+  buildPokemonData(pokemonRows, teamMembers);
+
+  // -------------------------------------------------------
+  // SHINY WEEKLY + DEX MODEL
+  // -------------------------------------------------------
+
+  if (!shinyWeeklyWeeks) {
+    const rows = await loadShinyWeekly();
+    shinyWeeklyWeeks = buildShinyWeeklyModel(rows);
+    shinyDexData = buildShinyDexModel(shinyWeeklyWeeks);
+  }
+
+  // -------------------------------------------------------
+  // DONATORS
+  // -------------------------------------------------------
+
+  if (!donatorsData) {
+    donatorsData = await loadDonators();
+  }
 
   // -------------------------------------------------------
   // SHOWCASE
@@ -160,12 +169,12 @@ async function renderPage() {
   }
 
   // -------------------------------------------------------
-  // HITLIST / LIVING DEX
+  // HITLIST / LIVING DEX (PHASE 1)
   // -------------------------------------------------------
 
   else if (page === 'hitlist') {
     content.innerHTML = `<div id="shiny-dex-container"></div>`;
-    setupShinyDexHitlistSearch(shinyDexData);
+    setupShinyDexHitlistSearch();
   }
 
   // -------------------------------------------------------
