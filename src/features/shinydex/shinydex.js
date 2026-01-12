@@ -1,6 +1,5 @@
 // src/features/shinydex/shinydex.js
 // Shiny Dex — PAGE CONTROLLER
-// Correct button highlighting logic
 
 import { buildShinyDexModel } from '../../data/shinydex.model.js';
 import { renderHitlistStandard } from './shinydex.hitlist.js';
@@ -22,13 +21,14 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
 
   const unclaimedBtn = document.createElement('button');
   unclaimedBtn.textContent = 'Unclaimed';
-  unclaimedBtn.className = 'dex-tab'; // inactive by default
+  unclaimedBtn.className = 'dex-tab';
 
   const modeSelect = document.createElement('select');
   modeSelect.innerHTML = `
     <option value="standard">Standard</option>
     <option value="claims">Total Claims</option>
     <option value="points">Total Claim Points</option>
+    <option value="total">Total Shinies</option>
   `;
 
   const totalCounter = document.createElement('span');
@@ -43,7 +43,7 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
 
   const hitlistTab = document.createElement('button');
   hitlistTab.textContent = 'Shiny Dex Hitlist';
-  hitlistTab.className = 'dex-tab active'; // default
+  hitlistTab.className = 'dex-tab active';
 
   const livingTab = document.createElement('button');
   livingTab.textContent = 'Shiny Living Dex';
@@ -66,34 +66,29 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
   const state = {
     view: 'hitlist',
     search: '',
-    unclaimed: false, // default: show all
+    unclaimed: false,
     mode: 'standard'
   };
 
-  /* ---------------- PIPELINE ---------------- */
-
-  function syncButtonStates() {
-    // tabs
+  function syncControls() {
     hitlistTab.classList.toggle('active', state.view === 'hitlist');
     livingTab.classList.toggle('active', state.view === 'living');
-
-    // unclaimed filter
     unclaimedBtn.classList.toggle('active', state.unclaimed);
 
-    // hide hitlist-only controls
-    const showHitlistControls = state.view === 'hitlist';
-    unclaimedBtn.style.display = showHitlistControls ? '' : 'none';
-    modeSelect.style.display = showHitlistControls ? '' : 'none';
+    const hitlistOnly = state.view === 'hitlist';
+    unclaimedBtn.style.display = hitlistOnly ? '' : 'none';
+    modeSelect.style.display = '';
   }
 
   function apply() {
     content.innerHTML = '';
-    syncButtonStates();
+    syncControls();
 
     if (state.view === 'living') {
       renderShinyLivingDex({
         showcaseRows,
         search: state.search,
+        sort: state.mode === 'total' ? 'total' : 'standard',
         container: content,
         totalCounter
       });
