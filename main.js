@@ -1,6 +1,7 @@
 // main.js (ROOT)
 // Entrypoint — JSON-only runtime
 // All data preprocessed in CI
+// Runtime only wires models → UI
 
 import { loadShinyWeekly } from './src/data/shinyweekly.loader.js';
 import { buildShinyWeeklyModel } from './src/data/shinyweekly.model.js';
@@ -11,11 +12,7 @@ import { loadPokemon } from './src/data/pokemon.loader.js';
 import { loadMembers } from './src/data/members.loader.js';
 import { loadDonators } from './src/data/donators.loader.js';
 
-import {
-  buildPokemonData,
-  POKEMON_POINTS
-} from './src/data/pokemondatabuilder.js';
-
+import { buildPokemonData, POKEMON_POINTS } from './src/data/pokemondatabuilder.js';
 import { buildMembersModel } from './src/data/members.model.js';
 
 import {
@@ -29,20 +26,18 @@ import { renderDonators } from './src/features/donators/donators.js';
 import { renderShinyWeekly } from './src/features/shinyweekly/shinyweekly.ui.js';
 
 // ---------------------------------------------------------
-// DATA CACHES
+// RUNTIME STATE (SINGLE INITIALIZATION)
 // ---------------------------------------------------------
 
-let pokemonRows = null;
-let membersRows = null;
-let shinyShowcaseRows = null;
-let shinyWeeklyRows = null;
-let donatorsData = null;
-
-let teamMembers = null;
 let shinyWeeklyWeeks = null;
 let shinyDexData = null;
+let donatorsData = null;
+let membersData = null;
+let shinyShowcaseRows = null;
+let teamMembers = null;
+let pokemonRows = null;
 
-let runtimeBuilt = false;
+let initialized = false;
 
 // ---------------------------------------------------------
 // ROUTING
@@ -82,32 +77,37 @@ function setActiveNav(page) {
 }
 
 // ---------------------------------------------------------
-// BOOTSTRAP (STRICT ORDER)
+// ONE-TIME INITIALIZATION (CRITICAL FIX)
 // ---------------------------------------------------------
 
-async function ensureRuntimeBuilt() {
-  if (runtimeBuilt) return;
+async function initRuntime() {
+  if (initialized) return;
 
-  // 1. Load primary datasets
-  pokemonRows = await loadPokemon();
-  membersRows = await loadMembers();
-  shinyShowcaseRows = await loadShinyShowcase();
-  shinyWeeklyRows = await loadShinyWeekly();
-  donatorsData = await loadDonators();
+  // Load ALL raw data first
+  [
+    pokemonRows,
+    membersData,
+    shinyShowcaseRows,
+    donatorsData
+  ] = await Promise.all([
+    loadPokemon(),
+    loadMembers(),
+    loadShinyShowcase(),
+    loadDonators()
+  ]);
 
-  // 2. Build members model (required by multiple systems)
-  teamMembers = buildMembersModel(membersRows, shinyShowcaseRows);
+  // Build member model
+  teamMembers = buildMembersModel(membersData, shinyShowcaseRows);
 
-  // 3. Build Pokémon-derived runtime state (needs teamMembers)
+  // Build Pokémon derived data (AFTER members exist)
   buildPokemonData(pokemonRows, teamMembers);
 
-  // 4. Build Shiny Weekly aggregation
-  shinyWeeklyWeeks = buildShinyWeeklyModel(shinyWeeklyRows);
-
-  // 5. Build Shiny Dex model (depends on Pokémon + Weekly)
+  // Weekly → Dex pipeline
+  const weeklyRows = await loadShinyWeekly();
+  shinyWeeklyWeeks = buildShinyWeeklyModel(weeklyRows);
   shinyDexData = buildShinyDexModel(shinyWeeklyWeeks);
 
-  runtimeBuilt = true;
+  initialized = true;
 }
 
 // ---------------------------------------------------------
@@ -115,13 +115,13 @@ async function ensureRuntimeBuilt() {
 // ---------------------------------------------------------
 
 async function renderPage() {
+  await initRuntime();
+
   const { page, member } = getRoute();
   setActiveNav(page);
 
   const content = document.getElementById('page-content');
   content.innerHTML = '';
-
-  await ensureRuntimeBuilt();
 
   // -------------------------------------------------------
   // SHOWCASE
@@ -163,11 +163,10 @@ async function renderPage() {
   // HITLIST / LIVING DEX
   // -------------------------------------------------------
 
-    else if (page === 'hitlist') {
+  else if (page === 'hitlist') {
     content.innerHTML = `<div id="shiny-dex-container"></div>`;
-    setupShinyDexHitlistSearch();
+    setupShinyDexHitlistSearch(shinyDexData);
   }
-
 
   // -------------------------------------------------------
   // DONATORS
@@ -187,7 +186,7 @@ async function renderPage() {
     renderShinyWeekly(
       shinyWeeklyWeeks,
       document.getElementById('shinyweekly-container'),
-      membersRows
+      membersData
     );
   }
 }
