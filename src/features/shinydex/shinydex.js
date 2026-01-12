@@ -6,6 +6,7 @@
 import { buildShinyDexModel } from '../../domains/shinydex/hitlist.model.js';
 import { buildShinyLivingDexModel } from '../../domains/shinydex/livingdex.model.js';
 import { POKEMON_REGION } from '../../data/pokemondatabuilder.js';
+import { prettifyPokemonName } from '../../utils/utils.js';
 
 import { renderShinyDexHitlist } from './shinydex.hitlist.js';
 import { renderShinyLivingDex } from './shinylivingdex.js';
@@ -16,10 +17,6 @@ export function setupShinyDexPage({
 }) {
   const root = document.getElementById('page-content');
   root.innerHTML = '';
-
-  // --------------------------------------------------
-  // UI
-  // --------------------------------------------------
 
   root.innerHTML = `
     <div class="search-controls">
@@ -40,14 +37,9 @@ export function setupShinyDexPage({
   const searchInput = root.querySelector('#dex-search');
   const unclaimedBtn = root.querySelector('#dex-unclaimed');
   const sortSelect = root.querySelector('#dex-sort');
-  const countLabel = root.querySelector('#dex-count');
 
   const tabHitlist = root.querySelector('#tab-hitlist');
   const tabLiving = root.querySelector('#tab-living');
-
-  // --------------------------------------------------
-  // STATE
-  // --------------------------------------------------
 
   const state = {
     view: 'hitlist',
@@ -65,9 +57,36 @@ export function setupShinyDexPage({
 
   const active = () => state[state.view];
 
-  // --------------------------------------------------
-  // SORT OPTIONS
-  // --------------------------------------------------
+  function normalizeQuery(raw) {
+    const q = String(raw || '').toLowerCase().trim().replace(/\s+/g, ' ');
+    if (!q) return null;
+
+    return {
+      name: q,
+      key: q.replace(/ /g, '-')
+    };
+  }
+
+  function updateUnclaimedAvailability() {
+    if (state.view === 'hitlist') {
+      const scoreboardMode =
+        active().sort === 'claims' || active().sort === 'points';
+
+      if (scoreboardMode) {
+        active().showUnclaimed = false;
+        unclaimedBtn.disabled = true;
+        unclaimedBtn.classList.remove('active');
+        return;
+      }
+
+      unclaimedBtn.disabled = false;
+      unclaimedBtn.classList.toggle('active', active().showUnclaimed);
+      return;
+    }
+
+    unclaimedBtn.disabled = false;
+    unclaimedBtn.classList.toggle('active', active().showUnclaimed);
+  }
 
   function configureSort() {
     sortSelect.innerHTML = '';
@@ -86,31 +105,34 @@ export function setupShinyDexPage({
     }
 
     sortSelect.value = active().sort;
-    unclaimedBtn.classList.toggle('active', active().showUnclaimed);
+    updateUnclaimedAvailability();
   }
 
-  // --------------------------------------------------
-  // HITLIST PREP
-  // --------------------------------------------------
-
   function prepareHitlist() {
-    let dex = buildShinyDexModel(weeklyModel);
+    const view = active();
+    const q = normalizeQuery(view.search);
 
-    if (active().search) {
-      dex = dex.filter(e =>
-        e.pokemon.includes(active().search)
-      );
+    let baseDex = buildShinyDexModel(weeklyModel);
+
+    if (q) {
+      baseDex = baseDex.filter(e => {
+        const keyMatch = e.pokemon.includes(q.key);
+        const nameMatch = prettifyPokemonName(e.pokemon).toLowerCase().includes(q.name);
+        return keyMatch || nameMatch;
+      });
     }
 
-    const totalSpecies = dex.length;
-    const claimedSpecies = dex.filter(e => e.claimed).length;
+    const totalSpecies = baseDex.length;
+    const claimedSpecies = baseDex.filter(e => e.claimed).length;
     const unclaimedSpecies = totalSpecies - claimedSpecies;
 
-    if (active().showUnclaimed) {
+    let dex = baseDex;
+
+    if (view.showUnclaimed) {
       dex = dex.filter(e => !e.claimed);
     }
 
-    if (active().sort === 'claims' || active().sort === 'points') {
+    if (view.sort === 'claims' || view.sort === 'points') {
       const byMember = {};
 
       dex.forEach(e => {
@@ -127,7 +149,7 @@ export function setupShinyDexPage({
           points: entries.reduce((s, e) => s + e.points, 0)
         }))
         .sort((a, b) =>
-          active().sort === 'claims'
+          view.sort === 'claims'
             ? b.claims - a.claims
             : b.points - a.points
         );
@@ -163,42 +185,44 @@ export function setupShinyDexPage({
           highlighted: e.claimed && e.points >= 15
         }))
       })),
-      countLabelText: active().showUnclaimed
+      countLabelText: view.showUnclaimed
         ? `${unclaimedSpecies} / ${claimedSpecies} Species`
         : `${claimedSpecies} / ${totalSpecies} Species`
     };
   }
 
-  // --------------------------------------------------
-  // LIVING DEX PREP
-  // --------------------------------------------------
-
   function prepareLivingDex() {
-    let dex = buildShinyLivingDexModel(shinyShowcaseRows);
+    const view = active();
+    const q = normalizeQuery(view.search);
 
-    if (active().search) {
-      dex = dex.filter(e =>
-        e.pokemon.includes(active().search)
-      );
+    let baseDex = buildShinyLivingDexModel(shinyShowcaseRows);
+
+    if (q) {
+      baseDex = baseDex.filter(e => {
+        const keyMatch = e.pokemon.includes(q.key);
+        const nameMatch = prettifyPokemonName(e.pokemon).toLowerCase().includes(q.name);
+        return keyMatch || nameMatch;
+      });
     }
 
-    const totalSpecies = dex.length;
-    const ownedSpecies = dex.filter(e => e.count > 0).length;
+    const totalSpecies = baseDex.length;
+    const ownedSpecies = baseDex.filter(e => e.count > 0).length;
     const unownedSpecies = totalSpecies - ownedSpecies;
 
-    if (active().showUnclaimed) {
+    let dex = baseDex;
+
+    if (view.showUnclaimed) {
       dex = dex.filter(e => e.count === 0);
     }
 
-    if (active().sort === 'total') {
-      dex.sort((a, b) => b.count - a.count);
+    if (view.sort === 'total') {
+      dex = [...dex].sort((a, b) => b.count - a.count);
     }
 
     const byRegion = {};
     dex.forEach(e => {
-      const region = e.region;
-      byRegion[region] ??= [];
-      byRegion[region].push(e);
+      byRegion[e.region] ??= [];
+      byRegion[e.region].push(e);
     });
 
     return {
@@ -210,69 +234,63 @@ export function setupShinyDexPage({
           highlighted: e.count > 0
         }))
       })),
-      countLabelText: active().showUnclaimed
+      countLabelText: view.showUnclaimed
         ? `${unownedSpecies} / ${totalSpecies} Species`
         : `${ownedSpecies} / ${totalSpecies} Species`
     };
   }
 
-  // --------------------------------------------------
-  // RENDER
-  // --------------------------------------------------
-
   function render() {
-    const data =
-      state.view === 'hitlist'
-        ? prepareHitlist()
-        : prepareLivingDex();
+    updateUnclaimedAvailability();
 
     if (state.view === 'hitlist') {
-      renderShinyDexHitlist(data);
-    } else {
-      renderShinyLivingDex(data);
+      renderShinyDexHitlist(prepareHitlist());
+      return;
     }
+
+    renderShinyLivingDex(prepareLivingDex());
   }
 
-  // --------------------------------------------------
-  // EVENTS
-  // --------------------------------------------------
-
   searchInput.addEventListener('input', e => {
-    active().search = e.target.value.toLowerCase();
+    active().search = e.target.value;
     render();
   });
 
   unclaimedBtn.addEventListener('click', () => {
+    if (unclaimedBtn.disabled) return;
     active().showUnclaimed = !active().showUnclaimed;
     render();
   });
 
   sortSelect.addEventListener('change', e => {
     active().sort = e.target.value;
+    updateUnclaimedAvailability();
     render();
   });
 
   tabHitlist.addEventListener('click', () => {
     if (state.view === 'hitlist') return;
+
     state.view = 'hitlist';
     tabHitlist.classList.add('active');
     tabLiving.classList.remove('active');
+
+    searchInput.value = active().search;
     configureSort();
     render();
   });
 
   tabLiving.addEventListener('click', () => {
     if (state.view === 'livingdex') return;
+
     state.view = 'livingdex';
     tabLiving.classList.add('active');
     tabHitlist.classList.remove('active');
+
+    searchInput.value = active().search;
     configureSort();
     render();
   });
-
-  // --------------------------------------------------
-  // INIT
-  // --------------------------------------------------
 
   configureSort();
   render();
