@@ -1,10 +1,11 @@
 // src/data/shinydex.model.js
 // Shiny Dex — HITLIST MODEL
-// Correct family-stage resolution based on canonical family keys
+// Claim logic + Pokémon metadata enrichment
 
 import {
   pokemonFamilies,
-  POKEMON_POINTS
+  POKEMON_POINTS,
+  pokemonDataByKey
 } from './pokemondatabuilder.js';
 
 /**
@@ -34,7 +35,7 @@ export function buildShinyDexModel(weeklyModel) {
   });
 
   // -------------------------------------------------------
-  // BUILD FAMILY → STAGE CHAINS (DEX ORDER)
+  // BUILD FAMILY → STAGE CHAINS
   // -------------------------------------------------------
 
   const familyStages = {};
@@ -44,7 +45,6 @@ export function buildShinyDexModel(weeklyModel) {
     if (!familyKeys || familyKeys.length === 0) return;
 
     const familyKey = familyKeys[0];
-
     familyStages[familyKey] ??= [];
     familyStages[familyKey].push({
       pokemon,
@@ -53,7 +53,7 @@ export function buildShinyDexModel(weeklyModel) {
   });
 
   // -------------------------------------------------------
-  // CLAIM RESOLUTION (SPEC-FAITHFUL)
+  // CLAIM RESOLUTION
   // -------------------------------------------------------
 
   events.forEach(event => {
@@ -64,24 +64,21 @@ export function buildShinyDexModel(weeklyModel) {
     const stages = familyStages[familyKey];
     if (!stages) return;
 
-    // Case A — exact stage free
     let slot = stages.find(
       s => s.pokemon === event.pokemon && s.claimedBy === null
     );
 
-    // Case B — fallback to first free stage
     if (!slot) {
       slot = stages.find(s => s.claimedBy === null);
     }
 
-    // Case C — family complete
     if (!slot) return;
 
     slot.claimedBy = event.member;
   });
 
   // -------------------------------------------------------
-  // BUILD FINAL HITLIST MODEL
+  // BUILD FINAL HITLIST MODEL (WITH REGION)
   // -------------------------------------------------------
 
   return Object.keys(POKEMON_POINTS).map(pokemon => {
@@ -91,9 +88,12 @@ export function buildShinyDexModel(weeklyModel) {
     const slot =
       familyStages[family]?.find(s => s.pokemon === pokemon) || null;
 
+    const meta = pokemonDataByKey[pokemon];
+
     return {
       pokemon,
       family,
+      region: meta?.region || 'unknown',
       points: POKEMON_POINTS[pokemon],
       claimed: !!slot?.claimedBy,
       claimedBy: slot?.claimedBy || null
