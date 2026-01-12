@@ -163,10 +163,11 @@ async function renderPage() {
   // HITLIST / LIVING DEX
   // -------------------------------------------------------
 
-  else if (page === 'hitlist') {
+    else if (page === 'hitlist') {
     content.innerHTML = `<div id="shiny-dex-container"></div>`;
-    setupShinyDexHitlistSearch(shinyDexData);
+    setupShinyDexHitlistSearch();
   }
+
 
   // -------------------------------------------------------
   // DONATORS
