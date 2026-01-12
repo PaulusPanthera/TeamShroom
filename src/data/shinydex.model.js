@@ -7,7 +7,6 @@
 // Array<{
 //   pokemon: string,
 //   family: string,
-//   tier: string,
 //   points: number,
 //   claimed: boolean,
 //   claimedBy: string | null
@@ -15,8 +14,7 @@
 
 import {
   pokemonFamilies,
-  POKEMON_POINTS,
-  POKEMON_TIERS
+  POKEMON_POINTS
 } from './pokemondatabuilder.js';
 
 /**
@@ -103,7 +101,6 @@ export function buildShinyDexModel(weeklyModel) {
     return {
       pokemon,
       family,
-      tier: POKEMON_TIERS[pokemon],
       points: POKEMON_POINTS[pokemon],
       claimed,
       claimedBy: claimed ? slot.claimedBy : null
