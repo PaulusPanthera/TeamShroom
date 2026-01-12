@@ -1,5 +1,5 @@
 // src/features/shinydex/shinydex.js
-// Shiny Dex — HITLIST VIEW (Standard + Grouped Leaderboard Views)
+// Shiny Dex — HITLIST VIEW
 
 import { buildShinyDexModel } from '../../data/shinydex.model.js';
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
@@ -14,15 +14,18 @@ export function renderShinyDexHitlist(weeklyModel) {
   const container = document.getElementById('shiny-dex-container');
   container.innerHTML = '';
 
-  /* -------------------------------------------------------
-     CONTROLS
-  ------------------------------------------------------- */
+  /* ---------------- CONTROLS ---------------- */
 
   const controls = document.createElement('div');
-  controls.className = 'dex-controls';
+  controls.className = 'search-controls';
 
   const searchInput = document.createElement('input');
+  searchInput.type = 'text';
   searchInput.placeholder = 'Search…';
+
+  const unclaimedBtn = document.createElement('button');
+  unclaimedBtn.textContent = 'Unclaimed';
+  unclaimedBtn.dataset.active = 'false';
 
   const viewSelect = document.createElement('select');
   viewSelect.innerHTML = `
@@ -31,26 +34,21 @@ export function renderShinyDexHitlist(weeklyModel) {
     <option value="points">Total Claim Points</option>
   `;
 
-  const totalCounter = document.createElement('div');
-  totalCounter.className = 'dex-total';
+  const totalCounter = document.createElement('span');
 
-  controls.append(searchInput, viewSelect, totalCounter);
+  controls.append(searchInput, unclaimedBtn, viewSelect, totalCounter);
   container.appendChild(controls);
 
   const content = document.createElement('div');
   container.appendChild(content);
 
-  /* -------------------------------------------------------
-     DATA
-  ------------------------------------------------------- */
+  /* ---------------- DATA ---------------- */
 
   const dex = buildShinyDexModel(weeklyModel).filter(
     e => POKEMON_SHOW[e.pokemon] !== false
   );
 
-  /* -------------------------------------------------------
-     STANDARD VIEW (REGION GROUPED)
-  ------------------------------------------------------- */
+  /* ---------------- STANDARD ---------------- */
 
   function renderStandard(list) {
     content.innerHTML = '';
@@ -63,6 +61,9 @@ export function renderShinyDexHitlist(weeklyModel) {
     });
 
     Object.entries(byRegion).forEach(([region, entries]) => {
+      const section = document.createElement('section');
+      section.className = 'region-section';
+
       const claimedCount = entries.filter(e => e.claimed).length;
 
       const header = document.createElement('h2');
@@ -85,35 +86,32 @@ export function renderShinyDexHitlist(weeklyModel) {
         );
       });
 
-      content.append(header, grid);
+      section.append(header, grid);
+      content.appendChild(section);
     });
   }
 
-  /* -------------------------------------------------------
-     GROUPED MEMBER VIEWS
-  ------------------------------------------------------- */
-
-  function groupByMember() {
-    const map = {};
-    dex.forEach(e => {
-      if (!e.claimed) return;
-      map[e.claimedBy] ??= [];
-      map[e.claimedBy].push(e);
-    });
-    return map;
-  }
+  /* ---------------- GROUPED ---------------- */
 
   function renderGrouped(mode) {
     content.innerHTML = '';
 
-    const groups = groupByMember();
+    const byMember = {};
+    dex.forEach(e => {
+      if (!e.claimed) return;
+      byMember[e.claimedBy] ??= [];
+      byMember[e.claimedBy].push(e);
+    });
 
-    const members = Object.keys(groups)
+    const members = Object.keys(byMember)
       .map(name => {
-        const entries = groups[name];
-        const claims = entries.length;
-        const points = entries.reduce((s, e) => s + e.points, 0);
-        return { name, entries, claims, points };
+        const entries = byMember[name];
+        return {
+          name,
+          entries,
+          claims: entries.length,
+          points: entries.reduce((s, e) => s + e.points, 0)
+        };
       })
       .sort((a, b) =>
         mode === 'claims'
@@ -124,6 +122,9 @@ export function renderShinyDexHitlist(weeklyModel) {
     totalCounter.textContent = `${members.length} Members`;
 
     members.forEach((m, index) => {
+      const section = document.createElement('section');
+      section.className = 'scoreboard-member-section';
+
       const header = document.createElement('h2');
       header.textContent =
         mode === 'claims'
@@ -149,30 +150,41 @@ export function renderShinyDexHitlist(weeklyModel) {
         );
       });
 
-      content.append(header, grid);
+      section.append(header, grid);
+      content.appendChild(section);
     });
   }
 
-  /* -------------------------------------------------------
-     PIPELINE
-  ------------------------------------------------------- */
+  /* ---------------- PIPELINE ---------------- */
 
   function apply() {
     const q = searchInput.value.toLowerCase();
+    const unclaimedOnly = unclaimedBtn.dataset.active === 'true';
     const mode = viewSelect.value;
 
+    let list = dex.filter(e =>
+      prettifyPokemonName(e.pokemon).toLowerCase().includes(q)
+    );
+
+    if (unclaimedOnly) {
+      list = list.filter(e => !e.claimed);
+    }
+
     if (mode === 'standard') {
-      renderStandard(
-        dex.filter(e =>
-          prettifyPokemonName(e.pokemon).toLowerCase().includes(q)
-        )
-      );
+      renderStandard(list);
     } else {
       renderGrouped(mode);
     }
   }
 
   searchInput.addEventListener('input', apply);
+
+  unclaimedBtn.addEventListener('click', () => {
+    const active = unclaimedBtn.dataset.active === 'true';
+    unclaimedBtn.dataset.active = String(!active);
+    apply();
+  });
+
   viewSelect.addEventListener('change', apply);
 
   apply();
