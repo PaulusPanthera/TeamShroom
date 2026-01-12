@@ -2,7 +2,7 @@
 // Shiny Dex — HITLIST RENDERER
 // Render-only. No controls. No state ownership.
 
-import { buildShinyDexModel } from '../../data/shinydex.model.js';
+import { buildShinyDexModel } from '../../domains/shinydex/hitlist.model.js';
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
 import { POKEMON_SHOW } from '../../data/pokemondatabuilder.js';
