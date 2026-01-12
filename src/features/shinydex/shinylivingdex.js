@@ -1,101 +1,52 @@
 // src/features/shinydex/shinylivingdex.js
-// Shiny Living Dex — species ownership snapshot
-// Render-only. No state. No side effects.
+// Shiny Living Dex — RENDERER ONLY
+// No state. No aggregation. No sorting. No counting.
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
-import {
-  POKEMON_SHOW,
-  POKEMON_REGION
-} from '../../data/pokemondatabuilder.js';
-import { buildShinyLivingDexModel } from '../../domains/shinydex/livingdex.model.js';
 
 function getPokemonGif(key) {
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
 }
 
+/*
+INPUT SHAPE (FROM CONTROLLER):
+
+{
+  sections: Array<{
+    key: string
+    title: string
+    entries: Array<{
+      pokemon: string
+      count: number
+      highlighted: boolean
+    }>
+  }>,
+  countLabelText: string
+}
+*/
+
 export function renderShinyLivingDex({
-  showcaseRows,
-  search,
-  unclaimedOnly,
-  sort,
-  countLabel
+  sections,
+  countLabelText
 }) {
   const container = document.getElementById('shiny-dex-container');
+  const countLabel = document.getElementById('dex-count');
+
   container.innerHTML = '';
+  countLabel.textContent = countLabelText;
 
-  // -------------------------------------------------------
-  // DATA
-  // -------------------------------------------------------
-
-  let dex = buildShinyLivingDexModel(showcaseRows).filter(
-    e => POKEMON_SHOW[e.pokemon] !== false
-  );
-
-  // -------------------------------------------------------
-  // SEARCH
-  // -------------------------------------------------------
-
-  if (search) {
-    dex = dex.filter(e =>
-      prettifyPokemonName(e.pokemon)
-        .toLowerCase()
-        .includes(search)
-    );
-  }
-
-  // -------------------------------------------------------
-  // UNCLAIMED FILTER
-  // -------------------------------------------------------
-
-  if (unclaimedOnly) {
-    dex = dex.filter(e => e.count === 0);
-  }
-
-  // -------------------------------------------------------
-  // SORTING
-  // -------------------------------------------------------
-
-  if (sort === 'total') {
-    dex.sort((a, b) => b.count - a.count);
-  }
-  // else: preserve CI pokédex order
-
-  // -------------------------------------------------------
-  // GROUP BY REGION
-  // -------------------------------------------------------
-
-  const byRegion = {};
-  dex.forEach(entry => {
-    const region = POKEMON_REGION[entry.pokemon] || 'unknown';
-    byRegion[region] ??= [];
-    byRegion[region].push(entry);
-  });
-
-  // -------------------------------------------------------
-  // RENDER
-  // -------------------------------------------------------
-
-  let totalSpecies = 0;
-  let ownedSpecies = 0;
-
-  Object.entries(byRegion).forEach(([region, entries]) => {
+  sections.forEach(sectionData => {
     const section = document.createElement('section');
     section.className = 'region-section';
 
-    const total = entries.length;
-    const owned = entries.filter(e => e.count > 0).length;
-
-    totalSpecies += total;
-    ownedSpecies += owned;
-
     const header = document.createElement('h2');
-    header.textContent = `${region.toUpperCase()} (${owned} / ${total})`;
+    header.textContent = sectionData.title;
 
     const grid = document.createElement('div');
     grid.className = 'dex-grid';
 
-    entries.forEach(entry => {
+    sectionData.entries.forEach(entry => {
       grid.insertAdjacentHTML(
         'beforeend',
         renderUnifiedCard({
@@ -108,8 +59,7 @@ export function renderShinyLivingDex({
                 ? '1 Shiny'
                 : `${entry.count} Shinies`,
           unclaimed: entry.count === 0,
-          highlighted: entry.count > 0,
-          owners: entry.owners,
+          highlighted: !!entry.highlighted,
           cardType: 'pokemon'
         })
       );
@@ -118,6 +68,4 @@ export function renderShinyLivingDex({
     section.append(header, grid);
     container.appendChild(section);
   });
-
-  countLabel.textContent = `${ownedSpecies} / ${totalSpecies} Species`;
 }
