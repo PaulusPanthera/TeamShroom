@@ -73,7 +73,7 @@ export function renderShinyDexHitlist(weeklyModel, showcaseRows) {
   function syncControls() {
     hitlistTab.classList.toggle('active', state.view === 'hitlist');
     livingTab.classList.toggle('active', state.view === 'living');
-    unclaimedBtn.classList.toggle('active', state.unclaimed);
+    unclaimedBtn.classList.toggle('active', state.unclaimed === true);
 
     const hitlistOnly = state.view === 'hitlist';
     unclaimedBtn.style.display = hitlistOnly ? '' : 'none';
