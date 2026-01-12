@@ -1,49 +1,59 @@
 // src/data/pokemondatabuilder.js
 // Pokémon derived data builder
 // Runtime consumes CI-normalized pokemon.json
-//
-// SINGLE SOURCE OF TRUTH:
-// - pokemon.json already contains points, family, stage
-// - Runtime ONLY indexes and groups
 
 // ---------------------------------------------------------
-// RUNTIME STATE (REBUIILT FROM JSON)
+// TIER → POINTS MAP (STRING-BASED, MATCHES DATA)
+// ---------------------------------------------------------
+
+export const TIER_POINTS = {
+  'tier 6': 2,
+  'tier 5': 3,
+  'tier 4': 6,
+  'tier 3': 10,
+  'tier 2': 15,
+  'tier 1': 25,
+  'tier 0': 30,
+  'tier lm': 100
+};
+
+// ---------------------------------------------------------
+// RUNTIME STATE (SINGLE SOURCE OF TRUTH)
 // ---------------------------------------------------------
 
 export let POKEMON_POINTS = {};
-export let POKEMON_FAMILY = {};
-export let POKEMON_STAGE = {};
 export let POKEMON_SHOW = {};
-export let POKEMON_ORDER = [];
+export let POKEMON_REGION = {};
+export let pokemonFamilies = {};
 
 // ---------------------------------------------------------
 // BUILDER
 // ---------------------------------------------------------
 
-/**
- * Build runtime Pokémon lookup tables
- *
- * @param {Array} rows  pokemon.json.data[]
- */
 export function buildPokemonData(rows) {
+  // reset
   POKEMON_POINTS = {};
-  POKEMON_FAMILY = {};
-  POKEMON_STAGE = {};
   POKEMON_SHOW = {};
-  POKEMON_ORDER = [];
+  POKEMON_REGION = {};
+  pokemonFamilies = {};
 
   rows.forEach(row => {
-    // Hard contract from CI
-    const key = row.key;
+    const key = row.pokemon?.toLowerCase();
+    if (!key) return;
 
-    POKEMON_POINTS[key] = row.points;
-    POKEMON_FAMILY[key] = row.family;
-    POKEMON_STAGE[key] = row.stage;
+    // points
+    const tierKey = row.tier?.toLowerCase();
+    POKEMON_POINTS[key] = TIER_POINTS[tierKey] ?? 0;
 
-    // Visibility rule:
-    // points > 0 means it participates in shiny systems
-    POKEMON_SHOW[key] = row.points > 0;
+    // visibility
+    POKEMON_SHOW[key] = row.show === true;
 
-    POKEMON_ORDER.push(key);
+    // region
+    POKEMON_REGION[key] = row.region || 'unknown';
+
+    // family
+    if (Array.isArray(row.family)) {
+      pokemonFamilies[key] = row.family.map(f => f.toLowerCase());
+    }
   });
 }
