@@ -23,7 +23,7 @@ Array<{
 
 export function buildShinyDexModel(weeklyModel) {
   // -------------------------------------------------------
-  // FLATTEN WEEKLY MODEL → EVENTS (ORDER PRESERVED)
+  // 1. FLATTEN WEEKLY MODEL → CLAIM EVENTS (ORDER PRESERVED)
   // -------------------------------------------------------
 
   const events = [];
@@ -42,49 +42,59 @@ export function buildShinyDexModel(weeklyModel) {
   });
 
   // -------------------------------------------------------
-  // CLAIM RESOLUTION (FAMILY → STAGE)
+  // 2. PREPARE FAMILY STATE (DEX ORDER IS AUTHORITATIVE)
   // -------------------------------------------------------
 
-  const familyClaims = {};
+  const familyState = {};
   const pokemonClaims = {};
 
-  events.forEach(event => {
-    const familyId = Object.keys(pokemonFamilies)
-      .find(id => pokemonFamilies[id].includes(event.pokemon));
-
-    if (!familyId) return;
-
-    familyClaims[familyId] ??= {};
-
-    let claimedStage = null;
-
-    if (!familyClaims[familyId][event.pokemon]) {
-      claimedStage = event.pokemon;
-    } else {
-      claimedStage =
-        pokemonFamilies[familyId].find(
-          p => !familyClaims[familyId][p]
-        ) || null;
-    }
-
-    if (!claimedStage) return;
-
-    familyClaims[familyId][claimedStage] = event.member;
-    pokemonClaims[claimedStage] = event.member;
+  Object.entries(pokemonFamilies).forEach(([familyId, stages]) => {
+    familyState[familyId] = {
+      stages,
+      claimed: {}
+    };
   });
 
   // -------------------------------------------------------
-  // FINAL DEX LIST
+  // 3. RESOLVE CLAIMS — FIRST UNCLAIMED STAGE PER EVENT
   // -------------------------------------------------------
 
-  return Object.keys(POKEMON_POINTS).map(pokemon => ({
-    pokemon,
-    family:
+  events.forEach(event => {
+    const familyId = Object.keys(familyState).find(id =>
+      familyState[id].stages.includes(event.pokemon)
+    );
+
+    if (!familyId) return;
+
+    const family = familyState[familyId];
+
+    const nextStage = family.stages.find(
+      p => !family.claimed[p]
+    );
+
+    if (!nextStage) return;
+
+    family.claimed[nextStage] = event.member;
+    pokemonClaims[nextStage] = event.member;
+  });
+
+  // -------------------------------------------------------
+  // 4. FINAL DEX LIST (FULL, STABLE, ORDERED)
+  // -------------------------------------------------------
+
+  return Object.keys(POKEMON_POINTS).map(pokemon => {
+    const family =
       Object.keys(pokemonFamilies)
-        .find(id => pokemonFamilies[id].includes(pokemon)) || pokemon,
-    region: POKEMON_REGION[pokemon] || 'unknown',
-    points: POKEMON_POINTS[pokemon],
-    claimed: !!pokemonClaims[pokemon],
-    claimedBy: pokemonClaims[pokemon] || null
-  }));
+        .find(id => pokemonFamilies[id].includes(pokemon)) ||
+      pokemon;
+
+    return {
+      pokemon,
+      family,
+      region: POKEMON_REGION[pokemon] || 'unknown',
+      points: POKEMON_POINTS[pokemon],
+      claimed: Boolean(pokemonClaims[pokemon]),
+      claimedBy: pokemonClaims[pokemon] || null
+    };
+  });
 }
