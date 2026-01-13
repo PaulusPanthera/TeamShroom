@@ -1,4 +1,4 @@
-// v2.0.0-alpha.2
+// v2.0.0-alpha.1
 // src/features/shinydex/shinydex.living.presenter.js
 // Living Dex Presenter — view-specific data prep (no DOM)
 
@@ -19,12 +19,8 @@ export function prepareLivingDexRenderModel({
   const mode = viewState.sort; // 'standard' | 'total'
   const parsed = parseSearch(viewState.search);
 
-  // Truth snapshot (includes all species returned by living model)
   const snapshot = buildShinyLivingDexModel(showcaseRows);
 
-  // Counters are computed from mode dataset, PRE-SEARCH, per spec.
-  // Start: owned/total
-  // Unclaimed active: unowned/total
   const totalSpecies = snapshot.length;
   const ownedSpecies = snapshot.filter(e => e.count > 0).length;
   const unownedSpecies = totalSpecies - ownedSpecies;
@@ -36,10 +32,6 @@ export function prepareLivingDexRenderModel({
     regionStats[region].total += 1;
     if (e.count > 0) regionStats[region].owned += 1;
   });
-
-  // --------------------------------------------------
-  // MODE DATASET (PRE-SEARCH)
-  // --------------------------------------------------
 
   let modeSet = snapshot;
 
@@ -53,10 +45,6 @@ export function prepareLivingDexRenderModel({
   if (viewState.showUnclaimed) {
     modeSet = modeSet.filter(e => e.count === 0);
   }
-
-  // --------------------------------------------------
-  // SEARCH LAST (VISIBILITY ONLY)
-  // --------------------------------------------------
 
   let visible = modeSet;
 
@@ -73,10 +61,6 @@ export function prepareLivingDexRenderModel({
     visible = visible.filter(e => speciesMatches(e.pokemon, parsed.q));
   }
 
-  // --------------------------------------------------
-  // GROUP BY REGION (VISIBILITY)
-  // --------------------------------------------------
-
   const byRegion = {};
   visible.forEach(e => {
     const region = e.region || 'unknown';
@@ -84,20 +68,22 @@ export function prepareLivingDexRenderModel({
     byRegion[region].push(e);
   });
 
-  // --------------------------------------------------
-  // COUNT LABEL (SPEC-ACCURATE)
-  // --------------------------------------------------
-
   const countLabelText = viewState.showUnclaimed
-    ? `${unownedSpecies} / ${totalSpecies} Species`
-    : `${ownedSpecies} / ${totalSpecies} Species`;
+    ? `${unownedSpecies} Unowned`
+    : `${ownedSpecies} / ${totalSpecies} Owned`;
 
   return {
     sections: Object.entries(byRegion).map(([region, entries]) => {
       const stats = regionStats[region] || { owned: 0, total: 0 };
+      const regionUnowned = stats.total - stats.owned;
+
+      const title = viewState.showUnclaimed
+        ? `${region.toUpperCase()} (${regionUnowned} Unowned)`
+        : `${region.toUpperCase()} (${stats.owned} / ${stats.total})`;
+
       return {
         key: region,
-        title: `${region.toUpperCase()} (${stats.owned} / ${stats.total})`,
+        title,
         entries: entries.map(e => ({
           ...e,
           highlighted: e.count > 0
