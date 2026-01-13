@@ -1,139 +1,180 @@
+// v3.1.0
 // src/ui/unifiedcard.js
-// Unified Card Renderer — template layout (name lower + big status box)
+// Unified collector-card renderer (Hitlist + Living Dex)
+// - Header: name (left) + points (right)
+// - Art window narrower than header
+// - Info plate above
+// - Variant row (STD/Secret/Alpha/Safari) at bottom
+// - Variant switching changes the info plate text
 
+import { tierFromPoints } from './tier-map.js';
+
+export function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function classForNameLength(name) {
+  const n = String(name || '').trim().length;
+  if (n >= 18) return 'is-very-long';
+  if (n >= 14) return 'is-long';
+  return '';
+}
+
+function variantIconFor(key) {
+  switch (key) {
+    case 'secret': return 'img/symbols/secretshinysprite.png';
+    case 'alpha': return 'img/symbols/alphasprite.png';
+    case 'safari': return 'img/symbols/safarisprite.png';
+    case 'standard':
+    default: return 'img/symbols/singlesprite.png';
+  }
+}
+
+function normalizeVariants(variants) {
+  const base = Array.isArray(variants) ? variants : [];
+  const order = ['standard', 'secret', 'alpha', 'safari'];
+  const byKey = new Map(base.map(v => [v && v.key, v]));
+
+  return order.map(key => {
+    const v = byKey.get(key) || {};
+    return {
+      key,
+      title: v.title || key,
+      iconSrc: v.iconSrc || variantIconFor(key),
+      enabled: key === 'standard' ? true : Boolean(v.enabled),
+      infoText: v.infoText == null ? '' : String(v.infoText),
+      active: Boolean(v.active)
+    };
+  });
+}
+
+/**
+ * Render a single unified collector-card.
+ *
+ * @param {object} params
+ * @param {string} params.pokemonName
+ * @param {string} params.artSrc
+ * @param {number|string} params.points
+ * @param {string} params.infoText
+ * @param {boolean} params.isUnclaimed
+ * @param {string[]} [params.owners] Owners list for tooltip (optional)
+ * @param {Array<{key:string,title?:string,iconSrc?:string,enabled?:boolean,infoText?:string,active?:boolean}>} params.variants
+ */
 export function renderUnifiedCard({
-  name,
-  img,
-  info = '',             // kept for compatibility, not used as primary name display now
-  cardType = '',
-
-  unclaimed = false,
-  unowned = false,
-  lost = false,
-  highlighted = false,
-
-  tier,                  // 'lm' | '0'...'6'
-  owners,                // string[] optional for owner tooltip
-  clip,
-
-  // variant system:
-  // base claim always exists; variants optionally exist: alpha/secret/safari
-  variants = {
-    base: { label: '', icons: {} },
-    alpha: null,
-    secret: null,
-    safari: null
-  },
-
-  // initial variant to display
-  activeVariant = 'base'
+  pokemonName,
+  artSrc,
+  points,
+  infoText,
+  isUnclaimed,
+  owners,
+  variants
 }) {
-  const isNeg = !!(unclaimed || unowned);
+  const safeName = escapeHtml(pokemonName || '');
+  const pts = Number(points);
+  const ptsText = Number.isFinite(pts) ? String(pts) : '';
 
-  const classes = [
-    'unified-card',
-    isNeg && (unclaimed ? 'is-unclaimed' : 'is-unowned'),
-    lost && 'is-lost',
-    highlighted && 'is-highlighted'
-  ].filter(Boolean).join(' ');
+  const tierToken = tierFromPoints(pts);
+  const tierClass = tierToken === 'lm' ? 'tier-lm' : `tier-${tierToken}`;
+  const nameLenClass = classForNameLength(pokemonName);
 
-  let attrs = `
-    class="${classes}"
-    data-card-type="${escapeAttr(cardType)}"
-    data-name="${escapeAttr(name)}"
-    data-variant="${escapeAttr(activeVariant)}"
-  `;
+  const normalizedVariants = normalizeVariants(variants);
+  const selectedKey =
+    (normalizedVariants.find(v => v.active && v.enabled) ||
+      normalizedVariants.find(v => v.key === 'standard'))?.key ||
+    'standard';
 
-  if (tier != null && String(tier).trim() !== '') {
-    attrs += ` data-tier="${escapeAttr(String(tier).toLowerCase())}"`;
-  }
-  if (clip) attrs += ` data-clip="${escapeAttr(clip)}"`;
-  if (Array.isArray(owners) && owners.length) {
-    attrs += ` data-owners="${escapeAttr(JSON.stringify(owners))}"`;
-  }
+  const selectedVariant = normalizedVariants.find(v => v.key === selectedKey) || normalizedVariants[0];
 
-  const tierLabel = tier != null && String(tier).trim() !== '' ? String(tier).toUpperCase() : '';
+  const initialInfo =
+    (selectedVariant && selectedVariant.infoText) ||
+    (infoText || '') ||
+    (isUnclaimed ? 'Unclaimed' : '—');
 
-  const v = normalizeVariants(variants);
-  const current = v[activeVariant] || v.base;
+  const ownersArr = Array.isArray(owners) ? owners.filter(Boolean).map(String) : [];
+  const ownersAttr = ownersArr.length ? ` data-owners="${escapeHtml(JSON.stringify(ownersArr))}"` : '';
 
-  const availableKeys = Object.keys(v).filter(k => k !== 'base' && v[k]);
-  const cycleOrder = ['base', ...availableKeys];
+  const variantButtons = normalizedVariants
+    .map(v => {
+      const isDisabled = !v.enabled;
+      const isActive = v.key === selectedKey;
+      const cls = ['variant-btn', isDisabled ? 'is-disabled' : '', isActive ? 'is-active' : '']
+        .filter(Boolean)
+        .join(' ');
 
-  // status icons shown in slot; active state depends on variant key
-  const statusIcons = renderStatusIcons(activeVariant, v);
+      return `
+        <button
+          type="button"
+          class="${cls}"
+          data-variant="${escapeHtml(v.key)}"
+          data-info="${escapeHtml(v.infoText || '')}"
+          aria-label="${escapeHtml(v.title || v.key)}"
+        >
+          <img class="variant-icon" src="${escapeHtml(v.iconSrc)}" alt="">
+        </button>
+      `;
+    })
+    .join('');
 
   return `
-    <div ${attrs} data-variant-cycle="${escapeAttr(JSON.stringify(cycleOrder))}">
+    <div class="unified-card ${tierClass} ${isUnclaimed ? 'is-unclaimed' : ''}"
+         data-unified-card
+         data-name="${safeName}"
+         data-selected-variant="${escapeHtml(selectedKey)}"${ownersAttr}>
       <div class="unified-header">
-        <span class="tier-badge" aria-hidden="true">${escapeHtml(tierLabel)}</span>
-        <div class="symbol-strip" aria-hidden="true">
-          ${renderHeaderSymbols(current)}
+        <div class="unified-name-wrap">
+          <div class="unified-name ${nameLenClass}" title="${safeName}">${safeName}</div>
+        </div>
+        <div class="unified-value" aria-label="Points">
+          <span class="unified-value-number">${escapeHtml(ptsText)}</span>
+          <span class="unified-value-suffix">PTS</span>
         </div>
       </div>
 
-      <div class="unified-art">
-        <img class="unified-img" src="${img}" alt="${escapeAttr(name)}">
+      <div class="unified-art" aria-label="Art">
+        <img src="${escapeHtml(artSrc || '')}" alt="${safeName}">
       </div>
 
-      <div class="status-slot" tabindex="0" role="button" aria-label="Switch card variant">
-        <span class="status-pill" title="${escapeAttr(current.label || '')}">
-          ${escapeHtml(current.label || 'STANDARD')}
-        </span>
-        ${statusIcons}
+      <div class="unified-info" aria-label="Card info">
+        <div class="unified-info-text">${escapeHtml(initialInfo)}</div>
       </div>
 
-      <div class="name-box">
-        <span class="unified-name" title="${escapeAttr(name)}">${escapeHtml(name)}</span>
+      <div class="unified-variants" aria-label="Variants">
+        ${variantButtons}
       </div>
     </div>
   `;
 }
 
-function normalizeVariants(variants) {
-  const base = variants?.base || { label: 'STANDARD', icons: {} };
-  return {
-    base: { label: base.label || 'STANDARD', icons: base.icons || {} },
-    alpha: variants?.alpha || null,
-    secret: variants?.secret || null,
-    safari: variants?.safari || null
-  };
-}
+/**
+ * One-time event delegation to switch card variants.
+ * Updates the info panel text based on the clicked button's data-info.
+ */
+export function bindUnifiedCardVariantSwitching(root = document) {
+  if (!root || root.__unifiedCardVariantBound) return;
+  root.__unifiedCardVariantBound = true;
 
-function renderHeaderSymbols(currentVariant) {
-  // keep header strip minimal; leave it for "weird symbols" you already use
-  // this function can be wired later to your existing symbol set
-  return '';
-}
+  root.addEventListener('click', e => {
+    const btn = e.target && typeof e.target.closest === 'function' ? e.target.closest('.variant-btn') : null;
+    if (!btn) return;
+    if (btn.classList.contains('is-disabled')) return;
 
-function renderStatusIcons(activeKey, variants) {
-  // show the three variant icons if that variant exists
-  // icons are "wired symbols on the card"
-  const exists = {
-    alpha: !!variants.alpha,
-    secret: !!variants.secret,
-    safari: !!variants.safari
-  };
+    const card = btn.closest('.unified-card');
+    if (!card) return;
 
-  const icon = (key, file) => {
-    if (!exists[key]) return '';
-    const on = activeKey === key ? 'is-active' : '';
-    return `<img class="status-icon ${on}" src="img/symbols/${file}" alt="${key}">`;
-  };
+    const variant = btn.getAttribute('data-variant') || 'standard';
+    card.setAttribute('data-selected-variant', variant);
 
-  return `
-    ${icon('alpha', 'alphasprite.png')}
-    ${icon('secret', 'secretshinysprite.png')}
-    ${icon('safari', 'safarisprite.png')}
-  `;
-}
+    card.querySelectorAll('.variant-btn').forEach(b => b.classList.toggle('is-active', b === btn));
 
-function escapeAttr(str) {
-  return String(str).replace(/"/g, '&quot;');
-}
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+    const info = btn.getAttribute('data-info') || '';
+    const infoEl = card.querySelector('.unified-info-text');
+    if (infoEl) infoEl.textContent = info || (card.classList.contains('is-unclaimed') ? 'Unclaimed' : '—');
+
+    card.dispatchEvent(new CustomEvent('card:variant', { bubbles: true, detail: { variant } }));
+  });
 }
