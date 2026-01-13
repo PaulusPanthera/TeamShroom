@@ -1,155 +1,71 @@
 // v2.0.0-alpha.1
 // src/features/shinydex/shinydex.help.js
-// Shiny Dex Help — questionmark button + tooltip
-// Runtime-only. Never throws.
+// Help Tooltip — UI only
 
-function ensureHelpTooltip() {
-  var el = document.querySelector('.dex-help-tooltip');
-  if (el) return el;
+export function bindShinyDexHelp(opts) {
+  var buttonEl = opts && opts.buttonEl;
+  var inputEl = opts && opts.inputEl;
 
-  el = document.createElement('div');
-  el.className = 'dex-help-tooltip';
-  el.style.position = 'fixed';
-  el.style.zIndex = '9999';
-  el.style.maxWidth = '520px';
-  el.style.padding = '14px 16px';
-  el.style.background = 'var(--bg-panel)';
-  el.style.color = 'var(--text-main)';
-  el.style.border = 'var(--border-soft)';
-  el.style.borderRadius = '12px';
-  el.style.boxShadow = 'var(--shadow-depth)';
-  el.style.fontFamily = "'Press Start 2P', monospace";
-  el.style.fontSize = 'var(--font-card-stat)';
-  el.style.opacity = '0';
-  el.style.pointerEvents = 'none';
-  el.style.transition = 'opacity 0.15s ease';
+  if (!buttonEl) return;
 
-  document.body.appendChild(el);
-  return el;
-}
-
-function setPos(el, anchorEl) {
-  var rect = anchorEl.getBoundingClientRect();
-  var pad = 10;
-
-  var left = rect.left;
-  var top = rect.bottom + pad;
-
-  // keep within viewport
-  var vw = window.innerWidth || 0;
-  var vh = window.innerHeight || 0;
-
-  // measure
-  el.style.left = '0px';
-  el.style.top = '0px';
-  el.style.opacity = '0';
-  el.style.pointerEvents = 'none';
-  el.style.display = 'block';
-
-  var w = el.offsetWidth || 320;
-  var h = el.offsetHeight || 140;
-
-  if (left + w + pad > vw) left = Math.max(pad, vw - w - pad);
-  if (top + h + pad > vh) top = Math.max(pad, rect.top - h - pad);
-
-  el.style.left = Math.max(pad, left) + 'px';
-  el.style.top = Math.max(pad, top) + 'px';
-}
-
-function show(el) {
-  el.style.opacity = '1';
-  el.style.pointerEvents = 'auto';
-}
-
-function hide(el) {
-  el.style.opacity = '0';
-  el.style.pointerEvents = 'none';
-}
-
-function findHelpButton(root) {
-  var scope = root || document;
-
-  // supported selectors (controller can use any)
-  return (
-    scope.querySelector('#dex-help') ||
-    scope.querySelector('#dex-help-btn') ||
-    scope.querySelector('.dex-help-btn') ||
-    scope.querySelector('[data-dex-help]')
-  );
-}
-
-function buildHelpHtml() {
-  // Slim + readable
-  return (
-    '<div style="color:var(--accent);letter-spacing:1px;margin-bottom:8px;">Search Help</div>' +
-    '<div style="line-height:1.6;color:var(--text-main);">' +
-      '<div><span style="color:var(--accent);">Pokémon:</span> type a name (partial ok)</div>' +
-      '<div><span style="color:var(--accent);">Family:</span> <b>+name</b> or <b>name+</b></div>' +
-      '<div><span style="color:var(--accent);">Member:</span> <b>@name</b> (Hitlist: claimed-by • LivingDex: owners)</div>' +
-      '<div><span style="color:var(--accent);">Region:</span> <b>r:k</b> / <b>r:kan</b> / <b>region:un</b></div>' +
-      '<div><span style="color:var(--accent);">Tier:</span> <b>tier:0</b> <b>tier:1</b> <b>tier:2</b> … <b>tier:lm</b></div>' +
-      '<div><span style="color:var(--accent);">Flags:</span> <b>unclaimed</b> / <b>claimed</b> • <b>unowned</b> / <b>owned</b></div>' +
-    '</div>'
-  );
-}
-
-export function bindShinyDexHelp(root) {
-  var btn = findHelpButton(root);
-  if (!btn) return;
-
-  var tooltip = ensureHelpTooltip();
-  tooltip.innerHTML = buildHelpHtml();
-
-  var open = false;
-
-  function setActive(on) {
-    // works with your existing "active" style if you have it
-    if (on) btn.classList.add('active');
-    else btn.classList.remove('active');
+  var tooltip = document.querySelector('.dex-help-tooltip');
+  if (!tooltip) {
+    tooltip = document.createElement('div');
+    tooltip.className = 'dex-help-tooltip';
+    tooltip.innerHTML = `
+      <div class="help-title">Search Help</div>
+      <div class="help-body">
+        <div><b>Pokémon:</b> type a name (partial ok)</div>
+        <div><b>Family:</b> <code>+name</code> or <code>name+</code></div>
+        <div><b>Member:</b> <code>@name</code> (Hitlist: claimed-by • LivingDex: owners)</div>
+        <div><b>Region:</b> <code>r:k</code> • <code>r:kan</code> • <code>region:uno</code></div>
+        <div><b>Tier:</b> <code>tier:0</code> <code>tier:1</code> <code>tier:2</code> … <code>tier:lm</code></div>
+        <div><b>Flags:</b> <code>unclaimed</code> <code>claimed</code> <code>unowned</code> <code>owned</code></div>
+      </div>
+    `;
+    document.body.appendChild(tooltip);
   }
 
-  function openTip() {
-    open = true;
-    setActive(true);
-    setPos(tooltip, btn);
-    show(tooltip);
+  function hide() {
+    tooltip.classList.remove('show');
+    buttonEl.classList.remove('active');
   }
 
-  function closeTip() {
-    open = false;
-    setActive(false);
-    hide(tooltip);
+  function show() {
+    var r = buttonEl.getBoundingClientRect();
+
+    // anchor under the button, inside viewport
+    var x = Math.max(8, Math.min(window.innerWidth - 420, r.left - 10));
+    var y = Math.max(8, r.bottom + 8);
+
+    tooltip.style.left = x + 'px';
+    tooltip.style.top = y + 'px';
+
+    tooltip.classList.add('show');
+    buttonEl.classList.add('active');
   }
 
-  btn.addEventListener('click', function (e) {
+  buttonEl.addEventListener('click', function (e) {
     e.preventDefault();
     e.stopPropagation();
-    if (open) closeTip();
-    else openTip();
+
+    if (tooltip.classList.contains('show')) hide();
+    else show();
   });
 
-  document.addEventListener('click', function () {
-    if (!open) return;
-    closeTip();
-  });
-
-  window.addEventListener('resize', function () {
-    if (!open) return;
-    setPos(tooltip, btn);
+  document.addEventListener('click', function (e) {
+    if (!tooltip.classList.contains('show')) return;
+    if (e.target === buttonEl || buttonEl.contains(e.target)) return;
+    if (tooltip.contains(e.target)) return;
+    hide();
   });
 
   document.addEventListener('keydown', function (e) {
-    if (!open) return;
-    if (e.key === 'Escape') closeTip();
+    if (e.key === 'Escape') hide();
   });
 
-  // prevent tooltip click from closing immediately
-  tooltip.addEventListener('click', function (e) {
-    e.stopPropagation();
+  // optional: focus search when closing help
+  tooltip.addEventListener('click', function () {
+    if (inputEl) inputEl.focus();
   });
-}
-
-// Back-compat alias (if controller imports this name)
-export function setupShinyDexHelp(root) {
-  return bindShinyDexHelp(root);
 }
