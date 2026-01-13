@@ -11,6 +11,10 @@ import {
   memberMatches
 } from './shinydex.search.js';
 
+function normalizeRegion(raw) {
+  return String(raw || '').trim().toLowerCase();
+}
+
 export function prepareLivingDexRenderModel({
   showcaseRows,
   viewState,
@@ -19,7 +23,14 @@ export function prepareLivingDexRenderModel({
   const mode = viewState.sort; // 'standard' | 'total'
   const parsed = parseSearch(viewState.search);
 
-  const snapshot = buildShinyLivingDexModel(showcaseRows);
+  // truth snapshot
+  let snapshot = buildShinyLivingDexModel(showcaseRows);
+
+  // region filter applies to mode dataset + counters (pre-search)
+  if (parsed.filters?.region) {
+    const r = normalizeRegion(parsed.filters.region);
+    snapshot = snapshot.filter(e => normalizeRegion(e.region) === r);
+  }
 
   const totalSpecies = snapshot.length;
   const ownedSpecies = snapshot.filter(e => e.count > 0).length;
