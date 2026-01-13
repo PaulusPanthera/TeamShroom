@@ -1,6 +1,11 @@
+/* v2.0.0-alpha.2 */
 /* =========================================================
-   BUTTON SYSTEM — SEMANTIC SPLIT (LOCKED)
+   BUTTON SYSTEM — DESIGN SYSTEM v1 (LOCKED)
    ========================================================= */
+
+/* ---------------------------------------------------------
+   BASE BUTTON RESET
+--------------------------------------------------------- */
 
 button {
   font-family: inherit;
@@ -12,12 +17,12 @@ button {
 }
 
 /* ---------------------------------------------------------
-   TOGGLES / ACTIONS
+   ACTION BUTTONS (e.g. Unclaimed toggle)
 --------------------------------------------------------- */
 
-.dex-toggle,
-.dex-action {
+.search-controls button:not(.dex-tab) {
   padding: 6px 14px;
+
   font-weight: bold;
 
   background: var(--bg-panel-alt);
@@ -29,26 +34,29 @@ button {
   box-shadow: var(--shadow-depth);
 }
 
-.dex-toggle:hover,
-.dex-action:hover {
+.search-controls button:not(.dex-tab):hover {
   filter: brightness(1.05);
 }
 
-.dex-toggle.active {
+.search-controls button:not(.dex-tab).active {
   background: var(--accent);
   color: var(--text-dark);
   border-color: var(--accent);
 }
 
-.dex-toggle:disabled,
-.dex-action:disabled {
+/* Disabled third-state (muted, no hover, never looks active) */
+.search-controls button:not(.dex-tab):disabled {
   opacity: 0.45;
   cursor: not-allowed;
   filter: none;
+  background: var(--bg-panel);
+  color: var(--text-muted);
+  border-color: var(--bg-panel);
+  box-shadow: none;
 }
 
 /* ---------------------------------------------------------
-   DEX TABS (VIEW NAVIGATION ONLY)
+   DEX TABS (VIEW SWITCHERS)
 --------------------------------------------------------- */
 
 .dex-tab {
@@ -72,6 +80,7 @@ button {
   color: var(--text-main);
 }
 
+/* ACTIVE TAB = ORANGE / RED */
 .dex-tab.active {
   background: var(--accent);
   color: var(--text-dark);
@@ -106,6 +115,7 @@ button {
   color: var(--accent);
 }
 
+/* ONE ACTIVE NAV ITEM ONLY */
 .nav a.active {
   background: var(--accent);
   color: var(--text-dark);
