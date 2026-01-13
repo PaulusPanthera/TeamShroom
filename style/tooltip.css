@@ -1,11 +1,14 @@
 /* v2.0.0-alpha.1 */
-/* style/tooltip.css */
+/* =========================================================
+   TOOLTIP — IN-GAME INFO POPUP
+   Design System v1 style, v2 runtime
+   ========================================================= */
 
 /* ---------------------------------------------------------
-   OWNER TOOLTIP — RPG PANEL
-   --------------------------------------------------------- */
+   OWNERS TOOLTIP
+--------------------------------------------------------- */
 
-.dex-owner-tooltip{
+.dex-owner-tooltip {
   position: fixed;
   z-index: 9999;
 
@@ -17,7 +20,7 @@
   background: var(--bg-panel);
   color: var(--text-main);
 
-  border: var(--border-soft);
+  border: 2px solid var(--accent);
   border-radius: 12px;
 
   box-shadow: var(--shadow-depth);
@@ -30,114 +33,129 @@
   transition: opacity 0.15s ease;
 }
 
-.dex-owner-tooltip.show{
+.dex-owner-tooltip.show {
   opacity: 1;
 }
 
-.dex-owner-tooltip.frozen{
+.dex-owner-tooltip.is-frozen {
   pointer-events: auto;
 }
 
-.dex-owner-tooltip .owners-title{
+/* title */
+.dex-owner-tooltip .owners-title {
   margin-bottom: var(--space-1);
+  font-size: var(--font-card-stat);
   letter-spacing: 1px;
   color: var(--accent);
+  text-align: center;
 }
 
-.dex-owner-tooltip .owners-list{
-  white-space: pre-line;
-  line-height: 1.35em;
+/* list */
+.dex-owner-tooltip .owners-list {
+  display: grid;
+  gap: 6px;
+
+  padding: 8px;
+  background: var(--bg-panel-alt);
+  border: var(--border-soft);
+  border-radius: 10px;
+
+  min-height: 150px;
+}
+
+.dex-owner-tooltip .owners-list.fade {
+  opacity: 0.25;
+  transition: opacity 0.12s ease;
+}
+
+.dex-owner-tooltip .owner-name {
+  text-align: center;
   color: var(--text-muted);
-
-  /* 8-ish lines visible */
-  max-height: 11em;
-  overflow: hidden;
 }
 
-.dex-owner-tooltip .owners-footer{
+/* footer */
+.dex-owner-tooltip .owners-footer {
+  margin-top: var(--space-1);
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: var(--space-1);
   gap: var(--space-2);
 }
 
-.dex-owner-tooltip .owners-page{
-  opacity: 0.8;
-  color: var(--text-muted);
+.dex-owner-tooltip .owners-page {
+  color: var(--success);
+  font-weight: bold;
+  font-size: var(--font-small);
 }
 
-.dex-owner-tooltip .owners-next{
+.dex-owner-tooltip .owners-next {
   display: none;
-  font-family: 'Press Start 2P', monospace;
-  font-size: var(--font-card-stat);
-
   padding: 6px 10px;
+
+  font-family: inherit;
+  font-size: var(--font-small);
+  font-weight: bold;
+
+  background: var(--accent);
+  color: var(--text-dark);
+
+  border: none;
   border-radius: 10px;
 
-  background: #111;
-  color: var(--text-main);
-  border: 2px solid var(--accent);
   cursor: pointer;
+  box-shadow: var(--shadow-depth);
 }
 
-.dex-owner-tooltip.frozen .owners-next{
-  display: inline-block;
-}
-
-.dex-owner-tooltip.page-fade{
-  opacity: 0.55;
+.dex-owner-tooltip .owners-next:hover {
+  filter: brightness(1.05);
 }
 
 /* ---------------------------------------------------------
-   HELP TOOLTIP — RPG PANEL
-   --------------------------------------------------------- */
+   HELP TOOLTIP (RPG PANEL)
+--------------------------------------------------------- */
 
-.dex-help-tooltip{
-  position: fixed;
-  z-index: 9999;
+.dex-help-tooltip {
+  position: absolute;
+  left: calc(var(--space-3) + 220px);
+  top: calc(100% + 10px);
 
-  width: min(420px, calc(100vw - 16px));
+  width: 520px;
+  max-width: calc(100vw - 40px);
 
   padding: var(--space-2) var(--space-3);
 
   background: var(--bg-panel);
-  color: var(--text-main);
-
   border: 2px solid var(--accent);
-  border-radius: 12px;
+  border-radius: 14px;
 
   box-shadow: var(--shadow-depth);
 
   font-family: 'Press Start 2P', monospace;
   font-size: var(--font-card-stat);
 
-  pointer-events: auto;
-  opacity: 0;
-  transition: opacity 0.15s ease;
-
-  display: none;
+  z-index: 2000;
 }
 
-.dex-help-tooltip.show{
-  display: block;
-  opacity: 1;
-}
-
-.dex-help-tooltip .help-title{
-  margin-bottom: var(--space-1);
-  letter-spacing: 1px;
+.dex-help-title {
   color: var(--accent);
+  letter-spacing: 2px;
+  text-align: center;
+  margin-bottom: var(--space-1);
 }
 
-.dex-help-tooltip .help-body{
+.dex-help-body {
+  background: var(--bg-panel-alt);
+  border: var(--border-soft);
+  border-radius: 12px;
+  padding: var(--space-2);
+
+  display: grid;
+  gap: 8px;
+
   color: var(--text-muted);
-  line-height: 1.35em;
 }
 
-.dex-help-tooltip code{
+.dex-help-body b {
   color: var(--text-main);
-  background: rgba(0,0,0,0.25);
-  padding: 2px 4px;
-  border-radius: 6px;
 }
