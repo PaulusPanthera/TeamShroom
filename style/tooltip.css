@@ -1,3 +1,4 @@
+/* v2.0.0-alpha.4 */
 /* =========================================================
    TOOLTIP — IN-GAME INFO POPUP
    Design System v1
@@ -67,6 +68,43 @@
   white-space: pre-line;
 
   animation: tooltip-scroll 8s linear infinite;
+}
+
+/* ---------------------------------------------------------
+   HELP TOOLTIP (PAGE-LOCAL)
+   --------------------------------------------------------- */
+
+.dex-help-tooltip {
+  position: absolute;
+  z-index: 1200;
+
+  width: 420px;
+  max-width: calc(100vw - 40px);
+
+  padding: var(--space-2) var(--space-3);
+
+  background: var(--bg-panel);
+  color: var(--text-main);
+
+  border: var(--border-soft);
+  border-radius: 12px;
+
+  box-shadow: var(--shadow-depth);
+
+  font-size: var(--font-small);
+  line-height: 1.35;
+  letter-spacing: 0.5px;
+
+  white-space: pre-line;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+}
+
+.dex-help-tooltip.show {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* ---------------------------------------------------------
