@@ -1,11 +1,12 @@
-// v2.0.0-alpha.1
+// v2.0.0-alpha.2
 // src/features/shinydex/shinydex.tooltip.js
-// Shiny Dex — Owners Tooltip (paged + freeze mode)
+// Shiny Dex — Owners Tooltip (paged + freeze mode + auto page swap)
 
 let tooltipEl = null;
 let isBound = false;
 
 const PAGE_SIZE = 10;
+const AUTO_SWAP_MS = 1600;
 
 function ensureTooltip() {
   if (tooltipEl) return tooltipEl;
@@ -21,10 +22,8 @@ function ensureTooltip() {
     </div>
   `;
 
-  // Positioning uses fixed; tooltip should live at body root.
   document.body.appendChild(tooltipEl);
 
-  // Hidden default position (CSS fades with .show)
   tooltipEl.style.left = '-9999px';
   tooltipEl.style.top = '-9999px';
 
@@ -67,9 +66,24 @@ export function bindDexOwnerTooltip(root) {
   const pageEl = tt.querySelector('.owners-page');
   const nextBtn = tt.querySelector('.owners-next');
 
-  function stopTimer() {
-    if (timer) window.clearInterval(timer);
+  function stopAuto() {
+    if (!timer) return;
+    window.clearInterval(timer);
     timer = null;
+  }
+
+  function startAuto() {
+    stopAuto();
+    if (!activeCard) return;
+    if (frozen) return;
+    if (pages.length <= 1) return;
+
+    timer = window.setInterval(() => {
+      if (!activeCard) return;
+      if (frozen) return;
+      pageIndex = (pageIndex + 1) % pages.length;
+      renderPage(true);
+    }, AUTO_SWAP_MS);
   }
 
   function setPositionNearCard(cardEl) {
@@ -78,19 +92,16 @@ export function bindDexOwnerTooltip(root) {
     const r = cardEl.getBoundingClientRect();
     const pad = 12;
 
-    // Force measure
     tt.style.left = '-9999px';
     tt.style.top = '-9999px';
     tt.classList.add('show');
     const tr = tt.getBoundingClientRect();
 
-    // Prefer right side; if overflow, flip left.
     let x = r.right + pad;
     if (x + tr.width > window.innerWidth - pad) {
       x = r.left - tr.width - pad;
     }
 
-    // Vertical: align with top of card but keep inside viewport.
     let y = r.top;
     y = clamp(y, pad, window.innerHeight - tr.height - pad);
 
@@ -109,9 +120,7 @@ export function bindDexOwnerTooltip(root) {
       window.setTimeout(() => listEl.classList.remove('fade'), 120);
     }
 
-    listEl.innerHTML = current
-      .map(o => `<div class="owner-row">${o}</div>`)
-      .join('');
+    listEl.innerHTML = current.map(o => `<div class="owner-row">${o}</div>`).join('');
 
     pageEl.textContent = total > 1 ? `${pageIndex + 1} / ${total}` : '';
     nextBtn.style.display = total > 1 ? 'inline-block' : 'none';
@@ -126,7 +135,7 @@ export function bindDexOwnerTooltip(root) {
     tt.style.left = '-9999px';
     tt.style.top = '-9999px';
 
-    stopTimer();
+    stopAuto();
 
     frozen = false;
     tt.classList.remove('is-frozen');
@@ -169,6 +178,8 @@ export function bindDexOwnerTooltip(root) {
 
     setPositionNearCard(cardEl);
     show();
+
+    startAuto();
   }
 
   function toggleFreeze() {
@@ -177,20 +188,15 @@ export function bindDexOwnerTooltip(root) {
     frozen = !frozen;
     tt.classList.toggle('is-frozen', frozen);
 
-    if (!frozen) {
-      // when unfreezing, keep it visible only if still hovering card
-      // (next mouseout will hide)
-      stopTimer();
-    }
+    if (frozen) stopAuto();
+    else startAuto();
   }
 
-  // Delegation target: unified cards with data-owners
   function getCardFromEventTarget(target) {
     if (!target || typeof target.closest !== 'function') return null;
     return target.closest('.unified-card[data-owners]');
   }
 
-  // Hover: show tooltip (unless frozen)
   doc.addEventListener(
     'mouseover',
     e => {
@@ -205,7 +211,6 @@ export function bindDexOwnerTooltip(root) {
     true
   );
 
-  // Move: keep aligned (unless frozen)
   doc.addEventListener(
     'mousemove',
     () => {
@@ -216,7 +221,6 @@ export function bindDexOwnerTooltip(root) {
     { passive: true }
   );
 
-  // Leave card: hide (unless frozen)
   doc.addEventListener(
     'mouseout',
     e => {
@@ -234,14 +238,12 @@ export function bindDexOwnerTooltip(root) {
     true
   );
 
-  // Click on card toggles freeze
   doc.addEventListener(
     'click',
     e => {
       const card = getCardFromEventTarget(e.target);
       if (!card) return;
 
-      // If clicking a different card, switch first (and freeze toggles from false->true)
       if (card !== activeCard) {
         setActiveCard(card);
         frozen = false;
@@ -253,7 +255,6 @@ export function bindDexOwnerTooltip(root) {
     true
   );
 
-  // Next page button
   nextBtn.addEventListener('click', e => {
     e.preventDefault();
     e.stopPropagation();
@@ -261,9 +262,10 @@ export function bindDexOwnerTooltip(root) {
     if (!pages.length) return;
     pageIndex = (pageIndex + 1) % pages.length;
     renderPage(true);
+
+    startAuto();
   });
 
-  // Click outside closes when frozen
   document.addEventListener(
     'click',
     e => {
@@ -275,7 +277,6 @@ export function bindDexOwnerTooltip(root) {
     true
   );
 
-  // Escape closes
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') hide();
   });
