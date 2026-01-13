@@ -41,7 +41,7 @@
   margin-left: auto;
   margin-right: auto;
 
-  padding: 0 var(--space-3) var(--space-5);
+  padding: 0 var(--space-2) var(--space-5);
   min-height: 70vh;
 
   display: flex;
