@@ -1,4 +1,4 @@
-/* v2.0.0-alpha.2 */
+/* v2.0.0-alpha.1 */
 /* =========================================================
    BUTTON SYSTEM — DESIGN SYSTEM v1 (LOCKED)
    ========================================================= */
@@ -17,7 +17,7 @@ button {
 }
 
 /* ---------------------------------------------------------
-   ACTION BUTTONS (e.g. Unclaimed toggle)
+   ACTION BUTTONS (e.g. Unclaimed toggle, Help)
 --------------------------------------------------------- */
 
 .search-controls button:not(.dex-tab) {
@@ -53,6 +53,20 @@ button {
   color: var(--text-muted);
   border-color: var(--bg-panel);
   box-shadow: none;
+}
+
+/* Help icon button sizing */
+.dex-help-btn {
+  padding: 6px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dex-help-btn img {
+  width: 18px;
+  height: 18px;
+  image-rendering: pixelated;
 }
 
 /* ---------------------------------------------------------
