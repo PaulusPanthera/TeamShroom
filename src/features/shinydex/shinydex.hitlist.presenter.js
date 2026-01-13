@@ -1,3 +1,4 @@
+// v2.0.0-alpha.3
 // src/features/shinydex/shinydex.hitlist.presenter.js
 // Hitlist Presenter — view-specific data prep (no DOM)
 
@@ -51,7 +52,6 @@ export function prepareHitlistRenderModel({
       byMember[e.claimedBy].push(e);
     });
 
-    // Build full leaderboard first (global order)
     const fullLeaderboard = Object.entries(byMember)
       .map(([name, entries]) => ({
         name,
@@ -65,13 +65,11 @@ export function prepareHitlistRenderModel({
           : b.points - a.points
       );
 
-    // Global rank map (1-based), preserves placement under filtering
     const rankByName = {};
     fullLeaderboard.forEach((m, idx) => {
       rankByName[m.name] = idx + 1;
     });
 
-    // Apply @member filter AFTER rank is computed
     let visibleLeaderboard = fullLeaderboard;
     if (parsed.kind === 'member' && parsed.q) {
       visibleLeaderboard = fullLeaderboard.filter(m =>
@@ -130,21 +128,35 @@ export function prepareHitlistRenderModel({
     byRegion[region].push(e);
   });
 
+  // --------------------------------------------------
+  // LABELS (SPEC-ACCURATE)
+  // --------------------------------------------------
+
+  const countLabelText = viewState.showUnclaimed
+    ? `${unclaimedSpecies} / ${claimedSpecies} Species`
+    : `${claimedSpecies} / ${totalSpecies} Species`;
+
   return {
     mode: 'standard',
     sections: Object.entries(byRegion).map(([region, entries]) => {
       const stats = regionStats[region] || { claimed: 0, total: 0 };
+      const regionUnclaimed = stats.total - stats.claimed;
+
+      // When Unclaimed is active, headers follow the same denominator as the main counter:
+      // unclaimed / claimed (region-scoped), not affected by search.
+      const title = viewState.showUnclaimed
+        ? `${region.toUpperCase()} (${regionUnclaimed} / ${stats.claimed})`
+        : `${region.toUpperCase()} (${stats.claimed} / ${stats.total})`;
+
       return {
         key: region,
-        title: `${region.toUpperCase()} (${stats.claimed} / ${stats.total})`,
+        title,
         entries: entries.map(e => ({
           ...e,
           highlighted: e.claimed && e.points >= 15
         }))
       };
     }),
-    countLabelText: viewState.showUnclaimed
-      ? `${unclaimedSpecies} / ${claimedSpecies} Species`
-      : `${claimedSpecies} / ${totalSpecies} Species`
+    countLabelText
   };
 }
