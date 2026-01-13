@@ -1,228 +1,237 @@
 // v2.0.0-alpha.1
 // src/features/shinydex/shinydex.tooltip.js
-// Owners Tooltip — delegated hover + freeze mode
+// Shiny Dex — Owners Tooltip (paged + freeze mode)
 
-var TOOLTIP_ID = 'dex-owner-tooltip';
-var PAGE_SIZE = 8;
-var AUTO_MS = 3000;
+let tooltipEl = null;
 
-export function bindDexOwnerTooltip() {
-  // avoid double-binding
-  if (document.body && document.body.dataset && document.body.dataset.dexOwnerTooltipBound === '1') return;
-  if (document.body && document.body.dataset) document.body.dataset.dexOwnerTooltipBound = '1';
+function ensureTooltip() {
+  if (tooltipEl) return tooltipEl;
 
-  var tooltip = document.getElementById(TOOLTIP_ID);
-  if (!tooltip) {
-    tooltip = document.createElement('div');
-    tooltip.id = TOOLTIP_ID;
-    tooltip.className = 'dex-owner-tooltip';
-    tooltip.innerHTML = `
-      <div class="owners-title"></div>
-      <div class="owners-list"></div>
-      <div class="owners-footer">
-        <span class="owners-page"></span>
-        <button class="owners-next" type="button">Next</button>
-      </div>
-    `;
-    document.body.appendChild(tooltip);
+  tooltipEl = document.createElement('div');
+  tooltipEl.className = 'dex-owner-tooltip';
+  tooltipEl.innerHTML = `
+    <div class="owners-title"></div>
+    <div class="owners-list"></div>
+    <div class="owners-footer">
+      <span class="owners-page"></span>
+      <button class="owners-next" type="button">Next</button>
+    </div>
+  `;
+
+  document.body.appendChild(tooltipEl);
+  return tooltipEl;
+}
+
+function clamp(n, a, b) {
+  return Math.max(a, Math.min(b, n));
+}
+
+function chunk(arr, size) {
+  const out = [];
+  for (let i = 0; i < arr.length; i += size) {
+    out.push(arr.slice(i, i + size));
   }
+  return out;
+}
 
-  var titleEl = tooltip.querySelector('.owners-title');
-  var listEl = tooltip.querySelector('.owners-list');
-  var pageEl = tooltip.querySelector('.owners-page');
-  var nextBtn = tooltip.querySelector('.owners-next');
+export function bindDexOwnerTooltip(root) {
+  const doc = root || document;
+  const tt = ensureTooltip();
 
-  var currentCard = null;
-  var owners = [];
-  var page = 0;
-  var timer = null;
-  var frozen = false;
+  let activeCard = null;
+  let pages = [];
+  let pageIndex = 0;
+  let timer = null;
+  let frozen = false;
 
-  function uniq(arr) {
-    var map = {};
-    var out = [];
-    for (var i = 0; i < arr.length; i++) {
-      var k = String(arr[i] || '').trim();
-      if (!k) continue;
-      if (map[k]) continue;
-      map[k] = 1;
-      out.push(k);
-    }
-    return out;
-  }
+  const titleEl = tt.querySelector('.owners-title');
+  const listEl = tt.querySelector('.owners-list');
+  const pageEl = tt.querySelector('.owners-page');
+  const nextBtn = tt.querySelector('.owners-next');
 
   function stopTimer() {
-    if (timer) {
-      clearInterval(timer);
-      timer = null;
-    }
+    if (timer) window.clearInterval(timer);
+    timer = null;
   }
 
   function startTimer() {
     stopTimer();
-    if (frozen) return;
-
-    var pages = Math.max(1, Math.ceil(owners.length / PAGE_SIZE));
-    if (pages <= 1) return;
-
-    timer = setInterval(function () {
-      page = (page + 1) % pages;
+    timer = window.setInterval(() => {
+      if (frozen) return;
+      pageIndex = (pageIndex + 1) % Math.max(1, pages.length);
       renderPage(true);
-    }, AUTO_MS);
+    }, 3000);
   }
 
-  function anchorToCard() {
-    if (!currentCard) return;
-
-    var r = currentCard.getBoundingClientRect();
-    var x = r.right + 12;
-    var y = r.top + 12;
-
-    // keep inside viewport
-    var maxX = window.innerWidth - tooltip.offsetWidth - 8;
-    var maxY = window.innerHeight - tooltip.offsetHeight - 8;
-
-    if (x > maxX) x = Math.max(8, r.left - tooltip.offsetWidth - 12);
-    if (y > maxY) y = Math.max(8, maxY);
-
-    tooltip.style.left = x + 'px';
-    tooltip.style.top = y + 'px';
-  }
-
-  function renderPage(withFade) {
-    var totalPages = Math.max(1, Math.ceil(owners.length / PAGE_SIZE));
-    if (page >= totalPages) page = 0;
-
-    var start = page * PAGE_SIZE;
-    var chunk = owners.slice(start, start + PAGE_SIZE);
-
-    if (withFade) tooltip.classList.add('page-fade');
-    setTimeout(function () {
-      listEl.textContent = chunk.join('\n');
-      pageEl.textContent = totalPages > 1 ? ('Page ' + (page + 1) + ' / ' + totalPages) : '';
-      tooltip.classList.remove('page-fade');
-    }, withFade ? 120 : 0);
-  }
-
-  function showFor(card, pokemonName, ownersList) {
-    currentCard = card;
-    owners = uniq(ownersList || []);
-    page = 0;
-    frozen = false;
-
-    tooltip.classList.remove('frozen');
-    nextBtn.style.display = 'none';
-
-    titleEl.textContent = 'Owners — ' + pokemonName;
-    renderPage(false);
-
-    tooltip.classList.add('show');
-    anchorToCard();
-    startTimer();
+  function show() {
+    tt.classList.add('show');
   }
 
   function hide() {
+    tt.classList.remove('show');
+    tt.style.left = '-9999px';
+    tt.style.top = '-9999px';
     stopTimer();
-    currentCard = null;
-    owners = [];
-    page = 0;
     frozen = false;
-
-    tooltip.classList.remove('show');
-    tooltip.classList.remove('frozen');
-    nextBtn.style.display = 'none';
+    activeCard = null;
+    pages = [];
+    pageIndex = 0;
+    tt.classList.remove('is-frozen');
   }
 
-  function toggleFreeze() {
-    if (!tooltip.classList.contains('show')) return;
+  function setPositionNearCard(card) {
+    const r = card.getBoundingClientRect();
+    const pad = 12;
 
-    frozen = !frozen;
+    const desiredLeft = r.left + (r.width / 2) - (tt.offsetWidth / 2);
+    const desiredTop = r.top - tt.offsetHeight - 10;
 
-    if (frozen) {
-      stopTimer();
-      tooltip.classList.add('frozen');
-      nextBtn.style.display = owners.length > PAGE_SIZE ? 'inline-block' : 'none';
-      anchorToCard();
+    const left = clamp(desiredLeft, pad, window.innerWidth - tt.offsetWidth - pad);
+    const top = clamp(desiredTop, pad, window.innerHeight - tt.offsetHeight - pad);
+
+    tt.style.left = left + 'px';
+    tt.style.top = top + 'px';
+  }
+
+  function renderPage(withFade) {
+    const totalPages = Math.max(1, pages.length);
+    const idx = clamp(pageIndex, 0, totalPages - 1);
+
+    const names = pages[idx] || [];
+    const html = names.length
+      ? names.map(n => `<div class="owner-name">${escapeHtml(n)}</div>`).join('')
+      : `<div class="owner-name">—</div>`;
+
+    if (withFade) {
+      listEl.classList.add('fade');
+      window.setTimeout(() => {
+        listEl.innerHTML = html;
+        listEl.classList.remove('fade');
+      }, 120);
     } else {
-      tooltip.classList.remove('frozen');
-      nextBtn.style.display = 'none';
-      startTimer();
+      listEl.innerHTML = html;
     }
+
+    pageEl.textContent = totalPages > 1 ? `${idx + 1}/${totalPages}` : '';
+    nextBtn.style.display = frozen && totalPages > 1 ? 'inline-flex' : 'none';
+    tt.classList.toggle('is-frozen', frozen);
   }
 
-  // "Next" manual paging
-  nextBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!owners.length) return;
-
-    var pages = Math.max(1, Math.ceil(owners.length / PAGE_SIZE));
-    if (pages <= 1) return;
-
-    page = (page + 1) % pages;
-    renderPage(true);
-  });
-
-  // delegated hover on cards
-  document.addEventListener('mouseover', function (e) {
-    var card = e.target && e.target.closest ? e.target.closest('.unified-card[data-card-type="pokemon"]') : null;
-    if (!card) return;
-
-    var wrap = card.closest ? card.closest('.dex-card-wrap') : null;
-    if (!wrap) return;
-
-    var ownersRaw = wrap.getAttribute('data-owners') || '';
+  function openForCard(card) {
+    const ownersRaw = card.dataset.owners;
     if (!ownersRaw) return;
 
-    var pokemonName = wrap.getAttribute('data-pokemon-name') || card.getAttribute('data-name') || 'Pokémon';
-    var list = ownersRaw.split('|');
+    let owners = [];
+    try {
+      owners = JSON.parse(ownersRaw);
+      if (!Array.isArray(owners)) owners = [];
+    } catch (_) {
+      owners = [];
+    }
 
-    showFor(card, pokemonName, list);
-  });
+    owners = owners
+      .map(x => String(x || '').trim())
+      .filter(Boolean);
 
-  document.addEventListener('mousemove', function () {
-    if (!tooltip.classList.contains('show')) return;
-    if (frozen) return;
-    anchorToCard();
-  });
+    const pokemonName = card.dataset.name || '';
+    titleEl.textContent = `Owners — ${pokemonName}`;
 
-  document.addEventListener('mouseout', function (e) {
-    if (!tooltip.classList.contains('show')) return;
+    pages = chunk(owners, 8);
+    pageIndex = 0;
 
-    var card = e.target && e.target.closest ? e.target.closest('.unified-card[data-card-type="pokemon"]') : null;
+    renderPage(false);
+    show();
+    setPositionNearCard(card);
+    startTimer();
+  }
+
+  function toggleFreeze(card) {
+    if (!activeCard || activeCard !== card) return;
+    frozen = !frozen;
+    if (frozen) {
+      stopTimer();
+    } else {
+      startTimer();
+    }
+    renderPage(false);
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  doc.addEventListener('mouseover', e => {
+    const card = e.target && e.target.closest
+      ? e.target.closest('.unified-card[data-owners]')
+      : null;
+
     if (!card) return;
-
-    // if moving into tooltip, do nothing
-    if (e.relatedTarget && tooltip.contains(e.relatedTarget)) return;
-
-    // if frozen, keep it
     if (frozen) return;
 
+    activeCard = card;
+    openForCard(card);
+  });
+
+  doc.addEventListener('mousemove', e => {
+    if (!activeCard) return;
+    if (frozen) return;
+
+    // keep it near the card, not the cursor (stable)
+    setPositionNearCard(activeCard);
+  });
+
+  doc.addEventListener('mouseout', e => {
+    if (!activeCard) return;
+    if (frozen) return;
+
+    const to = e.relatedTarget;
+    if (to && activeCard.contains(to)) return;
+
+    // leaving the card: hide
     hide();
   });
 
-  // freeze mode: LEFT CLICK on the card toggles freeze
-  document.addEventListener('click', function (e) {
-    var card = e.target && e.target.closest ? e.target.closest('.unified-card[data-card-type="pokemon"]') : null;
-    if (!card) return;
+  doc.addEventListener('click', e => {
+    const card = e.target && e.target.closest
+      ? e.target.closest('.unified-card[data-owners]')
+      : null;
 
-    if (!tooltip.classList.contains('show')) return;
-    if (!currentCard) return;
-    if (card !== currentCard) return;
+    // click on card toggles freeze
+    if (card) {
+      if (!activeCard || activeCard !== card) {
+        activeCard = card;
+        frozen = false;
+        openForCard(card);
+        return;
+      }
+      toggleFreeze(card);
+      e.preventDefault();
+      return;
+    }
 
+    // clicking outside closes if frozen
+    if (frozen) {
+      hide();
+    }
+  });
+
+  nextBtn.addEventListener('click', e => {
     e.preventDefault();
     e.stopPropagation();
-    toggleFreeze();
+    if (!pages.length) return;
+    pageIndex = (pageIndex + 1) % pages.length;
+    renderPage(true);
   });
 
-  // escape closes tooltip even if frozen
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') hide();
-  });
+  window.addEventListener('scroll', () => {
+    if (activeCard && !frozen) setPositionNearCard(activeCard);
+  }, { passive: true });
 
-  // resize: re-anchor
-  window.addEventListener('resize', function () {
-    if (!tooltip.classList.contains('show')) return;
-    anchorToCard();
+  window.addEventListener('resize', () => {
+    if (activeCard) setPositionNearCard(activeCard);
   });
 }
