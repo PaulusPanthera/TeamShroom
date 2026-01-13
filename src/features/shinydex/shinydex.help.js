@@ -1,71 +1,63 @@
 // v2.0.0-alpha.1
 // src/features/shinydex/shinydex.help.js
-// Help Tooltip — UI only
+// Shiny Dex — Help Tooltip (Search Legend)
 
-export function bindShinyDexHelp(opts) {
-  var buttonEl = opts && opts.buttonEl;
-  var inputEl = opts && opts.inputEl;
-
+export function setupShinyDexHelp({
+  buttonEl,
+  controlsRoot
+}) {
   if (!buttonEl) return;
 
-  var tooltip = document.querySelector('.dex-help-tooltip');
+  let tooltip = controlsRoot.querySelector('.dex-help-tooltip');
   if (!tooltip) {
     tooltip = document.createElement('div');
     tooltip.className = 'dex-help-tooltip';
-    tooltip.innerHTML = `
-      <div class="help-title">Search Help</div>
-      <div class="help-body">
-        <div><b>Pokémon:</b> type a name (partial ok)</div>
-        <div><b>Family:</b> <code>+name</code> or <code>name+</code></div>
-        <div><b>Member:</b> <code>@name</code> (Hitlist: claimed-by • LivingDex: owners)</div>
-        <div><b>Region:</b> <code>r:k</code> • <code>r:kan</code> • <code>region:uno</code></div>
-        <div><b>Tier:</b> <code>tier:0</code> <code>tier:1</code> <code>tier:2</code> … <code>tier:lm</code></div>
-        <div><b>Flags:</b> <code>unclaimed</code> <code>claimed</code> <code>unowned</code> <code>owned</code></div>
-      </div>
-    `;
-    document.body.appendChild(tooltip);
+    tooltip.style.display = 'none';
+    controlsRoot.appendChild(tooltip);
   }
 
-  function hide() {
-    tooltip.classList.remove('show');
+  tooltip.innerHTML = `
+    <div class="dex-help-title">Search Help</div>
+    <div class="dex-help-body">
+      <div><b>Pokémon</b>: type a name (partial ok)</div>
+      <div><b>Family</b>: <b>+name</b> or <b>name+</b> (shows whole family)</div>
+      <div><b>Member</b>: <b>@name</b> (Hitlist: claimed-by · LivingDex: owner)</div>
+      <div><b>Region</b>: <b>r:k</b> / <b>r:kan</b> / <b>region:un</b></div>
+      <div><b>Tier</b>: <b>tier:0</b> <b>tier:1</b> <b>tier:2</b> ... <b>tier:lm</b></div>
+      <div><b>Flags</b>: <b>unclaimed</b> / <b>claimed</b> / <b>unowned</b> / <b>owned</b></div>
+    </div>
+  `;
+
+  function close() {
+    tooltip.style.display = 'none';
     buttonEl.classList.remove('active');
   }
 
-  function show() {
-    var r = buttonEl.getBoundingClientRect();
-
-    // anchor under the button, inside viewport
-    var x = Math.max(8, Math.min(window.innerWidth - 420, r.left - 10));
-    var y = Math.max(8, r.bottom + 8);
-
-    tooltip.style.left = x + 'px';
-    tooltip.style.top = y + 'px';
-
-    tooltip.classList.add('show');
+  function toggle() {
+    const open = tooltip.style.display !== 'none';
+    if (open) {
+      close();
+      return;
+    }
+    tooltip.style.display = 'block';
     buttonEl.classList.add('active');
   }
 
-  buttonEl.addEventListener('click', function (e) {
+  buttonEl.addEventListener('click', e => {
     e.preventDefault();
     e.stopPropagation();
-
-    if (tooltip.classList.contains('show')) hide();
-    else show();
+    toggle();
   });
 
-  document.addEventListener('click', function (e) {
-    if (!tooltip.classList.contains('show')) return;
-    if (e.target === buttonEl || buttonEl.contains(e.target)) return;
+  document.addEventListener('click', e => {
+    if (!tooltip) return;
+    if (tooltip.style.display === 'none') return;
     if (tooltip.contains(e.target)) return;
-    hide();
+    if (buttonEl.contains(e.target)) return;
+    close();
   });
 
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') hide();
-  });
-
-  // optional: focus search when closing help
-  tooltip.addEventListener('click', function () {
-    if (inputEl) inputEl.focus();
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') close();
   });
 }
