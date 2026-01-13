@@ -13,7 +13,7 @@ export function renderUnifiedCard({
   highlighted = false,
   symbols = {},           // { secret, alpha, run, favorite, clip, safari, egg, event }
   clip,
-  owners                // string[] | undefined
+  owners                 // string[] (optional) -> data-owners for tooltip
 }) {
   /* -------------------------------------------------------
      CLASS LIST — MUST MATCH CSS EXACTLY
@@ -42,19 +42,8 @@ export function renderUnifiedCard({
     attributes += ` data-clip="${escapeAttr(clip)}"`;
   }
 
-  // Owners tooltip contract (Living Dex):
-  // - Only used for hover tooltip (display only)
-  // - Stored as a compact delimiter string
   if (Array.isArray(owners) && owners.length) {
-    const packed = owners
-      .map(o => String(o || '').trim())
-      .filter(Boolean)
-      .join('|');
-
-    if (packed) {
-      attributes += ` data-owners="${escapeAttr(packed)}"`;
-      attributes += ` data-owners-count="${owners.length}"`;
-    }
+    attributes += ` data-owners="${escapeAttr(JSON.stringify(owners))}"`;
   }
 
   /* -------------------------------------------------------
