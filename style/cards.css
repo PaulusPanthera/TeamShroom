@@ -1,6 +1,5 @@
 /* v2.0.0-alpha.1 */
 /* style/cards.css */
-
 /* =========================================================
    UNIFIED CARD SYSTEM — HARD CONTRACT
    ONE SIZE • ONE STRUCTURE • ALL PAGES
@@ -11,12 +10,13 @@
 --------------------------------------------------------- */
 
 :root {
-  --card-width: 210px;
-  --card-height: 260px;
+  /* Wider + closer to v1 spacing targets */
+  --card-width: 228px;
+  --card-height: 276px;
 
-  --card-img-size: 120px;
-  --card-name-height: 40px;
-  --card-info-height: 32px;
+  --card-img-size: 132px;
+  --card-name-height: 44px;
+  --card-info-height: 36px;
 }
 
 /* ---------------------------------------------------------
@@ -49,15 +49,17 @@
 
   position: relative;
   overflow: hidden;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
 }
 
+/* Hover = lift only */
 .unified-card:hover {
   box-shadow: var(--shadow-hover);
   transform: translateY(-4px);
 }
 
 /* ---------------------------------------------------------
-   CARD NAME
+   CARD NAME — FIXED HEIGHT, CONTROLLED OVERFLOW
 --------------------------------------------------------- */
 
 .unified-name {
@@ -86,11 +88,17 @@
   text-overflow: ellipsis;
 }
 
-.unified-name.long-name { font-size: 13px; }
-.unified-name.very-long-name { font-size: 12px; }
+/* Optional visual tuning only */
+.unified-name.long-name {
+  font-size: 13px;
+}
+
+.unified-name.very-long-name {
+  font-size: 12px;
+}
 
 /* ---------------------------------------------------------
-   CARD IMAGE
+   CARD IMAGE — FIXED BOX
 --------------------------------------------------------- */
 
 .unified-img {
@@ -108,7 +116,7 @@
 }
 
 /* ---------------------------------------------------------
-   CARD INFO
+   CARD INFO — FIXED HEIGHT
 --------------------------------------------------------- */
 
 .unified-info {
@@ -137,7 +145,7 @@
 }
 
 /* ---------------------------------------------------------
-   CARD STATES
+   CARD STATES — MATCH JS EXACTLY
 --------------------------------------------------------- */
 
 .unified-card.is-unclaimed {
@@ -160,7 +168,7 @@
 }
 
 /* ---------------------------------------------------------
-   SYMBOL OVERLAYS
+   SYMBOL OVERLAYS — FIXED POSITIONS
 --------------------------------------------------------- */
 
 .symbol-overlay {
