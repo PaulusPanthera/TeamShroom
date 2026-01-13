@@ -1,219 +1,207 @@
 // v2.0.0-alpha.1
 // src/features/shinydex/shinydex.js
-// Shiny Dex Page Controller
+// Shiny Pokédex Page Controller
 // Owns ALL DOM under #page-content
 
 import { renderShinyDexHitlist } from './shinydex.hitlist.js';
 import { renderShinyLivingDex } from './shinylivingdex.js';
+import { attachDexHelp } from './shinydex.help.js';
 
-import { prettifyPokemonName } from '../../utils/utils.js';
-import { pokemonFamilies, POKEMON_POINTS } from '../../data/pokemondatabuilder.js';
+import {
+  pokemonFamilies,
+  POKEMON_POINTS
+} from '../../data/pokemondatabuilder.js';
 
 function buildSearchCtx() {
-  const dexOrder = Object.keys(POKEMON_POINTS || {});
-  const rootByPokemon = {};
-  const familyRootsSet = new Set();
-  const displayByPokemon = {};
+  var dexKeys = Object.keys(POKEMON_POINTS || {});
+  var dexIndexByPokemon = {};
+  dexKeys.forEach(function (k, i) { dexIndexByPokemon[k] = i; });
 
-  dexOrder.forEach(p => {
-    displayByPokemon[p] = prettifyPokemonName(p).toLowerCase();
+  var rootByPokemon = {};
+  var familyMembersByRoot = {};
 
-    const roots = pokemonFamilies && pokemonFamilies[p];
-    const root = Array.isArray(roots) && roots.length ? roots[0] : p;
+  var fam = pokemonFamilies || {};
+  var entries = Object.entries(fam);
 
-    rootByPokemon[p] = root;
-    familyRootsSet.add(root);
+  // heuristic: detect "root -> stages[]" mapping
+  var looksLikeStageMap = entries.some(function (pair) {
+    var k = pair[0];
+    var arr = pair[1];
+    if (!Array.isArray(arr) || arr.length < 2) return false;
+    // if members are real dex keys, treat as stages map
+    for (var i = 0; i < arr.length; i++) {
+      if (dexIndexByPokemon[arr[i]] != null) return true;
+    }
+    return false;
   });
 
-  // also ensure roots have display entries
-  Array.from(familyRootsSet).forEach(r => {
-    if (!displayByPokemon[r]) displayByPokemon[r] = prettifyPokemonName(r).toLowerCase();
-  });
+  if (looksLikeStageMap) {
+    entries.forEach(function (pair) {
+      var root = pair[0];
+      var stages = Array.isArray(pair[1]) ? pair[1] : [];
+      familyMembersByRoot[root] = stages.slice(0);
+      stages.forEach(function (p) {
+        rootByPokemon[p] = root;
+      });
+      // also map root itself
+      rootByPokemon[root] = root;
+    });
+  } else {
+    // assume "pokemon -> [root]" mapping
+    entries.forEach(function (pair) {
+      var pokemon = pair[0];
+      var roots = Array.isArray(pair[1]) ? pair[1] : [];
+      var root = roots[0] || pokemon;
+
+      rootByPokemon[pokemon] = root;
+
+      familyMembersByRoot[root] = familyMembersByRoot[root] || [];
+      familyMembersByRoot[root].push(pokemon);
+    });
+  }
 
   return {
-    dexOrder,
-    rootByPokemon,
-    familyRoots: Array.from(familyRootsSet),
-    displayByPokemon
+    dexIndexByPokemon: dexIndexByPokemon,
+    rootByPokemon: rootByPokemon,
+    familyMembersByRoot: familyMembersByRoot
   };
 }
 
-export function setupShinyDexPage({
-  weeklyModel,
-  shinyShowcaseRows
-}) {
-  const root = document.getElementById('page-content');
+export function setupShinyDexPage(opts) {
+  var weeklyModel = opts && opts.weeklyModel;
+  var shinyShowcaseRows = opts && opts.shinyShowcaseRows;
+
+  var root = document.getElementById('page-content');
+  if (!root) return;
+
   root.innerHTML = '';
 
-  root.innerHTML = `
-    <div class="search-controls">
-      <input id="dex-search" type="text" placeholder="Search" />
+  root.innerHTML =
+    '<div class="search-controls" id="dex-controls">' +
+      '<input id="dex-search" type="text" placeholder="Search" />' +
 
-      <button id="dex-help-btn" class="dex-help-btn" aria-label="Help">
-        <img src="img/symbols/questionmarksprite.png" alt="Help" style="width:18px;height:18px;image-rendering:pixelated;">
-      </button>
+      '<button id="dex-help" class="dex-tab" title="Help" style="padding:6px 10px;display:flex;align-items:center;justify-content:center;gap:6px;">' +
+        '<img src="img/symbols/questionmarksprite.png" alt="Help" style="width:18px;height:18px;image-rendering:pixelated;" />' +
+      '</button>' +
 
-      <button id="dex-unclaimed" class="dex-unclaimed">
-        Unclaimed
-      </button>
+      '<button id="dex-unclaimed" class="dex-tab">Unclaimed</button>' +
+      '<select id="dex-sort"></select>' +
+      '<span id="dex-count"></span>' +
+    '</div>' +
 
-      <select id="dex-sort"></select>
+    '<div class="search-controls">' +
+      '<button id="tab-hitlist" class="dex-tab active">Shiny Dex Hitlist</button>' +
+      '<button id="tab-living" class="dex-tab">Shiny Living Dex</button>' +
+    '</div>' +
 
-      <span id="dex-count"></span>
-    </div>
+    '<div id="shiny-dex-container"></div>';
 
-    <div id="dex-help" class="dex-help" style="display:none;">
-      <div class="dex-help-title">Search</div>
-      <div class="dex-help-body">
-        Pokémon: type a name (partial ok)<br>
-        Family: +name, name+ , family:name<br>
-        Member: @name, member:name<br>
-        Region: r:k, r:kan, r:unova<br>
-        Tier: tier:0..6, tier:lm<br>
-        Flags: unclaimed / claimed
-      </div>
-    </div>
+  var searchInput = root.querySelector('#dex-search');
+  var helpBtn = root.querySelector('#dex-help');
+  var unclaimedBtn = root.querySelector('#dex-unclaimed');
+  var sortSelect = root.querySelector('#dex-sort');
+  var countLabel = root.querySelector('#dex-count');
 
-    <div class="search-controls">
-      <button id="tab-hitlist" class="dex-tab active">Shiny Dex Hitlist</button>
-      <button id="tab-living" class="dex-tab">Shiny Living Dex</button>
-    </div>
+  var tabHitlist = root.querySelector('#tab-hitlist');
+  var tabLiving = root.querySelector('#tab-living');
 
-    <div id="shiny-dex-container"></div>
-  `;
+  var controlsRoot = root.querySelector('#dex-controls');
+  attachDexHelp(helpBtn, controlsRoot);
 
-  const searchInput = root.querySelector('#dex-search');
-  const helpBtn = root.querySelector('#dex-help-btn');
-  const helpBox = root.querySelector('#dex-help');
+  var searchCtx = buildSearchCtx();
 
-  const unclaimedBtn = root.querySelector('#dex-unclaimed');
-  const sortSelect = root.querySelector('#dex-sort');
-  const countLabel = root.querySelector('#dex-count');
-
-  const tabHitlist = root.querySelector('#tab-hitlist');
-  const tabLiving = root.querySelector('#tab-living');
-
-  const searchCtx = buildSearchCtx();
-
-  const state = {
-    view: 'hitlist',
-    hitlist: {
-      search: '',
-      showUnclaimed: false,
-      sort: 'standard'
-    },
-    living: {
-      search: '',
-      showUnclaimed: false,
-      sort: 'standard'
-    }
+  var state = {
+    view: 'hitlist',  // 'hitlist' | 'living'
+    search: '',
+    showUnclaimed: false,
+    sort: 'standard'
   };
-
-  function active() {
-    return state.view === 'hitlist' ? state.hitlist : state.living;
-  }
 
   function configureSort() {
     sortSelect.innerHTML = '';
 
     if (state.view === 'hitlist') {
-      sortSelect.innerHTML = `
-        <option value="standard">Standard</option>
-        <option value="claims">Total Claims</option>
-        <option value="points">Total Claim Points</option>
-      `;
-      sortSelect.value = state.hitlist.sort;
+      sortSelect.innerHTML =
+        '<option value="standard">Standard</option>' +
+        '<option value="claims">Total Claims</option>' +
+        '<option value="points">Total Claim Points</option>';
+      state.sort = 'standard';
+      state.showUnclaimed = false;
     } else {
-      sortSelect.innerHTML = `
-        <option value="standard">Standard</option>
-        <option value="total">Total Shinies</option>
-      `;
-      sortSelect.value = state.living.sort;
+      sortSelect.innerHTML =
+        '<option value="standard">Standard</option>' +
+        '<option value="total">Total Shinies</option>';
+      state.sort = 'standard';
+      state.showUnclaimed = false;
     }
 
-    applyControlState();
-  }
-
-  function applyControlState() {
-    const a = active();
-
-    searchInput.value = a.search || '';
-    unclaimedBtn.classList.toggle('active', !!a.showUnclaimed);
-
-    // Hitlist leaderboard modes: Unclaimed button disabled
-    if (state.view === 'hitlist' && (a.sort === 'claims' || a.sort === 'points')) {
-      unclaimedBtn.disabled = true;
-      unclaimedBtn.classList.remove('active');
-    } else {
-      unclaimedBtn.disabled = false;
-    }
+    unclaimedBtn.classList.toggle('active', state.showUnclaimed);
   }
 
   function render() {
-    applyControlState();
-    const a = active();
+    unclaimedBtn.classList.toggle('active', state.showUnclaimed);
+
+    // disable unclaimed + search in hitlist leaderboards (UI only)
+    var leaderboard = (state.view === 'hitlist' && (state.sort === 'claims' || state.sort === 'points'));
+    unclaimedBtn.disabled = !!leaderboard;
+    searchInput.disabled = false; // keep enabled (member search works via @name)
+    if (leaderboard) {
+      // still allow @name filtering; keep input enabled
+    }
+
+    var viewState = {
+      sort: state.sort,
+      search: state.search,
+      showUnclaimed: state.showUnclaimed
+    };
 
     if (state.view === 'hitlist') {
       renderShinyDexHitlist({
-        weeklyModel,
-        viewState: a,
-        searchCtx,
-        countLabel
+        weeklyModel: weeklyModel || [],
+        viewState: viewState,
+        searchCtx: searchCtx,
+        countLabel: countLabel
       });
     } else {
       renderShinyLivingDex({
-        showcaseRows: shinyShowcaseRows,
-        search: (a.search || '').toLowerCase(),
-        unclaimedOnly: !!a.showUnclaimed,
-        sort: a.sort,
-        countLabel
+        showcaseRows: shinyShowcaseRows || [],
+        viewState: viewState,
+        searchCtx: searchCtx,
+        countLabel: countLabel
       });
     }
   }
 
-  searchInput.addEventListener('input', e => {
-    active().search = String(e.target.value || '');
+  searchInput.addEventListener('input', function (e) {
+    state.search = String(e.target.value || '');
     render();
   });
 
-  helpBtn.addEventListener('click', () => {
-    helpBox.style.display = helpBox.style.display === 'none' ? 'block' : 'none';
-  });
-
-  unclaimedBtn.addEventListener('click', () => {
-    const a = active();
-
-    if (state.view === 'hitlist' && (a.sort === 'claims' || a.sort === 'points')) {
-      return;
-    }
-
-    a.showUnclaimed = !a.showUnclaimed;
+  unclaimedBtn.addEventListener('click', function () {
+    if (unclaimedBtn.disabled) return;
+    state.showUnclaimed = !state.showUnclaimed;
     render();
   });
 
-  sortSelect.addEventListener('change', e => {
-    active().sort = e.target.value;
+  sortSelect.addEventListener('change', function (e) {
+    state.sort = e.target.value;
     render();
   });
 
-  tabHitlist.addEventListener('click', () => {
+  tabHitlist.addEventListener('click', function () {
     if (state.view === 'hitlist') return;
-
     state.view = 'hitlist';
     tabHitlist.classList.add('active');
     tabLiving.classList.remove('active');
-
     configureSort();
     render();
   });
 
-  tabLiving.addEventListener('click', () => {
+  tabLiving.addEventListener('click', function () {
     if (state.view === 'living') return;
-
     state.view = 'living';
     tabLiving.classList.add('active');
     tabHitlist.classList.remove('active');
-
     configureSort();
     render();
   });
