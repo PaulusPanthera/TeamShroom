@@ -10,7 +10,7 @@ import { prepareLivingDexRenderModel } from './shinydex.livingdex.presenter.js';
 import { renderHitlistFromPresenterModel } from './shinydex.hitlist.js';
 import { renderLivingDexFromPresenterModel } from './shinylivingdex.js';
 
-import { bindDexOwnerTooltip } from './shinydex.tooltip.js';
+import { setupDexOwnerTooltip as bindDexOwnerTooltip } from './shinydex.tooltip.js';
 import { bindShinyDexHelp } from './shinydex.help.js';
 
 export function setupShinyDexPage({
