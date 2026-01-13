@@ -1,135 +1,193 @@
 // v2.0.0-alpha.1
 // src/features/shinydex/shinydex.search.js
-// Search parsing + match helpers (runtime-only, forgiving)
+// ShinyDex Search Parser + helpers (no DOM)
+
+import { prettifyPokemonName } from '../../utils/utils.js';
+import {
+  pokemonFamilies,
+  POKEMON_DEX_ORDER,
+  POKEMON_REGION
+} from '../../data/pokemondatabuilder.js';
 
 function norm(s) {
-  return String(s || '')
-    .toLowerCase()
-    .replace(/[_/]+/g, ' ')
-    .replace(/[^a-z0-9\s-]/g, '')   // keep hyphen
-    .replace(/\s+/g, ' ')
-    .trim();
+  return String(s || '').trim().toLowerCase();
 }
 
-function stripToken(src, re) {
-  return String(src || '').replace(re, ' ').replace(/\s+/g, ' ').trim();
+export function buildSearchContext() {
+  const order = Array.isArray(POKEMON_DEX_ORDER) ? POKEMON_DEX_ORDER : [];
+  const displayByPokemon = {};
+  const rootByPokemon = {};
+  const membersByRoot = {};
+  const roots = new Set();
+
+  order.forEach(p => {
+    displayByPokemon[p] = norm(prettifyPokemonName(p));
+    const fam = pokemonFamilies[p] || [];
+    const root = fam.length ? fam[0] : p;
+    rootByPokemon[p] = root;
+    roots.add(root);
+  });
+
+  // family members (dex order)
+  order.forEach(p => {
+    const root = rootByPokemon[p] || p;
+    if (!membersByRoot[root]) membersByRoot[root] = [];
+    membersByRoot[root].push(p);
+  });
+
+  return {
+    order,
+    displayByPokemon,
+    rootByPokemon,
+    membersByRoot,
+    roots: Array.from(roots)
+  };
 }
 
-/**
- * parseSearch(input)
- *
- * Supported:
- * - Species: "pik", "mr mime", "p:eevee", "pokemon:eevee"
- * - Family:  "+pika", "pika+", "family:pika", "family: pika"
- * - Member:  "@paulus", "member: paulus"
- * - Region:  "r:k", "r:kan", "region:kanto"  (prefix match)
- * - Tier:    "t:0", "t:1", "t:2", "t:lm", "tier:lm"
- * - Flags:   "unclaimed/unowned", "claimed/owned"
- */
+/*
+parse supports tokens:
+- @name / member:name
+- +name / name+ / family:name
+- r:k  region:kanto (prefix)
+- tier:0 tier:1 tier:2 tier:lm etc
+- flags: unclaimed claimed unowned owned
+- default → species query
+*/
 export function parseSearch(input) {
-  var raw = String(input || '').trim();
-  var s = raw;
+  const raw = String(input || '');
+  const tokens = raw.split(/\s+/).map(t => t.trim()).filter(Boolean);
 
-  var filters = {};
-  var flags = { unclaimed: false, claimed: false };
+  const out = {
+    raw,
+    kind: 'species',     // species | family | member
+    q: '',
+    filters: {},         // { region, tier }
+    flags: { unclaimed: false, claimed: false, unowned: false, owned: false }
+  };
 
-  // region token
-  var mR = s.match(/(?:^|\s)(?:r|region)\s*:\s*([a-z0-9-]+)/i);
-  if (mR && mR[1]) {
-    filters.region = mR[1];
-    s = stripToken(s, /(?:^|\s)(?:r|region)\s*:\s*[a-z0-9-]+/ig);
-  }
+  let q = raw.trim();
 
-  // tier token
-  var mT = s.match(/(?:^|\s)(?:t|tier)\s*:?\s*(lm|[0-6])\b/i);
-  if (mT && mT[1]) {
-    filters.tier = String(mT[1]).toLowerCase();
-    s = stripToken(s, /(?:^|\s)(?:t|tier)\s*:?\s*(?:lm|[0-6])\b/ig);
-  }
+  tokens.forEach(tok => {
+    const t = tok;
 
-  // flags (can appear anywhere)
-  if (/\b(unclaimed|unowned)\b/i.test(s)) {
-    flags.unclaimed = true;
-    s = stripToken(s, /\b(unclaimed|unowned)\b/ig);
-  }
-  if (/\b(claimed|owned)\b/i.test(s)) {
-    flags.claimed = true;
-    s = stripToken(s, /\b(claimed|owned)\b/ig);
-  }
+    const low = norm(t);
 
-  s = String(s || '').trim();
+    if (low === 'unclaimed') out.flags.unclaimed = true;
+    if (low === 'claimed') out.flags.claimed = true;
+    if (low === 'unowned') out.flags.unowned = true;
+    if (low === 'owned') out.flags.owned = true;
 
-  // member query
-  if (s[0] === '@') {
-    return { kind: 'member', q: norm(s.slice(1)), filters: filters, flags: flags, raw: raw };
-  }
-  var mMember = s.match(/^(?:member)\s*:\s*(.+)$/i);
-  if (mMember && mMember[1] != null) {
-    return { kind: 'member', q: norm(mMember[1]), filters: filters, flags: flags, raw: raw };
-  }
+    if (low.startsWith('r:') || low.startsWith('region:')) {
+      const v = low.replace(/^r:|^region:/, '');
+      if (v) out.filters.region = v;
+      return;
+    }
 
-  // family query
-  if (s[0] === '+') {
-    return { kind: 'family', q: norm(s.slice(1)), filters: filters, flags: flags, raw: raw };
+    if (low.startsWith('tier:') || low.startsWith('t:')) {
+      const v = low.replace(/^tier:|^t:/, '');
+      if (v) out.filters.tier = v;
+      return;
+    }
+  });
+
+  // detect explicit member
+  const m1 = q.match(/(^|\s)@([^\s]+)/);
+  const m2 = q.match(/(^|\s)member:([^\s]+)/i);
+  if (m1 && m1[2]) {
+    out.kind = 'member';
+    out.q = norm(m1[2]);
+    return out;
   }
-  if (s.length && s[s.length - 1] === '+') {
-    return { kind: 'family', q: norm(s.slice(0, -1)), filters: filters, flags: flags, raw: raw };
-  }
-  var mFam = s.match(/^(?:family)\s*:\s*(.+)$/i);
-  if (mFam && mFam[1] != null) {
-    return { kind: 'family', q: norm(mFam[1]), filters: filters, flags: flags, raw: raw };
+  if (m2 && m2[2]) {
+    out.kind = 'member';
+    out.q = norm(m2[2]);
+    return out;
   }
 
-  // explicit species prefix
-  var mP = s.match(/^(?:p|pokemon)\s*:\s*(.+)$/i);
-  if (mP && mP[1] != null) {
-    return { kind: 'species', q: norm(mP[1]), filters: filters, flags: flags, raw: raw };
+  // detect explicit family
+  const f1 = q.match(/(^|\s)\+([^\s]+)/);
+  const f2 = q.match(/([^\s]+)\+(\s|$)/);
+  const f3 = q.match(/(^|\s)family:([^\s]+)/i);
+  if (f1 && f1[2]) {
+    out.kind = 'family';
+    out.q = norm(f1[2]);
+    return out;
+  }
+  if (f2 && f2[1]) {
+    out.kind = 'family';
+    out.q = norm(f2[1]);
+    return out;
+  }
+  if (f3 && f3[2]) {
+    out.kind = 'family';
+    out.q = norm(f3[2]);
+    return out;
   }
 
-  // default species
-  return { kind: 'species', q: norm(s), filters: filters, flags: flags, raw: raw };
+  // default species query: strip known filter tokens from q
+  q = tokens
+    .filter(t => {
+      const low = norm(t);
+      if (low === 'unclaimed' || low === 'claimed' || low === 'unowned' || low === 'owned') return false;
+      if (low.startsWith('r:') || low.startsWith('region:')) return false;
+      if (low.startsWith('tier:') || low.startsWith('t:')) return false;
+      if (low.startsWith('@') || low.startsWith('member:')) return false;
+      if (low.startsWith('+') || low.endsWith('+') || low.startsWith('family:')) return false;
+      return true;
+    })
+    .join(' ');
+
+  out.q = norm(q);
+  return out;
 }
 
-export function memberMatches(name, q) {
+export function speciesMatches(pokemonKey, query, ctx) {
+  const q = norm(query);
   if (!q) return true;
-  return norm(name).indexOf(norm(q)) !== -1;
+  const disp = ctx && ctx.displayByPokemon ? ctx.displayByPokemon[pokemonKey] : norm(prettifyPokemonName(pokemonKey));
+  return disp.indexOf(q) !== -1;
 }
 
-export function speciesMatches(pokemonKey, q) {
+export function memberMatches(memberName, query) {
+  const q = norm(query);
   if (!q) return true;
-  var key = norm(pokemonKey).replace(/-/g, ' ');
-  var qq = norm(q);
-
-  // also allow matching against hyphenless/space-less
-  var compactKey = key.replace(/\s+/g, '');
-  var compactQ = qq.replace(/\s+/g, '');
-
-  return key.indexOf(qq) !== -1 || compactKey.indexOf(compactQ) !== -1;
+  return norm(memberName).indexOf(q) !== -1;
 }
 
-/**
- * resolveFamilyRootsByQuery(searchCtx, q)
- * - q can match ANY member inside a family (not just the root)
- * - returns Set<root>
- */
-export function resolveFamilyRootsByQuery(searchCtx, q) {
-  var set = new Set();
-  var qq = norm(q);
-  if (!qq) return set;
+export function resolveFamilyRootsByQuery(ctx, query) {
+  const q = norm(query);
+  const set = new Set();
+  if (!q || !ctx) return set;
 
-  if (!searchCtx || !searchCtx.familyMembersByRoot) return set;
+  // match against root key OR any member display name
+  const roots = Array.isArray(ctx.roots) ? ctx.roots : [];
+  roots.forEach(root => {
+    if (norm(root).indexOf(q) !== -1) set.add(root);
+  });
 
-  Object.keys(searchCtx.familyMembersByRoot).forEach(function (root) {
-    var members = searchCtx.familyMembersByRoot[root] || [];
-    for (var i = 0; i < members.length; i++) {
-      if (speciesMatches(members[i], qq)) {
+  const membersByRoot = ctx.membersByRoot || {};
+  Object.keys(membersByRoot).forEach(root => {
+    const members = membersByRoot[root] || [];
+    for (let i = 0; i < members.length; i++) {
+      const p = members[i];
+      const disp = ctx.displayByPokemon[p] || '';
+      if (disp.indexOf(q) !== -1) {
         set.add(root);
-        return;
+        break;
       }
     }
-    // also allow matching root name itself
-    if (speciesMatches(root, qq)) set.add(root);
   });
 
   return set;
+}
+
+export function regionPrefixMatches(regionValue, query) {
+  const r = norm(regionValue);
+  const q = norm(query);
+  if (!q) return true;
+  return r.indexOf(q) === 0;
+}
+
+export function getRegionForPokemon(pokemonKey) {
+  return POKEMON_REGION[pokemonKey] || 'unknown';
 }
