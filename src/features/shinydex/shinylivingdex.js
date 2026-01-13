@@ -1,9 +1,11 @@
-// v2.0.0-alpha.1
+// v2.0.0-alpha.2
 // src/features/shinydex/shinylivingdex.js
 // Shiny Living Dex — RENDERER (DOM-only)
+// UnifiedCard v3: points always shown; tier is frame-only via tier-map in unifiedcard.
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
+import { POKEMON_POINTS } from '../../data/pokemondatabuilder.js';
 
 function getPokemonGif(pokemonKey) {
   const overrides = {
@@ -17,6 +19,17 @@ function getPokemonGif(pokemonKey) {
 
   const key = overrides[pokemonKey] || pokemonKey;
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
+}
+
+function variantsForLiving(infoText) {
+  // Living Dex uses the same card component but keeps variants visually present.
+  // Non-standard variants are disabled until Living-specific meaning is defined.
+  return [
+    { key: 'standard', title: 'Standard', enabled: true, infoText: infoText, active: true },
+    { key: 'secret', title: 'Secret', enabled: false, infoText: '—', active: false },
+    { key: 'alpha', title: 'Alpha', enabled: false, infoText: '—', active: false },
+    { key: 'safari', title: 'Safari', enabled: false, infoText: '—', active: false }
+  ];
 }
 
 export function renderLivingDexFromModel(model) {
@@ -36,23 +49,26 @@ export function renderLivingDexFromModel(model) {
     grid.className = 'dex-grid';
 
     (sec.entries || []).forEach(entry => {
+      const key = entry.pokemon;
       const count = Number(entry.count) || 0;
+
+      const infoText =
+        count === 0 ? 'Unowned' :
+        count === 1 ? '1 Shiny' :
+        `${count} Shinies`;
+
+      const points = Number(entry.points ?? POKEMON_POINTS?.[key] ?? 0);
 
       grid.insertAdjacentHTML(
         'beforeend',
         renderUnifiedCard({
-          name: prettifyPokemonName(entry.pokemon),
-          img: getPokemonGif(entry.pokemon),
-          info:
-            count === 0
-              ? 'Unowned'
-              : count === 1
-                ? '1 Shiny'
-                : `${count} Shinies`,
-          unclaimed: count === 0,
-          highlighted: count > 0,
+          pokemonName: prettifyPokemonName(key),
+          artSrc: getPokemonGif(key),
+          points: points,
+          infoText: infoText,
+          isUnclaimed: count === 0,
           owners: Array.isArray(entry.owners) ? entry.owners : [],
-          cardType: 'pokemon'
+          variants: variantsForLiving(infoText)
         })
       );
     });
