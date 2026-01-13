@@ -1,6 +1,14 @@
-/* style/layout.css */
 /* v2.0.0-alpha.1 */
-/* LAYOUT — STRUCTURE & RHYTHM ONLY */
+/* style/layout.css */
+
+/* =========================================================
+   LAYOUT — STRUCTURE & RHYTHM ONLY
+   HARD CONTRACT: NEVER RESIZE CARDS
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   FIXED NAVIGATION
+--------------------------------------------------------- */
 
 .nav {
   display: flex;
@@ -21,6 +29,10 @@
   border-radius: 0 0 16px 16px;
 }
 
+/* ---------------------------------------------------------
+   PAGE CONTAINER
+--------------------------------------------------------- */
+
 #page-content {
   margin-top: calc(var(--space-5) + var(--space-3));
   padding: 0 var(--space-3);
@@ -30,6 +42,10 @@
   flex-direction: column;
   gap: var(--space-3);
 }
+
+/* ---------------------------------------------------------
+   SECTION / PANEL CONTAINERS
+--------------------------------------------------------- */
 
 .region-section,
 .scoreboard-member-section {
@@ -55,28 +71,16 @@
   border-bottom: 2px solid var(--success);
 }
 
-.showcase-category-header {
-  margin: var(--space-2) 0 var(--space-1);
-  padding: var(--space-1) var(--space-2);
-
-  font-size: var(--font-card-title);
-  letter-spacing: 2px;
-  text-align: center;
-
-  color: var(--accent);
-  background: var(--bg-panel);
-
-  border-radius: 12px;
-  border: var(--border-soft);
-  box-shadow: var(--shadow-depth);
-}
+/* ---------------------------------------------------------
+   CARD GRIDS — PLACEMENT ONLY
+--------------------------------------------------------- */
 
 .showcase-gallery,
 .dex-grid {
   display: grid;
 
-  grid-template-columns: repeat(auto-fill, minmax(var(--card-width), max-content));
-  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fill, minmax(210px, max-content));
+  gap: var(--space-2);
 
   margin-top: var(--space-2);
   margin-bottom: var(--space-4);
@@ -85,26 +89,20 @@
   align-content: start;
 }
 
-.showcase-supergrid {
-  display: flex;
-  flex-wrap: wrap;
-
-  gap: var(--space-4);
-  margin-bottom: var(--space-4);
-
-  align-items: flex-start;
-}
-
-.showcase-supergrid > section {
-  flex: 1 1 260px;
-  min-width: 0;
-
-  display: flex;
-  flex-direction: column;
-}
+/* ---------------------------------------------------------
+   RESPONSIVE — NO CARD RESIZING
+--------------------------------------------------------- */
 
 @media (max-width: 600px) {
-  body { font-size: var(--font-small); }
-  .nav { padding: var(--space-2); }
-  #page-content { padding: 0 var(--space-2); }
+  body {
+    font-size: var(--font-small);
+  }
+
+  .nav {
+    padding: var(--space-2);
+  }
+
+  #page-content {
+    padding: 0 var(--space-2);
+  }
 }
