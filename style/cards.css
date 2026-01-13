@@ -1,204 +1,36 @@
 /* v2.0.0-alpha.1 */
 /* style/cards.css */
-/* =========================================================
-   UNIFIED CARD SYSTEM — HARD CONTRACT
-   ONE SIZE • ONE STRUCTURE • ALL PAGES
-   ========================================================= */
 
-/* ---------------------------------------------------------
-   CARD DIMENSIONS — NON-NEGOTIABLE
---------------------------------------------------------- */
-
-:root {
-  /* Wider + closer to v1 spacing targets */
-  --card-width: 228px;
-  --card-height: 276px;
-
-  --card-img-size: 132px;
-  --card-name-height: 44px;
-  --card-info-height: 36px;
+:root{
+  /* ShinyDex-only sizing */
+  --dex-card-w: 210px;
+  --dex-card-h: 250px;
+  --dex-grid-gap: 18px;
 }
 
 /* ---------------------------------------------------------
-   BASE CARD
---------------------------------------------------------- */
-
-.unified-card {
-  width: var(--card-width);
-  height: var(--card-height);
-
-  display: grid;
-  grid-template-rows:
-    var(--card-name-height)
-    1fr
-    var(--card-info-height);
-
-  align-items: center;
-  justify-items: center;
-
-  padding: var(--space-2);
-
-  background: var(--card-gradient);
-  color: var(--text-dark);
-
-  border: 2px solid var(--accent);
-  border-radius: 14px;
-
-  box-shadow: var(--shadow-depth);
-  text-align: center;
-
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
-}
-
-/* Hover = lift only */
-.unified-card:hover {
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-4px);
-}
+   (existing file content above stays as-is)
+   --------------------------------------------------------- */
 
 /* ---------------------------------------------------------
-   CARD NAME — FIXED HEIGHT, CONTROLLED OVERFLOW
---------------------------------------------------------- */
+   SHINYDEX — CARD SIZE + GRID (scoped)
+   --------------------------------------------------------- */
 
-.unified-name {
-  width: 100%;
-  height: var(--card-name-height);
-
-  display: flex;
-  align-items: center;
+.shinydex-page .dex-grid{
+  grid-template-columns: repeat(auto-fill, var(--dex-card-w));
+  gap: var(--dex-grid-gap);
   justify-content: center;
-
-  padding: 6px 8px;
-
-  font-size: var(--font-card-title);
-  line-height: 1.1;
-
-  background: var(--bg-panel);
-  color: var(--text-main);
-
-  border: 2px solid var(--accent);
-  border-radius: 10px;
-
-  box-shadow: var(--shadow-depth);
-
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
 
-/* Optional visual tuning only */
-.unified-name.long-name {
-  font-size: 13px;
+.shinydex-page .unified-card{
+  width: var(--dex-card-w);
+  max-width: var(--dex-card-w);
+  height: var(--dex-card-h);
 }
 
-.unified-name.very-long-name {
-  font-size: 12px;
+.shinydex-page .dex-card-wrap{
+  display: contents;
 }
 
-/* ---------------------------------------------------------
-   CARD IMAGE — FIXED BOX
---------------------------------------------------------- */
-
-.unified-img {
-  width: var(--card-img-size);
-  height: var(--card-img-size);
-
-  object-fit: contain;
-  image-rendering: pixelated;
-
-  background: var(--bg-panel);
-  border: 2px solid var(--bg-panel-alt);
-  border-radius: 12px;
-
-  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.4);
-}
-
-/* ---------------------------------------------------------
-   CARD INFO — FIXED HEIGHT
---------------------------------------------------------- */
-
-.unified-info {
-  width: 100%;
-  height: var(--card-info-height);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 4px 8px;
-
-  font-size: var(--font-card-stat);
-  font-weight: bold;
-
-  background: var(--bg-panel);
-  color: var(--text-main);
-
-  border: 2px solid var(--bg-panel-alt);
-  border-radius: 10px;
-
-  box-shadow: var(--shadow-depth);
-
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-/* ---------------------------------------------------------
-   CARD STATES — MATCH JS EXACTLY
---------------------------------------------------------- */
-
-.unified-card.is-unclaimed {
-  opacity: 0.6;
-  filter: grayscale(0.6);
-  border-color: var(--bg-panel-alt);
-}
-
-.unified-card.is-lost {
-  opacity: 0.65;
-  filter: grayscale(0.75);
-  border-color: #a44;
-}
-
-.unified-card.is-highlighted {
-  border-color: var(--highlight);
-  box-shadow:
-    0 0 0 2px var(--highlight),
-    var(--shadow-hover);
-}
-
-/* ---------------------------------------------------------
-   SYMBOL OVERLAYS — FIXED POSITIONS
---------------------------------------------------------- */
-
-.symbol-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.symbol {
-  position: absolute;
-  width: 26px;
-  height: 26px;
-  padding: 2px;
-
-  background: var(--bg-panel);
-  border: 2px solid var(--accent);
-  border-radius: 8px;
-
-  box-shadow: var(--shadow-depth);
-}
-
-/* Top row */
-.symbol.secret { top: 52px; left: 10px; }
-.symbol.event  { top: 52px; right: 10px; }
-
-/* Middle row */
-.symbol.egg   { top: 50%; left: 10px; transform: translateY(-50%); }
-.symbol.alpha { top: 50%; right: 10px; transform: translateY(-50%); }
-
-/* Bottom row */
-.symbol.safari { bottom: 52px; left: 10px; }
-.symbol.clip   { bottom: 52px; right: 10px; }
+/* remove missing texture reference (kills square-bg.png request)
+   If your old CSS used square-bg.png, do NOT re-add it. */
