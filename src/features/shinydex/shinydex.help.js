@@ -1,59 +1,112 @@
 // v2.0.0-alpha.1
 // src/features/shinydex/shinydex.help.js
-// Help tooltip — UI only
+// Shiny Dex Help Tooltip — UI ONLY
 
-export function bindShinyDexHelp(helpBtn) {
-  if (!helpBtn) return;
+const HELP_TOOLTIP_ID = 'dex-help-tooltip';
 
-  // singleton
-  let tip = document.querySelector('.dex-help-tooltip');
-  if (!tip) {
-    tip = document.createElement('div');
-    tip.className = 'dex-help-tooltip';
-    tip.innerHTML = `
-      <div class="help-title">Search Help</div>
-      <div class="help-body">
-        <div><b>Pokémon</b>: type a name (partial ok)</div>
-        <div><b>Family</b>: <b>+name</b> or <b>name+</b> (shows whole family)</div>
-        <div><b>Member</b>: <b>@name</b> (Hitlist: claimed-by • LivingDex: owners)</div>
-        <div><b>Region</b>: <b>r:k</b> / <b>r:kan</b> / <b>region:un</b></div>
-        <div><b>Tier</b>: <b>tier:0</b> <b>tier:1</b> <b>tier:2</b> … <b>tier:lm</b></div>
-        <div><b>Flags</b>: <b>unclaimed</b> / <b>claimed</b> • <b>unowned</b> / <b>owned</b></div>
-      </div>
-    `;
-    document.body.appendChild(tip);
-  }
+function getOrCreateHelpTooltip() {
+  let el = document.getElementById(HELP_TOOLTIP_ID);
+  if (el) return el;
 
-  function place() {
-    const r = helpBtn.getBoundingClientRect();
-    const pad = 10;
-    tip.style.left = Math.min(r.left, window.innerWidth - 440) + 'px';
-    tip.style.top = (r.bottom + pad) + 'px';
-  }
+  el = document.createElement('div');
+  el.id = HELP_TOOLTIP_ID;
+  el.className = 'dex-help-tooltip';
+
+  el.innerHTML = `
+    <div class="help-title">Search Help</div>
+    <div class="help-lines"></div>
+  `;
+
+  document.body.appendChild(el);
+  return el;
+}
+
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
+
+function positionNearButton(tooltip, btn) {
+  const pad = 12;
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  const r = btn.getBoundingClientRect();
+
+  tooltip.style.left = '0px';
+  tooltip.style.top = '0px';
+
+  // Force layout
+  const tr = tooltip.getBoundingClientRect();
+  const w = tr.width || 420;
+  const h = tr.height || 180;
+
+  // Prefer below-right, fallback within viewport
+  const x = clamp(r.left, pad, vw - w - pad);
+  const y = clamp(r.bottom + 10, pad, vh - h - pad);
+
+  tooltip.style.left = x + 'px';
+  tooltip.style.top = y + 'px';
+}
+
+const HELP_TEXT =
+`Pokémon: type a name (partial ok)
+Family: +name  or  name+
+Member: @name (Hitlist: claimed-by • LivingDex: owners)
+Region: r:k  /  r:kan  /  region:un
+Tier: tier:0  tier:1  tier:2 ... tier:lm
+Flags: unclaimed / claimed  •  unowned / owned`;
+
+export function setupDexHelpTooltip(rootEl) {
+  const root = rootEl || document;
+  const tooltip = getOrCreateHelpTooltip();
+
+  const btn =
+    root.getElementById
+      ? (root.getElementById('dex-help') || root.querySelector('.dex-help-btn'))
+      : null;
+
+  if (!btn) return;
+
+  const lines = tooltip.querySelector('.help-lines');
+  lines.textContent = HELP_TEXT;
+
+  let open = false;
 
   function show() {
-    place();
-    tip.classList.add('show');
+    open = true;
+    btn.classList.add('active');
+    tooltip.classList.add('show');
+    positionNearButton(tooltip, btn);
   }
 
   function hide() {
-    tip.classList.remove('show');
+    open = false;
+    btn.classList.remove('active');
+    tooltip.classList.remove('show');
   }
 
-  function toggle() {
-    if (tip.classList.contains('show')) hide();
-    else show();
-  }
-
-  helpBtn.addEventListener('click', e => {
+  btn.addEventListener('click', e => {
     e.preventDefault();
     e.stopPropagation();
-    toggle();
+    open ? hide() : show();
   });
 
-  document.addEventListener('click', () => hide());
   window.addEventListener('resize', () => {
-    if (tip.classList.contains('show')) place();
+    if (!open) return;
+    positionNearButton(tooltip, btn);
   });
-  window.addEventListener('scroll', () => hide(), { passive: true });
+
+  document.addEventListener('mousedown', e => {
+    if (!open) return;
+    const t = e.target;
+    if (btn.contains(t) || tooltip.contains(t)) return;
+    hide();
+  }, true);
+
+  return { show, hide };
+}
+
+// Back-compat alias (safe to call)
+export function initDexHelpTooltip(rootEl) {
+  return setupDexHelpTooltip(rootEl);
 }
