@@ -172,3 +172,36 @@
   border-color: var(--accent);
   box-shadow: 0 0 0 2px rgba(0,0,0,0.35) inset;
 }
+
+/* ---------------------------------------------------------
+   HARD-EDGE PASS (DEX UI)
+--------------------------------------------------------- */
+
+.search-controls,
+.showcase-search-controls,
+.shiny-dex-tabs,
+.region-section,
+.scoreboard-member-section {
+  border-radius: 0;
+}
+
+/* tighten vertical padding; reduces floaty feel */
+.search-controls,
+.showcase-search-controls {
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+
+/* tabs panel tighter */
+.shiny-dex-tabs {
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+
+/* buttons read like menu items, not pills */
+.search-controls button,
+.shiny-dex-tabs button,
+.dex-tab {
+  border-radius: 0;
+}
+
