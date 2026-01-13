@@ -15,6 +15,13 @@ function normalizeRegion(raw) {
   return String(raw || '').trim().toLowerCase();
 }
 
+function regionMatches(regionValue, query) {
+  const r = normalizeRegion(regionValue);
+  const q = normalizeRegion(query);
+  if (!q) return true;
+  return r.startsWith(q);
+}
+
 export function prepareLivingDexRenderModel({
   showcaseRows,
   viewState,
@@ -28,8 +35,8 @@ export function prepareLivingDexRenderModel({
 
   // region filter applies to mode dataset + counters (pre-search)
   if (parsed.filters?.region) {
-    const r = normalizeRegion(parsed.filters.region);
-    snapshot = snapshot.filter(e => normalizeRegion(e.region) === r);
+    const q = parsed.filters.region;
+    snapshot = snapshot.filter(e => regionMatches(e.region, q));
   }
 
   const totalSpecies = snapshot.length;
