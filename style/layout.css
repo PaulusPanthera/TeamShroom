@@ -1,6 +1,5 @@
 /* v2.0.0-alpha.1 */
 /* style/layout.css */
-
 /* =========================================================
    LAYOUT — STRUCTURE & RHYTHM ONLY
    HARD CONTRACT: NEVER RESIZE CARDS
@@ -72,6 +71,26 @@
 }
 
 /* ---------------------------------------------------------
+   SHOWCASE CATEGORY HEADER
+--------------------------------------------------------- */
+
+.showcase-category-header {
+  margin: var(--space-2) 0 var(--space-1);
+  padding: var(--space-1) var(--space-2);
+
+  font-size: var(--font-card-title);
+  letter-spacing: 2px;
+  text-align: center;
+
+  color: var(--accent);
+  background: var(--bg-panel);
+
+  border-radius: 12px;
+  border: var(--border-soft);
+  box-shadow: var(--shadow-depth);
+}
+
+/* ---------------------------------------------------------
    CARD GRIDS — PLACEMENT ONLY
 --------------------------------------------------------- */
 
@@ -79,7 +98,7 @@
 .dex-grid {
   display: grid;
 
-  grid-template-columns: repeat(auto-fill, minmax(210px, max-content));
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-width), max-content));
   gap: var(--space-2);
 
   margin-top: var(--space-2);
@@ -87,6 +106,28 @@
 
   justify-content: start;
   align-content: start;
+}
+
+/* ---------------------------------------------------------
+   SUPERGRID (MULTI-SECTIONS)
+--------------------------------------------------------- */
+
+.showcase-supergrid {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+
+  align-items: flex-start;
+}
+
+.showcase-supergrid > section {
+  flex: 1 1 260px;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
 }
 
 /* ---------------------------------------------------------
