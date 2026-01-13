@@ -1,149 +1,162 @@
 // v2.0.0-alpha.1
 // src/features/shinydex/shinydex.search.js
-// Search parsing + matching helpers (no DOM)
+// ShinyDex Search — parsing + matching (no DOM)
 
 import { prettifyPokemonName } from '../../utils/utils.js';
 
+function norm(s) {
+  return String(s || '')
+    .toLowerCase()
+    .trim()
+    .replace(/[_]/g, ' ')
+    .replace(/[-]/g, ' ')
+    .replace(/[^a-z0-9\s♀♂.]/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+function splitTokens(raw) {
+  const s = String(raw || '').trim();
+  if (!s) return [];
+  return s.split(/\s+/).filter(Boolean);
+}
+
+/**
+ * parseSearch(raw)
+ *
+ * Supported:
+ * - species: default, or "pokemon:<q>" / "p:<q>"
+ * - family: "+<q>" or "<q>+" or "family:<q>" / "f:<q>"
+ * - member: "@<q>" or "member:<q>" / "m:<q>"
+ * - region filter: "r:<q>" / "region:<q>" (prefix match; r:k r:kan r:uno)
+ * - tier filter: "tier:<0-6|lm>" / "t:<0-6|lm>"
+ * - flags: "unclaimed|unowned" and "claimed|owned"
+ */
 export function parseSearch(raw) {
-  var input = String(raw || '').trim();
-  if (!input) return { kind: 'none', q: '', flags: {}, filters: {} };
+  const tokens = splitTokens(raw);
 
-  var lower = input.toLowerCase();
-
-  // hard prefixes
-  if (lower.indexOf('@') === 0) {
-    var mq = input.slice(1).trim();
-    return { kind: 'member', q: mq.toLowerCase(), flags: {}, filters: {} };
-  }
-
-  if (lower.indexOf('+') === 0) {
-    var fq = input.slice(1).trim();
-    return { kind: 'family', q: fq.toLowerCase(), flags: {}, filters: {} };
-  }
-
-  if (lower.lastIndexOf('+') === lower.length - 1) {
-    var fq2 = input.slice(0, -1).trim();
-    return { kind: 'family', q: fq2.toLowerCase(), flags: {}, filters: {} };
-  }
-
-  // token parsing (filters + directives)
-  var parts = input.split(/\s+/).filter(Boolean);
-  var flags = {};
-  var filters = {};
-  var directive = null; // { kind, q }
-  var residual = [];
-
-  for (var i = 0; i < parts.length; i++) {
-    var p = parts[i];
-    var t = p.toLowerCase();
-
-    // boolean flags
-    if (t === 'unclaimed') { flags.unclaimed = true; continue; }
-    if (t === 'claimed')   { flags.claimed = true; continue; }
-    if (t === 'unowned')   { flags.unowned = true; continue; }
-    if (t === 'owned')     { flags.owned = true; continue; }
-
-    // tier filter (tier:0..6 | tier:lm)
-    var mTier = t.match(/^tier:(lm|[0-6])$/);
-    if (mTier) {
-      filters.tier = mTier[1];
-      continue;
+  const out = {
+    raw: String(raw || ''),
+    kind: 'species', // 'species' | 'family' | 'member'
+    q: '',
+    filters: {
+      region: null,
+      tier: null
+    },
+    flags: {
+      unclaimed: false,
+      claimed: false
     }
-
-    // region filter (region:kanto | r:kanto)
-    var mRegion = t.match(/^(region|r):(.*)$/);
-    if (mRegion) {
-      var rest = (p.slice(p.indexOf(':') + 1) || '').trim();
-      if (rest) filters.region = rest.toLowerCase();
-      continue;
-    }
-
-    // directives (first one only)
-    var m = t.match(/^(pokemon|p|family|f|member|m):(.*)$/);
-    if (m && directive === null) {
-      var key = m[1];
-      var rest2 = (p.slice(p.indexOf(':') + 1) || '').trim();
-      var dq = rest2 ? rest2 : '';
-
-      if (key === 'member' || key === 'm') directive = { kind: 'member', q: dq.toLowerCase() };
-      else if (key === 'family' || key === 'f') directive = { kind: 'family', q: dq.toLowerCase() };
-      else directive = { kind: 'species', q: dq.toLowerCase() };
-
-      continue;
-    }
-
-    residual.push(p);
-  }
-
-  // conflicting flags cancel each other
-  if (flags.unclaimed && flags.claimed) { delete flags.unclaimed; delete flags.claimed; }
-  if (flags.unowned && flags.owned)     { delete flags.unowned; delete flags.owned; }
-
-  if (directive) {
-    var q = directive.q || residual.join(' ').trim().toLowerCase();
-    return { kind: directive.kind, q: q, flags: flags, filters: filters };
-  }
-
-  return {
-    kind: 'species',
-    q: residual.join(' ').trim().toLowerCase(),
-    flags: flags,
-    filters: filters
   };
-}
 
-export function buildSearchContext(dexOrder, familiesMap) {
-  var dexIndex = {};
-  for (var i = 0; i < dexOrder.length; i++) dexIndex[dexOrder[i]] = i;
+  if (!tokens.length) return out;
 
-  var rootByPokemon = {};
-  var familyMembersByRoot = {};
-
-  var entries = Object.entries(familiesMap || {});
-  for (var j = 0; j < entries.length; j++) {
-    var pokemon = entries[j][0];
-    var roots = entries[j][1];
-
-    var root = (Array.isArray(roots) && roots.length) ? roots[0] : pokemon;
-
-    rootByPokemon[pokemon] = root;
-
-    if (!familyMembersByRoot[root]) familyMembersByRoot[root] = new Set();
-    familyMembersByRoot[root].add(pokemon);
+  // Single-string shortcuts (+family / @member / trailing +)
+  const whole = String(raw || '').trim();
+  if (whole.startsWith('+')) {
+    out.kind = 'family';
+    out.q = norm(whole.slice(1));
+  } else if (whole.endsWith('+')) {
+    out.kind = 'family';
+    out.q = norm(whole.slice(0, -1));
+  } else if (whole.startsWith('@')) {
+    out.kind = 'member';
+    out.q = norm(whole.slice(1));
   }
 
-  return { dexIndex: dexIndex, rootByPokemon: rootByPokemon, familyMembersByRoot: familyMembersByRoot };
-}
+  // Token parsing (can override kind/q)
+  for (let i = 0; i < tokens.length; i++) {
+    const t = tokens[i];
+    const lower = t.toLowerCase();
 
-export function speciesMatches(pokemonKey, q) {
-  if (!q) return true;
+    // flags
+    if (lower === 'unclaimed' || lower === 'unowned') out.flags.unclaimed = true;
+    if (lower === 'claimed' || lower === 'owned') out.flags.claimed = true;
 
-  var key = String(pokemonKey || '').toLowerCase();
-  var display = prettifyPokemonName(key).toLowerCase();
+    // region filter
+    if (lower.startsWith('r:') || lower.startsWith('region:')) {
+      const v = lower.includes(':') ? lower.split(':').slice(1).join(':') : '';
+      out.filters.region = norm(v);
+      continue;
+    }
 
-  return display.indexOf(q) !== -1 || key.indexOf(q) !== -1;
-}
+    // tier filter
+    if (lower.startsWith('t:') || lower.startsWith('tier:')) {
+      const v = lower.includes(':') ? lower.split(':').slice(1).join(':') : '';
+      const tv = norm(v).replace(/^tier\s*/g, '');
+      if (tv === 'lm' || /^[0-6]$/.test(tv)) out.filters.tier = tv;
+      continue;
+    }
 
-export function memberMatches(memberName, q) {
-  if (!q) return true;
-  return String(memberName || '').toLowerCase().indexOf(q) !== -1;
-}
+    // explicit kind selectors
+    if (lower.startsWith('pokemon:') || lower.startsWith('p:')) {
+      const v = lower.split(':').slice(1).join(':');
+      out.kind = 'species';
+      out.q = norm(v);
+      continue;
+    }
 
-export function resolveFamilyRootsByQuery(searchCtx, q) {
-  var roots = new Set();
-  if (!q) return roots;
+    if (lower.startsWith('family:') || lower.startsWith('f:')) {
+      const v = lower.split(':').slice(1).join(':');
+      out.kind = 'family';
+      out.q = norm(v);
+      continue;
+    }
 
-  var rootByPokemon = searchCtx.rootByPokemon || {};
-  var familyMembersByRoot = searchCtx.familyMembersByRoot || {};
+    if (lower.startsWith('member:') || lower.startsWith('m:')) {
+      const v = lower.split(':').slice(1).join(':');
+      out.kind = 'member';
+      out.q = norm(v);
+      continue;
+    }
 
-  var keys = Object.keys(rootByPokemon);
-  for (var i = 0; i < keys.length; i++) {
-    var pokemon = keys[i];
-    if (!speciesMatches(pokemon, q)) continue;
-
-    var root = rootByPokemon[pokemon] || pokemon;
-    if (familyMembersByRoot[root]) roots.add(root);
+    // if no explicit q picked yet, use remaining words as default species query
+    if (!out.q && out.kind === 'species' && !lower.includes(':') && !lower.startsWith('+') && !lower.startsWith('@')) {
+      out.q = norm(tokens.join(' '));
+    }
   }
 
-  return roots;
+  return out;
+}
+
+export function speciesMatches(pokemonKey, query) {
+  const q = norm(query);
+  if (!q) return true;
+
+  const display = norm(prettifyPokemonName(pokemonKey));
+  const key = norm(pokemonKey);
+
+  // forgiving: match either display or raw key
+  return display.includes(q) || key.includes(q);
+}
+
+export function memberMatches(memberName, query) {
+  const q = norm(query);
+  if (!q) return true;
+  const name = norm(memberName);
+  return name.includes(q);
+}
+
+/**
+ * searchCtx contract (built in controller):
+ * {
+ *   rootByPokemon: { [pokemonKey]: rootKey },
+ *   familyRoots: string[],
+ *   displayByPokemon: { [pokemonKey]: string } // normalized display
+ * }
+ */
+export function resolveFamilyRootsByQuery(searchCtx, query) {
+  const q = norm(query);
+  const roots = Array.isArray(searchCtx?.familyRoots) ? searchCtx.familyRoots : [];
+  const displayByPokemon = searchCtx?.displayByPokemon || {};
+
+  // empty family query => no filtering (all roots)
+  if (!q) return new Set(roots);
+
+  const out = new Set();
+  for (let i = 0; i < roots.length; i++) {
+    const root = roots[i];
+    const d = displayByPokemon[root] || norm(prettifyPokemonName(root));
+    if (d.includes(q)) out.add(root);
+  }
+  return out;
 }
