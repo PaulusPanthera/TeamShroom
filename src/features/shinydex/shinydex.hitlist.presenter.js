@@ -32,6 +32,13 @@ function normalizeRegion(raw) {
   return String(raw || '').trim().toLowerCase();
 }
 
+function regionMatches(regionValue, query) {
+  const r = normalizeRegion(regionValue);
+  const q = normalizeRegion(query);
+  if (!q) return true;
+  return r.startsWith(q);
+}
+
 export function prepareHitlistRenderModel({
   weeklyModel,
   viewState,
@@ -47,8 +54,11 @@ export function prepareHitlistRenderModel({
 
   // region filter applies to mode dataset + counters (pre-search)
   if (parsed.filters?.region) {
-    const r = normalizeRegion(parsed.filters.region);
-    snapshot = snapshot.filter(e => normalizeRegion(POKEMON_REGION[e.pokemon] || e.region) === r);
+    const q = parsed.filters.region;
+    snapshot = snapshot.filter(e => {
+      const region = POKEMON_REGION[e.pokemon] || e.region || 'unknown';
+      return regionMatches(region, q);
+    });
   }
 
   const totalSpecies = snapshot.length;
