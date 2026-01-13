@@ -1,85 +1,139 @@
+// v2.0.0-alpha.1
 // src/features/shinydex/shinydex.search.js
-// ShinyDex Search — pure helpers (no DOM, no state)
+// Search parsing + matching helpers (no DOM)
 
 import { prettifyPokemonName } from '../../utils/utils.js';
 
 /*
-Search syntax:
-- "text"   → species search
-- "+text"  → family search
-- "text+"  → family search
-- "@name"  → member search
+Parsed search output:
+{
+  kind: 'none' | 'species' | 'family' | 'member'
+  q: string
+  flags: {
+    unclaimed?: boolean
+    claimed?: boolean
+    unowned?: boolean
+    owned?: boolean
+  }
+}
 */
 
-export function normalizeText(s) {
-  return String(s || '')
-    .toLowerCase()
-    .replace(/♀/g, 'f')
-    .replace(/♂/g, 'm')
-    .replace(/[.'":,!?()[\]{}]/g, '')
-    .replace(/-/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
 export function parseSearch(raw) {
-  const s = String(raw || '').trim();
-  if (!s) return { kind: 'none', q: '' };
+  const input = String(raw || '').trim();
+  if (!input) return { kind: 'none', q: '', flags: {} };
 
-  if (s.startsWith('@')) {
-    const q = normalizeText(s.slice(1));
-    return q ? { kind: 'member', q } : { kind: 'none', q: '' };
+  const lower = input.toLowerCase();
+
+  // hard prefixes
+  if (lower.startsWith('@')) {
+    const q = input.slice(1).trim();
+    return { kind: 'member', q: q.toLowerCase(), flags: {} };
   }
 
-  const familyMode = s.startsWith('+') || s.endsWith('+');
-  if (familyMode) {
-    const q = normalizeText(s.replace(/^\+/, '').replace(/\+$/, ''));
-    return q ? { kind: 'family', q } : { kind: 'none', q: '' };
+  if (lower.startsWith('+')) {
+    const q = input.slice(1).trim();
+    return { kind: 'family', q: q.toLowerCase(), flags: {} };
   }
 
-  const q = normalizeText(s);
-  return q ? { kind: 'species', q } : { kind: 'none', q: '' };
+  if (lower.endsWith('+')) {
+    const q = input.slice(0, -1).trim();
+    return { kind: 'family', q: q.toLowerCase(), flags: {} };
+  }
+
+  // token parsing (filters + directives)
+  const parts = input.split(/\s+/).filter(Boolean);
+  const flags = {};
+  let directive = null; // { kind, q }
+  const residual = [];
+
+  for (const p of parts) {
+    const t = p.toLowerCase();
+
+    if (t === 'unclaimed') { flags.unclaimed = true; continue; }
+    if (t === 'claimed')   { flags.claimed = true; continue; }
+    if (t === 'unowned')   { flags.unowned = true; continue; }
+    if (t === 'owned')     { flags.owned = true; continue; }
+
+    const m = t.match(/^(pokemon|p|family|f|member|m):(.*)$/);
+    if (m && directive === null) {
+      const key = m[1];
+      const rest = (p.slice(p.indexOf(':') + 1) || '').trim();
+      const dq = rest ? rest : '';
+      if (key === 'member' || key === 'm') directive = { kind: 'member', q: dq.toLowerCase() };
+      else if (key === 'family' || key === 'f') directive = { kind: 'family', q: dq.toLowerCase() };
+      else directive = { kind: 'species', q: dq.toLowerCase() };
+      continue;
+    }
+
+    residual.push(p);
+  }
+
+  // conflicting flags cancel each other
+  if (flags.unclaimed && flags.claimed) { delete flags.unclaimed; delete flags.claimed; }
+  if (flags.unowned && flags.owned)     { delete flags.unowned; delete flags.owned; }
+
+  if (directive) {
+    // If directive had empty q, fall back to residual
+    const q = directive.q || residual.join(' ').trim().toLowerCase();
+    return { kind: directive.kind, q, flags };
+  }
+
+  return {
+    kind: 'species',
+    q: residual.join(' ').trim().toLowerCase(),
+    flags
+  };
 }
 
-export function buildSearchContext(dexOrder, pokemonFamilies) {
-  const dexIndex = Object.fromEntries(dexOrder.map((k, i) => [k, i]));
+/*
+Search context:
+- dexIndex: pokemon -> index
+- rootByPokemon: pokemon -> family root key
+- familyMembersByRoot: root -> Set(pokemon)
+*/
+export function buildSearchContext(dexOrder, familiesMap) {
+  const dexIndex = {};
+  dexOrder.forEach((p, i) => { dexIndex[p] = i; });
 
   const rootByPokemon = {};
-  const stagesByRoot = {};
+  const familyMembersByRoot = {};
 
-  dexOrder.forEach(pokemon => {
-    const fam = pokemonFamilies?.[pokemon];
-    const root = Array.isArray(fam) && fam.length ? fam[0] : pokemon;
-
+  // familiesMap shape in this repo: pokemonFamilies[pokemon] = [rootId,...]
+  // rootId is treated as the family root key.
+  Object.entries(familiesMap || {}).forEach(([pokemon, roots]) => {
+    const root = Array.isArray(roots) && roots.length ? roots[0] : pokemon;
     rootByPokemon[pokemon] = root;
-    stagesByRoot[root] ??= [];
-    stagesByRoot[root].push(pokemon);
+    familyMembersByRoot[root] ??= new Set();
+    familyMembersByRoot[root].add(pokemon);
   });
 
-  return { dexIndex, rootByPokemon, stagesByRoot };
+  return { dexIndex, rootByPokemon, familyMembersByRoot };
 }
 
 export function speciesMatches(pokemonKey, q) {
   if (!q) return true;
 
-  const display = normalizeText(prettifyPokemonName(pokemonKey));
-  const key = normalizeText(pokemonKey);
+  const key = String(pokemonKey || '').toLowerCase();
+  const display = prettifyPokemonName(key).toLowerCase();
 
   return display.includes(q) || key.includes(q);
 }
 
-export function memberMatches(name, q) {
+export function memberMatches(memberName, q) {
   if (!q) return true;
-  return normalizeText(name).includes(q);
+  return String(memberName || '').toLowerCase().includes(q);
 }
 
-export function resolveFamilyRootsByQuery(ctx, q) {
+export function resolveFamilyRootsByQuery(searchCtx, q) {
   const roots = new Set();
   if (!q) return roots;
 
-  Object.entries(ctx.stagesByRoot).forEach(([root, stages]) => {
-    const hit = stages.some(p => speciesMatches(p, q));
-    if (hit) roots.add(root);
+  const { rootByPokemon, familyMembersByRoot } = searchCtx;
+
+  Object.keys(rootByPokemon).forEach(pokemon => {
+    if (!speciesMatches(pokemon, q)) return;
+    const root = rootByPokemon[pokemon] || pokemon;
+    if (familyMembersByRoot[root]) roots.add(root);
   });
 
   return roots;
