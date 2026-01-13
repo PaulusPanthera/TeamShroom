@@ -202,3 +202,23 @@
   padding-left: var(--space-2);
   padding-right: var(--space-2);
 }
+
+/* sticky hotbar under nav */
+.search-controls{
+  position: sticky;
+  top: 56px;     /* adjust to real nav height later */
+  z-index: 900;
+}
+
+.shiny-dex-tabs{
+  position: sticky;
+  top: 128px;    /* 56 + hotbar height (rough) */
+  z-index: 850;
+}
+
+/* fit 6 cards */
+#page-content{
+  max-width: 1760px;
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
+}
