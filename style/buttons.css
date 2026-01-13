@@ -1,126 +1,45 @@
 /* v2.0.0-alpha.1 */
 /* style/buttons.css */
 
-/* =========================================================
-   BUTTON SYSTEM — DESIGN SYSTEM v1 (LOCKED)
-   ========================================================= */
+/* ---------------------------------------------------------
+   (existing file content above stays as-is)
+   --------------------------------------------------------- */
 
-button {
-  font-family: inherit;
-  font-size: inherit;
-  border: none;
-  background: none;
-  color: inherit;
+/* ---------------------------------------------------------
+   SHINYDEX HELP BUTTON
+   --------------------------------------------------------- */
+
+.help-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 34px;
+
+  border-radius: 10px;
+  border: 2px solid transparent;
+
+  background: #111;
   cursor: pointer;
 }
 
-/* ACTION BUTTONS */
-.search-controls button:not(.dex-tab):not(.dex-help-btn) {
-  padding: 6px 14px;
-  font-weight: bold;
-
-  background: var(--bg-panel-alt);
-  color: var(--text-main);
-
-  border: 2px solid var(--bg-panel-alt);
-  border-radius: 10px;
-
-  box-shadow: var(--shadow-depth);
+.help-btn .help-icon{
+  width: 18px;
+  height: 18px;
+  image-rendering: pixelated;
 }
 
-.search-controls button:not(.dex-tab):not(.dex-help-btn):hover {
-  filter: brightness(1.05);
-}
-
-.search-controls button:not(.dex-tab):not(.dex-help-btn).active {
-  background: var(--accent);
-  color: var(--text-dark);
+.help-btn:hover{
   border-color: var(--accent);
 }
 
-/* DEX TABS */
-.dex-tab {
-  padding: 8px 16px;
-
-  font-size: var(--font-card-stat);
-  font-weight: bold;
-  letter-spacing: 1px;
-
-  background: var(--bg-panel);
-  color: var(--text-muted);
-
-  border: 2px solid var(--bg-panel-alt);
-  border-bottom: none;
-  border-radius: 12px 12px 0 0;
-
-  box-shadow: var(--shadow-depth);
-}
-
-.dex-tab:hover {
-  color: var(--text-main);
-}
-
-.dex-tab.active {
-  background: var(--accent);
-  color: var(--text-dark);
-
+.help-btn.active{
   border-color: var(--accent);
-  border-bottom: 2px solid var(--accent);
-
-  z-index: 2;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.35) inset;
 }
 
-.dex-tab.is-disabled,
-.dex-tab:disabled {
-  opacity: 0.55;
+.dex-tab.is-disabled{
+  opacity: 0.45;
   cursor: not-allowed;
-  filter: grayscale(0.4);
-}
-
-/* NAV */
-.nav a {
-  padding: 8px 14px;
-
-  font-size: var(--font-card-stat);
-  font-weight: bold;
-  letter-spacing: 1px;
-
-  background: var(--bg-panel-alt);
-  color: var(--text-main);
-
-  border: 2px solid var(--bg-panel-alt);
-  border-radius: 12px;
-
-  box-shadow: var(--shadow-depth);
-}
-
-.nav a:hover {
-  color: var(--accent);
-}
-
-.nav a.active {
-  background: var(--accent);
-  color: var(--text-dark);
-  border-color: var(--accent);
-}
-
-/* HELP BUTTON (question mark sprite) */
-.dex-help-btn {
-  width: 34px;
-  height: 34px;
-
-  background: var(--bg-panel-alt);
-  border: 2px solid var(--bg-panel-alt);
-  border-radius: 10px;
-
-  box-shadow: var(--shadow-depth);
-
-  background-image: url('/img/symbols/questionmarksprite.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 18px 18px;
-}
-
-.dex-help-btn:hover {
-  filter: brightness(1.05);
 }
