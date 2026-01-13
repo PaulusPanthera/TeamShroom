@@ -7,17 +7,20 @@ const HELP_TEXT = [
   '',
   'Pokémon:',
   '- type a name (partial ok)',
+  '- pokemon: name',
   '',
   'Family:',
-  '- +name  (matches any stage)',
-  '- name+  (same)',
+  '- +name',
+  '- name+',
+  '- family: name',
   '',
   'Member:',
-  '- @name  (filters by member)',
+  '- @name',
+  '- member: name',
   '',
-  'Notes',
-  '- Hitlist leaderboards: only @ works',
-  '- Unclaimed button disables on leaderboards'
+  'Filters:',
+  '- unclaimed / unowned',
+  '- claimed / owned'
 ].join('\n');
 
 function ensureHelpEl(root) {
