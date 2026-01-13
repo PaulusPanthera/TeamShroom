@@ -42,6 +42,7 @@ import { renderShinyLivingDex } from './shinylivingdex.js';
 import { buildSearchContext, parseSearch } from './shinydex.search.js';
 import { prepareHitlistRenderModel } from './shinydex.hitlist.presenter.js';
 import { prepareLivingDexRenderModel } from './shinydex.living.presenter.js';
+import { bindDexOwnerTooltip } from './shinydex.tooltip.js';
 
 export function setupShinyDexPage({
   weeklyModel,
@@ -73,6 +74,8 @@ export function setupShinyDexPage({
   const tabHitlist = root.querySelector('#tab-hitlist');
   const tabLiving = root.querySelector('#tab-living');
 
+  const container = root.querySelector('#shiny-dex-container');
+
   const state = {
     view: 'hitlist',
     hitlist: {
@@ -100,7 +103,6 @@ export function setupShinyDexPage({
   function updateControlAvailability() {
     const parsed = parseSearch(active().search);
 
-    // search input always typeable; behavior controlled in presenters
     searchInput.disabled = false;
 
     if (isHitlistLeaderboardMode()) {
@@ -148,16 +150,18 @@ export function setupShinyDexPage({
           searchCtx
         })
       );
-      return;
-    }
+    } else {
+      renderShinyLivingDex(
+        prepareLivingDexRenderModel({
+          showcaseRows: shinyShowcaseRows,
+          viewState: active(),
+          searchCtx
+        })
+      );
 
-    renderShinyLivingDex(
-      prepareLivingDexRenderModel({
-        showcaseRows: shinyShowcaseRows,
-        viewState: active(),
-        searchCtx
-      })
-    );
+      // Living Dex only: ownership tooltip
+      bindDexOwnerTooltip(container);
+    }
   }
 
   searchInput.addEventListener('input', e => {
