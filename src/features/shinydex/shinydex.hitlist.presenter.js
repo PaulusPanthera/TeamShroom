@@ -1,4 +1,4 @@
-// v2.0.0-alpha.1
+// v2.0.0-alpha.2
 // src/features/shinydex/shinydex.hitlist.presenter.js
 // Hitlist Presenter — view-specific data prep (no DOM)
 
@@ -12,18 +12,7 @@ import {
   memberMatches
 } from './shinydex.search.js';
 
-function tierFromPoints(points) {
-  var p = Number(points) || 0;
-  if (p >= 100) return 'lm';
-  if (p >= 30) return '0';
-  if (p >= 25) return '1';
-  if (p >= 15) return '2';
-  if (p >= 10) return '3';
-  if (p >= 6) return '4';
-  if (p >= 3) return '5';
-  if (p >= 2) return '6';
-  return null;
-}
+import { tierFromPoints } from '../../ui/tier-map.js';
 
 function normalizeRegion(raw) {
   return String(raw || '').trim().toLowerCase();
@@ -33,7 +22,7 @@ function regionMatches(regionValue, query) {
   var r = normalizeRegion(regionValue);
   var q = normalizeRegion(query);
   if (!q) return true;
-  return r.indexOf(q) === 0; // prefix match
+  return r.indexOf(q) === 0;
 }
 
 export function prepareHitlistRenderModel(opts) {
@@ -71,8 +60,6 @@ export function prepareHitlistRenderModel(opts) {
 
   // --------------------------------------------------
   // SCOREBOARD MODES (claims/points)
-  // Search is allowed here (member filtering),
-  // BUT rank stays from full leaderboard.
   // --------------------------------------------------
   if (mode === 'claims' || mode === 'points') {
     var claimed = snapshot.filter(function (e) { return e.claimed; });
@@ -106,7 +93,6 @@ export function prepareHitlistRenderModel(opts) {
 
     var visibleLeaderboard = fullLeaderboard;
 
-    // default scoreboard search = member search even without @
     if (parsed.q) {
       var q = parsed.q;
       visibleLeaderboard = fullLeaderboard.filter(function (m) {
@@ -121,7 +107,7 @@ export function prepareHitlistRenderModel(opts) {
           key: m.name,
           title: rankByName[m.name] + '. ' + m.name + ' — ' + m.claims + ' Claims · ' + m.points + ' Points',
           entries: m.entries.map(function (e) {
-            return Object.assign({}, e, { highlighted: true, info: (e.points || 0) + ' pts' });
+            return Object.assign({}, e);
           })
         };
       }),
@@ -190,7 +176,7 @@ export function prepareHitlistRenderModel(opts) {
         key: region,
         title: title,
         entries: pair[1].map(function (e) {
-          return Object.assign({}, e, { highlighted: e.claimed && (e.points || 0) >= 15 });
+          return Object.assign({}, e);
         })
       };
     }),
