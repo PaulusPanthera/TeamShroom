@@ -3,6 +3,8 @@
 // Shiny Dex — Owners Tooltip (paged + freeze mode)
 
 let tooltipEl = null;
+let ownerTooltipBound = false;
+
 
 function ensureTooltip() {
   if (tooltipEl) return tooltipEl;
@@ -32,6 +34,14 @@ function chunk(arr, size) {
     out.push(arr.slice(i, i + size));
   }
   return out;
+}
+export function bindDexOwnerTooltip(root) {
+  if (ownerTooltipBound) return;
+  ownerTooltipBound = true;
+
+  const doc = root || document;
+  const tt = ensureTooltip();
+  ...
 }
 
 export function bindDexOwnerTooltip(root) {
