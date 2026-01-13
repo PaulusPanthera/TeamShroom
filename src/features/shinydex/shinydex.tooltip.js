@@ -106,6 +106,7 @@ export function bindDexOwnerTooltip(container) {
 
     if (pages.length <= 1) return;
 
+    // readable pacing
     rotTimer = setInterval(() => {
       const box = tooltip.querySelector('.owners-pages');
       box.classList.add('fade');
@@ -118,8 +119,8 @@ export function bindDexOwnerTooltip(container) {
 
         setTooltipPage(tooltip, pages[pageIndex], remainder);
         box.classList.remove('fade');
-      }, 120);
-    }, 1700);
+      }, 140);
+    }, 2800);
   }
 
   function show(card, evt) {
