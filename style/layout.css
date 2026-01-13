@@ -179,3 +179,26 @@
   gap: var(--space-2);
 }
 
+/* ---------------------------------------------------------
+   STICKY HOTBAR (TWO BARS ATTACHED UNDER NAV)
+--------------------------------------------------------- */
+
+/* nav is fixed; these stick under it */
+.search-controls{
+  position: sticky;
+  top: 56px;              /* match nav height; adjust once nav finalizes */
+  z-index: 900;
+}
+
+.shiny-dex-tabs{
+  position: sticky;
+  top: calc(56px + 72px); /* bar 2 sits under bar 1 */
+  z-index: 850;
+}
+
+/* reduce dead space; more usable width for 6 cards */
+#page-content{
+  max-width: 1760px;
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
+}
