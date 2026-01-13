@@ -11,7 +11,7 @@ import { renderHitlistFromPresenterModel } from './shinydex.hitlist.js';
 import { renderLivingDexFromPresenterModel } from './shinylivingdex.js';
 
 import { setupDexOwnerTooltip as bindDexOwnerTooltip } from './shinydex.tooltip.js';
-import { bindShinyDexHelp } from './shinydex.help.js';
+import { setupShinyDexHelp as bindShinyDexHelp } from './shinydex.help.js';
 
 export function setupShinyDexPage({
   weeklyModel,
