@@ -4,7 +4,6 @@
 
 import { buildShinyDexModel } from '../../domains/shinydex/hitlist.model.js';
 import {
-  POKEMON_REGION,
   POKEMON_SHOW
 } from '../../data/pokemondatabuilder.js';
 
@@ -12,7 +11,9 @@ import {
   parseSearch,
   resolveFamilyRootsByQuery,
   speciesMatches,
-  memberMatches
+  memberMatches,
+  regionPrefixMatches,
+  getRegionForPokemon
 } from './shinydex.search.js';
 
 function tierFromPoints(points) {
@@ -28,17 +29,6 @@ function tierFromPoints(points) {
   return null;
 }
 
-function normalizeRegion(raw) {
-  return String(raw || '').trim().toLowerCase();
-}
-
-function regionMatches(regionValue, query) {
-  var r = normalizeRegion(regionValue);
-  var q = normalizeRegion(query);
-  if (!q) return true;
-  return r.indexOf(q) === 0; // prefix match
-}
-
 export function prepareHitlistRenderModel({
   weeklyModel,
   viewState,
@@ -51,11 +41,12 @@ export function prepareHitlistRenderModel({
     return POKEMON_SHOW[e.pokemon] !== false;
   });
 
+  // region filter is visibility-only, safe here
   if (parsed.filters && parsed.filters.region) {
     var rq = parsed.filters.region;
     snapshot = snapshot.filter(function (e) {
-      var region = POKEMON_REGION[e.pokemon] || e.region || 'unknown';
-      return regionMatches(region, rq);
+      var region = getRegionForPokemon(e.pokemon) || e.region || 'unknown';
+      return regionPrefixMatches(region, rq);
     });
   }
 
@@ -65,11 +56,15 @@ export function prepareHitlistRenderModel({
 
   var regionStats = {};
   snapshot.forEach(function (e) {
-    var region = POKEMON_REGION[e.pokemon] || 'unknown';
+    var region = getRegionForPokemon(e.pokemon) || 'unknown';
     if (!regionStats[region]) regionStats[region] = { total: 0, claimed: 0 };
     regionStats[region].total += 1;
     if (e.claimed) regionStats[region].claimed += 1;
   });
+
+  // -------------------------------------------------------
+  // SCOREBOARD
+  // -------------------------------------------------------
 
   if (mode === 'claims' || mode === 'points') {
     var claimed = snapshot.filter(function (e) { return e.claimed; });
@@ -99,7 +94,7 @@ export function prepareHitlistRenderModel({
 
     var rankByName = {};
     fullLeaderboard.forEach(function (m, idx) {
-      rankByName[m.name] = idx + 1;
+      rankByName[m.name] = idx + 1; // KEEP ORIGINAL RANK, EVEN IF FILTERED
     });
 
     var visibleLeaderboard = fullLeaderboard;
@@ -125,6 +120,10 @@ export function prepareHitlistRenderModel({
     };
   }
 
+  // -------------------------------------------------------
+  // STANDARD
+  // -------------------------------------------------------
+
   var forceUnclaimed = !!parsed.flags.unclaimed;
   var forceClaimed = !!parsed.flags.claimed;
   var effectiveUnclaimed = forceUnclaimed ? true : (forceClaimed ? false : !!viewState.showUnclaimed);
@@ -135,7 +134,7 @@ export function prepareHitlistRenderModel({
   if (forceClaimed) modeSet = modeSet.filter(function (e) { return e.claimed; });
 
   if (parsed.filters && parsed.filters.tier) {
-    var wanted = parsed.filters.tier;
+    var wanted = String(parsed.filters.tier || '').toLowerCase();
     modeSet = modeSet.filter(function (e) { return tierFromPoints(e.points) === wanted; });
   }
 
@@ -148,20 +147,23 @@ export function prepareHitlistRenderModel({
   } else if (parsed.kind === 'family' && parsed.q != null) {
     var roots = resolveFamilyRootsByQuery(searchCtx, parsed.q);
     visible = visible.filter(function (e) {
-      var root = (searchCtx && searchCtx.rootByPokemon && searchCtx.rootByPokemon[e.pokemon]) || e.pokemon;
+      var root = (searchCtx && searchCtx.rootByPokemon && searchCtx.rootByPokemon[e.pokemon]) || e.family || e.pokemon;
       return roots.has(root);
     });
   } else if (parsed.kind === 'species' && parsed.q) {
-    visible = visible.filter(function (e) { return speciesMatches(e.pokemon, parsed.q); });
+    visible = visible.filter(function (e) { return speciesMatches(e.pokemon, parsed.q, searchCtx); });
   }
 
   var byRegion = {};
   visible.forEach(function (e) {
-    var region = POKEMON_REGION[e.pokemon] || 'unknown';
+    var region = getRegionForPokemon(e.pokemon) || 'unknown';
     if (!byRegion[region]) byRegion[region] = [];
     byRegion[region].push(e);
   });
 
+  // header label logic you wanted:
+  // - Standard: claimed/total Claimed
+  // - Unclaimed: totalUnclaimed Unclaimed
   var countLabelText = effectiveUnclaimed
     ? (unclaimedSpecies + ' Unclaimed')
     : (claimedSpecies + ' / ' + totalSpecies + ' Claimed');
@@ -175,6 +177,9 @@ export function prepareHitlistRenderModel({
       var stats = regionStats[region] || { claimed: 0, total: 0 };
       var regionUnclaimed = stats.total - stats.claimed;
 
+      // region header:
+      // - Standard: (claimed/total)
+      // - Unclaimed: (unclaimed Unclaimed)
       var title = effectiveUnclaimed
         ? (region.toUpperCase() + ' (' + regionUnclaimed + ' Unclaimed)')
         : (region.toUpperCase() + ' (' + stats.claimed + ' / ' + stats.total + ')');
