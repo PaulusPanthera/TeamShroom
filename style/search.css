@@ -240,3 +240,36 @@
 .dex-help-btn:hover{
   border-color: rgba(255,122,24,0.85);
 }
+
+/* ---------------------------------------------------------
+   HOTBAR CONTROLS — HARD COMMIT 8-BIT (NO RADIUS)
+--------------------------------------------------------- */
+
+.search-controls input,
+.search-controls select,
+.showcase-search-controls input,
+.showcase-search-controls select{
+  border-radius: 0;
+  border: 2px solid rgba(0,0,0,0.55);
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,0.08) inset,
+    0 0 0 1px rgba(0,0,0,0.35) inset;
+}
+
+/* orange buttons must read clickable */
+.search-controls button,
+.showcase-search-controls button,
+.dex-help-btn{
+  border-radius: 0;
+  border: 2px solid rgba(0,0,0,0.55);
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,0.10) inset,
+    0 0 0 1px rgba(0,0,0,0.35) inset,
+    var(--shadow-depth);
+}
+
+.search-controls button:hover,
+.showcase-search-controls button:hover,
+.dex-help-btn:hover{
+  filter: brightness(1.08);
+}
