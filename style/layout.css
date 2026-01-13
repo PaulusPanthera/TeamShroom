@@ -98,8 +98,17 @@
 .dex-grid {
   display: grid;
 
-  grid-template-columns: repeat(auto-fill, minmax(var(--card-width), max-content));
+  /* fixed-width card columns; packs as many as fit */
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-w), var(--card-w)));
   gap: var(--space-2);
+
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-4);
+
+  justify-content: start;
+  align-content: start;
+}
+
 
   margin-top: var(--space-2);
   margin-bottom: var(--space-4);
