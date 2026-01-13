@@ -1,4 +1,4 @@
-// v2.0.0-alpha.1
+// v2.0.0-alpha.2
 // src/features/shinydex/shinydex.js
 // Shiny Dex Page Controller
 // Owns ALL DOM under #page-content
@@ -15,10 +15,10 @@ import { setupShinyDexHelp } from './shinydex.help.js';
 import { buildSearchContext } from './shinydex.search.js';
 import { pokemonFamilies, POKEMON_DEX_ORDER } from '../../data/pokemondatabuilder.js';
 
-export function setupShinyDexPage({
-  weeklyModel,
-  shinyShowcaseRows
-}) {
+// NEW: card variant switch (status-slot click)
+import { wireCardVariantSwitch } from './shinydex.variants.js';
+
+export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
   const root = document.getElementById('page-content');
   root.innerHTML = '';
 
@@ -82,25 +82,27 @@ export function setupShinyDexPage({
   // --------------------------------------------------
 
   const state = {
-    view: 'hitlist',        // 'hitlist' | 'living'
+    view: 'hitlist', // 'hitlist' | 'living'
     search: '',
     unclaimed: false,
     sort: 'standard'
   };
 
   // --------------------------------------------------
-  // HELP + TOOLTIP
+  // HELP + TOOLTIP + VARIANT SWITCH
   // --------------------------------------------------
 
   const controlsBar = root.querySelector('.shiny-dex-controls') || root;
 
-setupShinyDexHelp({
-  buttonEl: helpBtn,
-  controlsRoot: controlsBar
-});
-
+  setupShinyDexHelp({
+    buttonEl: helpBtn,
+    controlsRoot: controlsBar
+  });
 
   bindDexOwnerTooltip(document);
+
+  // Delegate variant switching under this page only
+  wireCardVariantSwitch(root);
 
   // --------------------------------------------------
   // SORT OPTIONS (PER VIEW)
