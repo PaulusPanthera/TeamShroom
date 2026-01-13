@@ -1,96 +1,73 @@
 // v2.0.0-alpha.1
 // src/features/shinydex/shinydex.hitlist.js
-// Hitlist Renderer — DOM only
+// Shiny Dex — HITLIST RENDERER (DOM-only)
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
-import { prepareHitlistRenderModel } from './shinydex.hitlist.presenter.js';
 
-function spriteKey(pokemonKey) {
-  var k = String(pokemonKey || '').toLowerCase();
+function getPokemonGif(pokemonKey) {
+  const overrides = {
+    mrmime: 'mr-mime',
+    mimejr: 'mime-jr',
+    'nidoran-f': 'nidoran-f',
+    'nidoran-m': 'nidoran-m',
+    typenull: 'type-null',
+    'porygon-z': 'porygon-z'
+  };
 
-  // CORB-fix: ensure pokemondb keys are correct
-  if (k === 'mrmime') return 'mr-mime';
-  if (k === 'mimejr') return 'mime-jr';
-  if (k === 'typenull') return 'type-null';
-  if (k === 'porygonz') return 'porygon-z';
-
-  return k;
+  const key = overrides[pokemonKey] || pokemonKey;
+  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
 }
 
-function getPokemonGif(key) {
-  return 'https://img.pokemondb.net/sprites/black-white/anim/shiny/' + spriteKey(key) + '.gif';
-}
-
-export function renderShinyDexHitlist(opts) {
-  var weeklyModel = opts && opts.weeklyModel;
-  var viewState = opts && opts.viewState;
-  var searchCtx = opts && opts.searchCtx;
-  var countLabel = opts && opts.countLabel;
-
-  var container = document.getElementById('shiny-dex-container');
+export function renderHitlistFromModel(model) {
+  const container = document.getElementById('shiny-dex-container');
   container.innerHTML = '';
 
-  var model = prepareHitlistRenderModel({
-    weeklyModel: weeklyModel,
-    viewState: viewState,
-    searchCtx: searchCtx
-  });
-
-  if (countLabel) countLabel.textContent = model.countLabelText;
+  if (!model || !Array.isArray(model.sections)) return;
 
   if (model.mode === 'scoreboard') {
-    for (var i = 0; i < model.sections.length; i++) {
-      var sec = model.sections[i];
+    model.sections.forEach(sec => {
+      const section = document.createElement('section');
+      section.className = 'scoreboard-member-section';
 
-      var sectionEl = document.createElement('section');
-      sectionEl.className = 'scoreboard-member-section';
+      const header = document.createElement('h2');
+      header.textContent = sec.title || '';
 
-      var h = document.createElement('h2');
-      h.textContent = sec.title;
-
-      var grid = document.createElement('div');
+      const grid = document.createElement('div');
       grid.className = 'dex-grid';
 
-      for (var j = 0; j < sec.entries.length; j++) {
-        var e = sec.entries[j];
+      (sec.entries || []).forEach(entry => {
         grid.insertAdjacentHTML(
           'beforeend',
           renderUnifiedCard({
-            name: prettifyPokemonName(e.pokemon),
-            img: getPokemonGif(e.pokemon),
-            info: e.info || '',
+            name: prettifyPokemonName(entry.pokemon),
+            img: getPokemonGif(entry.pokemon),
+            info: entry.info || `${entry.points} pts`,
             highlighted: true,
             cardType: 'pokemon'
           })
         );
-      }
+      });
 
-      sectionEl.appendChild(h);
-      sectionEl.appendChild(grid);
-      container.appendChild(sectionEl);
-    }
+      section.append(header, grid);
+      container.appendChild(section);
+    });
 
     return;
   }
 
-  // standard (region sections)
-  for (var r = 0; r < model.sections.length; r++) {
-    var regionSec = model.sections[r];
-
-    var section = document.createElement('section');
+  model.sections.forEach(sec => {
+    const section = document.createElement('section');
     section.className = 'region-section';
 
-    var header = document.createElement('h2');
-    header.textContent = regionSec.title;
+    const header = document.createElement('h2');
+    header.textContent = sec.title || '';
 
-    var grid2 = document.createElement('div');
-    grid2.className = 'dex-grid';
+    const grid = document.createElement('div');
+    grid.className = 'dex-grid';
 
-    for (var x = 0; x < regionSec.entries.length; x++) {
-      var entry = regionSec.entries[x];
-
-      grid2.insertAdjacentHTML(
+    (sec.entries || []).forEach(entry => {
+      grid.insertAdjacentHTML(
         'beforeend',
         renderUnifiedCard({
           name: prettifyPokemonName(entry.pokemon),
@@ -101,10 +78,9 @@ export function renderShinyDexHitlist(opts) {
           cardType: 'pokemon'
         })
       );
-    }
+    });
 
-    section.appendChild(header);
-    section.appendChild(grid2);
+    section.append(header, grid);
     container.appendChild(section);
-  }
+  });
 }
