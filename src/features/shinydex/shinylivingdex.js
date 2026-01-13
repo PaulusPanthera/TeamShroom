@@ -1,6 +1,6 @@
 // src/features/shinydex/shinylivingdex.js
-// Shiny Living Dex — RENDERER ONLY
-// No state. No aggregation. No sorting. No counting.
+// Shiny Living Dex — RENDERER
+// Render-only. Stateless. Presenter owns filters/counters.
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
@@ -10,7 +10,7 @@ function getPokemonGif(key) {
 }
 
 /*
-INPUT SHAPE (FROM CONTROLLER):
+INPUT SHAPE (FROM PRESENTER):
 
 {
   sections: Array<{
@@ -19,6 +19,7 @@ INPUT SHAPE (FROM CONTROLLER):
     entries: Array<{
       pokemon: string
       count: number
+      owners: string[]
       highlighted: boolean
     }>
   }>,
@@ -47,17 +48,19 @@ export function renderShinyLivingDex({
     grid.className = 'dex-grid';
 
     sectionData.entries.forEach(entry => {
+      const info =
+        entry.count === 0
+          ? 'Unowned'
+          : entry.count === 1
+            ? '1 Shiny'
+            : `${entry.count} Shinies`;
+
       grid.insertAdjacentHTML(
         'beforeend',
         renderUnifiedCard({
           name: prettifyPokemonName(entry.pokemon),
           img: getPokemonGif(entry.pokemon),
-          info:
-            entry.count === 0
-              ? 'Unowned'
-              : entry.count === 1
-                ? '1 Shiny'
-                : `${entry.count} Shinies`,
+          info,
           unclaimed: entry.count === 0,
           highlighted: !!entry.highlighted,
           cardType: 'pokemon'
