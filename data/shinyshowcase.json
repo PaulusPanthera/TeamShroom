@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-01-13T06:16:56.316Z",
+  "generatedAt": "2026-01-13T12:20:58.231Z",
   "source": "google-sheets",
   "data": [
     {
@@ -14082,7 +14082,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "mightyena",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14094,7 +14094,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "linoone",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14106,7 +14106,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "typhlosion",
-      "method": null,
+      "method": "single",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14118,7 +14118,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "smeargle",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14130,7 +14130,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "camerupt",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14142,7 +14142,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "bellsprout",
-      "method": null,
+      "method": "single",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14154,7 +14154,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "rapidash",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14166,7 +14166,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "miltank",
-      "method": null,
+      "method": "single",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14238,7 +14238,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "metapod",
-      "method": null,
+      "method": "single",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14262,7 +14262,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "slowbro",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14274,7 +14274,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "rattata",
-      "method": null,
+      "method": "single",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14322,7 +14322,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "weezing",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14370,7 +14370,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "golurk",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14490,7 +14490,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "jigglypuff",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14502,7 +14502,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "stoutland",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14526,7 +14526,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "zebstrika",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14550,7 +14550,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "stunfisk",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14562,7 +14562,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "basculin",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14574,7 +14574,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "durant",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14586,7 +14586,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "cascoon",
-      "method": null,
+      "method": "single",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14610,7 +14610,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "wobbuffet",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -14622,7 +14622,7 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "mamoswine",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -22614,6 +22614,42 @@
     {
       "ot": "zzxyami",
       "pokemon": "sharpedo",
+      "method": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "AUTO-GENERATED ORDER DATE"
+    },
+    {
+      "ot": "PaulusTFT",
+      "pokemon": "elgyem",
+      "method": "5x100%",
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "AUTO-GENERATED ORDER DATE"
+    },
+    {
+      "ot": "PaulusTFT",
+      "pokemon": "girafarig",
+      "method": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "AUTO-GENERATED ORDER DATE"
+    },
+    {
+      "ot": "PaulusTFT",
+      "pokemon": "luxio",
       "method": null,
       "secret": false,
       "alpha": false,
