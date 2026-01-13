@@ -6,7 +6,7 @@ let tooltipEl = null;
 let isBound = false;
 
 const PAGE_SIZE = 10;
-const AUTO_SWAP_MS = 3750;
+const AUTO_SWAP_MS = 3450;
 const SWAP_CLASS_MS = 160;
 
 function ensureTooltip() {
