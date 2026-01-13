@@ -1,188 +1,227 @@
+// src/features/shinydex/shinydex.hitlist.js
 // v2.0.0-alpha.1
-// src/features/shinydex/shinylivingdex.js
-// Shiny Living Dex — species ownership snapshot
-// Render-only. No state. No side effects beyond DOM created in-container.
+// Shiny Dex — HITLIST RENDERER
+// Render-only. Stateless. Controller owns UI & state.
 
+import { buildShinyDexModel } from '../../domains/shinydex/hitlist.model.js';
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
 import {
   POKEMON_SHOW,
-  POKEMON_REGION
+  POKEMON_REGION,
+  POKEMON_TIER,
+  pokemonFamilies
 } from '../../data/pokemondatabuilder.js';
-import { buildShinyLivingDexModel } from '../../domains/shinydex/livingdex.model.js';
 
 function getPokemonGif(key) {
-  return 'https://img.pokemondb.net/sprites/black-white/anim/shiny/' + key + '.gif';
+  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
 }
 
-function ensureOwnerTooltip() {
-  var existing = document.getElementById('dex-owner-tooltip');
-  if (existing) existing.remove();
-
-  var tip = document.createElement('div');
-  tip.id = 'dex-owner-tooltip';
-  tip.className = 'dex-owner-tooltip';
-
-  tip.innerHTML = [
-    '<div class="owners-title"></div>',
-    '<div class="owners-list"><div class="scrolling-names"></div></div>'
-  ].join('');
-
-  document.body.appendChild(tip);
-  return tip;
+function includesCI(hay, needle) {
+  return String(hay || '').toLowerCase().indexOf(String(needle || '').toLowerCase()) !== -1;
 }
 
-function setTooltipContent(tip, pokemonName, owners) {
-  var title = tip.querySelector('.owners-title');
-  var scrolling = tip.querySelector('.scrolling-names');
+function resolveFamilyKeyByName(partialName) {
+  const q = String(partialName || '').toLowerCase().trim();
+  if (!q) return null;
 
-  title.textContent = 'Owners — ' + pokemonName;
-
-  var list = Array.isArray(owners) ? owners.slice() : [];
-  if (!list.length) list = ['None'];
-
-  // dedupe + stable display
-  var seen = {};
-  var out = [];
-  for (var i = 0; i < list.length; i++) {
-    var n = String(list[i] || '').trim();
-    if (!n) continue;
-    var k = n.toLowerCase();
-    if (seen[k]) continue;
-    seen[k] = true;
-    out.push(n);
+  const keys = Object.keys(pokemonFamilies);
+  for (let i = 0; i < keys.length; i++) {
+    const familyKey = keys[i];
+    const stages = pokemonFamilies[familyKey] || [];
+    for (let j = 0; j < stages.length; j++) {
+      const mon = stages[j];
+      const pretty = prettifyPokemonName(mon).toLowerCase();
+      if (pretty.indexOf(q) !== -1) return familyKey;
+    }
   }
-  if (!out.length) out = ['None'];
-
-  scrolling.textContent = out.join('\n');
-
-  // slower for large lists: 12s base + 0.6s per name, capped
-  var dur = Math.min(36, Math.max(12, 12 + out.length * 0.6));
-  scrolling.style.animationDuration = dur + 's';
+  return null;
 }
 
-function positionTooltip(tip, x, y) {
-  var pad = 14;
-  var w = tip.offsetWidth || 320;
-  var h = tip.offsetHeight || 140;
-
-  var left = x + pad;
-  var top = y + pad;
-
-  var maxLeft = window.innerWidth - w - pad;
-  var maxTop = window.innerHeight - h - pad;
-
-  if (left > maxLeft) left = x - w - pad;
-  if (top > maxTop) top = y - h - pad;
-
-  tip.style.left = left + 'px';
-  tip.style.top = top + 'px';
+function matchRegion(pokemonKey, regionText) {
+  const rt = String(regionText || '').toLowerCase().trim();
+  if (!rt) return true;
+  const r = (POKEMON_REGION[pokemonKey] || 'unknown').toLowerCase();
+  return r.indexOf(rt) === 0; // partial ok
 }
 
-export function renderShinyLivingDex(args) {
-  var showcaseRows = args.showcaseRows;
-  var search = args.search;
-  var unclaimedOnly = args.unclaimedOnly;
-  var sort = args.sort;
-  var countLabel = args.countLabel;
+function matchTier(pokemonKey, tierText) {
+  const tt = String(tierText || '').toLowerCase().trim();
+  if (!tt) return true;
+  const tier = (POKEMON_TIER[pokemonKey] || '').toLowerCase().replace('tier', '').trim();
+  // tier becomes "0"/"1"/.../"lm"
+  return tier === tt;
+}
 
-  var container = document.getElementById('shiny-dex-container');
+export function renderShinyDexHitlist({
+  weeklyModel,
+  sort,
+  unclaimedOnly,
+  query,
+  countLabel
+}) {
+  const container = document.getElementById('shiny-dex-container');
+  if (!container) return;
   container.innerHTML = '';
 
-  var tip = ensureOwnerTooltip();
+  const snapshot = buildShinyDexModel(weeklyModel || []).filter(e => POKEMON_SHOW[e.pokemon] !== false);
 
-  var dex = buildShinyLivingDexModel(showcaseRows).filter(function (e) {
-    return POKEMON_SHOW[e.pokemon] !== false;
+  const isLeaderboard = sort === 'claims' || sort === 'points';
+
+  // LEADERBOARDS: search filters MEMBERS, preserves rank from full list
+  if (isLeaderboard) {
+    const claimed = snapshot.filter(e => e.claimed);
+
+    const byMember = {};
+    claimed.forEach(e => {
+      const name = e.claimedBy || '';
+      if (!name) return;
+      if (!byMember[name]) byMember[name] = [];
+      byMember[name].push(e);
+    });
+
+    const full = Object.entries(byMember).map(entry => {
+      const name = entry[0];
+      const entries = entry[1] || [];
+      const points = entries.reduce((s, x) => s + (x.points || 0), 0);
+      return { name, entries, claims: entries.length, points };
+    }).sort((a, b) => {
+      return sort === 'claims' ? (b.claims - a.claims) : (b.points - a.points);
+    }).map((m, idx) => {
+      m.rank = idx + 1;
+      return m;
+    });
+
+    const memberNeedle = query && query.memberText ? query.memberText : (query && query.pokemonText ? query.pokemonText : '');
+    const visible = memberNeedle
+      ? full.filter(m => includesCI(m.name, memberNeedle))
+      : full;
+
+    countLabel.textContent = `${visible.length} Members`;
+
+    visible.forEach(m => {
+      const section = document.createElement('section');
+      section.className = 'scoreboard-member-section';
+
+      const header = document.createElement('h2');
+      header.textContent =
+        `${m.rank}. ${m.name} — ${m.claims} Claims · ${m.points} Points`;
+
+      const grid = document.createElement('div');
+      grid.className = 'dex-grid';
+
+      m.entries.forEach(entry => {
+        grid.insertAdjacentHTML(
+          'beforeend',
+          renderUnifiedCard({
+            name: prettifyPokemonName(entry.pokemon),
+            img: getPokemonGif(entry.pokemon),
+            info: `${entry.points} pts`,
+            highlighted: true,
+            cardType: 'pokemon',
+            pokemonKey: entry.pokemon
+          })
+        );
+      });
+
+      section.append(header, grid);
+      container.appendChild(section);
+    });
+
+    return;
+  }
+
+  // STANDARD: mode dataset (pre-search counters)
+  let mode = snapshot.slice();
+
+  // status tokens (optional)
+  const requireUnclaimed = !!(query && query.requireUnclaimed);
+  const requireClaimed = !!(query && query.requireClaimed);
+
+  // region/tier (mode dataset)
+  mode = mode.filter(e => matchRegion(e.pokemon, query ? query.regionText : ''));
+  mode = mode.filter(e => matchTier(e.pokemon, query ? query.tierText : ''));
+
+  // toggle unclaimed
+  if (unclaimedOnly) {
+    mode = mode.filter(e => !e.claimed);
+  }
+
+  // status tokens refine
+  if (requireUnclaimed) mode = mode.filter(e => !e.claimed);
+  if (requireClaimed) mode = mode.filter(e => e.claimed);
+
+  const totalSpecies = snapshot.length;
+  const claimedSpecies = snapshot.filter(e => e.claimed).length;
+
+  // header count label (your display rules)
+  if (unclaimedOnly || requireUnclaimed) {
+    const unclaimedCount = snapshot.length - claimedSpecies;
+    countLabel.textContent = `${unclaimedCount} Unclaimed`;
+  } else {
+    countLabel.textContent = `${claimedSpecies} / ${totalSpecies} Claimed`;
+  }
+
+  // SEARCH (LAST) — pokemon/family text
+  const pokemonNeedle = query && query.pokemonText ? query.pokemonText : '';
+  const familyNeedle = query && query.familyText ? query.familyText : '';
+
+  let familyKey = null;
+  if (familyNeedle) familyKey = resolveFamilyKeyByName(familyNeedle);
+
+  const visible = mode.filter(e => {
+    if (familyKey) {
+      const stages = pokemonFamilies[familyKey] || [];
+      return stages.indexOf(e.pokemon) !== -1 || e.pokemon === familyKey;
+    }
+    if (pokemonNeedle) {
+      const pretty = prettifyPokemonName(e.pokemon).toLowerCase();
+      return pretty.indexOf(pokemonNeedle.toLowerCase()) !== -1;
+    }
+    return true;
   });
 
-  if (search) {
-    dex = dex.filter(function (e) {
-      return prettifyPokemonName(e.pokemon).toLowerCase().indexOf(search) !== -1;
-    });
-  }
+  // GROUP BY REGION (visible render)
+  const byRegion = {};
+  visible.forEach(e => {
+    const r = (POKEMON_REGION[e.pokemon] || e.region || 'unknown').toLowerCase();
+    if (!byRegion[r]) byRegion[r] = [];
+    byRegion[r].push(e);
+  });
 
-  if (unclaimedOnly) {
-    dex = dex.filter(function (e) { return e.count === 0; });
-  }
+  Object.entries(byRegion).forEach(entry => {
+    const region = entry[0];
+    const entries = entry[1] || [];
 
-  if (sort === 'total') {
-    dex.sort(function (a, b) { return b.count - a.count; });
-  }
-
-  var byRegion = {};
-  for (var i = 0; i < dex.length; i++) {
-    var entry = dex[i];
-    var region = POKEMON_REGION[entry.pokemon] || 'unknown';
-    if (!byRegion[region]) byRegion[region] = [];
-    byRegion[region].push(entry);
-  }
-
-  var totalSpecies = 0;
-  var ownedSpecies = 0;
-
-  Object.entries(byRegion).forEach(function (pair) {
-    var region = pair[0];
-    var entries = pair[1];
-
-    var section = document.createElement('section');
+    const section = document.createElement('section');
     section.className = 'region-section';
 
-    var total = entries.length;
-    var owned = entries.filter(function (e) { return e.count > 0; }).length;
+    // region header counts from MODE DATASET (not post-search)
+    const regionMode = mode.filter(x => (POKEMON_REGION[x.pokemon] || x.region || 'unknown').toLowerCase() === region);
+    const regionClaimed = regionMode.filter(x => x.claimed).length;
 
-    totalSpecies += total;
-    ownedSpecies += owned;
+    const header = document.createElement('h2');
+    header.textContent = `${region.toUpperCase()} (${regionClaimed} / ${regionMode.length})`;
 
-    var header = document.createElement('h2');
-    header.textContent = region.toUpperCase() + ' (' + owned + ' / ' + total + ')';
-
-    var grid = document.createElement('div');
+    const grid = document.createElement('div');
     grid.className = 'dex-grid';
 
-    entries.forEach(function (entry) {
-      var wrap = document.createElement('div');
-      wrap.innerHTML = renderUnifiedCard({
-        name: prettifyPokemonName(entry.pokemon),
-        img: getPokemonGif(entry.pokemon),
-        info:
-          entry.count === 0
-            ? 'Unowned'
-            : entry.count === 1
-              ? '1 Shiny'
-              : entry.count + ' Shinies',
-        unclaimed: entry.count === 0,
-        highlighted: entry.count > 0,
-        cardType: 'pokemon'
-      }).trim();
-
-      var card = wrap.firstElementChild;
-      card.setAttribute('data-pokemon-key', entry.pokemon);
-
-      card.addEventListener('mouseenter', function (ev) {
-        var key = this.getAttribute('data-pokemon-key');
-        var found = entries.find(function (x) { return x.pokemon === key; });
-        var owners = found ? found.owners : [];
-        setTooltipContent(tip, prettifyPokemonName(key), owners);
-        tip.classList.add('show');
-        positionTooltip(tip, ev.clientX, ev.clientY);
-      });
-
-      card.addEventListener('mousemove', function (ev) {
-        if (!tip.classList.contains('show')) return;
-        positionTooltip(tip, ev.clientX, ev.clientY);
-      });
-
-      card.addEventListener('mouseleave', function () {
-        tip.classList.remove('show');
-      });
-
-      grid.appendChild(card);
+    entries.forEach(mon => {
+      grid.insertAdjacentHTML(
+        'beforeend',
+        renderUnifiedCard({
+          name: prettifyPokemonName(mon.pokemon),
+          img: getPokemonGif(mon.pokemon),
+          info: mon.claimed ? mon.claimedBy : 'Unclaimed',
+          unclaimed: !mon.claimed,
+          highlighted: mon.claimed && (mon.points || 0) >= 15,
+          cardType: 'pokemon',
+          pokemonKey: mon.pokemon
+        })
+      );
     });
 
-    section.appendChild(header);
-    section.appendChild(grid);
+    section.append(header, grid);
     container.appendChild(section);
   });
-
-  countLabel.textContent = ownedSpecies + ' / ' + totalSpecies + ' Owned';
 }
