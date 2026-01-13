@@ -1,110 +1,96 @@
-// unifiedcard.js
-// Unified Card Renderer — HARD CONTRACT
-// Structure and size are immutable
+// src/domains/shinydex/hitlist.model.js
+// v2.0.0-alpha.1
+// Shiny Dex — HITLIST CLAIM MODEL
+// PURE FUNCTION — deterministic, order-dependent
+// Source of truth: Shiny Weekly model ONLY
 
-export function renderUnifiedCard({
-  name,
-  img,
-  info = '',
-  cardType,               // 'member' | 'pokemon'
-  unclaimed = false,
-  lost = false,
-  highlighted = false,
-  symbols = {},           // { secret, alpha, run, favorite, clip, safari, egg, event }
-  clip
-}) {
-  /* -------------------------------------------------------
-     CLASS LIST — MUST MATCH CSS EXACTLY
-  ------------------------------------------------------- */
+import {
+  pokemonFamilies,
+  POKEMON_POINTS,
+  POKEMON_REGION,
+  POKEMON_DEX_ORDER
+} from '../../data/pokemondatabuilder.js';
 
-  const classes = [
-    'unified-card',
-    unclaimed && 'is-unclaimed',
-    lost && 'is-lost',
-    highlighted && 'is-highlighted'
-  ]
-    .filter(Boolean)
-    .join(' ');
+/*
+OUTPUT:
+Array<{
+  pokemon: string
+  family: string
+  region: string
+  points: number
+  claimed: boolean
+  claimedBy: string | null
+}>
+*/
 
-  /* -------------------------------------------------------
-     ATTRIBUTES
-  ------------------------------------------------------- */
+export function buildShinyDexModel(weeklyModel) {
+  const weeks = Array.isArray(weeklyModel) ? weeklyModel : [];
 
-  let attributes = `
-    class="${classes}"
-    data-card-type="${cardType || ''}"
-    data-name="${escapeAttr(name)}"
-  `;
+  // FLATTEN → EVENTS (ORDER PRESERVED)
+  const events = [];
+  weeks.forEach(week => {
+    const members = week && week.members ? Object.values(week.members) : [];
+    members.forEach(member => {
+      const shinies = member && Array.isArray(member.shinies) ? member.shinies : [];
+      shinies.forEach(shiny => {
+        if (!shiny || shiny.lost) return;
+        events.push({
+          member: shiny.member,
+          pokemon: shiny.pokemon
+        });
+      });
+    });
+  });
 
-  if (clip) {
-    attributes += ` data-clip="${escapeAttr(clip)}"`;
-  }
+  // CLAIM RESOLUTION (FAMILY → NEXT STAGE, PROGRESSIVE)
+  const claimedByPokemon = {};
+  const claimedStagesByFamily = {};
 
-  /* -------------------------------------------------------
-     SYMBOL OVERLAY
-  ------------------------------------------------------- */
+  events.forEach(event => {
+    const mon = (event.pokemon || '').toLowerCase();
+    if (!mon) return;
 
-  const symbolMap = {
-    // status
-    secret: 'secretshinysprite.png',
-    alpha: 'alphasprite.png',
-    clip: 'clipsprite.png',
+    // familyId = root key whose family list contains this mon, else fallback mon itself
+    let familyId = null;
+    const familyKeys = Object.keys(pokemonFamilies);
+    for (let i = 0; i < familyKeys.length; i++) {
+      const k = familyKeys[i];
+      const stages = pokemonFamilies[k] || [];
+      if (stages.indexOf(mon) !== -1 || k === mon) {
+        familyId = k;
+        break;
+      }
+    }
+    if (!familyId) familyId = mon;
 
-    // methods
-    mpb: 'mpbsprite.png',
-    mgb: 'mgbsprite.png',
-    mub: 'mubsprite.png',
-    mcb: 'mcbsprite.png',
-    mdb: 'mdbsprite.png',
-    egg: 'eggsprite.png',
-    safari: 'safarisprite.png',
-    single: 'singlesprite.png',
-    swarm: 'swarmsprite.png',
-    raid: 'raidsprite.png',
-    fishing: 'fishingsprite.png',
-    headbutt: 'headbuttsprite.png',
-    rocksmash: 'rocksmashsprite.png',
-    honeytree: 'honeytreesprite.png',
-    event: 'eventsprite.png'
-  };
+    const familyStages = pokemonFamilies[familyId] || [familyId];
+    if (!claimedStagesByFamily[familyId]) claimedStagesByFamily[familyId] = {};
 
-  const symbolHtml = Object.entries(symbols)
-    .filter(([, enabled]) => enabled)
-    .map(([key]) =>
-      symbolMap[key]
-        ? `
-          <img
-            class="symbol ${key}"
-            src="img/symbols/${symbolMap[key]}"
-            alt="${key}"
-          >
-        `
-        : ''
-    )
-    .join('');
+    // next unclaimed stage
+    let nextStage = null;
+    for (let i = 0; i < familyStages.length; i++) {
+      const stage = familyStages[i];
+      if (!claimedStagesByFamily[familyId][stage]) {
+        nextStage = stage;
+        break;
+      }
+    }
+    if (!nextStage) return;
 
-  const overlay = symbolHtml
-    ? `<div class="symbol-overlay">${symbolHtml}</div>`
-    : '';
+    claimedStagesByFamily[familyId][nextStage] = event.member;
+    claimedByPokemon[nextStage] = event.member;
+  });
 
-  /* -------------------------------------------------------
-     OUTPUT — ORDER IS FIXED
-  ------------------------------------------------------- */
+  const order = Array.isArray(POKEMON_DEX_ORDER) && POKEMON_DEX_ORDER.length
+    ? POKEMON_DEX_ORDER
+    : Object.keys(POKEMON_POINTS);
 
-  return `
-    <div ${attributes}>
-      ${overlay}
-      <span class="unified-name">${name}</span>
-      <img class="unified-img" src="${img}" alt="${name}">
-      <span class="unified-info">${info}</span>
-    </div>
-  `;
-}
-
-/* ---------------------------------------------------------
-   HELPERS
---------------------------------------------------------- */
-
-function escapeAttr(str) {
-  return String(str).replace(/"/g, '&quot;');
+  return order.map(pokemon => ({
+    pokemon,
+    family: pokemon,
+    region: POKEMON_REGION[pokemon] || 'unknown',
+    points: POKEMON_POINTS[pokemon] || 0,
+    claimed: !!claimedByPokemon[pokemon],
+    claimedBy: claimedByPokemon[pokemon] || null
+  }));
 }
