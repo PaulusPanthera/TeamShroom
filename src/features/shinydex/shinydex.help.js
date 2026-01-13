@@ -1,4 +1,4 @@
-// v2.0.0-alpha.3
+// v2.0.0-alpha.4
 // src/features/shinydex/shinydex.help.js
 // Shiny Dex — Help Tooltip (Search Legend)
 
@@ -31,12 +31,14 @@ export function setupShinyDexHelp({ buttonEl, controlsRoot }) {
     <div class="dex-help-rows">
       <div class="help-row">
         <div class="help-k">Name</div>
-        <div class="help-v">Plain text: <code>bulba</code></div>
+        <div class="help-v">Text: <code>bulba</code></div>
       </div>
 
       <div class="help-row">
         <div class="help-k">Owner</div>
-        <div class="help-v"><code>owner:willy</code> / <code>claimedby:willy</code></div>
+        <div class="help-v">
+          <code>owner:willy</code> / <code>claimedby:willy</code> / <code>o:willy</code> / <code>cb:willy</code>
+        </div>
       </div>
 
       <div class="help-row">
@@ -46,12 +48,14 @@ export function setupShinyDexHelp({ buttonEl, controlsRoot }) {
 
       <div class="help-row">
         <div class="help-k">Tier</div>
-        <div class="help-v"><code>tier:0</code> <code>tier:1</code> <code>tier:2</code> … <code>tier:lm</code></div>
+        <div class="help-v"><code>tier:0</code> / <code>t:0</code> … <code>tier:lm</code> / <code>t:lm</code></div>
       </div>
 
       <div class="help-row">
         <div class="help-k">Flags</div>
-        <div class="help-v"><code>unclaimed</code> / <code>claimed</code> / <code>unowned</code> / <code>owned</code></div>
+        <div class="help-v">
+          <code>unclaimed</code> / <code>unowned</code> / <code>claimed</code> / <code>owned</code>
+        </div>
       </div>
     </div>
   `;
@@ -65,7 +69,7 @@ export function setupShinyDexHelp({ buttonEl, controlsRoot }) {
     const maxLeft = controlsRoot.clientWidth - tooltip.offsetWidth - pad;
 
     const left = clamp(desiredLeft, pad, Math.max(pad, maxLeft));
-    const top = (btnRect.bottom - rootRect.top) + pad;
+    const top = btnRect.bottom - rootRect.top + pad;
 
     tooltip.style.left = `${Math.round(left)}px`;
     tooltip.style.top = `${Math.round(top)}px`;
