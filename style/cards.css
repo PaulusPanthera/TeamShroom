@@ -1,36 +1,145 @@
 /* v2.0.0-alpha.1 */
-/* style/cards.css */
+/* =========================================================
+   CARDS — UNIFIED CARD SYSTEM (DEX-FIRST)
+   HARD CONTRACT: Cards do not resize; layout adapts around them.
+   ========================================================= */
 
-:root{
-  /* ShinyDex-only sizing */
-  --dex-card-w: 210px;
-  --dex-card-h: 250px;
-  --dex-grid-gap: 18px;
+:root {
+  --card-w: 240px;
+  --card-h: 300px;
+
+  --card-inner: #f3e3a6;
+  --card-inner-soft: #efe0a8;
+
+  --card-border: #d8c36a;
+  --card-shadow: 0 10px 0 rgba(0, 0, 0, 0.35);
+
+  --card-title-bg: #0d0f12;
+  --card-title-border: #ff6a00;
+
+  --card-info-bg: #0d0f12;
+  --card-info-text: #f3e3a6;
 }
 
 /* ---------------------------------------------------------
-   (existing file content above stays as-is)
-   --------------------------------------------------------- */
+   UNIFIED CARD SHELL
+--------------------------------------------------------- */
+
+.unified-card {
+  width: var(--card-w);
+  height: var(--card-h);
+
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 10px;
+
+  padding: 12px;
+
+  background: linear-gradient(180deg, var(--card-inner) 0%, var(--card-inner-soft) 100%);
+  border: 3px solid var(--card-border);
+  border-radius: 14px;
+
+  box-shadow: var(--card-shadow);
+
+  position: relative;
+
+  user-select: none;
+}
 
 /* ---------------------------------------------------------
-   SHINYDEX — CARD SIZE + GRID (scoped)
-   --------------------------------------------------------- */
+   TITLE
+--------------------------------------------------------- */
 
-.shinydex-page .dex-grid{
-  grid-template-columns: repeat(auto-fill, var(--dex-card-w));
-  gap: var(--dex-grid-gap);
-  justify-content: center;
+.unified-card .unified-name {
+  display: block;
+  text-align: center;
+
+  padding: 8px 10px;
+
+  background: var(--card-title-bg);
+  color: var(--card-info-text);
+
+  border: 3px solid var(--card-title-border);
+  border-radius: 12px;
+
+  letter-spacing: 1px;
+  font-size: var(--font-card-title);
 }
 
-.shinydex-page .unified-card{
-  width: var(--dex-card-w);
-  max-width: var(--dex-card-w);
-  height: var(--dex-card-h);
+/* ---------------------------------------------------------
+   IMAGE
+--------------------------------------------------------- */
+
+.unified-card .unified-img {
+  width: 100%;
+  height: 150px;
+
+  object-fit: contain;
+
+  background: #0c0e12;
+  border-radius: 12px;
 }
 
-.shinydex-page .dex-card-wrap{
-  display: contents;
+/* ---------------------------------------------------------
+   INFO
+--------------------------------------------------------- */
+
+.unified-card .unified-info {
+  display: block;
+  text-align: center;
+
+  padding: 8px 10px;
+
+  background: var(--card-info-bg);
+  color: var(--card-info-text);
+
+  border-radius: 12px;
+  font-size: var(--font-card-stat);
+  letter-spacing: 1px;
 }
 
-/* remove missing texture reference (kills square-bg.png request)
-   If your old CSS used square-bg.png, do NOT re-add it. */
+/* ---------------------------------------------------------
+   STATES
+--------------------------------------------------------- */
+
+.unified-card.is-unclaimed {
+  filter: grayscale(1);
+  opacity: 0.85;
+}
+
+.unified-card.is-lost {
+  filter: grayscale(1);
+  opacity: 0.7;
+}
+
+.unified-card.is-highlighted {
+  outline: 3px solid var(--success);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------
+   SYMBOL OVERLAY
+--------------------------------------------------------- */
+
+.symbol-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  z-index: 2;
+}
+
+.symbol-overlay .symbol {
+  width: 28px;
+  height: 28px;
+
+  image-rendering: pixelated;
+
+  background: #0c0e12;
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+}
