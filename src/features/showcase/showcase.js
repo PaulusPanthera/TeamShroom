@@ -1,3 +1,4 @@
+// v2.0.0-alpha.1
 // src/features/showcase/showcase.js
 // Team Shroom — Showcase & Member Views
 // Rendering + interaction only. No aggregation.
@@ -110,7 +111,7 @@ export function setupShowcaseSearchAndSort(
   controls.innerHTML = '';
 
   const input = document.createElement('input');
-  input.placeholder = 'Search Member';
+  input.placeholder = 'Search';
 
   const select = document.createElement('select');
   [
