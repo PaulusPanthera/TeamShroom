@@ -18,7 +18,7 @@
   justify-content: center;
   background: var(--bg-panel);
   border: var(--border-soft);
-  border-radius: 14px;
+  border-radius: 0;
 
   box-shadow: var(--shadow-depth);
 }
@@ -41,7 +41,7 @@
   color: var(--text-main);
 
   border: 2px solid var(--bg-panel-alt);
-  border-radius: 10px;
+  border-radius: 0;
 
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
 }
@@ -64,7 +64,7 @@
   color: var(--text-main);
 
   border: 2px solid var(--bg-panel-alt);
-  border-radius: 10px;
+  border-radius: 0;
 
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
 }
@@ -92,7 +92,7 @@
   color: var(--text-dark);
 
   border: none;
-  border-radius: 10px;
+  border-radius: 0;
 
   cursor: pointer;
   box-shadow: var(--shadow-depth);
@@ -134,7 +134,7 @@
   color: var(--text-main);
 
   border: 2px solid var(--bg-panel-alt);
-  border-radius: 10px;
+  border-radius: 0;
 
   box-shadow: var(--shadow-depth);
 }
