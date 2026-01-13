@@ -3,17 +3,13 @@
 // Hitlist Presenter — view-specific data prep (no DOM)
 
 import { buildShinyDexModel } from '../../domains/shinydex/hitlist.model.js';
-import {
-  POKEMON_SHOW
-} from '../../data/pokemondatabuilder.js';
+import { POKEMON_REGION, POKEMON_SHOW } from '../../data/pokemondatabuilder.js';
 
 import {
   parseSearch,
   resolveFamilyRootsByQuery,
   speciesMatches,
-  memberMatches,
-  regionPrefixMatches,
-  getRegionForPokemon
+  memberMatches
 } from './shinydex.search.js';
 
 function tierFromPoints(points) {
@@ -23,30 +19,41 @@ function tierFromPoints(points) {
   if (p >= 25) return '1';
   if (p >= 15) return '2';
   if (p >= 10) return '3';
-  if (p >= 6)  return '4';
-  if (p >= 3)  return '5';
-  if (p >= 2)  return '6';
+  if (p >= 6) return '4';
+  if (p >= 3) return '5';
+  if (p >= 2) return '6';
   return null;
 }
 
-export function prepareHitlistRenderModel({
-  weeklyModel,
-  viewState,
-  searchCtx
-}) {
-  var mode = viewState.sort; // 'standard' | 'claims' | 'points'
-  var parsed = parseSearch(viewState.search);
+function normalizeRegion(raw) {
+  return String(raw || '').trim().toLowerCase();
+}
+
+function regionMatches(regionValue, query) {
+  var r = normalizeRegion(regionValue);
+  var q = normalizeRegion(query);
+  if (!q) return true;
+  return r.indexOf(q) === 0; // prefix match
+}
+
+export function prepareHitlistRenderModel(opts) {
+  var weeklyModel = opts && opts.weeklyModel;
+  var viewState = opts && opts.viewState;
+  var searchCtx = opts && opts.searchCtx;
+
+  var mode = viewState && viewState.sort ? viewState.sort : 'standard'; // 'standard' | 'claims' | 'points'
+  var parsed = parseSearch(viewState && viewState.search ? viewState.search : '');
 
   var snapshot = buildShinyDexModel(weeklyModel).filter(function (e) {
     return POKEMON_SHOW[e.pokemon] !== false;
   });
 
-  // region filter is visibility-only, safe here
+  // region filter
   if (parsed.filters && parsed.filters.region) {
     var rq = parsed.filters.region;
     snapshot = snapshot.filter(function (e) {
-      var region = getRegionForPokemon(e.pokemon) || e.region || 'unknown';
-      return regionPrefixMatches(region, rq);
+      var region = POKEMON_REGION[e.pokemon] || e.region || 'unknown';
+      return regionMatches(region, rq);
     });
   }
 
@@ -56,23 +63,25 @@ export function prepareHitlistRenderModel({
 
   var regionStats = {};
   snapshot.forEach(function (e) {
-    var region = getRegionForPokemon(e.pokemon) || 'unknown';
+    var region = POKEMON_REGION[e.pokemon] || 'unknown';
     if (!regionStats[region]) regionStats[region] = { total: 0, claimed: 0 };
     regionStats[region].total += 1;
     if (e.claimed) regionStats[region].claimed += 1;
   });
 
-  // -------------------------------------------------------
-  // SCOREBOARD
-  // -------------------------------------------------------
-
+  // --------------------------------------------------
+  // SCOREBOARD MODES (claims/points)
+  // Search is allowed here (member filtering),
+  // BUT rank stays from full leaderboard.
+  // --------------------------------------------------
   if (mode === 'claims' || mode === 'points') {
     var claimed = snapshot.filter(function (e) { return e.claimed; });
 
     var byMember = {};
     claimed.forEach(function (e) {
-      if (!byMember[e.claimedBy]) byMember[e.claimedBy] = [];
-      byMember[e.claimedBy].push(e);
+      var n = e.claimedBy || '';
+      if (!byMember[n]) byMember[n] = [];
+      byMember[n].push(e);
     });
 
     var fullLeaderboard = Object.entries(byMember)
@@ -83,25 +92,25 @@ export function prepareHitlistRenderModel({
           name: name,
           entries: entries,
           claims: entries.length,
-          points: entries.reduce(function (s, x) { return s + x.points; }, 0)
+          points: entries.reduce(function (s, x) { return s + (x.points || 0); }, 0)
         };
       })
       .sort(function (a, b) {
-        return mode === 'claims'
-          ? (b.claims - a.claims)
-          : (b.points - a.points);
+        return mode === 'claims' ? (b.claims - a.claims) : (b.points - a.points);
       });
 
     var rankByName = {};
     fullLeaderboard.forEach(function (m, idx) {
-      rankByName[m.name] = idx + 1; // KEEP ORIGINAL RANK, EVEN IF FILTERED
+      rankByName[m.name] = idx + 1;
     });
 
     var visibleLeaderboard = fullLeaderboard;
 
-    if (parsed.kind === 'member' && parsed.q) {
+    // default scoreboard search = member search even without @
+    if (parsed.q) {
+      var q = parsed.q;
       visibleLeaderboard = fullLeaderboard.filter(function (m) {
-        return memberMatches(m.name, parsed.q);
+        return memberMatches(m.name, q);
       });
     }
 
@@ -112,7 +121,7 @@ export function prepareHitlistRenderModel({
           key: m.name,
           title: rankByName[m.name] + '. ' + m.name + ' — ' + m.claims + ' Claims · ' + m.points + ' Points',
           entries: m.entries.map(function (e) {
-            return Object.assign({}, e, { highlighted: true, info: e.points + ' pts' });
+            return Object.assign({}, e, { highlighted: true, info: (e.points || 0) + ' pts' });
           })
         };
       }),
@@ -120,13 +129,13 @@ export function prepareHitlistRenderModel({
     };
   }
 
-  // -------------------------------------------------------
-  // STANDARD
-  // -------------------------------------------------------
+  // --------------------------------------------------
+  // STANDARD MODE
+  // --------------------------------------------------
 
-  var forceUnclaimed = !!parsed.flags.unclaimed;
-  var forceClaimed = !!parsed.flags.claimed;
-  var effectiveUnclaimed = forceUnclaimed ? true : (forceClaimed ? false : !!viewState.showUnclaimed);
+  var forceUnclaimed = !!(parsed.flags && parsed.flags.unclaimed);
+  var forceClaimed = !!(parsed.flags && parsed.flags.claimed);
+  var effectiveUnclaimed = forceUnclaimed ? true : (forceClaimed ? false : !!(viewState && viewState.showUnclaimed));
 
   var modeSet = snapshot;
 
@@ -134,7 +143,7 @@ export function prepareHitlistRenderModel({
   if (forceClaimed) modeSet = modeSet.filter(function (e) { return e.claimed; });
 
   if (parsed.filters && parsed.filters.tier) {
-    var wanted = String(parsed.filters.tier || '').toLowerCase();
+    var wanted = parsed.filters.tier;
     modeSet = modeSet.filter(function (e) { return tierFromPoints(e.points) === wanted; });
   }
 
@@ -147,23 +156,20 @@ export function prepareHitlistRenderModel({
   } else if (parsed.kind === 'family' && parsed.q != null) {
     var roots = resolveFamilyRootsByQuery(searchCtx, parsed.q);
     visible = visible.filter(function (e) {
-      var root = (searchCtx && searchCtx.rootByPokemon && searchCtx.rootByPokemon[e.pokemon]) || e.family || e.pokemon;
+      var root = (searchCtx && searchCtx.rootByPokemon && searchCtx.rootByPokemon[e.pokemon]) || e.pokemon;
       return roots.has(root);
     });
   } else if (parsed.kind === 'species' && parsed.q) {
-    visible = visible.filter(function (e) { return speciesMatches(e.pokemon, parsed.q, searchCtx); });
+    visible = visible.filter(function (e) { return speciesMatches(e.pokemon, parsed.q); });
   }
 
   var byRegion = {};
   visible.forEach(function (e) {
-    var region = getRegionForPokemon(e.pokemon) || 'unknown';
+    var region = POKEMON_REGION[e.pokemon] || 'unknown';
     if (!byRegion[region]) byRegion[region] = [];
     byRegion[region].push(e);
   });
 
-  // header label logic you wanted:
-  // - Standard: claimed/total Claimed
-  // - Unclaimed: totalUnclaimed Unclaimed
   var countLabelText = effectiveUnclaimed
     ? (unclaimedSpecies + ' Unclaimed')
     : (claimedSpecies + ' / ' + totalSpecies + ' Claimed');
@@ -172,14 +178,10 @@ export function prepareHitlistRenderModel({
     mode: 'standard',
     sections: Object.entries(byRegion).map(function (pair) {
       var region = pair[0];
-      var entries = pair[1];
 
       var stats = regionStats[region] || { claimed: 0, total: 0 };
       var regionUnclaimed = stats.total - stats.claimed;
 
-      // region header:
-      // - Standard: (claimed/total)
-      // - Unclaimed: (unclaimed Unclaimed)
       var title = effectiveUnclaimed
         ? (region.toUpperCase() + ' (' + regionUnclaimed + ' Unclaimed)')
         : (region.toUpperCase() + ' (' + stats.claimed + ' / ' + stats.total + ')');
@@ -187,8 +189,8 @@ export function prepareHitlistRenderModel({
       return {
         key: region,
         title: title,
-        entries: entries.map(function (e) {
-          return Object.assign({}, e, { highlighted: e.claimed && e.points >= 15 });
+        entries: pair[1].map(function (e) {
+          return Object.assign({}, e, { highlighted: e.claimed && (e.points || 0) >= 15 });
         })
       };
     }),
