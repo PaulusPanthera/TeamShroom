@@ -1,39 +1,25 @@
 /* v2.0.0-alpha.3 */
 /* style/cards.css */
-/* =========================================================
-   CARDS — UNIFIED CARD SYSTEM (8-bit play-card framing)
-   A) pixel bevel (hard steps, no blur)
-   B) card-first; fixed size
-   C) tier motifs + grouped tiers
-   D) claim-state affects interior, not tier trim
-   E) proportions: smaller gif window, reserved status slot
-   ========================================================= */
 
 :root{
-  /* lock final card size; grid adapts around this */
   --card-w: 230px;
   --card-h: 298px;
 
-  /* base surfaces */
   --c-void: #0b0d10;
   --c-ink: #f3e3a6;
 
-  /* card shell (teal frame) */
   --card-shell: #0f5b53;
-  --card-shell-2: #136a60;
 
-  /* window */
   --win-bg: #0c0e12;
-  --win-frame: #8f969d;     /* “silver” */
+  --win-frame: #8f969d;
   --win-frame-2: #2b2f35;
 
-  /* title + textbox */
   --plate-bg: #0d0f12;
   --plate-orange: #ff6a00;
+
   --box-bg: #11161d;
   --box-stroke: rgba(255,255,255,0.14);
 
-  /* tier groups */
   --tier-lm: #e6c86a;
 
   --tier-0: #7dff66;
@@ -46,24 +32,18 @@
   --tier-5: #6c7f86;
   --tier-6: #3f4a4f;
 
-  /* hard shadows only */
   --card-shadow: 0 10px 0 rgba(0,0,0,0.45);
 }
-
-/* ---------------------------------------------------------
-   CARD SHELL (pixel bevel; no gradient softness)
---------------------------------------------------------- */
 
 .unified-card{
   width: var(--card-w);
   height: var(--card-h);
 
-  /* default tier trim */
   --tier-accent: var(--tier-4);
   --tier-inner: rgba(0,0,0,0.55);
 
   display: grid;
-  grid-template-rows: auto 120px 22px auto; /* smaller gif window + status slot */
+  grid-template-rows: auto 120px 22px auto;
   gap: 10px;
 
   padding: 12px;
@@ -72,7 +52,6 @@
   border-radius: 0;
   border: 3px solid var(--tier-accent);
 
-  /* pixel bevel: stepped inset lines + hard drop */
   box-shadow:
     0 0 0 2px var(--tier-inner) inset,
     0 0 0 1px rgba(255,255,255,0.10) inset,
@@ -83,24 +62,17 @@
   user-select: none;
 }
 
-/* pixel-corner notches (simple, consistent motif) */
 .unified-card::before{
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-
-  /* 4 notches via background gradients */
   background:
     linear-gradient(#0000, #0000) top left / 10px 10px no-repeat,
     linear-gradient(#0000, #0000) top right / 10px 10px no-repeat,
     linear-gradient(#0000, #0000) bottom left / 10px 10px no-repeat,
     linear-gradient(#0000, #0000) bottom right / 10px 10px no-repeat;
 }
-
-/* ---------------------------------------------------------
-   TIER TAG (top-left) + tier-specific motifs
---------------------------------------------------------- */
 
 .unified-card[data-tier]::after{
   content: attr(data-tier);
@@ -121,13 +93,10 @@
   letter-spacing: 1px;
   text-transform: uppercase;
 
-  box-shadow:
-    0 0 0 1px rgba(0,0,0,0.55) inset;
-
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.55) inset;
   z-index: 3;
 }
 
-/* LM: distinct prestige frame (corners + inner trim) */
 .unified-card[data-tier="lm"]{
   --tier-accent: var(--tier-lm);
   box-shadow:
@@ -145,20 +114,21 @@
   background:
     linear-gradient(var(--tier-lm), var(--tier-lm)) top left / 10px 2px no-repeat,
     linear-gradient(var(--tier-lm), var(--tier-lm)) top left / 2px 10px no-repeat,
-
     linear-gradient(var(--tier-lm), var(--tier-lm)) top right / 10px 2px no-repeat,
     linear-gradient(var(--tier-lm), var(--tier-lm)) top right / 2px 10px no-repeat,
-
     linear-gradient(var(--tier-lm), var(--tier-lm)) bottom left / 10px 2px no-repeat,
     linear-gradient(var(--tier-lm), var(--tier-lm)) bottom left / 2px 10px no-repeat,
-
     linear-gradient(var(--tier-lm), var(--tier-lm)) bottom right / 10px 2px no-repeat,
     linear-gradient(var(--tier-lm), var(--tier-lm)) bottom right / 2px 10px no-repeat;
 }
 
-/* Group 0–1: strong green family, clearly different from LM */
 .unified-card[data-tier="0"]{ --tier-accent: var(--tier-0); }
 .unified-card[data-tier="1"]{ --tier-accent: var(--tier-1); }
+.unified-card[data-tier="2"]{ --tier-accent: var(--tier-2); }
+.unified-card[data-tier="3"]{ --tier-accent: var(--tier-3); }
+.unified-card[data-tier="4"]{ --tier-accent: var(--tier-4); }
+.unified-card[data-tier="5"]{ --tier-accent: var(--tier-5); }
+.unified-card[data-tier="6"]{ --tier-accent: var(--tier-6); }
 
 .unified-card[data-tier="0"],
 .unified-card[data-tier="1"]{
@@ -168,19 +138,6 @@
     0 0 0 6px rgba(0,0,0,0.45) inset,
     var(--card-shadow);
 }
-
-/* Group 2–3: teal-cyan family */
-.unified-card[data-tier="2"]{ --tier-accent: var(--tier-2); }
-.unified-card[data-tier="3"]{ --tier-accent: var(--tier-3); }
-
-/* Group 4–6: plain/desaturated */
-.unified-card[data-tier="4"]{ --tier-accent: var(--tier-4); }
-.unified-card[data-tier="5"]{ --tier-accent: var(--tier-5); }
-.unified-card[data-tier="6"]{ --tier-accent: var(--tier-6); }
-
-/* ---------------------------------------------------------
-   TITLE PLATE (slightly shorter; hard edge)
---------------------------------------------------------- */
 
 .unified-card .unified-name{
   display: block;
@@ -197,13 +154,8 @@
   letter-spacing: 1px;
   font-size: var(--font-card-title);
 
-  box-shadow:
-    0 0 0 1px rgba(0,0,0,0.55) inset;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.55) inset;
 }
-
-/* ---------------------------------------------------------
-   IMAGE WINDOW (smaller; heavier frame)
---------------------------------------------------------- */
 
 .unified-card .unified-img{
   width: 100%;
@@ -223,10 +175,6 @@
   image-rendering: pixelated;
 }
 
-/* ---------------------------------------------------------
-   STATUS SLOT (reserved for icons)
---------------------------------------------------------- */
-
 .unified-card .unified-status{
   height: 22px;
 
@@ -236,10 +184,6 @@
 
   box-shadow: 0 0 0 1px rgba(0,0,0,0.55) inset;
 }
-
-/* ---------------------------------------------------------
-   INFO TEXTBOX (denser; slightly lower)
---------------------------------------------------------- */
 
 .unified-card .unified-info{
   display: block;
@@ -259,10 +203,6 @@
   box-shadow: 0 0 0 1px rgba(0,0,0,0.55) inset;
 }
 
-/* ---------------------------------------------------------
-   CLAIM STATES (interior only; keep tier trim visible)
---------------------------------------------------------- */
-
 .unified-card.is-unclaimed .unified-img,
 .unified-card.is-unclaimed .unified-info,
 .unified-card.is-unclaimed .unified-status{
@@ -277,18 +217,10 @@
   opacity: 0.70;
 }
 
-/* ---------------------------------------------------------
-   HIGHLIGHTED
---------------------------------------------------------- */
-
 .unified-card.is-highlighted{
   outline: 3px solid var(--success);
   outline-offset: 3px;
 }
-
-/* ---------------------------------------------------------
-   SYMBOL OVERLAY (top-right)
---------------------------------------------------------- */
 
 .symbol-overlay{
   position: absolute;
