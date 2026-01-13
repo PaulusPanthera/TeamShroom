@@ -1,18 +1,20 @@
 /* v2.0.0-alpha.1 */
 /* style/tooltip.css */
-
 /* =========================================================
    TOOLTIP — IN-GAME INFO POPUP
    Design System v1
    ========================================================= */
 
+/* ---------------------------------------------------------
+   OWNER TOOLTIP (LIVING DEX)
+--------------------------------------------------------- */
+
 .dex-owner-tooltip {
   position: fixed;
   z-index: 9999;
 
-  min-width: 220px;
-  max-width: 460px;
-  max-height: 220px;
+  min-width: 280px;
+  max-width: 560px;
 
   padding: var(--space-2) var(--space-3);
 
@@ -29,79 +31,178 @@
 
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.15s ease;
+  transform: translateY(2px);
+  transition: opacity 0.12s ease, transform 0.12s ease;
 }
 
 .dex-owner-tooltip.show {
   opacity: 1;
+  transform: translateY(0);
 }
 
+.dex-owner-tooltip.pinned {
+  pointer-events: auto;
+}
+
+/* title */
 .dex-owner-tooltip .owners-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+
   margin-bottom: var(--space-1);
-
-  font-size: var(--font-card-stat);
   letter-spacing: 1px;
+}
 
+.dex-owner-tooltip .owners-title .title-text {
   color: var(--accent);
 }
 
-.dex-owner-tooltip .owners-list {
-  position: relative;
-  min-height: 3.5em;
-  overflow: hidden;
-
+.dex-owner-tooltip .owners-title .page-indicator {
   color: var(--text-muted);
+  font-size: var(--font-small);
 }
 
-.dex-owner-tooltip .scrolling-names {
+/* list */
+.dex-owner-tooltip .owners-list {
+  margin-top: var(--space-1);
+  padding-top: var(--space-1);
+
+  border-top: 2px solid var(--bg-panel-alt);
+
+  line-height: 1.25;
+  color: var(--text-muted);
+
+  /* 8 lines target */
+  max-height: 10.5em;
+  overflow: hidden;
   white-space: pre-line;
-  text-align: center;
+
+  opacity: 1;
+  transition: opacity 0.18s ease;
 }
 
-/* HELP TOOLTIP */
+.dex-owner-tooltip .owners-list.is-fading {
+  opacity: 0;
+}
+
+/* controls */
+.dex-owner-tooltip .tooltip-controls {
+  display: none;
+  margin-top: var(--space-2);
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.dex-owner-tooltip.pinned .tooltip-controls {
+  display: flex;
+}
+
+.dex-owner-tooltip .tooltip-next {
+  padding: 6px 12px;
+
+  background: var(--accent);
+  color: var(--text-dark);
+
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+
+  box-shadow: var(--shadow-depth);
+
+  font-family: inherit;
+  font-size: var(--font-card-stat);
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.dex-owner-tooltip .tooltip-next:hover {
+  filter: brightness(1.05);
+}
+
+/* ---------------------------------------------------------
+   HELP TOOLTIP
+--------------------------------------------------------- */
+
 .dex-help-tooltip {
   position: fixed;
   z-index: 9999;
 
-  width: min(460px, calc(100vw - 24px));
+  min-width: 320px;
+  max-width: 640px;
 
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-3);
 
   background: var(--bg-panel);
   color: var(--text-main);
 
-  border: var(--border-soft);
-  border-radius: 12px;
+  border: 2px solid var(--accent);
+  border-radius: 14px;
 
   box-shadow: var(--shadow-depth);
 
   font-family: 'Press Start 2P', monospace;
-  font-size: var(--font-small);
+  font-size: var(--font-card-stat);
 
-  opacity: 0;
   pointer-events: none;
-  transform: translateY(-6px);
+  opacity: 0;
+  transform: translateY(2px);
   transition: opacity 0.12s ease, transform 0.12s ease;
 }
 
 .dex-help-tooltip.show {
   opacity: 1;
-  pointer-events: auto;
   transform: translateY(0);
 }
 
 .dex-help-tooltip .help-title {
+  margin-bottom: var(--space-2);
   color: var(--accent);
-  margin-bottom: var(--space-1);
-  letter-spacing: 1px;
-  font-size: var(--font-card-stat);
+  letter-spacing: 2px;
 }
 
-.dex-help-tooltip .help-body > div {
-  margin: 6px 0;
+.dex-help-tooltip .help-lines {
+  line-height: 1.35;
   color: var(--text-muted);
+  white-space: pre-line;
 }
 
-.dex-help-tooltip b {
-  color: var(--text-main);
+/* ---------------------------------------------------------
+   HELP BUTTON (ICON)
+--------------------------------------------------------- */
+
+.search-controls #dex-help,
+.search-controls .dex-help-btn {
+  width: 38px;
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  background: var(--bg-panel-alt);
+  border: 2px solid var(--bg-panel-alt);
+  border-radius: 10px;
+
+  box-shadow: var(--shadow-depth);
+}
+
+.search-controls #dex-help img,
+.search-controls .dex-help-btn img {
+  width: 18px;
+  height: 18px;
+  image-rendering: pixelated;
+}
+
+.search-controls #dex-help:hover,
+.search-controls .dex-help-btn:hover {
+  filter: brightness(1.05);
+}
+
+.search-controls #dex-help.active,
+.search-controls .dex-help-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
 }
