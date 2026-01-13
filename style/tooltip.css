@@ -30,52 +30,52 @@
 
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.15s ease;
+  transform: translateY(6px);
+
+  transition: opacity 0.12s ease, transform 0.12s ease;
 }
 
 .dex-owner-tooltip.show {
   opacity: 1;
+  transform: translateY(0);
 }
 
 .dex-owner-tooltip.is-frozen {
   pointer-events: auto;
 }
 
-/* title */
-.dex-owner-tooltip .owners-title {
-  margin-bottom: var(--space-1);
-  font-size: var(--font-card-stat);
-  letter-spacing: 1px;
+.owners-title {
   color: var(--accent);
-  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: var(--space-2);
+  text-transform: uppercase;
 }
 
-/* list */
-.dex-owner-tooltip .owners-list {
+.owners-list {
   display: grid;
   gap: 6px;
 
-  padding: 8px;
   background: var(--bg-panel-alt);
   border: var(--border-soft);
   border-radius: 10px;
 
-  min-height: 150px;
-}
-
-.dex-owner-tooltip .owners-list.fade {
-  opacity: 0.25;
-  transition: opacity 0.12s ease;
-}
-
-.dex-owner-tooltip .owner-name {
-  text-align: center;
+  padding: var(--space-2);
   color: var(--text-muted);
 }
 
-/* footer */
-.dex-owner-tooltip .owners-footer {
-  margin-top: var(--space-1);
+.owners-list.fade {
+  opacity: 0.4;
+}
+
+.owner-row {
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.owners-footer {
+  margin-top: var(--space-2);
 
   display: flex;
   align-items: center;
@@ -83,51 +83,47 @@
   gap: var(--space-2);
 }
 
-.dex-owner-tooltip .owners-page {
-  color: var(--success);
-  font-weight: bold;
-  font-size: var(--font-small);
+.owners-page {
+  color: var(--text-muted);
 }
 
-.dex-owner-tooltip .owners-next {
-  display: none;
+.owners-next {
+  pointer-events: auto;
+
   padding: 6px 10px;
-
-  font-family: inherit;
-  font-size: var(--font-small);
-  font-weight: bold;
-
-  background: var(--accent);
-  color: var(--text-dark);
-
-  border: none;
   border-radius: 10px;
 
+  background: var(--bg-panel-alt);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  color: var(--accent);
+  font-family: 'Press Start 2P', monospace;
+  font-size: var(--font-small);
+
   cursor: pointer;
-  box-shadow: var(--shadow-depth);
 }
 
-.dex-owner-tooltip .owners-next:hover {
-  filter: brightness(1.05);
+.owners-next:hover {
+  border-color: var(--accent);
 }
 
 /* ---------------------------------------------------------
-   HELP TOOLTIP (RPG PANEL)
+   SEARCH HELP TOOLTIP (MATCH RPG MENU LANGUAGE)
 --------------------------------------------------------- */
 
 .dex-help-tooltip {
   position: absolute;
-  left: calc(var(--space-3) + 220px);
-  top: calc(100% + 10px);
+  left: var(--space-2);
+  top: calc(100% + var(--space-2));
 
-  width: 520px;
+  width: 420px;
   max-width: calc(100vw - 40px);
 
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-3);
 
-  background: var(--bg-panel);
+  background: linear-gradient(180deg, var(--bg-panel), #0f121a);
   border: 2px solid var(--accent);
-  border-radius: 14px;
+  border-radius: 0;
 
   box-shadow: var(--shadow-depth);
 
@@ -139,23 +135,30 @@
 
 .dex-help-title {
   color: var(--accent);
-  letter-spacing: 2px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
   text-align: center;
-  margin-bottom: var(--space-1);
+  margin-bottom: var(--space-2);
+
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid rgba(255, 106, 0, 0.35);
 }
 
 .dex-help-body {
-  background: var(--bg-panel-alt);
-  border: var(--border-soft);
-  border-radius: 12px;
-  padding: var(--space-2);
+  background: #0f1218;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 0;
+
+  padding: var(--space-3);
 
   display: grid;
-  gap: 8px;
+  gap: var(--space-2);
 
   color: var(--text-muted);
 }
 
 .dex-help-body b {
   color: var(--text-main);
+  font-weight: 700;
 }
