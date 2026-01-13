@@ -1,11 +1,10 @@
+/* v2.0.0-alpha.1 */
+/* style/donators.css */
+
 /* =========================================================
    DONATORS — DESIGN SYSTEM v1 (STABILIZED)
    Tables now behave like system panels
    ========================================================= */
-
-/* ---------------------------------------------------------
-   TOP LAYOUT
-   --------------------------------------------------------- */
 
 .donators-top-flex {
   display: flex;
@@ -13,10 +12,6 @@
   gap: var(--space-3);
   margin-bottom: var(--space-4);
 }
-
-/* ---------------------------------------------------------
-   INFO PANEL — HOW TO DONATE
-   --------------------------------------------------------- */
 
 .how-to-donate-box {
   flex: 1 1 280px;
@@ -56,10 +51,6 @@
   border-radius: 10px;
 }
 
-/* ---------------------------------------------------------
-   LAST DONATIONS PANEL
-   --------------------------------------------------------- */
-
 .last-donations-fixed-box {
   flex: 1 1 520px;
   min-height: 220px;
@@ -84,10 +75,6 @@
   letter-spacing: 1px;
   color: var(--success);
 }
-
-/* ---------------------------------------------------------
-   LAST DONATIONS TABLE (QUIET)
-   --------------------------------------------------------- */
 
 .last-donations-table {
   width: 100%;
@@ -114,10 +101,6 @@
   color: var(--success);
   font-weight: bold;
 }
-
-/* ---------------------------------------------------------
-   DONATORS TABLE (PRIMARY LIST)
-   --------------------------------------------------------- */
 
 .donators-table {
   width: 100%;
@@ -146,18 +129,12 @@
   letter-spacing: 1px;
 }
 
-/* ---------------------------------------------------------
-   HIGHLIGHTS & TIERS (RESTRAINED)
-   --------------------------------------------------------- */
-
-/* Top Donator — ONLY place gold is allowed */
 .donators-table tr.top td {
   border: 2px solid var(--highlight);
   color: var(--highlight);
   font-weight: bold;
 }
 
-/* Tier emphasis (no gradients) */
 .donators-table tr.diamond td,
 .donators-table tr.platinum td,
 .donators-table tr.gold td,
@@ -165,10 +142,6 @@
 .donators-table tr.bronze td {
   opacity: 0.9;
 }
-
-/* ---------------------------------------------------------
-   TIER ICONS & TOOLTIP
-   --------------------------------------------------------- */
 
 .donators-table .tier-icon {
   width: 24px;
@@ -211,10 +184,6 @@
   visibility: visible;
   opacity: 1;
 }
-
-/* ---------------------------------------------------------
-   RESPONSIVE
-   --------------------------------------------------------- */
 
 @media (max-width: 1100px) {
   .donators-top-flex {
