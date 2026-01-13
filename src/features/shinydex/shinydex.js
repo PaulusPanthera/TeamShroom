@@ -1,3 +1,4 @@
+// v2.0.0-alpha.4
 /**
  * SHINY POKEDEX — SEARCH LEGEND (v2)
  *
@@ -43,6 +44,7 @@ import { buildSearchContext, parseSearch } from './shinydex.search.js';
 import { prepareHitlistRenderModel } from './shinydex.hitlist.presenter.js';
 import { prepareLivingDexRenderModel } from './shinydex.living.presenter.js';
 import { bindDexOwnerTooltip } from './shinydex.tooltip.js';
+import { setupShinyDexHelp } from './shinydex.help.js';
 
 export function setupShinyDexPage({
   weeklyModel,
@@ -54,14 +56,15 @@ export function setupShinyDexPage({
   root.innerHTML = `
     <div class="search-controls">
       <input id="dex-search" type="text" placeholder="Search… (Pokémon, +family, @member)" />
-      <button id="dex-unclaimed" class="dex-toggle">Unclaimed</button>
+      <button id="dex-help" class="dex-toggle" type="button">Help</button>
+      <button id="dex-unclaimed" class="dex-toggle" type="button">Unclaimed</button>
       <select id="dex-sort"></select>
       <span id="dex-count"></span>
     </div>
 
     <div class="search-controls">
-      <button id="tab-hitlist" class="dex-tab active">Shiny Dex Hitlist</button>
-      <button id="tab-living" class="dex-tab">Shiny Living Dex</button>
+      <button id="tab-hitlist" class="dex-tab active" type="button">Shiny Dex Hitlist</button>
+      <button id="tab-living" class="dex-tab" type="button">Shiny Living Dex</button>
     </div>
 
     <div id="shiny-dex-container"></div>
@@ -94,6 +97,8 @@ export function setupShinyDexPage({
 
   const dexOrder = Object.keys(POKEMON_POINTS);
   const searchCtx = buildSearchContext(dexOrder, pokemonFamilies);
+
+  setupShinyDexHelp(root);
 
   function isHitlistLeaderboardMode() {
     return state.view === 'hitlist' &&
@@ -159,7 +164,6 @@ export function setupShinyDexPage({
         })
       );
 
-      // Living Dex only: ownership tooltip
       bindDexOwnerTooltip(container);
     }
   }
