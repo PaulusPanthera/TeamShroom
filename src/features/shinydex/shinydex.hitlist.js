@@ -1,4 +1,4 @@
-// v2.0.0-alpha.1
+// v2.0.0-alpha.2
 // src/features/shinydex/shinydex.hitlist.js
 // Shiny Dex — HITLIST RENDERER (DOM-only)
 
@@ -17,6 +17,19 @@ function getPokemonGif(pokemonKey) {
 
   const key = overrides[pokemonKey] || pokemonKey;
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
+}
+
+function tierFromPoints(points) {
+  const p = Number(points) || 0;
+  if (p >= 100) return 'lm';
+  if (p >= 30) return '0';
+  if (p >= 25) return '1';
+  if (p >= 15) return '2';
+  if (p >= 10) return '3';
+  if (p >= 6) return '4';
+  if (p >= 3) return '5';
+  if (p >= 2) return '6';
+  return null;
 }
 
 export function renderHitlistFromModel(model) {
@@ -44,6 +57,7 @@ export function renderHitlistFromModel(model) {
             img: getPokemonGif(entry.pokemon),
             info: entry.info || `${entry.points} pts`,
             highlighted: true,
+            tier: tierFromPoints(entry.points),
             cardType: 'pokemon'
           })
         );
@@ -75,6 +89,7 @@ export function renderHitlistFromModel(model) {
           info: entry.claimed ? (entry.claimedBy || '') : 'Unclaimed',
           unclaimed: !entry.claimed,
           highlighted: !!entry.highlighted,
+          tier: tierFromPoints(entry.points),
           cardType: 'pokemon'
         })
       );
