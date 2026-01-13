@@ -1,4 +1,4 @@
-// v2.0.0-alpha.3
+// v2.0.0-alpha.1
 // src/features/shinydex/shinydex.hitlist.presenter.js
 // Hitlist Presenter — view-specific data prep (no DOM)
 
@@ -38,10 +38,6 @@ export function prepareHitlistRenderModel({
     regionStats[region].total += 1;
     if (e.claimed) regionStats[region].claimed += 1;
   });
-
-  // --------------------------------------------------
-  // LEADERBOARD MODES (GLOBAL RANK PRESERVED)
-  // --------------------------------------------------
 
   if (mode === 'claims' || mode === 'points') {
     const claimed = snapshot.filter(e => e.claimed);
@@ -92,19 +88,11 @@ export function prepareHitlistRenderModel({
     };
   }
 
-  // --------------------------------------------------
-  // STANDARD MODE DATASET (MODE FILTERS, PRE-SEARCH COUNTS)
-  // --------------------------------------------------
-
   let modeSet = snapshot;
 
   if (viewState.showUnclaimed) {
     modeSet = modeSet.filter(e => !e.claimed);
   }
-
-  // --------------------------------------------------
-  // SEARCH LAST (VISIBILITY ONLY)
-  // --------------------------------------------------
 
   let visible = modeSet;
 
@@ -128,13 +116,9 @@ export function prepareHitlistRenderModel({
     byRegion[region].push(e);
   });
 
-  // --------------------------------------------------
-  // LABELS (SPEC-ACCURATE)
-  // --------------------------------------------------
-
   const countLabelText = viewState.showUnclaimed
-    ? `${unclaimedSpecies} / ${claimedSpecies} Species`
-    : `${claimedSpecies} / ${totalSpecies} Species`;
+    ? `${unclaimedSpecies} Unclaimed`
+    : `${claimedSpecies} / ${totalSpecies} Claimed`;
 
   return {
     mode: 'standard',
@@ -142,10 +126,8 @@ export function prepareHitlistRenderModel({
       const stats = regionStats[region] || { claimed: 0, total: 0 };
       const regionUnclaimed = stats.total - stats.claimed;
 
-      // When Unclaimed is active, headers follow the same denominator as the main counter:
-      // unclaimed / claimed (region-scoped), not affected by search.
       const title = viewState.showUnclaimed
-        ? `${region.toUpperCase()} (${regionUnclaimed} / ${stats.claimed})`
+        ? `${region.toUpperCase()} (${regionUnclaimed} Unclaimed)`
         : `${region.toUpperCase()} (${stats.claimed} / ${stats.total})`;
 
       return {
