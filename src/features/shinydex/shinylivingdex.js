@@ -66,6 +66,12 @@ export function renderShinyLivingDex({
           cardType: 'pokemon'
         })
       );
+
+      const card = grid.lastElementChild;
+      if (card) {
+        card.dataset.pokemon = entry.pokemon;
+        card.dataset.owners = JSON.stringify(entry.owners || []);
+      }
     });
 
     section.append(header, grid);
