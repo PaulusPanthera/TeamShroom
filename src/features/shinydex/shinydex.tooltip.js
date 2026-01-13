@@ -1,127 +1,271 @@
 // v2.0.0-alpha.1
 // src/features/shinydex/shinydex.tooltip.js
-// Owners tooltip (LivingDex) — UI only
+// Living Dex Owners Tooltip — UI ONLY
 
-function uniq(list) {
-  const out = [];
-  const seen = {};
-  (list || []).forEach(x => {
-    const k = String(x || '');
-    if (!k) return;
-    if (seen[k]) return;
-    seen[k] = true;
-    out.push(k);
-  });
-  return out;
-}
+const TOOLTIP_ID = 'dex-owner-tooltip';
 
-function chunk(arr, size) {
-  const out = [];
-  for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
-  return out;
-}
+function getOrCreateTooltip() {
+  let el = document.getElementById(TOOLTIP_ID);
+  if (el) return el;
 
-export function ensureDexOwnerTooltip() {
-  let tip = document.querySelector('.dex-owner-tooltip');
-  if (tip) return tip;
+  el = document.createElement('div');
+  el.id = TOOLTIP_ID;
+  el.className = 'dex-owner-tooltip';
 
-  tip = document.createElement('div');
-  tip.className = 'dex-owner-tooltip';
-
-  tip.innerHTML = `
-    <div class="owners-title"></div>
-    <div class="owners-list">
-      <div class="scrolling-names"></div>
+  el.innerHTML = `
+    <div class="owners-title">
+      <span class="title-text"></span>
+      <span class="page-indicator"></span>
+    </div>
+    <div class="owners-list"></div>
+    <div class="tooltip-controls">
+      <button class="tooltip-next" type="button">Next</button>
     </div>
   `;
 
-  document.body.appendChild(tip);
-  return tip;
+  document.body.appendChild(el);
+  return el;
 }
 
-export function bindDexOwnerTooltip(rootEl) {
-  const tip = ensureDexOwnerTooltip();
-  const titleEl = tip.querySelector('.owners-title');
-  const namesEl = tip.querySelector('.scrolling-names');
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
 
-  let timer = null;
-  let pageIdx = 0;
-  let pages = [];
+function positionTooltip(el, x, y) {
+  const pad = 12;
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
 
-  function stop() {
-    if (timer) clearInterval(timer);
-    timer = null;
-    pageIdx = 0;
-    pages = [];
+  el.style.left = '0px';
+  el.style.top = '0px';
+  el.style.right = 'auto';
+  el.style.bottom = 'auto';
+
+  // Force layout so width/height are correct
+  const rect = el.getBoundingClientRect();
+  const w = rect.width || 360;
+  const h = rect.height || 140;
+
+  const px = clamp(x + 18, pad, vw - w - pad);
+  const py = clamp(y + 18, pad, vh - h - pad);
+
+  el.style.left = px + 'px';
+  el.style.top = py + 'px';
+}
+
+function ownersFromCard(card) {
+  const packed = card.getAttribute('data-owners') || '';
+  if (!packed) return [];
+  return packed
+    .split('|')
+    .map(s => String(s || '').trim())
+    .filter(Boolean);
+}
+
+function renderPage(tooltip, state, fade) {
+  const titleEl = tooltip.querySelector('.title-text');
+  const pageEl = tooltip.querySelector('.page-indicator');
+  const listEl = tooltip.querySelector('.owners-list');
+
+  const total = state.owners.length;
+  const pages = Math.max(1, Math.ceil(total / state.pageSize));
+  const page = clamp(state.page, 0, pages - 1);
+
+  state.page = page;
+
+  const start = page * state.pageSize;
+  const slice = state.owners.slice(start, start + state.pageSize);
+
+  titleEl.textContent = 'Owners — ' + (state.pokemonName || 'Unknown');
+
+  pageEl.textContent = pages > 1
+    ? `Page ${page + 1}/${pages}`
+    : '';
+
+  if (fade) {
+    listEl.classList.add('is-fading');
+    window.setTimeout(() => {
+      listEl.textContent = slice.join('\n');
+      listEl.classList.remove('is-fading');
+    }, 120);
+  } else {
+    listEl.textContent = slice.join('\n');
+  }
+}
+
+export function setupDexOwnerTooltip(rootEl) {
+  const root = rootEl || document;
+  const tooltip = getOrCreateTooltip();
+
+  const state = {
+    visible: false,
+    pinned: false,
+    pinnedCard: null,
+
+    pokemonName: '',
+    owners: [],
+    page: 0,
+    pageSize: 8,
+
+    timer: null,
+    lastMouse: { x: 0, y: 0 }
+  };
+
+  function stopTimer() {
+    if (state.timer) {
+      window.clearInterval(state.timer);
+      state.timer = null;
+    }
   }
 
-  function hide() {
-    stop();
-    tip.classList.remove('show');
+  function startTimerIfNeeded() {
+    stopTimer();
+    if (state.pinned) return;
+
+    const pages = Math.ceil(state.owners.length / state.pageSize);
+    if (pages <= 1) return;
+
+    state.timer = window.setInterval(() => {
+      const maxPage = pages - 1;
+      state.page = state.page >= maxPage ? 0 : state.page + 1;
+      renderPage(tooltip, state, true);
+    }, 3000);
   }
 
   function showAt(x, y) {
-    const pad = 14;
-    const w = tip.offsetWidth || 260;
-    const h = tip.offsetHeight || 140;
-
-    let left = x + pad;
-    let top = y + pad;
-
-    if (left + w > window.innerWidth - 10) left = x - w - pad;
-    if (top + h > window.innerHeight - 10) top = y - h - pad;
-
-    tip.style.left = left + 'px';
-    tip.style.top = top + 'px';
-    tip.classList.add('show');
+    tooltip.classList.add('show');
+    state.visible = true;
+    positionTooltip(tooltip, x, y);
   }
 
-  function setPages(owners) {
-    const list = uniq(owners);
-    pages = chunk(list, 8);     // 8 names per page
-    pageIdx = 0;
-
-    if (!pages.length) {
-      namesEl.textContent = '';
-      return;
-    }
-
-    namesEl.textContent = pages[0].join('\n');
-
-    // readable cadence (not too fast)
-    if (pages.length > 1) {
-      timer = setInterval(() => {
-        pageIdx = (pageIdx + 1) % pages.length;
-        namesEl.textContent = pages[pageIdx].join('\n');
-      }, 2500);
-    }
+  function hide() {
+    tooltip.classList.remove('show');
+    tooltip.classList.remove('pinned');
+    state.visible = false;
+    stopTimer();
   }
 
-  // event delegation
-  rootEl.addEventListener('mouseover', e => {
-    const card = e.target && e.target.closest ? e.target.closest('.unified-card[data-owners]') : null;
-    if (!card) return;
-
-    const raw = card.getAttribute('data-owners') || '';
-    const owners = raw ? raw.split('|').map(x => x.trim()).filter(Boolean) : [];
+  function attachToCard(card, x, y) {
+    const owners = ownersFromCard(card);
     if (!owners.length) return;
 
-    titleEl.textContent = 'Owners — ' + (card.getAttribute('data-name') || '');
-    setPages(owners);
-    showAt(e.clientX, e.clientY);
+    state.pokemonName = card.getAttribute('data-name') || '';
+    state.owners = owners;
+    state.page = 0;
+
+    renderPage(tooltip, state, false);
+    showAt(x, y);
+    startTimerIfNeeded();
+  }
+
+  function pinCard(card) {
+    state.pinned = true;
+    state.pinnedCard = card;
+
+    tooltip.classList.add('pinned');
+
+    // Anchor near the card (top-right)
+    const r = card.getBoundingClientRect();
+    positionTooltip(tooltip, r.right, r.top);
+
+    stopTimer();
+    renderPage(tooltip, state, false);
+  }
+
+  function unpin() {
+    state.pinned = false;
+    state.pinnedCard = null;
+    tooltip.classList.remove('pinned');
+
+    // When unpinning, behave like normal hover (hide)
+    hide();
+  }
+
+  // Hover behavior (only when not pinned)
+  root.addEventListener('mousemove', e => {
+    state.lastMouse.x = e.clientX;
+    state.lastMouse.y = e.clientY;
+    if (state.visible && !state.pinned) {
+      positionTooltip(tooltip, e.clientX, e.clientY);
+    }
   });
 
-  rootEl.addEventListener('mousemove', e => {
-    if (!tip.classList.contains('show')) return;
-    showAt(e.clientX, e.clientY);
+  root.addEventListener('mouseover', e => {
+    if (state.pinned) return;
+
+    const card = e.target && e.target.closest
+      ? e.target.closest('.unified-card[data-owners]')
+      : null;
+
+    if (!card) return;
+
+    attachToCard(card, state.lastMouse.x, state.lastMouse.y);
   });
 
-  rootEl.addEventListener('mouseout', e => {
-    const related = e.relatedTarget;
-    if (related && tip.contains(related)) return;
+  root.addEventListener('mouseout', e => {
+    if (state.pinned) return;
+
+    const card = e.target && e.target.closest
+      ? e.target.closest('.unified-card[data-owners]')
+      : null;
+
+    if (!card) return;
+
+    // If leaving the card, hide
     hide();
   });
 
-  window.addEventListener('scroll', hide, { passive: true });
-  window.addEventListener('blur', hide);
+  // Freeze mode toggle (left click on card)
+  root.addEventListener('click', e => {
+    const card = e.target && e.target.closest
+      ? e.target.closest('.unified-card[data-owners]')
+      : null;
+
+    if (!card) return;
+
+    // Ensure tooltip is showing correct card data
+    if (!state.visible || state.pokemonName !== (card.getAttribute('data-name') || '')) {
+      attachToCard(card, state.lastMouse.x, state.lastMouse.y);
+    }
+
+    if (state.pinned && state.pinnedCard === card) {
+      unpin();
+      return;
+    }
+
+    pinCard(card);
+  });
+
+  // Next button (only visible in pinned mode)
+  const nextBtn = tooltip.querySelector('.tooltip-next');
+  nextBtn.addEventListener('click', () => {
+    if (!state.pinned) return;
+
+    const pages = Math.max(1, Math.ceil(state.owners.length / state.pageSize));
+    state.page = pages <= 1 ? 0 : (state.page + 1) % pages;
+    renderPage(tooltip, state, true);
+  });
+
+  // Click outside exits pinned mode
+  document.addEventListener('mousedown', e => {
+    if (!state.pinned) return;
+
+    const t = e.target;
+    const insideTooltip = tooltip.contains(t);
+    const insideCard = state.pinnedCard && state.pinnedCard.contains(t);
+
+    if (!insideTooltip && !insideCard) {
+      unpin();
+    }
+  }, true);
+
+  return {
+    hide,
+    unpin
+  };
+}
+
+// Back-compat alias (safe to call)
+export function initDexOwnerTooltip(rootEl) {
+  return setupDexOwnerTooltip(rootEl);
 }
