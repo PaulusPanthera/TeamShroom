@@ -1,11 +1,10 @@
+/* v2.0.0-alpha.1 */
+/* style/shinyweekly.css */
+
 /* =========================================================
    SHINY WEEKLY — LAYOUT & DENSITY ONLY
    Design System v1 compliant
    ========================================================= */
-
-/* ---------------------------------------------------------
-   WEEK PANEL (RPG MENU CONTAINER)
-   --------------------------------------------------------- */
 
 .weekly-card {
   max-width: 1600px;
@@ -18,10 +17,6 @@
 
   box-shadow: var(--shadow-depth);
 }
-
-/* ---------------------------------------------------------
-   WEEK HEADER
-   --------------------------------------------------------- */
 
 .weekly-header {
   display: flex;
@@ -45,39 +40,19 @@
   color: var(--text-muted);
 }
 
-/* ---------------------------------------------------------
-   WEEK BODY
-   --------------------------------------------------------- */
-
 .weekly-body {
   width: 100%;
 }
-
-/* ---------------------------------------------------------
-   GRID DENSITY OVERRIDE (USING SAME CARD SYSTEM)
-   --------------------------------------------------------- */
 
 .weekly-body .dex-grid {
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: var(--space-2);
 }
 
-/* ---------------------------------------------------------
-   COMPACT CARD MODE
-   --------------------------------------------------------- */
-
-.weekly-body .unified-card {
-  /* Use the system-defined compact variant */
-}
-
 .weekly-body .unified-card.is-compact {
   max-width: 160px;
   height: 210px;
 }
-
-/* ---------------------------------------------------------
-   MOBILE DENSITY
-   --------------------------------------------------------- */
 
 @media (max-width: 768px) {
   .weekly-body .dex-grid {
