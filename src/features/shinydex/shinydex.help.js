@@ -1,4 +1,4 @@
-// v2.0.0-alpha.4
+// v2.0.0-alpha.5
 // src/features/shinydex/shinydex.help.js
 // Shiny Dex — Help Tooltip (Search Legend)
 
@@ -31,14 +31,12 @@ export function setupShinyDexHelp({ buttonEl, controlsRoot }) {
     <div class="dex-help-rows">
       <div class="help-row">
         <div class="help-k">Name</div>
-        <div class="help-v">Text: <code>bulba</code></div>
+        <div class="help-v"><code>bulba</code></div>
       </div>
 
       <div class="help-row">
         <div class="help-k">Owner</div>
-        <div class="help-v">
-          <code>owner:willy</code> / <code>claimedby:willy</code> / <code>o:willy</code> / <code>cb:willy</code>
-        </div>
+        <div class="help-v"><code>ot:willy</code></div>
       </div>
 
       <div class="help-row">
@@ -53,9 +51,7 @@ export function setupShinyDexHelp({ buttonEl, controlsRoot }) {
 
       <div class="help-row">
         <div class="help-k">Flags</div>
-        <div class="help-v">
-          <code>unclaimed</code> / <code>unowned</code> / <code>claimed</code> / <code>owned</code>
-        </div>
+        <div class="help-v"><code>unclaimed</code> / <code>unowned</code> / <code>claimed</code> / <code>owned</code></div>
       </div>
     </div>
   `;
