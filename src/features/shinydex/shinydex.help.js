@@ -1,74 +1,59 @@
 // v2.0.0-alpha.1
 // src/features/shinydex/shinydex.help.js
-// Help popup logic (no CSS dependency, inline-styled)
+// Help tooltip — UI only
 
-function ensureHelpPanel() {
-  var el = document.getElementById('dex-help-panel');
-  if (el) return el;
+export function bindShinyDexHelp(helpBtn) {
+  if (!helpBtn) return;
 
-  el = document.createElement('div');
-  el.id = 'dex-help-panel';
+  // singleton
+  let tip = document.querySelector('.dex-help-tooltip');
+  if (!tip) {
+    tip = document.createElement('div');
+    tip.className = 'dex-help-tooltip';
+    tip.innerHTML = `
+      <div class="help-title">Search Help</div>
+      <div class="help-body">
+        <div><b>Pokémon</b>: type a name (partial ok)</div>
+        <div><b>Family</b>: <b>+name</b> or <b>name+</b> (shows whole family)</div>
+        <div><b>Member</b>: <b>@name</b> (Hitlist: claimed-by • LivingDex: owners)</div>
+        <div><b>Region</b>: <b>r:k</b> / <b>r:kan</b> / <b>region:un</b></div>
+        <div><b>Tier</b>: <b>tier:0</b> <b>tier:1</b> <b>tier:2</b> … <b>tier:lm</b></div>
+        <div><b>Flags</b>: <b>unclaimed</b> / <b>claimed</b> • <b>unowned</b> / <b>owned</b></div>
+      </div>
+    `;
+    document.body.appendChild(tip);
+  }
 
-  // inline style so you don't need to touch CSS right now
-  el.style.position = 'absolute';
-  el.style.left = '12px';
-  el.style.top = '52px';
-  el.style.maxWidth = '860px';
-  el.style.padding = '10px 12px';
-  el.style.borderRadius = '12px';
-  el.style.background = 'var(--bg-panel)';
-  el.style.color = 'var(--text-main)';
-  el.style.border = 'var(--border-soft)';
-  el.style.boxShadow = 'var(--shadow-depth)';
-  el.style.zIndex = '9999';
-  el.style.display = 'none';
+  function place() {
+    const r = helpBtn.getBoundingClientRect();
+    const pad = 10;
+    tip.style.left = Math.min(r.left, window.innerWidth - 440) + 'px';
+    tip.style.top = (r.bottom + pad) + 'px';
+  }
 
-  el.innerHTML =
-    '<div style="color:var(--accent);letter-spacing:1px;margin-bottom:6px;">Search</div>' +
-    '<div style="line-height:1.6;">' +
-      '<b>Pokémon</b>: type a name (partial ok)<br>' +
-      '<b>Family</b>: <b>+name</b> or <b>name+</b> (partial ok)<br>' +
-      '<b>Member</b>: <b>@name</b> or <b>member:name</b><br>' +
-      '<b>Region</b>: <b>r:k</b>, <b>r:kan</b>, <b>r:uno</b> (prefix)<br>' +
-      '<b>Tier</b>: <b>t:0</b>, <b>t:1</b>, <b>t:2</b> … <b>t:lm</b><br>' +
-      '<b>Flags</b>: <b>unclaimed/unowned</b>, <b>claimed/owned</b>' +
-    '</div>';
+  function show() {
+    place();
+    tip.classList.add('show');
+  }
 
-  return el;
-}
-
-export function attachDexHelp(helpButtonEl, controlsRootEl) {
-  if (!helpButtonEl || !controlsRootEl) return;
-
-  var panel = ensureHelpPanel();
-  controlsRootEl.style.position = 'relative';
-  controlsRootEl.appendChild(panel);
-
-  function close() {
-    panel.style.display = 'none';
-    helpButtonEl.classList.remove('active');
+  function hide() {
+    tip.classList.remove('show');
   }
 
   function toggle() {
-    var open = panel.style.display !== 'none';
-    if (open) close();
-    else {
-      panel.style.display = 'block';
-      helpButtonEl.classList.add('active');
-    }
+    if (tip.classList.contains('show')) hide();
+    else show();
   }
 
-  helpButtonEl.addEventListener('click', function (e) {
+  helpBtn.addEventListener('click', e => {
     e.preventDefault();
     e.stopPropagation();
     toggle();
   });
 
-  document.addEventListener('click', function () {
-    close();
+  document.addEventListener('click', () => hide());
+  window.addEventListener('resize', () => {
+    if (tip.classList.contains('show')) place();
   });
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') close();
-  });
+  window.addEventListener('scroll', () => hide(), { passive: true });
 }
