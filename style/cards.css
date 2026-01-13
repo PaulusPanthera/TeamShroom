@@ -1,87 +1,116 @@
-/* v2.0.0-alpha.2 */
+/* v2.0.0-alpha.3 */
+/* style/cards.css */
 /* =========================================================
-   CARDS — UNIFIED CARD SYSTEM
-   Target: 8-bit play-card framing (hard edges, layered borders)
-   Contract: cards do not resize; layout adapts around them
+   CARDS — UNIFIED CARD SYSTEM (8-bit play-card framing)
+   A) pixel bevel (hard steps, no blur)
+   B) card-first; fixed size
+   C) tier motifs + grouped tiers
+   D) claim-state affects interior, not tier trim
+   E) proportions: smaller gif window, reserved status slot
    ========================================================= */
 
 :root{
-  --card-w: 240px;
-  --card-h: 300px;
+  /* lock final card size; grid adapts around this */
+  --card-w: 230px;
+  --card-h: 298px;
 
-  /* play-card frame */
-  --card-frame-a: #0f5b53;     /* outer teal */
-  --card-frame-b: #136a60;     /* inner teal */
-  --card-edge-dark: rgba(0,0,0,0.55);
-  --card-edge-lite: rgba(255,255,255,0.14);
+  /* base surfaces */
+  --c-void: #0b0d10;
+  --c-ink: #f3e3a6;
 
-  /* windows */
-  --card-window-bg: #0c0e12;
-  --card-window-frame: #9aa1a7;   /* “silver” */
-  --card-window-frame2: #2b2f35;
+  /* card shell (teal frame) */
+  --card-shell: #0f5b53;
+  --card-shell-2: #136a60;
 
-  /* text areas */
-  --card-title-bg: #0d0f12;
-  --card-title-border: #ff6a00;
+  /* window */
+  --win-bg: #0c0e12;
+  --win-frame: #8f969d;     /* “silver” */
+  --win-frame-2: #2b2f35;
 
-  --card-textbox-bg: #1a2028;
-  --card-textbox-border: rgba(255,255,255,0.14);
+  /* title + textbox */
+  --plate-bg: #0d0f12;
+  --plate-orange: #ff6a00;
+  --box-bg: #11161d;
+  --box-stroke: rgba(255,255,255,0.14);
 
-  /* tier accents */
+  /* tier groups */
   --tier-lm: #e6c86a;
-  --tier-0:  #7dff66;
-  --tier-1:  #8dfb72;
-  --tier-2:  #a0f07f;
-  --tier-3:  #c7e06f;
-  --tier-4:  #d8c36a;
-  --tier-5:  #b6a6a0;
-  --tier-6:  #6c6c6c;
 
+  --tier-0: #7dff66;
+  --tier-1: #4fe85a;
+
+  --tier-2: #66ffd8;
+  --tier-3: #2fd2b7;
+
+  --tier-4: #8aa0a6;
+  --tier-5: #6c7f86;
+  --tier-6: #3f4a4f;
+
+  /* hard shadows only */
   --card-shadow: 0 10px 0 rgba(0,0,0,0.45);
 }
 
 /* ---------------------------------------------------------
-   UNIFIED CARD SHELL
+   CARD SHELL (pixel bevel; no gradient softness)
 --------------------------------------------------------- */
 
 .unified-card{
   width: var(--card-w);
   height: var(--card-h);
 
-  /* default tier accent */
+  /* default tier trim */
   --tier-accent: var(--tier-4);
+  --tier-inner: rgba(0,0,0,0.55);
 
   display: grid;
-  grid-template-rows: auto 132px 24px auto;
+  grid-template-rows: auto 120px 22px auto; /* smaller gif window + status slot */
   gap: 10px;
 
   padding: 12px;
 
-  /* teal frame */
-  background: linear-gradient(180deg, var(--card-frame-b), var(--card-frame-a));
-  border: 3px solid var(--tier-accent);
+  background: var(--card-shell);
   border-radius: 0;
+  border: 3px solid var(--tier-accent);
 
-  /* “pixel bevel” */
+  /* pixel bevel: stepped inset lines + hard drop */
   box-shadow:
-    0 0 0 2px var(--card-edge-dark) inset,
-    0 0 0 1px var(--card-edge-lite) inset,
+    0 0 0 2px var(--tier-inner) inset,
+    0 0 0 1px rgba(255,255,255,0.10) inset,
+    0 0 0 6px rgba(0,0,0,0.45) inset,
     var(--card-shadow);
 
   position: relative;
   user-select: none;
 }
 
-/* tier badge (top-left) */
+/* pixel-corner notches (simple, consistent motif) */
+.unified-card::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  /* 4 notches via background gradients */
+  background:
+    linear-gradient(#0000, #0000) top left / 10px 10px no-repeat,
+    linear-gradient(#0000, #0000) top right / 10px 10px no-repeat,
+    linear-gradient(#0000, #0000) bottom left / 10px 10px no-repeat,
+    linear-gradient(#0000, #0000) bottom right / 10px 10px no-repeat;
+}
+
+/* ---------------------------------------------------------
+   TIER TAG (top-left) + tier-specific motifs
+--------------------------------------------------------- */
+
 .unified-card[data-tier]::after{
   content: attr(data-tier);
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 9px;
+  left: 9px;
 
   padding: 4px 6px;
 
-  background: #0c0e12;
+  background: var(--c-void);
   color: var(--tier-accent);
 
   border: 2px solid var(--tier-accent);
@@ -92,12 +121,65 @@
   letter-spacing: 1px;
   text-transform: uppercase;
 
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.45) inset;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.55) inset;
+
   z-index: 3;
 }
 
+/* LM: distinct prestige frame (corners + inner trim) */
+.unified-card[data-tier="lm"]{
+  --tier-accent: var(--tier-lm);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.60) inset,
+    0 0 0 2px rgba(230,200,106,0.55) inset,
+    0 0 0 6px rgba(0,0,0,0.45) inset,
+    var(--card-shadow);
+}
+
+.unified-card[data-tier="lm"] .unified-name{
+  border-color: var(--tier-lm);
+}
+
+.unified-card[data-tier="lm"]::before{
+  background:
+    linear-gradient(var(--tier-lm), var(--tier-lm)) top left / 10px 2px no-repeat,
+    linear-gradient(var(--tier-lm), var(--tier-lm)) top left / 2px 10px no-repeat,
+
+    linear-gradient(var(--tier-lm), var(--tier-lm)) top right / 10px 2px no-repeat,
+    linear-gradient(var(--tier-lm), var(--tier-lm)) top right / 2px 10px no-repeat,
+
+    linear-gradient(var(--tier-lm), var(--tier-lm)) bottom left / 10px 2px no-repeat,
+    linear-gradient(var(--tier-lm), var(--tier-lm)) bottom left / 2px 10px no-repeat,
+
+    linear-gradient(var(--tier-lm), var(--tier-lm)) bottom right / 10px 2px no-repeat,
+    linear-gradient(var(--tier-lm), var(--tier-lm)) bottom right / 2px 10px no-repeat;
+}
+
+/* Group 0–1: strong green family, clearly different from LM */
+.unified-card[data-tier="0"]{ --tier-accent: var(--tier-0); }
+.unified-card[data-tier="1"]{ --tier-accent: var(--tier-1); }
+
+.unified-card[data-tier="0"],
+.unified-card[data-tier="1"]{
+  box-shadow:
+    0 0 0 2px rgba(0,0,0,0.60) inset,
+    0 0 0 1px rgba(125,255,102,0.20) inset,
+    0 0 0 6px rgba(0,0,0,0.45) inset,
+    var(--card-shadow);
+}
+
+/* Group 2–3: teal-cyan family */
+.unified-card[data-tier="2"]{ --tier-accent: var(--tier-2); }
+.unified-card[data-tier="3"]{ --tier-accent: var(--tier-3); }
+
+/* Group 4–6: plain/desaturated */
+.unified-card[data-tier="4"]{ --tier-accent: var(--tier-4); }
+.unified-card[data-tier="5"]{ --tier-accent: var(--tier-5); }
+.unified-card[data-tier="6"]{ --tier-accent: var(--tier-6); }
+
 /* ---------------------------------------------------------
-   TITLE (slightly lower / tighter)
+   TITLE PLATE (slightly shorter; hard edge)
 --------------------------------------------------------- */
 
 .unified-card .unified-name{
@@ -106,55 +188,57 @@
 
   padding: 6px 8px;
 
-  background: var(--card-title-bg);
-  color: #f3e3a6;
+  background: var(--plate-bg);
+  color: var(--c-ink);
 
-  border: 3px solid var(--card-title-border);
+  border: 3px solid var(--plate-orange);
   border-radius: 0;
 
   letter-spacing: 1px;
   font-size: var(--font-card-title);
 
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.45) inset;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.55) inset;
 }
 
 /* ---------------------------------------------------------
-   IMAGE WINDOW (smaller; framed like play-card)
+   IMAGE WINDOW (smaller; heavier frame)
 --------------------------------------------------------- */
 
 .unified-card .unified-img{
   width: 100%;
-  height: 132px;
+  height: 120px;
 
   object-fit: contain;
 
-  background: var(--card-window-bg);
+  background: var(--win-bg);
   border-radius: 0;
 
-  border: 4px solid var(--card-window-frame);
+  border: 4px solid var(--win-frame);
+
   box-shadow:
-    0 0 0 2px var(--card-window-frame2) inset,
+    0 0 0 2px var(--win-frame-2) inset,
     0 0 0 1px rgba(255,255,255,0.10) inset;
 
   image-rendering: pixelated;
 }
 
 /* ---------------------------------------------------------
-   STATUS SLOT (reserved for icons later)
+   STATUS SLOT (reserved for icons)
 --------------------------------------------------------- */
 
 .unified-card .unified-status{
-  height: 24px;
+  height: 22px;
 
   background: #0f1218;
   border: 2px solid rgba(255,255,255,0.10);
   border-radius: 0;
 
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.45) inset;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.55) inset;
 }
 
 /* ---------------------------------------------------------
-   INFO / TEXTBOX (lower, denser)
+   INFO TEXTBOX (denser; slightly lower)
 --------------------------------------------------------- */
 
 .unified-card .unified-info{
@@ -163,56 +247,43 @@
 
   padding: 6px 8px;
 
-  background: var(--card-textbox-bg);
-  color: #f3e3a6;
+  background: var(--box-bg);
+  color: var(--c-ink);
 
-  border: 2px solid var(--card-textbox-border);
+  border: 2px solid var(--box-stroke);
   border-radius: 0;
 
   font-size: var(--font-card-stat);
   letter-spacing: 1px;
 
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.45) inset;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.55) inset;
 }
 
 /* ---------------------------------------------------------
-   STATES
+   CLAIM STATES (interior only; keep tier trim visible)
 --------------------------------------------------------- */
 
-.unified-card.is-unclaimed{
+.unified-card.is-unclaimed .unified-img,
+.unified-card.is-unclaimed .unified-info,
+.unified-card.is-unclaimed .unified-status{
   filter: grayscale(1);
   opacity: 0.85;
 }
 
-.unified-card.is-lost{
+.unified-card.is-lost .unified-img,
+.unified-card.is-lost .unified-info,
+.unified-card.is-lost .unified-status{
   filter: grayscale(1);
-  opacity: 0.7;
+  opacity: 0.70;
 }
+
+/* ---------------------------------------------------------
+   HIGHLIGHTED
+--------------------------------------------------------- */
 
 .unified-card.is-highlighted{
   outline: 3px solid var(--success);
   outline-offset: 3px;
-}
-
-/* ---------------------------------------------------------
-   TIER ACCENTS
---------------------------------------------------------- */
-
-.unified-card[data-tier="lm"]{ --tier-accent: var(--tier-lm); }
-.unified-card[data-tier="0"]{ --tier-accent: var(--tier-0); }
-.unified-card[data-tier="1"]{ --tier-accent: var(--tier-1); }
-.unified-card[data-tier="2"]{ --tier-accent: var(--tier-2); }
-.unified-card[data-tier="3"]{ --tier-accent: var(--tier-3); }
-.unified-card[data-tier="4"]{ --tier-accent: var(--tier-4); }
-.unified-card[data-tier="5"]{ --tier-accent: var(--tier-5); }
-.unified-card[data-tier="6"]{ --tier-accent: var(--tier-6); }
-
-/* LM: extra prestige frame */
-.unified-card[data-tier="lm"]{
-  box-shadow:
-    0 0 0 2px rgba(230,200,106,0.45) inset,
-    0 0 0 1px var(--card-edge-lite) inset,
-    var(--card-shadow);
 }
 
 /* ---------------------------------------------------------
@@ -221,8 +292,8 @@
 
 .symbol-overlay{
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 9px;
+  right: 9px;
 
   display: flex;
   flex-wrap: wrap;
@@ -237,9 +308,9 @@
 
   image-rendering: pixelated;
 
-  background: #0c0e12;
-  border: 2px solid var(--accent);
+  background: var(--c-void);
+  border: 2px solid var(--plate-orange);
   border-radius: 0;
 
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.45) inset;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.55) inset;
 }
