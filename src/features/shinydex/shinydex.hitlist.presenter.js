@@ -39,7 +39,7 @@ export function prepareHitlistRenderModel({
   });
 
   // --------------------------------------------------
-  // LEADERBOARD MODES
+  // LEADERBOARD MODES (GLOBAL RANK PRESERVED)
   // --------------------------------------------------
 
   if (mode === 'claims' || mode === 'points') {
@@ -51,7 +51,8 @@ export function prepareHitlistRenderModel({
       byMember[e.claimedBy].push(e);
     });
 
-    let members = Object.entries(byMember)
+    // Build full leaderboard first (global order)
+    const fullLeaderboard = Object.entries(byMember)
       .map(([name, entries]) => ({
         name,
         entries,
@@ -64,23 +65,32 @@ export function prepareHitlistRenderModel({
           : b.points - a.points
       );
 
-    // In leaderboard: only @member filters; species/family ignored
+    // Global rank map (1-based), preserves placement under filtering
+    const rankByName = {};
+    fullLeaderboard.forEach((m, idx) => {
+      rankByName[m.name] = idx + 1;
+    });
+
+    // Apply @member filter AFTER rank is computed
+    let visibleLeaderboard = fullLeaderboard;
     if (parsed.kind === 'member' && parsed.q) {
-      members = members.filter(m => memberMatches(m.name, parsed.q));
+      visibleLeaderboard = fullLeaderboard.filter(m =>
+        memberMatches(m.name, parsed.q)
+      );
     }
 
     return {
       mode: 'scoreboard',
-      sections: members.map((m, i) => ({
+      sections: visibleLeaderboard.map(m => ({
         key: m.name,
-        title: `${i + 1}. ${m.name} — ${m.claims} Claims · ${m.points} Points`,
+        title: `${rankByName[m.name]}. ${m.name} — ${m.claims} Claims · ${m.points} Points`,
         entries: m.entries.map(e => ({
           ...e,
           highlighted: true,
           info: `${e.points} pts`
         }))
       })),
-      countLabelText: `${members.length} Members`
+      countLabelText: `${fullLeaderboard.length} Members`
     };
   }
 
