@@ -33,6 +33,10 @@ export function prepareLivingDexRenderModel({
     if (e.count > 0) regionStats[region].owned += 1;
   });
 
+  const forceUnowned = !!parsed.flags.unowned;
+  const forceOwned = !!parsed.flags.owned;
+  const effectiveUnclaimed = forceUnowned ? true : (forceOwned ? false : !!viewState.showUnclaimed);
+
   let modeSet = snapshot;
 
   if (mode === 'total') {
@@ -42,9 +46,8 @@ export function prepareLivingDexRenderModel({
     });
   }
 
-  if (viewState.showUnclaimed) {
-    modeSet = modeSet.filter(e => e.count === 0);
-  }
+  if (effectiveUnclaimed) modeSet = modeSet.filter(e => e.count === 0);
+  if (forceOwned) modeSet = modeSet.filter(e => e.count > 0);
 
   let visible = modeSet;
 
@@ -68,7 +71,7 @@ export function prepareLivingDexRenderModel({
     byRegion[region].push(e);
   });
 
-  const countLabelText = viewState.showUnclaimed
+  const countLabelText = effectiveUnclaimed
     ? `${unownedSpecies} Unowned`
     : `${ownedSpecies} / ${totalSpecies} Owned`;
 
@@ -77,7 +80,7 @@ export function prepareLivingDexRenderModel({
       const stats = regionStats[region] || { owned: 0, total: 0 };
       const regionUnowned = stats.total - stats.owned;
 
-      const title = viewState.showUnclaimed
+      const title = effectiveUnclaimed
         ? `${region.toUpperCase()} (${regionUnowned} Unowned)`
         : `${region.toUpperCase()} (${stats.owned} / ${stats.total})`;
 
