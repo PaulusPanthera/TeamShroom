@@ -3,50 +3,64 @@
 // Unified Card Renderer — HARD CONTRACT
 // Structure and size are immutable
 
-export function renderUnifiedCard(cfg) {
-  cfg = cfg || {};
+export function renderUnifiedCard({
+  name,
+  img,
+  info = '',
+  cardType,               // 'member' | 'pokemon'
+  unclaimed = false,
+  lost = false,
+  highlighted = false,
+  symbols = {},           // { secret, alpha, run, favorite, clip, safari, egg, event }
+  clip,
+  owners                  // string[] (optional, tooltip only)
+}) {
+  /* -------------------------------------------------------
+     CLASS LIST — MUST MATCH CSS EXACTLY
+  ------------------------------------------------------- */
 
-  var name = cfg.name;
-  var img = cfg.img;
-  var info = cfg.info || '';
-  var cardType = cfg.cardType; // 'member' | 'pokemon'
-  var unclaimed = !!cfg.unclaimed;
-  var lost = !!cfg.lost;
-  var highlighted = !!cfg.highlighted;
-  var symbols = cfg.symbols || {};
-  var clip = cfg.clip;
-  var key = cfg.key;
-  var owners = cfg.owners;
-
-  var classes = [
+  const classes = [
     'unified-card',
     unclaimed && 'is-unclaimed',
     lost && 'is-lost',
     highlighted && 'is-highlighted'
-  ].filter(Boolean).join(' ');
+  ]
+    .filter(Boolean)
+    .join(' ');
 
-  var attributes =
-    'class="' + classes + '" ' +
-    'data-card-type="' + (cardType || '') + '" ' +
-    'data-name="' + escapeAttr(name) + '"';
+  /* -------------------------------------------------------
+     ATTRIBUTES
+  ------------------------------------------------------- */
 
-  if (key) {
-    attributes += ' data-key="' + escapeAttr(key) + '"';
-  }
+  let attributes = `
+    class="${classes}"
+    data-card-type="${cardType || ''}"
+    data-name="${escapeAttr(name)}"
+  `;
 
   if (clip) {
-    attributes += ' data-clip="' + escapeAttr(clip) + '"';
+    attributes += ` data-clip="${escapeAttr(clip)}"`;
   }
 
-  if (owners && Array.isArray(owners) && owners.length) {
-    attributes += ' data-owners="' + escapeAttr(JSON.stringify(owners)) + '"';
+  if (Array.isArray(owners) && owners.length) {
+    // delimiter must be attribute-safe
+    const packed = owners
+      .map(x => String(x || '').replace(/\|/g, '/'))
+      .join('|');
+    attributes += ` data-owners="${escapeAttr(packed)}"`;
   }
 
-  var symbolMap = {
+  /* -------------------------------------------------------
+     SYMBOL OVERLAY
+  ------------------------------------------------------- */
+
+  const symbolMap = {
+    // status
     secret: 'secretshinysprite.png',
     alpha: 'alphasprite.png',
     clip: 'clipsprite.png',
 
+    // methods
     mpb: 'mpbsprite.png',
     mgb: 'mgbsprite.png',
     mub: 'mubsprite.png',
@@ -64,33 +78,42 @@ export function renderUnifiedCard(cfg) {
     event: 'eventsprite.png'
   };
 
-  var symbolHtml = Object.entries(symbols)
-    .filter(function (pair) { return !!pair[1]; })
-    .map(function (pair) {
-      var k = pair[0];
-      var file = symbolMap[k];
-      if (!file) return '';
-      return (
-        '<img class="symbol ' + k + '" ' +
-          'src="img/symbols/' + file + '" ' +
-          'alt="' + k + '">' 
-      );
-    })
+  const symbolHtml = Object.entries(symbols)
+    .filter(([, enabled]) => enabled)
+    .map(([key]) =>
+      symbolMap[key]
+        ? `
+          <img
+            class="symbol ${key}"
+            src="img/symbols/${symbolMap[key]}"
+            alt="${key}"
+          >
+        `
+        : ''
+    )
     .join('');
 
-  var overlay = symbolHtml
-    ? '<div class="symbol-overlay">' + symbolHtml + '</div>'
+  const overlay = symbolHtml
+    ? `<div class="symbol-overlay">${symbolHtml}</div>`
     : '';
 
-  return (
-    '<div ' + attributes + '>' +
-      overlay +
-      '<span class="unified-name">' + (name || '') + '</span>' +
-      '<img class="unified-img" src="' + (img || '') + '" alt="' + (name || '') + '">' +
-      '<span class="unified-info">' + (info || '') + '</span>' +
-    '</div>'
-  );
+  /* -------------------------------------------------------
+     OUTPUT — ORDER IS FIXED
+  ------------------------------------------------------- */
+
+  return `
+    <div ${attributes}>
+      ${overlay}
+      <span class="unified-name">${name}</span>
+      <img class="unified-img" src="${img}" alt="${name}">
+      <span class="unified-info">${info}</span>
+    </div>
+  `;
 }
+
+/* ---------------------------------------------------------
+   HELPERS
+--------------------------------------------------------- */
 
 function escapeAttr(str) {
   return String(str).replace(/"/g, '&quot;');
