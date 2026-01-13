@@ -153,3 +153,247 @@ export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
     const text = String(raw || '').trim();
     const q = {
       pokemonText: '',
+      familyText: '',
+      memberText: '',
+      regionText: '',
+      tierText: '',
+      requireUnclaimed: false,
+      requireClaimed: false
+    };
+    if (!text) return q;
+
+    const parts = text.split(/\s+/).filter(Boolean);
+
+    parts.forEach(p => {
+      const lower = p.toLowerCase();
+
+      if (lower === 'unclaimed' || lower === 'unowned') q.requireUnclaimed = true;
+      if (lower === 'claimed' || lower === 'owned') q.requireClaimed = true;
+
+      if (lower[0] === '@' && lower.length > 1) {
+        q.memberText = lower.slice(1);
+        return;
+      }
+
+      if (startsWithKey(lower, 'pokemon:')) {
+        q.pokemonText = lower.slice('pokemon:'.length);
+        return;
+      }
+
+      if (startsWithKey(lower, 'family:')) {
+        q.familyText = lower.slice('family:'.length);
+        return;
+      }
+
+      if (startsWithKey(lower, 'member:')) {
+        q.memberText = lower.slice('member:'.length);
+        return;
+      }
+
+      if (startsWithKey(lower, 'r:')) {
+        q.regionText = lower.slice(2);
+        return;
+      }
+
+      if (startsWithKey(lower, 'region:')) {
+        q.regionText = lower.slice('region:'.length);
+        return;
+      }
+
+      if (startsWithKey(lower, 'tier:')) {
+        q.tierText = lower.slice('tier:'.length);
+        return;
+      }
+
+      // forgiving family markers
+      if (lower[0] === '+' && lower.length > 1) {
+        q.familyText = lower.slice(1);
+        return;
+      }
+
+      if (lower[lower.length - 1] === '+' && lower.length > 1) {
+        q.familyText = lower.slice(0, lower.length - 1);
+        return;
+      }
+
+      // default: pokemon text
+      q.pokemonText = q.pokemonText ? (q.pokemonText + ' ' + lower) : lower;
+    });
+
+    q.pokemonText = q.pokemonText.trim();
+    q.familyText = q.familyText.trim();
+    q.memberText = q.memberText.trim();
+    q.regionText = q.regionText.trim();
+    q.tierText = q.tierText.trim();
+
+    return q;
+  }
+
+  function startsWithKey(s, key) {
+    return s.slice(0, key.length) === key;
+  }
+
+  // TOOLTIP (OWNERS)
+  let tooltipTimer = null;
+
+  function hideOwnersTooltip() {
+    if (tooltipTimer) {
+      clearInterval(tooltipTimer);
+      tooltipTimer = null;
+    }
+    tooltip.classList.remove('show');
+    tooltip.setAttribute('aria-hidden', 'true');
+  }
+
+  function showOwnersTooltip(card, x, y) {
+    const ownersRaw = card.getAttribute('data-owners') || '';
+    if (!ownersRaw) return;
+
+    const owners = ownersRaw.split('|').map(s => s.trim()).filter(Boolean);
+    if (!owners.length) return;
+
+    const pokemonName = card.getAttribute('data-name') || '';
+    tooltipTitle.textContent = 'Owners — ' + pokemonName;
+
+    const pageSize = 8;
+    const pages = [];
+    for (let i = 0; i < owners.length; i += pageSize) {
+      pages.push(owners.slice(i, i + pageSize));
+    }
+
+    let page = 0;
+    function renderPage() {
+      const list = pages[page] || [];
+      const more = owners.length - ((page + 1) * pageSize);
+      const lines = list.slice();
+      if (more > 0) lines.push('(+ ' + more + ' more)');
+      tooltipList.textContent = lines.join('\n');
+      page = (page + 1) % pages.length;
+    }
+
+    renderPage();
+
+    // readable cadence
+    if (tooltipTimer) clearInterval(tooltipTimer);
+    if (pages.length > 1) {
+      tooltipTimer = setInterval(renderPage, 2600);
+    }
+
+    tooltip.style.left = Math.min(x + 14, window.innerWidth - 440) + 'px';
+    tooltip.style.top = Math.min(y + 14, window.innerHeight - 220) + 'px';
+
+    tooltip.classList.add('show');
+    tooltip.setAttribute('aria-hidden', 'false');
+  }
+
+  function bindOwnersTooltip() {
+    const container = root.querySelector('#shiny-dex-container');
+    if (!container) return;
+
+    container.onmousemove = function (e) {
+      const t = e.target;
+      if (!t) return;
+
+      const card = closestCard(t);
+      if (!card) {
+        hideOwnersTooltip();
+        return;
+      }
+
+      const hasOwners = !!card.getAttribute('data-owners');
+      if (!hasOwners) {
+        hideOwnersTooltip();
+        return;
+      }
+
+      showOwnersTooltip(card, e.clientX, e.clientY);
+    };
+
+    container.onmouseleave = function () {
+      hideOwnersTooltip();
+    };
+  }
+
+  function closestCard(el) {
+    let cur = el;
+    while (cur) {
+      if (cur.classList && cur.classList.contains('unified-card')) return cur;
+      cur = cur.parentElement;
+    }
+    return null;
+  }
+
+  function render() {
+    const v = state.view === 'hitlist' ? state.hitlist : state.living;
+    const q = parseQuery(v.search);
+
+    if (state.view === 'hitlist') {
+      renderShinyDexHitlist({
+        weeklyModel: weeklyModel,
+        sort: v.sort,
+        unclaimedOnly: v.unclaimed,
+        query: q,
+        countLabel: countLabel
+      });
+    } else {
+      renderShinyLivingDex({
+        showcaseRows: shinyShowcaseRows,
+        sort: v.sort,
+        unclaimedOnly: v.unclaimed,
+        query: q,
+        countLabel: countLabel
+      });
+    }
+
+    bindOwnersTooltip();
+  }
+
+  // EVENTS
+  searchInput.addEventListener('input', e => {
+    const v = state.view === 'hitlist' ? state.hitlist : state.living;
+    v.search = String(e.target.value || '');
+    render();
+  });
+
+  helpBtn.addEventListener('click', () => {
+    setHelp(!state.helpOpen);
+  });
+
+  unclaimedBtn.addEventListener('click', () => {
+    const v = state.view === 'hitlist' ? state.hitlist : state.living;
+    if (unclaimedBtn.disabled) return;
+    v.unclaimed = !v.unclaimed;
+    syncControlStates();
+    render();
+  });
+
+  sortSelect.addEventListener('change', e => {
+    const v = state.view === 'hitlist' ? state.hitlist : state.living;
+    v.sort = String(e.target.value || 'standard');
+    syncControlStates();
+    render();
+  });
+
+  tabHitlist.addEventListener('click', () => {
+    if (state.view === 'hitlist') return;
+    state.view = 'hitlist';
+    tabHitlist.classList.add('active');
+    tabLiving.classList.remove('active');
+    configureSort();
+    render();
+  });
+
+  tabLiving.addEventListener('click', () => {
+    if (state.view === 'living') return;
+    state.view = 'living';
+    tabLiving.classList.add('active');
+    tabHitlist.classList.remove('active');
+    configureSort();
+    render();
+  });
+
+  // INIT
+  configureSort();
+  setHelp(false);
+  render();
+}
