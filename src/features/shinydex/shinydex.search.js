@@ -1,211 +1,164 @@
 // v2.0.0-alpha.1
 // src/features/shinydex/shinydex.search.js
-// Search parsing + matching + context builder
+// Shiny Dex — Search Parsing + Matching + Family Context
 
 import { prettifyPokemonName } from '../../utils/utils.js';
-import { pokemonFamilies, POKEMON_DEX_ORDER } from '../../data/pokemondatabuilder.js';
 
-export function buildSearchContext() {
-  var rootByPokemon = {};
-  var stagesByRoot = {};
-  var dexIndexByPokemon = {};
+export function parseSearch(input) {
+  const raw = String(input || '').trim();
+  const lower = raw.toLowerCase();
 
-  if (Array.isArray(POKEMON_DEX_ORDER)) {
-    for (var i = 0; i < POKEMON_DEX_ORDER.length; i++) {
-      dexIndexByPokemon[POKEMON_DEX_ORDER[i]] = i;
-    }
-  }
-
-  var keys = Object.keys(pokemonFamilies || {});
-  for (var k = 0; k < keys.length; k++) {
-    var mon = keys[k];
-    var fam = pokemonFamilies[mon];
-    if (!Array.isArray(fam) || fam.length === 0) {
-      rootByPokemon[mon] = mon;
-      if (!stagesByRoot[mon]) stagesByRoot[mon] = [mon];
-      continue;
-    }
-
-    // assume fam is the full evolution stage list (CI-owned)
-    var root = String(fam[0] || mon).toLowerCase();
-    rootByPokemon[mon] = root;
-
-    if (!stagesByRoot[root]) stagesByRoot[root] = [];
-    for (var s = 0; s < fam.length; s++) {
-      var stage = String(fam[s] || '').toLowerCase();
-      if (!stage) continue;
-      stagesByRoot[root].push(stage);
-      rootByPokemon[stage] = root;
-    }
-  }
-
-  return {
-    rootByPokemon: rootByPokemon,
-    stagesByRoot: stagesByRoot,
-    dexIndexByPokemon: dexIndexByPokemon
-  };
-}
-
-function norm(s) {
-  return String(s || '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, ' ')
-    .trim();
-}
-
-export function parseSearch(raw) {
-  var text = String(raw || '').trim();
-  var out = {
-    raw: text,
-    kind: 'none', // 'species' | 'family' | 'member' | 'none'
+  const out = {
+    raw: raw,
+    kind: 'species',  // 'species' | 'family' | 'member'
     q: '',
-    filters: { region: '', tier: '' },
-    flags: { unclaimed: false, claimed: false, unowned: false, owned: false }
+    filters: {
+      region: null,
+      tier: null
+    },
+    flags: {
+      unclaimed: false,
+      claimed: false,
+      unowned: false,
+      owned: false
+    }
   };
 
-  if (!text) return out;
+  if (!lower) return out;
 
-  // flags anywhere
-  var lower = text.toLowerCase();
-  if (lower.indexOf('unclaimed') !== -1) out.flags.unclaimed = true;
-  if (lower.indexOf('claimed') !== -1) out.flags.claimed = true;
-  if (lower.indexOf('unowned') !== -1) out.flags.unowned = true;
-  if (lower.indexOf('owned') !== -1) out.flags.owned = true;
+  // tokens split by whitespace
+  const tokens = lower.split(/\s+/).filter(Boolean);
 
-  // token scan (space separated)
-  var parts = lower.split(/\s+/);
-  var keep = [];
+  // detect prefix forms first (r: / region: / tier:)
+  tokens.forEach(t => {
+    if (t.indexOf('r:') === 0) out.filters.region = t.slice(2);
+    if (t.indexOf('region:') === 0) out.filters.region = t.slice(7);
 
-  for (var i = 0; i < parts.length; i++) {
-    var p = parts[i];
-    if (!p) continue;
+    if (t.indexOf('tier:') === 0) out.filters.tier = t.slice(5);
+  });
 
-    // region forms:
-    // r:k  r:kan  region:uno
-    if (p.indexOf('r:') === 0) {
-      out.filters.region = p.slice(2);
-      continue;
-    }
-    if (p.indexOf('region:') === 0) {
-      out.filters.region = p.slice(7);
-      continue;
-    }
+  tokens.forEach(t => {
+    if (t === 'unclaimed') out.flags.unclaimed = true;
+    if (t === 'claimed') out.flags.claimed = true;
+    if (t === 'unowned') out.flags.unowned = true;
+    if (t === 'owned') out.flags.owned = true;
+  });
 
-    // tier forms:
-    // tier:0 tier:1 tier:lm
-    if (p.indexOf('tier:') === 0) {
-      out.filters.tier = p.slice(5).replace(/[^a-z0-9]/g, '');
-      continue;
-    }
-    if (p.indexOf('t:') === 0) {
-      out.filters.tier = p.slice(2).replace(/[^a-z0-9]/g, '');
-      continue;
-    }
-
-    // explicit kind prefixes
-    if (p.indexOf('pokemon:') === 0 || p.indexOf('p:') === 0) {
-      out.kind = 'species';
-      out.q = p.split(':').slice(1).join(':');
-      continue;
-    }
-    if (p.indexOf('family:') === 0 || p.indexOf('f:') === 0) {
-      out.kind = 'family';
-      out.q = p.split(':').slice(1).join(':');
-      continue;
-    }
-    if (p.indexOf('member:') === 0 || p.indexOf('m:') === 0) {
-      out.kind = 'member';
-      out.q = p.split(':').slice(1).join(':');
-      continue;
-    }
-
-    // @name member shorthand
-    if (p.charAt(0) === '@') {
-      out.kind = 'member';
-      out.q = p.slice(1);
-      continue;
-    }
-
-    // +name / name+ family shorthand
-    if (p.charAt(0) === '+' || p.charAt(p.length - 1) === '+') {
-      out.kind = 'family';
-      out.q = p.replace(/\+/g, '');
-      continue;
-    }
-
-    // ignore pure flags already handled
-    if (p === 'unclaimed' || p === 'claimed' || p === 'unowned' || p === 'owned') {
-      continue;
-    }
-
-    keep.push(p);
+  // member search
+  const at = lower.match(/(^| )@([a-z0-9._-]+)/);
+  if (at && at[2]) {
+    out.kind = 'member';
+    out.q = at[2];
+    return out;
+  }
+  const member = lower.match(/(^| )member:([a-z0-9._-]+)/);
+  if (member && member[2]) {
+    out.kind = 'member';
+    out.q = member[2];
+    return out;
   }
 
-  if (!out.q && keep.length) {
-    // default = species query
-    out.kind = 'species';
-    out.q = keep.join(' ');
+  // family search (+name / name+ / family:name)
+  const fam1 = lower.match(/(^| )\+([a-z0-9._-]+)/);
+  if (fam1 && fam1[2]) {
+    out.kind = 'family';
+    out.q = fam1[2];
+    return out;
+  }
+  const fam2 = lower.match(/(^| )([a-z0-9._-]+)\+/);
+  if (fam2 && fam2[2]) {
+    out.kind = 'family';
+    out.q = fam2[2];
+    return out;
+  }
+  const fam3 = lower.match(/(^| )family:([a-z0-9._-]+)/);
+  if (fam3 && fam3[2]) {
+    out.kind = 'family';
+    out.q = fam3[2];
+    return out;
   }
 
-  out.q = String(out.q || '').trim();
+  // default species query: remove filter tokens from visible query
+  const removed = tokens.filter(t => {
+    if (t.indexOf('r:') === 0) return false;
+    if (t.indexOf('region:') === 0) return false;
+    if (t.indexOf('tier:') === 0) return false;
+    if (t === 'unclaimed' || t === 'claimed' || t === 'unowned' || t === 'owned') return false;
+    return true;
+  });
+
+  out.kind = 'species';
+  out.q = removed.join(' ').trim();
   return out;
 }
 
-export function speciesMatches(pokemonKey, query) {
-  var q = norm(query);
-  if (!q) return true;
-
-  var key = norm(pokemonKey).replace(/\s+/g, '');
-  var pretty = norm(prettifyPokemonName(pokemonKey)).replace(/\s+/g, '');
-
-  return pretty.indexOf(q.replace(/\s+/g, '')) !== -1 || key.indexOf(q.replace(/\s+/g, '')) !== -1;
+export function memberMatches(name, q) {
+  const n = String(name || '').toLowerCase();
+  const s = String(q || '').toLowerCase();
+  if (!s) return true;
+  return n.indexOf(s) !== -1;
 }
 
-export function memberMatches(memberName, query) {
-  var q = norm(query);
-  if (!q) return true;
-  return norm(memberName).indexOf(q) !== -1;
+export function speciesMatches(pokemonKey, q) {
+  const label = prettifyPokemonName(pokemonKey).toLowerCase();
+  const s = String(q || '').toLowerCase();
+  if (!s) return true;
+  return label.indexOf(s) !== -1;
 }
 
-export function resolveFamilyRootsByQuery(searchCtx, query) {
-  var roots = new Set();
-  var q = norm(query).replace(/\s+/g, '');
-  if (!q) return roots;
+/*
+searchCtx contract:
+{
+  rootByPokemon: { [pokemonKey]: rootKey }
+  pokemonByRoot: { [rootKey]: string[] }
+  displayByPokemon: { [pokemonKey]: string }  // lowercased
+}
+*/
+export function buildSearchContext({ dexOrder, familyRootsByPokemon }) {
+  const order = Array.isArray(dexOrder) && dexOrder.length ? dexOrder : Object.keys(familyRootsByPokemon || {});
+  const rootByPokemon = {};
+  const pokemonByRoot = {};
+  const displayByPokemon = {};
 
-  var rootMap = (searchCtx && searchCtx.stagesByRoot) ? searchCtx.stagesByRoot : {};
+  order.forEach(p => {
+    const key = String(p || '').toLowerCase();
+    if (!key) return;
 
-  var allRoots = Object.keys(rootMap);
-  for (var i = 0; i < allRoots.length; i++) {
-    var root = allRoots[i];
-    var stages = rootMap[root] || [];
+    const roots = (familyRootsByPokemon && familyRootsByPokemon[key]) || null;
+    const root = Array.isArray(roots) && roots.length ? String(roots[0] || '').toLowerCase() : key;
 
-    // match any stage name in the family
-    for (var s = 0; s < stages.length; s++) {
-      var stage = stages[s];
-      var pretty = norm(prettifyPokemonName(stage)).replace(/\s+/g, '');
-      var key = norm(stage).replace(/\s+/g, '');
+    rootByPokemon[key] = root;
 
-      if (pretty.indexOf(q) !== -1 || key.indexOf(q) !== -1) {
-        roots.add(root);
+    if (!pokemonByRoot[root]) pokemonByRoot[root] = [];
+    pokemonByRoot[root].push(key);
+
+    displayByPokemon[key] = prettifyPokemonName(key).toLowerCase();
+  });
+
+  return {
+    rootByPokemon: rootByPokemon,
+    pokemonByRoot: pokemonByRoot,
+    displayByPokemon: displayByPokemon
+  };
+}
+
+export function resolveFamilyRootsByQuery(searchCtx, q) {
+  const s = String(q == null ? '' : q).toLowerCase().trim();
+  const set = new Set();
+  if (!s || !searchCtx) return set;
+
+  const roots = Object.keys(searchCtx.pokemonByRoot || {});
+  roots.forEach(root => {
+    const mons = searchCtx.pokemonByRoot[root] || [];
+    for (let i = 0; i < mons.length; i++) {
+      const mon = mons[i];
+      const label = searchCtx.displayByPokemon[mon] || mon;
+      if (label.indexOf(s) !== -1) {
+        set.add(root);
         break;
       }
     }
-  }
-
-  return roots;
-}
-
-export function stableDexSort(searchCtx, arr, keyField) {
-  var map = (searchCtx && searchCtx.dexIndexByPokemon) ? searchCtx.dexIndexByPokemon : {};
-  var kf = keyField || 'pokemon';
-
-  arr.sort(function (a, b) {
-    var ka = a && a[kf] ? a[kf] : '';
-    var kb = b && b[kf] ? b[kf] : '';
-    var ia = typeof map[ka] === 'number' ? map[ka] : 999999;
-    var ib = typeof map[kb] === 'number' ? map[kb] : 999999;
-    return ia - ib;
   });
 
-  return arr;
+  return set;
 }
