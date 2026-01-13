@@ -5,8 +5,7 @@
 import { buildShinyDexModel } from '../../domains/shinydex/hitlist.model.js';
 import {
   POKEMON_REGION,
-  POKEMON_SHOW,
-  POKEMON_POINTS
+  POKEMON_SHOW
 } from '../../data/pokemondatabuilder.js';
 
 import {
@@ -29,10 +28,9 @@ function tierFromPoints(points) {
   return null;
 }
 
-// Optional fast path if you ever want exact tier mapping:
-// points come from pokemon.json tier keys; this keeps runtime stateless.
-// Leaving this here avoids importing TIER_POINTS.
-void POKEMON_POINTS;
+function normalizeRegion(raw) {
+  return String(raw || '').trim().toLowerCase();
+}
 
 export function prepareHitlistRenderModel({
   weeklyModel,
@@ -42,9 +40,16 @@ export function prepareHitlistRenderModel({
   const mode = viewState.sort; // 'standard' | 'claims' | 'points'
   const parsed = parseSearch(viewState.search);
 
-  const snapshot = buildShinyDexModel(weeklyModel).filter(
+  // truth snapshot
+  let snapshot = buildShinyDexModel(weeklyModel).filter(
     e => POKEMON_SHOW[e.pokemon] !== false
   );
+
+  // region filter applies to mode dataset + counters (pre-search)
+  if (parsed.filters?.region) {
+    const r = normalizeRegion(parsed.filters.region);
+    snapshot = snapshot.filter(e => normalizeRegion(POKEMON_REGION[e.pokemon] || e.region) === r);
+  }
 
   const totalSpecies = snapshot.length;
   const claimedSpecies = snapshot.filter(e => e.claimed).length;
@@ -87,6 +92,7 @@ export function prepareHitlistRenderModel({
 
     let visibleLeaderboard = fullLeaderboard;
 
+    // member-only filter in leaderboards
     if (parsed.kind === 'member' && parsed.q) {
       visibleLeaderboard = fullLeaderboard.filter(m =>
         memberMatches(m.name, parsed.q)
