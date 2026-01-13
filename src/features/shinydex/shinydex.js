@@ -1,36 +1,21 @@
-// v2.0.0-alpha.4
+// v2.0.0-alpha.1
 /**
  * SHINY POKEDEX — SEARCH LEGEND (v2)
  *
- * Global:
- * - Search never changes truth; only filters visibility.
- * - Search is applied LAST, after view+mode filters.
- * - Forgiving matching: display name OR canonical key, case-insensitive substring.
- *
  * Syntax:
  * - "text"      → species search (name/key)
- * - "+text"     → family search (show all stages of any family matched by text)
- * - "text+"     → family search (same as above)
- * - "@name"     → member search
+ * - "+text"     → family filter
+ * - "text+"     → family filter
+ * - "@name"     → member filter
  *
- * HITLIST:
- * - Standard: species/family/@member supported, unclaimed supported.
- * - Leaderboards (Total Claims / Total Claim Points): unclaimed DISABLED; only @member filters members.
- *
- * LIVING DEX:
- * - species/family/@member supported.
- * - Standard: dex/region order, includes unowned species.
- * - Total Shinies: sort by count desc, tie-break by dex order.
- *
- * Counters:
- * - Always computed from mode dataset (pre-search).
- * - Region headers show region totals for mode dataset (pre-search).
+ * Labels:
+ * - Hitlist: "claimed / total Claimed" | "unclaimed Unclaimed"
+ * - Living:  "owned / total Owned"     | "unowned Unowned"
  */
 
 // src/features/shinydex/shinydex.js
 // Shiny Dex Page Controller
 // Owns ALL DOM under #page-content
-// State + controls only; delegates data prep to presenters
 
 import {
   POKEMON_POINTS,
@@ -55,8 +40,12 @@ export function setupShinyDexPage({
 
   root.innerHTML = `
     <div class="search-controls">
-      <input id="dex-search" type="text" placeholder="Search… (Pokémon, +family, @member)" />
-      <button id="dex-help" class="dex-toggle" type="button">Help</button>
+      <input id="dex-search" type="text" placeholder="Search" />
+
+      <button id="dex-help" class="dex-toggle dex-help-btn" type="button" aria-label="Help">
+        <img src="img/symbols/questionmarksprite.png" alt="Help">
+      </button>
+
       <button id="dex-unclaimed" class="dex-toggle" type="button">Unclaimed</button>
       <select id="dex-sort"></select>
       <span id="dex-count"></span>
@@ -81,16 +70,8 @@ export function setupShinyDexPage({
 
   const state = {
     view: 'hitlist',
-    hitlist: {
-      search: '',
-      sort: 'standard',
-      showUnclaimed: false
-    },
-    livingdex: {
-      search: '',
-      sort: 'standard',
-      showUnclaimed: false
-    }
+    hitlist: { search: '', sort: 'standard', showUnclaimed: false },
+    livingdex: { search: '', sort: 'standard', showUnclaimed: false }
   };
 
   const active = () => state[state.view];
@@ -107,6 +88,7 @@ export function setupShinyDexPage({
 
   function updateControlAvailability() {
     const parsed = parseSearch(active().search);
+    void parsed;
 
     searchInput.disabled = false;
 
@@ -119,8 +101,6 @@ export function setupShinyDexPage({
 
     unclaimedBtn.disabled = false;
     unclaimedBtn.classList.toggle('active', active().showUnclaimed);
-
-    void parsed;
   }
 
   function configureSort() {
@@ -141,6 +121,7 @@ export function setupShinyDexPage({
 
     sortSelect.value = active().sort;
     searchInput.value = active().search;
+
     updateControlAvailability();
   }
 
@@ -155,17 +136,18 @@ export function setupShinyDexPage({
           searchCtx
         })
       );
-    } else {
-      renderShinyLivingDex(
-        prepareLivingDexRenderModel({
-          showcaseRows: shinyShowcaseRows,
-          viewState: active(),
-          searchCtx
-        })
-      );
-
-      bindDexOwnerTooltip(container);
+      return;
     }
+
+    renderShinyLivingDex(
+      prepareLivingDexRenderModel({
+        showcaseRows: shinyShowcaseRows,
+        viewState: active(),
+        searchCtx
+      })
+    );
+
+    bindDexOwnerTooltip(container);
   }
 
   searchInput.addEventListener('input', e => {
