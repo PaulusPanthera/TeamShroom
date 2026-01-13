@@ -1,26 +1,8 @@
+/* style/buttons.css */
 /* v2.0.0-alpha.1 */
-/* =========================================================
-   BUTTON SYSTEM — DESIGN SYSTEM v1 (LOCKED)
-   ========================================================= */
+/* Additions only: icon + action button semantics for dex bar */
 
-/* ---------------------------------------------------------
-   BASE BUTTON RESET
---------------------------------------------------------- */
-
-button {
-  font-family: inherit;
-  font-size: inherit;
-  border: none;
-  background: none;
-  color: inherit;
-  cursor: pointer;
-}
-
-/* ---------------------------------------------------------
-   ACTION BUTTONS (e.g. Unclaimed toggle)
---------------------------------------------------------- */
-
-.search-controls button:not(.dex-tab) {
+.dex-action-btn {
   padding: 6px 14px;
 
   font-weight: bold;
@@ -34,94 +16,39 @@ button {
   box-shadow: var(--shadow-depth);
 }
 
-.search-controls button:not(.dex-tab):hover {
+.dex-action-btn:hover {
   filter: brightness(1.05);
 }
 
-.search-controls button:not(.dex-tab).active {
+.dex-action-btn.active {
   background: var(--accent);
   color: var(--text-dark);
   border-color: var(--accent);
 }
 
-/* Icon-only action button */
-.dex-help-btn {
-  padding: 6px 10px;
-  width: 44px;
-  height: 34px;
+.dex-action-btn.disabled,
+.dex-action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: none;
+}
 
+.dex-icon-btn {
+  width: 36px;
+  height: 32px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
+  background: var(--bg-panel-alt);
+  border: 2px solid var(--bg-panel-alt);
+  border-radius: 10px;
+
+  box-shadow: var(--shadow-depth);
 }
 
-.dex-help-btn img {
+.dex-icon-btn img {
   width: 18px;
   height: 18px;
   image-rendering: pixelated;
-}
-
-/* ---------------------------------------------------------
-   DEX TABS (VIEW SWITCHERS)
---------------------------------------------------------- */
-
-.dex-tab {
-  padding: 8px 16px;
-
-  font-size: var(--font-card-stat);
-  font-weight: bold;
-  letter-spacing: 1px;
-
-  background: var(--bg-panel);
-  color: var(--text-muted);
-
-  border: 2px solid var(--bg-panel-alt);
-  border-bottom: none;
-  border-radius: 12px 12px 0 0;
-
-  box-shadow: var(--shadow-depth);
-}
-
-.dex-tab:hover {
-  color: var(--text-main);
-}
-
-.dex-tab.active {
-  background: var(--accent);
-  color: var(--text-dark);
-
-  border-color: var(--accent);
-  border-bottom: 2px solid var(--accent);
-
-  z-index: 2;
-}
-
-/* ---------------------------------------------------------
-   NAV BUTTONS (TOP NAV)
---------------------------------------------------------- */
-
-.nav a {
-  padding: 8px 14px;
-
-  font-size: var(--font-card-stat);
-  font-weight: bold;
-  letter-spacing: 1px;
-
-  background: var(--bg-panel-alt);
-  color: var(--text-main);
-
-  border: 2px solid var(--bg-panel-alt);
-  border-radius: 12px;
-
-  box-shadow: var(--shadow-depth);
-}
-
-.nav a:hover {
-  color: var(--accent);
-}
-
-.nav a.active {
-  background: var(--accent);
-  color: var(--text-dark);
-  border-color: var(--accent);
 }
