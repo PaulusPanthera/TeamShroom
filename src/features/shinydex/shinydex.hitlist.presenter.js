@@ -5,7 +5,8 @@
 import { buildShinyDexModel } from '../../domains/shinydex/hitlist.model.js';
 import {
   POKEMON_REGION,
-  POKEMON_SHOW
+  POKEMON_SHOW,
+  POKEMON_POINTS
 } from '../../data/pokemondatabuilder.js';
 
 import {
@@ -14,6 +15,24 @@ import {
   speciesMatches,
   memberMatches
 } from './shinydex.search.js';
+
+function tierFromPoints(points) {
+  const p = Number(points) || 0;
+  if (p >= 100) return 'lm';
+  if (p >= 30) return '0';
+  if (p >= 25) return '1';
+  if (p >= 15) return '2';
+  if (p >= 10) return '3';
+  if (p >= 6)  return '4';
+  if (p >= 3)  return '5';
+  if (p >= 2)  return '6';
+  return null;
+}
+
+// Optional fast path if you ever want exact tier mapping:
+// points come from pokemon.json tier keys; this keeps runtime stateless.
+// Leaving this here avoids importing TIER_POINTS.
+void POKEMON_POINTS;
 
 export function prepareHitlistRenderModel({
   weeklyModel,
@@ -97,6 +116,12 @@ export function prepareHitlistRenderModel({
 
   if (effectiveUnclaimed) modeSet = modeSet.filter(e => !e.claimed);
   if (forceClaimed) modeSet = modeSet.filter(e => e.claimed);
+
+  // tier filter (tier:0..6 | tier:lm)
+  if (parsed.filters?.tier) {
+    const wanted = parsed.filters.tier;
+    modeSet = modeSet.filter(e => tierFromPoints(e.points) === wanted);
+  }
 
   let visible = modeSet;
 
