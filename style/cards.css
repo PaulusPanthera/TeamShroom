@@ -1,3 +1,4 @@
+/* v2.0.0-alpha.1 */
 /* =========================================================
    UNIFIED CARD SYSTEM — HARD CONTRACT
    ONE SIZE • ONE STRUCTURE • ALL PAGES
@@ -5,15 +6,16 @@
 
 /* ---------------------------------------------------------
    CARD DIMENSIONS — NON-NEGOTIABLE
+   (Adjusted to match v1 spacing/scale closer)
    --------------------------------------------------------- */
 
 :root {
-  --card-width: 210px;
-  --card-height: 260px;
+  --card-width: 240px;
+  --card-height: 300px;
 
-  --card-img-size: 120px;
-  --card-name-height: 40px;
-  --card-info-height: 32px;
+  --card-img-size: 140px;
+  --card-name-height: 44px;
+  --card-info-height: 36px;
 }
 
 /* ---------------------------------------------------------
@@ -33,7 +35,7 @@
   align-items: center;
   justify-items: center;
 
-  padding: var(--space-2);
+  padding: var(--space-3);
 
   background: var(--card-gradient);
   color: var(--text-dark);
@@ -48,7 +50,6 @@
   overflow: hidden;
 }
 
-/* Hover = lift only */
 .unified-card:hover {
   box-shadow: var(--shadow-hover);
   transform: translateY(-4px);
@@ -66,7 +67,7 @@
   align-items: center;
   justify-content: center;
 
-  padding: 6px 8px;
+  padding: 6px 10px;
 
   font-size: var(--font-card-title);
   line-height: 1.1;
@@ -84,7 +85,6 @@
   text-overflow: ellipsis;
 }
 
-/* Optional visual tuning only */
 .unified-name.long-name {
   font-size: 13px;
 }
@@ -123,7 +123,7 @@
   align-items: center;
   justify-content: center;
 
-  padding: 4px 8px;
+  padding: 4px 10px;
 
   font-size: var(--font-card-stat);
   font-weight: bold;
