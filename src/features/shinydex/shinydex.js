@@ -1,4 +1,4 @@
-// v2.0.0-alpha.2
+// v2.0.0-alpha.3
 // src/features/shinydex/shinydex.js
 // Shiny Dex Page Controller
 // Owns ALL DOM under #page-content
@@ -15,25 +15,17 @@ import { setupShinyDexHelp } from './shinydex.help.js';
 import { buildSearchContext } from './shinydex.search.js';
 import { pokemonFamilies, POKEMON_DEX_ORDER } from '../../data/pokemondatabuilder.js';
 
-// NEW: card variant switch (status-slot click)
-import { wireCardVariantSwitch } from './shinydex.variants.js';
+// UnifiedCard v3: variant switching delegation
+import { bindUnifiedCardVariantSwitching } from '../../ui/unifiedcard.js';
 
 export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
   const root = document.getElementById('page-content');
   root.innerHTML = '';
 
-  // --------------------------------------------------
-  // SEARCH CONTEXT (family roots / dex order)
-  // --------------------------------------------------
-
   const searchCtx = buildSearchContext({
     dexOrder: Array.isArray(POKEMON_DEX_ORDER) && POKEMON_DEX_ORDER.length ? POKEMON_DEX_ORDER : null,
     familyRootsByPokemon: pokemonFamilies || {}
   });
-
-  // --------------------------------------------------
-  // UI SKELETON
-  // --------------------------------------------------
 
   root.innerHTML = `
     <div class="search-controls shiny-dex-controls">
@@ -64,10 +56,6 @@ export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
     <div id="shiny-dex-container"></div>
   `;
 
-  // --------------------------------------------------
-  // ELEMENTS
-  // --------------------------------------------------
-
   const searchInput = root.querySelector('#dex-search');
   const helpBtn = root.querySelector('#dex-help');
   const unclaimedBtn = root.querySelector('#dex-unclaimed');
@@ -77,20 +65,12 @@ export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
   const tabHitlist = root.querySelector('#tab-hitlist');
   const tabLiving = root.querySelector('#tab-living');
 
-  // --------------------------------------------------
-  // STATE (SINGLE SOURCE OF TRUTH)
-  // --------------------------------------------------
-
   const state = {
-    view: 'hitlist', // 'hitlist' | 'living'
+    view: 'hitlist',
     search: '',
     unclaimed: false,
     sort: 'standard'
   };
-
-  // --------------------------------------------------
-  // HELP + TOOLTIP + VARIANT SWITCH
-  // --------------------------------------------------
 
   const controlsBar = root.querySelector('.shiny-dex-controls') || root;
 
@@ -101,12 +81,8 @@ export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
 
   bindDexOwnerTooltip(document);
 
-  // Delegate variant switching under this page only
-  wireCardVariantSwitch(root);
-
-  // --------------------------------------------------
-  // SORT OPTIONS (PER VIEW)
-  // --------------------------------------------------
+  // Variant switching for the unified cards (hitlist + living)
+  bindUnifiedCardVariantSwitching(root);
 
   function configureSort() {
     sortSelect.innerHTML = '';
@@ -133,10 +109,6 @@ export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
     sortSelect.value = state.sort;
     unclaimedBtn.classList.toggle('active', state.unclaimed);
   }
-
-  // --------------------------------------------------
-  // RENDER PIPELINE
-  // --------------------------------------------------
 
   function render() {
     unclaimedBtn.classList.toggle('active', state.unclaimed);
@@ -168,10 +140,6 @@ export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
     countLabel.textContent = model.countLabelText || '';
     renderLivingDexFromModel(model);
   }
-
-  // --------------------------------------------------
-  // EVENTS
-  // --------------------------------------------------
 
   searchInput.addEventListener('input', e => {
     state.search = String(e.target.value || '');
@@ -215,10 +183,6 @@ export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
     configureSort();
     render();
   });
-
-  // --------------------------------------------------
-  // INIT
-  // --------------------------------------------------
 
   configureSort();
   render();
