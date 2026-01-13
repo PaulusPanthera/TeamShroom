@@ -1,38 +1,45 @@
-/* v2.0.0-alpha.4 */
 /* style/cards.css */
 /* =========================================================
-   CARDS — UNIFIED CARD SYSTEM (8-bit play-card framing)
-   - Smaller GIF window (template feel)
-   - Tier + Name in ONE header bar
-   - Icons CONNECTED to header bar (no floating overlay)
-   - Unclaimed/Unowned POP negatively (very clear)
-   - Main border slightly less aggressive
+   UNIFIED 8-BIT PLAY-CARD SYSTEM (template framing)
+
+   Includes the step you did NOT execute:
+   - grid-template-rows: 34px 92px 32px auto
+   - art height: 92px
+   - status height: 32px
+   - inset frame 6px -> 4px
+   - tier badge: font-size 12px, letter-spacing 0
+   - add at end:
+       .tier-badge:empty{ display:none; }
+       .unified-name{ line-height: 1; }
+
+   Additional:
+   - long names never overflow / never cover other cards
+   - remove hitlist-only glow: normalize shadows, kill outlines
+   - template proportions further: bigger status box, name lower
+   - unclaimed/unowned pops negatively
+   - hooks for status click switching (variant states)
    ========================================================= */
 
 :root{
-  /* lock final card size; grid adapts around this */
   --card-w: 230px;
-  --card-h: 298px;
+  --card-h: 308px; /* slightly taller for template split (name lower + bigger status) */
 
   --c-void: #0b0d10;
   --c-ink: #f3e3a6;
 
-  /* base shell */
   --card-shell: #0f5b53;
+  --neg-shell: #2b2f34;
 
-  /* window */
+  --plate-bg: #0d0f12;
+  --plate-orange: #ff6a00;
+
+  --box-bg: #0f141a;
+  --box-stroke: rgba(255,255,255,0.14);
+
   --win-bg: #0c0e12;
   --win-frame: #8f969d;
   --win-frame-2: #2b2f35;
 
-  /* header / plates */
-  --plate-bg: #0d0f12;
-  --plate-orange: #ff6a00;
-
-  --box-bg: #11161d;
-  --box-stroke: rgba(255,255,255,0.14);
-
-  /* tier groups */
   --tier-lm: #e6c86a;
 
   --tier-0: #7dff66;
@@ -45,17 +52,14 @@
   --tier-5: #6c7f86;
   --tier-6: #3f4a4f;
 
-  /* negative state */
-  --neg-shell: #2b2f34;
-  --neg-frame: #7d8288;
-  --neg-ink: #d0d3d6;
-
-  /* hard shadows only */
+  --tier-inner: rgba(0,0,0,0.55);
   --card-shadow: 0 10px 0 rgba(0,0,0,0.45);
+
+  --dead-ink: rgba(255,255,255,0.70);
 }
 
 /* ---------------------------------------------------------
-   CARD SHELL (pixel bevel; no blur)
+   UNIFIED CARD SHELL
 --------------------------------------------------------- */
 
 .unified-card{
@@ -63,36 +67,38 @@
   height: var(--card-h);
 
   --tier-accent: var(--tier-4);
-  --tier-inner: rgba(0,0,0,0.55);
 
   display: grid;
-  grid-template-rows: 34px 104px 26px auto; /* header, gif, status, info */
-  gap: 10px;
 
+  /* step you didn't run (kept), but with template split:
+     header bar, art, BIG status, name box
+  */
+  grid-template-rows: 34px 92px 44px 1fr;
+
+  gap: 10px;
   padding: 12px;
 
   background: var(--card-shell);
   border-radius: 0;
-
-  /* less aggressive main border */
   border: 2px solid var(--tier-accent);
 
-  /* pixel bevel: stepped inset + hard drop */
+  /* step you didn't run: inset 6 -> 4 */
   box-shadow:
     0 0 0 2px var(--tier-inner) inset,
     0 0 0 1px rgba(255,255,255,0.10) inset,
-    0 0 0 6px rgba(0,0,0,0.45) inset,
+    0 0 0 4px rgba(0,0,0,0.45) inset,
     var(--card-shadow);
 
   position: relative;
   user-select: none;
+
+  /* critical: prevents “background reach” over adjacent cards */
+  overflow: hidden;
 }
 
-/* ---------------------------------------------------------
-   TIER ACCENTS (grouped tiers)
---------------------------------------------------------- */
-
-.unified-card[data-tier="lm"]{ --tier-accent: var(--tier-lm); }
+/* tier accents */
+.unified-card[data-tier="lm"],
+.unified-card[data-tier="LM"]{ --tier-accent: var(--tier-lm); }
 .unified-card[data-tier="0"]{ --tier-accent: var(--tier-0); }
 .unified-card[data-tier="1"]{ --tier-accent: var(--tier-1); }
 .unified-card[data-tier="2"]{ --tier-accent: var(--tier-2); }
@@ -101,17 +107,18 @@
 .unified-card[data-tier="5"]{ --tier-accent: var(--tier-5); }
 .unified-card[data-tier="6"]{ --tier-accent: var(--tier-6); }
 
-/* LM: prestige motif (hard corner marks + inner trim) */
-.unified-card[data-tier="lm"]{
+/* remove hitlist-only glow/highlight differences */
+.unified-card.is-highlighted{
+  outline: none !important;
   box-shadow:
-    0 0 0 1px rgba(0,0,0,0.60) inset,
-    0 0 0 2px rgba(230,200,106,0.55) inset,
-    0 0 0 6px rgba(0,0,0,0.45) inset,
-    var(--card-shadow);
+    0 0 0 2px var(--tier-inner) inset,
+    0 0 0 1px rgba(255,255,255,0.10) inset,
+    0 0 0 4px rgba(0,0,0,0.45) inset,
+    var(--card-shadow) !important;
 }
 
 /* ---------------------------------------------------------
-   HEADER BAR (tier + name + icons in one connected box)
+   HEADER: TIER + ICON STRIP ONLY (NAME MOVED LOWER)
 --------------------------------------------------------- */
 
 .unified-header{
@@ -119,18 +126,18 @@
 
   display: flex;
   align-items: center;
-  gap: 8px;
 
+  gap: 6px;
   padding: 4px 6px;
 
   background: var(--plate-bg);
+  border: 3px solid var(--plate-orange);
   border-radius: 0;
 
-  /* unified header frame (connected) */
-  border: 3px solid var(--plate-orange);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.55) inset;
 
-  box-shadow:
-    0 0 0 1px rgba(0,0,0,0.55) inset;
+  /* long-content clamp */
+  overflow: hidden;
 }
 
 .tier-badge{
@@ -150,37 +157,24 @@
   border-radius: 0;
 
   font-family: 'Press Start 2P', monospace;
-  font-size: 10px;
-  letter-spacing: 1px;
+
+  /* step you didn't run */
+  font-size: 12px;
+  letter-spacing: 0px;
+
   text-transform: uppercase;
 
   box-shadow: 0 0 0 1px rgba(0,0,0,0.55) inset;
 }
 
-.unified-name{
-  flex: 1 1 auto;
-  min-width: 0;
-
-  display: block;
-
-  color: var(--c-ink);
-  font-size: var(--font-card-title);
-  letter-spacing: 1px;
-
-  /* long name solution */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* icons are part of the header bar now */
 .symbol-strip{
-  flex: 0 0 auto;
+  margin-left: auto;
 
   display: inline-flex;
   align-items: center;
+
   gap: 6px;
-  max-width: 78px; /* prevents header from blowing up */
+  max-width: 120px;
   overflow: hidden;
 }
 
@@ -195,144 +189,185 @@
   border-radius: 0;
 
   box-shadow: 0 0 0 1px rgba(0,0,0,0.55) inset;
-}
 
-/* LM: subtle header prestige */
-.unified-card[data-tier="lm"] .unified-header{
-  border-color: var(--tier-lm);
+  opacity: 0.55;
 }
+.symbol-strip .symbol.is-active{ opacity: 1; }
 
 /* ---------------------------------------------------------
-   IMAGE WINDOW (smaller; heavier frame)
+   ART WINDOW (smaller, template feel)
 --------------------------------------------------------- */
 
-.unified-img{
-  width: 100%;
-  height: 104px;
-
-  object-fit: contain;
+.unified-art{
+  height: 92px; /* step you didn't run */
 
   background: var(--win-bg);
-  border-radius: 0;
-
-  border: 4px solid var(--win-frame);
+  border: 2px solid var(--win-frame);
 
   box-shadow:
     0 0 0 2px var(--win-frame-2) inset,
-    0 0 0 1px rgba(255,255,255,0.10) inset;
+    0 0 0 1px rgba(255,255,255,0.08) inset;
 
+  border-radius: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.unified-art img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   image-rendering: pixelated;
 }
 
 /* ---------------------------------------------------------
-   STATUS SLOT (reserved for icons; larger separation)
+   BIG STATUS BOX (click-switch target)
 --------------------------------------------------------- */
 
-.unified-status{
-  height: 26px;
+.status-slot{
+  height: 44px;
 
-  background: #0f1218;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 0 8px;
+
+  background: #0c1117;
   border: 2px solid rgba(255,255,255,0.10);
   border-radius: 0;
 
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.55) inset;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.70) inset,
+    0 2px 0 rgba(0,0,0,0.35);
+
+  cursor: pointer;
+}
+
+.status-slot .status-pill{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 4px 6px;
+
+  background: var(--plate-bg);
+  border: 2px solid rgba(255,255,255,0.12);
+
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: rgba(255,255,255,0.75);
+
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status-slot .status-icon{
+  width: 18px;
+  height: 18px;
+
+  image-rendering: pixelated;
+
+  opacity: 0.35;
+  filter: grayscale(1);
+}
+.status-slot .status-icon.is-active{
+  opacity: 1;
+  filter: none;
+}
+
+.status-slot:focus{
+  outline: 2px solid var(--plate-orange);
+  outline-offset: 2px;
 }
 
 /* ---------------------------------------------------------
-   INFO TEXTBOX
+   NAME BOX (lower, small box like template)
 --------------------------------------------------------- */
 
-.unified-info{
-  display: block;
-  text-align: center;
-
-  padding: 6px 8px;
-
-  background: var(--box-bg);
-  color: var(--c-ink);
-
-  border: 2px solid var(--box-stroke);
+.name-box{
+  background: #0f141a;
+  border: 2px solid rgba(255,255,255,0.12);
   border-radius: 0;
 
-  font-size: var(--font-card-stat);
-  letter-spacing: 1px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.65) inset;
 
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.55) inset;
+  padding: 8px 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 46px;
+}
+
+.name-box .unified-name{
+  display: block;
+
+  color: var(--c-ink);
+  font-size: var(--font-card-title);
+
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* ---------------------------------------------------------
-   NEGATIVE POP (Unclaimed / Unowned) — VERY OBVIOUS
-   - keep tier trim faintly visible
-   - push “dead card” feel like common/blank template
+   NEGATIVE CARDS (UNCLAIMED / UNOWNED)
 --------------------------------------------------------- */
 
-.unified-card.is-unclaimed{
+.unified-card.is-unclaimed,
+.unified-card.is-unowned{
   background: var(--neg-shell);
-  border-color: var(--neg-frame);
+  border-color: rgba(255,255,255,0.18);
 
   box-shadow:
-    0 0 0 2px rgba(0,0,0,0.70) inset,
-    0 0 0 1px rgba(255,255,255,0.06) inset,
-    0 0 0 6px rgba(0,0,0,0.55) inset,
+    0 0 0 2px rgba(0,0,0,0.65) inset,
+    0 0 0 1px rgba(255,255,255,0.08) inset,
+    /* step you didn't run: reduce inset here too */
+    0 0 0 4px rgba(0,0,0,0.55) inset,
     var(--card-shadow);
 }
 
-/* tier accent remains, but muted */
-.unified-card.is-unclaimed .tier-badge{
-  color: rgba(255,255,255,0.55);
-  border-color: rgba(255,255,255,0.30);
+.unified-card.is-unclaimed .name-box .unified-name,
+.unified-card.is-unowned .name-box .unified-name{
+  color: var(--dead-ink);
 }
 
-/* header becomes “dead plate” */
-.unified-card.is-unclaimed .unified-header{
-  background: #15181d;
-  border-color: rgba(255,255,255,0.18);
-}
-
-.unified-card.is-unclaimed .unified-name{
-  color: var(--neg-ink);
-}
-
-/* hatch pattern in image + plates (negative pop) */
-.unified-card.is-unclaimed .unified-img{
-  filter: grayscale(1);
-  opacity: 0.88;
-
-  background:
-    repeating-linear-gradient(
-      135deg,
-      rgba(255,255,255,0.06) 0px,
-      rgba(255,255,255,0.06) 6px,
-      rgba(0,0,0,0.00) 6px,
-      rgba(0,0,0,0.00) 12px
-    ),
-    var(--win-bg);
-}
-
-.unified-card.is-unclaimed .unified-status,
-.unified-card.is-unclaimed .unified-info{
+.unified-card.is-unclaimed .unified-art,
+.unified-card.is-unowned .unified-art{
+  position: relative;
   filter: grayscale(1);
   opacity: 0.90;
-  color: var(--neg-ink);
-  border-color: rgba(255,255,255,0.12);
+}
+
+.unified-card.is-unclaimed .unified-art::after,
+.unified-card.is-unowned .unified-art::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(255,255,255,0.10) 0px,
+    rgba(255,255,255,0.10) 6px,
+    rgba(0,0,0,0.00) 6px,
+    rgba(0,0,0,0.00) 12px
+  );
+
+  pointer-events: none;
 }
 
 /* ---------------------------------------------------------
-   LOST (kept weaker than unclaimed; still negative)
+   RTF-2 requested lines at end
 --------------------------------------------------------- */
 
-.unified-card.is-lost .unified-img,
-.unified-card.is-lost .unified-info,
-.unified-card.is-lost .unified-status{
-  filter: grayscale(1);
-  opacity: 0.70;
-}
-
-/* ---------------------------------------------------------
-   HIGHLIGHTED
---------------------------------------------------------- */
-
-.unified-card.is-highlighted{
-  outline: 3px solid var(--success);
-  outline-offset: 3px;
-}
+.tier-badge:empty{ display:none; }
+.unified-name{ line-height: 1; }
