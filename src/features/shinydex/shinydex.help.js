@@ -1,21 +1,23 @@
-// v2.0.0-alpha.4
+// v2.0.0-alpha.1
 // src/features/shinydex/shinydex.help.js
 // ShinyDex Help Tooltip — controller-owned UI helper (DOM only)
 
 const HELP_TEXT = [
-  'Search:',
-  '- text    = Pokémon species (name/key)',
-  '- +text   = family filter (any stage match shows full family)',
-  '- text+   = family filter',
-  '- @name   = member filter',
+  'Search',
   '',
-  'Hitlist:',
-  '- Standard: text/+/@ supported, Unclaimed supported',
-  '- Leaderboards: only @ filters; Unclaimed disabled',
+  'Pokémon:',
+  '- type a name (partial ok)',
   '',
-  'Living Dex:',
-  '- Standard/Total: text/+/@ supported',
-  '- Unclaimed: shows unowned species only'
+  'Family:',
+  '- +name  (matches any stage)',
+  '- name+  (same)',
+  '',
+  'Member:',
+  '- @name  (filters by member)',
+  '',
+  'Notes',
+  '- Hitlist leaderboards: only @ works',
+  '- Unclaimed button disables on leaderboards'
 ].join('\n');
 
 function ensureHelpEl(root) {
