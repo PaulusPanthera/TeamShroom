@@ -1,13 +1,18 @@
-/* style/tooltip.css */
 /* v2.0.0-alpha.1 */
-/* TOOLTIP — OWNERS POPUP */
+/* style/tooltip.css */
+
+/* =========================================================
+   TOOLTIP — IN-GAME INFO POPUP
+   Design System v1
+   ========================================================= */
 
 .dex-owner-tooltip {
   position: fixed;
   z-index: 9999;
 
-  min-width: 240px;
-  max-width: 440px;
+  min-width: 220px;
+  max-width: 460px;
+  max-height: 220px;
 
   padding: var(--space-2) var(--space-3);
 
@@ -33,13 +38,70 @@
 
 .dex-owner-tooltip .owners-title {
   margin-bottom: var(--space-1);
+
   font-size: var(--font-card-stat);
   letter-spacing: 1px;
+
   color: var(--accent);
 }
 
 .dex-owner-tooltip .owners-list {
-  white-space: pre-line;
+  position: relative;
+  min-height: 3.5em;
+  overflow: hidden;
+
   color: var(--text-muted);
-  line-height: 1.35;
+}
+
+.dex-owner-tooltip .scrolling-names {
+  white-space: pre-line;
+  text-align: center;
+}
+
+/* HELP TOOLTIP */
+.dex-help-tooltip {
+  position: fixed;
+  z-index: 9999;
+
+  width: min(460px, calc(100vw - 24px));
+
+  padding: var(--space-2) var(--space-3);
+
+  background: var(--bg-panel);
+  color: var(--text-main);
+
+  border: var(--border-soft);
+  border-radius: 12px;
+
+  box-shadow: var(--shadow-depth);
+
+  font-family: 'Press Start 2P', monospace;
+  font-size: var(--font-small);
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+
+.dex-help-tooltip.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.dex-help-tooltip .help-title {
+  color: var(--accent);
+  margin-bottom: var(--space-1);
+  letter-spacing: 1px;
+  font-size: var(--font-card-stat);
+}
+
+.dex-help-tooltip .help-body > div {
+  margin: 6px 0;
+  color: var(--text-muted);
+}
+
+.dex-help-tooltip b {
+  color: var(--text-main);
 }
