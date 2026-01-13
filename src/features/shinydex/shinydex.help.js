@@ -2,27 +2,28 @@
 // src/features/shinydex/shinydex.help.js
 // Shiny Dex — Help Tooltip (Search Legend)
 
-export function setupShinyDexHelp({
-  buttonEl,
-  controlsRoot
-}) {
-  if (!buttonEl) return;
+let cleanup = null;
+
+export function setupShinyDexHelp({ buttonEl, controlsRoot }) {
+  if (!buttonEl || !controlsRoot) return;
+
+  if (cleanup) cleanup();
 
   let tooltip = controlsRoot.querySelector('.dex-help-tooltip');
   if (!tooltip) {
     tooltip = document.createElement('div');
     tooltip.className = 'dex-help-tooltip';
-    tooltip.style.display = 'none';
     controlsRoot.appendChild(tooltip);
   }
+
+  tooltip.style.display = 'none';
 
   tooltip.innerHTML = `
     <div class="dex-help-title">Search Help</div>
     <div class="dex-help-body">
-      <div><b>Pokémon</b>: type a name (partial ok)</div>
-      <div><b>Family</b>: <b>+name</b> or <b>name+</b> (shows whole family)</div>
-      <div><b>Member</b>: <b>@name</b> (Hitlist: claimed-by · LivingDex: owner)</div>
-      <div><b>Region</b>: <b>r:k</b> / <b>r:kan</b> / <b>region:un</b></div>
+      <div><b>Name</b>: plain text (e.g. <b>bulba</b>)</div>
+      <div><b>Owner</b>: <b>owner:willy</b> / <b>claimedby:willy</b></div>
+      <div><b>Region</b>: <b>r:kanto</b> / <b>region:un</b></div>
       <div><b>Tier</b>: <b>tier:0</b> <b>tier:1</b> <b>tier:2</b> ... <b>tier:lm</b></div>
       <div><b>Flags</b>: <b>unclaimed</b> / <b>claimed</b> / <b>unowned</b> / <b>owned</b></div>
     </div>
@@ -33,31 +34,39 @@ export function setupShinyDexHelp({
     buttonEl.classList.remove('active');
   }
 
-  function toggle() {
-    const open = tooltip.style.display !== 'none';
-    if (open) {
-      close();
-      return;
-    }
+  function open() {
     tooltip.style.display = 'block';
     buttonEl.classList.add('active');
   }
 
-  buttonEl.addEventListener('click', e => {
-    e.preventDefault();
-    e.stopPropagation();
-    toggle();
-  });
+  function toggle() {
+    if (tooltip.style.display === 'none') open();
+    else close();
+  }
 
-  document.addEventListener('click', e => {
-    if (!tooltip) return;
+  const onButtonClick = (e) => {
+    e.preventDefault();
+    toggle();
+  };
+
+  const onDocClick = (e) => {
     if (tooltip.style.display === 'none') return;
     if (tooltip.contains(e.target)) return;
     if (buttonEl.contains(e.target)) return;
     close();
-  });
+  };
 
-  document.addEventListener('keydown', e => {
+  const onKeyDown = (e) => {
     if (e.key === 'Escape') close();
-  });
+  };
+
+  buttonEl.addEventListener('click', onButtonClick);
+  document.addEventListener('click', onDocClick);
+  document.addEventListener('keydown', onKeyDown);
+
+  cleanup = () => {
+    buttonEl.removeEventListener('click', onButtonClick);
+    document.removeEventListener('click', onDocClick);
+    document.removeEventListener('keydown', onKeyDown);
+  };
 }
