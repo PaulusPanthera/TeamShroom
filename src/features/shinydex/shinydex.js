@@ -1,76 +1,85 @@
 // v2.0.0-alpha.1
 // src/features/shinydex/shinydex.js
-// Shiny Dex Page Controller
-// Owns ALL DOM under #page-content
+// Shiny Dex Page Controller (Hitlist + Living Dex)
+// Owns ALL DOM under #page-content for this page only.
 
+import { renderShinyDexHitlist } from './shinydex.hitlist.js';
+import { renderShinyLivingDex } from './shinylivingdex.js';
+import { bindDexOwnerTooltip } from './shinydex.tooltip.js';
+import { bindShinyDexHelp } from './shinydex.help.js';
 import { buildSearchContext } from './shinydex.search.js';
-import { prepareHitlistRenderModel } from './shinydex.hitlist.presenter.js';
-import { prepareLivingDexRenderModel } from './shinydex.livingdex.presenter.js';
 
-import { renderHitlistFromPresenterModel } from './shinydex.hitlist.js';
-import { renderLivingDexFromPresenterModel } from './shinylivingdex.js';
-
-import { setupDexOwnerTooltip as bindDexOwnerTooltip } from './shinydex.tooltip.js';
-import { setupShinyDexHelp as bindShinyDexHelp } from './shinydex.help.js';
-
-export function setupShinyDexPage({
-  weeklyModel,
-  shinyShowcaseRows
-}) {
-  const root = document.getElementById('page-content');
+export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
+  var root = document.getElementById('page-content');
   root.innerHTML = '';
 
+  // --------------------------------------------------
+  // UI SKELETON (scoped wrapper for CSS)
+  // --------------------------------------------------
+
   root.innerHTML = `
-    <div class="search-controls">
-      <input id="dex-search" type="text" placeholder="Search" />
+    <div class="shinydex-page">
+      <div class="search-controls">
+        <input id="dex-search" type="text" placeholder="Search" />
 
-      <button id="dex-help" class="dex-help-btn" aria-label="Help"></button>
+        <button id="dex-help" class="help-btn" type="button" aria-label="Search Help">
+          <img class="help-icon" src="img/symbols/questionmarksprite.png" alt="?">
+        </button>
 
-      <button id="dex-unclaimed" class="dex-tab">
-        Unclaimed
-      </button>
+        <button id="dex-unclaimed" class="dex-tab" type="button">
+          Unclaimed
+        </button>
 
-      <select id="dex-sort"></select>
+        <select id="dex-sort"></select>
 
-      <span id="dex-count"></span>
+        <span id="dex-count"></span>
+      </div>
+
+      <div class="search-controls">
+        <button id="tab-hitlist" class="dex-tab active" type="button">
+          Shiny Dex Hitlist
+        </button>
+        <button id="tab-living" class="dex-tab" type="button">
+          Shiny Living Dex
+        </button>
+      </div>
+
+      <div id="shiny-dex-container"></div>
     </div>
-
-    <div class="search-controls">
-      <button id="tab-hitlist" class="dex-tab active">
-        Shiny Dex Hitlist
-      </button>
-      <button id="tab-living" class="dex-tab">
-        Shiny Living Dex
-      </button>
-    </div>
-
-    <div id="shiny-dex-container"></div>
   `;
 
-  const searchInput = root.querySelector('#dex-search');
-  const helpBtn = root.querySelector('#dex-help');
-  const unclaimedBtn = root.querySelector('#dex-unclaimed');
-  const sortSelect = root.querySelector('#dex-sort');
-  const countLabel = root.querySelector('#dex-count');
+  // --------------------------------------------------
+  // ELEMENTS
+  // --------------------------------------------------
 
-  const tabHitlist = root.querySelector('#tab-hitlist');
-  const tabLiving = root.querySelector('#tab-living');
+  var searchInput = root.querySelector('#dex-search');
+  var helpBtn = root.querySelector('#dex-help');
+  var unclaimedBtn = root.querySelector('#dex-unclaimed');
+  var sortSelect = root.querySelector('#dex-sort');
+  var countLabel = root.querySelector('#dex-count');
 
-  // help + owners tooltip
-  bindShinyDexHelp(helpBtn);
-  bindDexOwnerTooltip(document.getElementById('shiny-dex-container'));
+  var tabHitlist = root.querySelector('#tab-hitlist');
+  var tabLiving = root.querySelector('#tab-living');
 
-  const searchCtx = buildSearchContext();
+  // --------------------------------------------------
+  // STATE (single source of truth)
+  // --------------------------------------------------
 
-  // per-view state (no leakage)
-  const state = {
-    view: 'hitlist',
+  var state = {
+    view: 'hitlist',        // 'hitlist' | 'living'
     search: '',
-    showUnclaimed: false,
+    unclaimed: false,
 
-    hitlistSort: 'standard',   // standard | claims | points
-    livingSort: 'standard'     // standard | total
+    // keep independent dropdown state per tab
+    hitlistSort: 'standard',  // 'standard' | 'claims' | 'points'
+    livingSort: 'standard'    // 'standard' | 'total'
   };
+
+  var searchCtx = buildSearchContext();
+
+  // --------------------------------------------------
+  // SORT OPTIONS (per view)
+  // --------------------------------------------------
 
   function configureSort() {
     sortSelect.innerHTML = '';
@@ -90,78 +99,87 @@ export function setupShinyDexPage({
       sortSelect.value = state.livingSort;
     }
 
-    // button styling
-    unclaimedBtn.classList.toggle('active', !!state.showUnclaimed);
-
-    // disable unclaimed in hitlist scoreboard modes
-    const hitScore = state.view === 'hitlist' && (state.hitlistSort === 'claims' || state.hitlistSort === 'points');
-    unclaimedBtn.disabled = !!hitScore;
-    unclaimedBtn.classList.toggle('is-disabled', !!hitScore);
-    if (hitScore) state.showUnclaimed = false;
-    unclaimedBtn.classList.toggle('active', !!state.showUnclaimed);
-
-    // disable typing in hitlist leaderboard modes (still visible, inert)
-    searchInput.disabled = !!hitScore;
-    searchInput.classList.toggle('is-disabled', !!hitScore);
-    if (hitScore) searchInput.value = state.search; // keep display
+    updateControlStates();
   }
+
+  function updateControlStates() {
+    var hitlistMode = state.view === 'hitlist' ? state.hitlistSort : null;
+    var leaderboard = state.view === 'hitlist' && (hitlistMode === 'claims' || hitlistMode === 'points');
+
+    // SEARCH: never blocked (member-search is valid in leaderboards)
+    searchInput.disabled = false;
+
+    // Unclaimed: disabled only in hitlist leaderboards (3rd state)
+    unclaimedBtn.disabled = !!leaderboard;
+    unclaimedBtn.classList.toggle('is-disabled', !!leaderboard);
+
+    // Help: always available
+    helpBtn.disabled = false;
+
+    unclaimedBtn.classList.toggle('active', !!state.unclaimed);
+  }
+
+  // --------------------------------------------------
+  // RENDER PIPELINE
+  // --------------------------------------------------
 
   function render() {
-    const sort = state.view === 'hitlist' ? state.hitlistSort : state.livingSort;
+    updateControlStates();
+
+    var viewState = {
+      search: state.search,
+      showUnclaimed: !!state.unclaimed,
+      sort: state.view === 'hitlist' ? state.hitlistSort : state.livingSort
+    };
 
     if (state.view === 'hitlist') {
-      const model = prepareHitlistRenderModel({
-        weeklyModel,
-        viewState: {
-          sort,
-          search: state.search,
-          showUnclaimed: state.showUnclaimed
-        },
-        searchCtx
+      renderShinyDexHitlist({
+        weeklyModel: weeklyModel,
+        viewState: viewState,
+        searchCtx: searchCtx,
+        countLabel: countLabel
       });
-
-      // scoreboard sections use member layout, still render in region-section
-      renderHitlistFromPresenterModel(model, countLabel);
-      return;
+    } else {
+      renderShinyLivingDex({
+        showcaseRows: shinyShowcaseRows,
+        viewState: viewState,
+        searchCtx: searchCtx,
+        countLabel: countLabel
+      });
     }
-
-    const model = prepareLivingDexRenderModel({
-      showcaseRows: shinyShowcaseRows,
-      viewState: {
-        sort,
-        search: state.search,
-        showUnclaimed: state.showUnclaimed
-      },
-      searchCtx
-    });
-
-    renderLivingDexFromPresenterModel(model, countLabel);
   }
 
-  // events
-  searchInput.addEventListener('input', e => {
-    state.search = String(e.target.value || '');
+  // --------------------------------------------------
+  // EVENTS
+  // --------------------------------------------------
+
+  searchInput.addEventListener('input', function (e) {
+    state.search = String(e.target.value || '').toLowerCase();
     render();
   });
 
-  unclaimedBtn.addEventListener('click', () => {
+  unclaimedBtn.addEventListener('click', function () {
     if (unclaimedBtn.disabled) return;
-    state.showUnclaimed = !state.showUnclaimed;
-    unclaimedBtn.classList.toggle('active', state.showUnclaimed);
+    state.unclaimed = !state.unclaimed;
     render();
   });
 
-  sortSelect.addEventListener('change', e => {
-    const v = e.target.value;
+  sortSelect.addEventListener('change', function (e) {
+    var v = e.target.value;
 
     if (state.view === 'hitlist') state.hitlistSort = v;
     else state.livingSort = v;
+
+    // if hitlist leaderboards, force unclaimed off
+    if (state.view === 'hitlist' && (state.hitlistSort === 'claims' || state.hitlistSort === 'points')) {
+      state.unclaimed = false;
+    }
 
     configureSort();
     render();
   });
 
-  tabHitlist.addEventListener('click', () => {
+  tabHitlist.addEventListener('click', function () {
     if (state.view === 'hitlist') return;
 
     state.view = 'hitlist';
@@ -172,7 +190,7 @@ export function setupShinyDexPage({
     render();
   });
 
-  tabLiving.addEventListener('click', () => {
+  tabLiving.addEventListener('click', function () {
     if (state.view === 'living') return;
 
     state.view = 'living';
@@ -183,7 +201,20 @@ export function setupShinyDexPage({
     render();
   });
 
-  // init
+  // --------------------------------------------------
+  // BIND HELP + TOOLTIP (once, delegated)
+  // --------------------------------------------------
+
+  bindDexOwnerTooltip();
+  bindShinyDexHelp({
+    buttonEl: helpBtn,
+    inputEl: searchInput
+  });
+
+  // --------------------------------------------------
+  // INIT
+  // --------------------------------------------------
+
   configureSort();
   render();
 }
