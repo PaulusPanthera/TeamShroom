@@ -1,6 +1,7 @@
+// v2.0.0-alpha.1
 // src/features/shinydex/shinydex.tooltip.js
 // Owner tooltip binding for Living Dex cards
-// No state mutation outside DOM; idempotent per-container binding.
+// Paged rotation (no scrolling). Idempotent per-container binding.
 
 import { prettifyPokemonName } from '../../utils/utils.js';
 
@@ -14,7 +15,9 @@ function ensureTooltipEl() {
   el.className = 'dex-owner-tooltip';
   el.innerHTML = `
     <div class="owners-title"></div>
-    <div class="owners-list"><div class="scrolling-names"></div></div>
+    <div class="owners-list">
+      <div class="owners-pages"></div>
+    </div>
   `;
   document.body.appendChild(el);
   return el;
@@ -29,7 +32,6 @@ function positionTooltip(el, x, y) {
   const vw = window.innerWidth;
   const vh = window.innerHeight;
 
-  // First place near cursor, then clamp within viewport.
   el.style.left = `${x + pad}px`;
   el.style.top = `${y + pad}px`;
 
@@ -41,20 +43,43 @@ function positionTooltip(el, x, y) {
   el.style.top = `${top}px`;
 }
 
-function setTooltipContent(el, pokemonKey, owners) {
-  const title = el.querySelector('.owners-title');
-  const names = el.querySelector('.scrolling-names');
+function uniqPreserveOrder(arr) {
+  const seen = new Set();
+  const out = [];
+  for (const v of arr) {
+    const k = String(v);
+    if (seen.has(k)) continue;
+    seen.add(k);
+    out.push(k);
+  }
+  return out;
+}
 
+function buildPages(owners, pageSize) {
+  const pages = [];
+  for (let i = 0; i < owners.length; i += pageSize) {
+    pages.push(owners.slice(i, i + pageSize));
+  }
+  return pages;
+}
+
+function setTooltipTitle(el, pokemonKey) {
+  const title = el.querySelector('.owners-title');
   const mon = pokemonKey ? prettifyPokemonName(pokemonKey) : '';
   title.textContent = mon ? `Owners — ${mon}` : 'Owners';
+}
 
-  if (!owners || owners.length === 0) {
-    names.textContent = 'No owners';
-    return;
+function setTooltipPage(el, pageLines, remainder) {
+  const box = el.querySelector('.owners-pages');
+
+  const lines = [...pageLines];
+  if (remainder > 0 && lines.length > 0) {
+    lines[lines.length - 1] = `${lines[lines.length - 1]}  (+${remainder} more)`;
+  } else if (lines.length === 0) {
+    lines.push('No owners');
   }
 
-  // Pre-line is handled by CSS; keep it simple.
-  names.textContent = owners.join('\n');
+  box.textContent = lines.join('\n');
 }
 
 export function bindDexOwnerTooltip(container) {
@@ -64,6 +89,38 @@ export function bindDexOwnerTooltip(container) {
   const tooltip = ensureTooltipEl();
 
   let activeCard = null;
+  let rotTimer = null;
+  let pageIndex = 0;
+  let pages = [];
+  let pageSize = 8;
+
+  function stopRotation() {
+    if (rotTimer) {
+      clearInterval(rotTimer);
+      rotTimer = null;
+    }
+  }
+
+  function startRotation(totalOwners) {
+    stopRotation();
+
+    if (pages.length <= 1) return;
+
+    rotTimer = setInterval(() => {
+      const box = tooltip.querySelector('.owners-pages');
+      box.classList.add('fade');
+
+      window.setTimeout(() => {
+        pageIndex = (pageIndex + 1) % pages.length;
+
+        const shownCount = (pageIndex + 1) * pageSize;
+        const remainder = Math.max(0, totalOwners - shownCount);
+
+        setTooltipPage(tooltip, pages[pageIndex], remainder);
+        box.classList.remove('fade');
+      }, 120);
+    }, 1700);
+  }
 
   function show(card, evt) {
     activeCard = card;
@@ -75,14 +132,25 @@ export function bindDexOwnerTooltip(container) {
       owners = [];
     }
 
-    setTooltipContent(tooltip, card.dataset.pokemon || '', owners);
+    owners = uniqPreserveOrder(Array.isArray(owners) ? owners : []);
+    setTooltipTitle(tooltip, card.dataset.pokemon || '');
+
+    pageIndex = 0;
+    pages = buildPages(owners, pageSize);
+
+    const remainder = Math.max(0, owners.length - pageSize);
+    setTooltipPage(tooltip, pages[0] || [], remainder);
+
     tooltip.classList.add('show');
     positionTooltip(tooltip, evt.clientX, evt.clientY);
+
+    startRotation(owners.length);
   }
 
   function hide() {
     activeCard = null;
     tooltip.classList.remove('show');
+    stopRotation();
   }
 
   container.addEventListener('mouseover', evt => {
@@ -103,9 +171,12 @@ export function bindDexOwnerTooltip(container) {
     hide();
   });
 
-  window.addEventListener('scroll', () => {
-    if (!activeCard) return;
-    tooltip.classList.remove('show');
-    activeCard = null;
-  }, { passive: true });
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!activeCard) return;
+      hide();
+    },
+    { passive: true }
+  );
 }
