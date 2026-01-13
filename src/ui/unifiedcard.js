@@ -1,109 +1,136 @@
-// v2.0.0-alpha.4
 // src/ui/unifiedcard.js
-// Unified Card Renderer — HARD CONTRACT
-// Structure and size are immutable
+// Unified Card Renderer — template layout (name lower + big status box)
 
 export function renderUnifiedCard({
   name,
   img,
-  info = '',
-  cardType,               // 'member' | 'pokemon'
+  info = '',             // kept for compatibility, not used as primary name display now
+  cardType = '',
+
   unclaimed = false,
-  unowned = false,        // alias -> same visuals as unclaimed
+  unowned = false,
   lost = false,
   highlighted = false,
-  symbols = {},           // { secret, alpha, run, favorite, clip, safari, egg, event, ... }
+
+  tier,                  // 'lm' | '0'...'6'
+  owners,                // string[] optional for owner tooltip
   clip,
-  owners,                 // string[] (optional) -> data-owners for tooltip
-  tier                    // 'lm' | '0'...'6' (optional)
+
+  // variant system:
+  // base claim always exists; variants optionally exist: alpha/secret/safari
+  variants = {
+    base: { label: '', icons: {} },
+    alpha: null,
+    secret: null,
+    safari: null
+  },
+
+  // initial variant to display
+  activeVariant = 'base'
 }) {
-  const isNegative = !!(unclaimed || unowned);
+  const isNeg = !!(unclaimed || unowned);
 
   const classes = [
     'unified-card',
-    isNegative && 'is-unclaimed',
+    isNeg && (unclaimed ? 'is-unclaimed' : 'is-unowned'),
     lost && 'is-lost',
     highlighted && 'is-highlighted'
-  ]
-    .filter(Boolean)
-    .join(' ');
+  ].filter(Boolean).join(' ');
 
-  let attributes = `
+  let attrs = `
     class="${classes}"
-    data-card-type="${escapeAttr(cardType || '')}"
+    data-card-type="${escapeAttr(cardType)}"
     data-name="${escapeAttr(name)}"
+    data-variant="${escapeAttr(activeVariant)}"
   `;
 
-  if (clip) attributes += ` data-clip="${escapeAttr(clip)}"`;
   if (tier != null && String(tier).trim() !== '') {
-    attributes += ` data-tier="${escapeAttr(String(tier).toLowerCase())}"`;
+    attrs += ` data-tier="${escapeAttr(String(tier).toLowerCase())}"`;
   }
+  if (clip) attrs += ` data-clip="${escapeAttr(clip)}"`;
   if (Array.isArray(owners) && owners.length) {
-    attributes += ` data-owners="${escapeAttr(JSON.stringify(owners))}"`;
+    attrs += ` data-owners="${escapeAttr(JSON.stringify(owners))}"`;
   }
-
-  const symbolMap = {
-    // status
-    secret: 'secretshinysprite.png',
-    alpha: 'alphasprite.png',
-    clip: 'clipsprite.png',
-
-    // methods
-    mpb: 'mpbsprite.png',
-    mgb: 'mgbsprite.png',
-    mub: 'mubsprite.png',
-    mcb: 'mcbsprite.png',
-    mdb: 'mdbsprite.png',
-    egg: 'eggsprite.png',
-    safari: 'safarisprite.png',
-    single: 'singlesprite.png',
-    swarm: 'swarmsprite.png',
-    raid: 'raidsprite.png',
-    fishing: 'fishingsprite.png',
-    headbutt: 'headbuttsprite.png',
-    rocksmash: 'rocksmashsprite.png',
-    honeytree: 'honeytreesprite.png',
-    event: 'eventsprite.png'
-  };
-
-  const symbolHtml = Object.entries(symbols)
-    .filter(([, enabled]) => enabled)
-    .map(([key]) =>
-      symbolMap[key]
-        ? `
-          <img
-            class="symbol ${key}"
-            src="img/symbols/${symbolMap[key]}"
-            alt="${key}"
-          >
-        `
-        : ''
-    )
-    .join('');
 
   const tierLabel = tier != null && String(tier).trim() !== '' ? String(tier).toUpperCase() : '';
 
+  const v = normalizeVariants(variants);
+  const current = v[activeVariant] || v.base;
+
+  const availableKeys = Object.keys(v).filter(k => k !== 'base' && v[k]);
+  const cycleOrder = ['base', ...availableKeys];
+
+  // status icons shown in slot; active state depends on variant key
+  const statusIcons = renderStatusIcons(activeVariant, v);
+
   return `
-    <div ${attributes} title="${escapeAttr(name)}">
+    <div ${attrs} data-variant-cycle="${escapeAttr(JSON.stringify(cycleOrder))}">
       <div class="unified-header">
         <span class="tier-badge" aria-hidden="true">${escapeHtml(tierLabel)}</span>
-        <span class="unified-name">${escapeHtml(name)}</span>
-        <div class="symbol-strip" aria-hidden="true">${symbolHtml}</div>
+        <div class="symbol-strip" aria-hidden="true">
+          ${renderHeaderSymbols(current)}
+        </div>
       </div>
 
-      <img class="unified-img" src="${img}" alt="${escapeAttr(name)}">
+      <div class="unified-art">
+        <img class="unified-img" src="${img}" alt="${escapeAttr(name)}">
+      </div>
 
-      <div class="unified-status" aria-hidden="true"></div>
+      <div class="status-slot" tabindex="0" role="button" aria-label="Switch card variant">
+        <span class="status-pill" title="${escapeAttr(current.label || '')}">
+          ${escapeHtml(current.label || 'STANDARD')}
+        </span>
+        ${statusIcons}
+      </div>
 
-      <span class="unified-info">${escapeHtml(info)}</span>
+      <div class="name-box">
+        <span class="unified-name" title="${escapeAttr(name)}">${escapeHtml(name)}</span>
+      </div>
     </div>
+  `;
+}
+
+function normalizeVariants(variants) {
+  const base = variants?.base || { label: 'STANDARD', icons: {} };
+  return {
+    base: { label: base.label || 'STANDARD', icons: base.icons || {} },
+    alpha: variants?.alpha || null,
+    secret: variants?.secret || null,
+    safari: variants?.safari || null
+  };
+}
+
+function renderHeaderSymbols(currentVariant) {
+  // keep header strip minimal; leave it for "weird symbols" you already use
+  // this function can be wired later to your existing symbol set
+  return '';
+}
+
+function renderStatusIcons(activeKey, variants) {
+  // show the three variant icons if that variant exists
+  // icons are "wired symbols on the card"
+  const exists = {
+    alpha: !!variants.alpha,
+    secret: !!variants.secret,
+    safari: !!variants.safari
+  };
+
+  const icon = (key, file) => {
+    if (!exists[key]) return '';
+    const on = activeKey === key ? 'is-active' : '';
+    return `<img class="status-icon ${on}" src="img/symbols/${file}" alt="${key}">`;
+  };
+
+  return `
+    ${icon('alpha', 'alphasprite.png')}
+    ${icon('secret', 'secretshinysprite.png')}
+    ${icon('safari', 'safarisprite.png')}
   `;
 }
 
 function escapeAttr(str) {
   return String(str).replace(/"/g, '&quot;');
 }
-
 function escapeHtml(str) {
   return String(str)
     .replace(/&/g, '&amp;')
