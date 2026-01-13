@@ -1,12 +1,13 @@
-// v2.0.0-alpha.2
+// v2.0.0-alpha.3
 // src/features/shinydex/shinydex.tooltip.js
-// Shiny Dex — Owners Tooltip (paged + freeze mode + auto page swap)
+// Shiny Dex — Owners Tooltip (paged + freeze mode + old-school auto swap)
 
 let tooltipEl = null;
 let isBound = false;
 
 const PAGE_SIZE = 10;
-const AUTO_SWAP_MS = 1600;
+const AUTO_SWAP_MS = 1700;
+const SWAP_CLASS_MS = 160;
 
 function ensureTooltip() {
   if (tooltipEl) return tooltipEl;
@@ -23,7 +24,6 @@ function ensureTooltip() {
   `;
 
   document.body.appendChild(tooltipEl);
-
   tooltipEl.style.left = '-9999px';
   tooltipEl.style.top = '-9999px';
 
@@ -81,6 +81,7 @@ export function bindDexOwnerTooltip(root) {
     timer = window.setInterval(() => {
       if (!activeCard) return;
       if (frozen) return;
+
       pageIndex = (pageIndex + 1) % pages.length;
       renderPage(true);
     }, AUTO_SWAP_MS);
@@ -98,9 +99,7 @@ export function bindDexOwnerTooltip(root) {
     const tr = tt.getBoundingClientRect();
 
     let x = r.right + pad;
-    if (x + tr.width > window.innerWidth - pad) {
-      x = r.left - tr.width - pad;
-    }
+    if (x + tr.width > window.innerWidth - pad) x = r.left - tr.width - pad;
 
     let y = r.top;
     y = clamp(y, pad, window.innerHeight - tr.height - pad);
@@ -109,21 +108,27 @@ export function bindDexOwnerTooltip(root) {
     tt.style.top = `${Math.round(y)}px`;
   }
 
-  function renderPage(withFade) {
+  function swapEffect() {
+    // “old-school” step-swap (no opacity blink)
+    listEl.classList.remove('swap');
+    // force reflow so the class re-triggers reliably
+    void listEl.offsetWidth; // eslint-disable-line no-unused-expressions
+    listEl.classList.add('swap');
+    window.setTimeout(() => listEl.classList.remove('swap'), SWAP_CLASS_MS);
+  }
+
+  function renderPage(withSwap) {
     if (!pages.length) return;
 
     const current = pages[pageIndex] || [];
     const total = pages.length;
 
-    if (withFade) {
-      listEl.classList.add('fade');
-      window.setTimeout(() => listEl.classList.remove('fade'), 120);
-    }
-
     listEl.innerHTML = current.map(o => `<div class="owner-row">${o}</div>`).join('');
 
     pageEl.textContent = total > 1 ? `${pageIndex + 1} / ${total}` : '';
     nextBtn.style.display = total > 1 ? 'inline-block' : 'none';
+
+    if (withSwap) swapEffect();
   }
 
   function show() {
@@ -204,8 +209,8 @@ export function bindDexOwnerTooltip(root) {
 
       const card = getCardFromEventTarget(e.target);
       if (!card) return;
-
       if (card === activeCard) return;
+
       setActiveCard(card);
     },
     true
