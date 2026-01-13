@@ -67,6 +67,7 @@ export function prepareHitlistRenderModel({
     });
 
     let visibleLeaderboard = fullLeaderboard;
+
     if (parsed.kind === 'member' && parsed.q) {
       visibleLeaderboard = fullLeaderboard.filter(m =>
         memberMatches(m.name, parsed.q)
@@ -88,11 +89,14 @@ export function prepareHitlistRenderModel({
     };
   }
 
+  const forceUnclaimed = !!parsed.flags.unclaimed;
+  const forceClaimed = !!parsed.flags.claimed;
+  const effectiveUnclaimed = forceUnclaimed ? true : (forceClaimed ? false : !!viewState.showUnclaimed);
+
   let modeSet = snapshot;
 
-  if (viewState.showUnclaimed) {
-    modeSet = modeSet.filter(e => !e.claimed);
-  }
+  if (effectiveUnclaimed) modeSet = modeSet.filter(e => !e.claimed);
+  if (forceClaimed) modeSet = modeSet.filter(e => e.claimed);
 
   let visible = modeSet;
 
@@ -116,7 +120,7 @@ export function prepareHitlistRenderModel({
     byRegion[region].push(e);
   });
 
-  const countLabelText = viewState.showUnclaimed
+  const countLabelText = effectiveUnclaimed
     ? `${unclaimedSpecies} Unclaimed`
     : `${claimedSpecies} / ${totalSpecies} Claimed`;
 
@@ -126,7 +130,7 @@ export function prepareHitlistRenderModel({
       const stats = regionStats[region] || { claimed: 0, total: 0 };
       const regionUnclaimed = stats.total - stats.claimed;
 
-      const title = viewState.showUnclaimed
+      const title = effectiveUnclaimed
         ? `${region.toUpperCase()} (${regionUnclaimed} Unclaimed)`
         : `${region.toUpperCase()} (${stats.claimed} / ${stats.total})`;
 
