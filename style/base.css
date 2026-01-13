@@ -1,3 +1,6 @@
+/* v2.0.0-alpha.1 */
+/* style/base.css */
+
 :root {
   /* =========================================================
      COLOR SYSTEM — DESIGN SYSTEM v1 (LOCKED)
@@ -11,11 +14,7 @@
   /* Card Interior (warm, collectible feel) */
   --card: #fff6cc;
   --card-alt: #ffe9a8;
-  --card-gradient: linear-gradient(
-    180deg,
-    var(--card),
-    var(--card-alt)
-  );
+  --card-gradient: linear-gradient(180deg, var(--card), var(--card-alt));
 
   /* Accents */
   --accent: #f25c2a;      /* Shroom Orange */
@@ -91,8 +90,6 @@ body {
   background-image: url('https://www.transparenttextures.com/patterns/square-bg.png');
   background-size: 120px 120px;
   background-attachment: fixed;
-
-  /* No transitions for theme changes — dark mode is default */
 }
 
 /* =========================================================
