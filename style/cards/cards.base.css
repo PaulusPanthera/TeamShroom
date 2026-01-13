@@ -1,0 +1,209 @@
+/* v3.1 — Unified collector cards (8-bit RPG)
+
+   Goals:
+   - Fixed-size cards; layout adapts around them.
+   - No glow/blur. Hard edges. Pixel depth.
+   - Header wider than art window (collector-card framing).
+   - Long names never overflow/bend layout.
+   - Unclaimed/Unowned reads "dead" negatively.
+*/
+
+:root{
+  /* drives .dex-grid in style/layout.css */
+  --card-w: 190px;
+  --card-h: 262px;
+
+  --u-card-bg: rgba(0,0,0,0.45);
+  --u-card-fill: #0e151c;
+  --u-card-plate: #0b1117;
+  --u-text: #f2e6c6;
+  --u-muted: rgba(255,255,255,0.70);
+
+  /* defaults overwritten by tier classes */
+  --u-frame: #516075;
+  --u-accent: #ff7a1a;
+
+  --u-depth: rgba(0,0,0,0.55);
+}
+
+/* --------------------------------------------------
+   CORE CARD
+-------------------------------------------------- */
+
+.unified-card{
+  width: var(--card-w);
+  height: var(--card-h);
+
+  display: grid;
+  grid-template-rows: 30px 92px 34px 1fr; /* header, art, info, variants */
+  gap: 8px;
+  padding: 10px;
+
+  background: var(--u-card-fill);
+  border: 2px solid var(--u-frame);
+  border-radius: 0;
+
+  /* pixel depth only (no blur) */
+  box-shadow:
+    0 6px 0 var(--u-depth),
+    0 0 0 2px rgba(0,0,0,0.35) inset,
+    0 0 0 4px rgba(0,0,0,0.45) inset;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.unified-card *{ box-sizing: border-box; }
+
+/* --------------------------------------------------
+   HEADER STRIP
+-------------------------------------------------- */
+
+.unified-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px;
+
+  background: var(--u-card-bg);
+  border: 2px solid rgba(255,255,255,0.18);
+  border-radius: 0;
+
+  overflow: hidden;
+}
+
+.unified-name-wrap{
+  min-width: 0;
+  flex: 1;
+}
+
+.unified-name{
+  display: block;
+  font-family: "Press Start 2P", monospace;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--u-text);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.unified-name.is-long{ font-size: 11px; }
+.unified-name.is-very-long{ font-size: 10px; }
+
+.unified-value{
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+
+  padding: 5px 7px;
+  background: rgba(0,0,0,0.55);
+  border: 2px solid var(--u-accent);
+  border-radius: 0;
+
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  line-height: 1;
+  color: var(--u-text);
+  user-select: none;
+}
+
+.unified-value-number{ font-size: 10px; }
+.unified-value-suffix{ font-size: 9px; opacity: 0.75; }
+
+/* --------------------------------------------------
+   ART WINDOW (narrower than header)
+-------------------------------------------------- */
+
+.unified-art{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 10px; /* narrower than header */
+
+  background: rgba(0,0,0,0.60);
+  border: 2px solid rgba(255,255,255,0.25);
+  border-radius: 0;
+
+  box-shadow:
+    0 0 0 2px rgba(0,0,0,0.25) inset,
+    0 0 0 1px rgba(255,255,255,0.08);
+
+  overflow: hidden;
+}
+
+.unified-art img{
+  width: 96px;
+  height: 72px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+/* --------------------------------------------------
+   INFO PLATE (small box above variants)
+-------------------------------------------------- */
+
+.unified-info{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 8px;
+
+  background: var(--u-card-bg);
+  border: 2px solid rgba(255,255,255,0.18);
+  border-radius: 0;
+
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.25) inset;
+}
+
+.unified-info-text{
+  font-family: "Press Start 2P", monospace;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--u-text);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* --------------------------------------------------
+   NEGATIVE POP (UNCLAIMED / UNOWNED)
+-------------------------------------------------- */
+
+.unified-card.is-unclaimed{
+  border-color: #666;
+  filter: saturate(0.65);
+}
+
+.unified-card.is-unclaimed .unified-header,
+.unified-card.is-unclaimed .unified-info{
+  border-color: rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.58);
+}
+
+.unified-card.is-unclaimed .unified-value{
+  border-color: rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.75);
+}
+
+.unified-card.is-unclaimed .unified-art{
+  background-image:
+    repeating-linear-gradient(
+      135deg,
+      rgba(255,255,255,0.10) 0,
+      rgba(255,255,255,0.10) 6px,
+      rgba(0,0,0,0.00) 6px,
+      rgba(0,0,0,0.00) 12px
+    );
+}
+
+.unified-card.is-unclaimed .unified-art img{
+  filter: grayscale(1) contrast(0.95) brightness(0.90);
+}
