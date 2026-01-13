@@ -153,3 +153,22 @@
   height: 20px;
   image-rendering: pixelated;
 }
+
+/* ---------------------------------------------------------
+   SHINY DEX — ACTIVE TAB STATES
+--------------------------------------------------------- */
+
+/* prevent layout shift when active border appears */
+.shiny-dex-controls .dex-tab,
+.shiny-dex-tabs .dex-tab {
+  border: 2px solid transparent;
+}
+
+/* active state (tabs + Unclaimed) */
+.shiny-dex-controls .dex-tab.active,
+.shiny-dex-tabs .dex-tab.active {
+  background: var(--bg-panel);
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.35) inset;
+}
