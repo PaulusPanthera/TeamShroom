@@ -1,50 +1,78 @@
 // v2.0.0-alpha.1
 // src/features/shinydex/shinydex.hitlist.js
-// Shiny Dex — HITLIST RENDERER (DOM only)
+// Hitlist Renderer — DOM only (consumes presenter model)
 
-import { prepareHitlistRenderModel } from './shinydex.hitlist.presenter.js';
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
+import { prepareHitlistRenderModel } from './shinydex.hitlist.presenter.js';
 
 function getPokemonGif(key) {
-  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
+  var overrides = {
+    mrmime: 'mr-mime',
+    mimejr: 'mime-jr',
+    'nidoran-f': 'nidoran-f',
+    'nidoran-m': 'nidoran-m',
+    typenull: 'type-null',
+    'porygon-z': 'porygon-z'
+  };
+  var k = overrides[key] || key;
+  return 'https://img.pokemondb.net/sprites/black-white/anim/shiny/' + k + '.gif';
 }
 
-export function renderShinyDexHitlist({
-  weeklyModel,
-  viewState,
-  searchCtx,
-  countLabel
-}) {
-  const container = document.getElementById('shiny-dex-container');
+export function renderShinyDexHitlist(opts) {
+  var weeklyModel = opts && opts.weeklyModel;
+  var viewState = opts && opts.viewState;
+  var searchCtx = opts && opts.searchCtx;
+  var countLabel = opts && opts.countLabel;
+
+  var container = document.getElementById('shiny-dex-container');
+  if (!container) return;
+
   container.innerHTML = '';
 
-  const model = prepareHitlistRenderModel({
-    weeklyModel,
-    viewState,
-    searchCtx
-  });
+  var model;
+  try {
+    model = prepareHitlistRenderModel({
+      weeklyModel: weeklyModel || [],
+      viewState: viewState || { sort: 'standard', search: '', showUnclaimed: false },
+      searchCtx: searchCtx || {}
+    });
+  } catch (e) {
+    container.innerHTML =
+      '<div style="text-align:center;opacity:0.7;padding:20px;">Hitlist failed to render.</div>';
+    if (countLabel) countLabel.textContent = '';
+    return;
+  }
 
-  countLabel.textContent = model.countLabelText || '';
+  if (countLabel) countLabel.textContent = model.countLabelText || '';
 
+  var sections = (model && model.sections) ? model.sections : [];
+  if (!sections.length) {
+    container.innerHTML =
+      '<div style="text-align:center;opacity:0.7;padding:20px;">No results.</div>';
+    return;
+  }
+
+  // scoreboard mode
   if (model.mode === 'scoreboard') {
-    model.sections.forEach(sectionModel => {
-      const section = document.createElement('section');
+    sections.forEach(function (sec) {
+      var section = document.createElement('section');
       section.className = 'scoreboard-member-section';
 
-      const header = document.createElement('h2');
-      header.textContent = sectionModel.title;
+      var header = document.createElement('h2');
+      header.textContent = sec.title || '';
 
-      const grid = document.createElement('div');
+      var grid = document.createElement('div');
       grid.className = 'dex-grid';
 
-      sectionModel.entries.forEach(entry => {
+      (sec.entries || []).forEach(function (entry) {
         grid.insertAdjacentHTML(
           'beforeend',
           renderUnifiedCard({
+            key: entry.pokemon,
             name: prettifyPokemonName(entry.pokemon),
             img: getPokemonGif(entry.pokemon),
-            info: entry.info || `${entry.points} pts`,
+            info: entry.info || (entry.points + ' pts'),
             highlighted: true,
             cardType: 'pokemon'
           })
@@ -58,23 +86,25 @@ export function renderShinyDexHitlist({
     return;
   }
 
-  model.sections.forEach(sectionModel => {
-    const section = document.createElement('section');
+  // standard mode
+  sections.forEach(function (sec) {
+    var section = document.createElement('section');
     section.className = 'region-section';
 
-    const header = document.createElement('h2');
-    header.textContent = sectionModel.title;
+    var header = document.createElement('h2');
+    header.textContent = sec.title || '';
 
-    const grid = document.createElement('div');
+    var grid = document.createElement('div');
     grid.className = 'dex-grid';
 
-    sectionModel.entries.forEach(entry => {
+    (sec.entries || []).forEach(function (entry) {
       grid.insertAdjacentHTML(
         'beforeend',
         renderUnifiedCard({
+          key: entry.pokemon,
           name: prettifyPokemonName(entry.pokemon),
           img: getPokemonGif(entry.pokemon),
-          info: entry.claimed ? entry.claimedBy : 'Unclaimed',
+          info: entry.claimed ? (entry.claimedBy || '') : 'Unclaimed',
           unclaimed: !entry.claimed,
           highlighted: !!entry.highlighted,
           cardType: 'pokemon'
