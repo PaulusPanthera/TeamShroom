@@ -1,4 +1,4 @@
-// v2.0.0-alpha.1
+// v2.0.0-alpha.2
 // src/features/shinydex/shinydex.search.js
 // Shiny Dex — Search Parsing + Matching + Family Context
 
@@ -10,13 +10,16 @@ export function parseSearch(input) {
 
   const out = {
     raw: raw,
-    kind: 'species',  // 'species' | 'family' | 'member'
+    kind: 'species', // 'species' | 'family' | 'member'
     q: '',
     filters: {
       region: null,
       tier: null
     },
     flags: {
+      // synonyms are intentionally linked:
+      // unclaimed <-> unowned
+      // claimed <-> owned
       unclaimed: false,
       claimed: false,
       unowned: false,
@@ -26,25 +29,47 @@ export function parseSearch(input) {
 
   if (!lower) return out;
 
-  // tokens split by whitespace
   const tokens = lower.split(/\s+/).filter(Boolean);
 
-  // detect prefix forms first (r: / region: / tier:)
+  let memberToken = null;
+
+  // prefix tokens (can be combined)
   tokens.forEach(t => {
+    // region
     if (t.indexOf('r:') === 0) out.filters.region = t.slice(2);
     if (t.indexOf('region:') === 0) out.filters.region = t.slice(7);
 
+    // tier
     if (t.indexOf('tier:') === 0) out.filters.tier = t.slice(5);
+    if (t.indexOf('t:') === 0) out.filters.tier = t.slice(2);
+
+    // owner/member shortcuts (all map to member search)
+    if (t.indexOf('owner:') === 0) memberToken = t.slice(6);
+    if (t.indexOf('claimedby:') === 0) memberToken = t.slice(9);
+    if (t.indexOf('o:') === 0) memberToken = t.slice(2);
+    if (t.indexOf('cb:') === 0) memberToken = t.slice(3);
+    if (t.indexOf('ot:') === 0) memberToken = t.slice(3); // alias
   });
 
+  // flags (synonyms linked across both dexes)
   tokens.forEach(t => {
-    if (t === 'unclaimed') out.flags.unclaimed = true;
-    if (t === 'claimed') out.flags.claimed = true;
-    if (t === 'unowned') out.flags.unowned = true;
-    if (t === 'owned') out.flags.owned = true;
+    if (t === 'unclaimed' || t === 'unowned') {
+      out.flags.unclaimed = true;
+      out.flags.unowned = true;
+    }
+    if (t === 'claimed' || t === 'owned') {
+      out.flags.claimed = true;
+      out.flags.owned = true;
+    }
   });
 
-  // member search
+  // token-based owner search
+  if (memberToken) {
+    out.kind = 'member';
+    out.q = memberToken;
+  }
+
+  // explicit member search (@name / member:name) overrides token-based
   const at = lower.match(/(^| )@([a-z0-9._-]+)/);
   if (at && at[2]) {
     out.kind = 'member';
@@ -57,6 +82,9 @@ export function parseSearch(input) {
     out.q = member[2];
     return out;
   }
+
+  // if member search was set via owner/claimedby tokens, stop here
+  if (out.kind === 'member' && out.q) return out;
 
   // family search (+name / name+ / family:name)
   const fam1 = lower.match(/(^| )\+([a-z0-9._-]+)/);
@@ -78,12 +106,22 @@ export function parseSearch(input) {
     return out;
   }
 
-  // default species query: remove filter tokens from visible query
+  // default species query: remove control tokens from visible query
   const removed = tokens.filter(t => {
     if (t.indexOf('r:') === 0) return false;
     if (t.indexOf('region:') === 0) return false;
+
     if (t.indexOf('tier:') === 0) return false;
-    if (t === 'unclaimed' || t === 'claimed' || t === 'unowned' || t === 'owned') return false;
+    if (t.indexOf('t:') === 0) return false;
+
+    if (t.indexOf('owner:') === 0) return false;
+    if (t.indexOf('claimedby:') === 0) return false;
+    if (t.indexOf('o:') === 0) return false;
+    if (t.indexOf('cb:') === 0) return false;
+    if (t.indexOf('ot:') === 0) return false;
+
+    if (t === 'unclaimed' || t === 'unowned' || t === 'claimed' || t === 'owned') return false;
+
     return true;
   });
 
@@ -115,7 +153,11 @@ searchCtx contract:
 }
 */
 export function buildSearchContext({ dexOrder, familyRootsByPokemon }) {
-  const order = Array.isArray(dexOrder) && dexOrder.length ? dexOrder : Object.keys(familyRootsByPokemon || {});
+  const order =
+    Array.isArray(dexOrder) && dexOrder.length
+      ? dexOrder
+      : Object.keys(familyRootsByPokemon || {});
+
   const rootByPokemon = {};
   const pokemonByRoot = {};
   const displayByPokemon = {};
@@ -125,7 +167,8 @@ export function buildSearchContext({ dexOrder, familyRootsByPokemon }) {
     if (!key) return;
 
     const roots = (familyRootsByPokemon && familyRootsByPokemon[key]) || null;
-    const root = Array.isArray(roots) && roots.length ? String(roots[0] || '').toLowerCase() : key;
+    const root =
+      Array.isArray(roots) && roots.length ? String(roots[0] || '').toLowerCase() : key;
 
     rootByPokemon[key] = root;
 
