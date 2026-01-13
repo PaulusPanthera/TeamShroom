@@ -3,8 +3,9 @@
 // Shiny Dex — Owners Tooltip (paged + freeze mode)
 
 let tooltipEl = null;
-let ownerTooltipBound = false;
+let isBound = false;
 
+const PAGE_SIZE = 10;
 
 function ensureTooltip() {
   if (tooltipEl) return tooltipEl;
@@ -16,35 +17,42 @@ function ensureTooltip() {
     <div class="owners-list"></div>
     <div class="owners-footer">
       <span class="owners-page"></span>
-      <button class="owners-next" type="button">Next</button>
+      <button type="button" class="owners-next">Next</button>
     </div>
   `;
 
+  // Positioning uses fixed; tooltip should live at body root.
   document.body.appendChild(tooltipEl);
+
+  // Hidden default position (CSS fades with .show)
+  tooltipEl.style.left = '-9999px';
+  tooltipEl.style.top = '-9999px';
+
   return tooltipEl;
 }
 
-function clamp(n, a, b) {
-  return Math.max(a, Math.min(b, n));
-}
-
-function chunk(arr, size) {
+function chunk(array, size) {
   const out = [];
-  for (let i = 0; i < arr.length; i += size) {
-    out.push(arr.slice(i, i + size));
-  }
+  for (let i = 0; i < array.length; i += size) out.push(array.slice(i, i + size));
   return out;
 }
-export function bindDexOwnerTooltip(root) {
-  if (ownerTooltipBound) return;
-  ownerTooltipBound = true;
 
-  const doc = root || document;
-  const tt = ensureTooltip();
-  ...
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
+
+function safeJsonParse(str) {
+  try {
+    return JSON.parse(str);
+  } catch {
+    return null;
+  }
 }
 
 export function bindDexOwnerTooltip(root) {
+  if (isBound) return;
+  isBound = true;
+
   const doc = root || document;
   const tt = ensureTooltip();
 
@@ -64,13 +72,49 @@ export function bindDexOwnerTooltip(root) {
     timer = null;
   }
 
-  function startTimer() {
-    stopTimer();
-    timer = window.setInterval(() => {
-      if (frozen) return;
-      pageIndex = (pageIndex + 1) % Math.max(1, pages.length);
-      renderPage(true);
-    }, 3000);
+  function setPositionNearCard(cardEl) {
+    if (!cardEl) return;
+
+    const r = cardEl.getBoundingClientRect();
+    const pad = 12;
+
+    // Force measure
+    tt.style.left = '-9999px';
+    tt.style.top = '-9999px';
+    tt.classList.add('show');
+    const tr = tt.getBoundingClientRect();
+
+    // Prefer right side; if overflow, flip left.
+    let x = r.right + pad;
+    if (x + tr.width > window.innerWidth - pad) {
+      x = r.left - tr.width - pad;
+    }
+
+    // Vertical: align with top of card but keep inside viewport.
+    let y = r.top;
+    y = clamp(y, pad, window.innerHeight - tr.height - pad);
+
+    tt.style.left = `${Math.round(x)}px`;
+    tt.style.top = `${Math.round(y)}px`;
+  }
+
+  function renderPage(withFade) {
+    if (!pages.length) return;
+
+    const current = pages[pageIndex] || [];
+    const total = pages.length;
+
+    if (withFade) {
+      listEl.classList.add('fade');
+      window.setTimeout(() => listEl.classList.remove('fade'), 120);
+    }
+
+    listEl.innerHTML = current
+      .map(o => `<div class="owner-row">${o}</div>`)
+      .join('');
+
+    pageEl.textContent = total > 1 ? `${pageIndex + 1} / ${total}` : '';
+    nextBtn.style.display = total > 1 ? 'inline-block' : 'none';
   }
 
   function show() {
@@ -81,165 +125,168 @@ export function bindDexOwnerTooltip(root) {
     tt.classList.remove('show');
     tt.style.left = '-9999px';
     tt.style.top = '-9999px';
+
     stopTimer();
+
     frozen = false;
+    tt.classList.remove('is-frozen');
+
     activeCard = null;
     pages = [];
     pageIndex = 0;
-    tt.classList.remove('is-frozen');
+
+    titleEl.textContent = '';
+    listEl.innerHTML = '';
+    pageEl.textContent = '';
+    nextBtn.style.display = 'none';
   }
 
-  function setPositionNearCard(card) {
-    const r = card.getBoundingClientRect();
-    const pad = 12;
-
-    const desiredLeft = r.left + (r.width / 2) - (tt.offsetWidth / 2);
-    const desiredTop = r.top - tt.offsetHeight - 10;
-
-    const left = clamp(desiredLeft, pad, window.innerWidth - tt.offsetWidth - pad);
-    const top = clamp(desiredTop, pad, window.innerHeight - tt.offsetHeight - pad);
-
-    tt.style.left = left + 'px';
-    tt.style.top = top + 'px';
+  function loadOwnersFromCard(cardEl) {
+    const raw = cardEl?.getAttribute('data-owners');
+    const parsed = safeJsonParse(raw);
+    const owners = Array.isArray(parsed) ? parsed.filter(Boolean).map(String) : [];
+    return owners;
   }
 
-  function renderPage(withFade) {
-    const totalPages = Math.max(1, pages.length);
-    const idx = clamp(pageIndex, 0, totalPages - 1);
+  function setActiveCard(cardEl) {
+    if (!cardEl) return;
 
-    const names = pages[idx] || [];
-    const html = names.length
-      ? names.map(n => `<div class="owner-name">${escapeHtml(n)}</div>`).join('')
-      : `<div class="owner-name">—</div>`;
+    activeCard = cardEl;
 
-    if (withFade) {
-      listEl.classList.add('fade');
-      window.setTimeout(() => {
-        listEl.innerHTML = html;
-        listEl.classList.remove('fade');
-      }, 120);
-    } else {
-      listEl.innerHTML = html;
-    }
+    const name = cardEl.getAttribute('data-name') || '';
+    const owners = loadOwnersFromCard(cardEl);
 
-    pageEl.textContent = totalPages > 1 ? `${idx + 1}/${totalPages}` : '';
-    nextBtn.style.display = frozen && totalPages > 1 ? 'inline-flex' : 'none';
-    tt.classList.toggle('is-frozen', frozen);
-  }
-
-  function openForCard(card) {
-    const ownersRaw = card.dataset.owners;
-    if (!ownersRaw) return;
-
-    let owners = [];
-    try {
-      owners = JSON.parse(ownersRaw);
-      if (!Array.isArray(owners)) owners = [];
-    } catch (_) {
-      owners = [];
-    }
-
-    owners = owners
-      .map(x => String(x || '').trim())
-      .filter(Boolean);
-
-    const pokemonName = card.dataset.name || '';
-    titleEl.textContent = `Owners — ${pokemonName}`;
-
-    pages = chunk(owners, 8);
-    pageIndex = 0;
-
-    renderPage(false);
-    show();
-    setPositionNearCard(card);
-    startTimer();
-  }
-
-  function toggleFreeze(card) {
-    if (!activeCard || activeCard !== card) return;
-    frozen = !frozen;
-    if (frozen) {
-      stopTimer();
-    } else {
-      startTimer();
-    }
-    renderPage(false);
-  }
-
-  function escapeHtml(s) {
-    return String(s)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
-  doc.addEventListener('mouseover', e => {
-    const card = e.target && e.target.closest
-      ? e.target.closest('.unified-card[data-owners]')
-      : null;
-
-    if (!card) return;
-    if (frozen) return;
-
-    activeCard = card;
-    openForCard(card);
-  });
-
-  doc.addEventListener('mousemove', e => {
-    if (!activeCard) return;
-    if (frozen) return;
-
-    // keep it near the card, not the cursor (stable)
-    setPositionNearCard(activeCard);
-  });
-
-  doc.addEventListener('mouseout', e => {
-    if (!activeCard) return;
-    if (frozen) return;
-
-    const to = e.relatedTarget;
-    if (to && activeCard.contains(to)) return;
-
-    // leaving the card: hide
-    hide();
-  });
-
-  doc.addEventListener('click', e => {
-    const card = e.target && e.target.closest
-      ? e.target.closest('.unified-card[data-owners]')
-      : null;
-
-    // click on card toggles freeze
-    if (card) {
-      if (!activeCard || activeCard !== card) {
-        activeCard = card;
-        frozen = false;
-        openForCard(card);
-        return;
-      }
-      toggleFreeze(card);
-      e.preventDefault();
+    if (!owners.length) {
+      hide();
       return;
     }
 
-    // clicking outside closes if frozen
-    if (frozen) {
-      hide();
-    }
-  });
+    pages = chunk(owners, PAGE_SIZE);
+    pageIndex = 0;
 
+    titleEl.textContent = name ? `Owners — ${name}` : 'Owners';
+    renderPage(false);
+
+    setPositionNearCard(cardEl);
+    show();
+  }
+
+  function toggleFreeze() {
+    if (!activeCard) return;
+
+    frozen = !frozen;
+    tt.classList.toggle('is-frozen', frozen);
+
+    if (!frozen) {
+      // when unfreezing, keep it visible only if still hovering card
+      // (next mouseout will hide)
+      stopTimer();
+    }
+  }
+
+  // Delegation target: unified cards with data-owners
+  function getCardFromEventTarget(target) {
+    if (!target || typeof target.closest !== 'function') return null;
+    return target.closest('.unified-card[data-owners]');
+  }
+
+  // Hover: show tooltip (unless frozen)
+  doc.addEventListener(
+    'mouseover',
+    e => {
+      if (frozen) return;
+
+      const card = getCardFromEventTarget(e.target);
+      if (!card) return;
+
+      if (card === activeCard) return;
+      setActiveCard(card);
+    },
+    true
+  );
+
+  // Move: keep aligned (unless frozen)
+  doc.addEventListener(
+    'mousemove',
+    () => {
+      if (!activeCard) return;
+      if (frozen) return;
+      setPositionNearCard(activeCard);
+    },
+    { passive: true }
+  );
+
+  // Leave card: hide (unless frozen)
+  doc.addEventListener(
+    'mouseout',
+    e => {
+      if (frozen) return;
+      if (!activeCard) return;
+
+      const fromCard = getCardFromEventTarget(e.target);
+      if (!fromCard || fromCard !== activeCard) return;
+
+      const to = e.relatedTarget;
+      if (to && (tt.contains(to) || activeCard.contains(to))) return;
+
+      hide();
+    },
+    true
+  );
+
+  // Click on card toggles freeze
+  doc.addEventListener(
+    'click',
+    e => {
+      const card = getCardFromEventTarget(e.target);
+      if (!card) return;
+
+      // If clicking a different card, switch first (and freeze toggles from false->true)
+      if (card !== activeCard) {
+        setActiveCard(card);
+        frozen = false;
+        tt.classList.remove('is-frozen');
+      }
+
+      toggleFreeze();
+    },
+    true
+  );
+
+  // Next page button
   nextBtn.addEventListener('click', e => {
     e.preventDefault();
     e.stopPropagation();
+
     if (!pages.length) return;
     pageIndex = (pageIndex + 1) % pages.length;
     renderPage(true);
   });
 
-  window.addEventListener('scroll', () => {
-    if (activeCard && !frozen) setPositionNearCard(activeCard);
-  }, { passive: true });
+  // Click outside closes when frozen
+  document.addEventListener(
+    'click',
+    e => {
+      if (!frozen) return;
+      if (tt.contains(e.target)) return;
+      if (activeCard && activeCard.contains(e.target)) return;
+      hide();
+    },
+    true
+  );
+
+  // Escape closes
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') hide();
+  });
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (activeCard && !frozen) setPositionNearCard(activeCard);
+    },
+    { passive: true }
+  );
 
   window.addEventListener('resize', () => {
     if (activeCard) setPositionNearCard(activeCard);
