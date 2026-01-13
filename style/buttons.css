@@ -17,7 +17,7 @@ button {
 }
 
 /* ---------------------------------------------------------
-   ACTION BUTTONS (e.g. Unclaimed toggle, Help)
+   ACTION BUTTONS (e.g. Unclaimed toggle)
 --------------------------------------------------------- */
 
 .search-controls button:not(.dex-tab) {
@@ -44,20 +44,12 @@ button {
   border-color: var(--accent);
 }
 
-/* Disabled third-state (muted, no hover, never looks active) */
-.search-controls button:not(.dex-tab):disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-  filter: none;
-  background: var(--bg-panel);
-  color: var(--text-muted);
-  border-color: var(--bg-panel);
-  box-shadow: none;
-}
-
-/* Help icon button sizing */
+/* Icon-only action button */
 .dex-help-btn {
   padding: 6px 10px;
+  width: 44px;
+  height: 34px;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -94,7 +86,6 @@ button {
   color: var(--text-main);
 }
 
-/* ACTIVE TAB = ORANGE / RED */
 .dex-tab.active {
   background: var(--accent);
   color: var(--text-dark);
@@ -129,7 +120,6 @@ button {
   color: var(--accent);
 }
 
-/* ONE ACTIVE NAV ITEM ONLY */
 .nav a.active {
   background: var(--accent);
   color: var(--text-dark);
