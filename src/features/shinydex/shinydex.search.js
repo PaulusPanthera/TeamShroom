@@ -17,6 +17,7 @@ Parsed search output:
   }
   filters: {
     tier?: string        // '0'..'6' | 'lm'
+    region?: string      // 'kanto' | 'johto' | ...
   }
 }
 */
@@ -64,6 +65,16 @@ export function parseSearch(raw) {
       const mTier = t.match(/^tier:(lm|[0-6])$/);
       if (mTier) {
         filters.tier = mTier[1];
+        continue;
+      }
+    }
+
+    // region filter (region:kanto | r:kanto)
+    {
+      const mRegion = t.match(/^(region|r):(.*)$/);
+      if (mRegion) {
+        const rest = (p.slice(p.indexOf(':') + 1) || '').trim();
+        if (rest) filters.region = rest.toLowerCase();
         continue;
       }
     }
