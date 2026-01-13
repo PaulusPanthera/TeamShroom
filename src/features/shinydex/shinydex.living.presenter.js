@@ -16,10 +16,15 @@ function normalizeRegion(raw) {
 }
 
 function regionMatches(regionValue, query) {
-  const r = normalizeRegion(regionValue);
-  const q = normalizeRegion(query);
+  var r = normalizeRegion(regionValue);
+  var q = normalizeRegion(query);
   if (!q) return true;
-  return r.startsWith(q);
+  return r.indexOf(q) === 0; // prefix match
+}
+
+function dexIdx(searchCtx, pokemon) {
+  var v = searchCtx && searchCtx.dexIndex ? searchCtx.dexIndex[pokemon] : undefined;
+  return (typeof v === 'number') ? v : 999999;
 }
 
 export function prepareLivingDexRenderModel({
@@ -27,90 +32,91 @@ export function prepareLivingDexRenderModel({
   viewState,
   searchCtx
 }) {
-  const mode = viewState.sort; // 'standard' | 'total'
-  const parsed = parseSearch(viewState.search);
+  var mode = viewState.sort; // 'standard' | 'total'
+  var parsed = parseSearch(viewState.search);
 
-  // truth snapshot
-  let snapshot = buildShinyLivingDexModel(showcaseRows);
+  var snapshot = buildShinyLivingDexModel(showcaseRows);
 
-  // region filter applies to mode dataset + counters (pre-search)
-  if (parsed.filters?.region) {
-    const q = parsed.filters.region;
-    snapshot = snapshot.filter(e => regionMatches(e.region, q));
+  if (parsed.filters && parsed.filters.region) {
+    var rq = parsed.filters.region;
+    snapshot = snapshot.filter(function (e) { return regionMatches(e.region, rq); });
   }
 
-  const totalSpecies = snapshot.length;
-  const ownedSpecies = snapshot.filter(e => e.count > 0).length;
-  const unownedSpecies = totalSpecies - ownedSpecies;
+  var totalSpecies = snapshot.length;
+  var ownedSpecies = snapshot.filter(function (e) { return e.count > 0; }).length;
+  var unownedSpecies = totalSpecies - ownedSpecies;
 
-  const regionStats = {};
-  snapshot.forEach(e => {
-    const region = e.region || 'unknown';
-    regionStats[region] ??= { total: 0, owned: 0 };
+  var regionStats = {};
+  snapshot.forEach(function (e) {
+    var region = e.region || 'unknown';
+    if (!regionStats[region]) regionStats[region] = { total: 0, owned: 0 };
     regionStats[region].total += 1;
     if (e.count > 0) regionStats[region].owned += 1;
   });
 
-  const forceUnowned = !!parsed.flags.unowned;
-  const forceOwned = !!parsed.flags.owned;
-  const effectiveUnclaimed = forceUnowned ? true : (forceOwned ? false : !!viewState.showUnclaimed);
+  var forceUnowned = !!parsed.flags.unowned;
+  var forceOwned = !!parsed.flags.owned;
+  var effectiveUnclaimed = forceUnowned ? true : (forceOwned ? false : !!viewState.showUnclaimed);
 
-  let modeSet = snapshot;
+  var modeSet = snapshot;
 
   if (mode === 'total') {
-    modeSet = [...modeSet].sort((a, b) => {
+    modeSet = [].concat(modeSet).sort(function (a, b) {
       if (b.count !== a.count) return b.count - a.count;
-      return (searchCtx.dexIndex[a.pokemon] ?? 999999) - (searchCtx.dexIndex[b.pokemon] ?? 999999);
+      return dexIdx(searchCtx, a.pokemon) - dexIdx(searchCtx, b.pokemon);
     });
   }
 
-  if (effectiveUnclaimed) modeSet = modeSet.filter(e => e.count === 0);
-  if (forceOwned) modeSet = modeSet.filter(e => e.count > 0);
+  if (effectiveUnclaimed) modeSet = modeSet.filter(function (e) { return e.count === 0; });
+  if (forceOwned) modeSet = modeSet.filter(function (e) { return e.count > 0; });
 
-  let visible = modeSet;
+  var visible = modeSet;
 
   if (parsed.kind === 'member' && parsed.q) {
-    visible = visible.filter(e =>
-      Array.isArray(e.owners) && e.owners.some(o => memberMatches(o, parsed.q))
-    );
+    visible = visible.filter(function (e) {
+      return Array.isArray(e.owners) && e.owners.some(function (o) { return memberMatches(o, parsed.q); });
+    });
   } else if (parsed.kind === 'family' && parsed.q) {
-    const roots = resolveFamilyRootsByQuery(searchCtx, parsed.q);
-    visible = visible.filter(e =>
-      roots.has(searchCtx.rootByPokemon[e.pokemon] || e.pokemon)
-    );
+    var roots = resolveFamilyRootsByQuery(searchCtx, parsed.q);
+    visible = visible.filter(function (e) {
+      var root = searchCtx.rootByPokemon[e.pokemon] || e.pokemon;
+      return roots.has(root);
+    });
   } else if (parsed.kind === 'species' && parsed.q) {
-    visible = visible.filter(e => speciesMatches(e.pokemon, parsed.q));
+    visible = visible.filter(function (e) { return speciesMatches(e.pokemon, parsed.q); });
   }
 
-  const byRegion = {};
-  visible.forEach(e => {
-    const region = e.region || 'unknown';
-    byRegion[region] ??= [];
+  var byRegion = {};
+  visible.forEach(function (e) {
+    var region = e.region || 'unknown';
+    if (!byRegion[region]) byRegion[region] = [];
     byRegion[region].push(e);
   });
 
-  const countLabelText = effectiveUnclaimed
-    ? `${unownedSpecies} Unowned`
-    : `${ownedSpecies} / ${totalSpecies} Owned`;
+  var countLabelText = effectiveUnclaimed
+    ? (unownedSpecies + ' Unowned')
+    : (ownedSpecies + ' / ' + totalSpecies + ' Owned');
 
   return {
-    sections: Object.entries(byRegion).map(([region, entries]) => {
-      const stats = regionStats[region] || { owned: 0, total: 0 };
-      const regionUnowned = stats.total - stats.owned;
+    sections: Object.entries(byRegion).map(function (pair) {
+      var region = pair[0];
+      var entries = pair[1];
 
-      const title = effectiveUnclaimed
-        ? `${region.toUpperCase()} (${regionUnowned} Unowned)`
-        : `${region.toUpperCase()} (${stats.owned} / ${stats.total})`;
+      var stats = regionStats[region] || { owned: 0, total: 0 };
+      var regionUnowned = stats.total - stats.owned;
+
+      var title = effectiveUnclaimed
+        ? (region.toUpperCase() + ' (' + regionUnowned + ' Unowned)')
+        : (region.toUpperCase() + ' (' + stats.owned + ' / ' + stats.total + ')');
 
       return {
         key: region,
-        title,
-        entries: entries.map(e => ({
-          ...e,
-          highlighted: e.count > 0
-        }))
+        title: title,
+        entries: entries.map(function (e) {
+          return Object.assign({}, e, { highlighted: e.count > 0 });
+        })
       };
     }),
-    countLabelText
+    countLabelText: countLabelText
   };
 }
