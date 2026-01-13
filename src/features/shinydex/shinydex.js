@@ -92,10 +92,13 @@ export function setupShinyDexPage({
   // HELP + TOOLTIP
   // --------------------------------------------------
 
-  setupShinyDexHelp({
-    buttonEl: helpBtn,
-    controlsRoot: root
-  });
+  const controlsBar = root.querySelector('.shiny-dex-controls') || root;
+
+setupShinyDexHelp({
+  buttonEl: helpBtn,
+  controlsRoot: controlsBar
+});
+
 
   bindDexOwnerTooltip(document);
 
