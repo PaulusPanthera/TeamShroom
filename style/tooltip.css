@@ -8,9 +8,9 @@
   position: fixed;
   z-index: 9999;
 
-  min-width: 220px;
+  min-width: 240px;
   max-width: 520px;
-  max-height: 220px;
+  max-height: 260px;
 
   padding: var(--space-2) var(--space-3);
 
@@ -53,7 +53,7 @@
 
 .dex-owner-tooltip .owners-list {
   position: relative;
-  height: 3.2em;
+  height: 5.5em;
   overflow: hidden;
 
   color: var(--text-muted);
@@ -63,19 +63,61 @@
   position: absolute;
   inset: 0;
 
-  text-align: center;
+  text-align: left;
   white-space: pre-line;
 
-  animation: tooltip-scroll 14s linear infinite;
+  animation-name: tooltip-scroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 14s; /* default; JS may override per tooltip */
 }
 
 /* ---------------------------------------------------------
-   SCROLL ANIMATION (READABLE)
+   SCROLL ANIMATION (SLOWER, READABLE)
    --------------------------------------------------------- */
 
 @keyframes tooltip-scroll {
   0%   { transform: translateY(0); }
   20%  { transform: translateY(0); }
-  80%  { transform: translateY(calc(-100% + 3.2em)); }
-  100% { transform: translateY(calc(-100% + 3.2em)); }
+  90%  { transform: translateY(calc(-100% + 5.5em)); }
+  100% { transform: translateY(calc(-100% + 5.5em)); }
+}
+
+/* =========================================================
+   SHINYDEX HELP POPOVER (ANCHOR: TOP SEARCH CONTROLS)
+   ========================================================= */
+
+.dex-help-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+
+  width: min(760px, calc(100vw - 48px));
+
+  padding: var(--space-2) var(--space-3);
+
+  background: var(--bg-panel);
+  color: var(--text-main);
+
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+
+  box-shadow: var(--shadow-depth);
+
+  z-index: 50;
+}
+
+.dex-help-popover.hidden {
+  display: none;
+}
+
+.dex-help-popover .help-title {
+  color: var(--accent);
+  letter-spacing: 1px;
+  margin-bottom: var(--space-1);
+}
+
+.dex-help-popover .help-line {
+  color: var(--text-muted);
+  line-height: 1.5;
 }
