@@ -1,4 +1,4 @@
-// v2.0.0-alpha.3
+// v2.0.0-alpha
 // src/features/shinydex/shinydex.js
 // Shiny Dex Page Controller
 // Owns ALL DOM under #page-content
