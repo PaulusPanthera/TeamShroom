@@ -3,14 +3,10 @@
 // Showcase UI renderer (DOM-only)
 
 import { renderUnifiedCard, escapeHtml } from '../../ui/unifiedcard.js';
-import { prettifyPokemonName } from '../../utils/utils.js';
+import { prettifyPokemonName, getPokemonDbShinyGifSrc } from '../../utils/utils.js';
 
 function normalize(str) {
   return String(str || '').trim().toLowerCase();
-}
-
-function getPokemonGif(pokemonKey) {
-  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${pokemonKey}.gif`;
 }
 
 function isSafariMethod(method) {
@@ -30,7 +26,6 @@ function prettifyMethod(method) {
   if (m === 'single') return 'Single';
   if (m === 'horde') return 'Horde';
   if (m === 'egg') return 'Egg';
-  if (m === 'safari') return 'Safari';
   return String(method).trim();
 }
 
@@ -40,8 +35,9 @@ function buildShinyInfoText(s) {
   if (s && s.sold) parts.push('Sold');
   else if (s && s.lost) parts.push('Lost');
 
-  const method = prettifyMethod(s && s.method);
-  if (method) parts.push(method);
+  const methodRaw = s && s.method ? String(s.method) : '';
+  const method = prettifyMethod(methodRaw);
+  if (method && !isSafariMethod(methodRaw)) parts.push(method);
 
   if (s && s.secret) parts.push('Secret');
   if (s && s.alpha) parts.push('Alpha');
@@ -305,7 +301,7 @@ export function renderMemberShinySections(sections, pokemonPoints) {
       const html = renderUnifiedCard({
         pokemonKey,
         pokemonName: prettifyPokemonName(pokemonKey),
-        artSrc: getPokemonGif(pokemonKey),
+        artSrc: getPokemonDbShinyGifSrc(pokemonKey),
         points,
         infoText: info,
         isUnclaimed: Boolean(s && (s.lost || s.sold)),
