@@ -1,6 +1,6 @@
 // src/data/shinyweekly.model.js
-// Shiny Weekly — aggregation + normalization model
-// Flat CI rows → deterministic weekly structure with explicit flag semantics
+// v2.0.0-beta
+// Shiny Weekly normalization + deterministic event-stream builder (explicit special-flag booleans)
 
 /*
 INTERNAL JSON API — SHINY WEEKLY MODEL OUTPUT
