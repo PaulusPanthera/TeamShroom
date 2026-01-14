@@ -2,23 +2,9 @@
 // v2.0.0-beta
 // ShinyDex-owned adapter translating presenter/domain entries into UnifiedCard props.
 
-import { prettifyPokemonName } from '../../utils/utils.js';
-import { getPokemonPoints } from '../../domains/pokemon/pokemon.data.js';
+import { prettifyPokemonName, getPokemonDbShinyGifSrc } from '../../utils/utils.js';
+import { POKEMON_POINTS } from '../../data/pokemondatabuilder.js';
 import { normalizeVariant } from './shinydex.variants.state.js';
-
-function getPokemonGif(pokemonKey) {
-  const overrides = {
-    mrmime: 'mr-mime',
-    mimejr: 'mime-jr',
-    'nidoran-f': 'nidoran-f',
-    'nidoran-m': 'nidoran-m',
-    typenull: 'type-null',
-    'porygon-z': 'porygon-z'
-  };
-
-  const key = overrides[pokemonKey] || pokemonKey;
-  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
-}
 
 function buildHitlistVariants(entry, standardInfoText, wantedVariant) {
   const vo = entry && entry.variantOwners ? entry.variantOwners : {};
@@ -64,7 +50,7 @@ function buildLivingVariants(entry, totalInfoText, wantedVariant) {
 
 export function toUnifiedCardPropsForHitlist(entry, wantedVariant, options) {
   const key = entry && entry.pokemon ? String(entry.pokemon) : '';
-  const points = Number(entry?.points ?? getPokemonPoints(key) ?? 0);
+  const points = Number(entry?.points ?? POKEMON_POINTS?.[key] ?? 0);
 
   const mode = options && options.mode;
   const isScoreboard = mode === 'scoreboard';
@@ -76,7 +62,7 @@ export function toUnifiedCardPropsForHitlist(entry, wantedVariant, options) {
   return {
     pokemonKey: key,
     pokemonName: prettifyPokemonName(key),
-    artSrc: getPokemonGif(key),
+    artSrc: getPokemonDbShinyGifSrc(key),
     points: points,
     infoText: infoText,
     isUnclaimed: !claimed,
@@ -93,13 +79,13 @@ export function toUnifiedCardPropsForLivingDex(entry, wantedVariant) {
     count === 1 ? '1 Shiny' :
     `${count} Shinies`;
 
-  const points = Number(entry?.points ?? getPokemonPoints(key) ?? 0);
+  const points = Number(entry?.points ?? POKEMON_POINTS?.[key] ?? 0);
   const ownersAll = Array.isArray(entry && entry.owners) ? entry.owners : [];
 
   return {
     pokemonKey: key,
     pokemonName: prettifyPokemonName(key),
-    artSrc: getPokemonGif(key),
+    artSrc: getPokemonDbShinyGifSrc(key),
     points: points,
     infoText: infoText,
     isUnclaimed: count === 0,
