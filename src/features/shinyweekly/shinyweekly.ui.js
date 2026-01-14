@@ -1,29 +1,10 @@
 // src/features/shinyweekly/shinyweekly.ui.js
-// Shiny Weekly — UI ONLY
-// Render-only module. Consumes aggregated weekly model.
+// v2.0.0-beta
+// Shiny Weekly UI renderer (DOM-only)
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
-import { prettifyPokemonName } from '../../utils/utils.js';
+import { prettifyPokemonName, getPokemonDbShinyGifSrc } from '../../utils/utils.js';
 import { getMemberSprite } from '../../utils/membersprite.js';
-
-/* ---------------------------------------------------------
-   SPRITES
---------------------------------------------------------- */
-
-function getPokemonGif(pokemonKey) {
-  const overrides = {
-    mrmime: 'mr-mime',
-    mimejr: 'mime-jr',
-    'nidoran-f': 'nidoran-f',
-    'nidoran-m': 'nidoran-m',
-    typenull: 'type-null',
-    'porygon-z': 'porygon-z'
-  };
-
-  const key = overrides[pokemonKey] || pokemonKey;
-
-  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
-}
 
 /* ---------------------------------------------------------
    RENDER
@@ -85,7 +66,7 @@ function renderShinyWeekly(weeks, container, membersData = []) {
 
           wrapper.innerHTML = renderUnifiedCard({
             name: prettifyPokemonName(mon.pokemon),
-            img: getPokemonGif(mon.pokemon),
+            img: getPokemonDbShinyGifSrc(mon.pokemon),
             info: '',
             cardType: 'pokemon',
             lost: !!mon.lost,
