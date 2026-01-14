@@ -1,6 +1,6 @@
 // src/utils/utils.js
 // v2.0.0-beta
-// Display helpers only. Includes external PokéDB sprite-key mapping used by UI features.
+// Display helpers + PokéDB sprite key mapping used by UI features.
 
 /* ---------------------------------------------------------
    POKÉMON DISPLAY HELPERS
