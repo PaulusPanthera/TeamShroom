@@ -1,5 +1,6 @@
 // src/features/donators/donators.presenter.js
-// Donators — presenter (formatting + view model)
+// v2.0.0-beta
+// Donators presenter (formatting + view model)
 
 import { buildDonatorsModel } from '../../domains/donators/donators.model.js';
 
