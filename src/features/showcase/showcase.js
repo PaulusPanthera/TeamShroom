@@ -3,13 +3,26 @@
 // Showcase page controller
 
 import { buildShowcaseModel } from '../../domains/showcase/showcase.model.js';
-import { filterMembers, sortMembers, buildMemberGalleryCardView } from './showcase.presenter.js';
+import {
+  filterMembers,
+  sortMembers,
+  buildMemberGalleryCardView,
+  filterMemberShinies,
+  sortMemberShinies,
+  buildMemberShinyCounts,
+  groupMemberShiniesByStatus
+} from './showcase.presenter.js';
+
+import { POKEMON_DEX_ORDER } from '../../data/pokemondatabuilder.js';
+
+import { bindUnifiedCardVariantSwitching } from '../../ui/unifiedcard.js';
 import {
   renderShowcaseShell,
   renderShowcaseControls,
   renderShowcaseGallery,
   renderMemberShowcaseShell,
-  renderMemberShinies
+  renderMemberShinyControls,
+  renderMemberShinySections
 } from './showcase.ui.js';
 
 function parseHash() {
@@ -51,6 +64,11 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
   const model = buildShowcaseModel({ membersRows, showcaseRows, pokemonPoints });
   const route = parseHash();
 
+  const dexIndex = {};
+  if (Array.isArray(POKEMON_DEX_ORDER) && POKEMON_DEX_ORDER.length) {
+    POKEMON_DEX_ORDER.forEach((k, i) => { dexIndex[String(k || '').toLowerCase()] = i; });
+  }
+
   if (route.view === 'member') {
     const member = model.byKey[route.memberKey];
 
@@ -62,22 +80,134 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
     renderMemberShowcaseShell({
       name: member.name,
       shinyCount: member.shinyCount,
+      inactiveShinyCount: member.inactiveShinyCount,
       points: member.points,
       spriteSrc: spriteSrcForMember(member)
     });
 
-    renderMemberShinies(member.ownedShinies || member.shinies || [], pokemonPoints);
+    const root = document.getElementById('page-content');
+    bindUnifiedCardVariantSwitching(root);
+
+    const state = {
+      search: '',
+      sortMode: 'newest',
+      statusMode: 'active',
+      variantMode: 'any'
+    };
+
+    const allRows = Array.isArray(member.shinies) ? member.shinies : [];
+    const withIdx = allRows.map((s, i) => Object.assign({}, s, { __idx: i }));
+
+    function renderMember() {
+      const filtered = filterMemberShinies(withIdx, {
+        search: state.search,
+        status: state.statusMode,
+        variant: state.variantMode
+      });
+
+      const sorted = sortMemberShinies(filtered, state.sortMode, {
+        dexIndex,
+        pointsMap: pokemonPoints
+      });
+
+      const grouped = groupMemberShiniesByStatus(sorted);
+
+      const sections = [];
+      if (grouped.active.length) {
+        sections.push({
+          key: 'active',
+          title: `Active (${grouped.active.length})`,
+          entries: grouped.active
+        });
+      }
+      if (grouped.sold.length) {
+        sections.push({
+          key: 'sold',
+          title: `Sold (${grouped.sold.length})`,
+          entries: grouped.sold
+        });
+      }
+      if (grouped.lost.length) {
+        sections.push({
+          key: 'lost',
+          title: `Lost (${grouped.lost.length})`,
+          entries: grouped.lost
+        });
+      }
+
+      const countsVisible = buildMemberShinyCounts(sorted);
+      const countsAll = buildMemberShinyCounts(withIdx);
+
+      const countText = `${countsVisible.total} / ${countsAll.total} Shinies`;
+
+      renderMemberShinyControls({
+        search: state.search,
+        sortMode: state.sortMode,
+        statusMode: state.statusMode,
+        variantMode: state.variantMode,
+        countText
+      });
+
+      renderMemberShinySections(sections, pokemonPoints);
+
+      const input = document.getElementById('member-shiny-search');
+      const sort = document.getElementById('member-shiny-sort');
+      const status = document.getElementById('member-shiny-status');
+      const variant = document.getElementById('member-shiny-variant');
+
+      if (input) {
+        input.oninput = (e) => {
+          state.search = String(e.target.value || '');
+          renderMember();
+        };
+      }
+
+      if (sort) {
+        sort.onchange = (e) => {
+          state.sortMode = String(e.target.value || 'newest');
+          renderMember();
+        };
+      }
+
+      if (status) {
+        status.onchange = (e) => {
+          state.statusMode = String(e.target.value || 'active');
+          renderMember();
+        };
+      }
+
+      if (variant) {
+        variant.onchange = (e) => {
+          state.variantMode = String(e.target.value || 'any');
+          renderMember();
+        };
+      }
+    }
+
+    renderMember();
 
     document.getElementById('showcase-back')?.addEventListener('click', () => {
       location.hash = '#showcase';
     });
 
-    document.querySelectorAll('.unified-card[data-clip]').forEach(card => {
-      card.addEventListener('click', () => {
+    // Delegated clip-open; ignore variant button clicks.
+    if (root && !root.__showcaseClipBound) {
+      root.__showcaseClipBound = true;
+      root.addEventListener('click', (e) => {
+        const btn = e && e.target && typeof e.target.closest === 'function'
+          ? e.target.closest('.variant-btn')
+          : null;
+        if (btn) return;
+
+        const card = e && e.target && typeof e.target.closest === 'function'
+          ? e.target.closest('.unified-card[data-clip]')
+          : null;
+        if (!card) return;
+
         const url = card.getAttribute('data-clip');
         if (url) window.open(url, '_blank');
       });
-    });
+    }
 
     return;
   }
@@ -93,9 +223,14 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
     const filtered = filterMembers(model.members, state.search);
     const sorted = sortMembers(filtered, state.sortMode);
 
+    const totalShinies = sorted.reduce((sum, m) => sum + (Number(m && m.shinyCount) || 0), 0);
+    const totalPoints = sorted.reduce((sum, m) => sum + (Number(m && m.points) || 0), 0);
+
     renderShowcaseControls({
       sortMode: state.sortMode,
-      memberCount: sorted.length
+      memberCount: sorted.length,
+      shinyCount: totalShinies,
+      points: totalPoints
     });
 
     const cardViews = sorted.map(m => buildMemberGalleryCardView(m, state.sortMode));
