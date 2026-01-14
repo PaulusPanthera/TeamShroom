@@ -3,19 +3,16 @@
 */
 
 :root{
-  /* drives .dex-grid in style/layout.css */
   --card-w: 210px;
   --card-h: 282px;
 
-  /* Core card materials (must pop on page bg, but stay dark-mode) */
-  --u-card-fill: var(--bg-panel-alt);   /* main body */
-  --u-card-bg: var(--ui-plate);     /* header/info/variants plates */
-  --u-card-plate: var(--text-dark);  /* deep window base */
+  --u-card-fill: var(--bg-panel-alt);
+  --u-card-bg: var(--ui-plate);
+  --u-card-plate: var(--text-dark);
 
   --u-text: var(--text-main);
   --u-muted: var(--text-muted);
 
-  /* Tier color system (defaults overwritten by tier classes) */
   --u-tier-main: #9ca3a8;
   --u-tier-sub: #596066;
   --u-tier-border: #d4dee6;
@@ -24,12 +21,7 @@
   --u-depth: var(--ui-shadow);
 }
 
-/* --------------------------------------------------
-   CORE CARD
--------------------------------------------------- */
-
 .shinydex-root .unified-card{
-  /* tier wiring must live on the card so it re-evaluates per tier class */
   --u-frame: var(--u-tier-border);
   --u-accent: var(--u-tier-main);
   --u-plate-border: var(--u-tier-sub);
@@ -38,7 +30,7 @@
   height: var(--card-h);
 
   display: grid;
-  grid-template-rows: 34px 92px 32px 1fr; /* header, art, info, variants */
+  grid-template-rows: 34px 92px 32px 1fr;
   gap: 8px;
   padding: 10px;
 
@@ -46,7 +38,6 @@
   border: 2px solid var(--u-frame);
   border-radius: 0;
 
-  /* pixel depth only (no blur) */
   box-shadow:
     0 8px 0 var(--u-depth),
     0 0 0 2px rgba(0,0,0,0.35) inset,
@@ -59,10 +50,44 @@
 .shinydex-root .unified-card *{ box-sizing: border-box; }
 
 /* --------------------------------------------------
+   TIER BODY TINT (SUBTLE, RETRO)
+   - body gets a low-opacity tier wash
+   - plates remain neutral steel for readability
+-------------------------------------------------- */
+
+.shinydex-root .unified-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+
+  background: var(--u-tier-main);
+  opacity: 0.06; /* default tint strength */
+  mix-blend-mode: normal;
+}
+
+.shinydex-root .unified-card.tier-6::after{ opacity: 0.03; }
+.shinydex-root .unified-card.tier-5::after{ opacity: 0.04; }
+.shinydex-root .unified-card.tier-4::after{ opacity: 0.05; }
+.shinydex-root .unified-card.tier-3::after{ opacity: 0.06; }
+.shinydex-root .unified-card.tier-2::after{ opacity: 0.06; }
+.shinydex-root .unified-card.tier-1::after{ opacity: 0.07; }
+.shinydex-root .unified-card.tier-0::after{ opacity: 0.08; }
+.shinydex-root .unified-card.tier-lm::after{ opacity: 0.07; }
+
+/* dead cards must stay dead */
+.shinydex-root .unified-card.is-unclaimed::after{
+  opacity: 0.00;
+}
+
+/* --------------------------------------------------
    HEADER STRIP
 -------------------------------------------------- */
 
 .shinydex-root .unified-header{
+  position: relative;
+  z-index: 1;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -99,6 +124,9 @@
 .shinydex-root .unified-name.is-very-long{ font-size: 10px; }
 
 .shinydex-root .unified-value{
+  position: relative;
+  z-index: 1;
+
   flex: 0 0 auto;
   display: inline-flex;
   align-items: baseline;
@@ -117,15 +145,18 @@
 .shinydex-root .unified-value-text{ font-size: 9px; }
 
 /* --------------------------------------------------
-   ART WINDOW (narrower than header)
+   ART WINDOW
 -------------------------------------------------- */
 
 .shinydex-root .unified-art{
+  position: relative;
+  z-index: 1;
+
   display: flex;
   align-items: center;
   justify-content: center;
 
-  margin: 0 10px; /* narrower than header */
+  margin: 0 10px;
 
   background: var(--u-card-plate);
   border: 2px solid rgba(255,255,255,0.18);
@@ -146,10 +177,13 @@
 }
 
 /* --------------------------------------------------
-   INFO PLATE (small box above variants)
+   INFO PLATE
 -------------------------------------------------- */
 
 .shinydex-root .unified-info{
+  position: relative;
+  z-index: 1;
+
   display: flex;
   align-items: center;
   justify-content: center;
