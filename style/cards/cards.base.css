@@ -8,12 +8,12 @@
   --card-h: 282px;
 
   /* Core card materials (must pop on page bg, but stay dark-mode) */
-  --u-card-fill: #1a232c;   /* main body */
-  --u-card-bg: #24313b;     /* header/info/variants plates */
-  --u-card-plate: #0e1217;  /* deep window base */
+  --u-card-fill: var(--bg-panel-alt);   /* main body */
+  --u-card-bg: var(--ui-plate);     /* header/info/variants plates */
+  --u-card-plate: var(--text-dark);  /* deep window base */
 
-  --u-text: #e6e1db;
-  --u-muted: #a2a29d;
+  --u-text: var(--text-main);
+  --u-muted: var(--text-muted);
 
   /* Tier color system (defaults overwritten by tier classes) */
   --u-tier-main: #9ca3a8;
@@ -25,8 +25,8 @@
   --u-accent: var(--u-tier-main);
   --u-plate-border: var(--u-tier-sub);
 
-  --u-line: #3a4651;
-  --u-depth: #07090c;
+  --u-line: var(--ui-line);
+  --u-depth: var(--ui-shadow);
 }
 
 /* --------------------------------------------------
@@ -201,48 +201,4 @@
       135deg,
       rgba(255,255,255,0.10) 0,
       rgba(255,255,255,0.10) 6px,
-      rgba(0,0,0,0.00) 6px,
-      rgba(0,0,0,0.00) 12px
-    );
-}
-
-.shinydex-root .unified-card.is-unclaimed .unified-art img{
-  filter: grayscale(1) contrast(0.95) brightness(0.90);
-}
-
-/* --------------------------------------------------
-   SHINYDEX LAYOUT CONTAINMENT (6-COLUMN TARGET)
--------------------------------------------------- */
-
-.shinydex-root{
-  --shinydex-grid-max: calc((var(--card-w) * 6) + (var(--space-4) * 5));
-}
-
-.shinydex-root .region-section,
-.shinydex-root .scoreboard-member-section,
-.shinydex-root .shiny-dex-controls,
-.shinydex-root .shiny-dex-tabs{
-  max-width: var(--shinydex-grid-max);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.shinydex-toolbar{
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: linear-gradient(180deg, rgba(16,20,28,0.98), rgba(12,16,22,0.96));
-  border-bottom: 2px solid rgba(255,122,24,0.35);
-  box-shadow: 0 6px 0 rgba(0,0,0,0.45);
-}
-
-.shinydex-toolbar-inner{
-  padding: var(--space-2) var(--space-2);
-}
-
-.shinydex-root .tier-badge:empty{ display:none; }
-
-.shinydex-root #dex-search{
-  width: 340px;
-  max-width: 42vw;
-}
+      rgba(0,0,0,0.0
