@@ -20,11 +20,6 @@
   --u-tier-sub: #596066;
   --u-tier-border: #d4dee6;
 
-  /* wiring for existing rules */
-  --u-frame: var(--u-tier-border);
-  --u-accent: var(--u-tier-main);
-  --u-plate-border: var(--u-tier-sub);
-
   --u-line: var(--ui-line);
   --u-depth: var(--ui-shadow);
 }
@@ -34,6 +29,11 @@
 -------------------------------------------------- */
 
 .shinydex-root .unified-card{
+  /* tier wiring must live on the card so it re-evaluates per tier class */
+  --u-frame: var(--u-tier-border);
+  --u-accent: var(--u-tier-main);
+  --u-plate-border: var(--u-tier-sub);
+
   width: var(--card-w);
   height: var(--card-h);
 
@@ -201,4 +201,48 @@
       135deg,
       rgba(255,255,255,0.10) 0,
       rgba(255,255,255,0.10) 6px,
-      rgba(0,0,0,0.0
+      rgba(0,0,0,0.00) 6px,
+      rgba(0,0,0,0.00) 12px
+    );
+}
+
+.shinydex-root .unified-card.is-unclaimed .unified-art img{
+  filter: grayscale(1) contrast(0.95) brightness(0.90);
+}
+
+/* --------------------------------------------------
+   SHINYDEX LAYOUT CONTAINMENT (6-COLUMN TARGET)
+-------------------------------------------------- */
+
+.shinydex-root{
+  --shinydex-grid-max: calc((var(--card-w) * 6) + (var(--space-4) * 5));
+}
+
+.shinydex-root .region-section,
+.shinydex-root .scoreboard-member-section,
+.shinydex-root .shiny-dex-controls,
+.shinydex-root .shiny-dex-tabs{
+  max-width: var(--shinydex-grid-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.shinydex-toolbar{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: linear-gradient(180deg, rgba(16,20,28,0.98), rgba(12,16,22,0.96));
+  border-bottom: 2px solid rgba(var(--accent-rgb),0.35);
+  box-shadow: 0 6px 0 rgba(0,0,0,0.45);
+}
+
+.shinydex-toolbar-inner{
+  padding: var(--space-2) var(--space-2);
+}
+
+.shinydex-root .tier-badge:empty{ display:none; }
+
+.shinydex-root #dex-search{
+  width: 340px;
+  max-width: 42vw;
+}
