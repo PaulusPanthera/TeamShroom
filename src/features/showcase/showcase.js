@@ -1,183 +1,135 @@
-// v2.0.0-alpha.1
 // src/features/showcase/showcase.js
-// Team Shroom — Showcase & Member Views
-// Rendering + interaction only. No aggregation.
+// v2.0.0-beta
+// Showcase page controller
 
-import { renderUnifiedCard } from '../../ui/unifiedcard.js';
-import { prettifyPokemonName } from '../../utils/utils.js';
+import { buildShowcaseModel } from '../../domains/showcase/showcase.model.js';
+import { filterMembers, sortMembers, buildMemberGalleryCardView, buildMemberShinyCardView } from './showcase.presenter.js';
+import { renderShowcaseShell, renderShowcaseControls, renderShowcaseGallery, renderMemberShowcaseShell, renderMemberShinies } from './showcase.ui.js';
 import { getMemberSprite } from '../../utils/membersprite.js';
 
-/* ---------------------------------------------------------
-   SPRITES
---------------------------------------------------------- */
+function parseHash() {
+  const raw = String(location.hash || '').trim();
+  // #showcase-<memberKey>
+  if (raw.startsWith('#showcase-')) {
+    const key = decodeURIComponent(raw.slice('#showcase-'.length));
+    return { view: 'member', memberKey: String(key || '').trim().toLowerCase() };
+  }
 
-function getPokemonGif(pokemonKey) {
-  return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${pokemonKey}.gif`;
+  // #showcase?sort=...
+  if (raw.startsWith('#showcase')) {
+    const qIndex = raw.indexOf('?');
+    if (qIndex !== -1) {
+      const qs = raw.slice(qIndex + 1);
+      const params = new URLSearchParams(qs);
+      const sort = String(params.get('sort') || '').trim().toLowerCase();
+      return { view: 'gallery', sortMode: sort || 'alphabetical' };
+    }
+    return { view: 'gallery', sortMode: 'alphabetical' };
+  }
+
+  return { view: 'gallery', sortMode: 'alphabetical' };
 }
 
-/* ---------------------------------------------------------
-   SHOWCASE GRID
---------------------------------------------------------- */
+function normalizeSort(sortMode) {
+  if (sortMode === 'scoreboard') return 'scoreboard';
+  if (sortMode === 'shinies') return 'shinies';
+  return 'alphabetical';
+}
 
-export function renderShowcaseGallery(
-  members,
-  container,
-  mode
-) {
-  container.innerHTML = '';
+export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) {
+  const model = buildShowcaseModel({ membersRows, showcaseRows, pokemonPoints });
+  const route = parseHash();
 
-  const sorted =
-    mode === 'scoreboard'
-      ? [...members].sort((a, b) => b.points - a.points)
-      : mode === 'shinies'
-      ? [...members].sort((a, b) => b.shinyCount - a.shinyCount)
-      : [...members].sort((a, b) => a.name.localeCompare(b.name));
+  if (route.view === 'member') {
+    const member = model.byKey[route.memberKey];
 
-  const grid = document.createElement('div');
-  grid.className = 'showcase-gallery';
+    if (!member) {
+      location.hash = '#showcase';
+      return;
+    }
 
-  sorted.forEach(member => {
-    grid.insertAdjacentHTML(
-      'beforeend',
-      renderUnifiedCard({
-        name: member.name,
-        img: getMemberSprite(member.name, members),
-        info:
-          mode === 'scoreboard'
-            ? `Points: ${member.points}`
-            : `Shinies: ${member.shinyCount}`,
-        cardType: 'member'
-      })
-    );
+    const spriteSrc = getMemberSprite(member.key, [{ key: member.key, sprite: member.sprite }]);
+
+    renderMemberShowcaseShell({
+      name: member.name,
+      shinyCount: member.shinyCount,
+      points: member.points,
+      spriteSrc
+    });
+
+    const shinyViews = (member.shinies || []).map(s => buildMemberShinyCardView(s, pokemonPoints));
+    renderMemberShinies(shinyViews);
+
+    document.getElementById('showcase-back')?.addEventListener('click', () => {
+      location.hash = '#showcase';
+    });
+
+    // Clip opener: uses data-clip injected into unified card root.
+    document.querySelectorAll('.unified-card[data-clip]').forEach(card => {
+      card.addEventListener('click', () => {
+        const url = card.getAttribute('data-clip');
+        if (url) window.open(url, '_blank');
+      });
+    });
+
+    return;
+  }
+
+  // GALLERY VIEW
+  renderShowcaseShell();
+
+  const state = {
+    search: '',
+    sortMode: normalizeSort(route.sortMode)
+  };
+
+  // Provide sprite lookup input compatible with getMemberSprite(memberKey, membersData)
+  const membersForSprites = {};
+  model.members.forEach(m => {
+    if (!m || !m.key) return;
+    membersForSprites[m.key] = m.sprite || null;
   });
 
-  container.appendChild(grid);
-  bindShowcaseInteractions(container);
-}
+  function render() {
+    const filtered = filterMembers(model.members, state.search);
+    const sorted = sortMembers(filtered, state.sortMode);
 
-/* ---------------------------------------------------------
-   MEMBER DETAIL
---------------------------------------------------------- */
+    renderShowcaseControls({
+      sortMode: state.sortMode,
+      memberCount: sorted.length
+    });
 
-export function renderMemberShowcase(member) {
-  const content = document.getElementById('page-content');
-  const shinies = member.shinies;
+    const cardViews = sorted.map(m => buildMemberGalleryCardView(m, membersForSprites, state.sortMode));
+    renderShowcaseGallery(cardViews);
 
-  content.innerHTML = `
-    <button class="back-btn">Back</button>
+    // Interactions
+    document.querySelectorAll('.unified-card[data-member-key]').forEach(card => {
+      card.addEventListener('click', () => {
+        const key = card.getAttribute('data-member-key');
+        if (!key) return;
+        location.hash = `#showcase-${encodeURIComponent(String(key))}`;
+      });
+    });
 
-    <div class="member-nameplate">
-      <img class="member-sprite" src="${getMemberSprite(member.name)}">
-      <span class="member-name">${member.name}</span>
-      <span class="shiny-count">Shinies: ${member.shinyCount}</span>
-      <span class="point-count">Points: ${member.points}</span>
-    </div>
+    const input = document.getElementById('showcase-search');
+    const select = document.getElementById('showcase-sort');
 
-    <div class="dex-grid">
-      ${shinies.map(mon =>
-        renderUnifiedCard({
-          name: prettifyPokemonName(mon.pokemon),
-          img: getPokemonGif(mon.pokemon),
-          info: mon.lost ? 'Lost' : mon.sold ? 'Sold' : '',
-          cardType: 'pokemon',
-          lost: mon.lost || mon.sold,
-          symbols: {
-            secret: mon.secret,
-            alpha: mon.alpha,
-            run: mon.run,
-            favorite: mon.favorite
-          },
-          clip: mon.clip || null
-        })
-      ).join('')}
-    </div>
-  `;
+    if (input) {
+      input.value = state.search;
+      input.oninput = (e) => {
+        state.search = String(e.target.value || '');
+        render();
+      };
+    }
 
-  bindMemberInteractions(content);
-}
-
-/* ---------------------------------------------------------
-   SEARCH + SORT CONTROLS
---------------------------------------------------------- */
-
-export function setupShowcaseSearchAndSort(
-  members,
-  renderCb,
-  _,
-  teamMembers,
-  POKEMON_POINTS
-) {
-  const controls = document.querySelector('.showcase-search-controls');
-  controls.innerHTML = '';
-
-  const input = document.createElement('input');
-  input.placeholder = 'Search';
-
-  const select = document.createElement('select');
-  [
-    ['Alphabetical', 'alphabetical'],
-    ['Total Shinies', 'shinies'],
-    ['Total Points', 'scoreboard']
-  ].forEach(([label, value]) => {
-    const option = document.createElement('option');
-    option.value = value;
-    option.textContent = label;
-    select.appendChild(option);
-  });
-
-  const count = document.createElement('span');
-  controls.append(input, select, count);
-
-  function update(push) {
-    const filtered = members.filter(m =>
-      m.name.toLowerCase().includes(input.value.toLowerCase())
-    );
-
-    count.textContent = `${filtered.length} Members`;
-
-    renderCb(
-      filtered,
-      document.getElementById('showcase-gallery-container'),
-      select.value,
-      teamMembers,
-      POKEMON_POINTS
-    );
-
-    if (push) {
-      location.hash = `#showcase?sort=${select.value}`;
+    if (select) {
+      select.value = state.sortMode;
+      select.onchange = (e) => {
+        state.sortMode = normalizeSort(e.target.value);
+        location.hash = `#showcase?sort=${encodeURIComponent(state.sortMode)}`;
+      };
     }
   }
 
-  input.addEventListener('input', () => update(false));
-  select.addEventListener('change', () => update(true));
-
-  update(false);
-}
-
-/* ---------------------------------------------------------
-   INTERACTIONS
---------------------------------------------------------- */
-
-function bindShowcaseInteractions(root) {
-  root
-    .querySelectorAll('.unified-card[data-card-type="member"]')
-    .forEach(card => {
-      card.addEventListener('click', () => {
-        location.hash = `#showcase-${encodeURIComponent(card.dataset.name)}`;
-      });
-    });
-}
-
-function bindMemberInteractions(root) {
-  root.querySelector('.back-btn')?.addEventListener('click', () => {
-    location.hash = '#showcase';
-  });
-
-  root
-    .querySelectorAll('.unified-card[data-clip]')
-    .forEach(card => {
-      card.addEventListener('click', () => {
-        window.open(card.dataset.clip, '_blank');
-      });
-    });
+  render();
 }
