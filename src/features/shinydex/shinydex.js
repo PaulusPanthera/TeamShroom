@@ -22,6 +22,8 @@ export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
   const root = document.getElementById('page-content');
   root.innerHTML = '';
 
+  const selectedVariantByKey = new Map();
+
   const searchCtx = buildSearchContext({
     dexOrder: Array.isArray(POKEMON_DEX_ORDER) && POKEMON_DEX_ORDER.length ? POKEMON_DEX_ORDER : null,
     familyRootsByPokemon: pokemonFamilies || {}
@@ -84,6 +86,17 @@ export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
   // Variant switching for the unified cards (hitlist + living)
   bindUnifiedCardVariantSwitching(root);
 
+  root.addEventListener('card:variant', (e) => {
+    const card = e && e.target && typeof e.target.closest === 'function' ? e.target.closest('.unified-card') : null;
+    if (!card) return;
+
+    const key = card.getAttribute('data-pokemon-key') || '';
+    if (!key) return;
+
+    const v = (e.detail && e.detail.variant) ? String(e.detail.variant) : (card.getAttribute('data-selected-variant') || 'standard');
+    selectedVariantByKey.set(key, v || 'standard');
+  });
+
   function configureSort() {
     sortSelect.innerHTML = '';
 
@@ -127,7 +140,7 @@ export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
       });
 
       countLabel.textContent = model.countLabelText || '';
-      renderHitlistFromModel(model);
+      renderHitlistFromModel(model, { selectedVariantByKey });
       return;
     }
 
@@ -138,7 +151,7 @@ export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
     });
 
     countLabel.textContent = model.countLabelText || '';
-    renderLivingDexFromModel(model);
+    renderLivingDexFromModel(model, { selectedVariantByKey });
   }
 
   searchInput.addEventListener('input', e => {
