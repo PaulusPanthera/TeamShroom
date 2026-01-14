@@ -27,11 +27,6 @@ function normalizePokemonKey(raw) {
   return String(raw || '').trim().toLowerCase();
 }
 
-function isSafariMethod(method) {
-  if (!method) return false;
-  return String(method).toLowerCase().indexOf('safari') >= 0;
-}
-
 /**
  * Enforces LivingDex rules:
  * - owners must always be species-wide owners (tooltip source-of-truth)
@@ -64,7 +59,7 @@ function buildShowcaseVariantAgg(showcaseRows) {
 
     if (r.secret) a.variantCounts.secret += 1;
     if (r.alpha) a.variantCounts.alpha += 1;
-    if (r.safari === true || isSafariMethod(r.method)) a.variantCounts.safari += 1;
+    if (r.safari === true) a.variantCounts.safari += 1;
   });
 
   return map;
