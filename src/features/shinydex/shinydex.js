@@ -13,7 +13,10 @@ import { bindDexOwnerTooltip } from './shinydex.tooltip.js';
 import { setupShinyDexHelp } from './shinydex.help.js';
 
 import { buildSearchContext } from './shinydex.search.js';
-import { pokemonFamilies, POKEMON_DEX_ORDER } from '../../data/pokemondatabuilder.js';
+import {
+  getPokemonFamiliesMap,
+  getPokemonDexOrder
+} from '../../domains/pokemon/pokemon.data.js';
 
 // UnifiedCard v2: variant switching delegation
 import { bindUnifiedCardVariantSwitching } from '../../ui/unifiedcard.js';
@@ -30,9 +33,12 @@ export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
   // Feature-owned state to avoid coupling to shared UI components.
   const selectedVariantByKey = createSelectedVariantStore();
 
+  const dexOrder = getPokemonDexOrder();
+  const familiesMap = getPokemonFamiliesMap();
+
   const searchCtx = buildSearchContext({
-    dexOrder: Array.isArray(POKEMON_DEX_ORDER) && POKEMON_DEX_ORDER.length ? POKEMON_DEX_ORDER : null,
-    familyRootsByPokemon: pokemonFamilies || {}
+    dexOrder: Array.isArray(dexOrder) && dexOrder.length ? dexOrder : null,
+    familyRootsByPokemon: familiesMap || {}
   });
 
   root.innerHTML = `
