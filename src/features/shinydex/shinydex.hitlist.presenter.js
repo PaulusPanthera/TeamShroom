@@ -4,9 +4,9 @@
 
 import { buildShinyDexModel } from '../../domains/shinydex/hitlist.model.js';
 import {
-  POKEMON_REGION,
-  POKEMON_SHOW
-} from '../../data/pokemondatabuilder.js';
+  getPokemonRegionMap,
+  getPokemonShowMap
+} from '../../domains/pokemon/pokemon.data.js';
 
 import {
   parseSearch,
@@ -90,8 +90,11 @@ export function prepareHitlistRenderModel(opts) {
   var mode = viewState && viewState.sort ? viewState.sort : 'standard'; // 'standard' | 'claims' | 'points'
   var parsed = parseSearch(viewState && viewState.search ? viewState.search : '');
 
+  var showMap = getPokemonShowMap();
+  var regionMap = getPokemonRegionMap();
+
   var snapshot = buildShinyDexModel(weeklyModel).filter(function (e) {
-    return POKEMON_SHOW[e.pokemon] !== false;
+    return showMap[e.pokemon] !== false;
   });
 
   var specialOwnersByPokemon = buildSpecialVariantOwnersByPokemon(weeklyModel);
@@ -112,7 +115,7 @@ export function prepareHitlistRenderModel(opts) {
   if (parsed.filters && parsed.filters.region) {
     var rq = parsed.filters.region;
     snapshot = snapshot.filter(function (e) {
-      var region = POKEMON_REGION[e.pokemon] || e.region || 'unknown';
+      var region = regionMap[e.pokemon] || e.region || 'unknown';
       return regionMatches(region, rq);
     });
   }
@@ -123,7 +126,7 @@ export function prepareHitlistRenderModel(opts) {
 
   var regionStats = {};
   snapshot.forEach(function (e) {
-    var region = POKEMON_REGION[e.pokemon] || 'unknown';
+    var region = regionMap[e.pokemon] || 'unknown';
     if (!regionStats[region]) regionStats[region] = { total: 0, claimed: 0 };
     regionStats[region].total += 1;
     if (e.claimed) regionStats[region].claimed += 1;
@@ -222,7 +225,7 @@ export function prepareHitlistRenderModel(opts) {
 
   var byRegion = {};
   visible.forEach(function (e) {
-    var region = POKEMON_REGION[e.pokemon] || 'unknown';
+    var region = regionMap[e.pokemon] || 'unknown';
     if (!byRegion[region]) byRegion[region] = [];
     byRegion[region].push(e);
   });
