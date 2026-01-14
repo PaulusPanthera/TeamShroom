@@ -9,6 +9,12 @@ function getPokemonGif(pokemonKey) {
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${pokemonKey}.gif`;
 }
 
+function injectDataAttr(html, attrName, attrValue) {
+  if (!attrName || attrValue == null) return html;
+  const safe = escapeHtml(String(attrValue));
+  return html.replace('data-unified-card', `data-unified-card ${attrName}="${safe}"`);
+}
+
 export function renderShowcaseShell() {
   const content = document.getElementById('page-content');
 
@@ -55,32 +61,13 @@ export function renderShowcaseControls({ sortMode, memberCount }) {
 }
 
 /**
- * Member gallery card layout (matches requested numbered structure):
- * 1) tier emblem
- * 2) name
- * 3) empty big background box
- * 4) sprite position (center)
+ * Member gallery uses UnifiedCard as a member-card type.
+ * Structure mapping (requested):
+ * 1) tier emblem -> headerLeftIconSrc
+ * 2) name -> pokemonName
+ * 3) empty panel -> unified-info (text hidden via CSS)
+ * 4) sprite position -> art window (centered)
  */
-function renderMemberGalleryCard(v) {
-  const pointsText = `${Number(v.points) || 0}P`;
-
-  return `
-    <div class="showcase-gallery-card" data-member-key="${escapeHtml(v.memberKey || '')}">
-      <div class="showcase-gallery-card-header">
-        <img class="showcase-tier-emblem" src="${escapeHtml(v.tierEmblemSrc || '')}" alt="">
-        <div class="showcase-gallery-card-name">${escapeHtml(v.name || '')}</div>
-        <div class="showcase-gallery-card-points">${escapeHtml(pointsText)}</div>
-      </div>
-
-      <div class="showcase-gallery-card-art">
-        <img src="${escapeHtml(v.spriteSrc || '')}" alt="${escapeHtml(v.name || '')}">
-      </div>
-
-      <div class="showcase-gallery-card-panel"></div>
-    </div>
-  `;
-}
-
 export function renderShowcaseGallery(memberCardViews) {
   const container = document.getElementById('showcase-gallery-container');
   if (!container) return;
@@ -91,7 +78,22 @@ export function renderShowcaseGallery(memberCardViews) {
   grid.className = 'showcase-gallery';
 
   (memberCardViews || []).forEach(v => {
-    grid.insertAdjacentHTML('beforeend', renderMemberGalleryCard(v));
+    const pointsText = `${Number(v.points) || 0}P`;
+
+    const html = renderUnifiedCard({
+      cardType: 'member',
+      pokemonKey: v.memberKey,
+      pokemonName: v.name,
+      artSrc: v.spriteSrc,
+      points: v.points,
+      headerLeftIconSrc: v.tierEmblemSrc,
+      headerRightText: pointsText,
+      infoText: '',
+      isUnclaimed: false,
+      showVariants: false
+    });
+
+    grid.insertAdjacentHTML('beforeend', injectDataAttr(html, 'data-member-key', v.memberKey));
   });
 
   container.appendChild(grid);
@@ -152,7 +154,10 @@ export function renderMemberShinies(shinies, pokemonPoints) {
       ]
     });
 
-    const withClip = s && s.clip ? html.replace('data-unified-card', `data-unified-card data-clip="${escapeHtml(String(s.clip))}"`) : html;
+    const withClip = s && s.clip
+      ? html.replace('data-unified-card', `data-unified-card data-clip="${escapeHtml(String(s.clip))}"`)
+      : html;
+
     grid.insertAdjacentHTML('beforeend', withClip);
   });
 }
