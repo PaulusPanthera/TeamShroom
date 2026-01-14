@@ -1,5 +1,5 @@
-// v2.0.0-alpha
 // src/features/shinydex/shinydex.tooltip.js
+// v2.0.0-beta
 // Shiny Dex — Owners Tooltip (paged + freeze mode + old-school auto swap)
 
 let tooltipEl = null;
