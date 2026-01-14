@@ -3,28 +3,28 @@
 */
 
 /* defaults */
-.unified-card{ --u-frame:#516075; --u-accent:#6a7e98; }
+.shinydex-root .unified-card{ --u-frame:#516075; --u-accent:#6a7e98; }
 
 /* 4–6: low / iron */
-.unified-card.tier-6{ --u-frame:#434a55; --u-accent:#5f6a78; }
-.unified-card.tier-5{ --u-frame:#516075; --u-accent:#6a7e98; }
-.unified-card.tier-4{ --u-frame:#5a7685; --u-accent:#7aa0b3; }
+.shinydex-root .unified-card.tier-6{ --u-frame:#434a55; --u-accent:#5f6a78; }
+.shinydex-root .unified-card.tier-5{ --u-frame:#516075; --u-accent:#6a7e98; }
+.shinydex-root .unified-card.tier-4{ --u-frame:#5a7685; --u-accent:#7aa0b3; }
 
 /* 2–3: mid / teal */
-.unified-card.tier-3{ --u-frame:#1ea58a; --u-accent:#2df3b7; }
-.unified-card.tier-2{ --u-frame:#2bc8a6; --u-accent:#3bffd1; }
+.shinydex-root .unified-card.tier-3{ --u-frame:#1ea58a; --u-accent:#2df3b7; }
+.shinydex-root .unified-card.tier-2{ --u-frame:#2bc8a6; --u-accent:#3bffd1; }
 
 /* 0–1: high / gold-green */
-.unified-card.tier-1{ --u-frame:#7ae84d; --u-accent:#ffd24a; }
-.unified-card.tier-0{ --u-frame:#ffd24a; --u-accent:#7ae84d; }
+.shinydex-root .unified-card.tier-1{ --u-frame:#7ae84d; --u-accent:#ffd24a; }
+.shinydex-root .unified-card.tier-0{ --u-frame:#ffd24a; --u-accent:#7ae84d; }
 
 /* LM: Legendary Mystic — corner marks + rune pixels (no glow) */
-.unified-card.tier-lm{
+.shinydex-root .unified-card.tier-lm{
   --u-frame:#ffd24a;
   --u-accent:#ff7a1a;
 }
 
-.unified-card.tier-lm::before{
+.shinydex-root .unified-card.tier-lm::before{
   content:"";
   position:absolute;
   inset:6px;
@@ -52,7 +52,7 @@
 }
 
 /* dead cards should always read dead, regardless of tier */
-.unified-card.is-unclaimed{
+.shinydex-root .unified-card.is-unclaimed{
   --u-frame:#606872;
   --u-accent:#7a828b;
 }
