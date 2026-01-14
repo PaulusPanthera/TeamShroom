@@ -1,16 +1,29 @@
 /* style/shinydex.css
    v2.0.0-beta
-   ShinyDex-only layout + toolbar styling (scoped)
+   ShinyDex-only layout + controls + grid (scoped)
 */
-
-/* --------------------------------------------------
-   SHINYDEX LAYOUT CONTAINMENT (6-COLUMN TARGET)
--------------------------------------------------- */
 
 .shinydex-root{
   --shinydex-grid-max: calc((var(--card-w) * 6) + (var(--space-4) * 5));
 }
 
+/* ---------------------------------------------------------
+   SHINYDEX PANELS (scoped)
+--------------------------------------------------------- */
+
+.shinydex-root .region-section,
+.shinydex-root .scoreboard-member-section,
+.shinydex-root .shiny-dex-tabs{
+  background: var(--bg-panel);
+  border: 1px solid #3A4651;
+  border-radius: 0;
+
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.65) inset,
+    0 10px 0 rgba(0,0,0,0.35);
+}
+
+/* width containment */
 .shinydex-root .region-section,
 .shinydex-root .scoreboard-member-section,
 .shinydex-root .shiny-dex-controls,
@@ -20,27 +33,17 @@
   margin-right: auto;
 }
 
-/* --------------------------------------------------
-   SHINYDEX STICKY TOOLBAR (SCOPED)
--------------------------------------------------- */
+/* ---------------------------------------------------------
+   STICKY TOOLBAR (scoped)
+--------------------------------------------------------- */
 
 .shinydex-root .shinydex-toolbar{
   position: sticky;
-  top: 56px; /* sits under fixed nav */
+  top: 56px;
   z-index: 900;
-  pointer-events: auto;
 
   background: var(--bg-panel);
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,0.02) 0px,
-      rgba(255,255,255,0.02) 1px,
-      rgba(0,0,0,0) 1px,
-      rgba(0,0,0,0) 8px
-    );
-
-  border: 2px solid rgba(58, 70, 81, 0.85);
+  border: 2px solid rgba(58,70,81,0.85);
   border-left: none;
   border-right: none;
 
@@ -58,35 +61,58 @@
   padding: 10px 12px;
 }
 
-/* attach the two bars into one "hotbar" block */
-.shinydex-root .shinydex-toolbar .search-controls{
-  margin-bottom: 0;
-  border: 2px solid rgba(58, 70, 81, 0.85);
-  background: var(--bg-panel);
-  box-shadow:
-    0 0 0 1px rgba(0,0,0,0.70) inset,
-    0 1px 0 rgba(45,58,69,0.85) inset,
-    0 -1px 0 rgba(7,9,12,0.90) inset;
+/* tighten tool rows into a single hotbar feel */
+.shinydex-root .shiny-dex-controls,
+.shinydex-root .shiny-dex-tabs{
+  width: 100%;
+  margin: 0;
 }
 
-.shinydex-root .shinydex-toolbar .shiny-dex-tabs{
-  margin-top: 0;
-  border-top: none;
+/* ---------------------------------------------------------
+   SHINYDEX GRID (fix for vertical stacking)
+--------------------------------------------------------- */
+
+.shinydex-root .dex-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-w), 1fr));
+  gap: 18px;
+
+  justify-items: center;
+  align-items: start;
+
+  margin: 0;
+  padding: 0 0 8px;
 }
 
-/* make orange actions read like menu items (hard press depth) */
-.shinydex-root .shinydex-toolbar .search-controls button,
-.shinydex-root .shinydex-toolbar .dex-help-btn,
-.shinydex-root .shinydex-toolbar .dex-tab{
+/* ---------------------------------------------------------
+   CONTROLS (scoped)
+--------------------------------------------------------- */
+
+.shinydex-root .dex-tab{
+  background: #131A21;
+  border: 2px solid #3A4651;
+  color: #E6E1DB;
+  padding: 6px 10px;
+  border-radius: 0;
+  cursor: pointer;
+
   box-shadow:
     0 0 0 1px rgba(0,0,0,0.70) inset,
     0 1px 0 rgba(255,255,255,0.10) inset,
     0 2px 0 rgba(0,0,0,0.75);
 }
 
-.shinydex-root .shinydex-toolbar .search-controls button:active,
-.shinydex-root .shinydex-toolbar .dex-help-btn:active,
-.shinydex-root .shinydex-toolbar .dex-tab:active{
+.shinydex-root .dex-tab:hover{
+  border-color: #F05B29;
+}
+
+.shinydex-root .dex-tab.active{
+  background: #F05B29;
+  border-color: #A73D1B;
+  color: #0E1217;
+}
+
+.shinydex-root .dex-tab:active{
   transform: translateY(1px);
   box-shadow:
     0 0 0 1px rgba(0,0,0,0.75) inset,
@@ -94,10 +120,64 @@
     0 1px 0 rgba(0,0,0,0.75);
 }
 
-/* compact sizing constraints */
+/* help button */
+.shinydex-root .dex-help-btn{
+  width: 34px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #131A21;
+  border: 2px solid #F05B29;
+  border-radius: 0;
+  cursor: pointer;
+
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.70) inset,
+    0 1px 0 rgba(255,255,255,0.10) inset,
+    0 2px 0 rgba(0,0,0,0.75);
+}
+
+.shinydex-root .dex-help-btn:hover{
+  filter: brightness(1.05);
+}
+
+.shinydex-root .dex-help-icon{
+  width: 18px;
+  height: 18px;
+  image-rendering: pixelated;
+}
+
+/* inputs */
 .shinydex-root #dex-search{
+  background: var(--bg-input);
+  border: 2px solid #3A4651;
+  color: #E6E1DB;
+  border-radius: 0;
+  padding: 6px 10px;
+
   width: 340px;
   max-width: 42vw;
+}
+
+.shinydex-root #dex-search:focus{
+  outline: none;
+  border-color: #F05B29;
+}
+
+/* dropdown */
+.shinydex-root #dex-sort{
+  background: var(--bg-input);
+  border: 2px solid #3A4651;
+  color: #E6E1DB;
+  border-radius: 0;
+  padding: 6px 10px;
+}
+
+.shinydex-root #dex-sort:focus{
+  outline: none;
+  border-color: #F05B29;
 }
 
 .shinydex-root #dex-count{
