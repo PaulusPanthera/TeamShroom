@@ -1,4 +1,4 @@
-// v3.1.0
+// v2
 // src/ui/unifiedcard.js
 // Unified collector-card renderer (Hitlist + Living Dex)
 // - Header: name (left) + points (right)
