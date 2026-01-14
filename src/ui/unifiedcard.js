@@ -1,11 +1,8 @@
 // src/ui/unifiedcard.js
 // v2.0.0-beta
-// Unified collector-card renderer (Hitlist + Living Dex)
-// - Header: name (left) + points (right)
-// - Art window narrower than header
-// - Info plate above
-// - Variant row (STD/Secret/Alpha/Safari) at bottom
-// - Variant switching changes the info plate text
+// Unified collector-card renderer (Pokemon + Member cards)
+// - Pokemon: header(name+points) + art + info + variants
+// - Member:  header(emblem+name+points) + art + empty panel
 
 import { tierFromPoints } from './tier-map.js';
 
@@ -56,16 +53,24 @@ function normalizeVariants(variants) {
 /**
  * Render a single unified collector-card.
  *
+ * Back-compat:
+ * - old callers only pass pokemon props -> defaults to cardType='pokemon' and showVariants=true
+ *
  * @param {object} params
+ * @param {'pokemon'|'member'} [params.cardType]
  * @param {string} params.pokemonName
  * @param {string} params.artSrc
  * @param {number|string} params.points
  * @param {string} params.infoText
  * @param {boolean} params.isUnclaimed
- * @param {string[]} [params.owners] Owners list for tooltip (optional)
- * @param {Array<{key:string,title?:string,iconSrc?:string,enabled?:boolean,infoText?:string,active?:boolean}>} params.variants
+ * @param {string[]} [params.owners]
+ * @param {Array<{key:string,title?:string,iconSrc?:string,enabled?:boolean,infoText?:string,active?:boolean}>} [params.variants]
+ * @param {boolean} [params.showVariants]
+ * @param {string} [params.headerLeftIconSrc] (member emblem)
+ * @param {string} [params.headerRightText] (override points chip)
  */
 export function renderUnifiedCard({
+  cardType = 'pokemon',
   pokemonKey,
   pokemonName,
   artSrc,
@@ -73,69 +78,115 @@ export function renderUnifiedCard({
   infoText,
   isUnclaimed,
   owners,
-  variants
+  variants,
+  showVariants,
+  headerLeftIconSrc,
+  headerRightText
 }) {
   const safeName = escapeHtml(pokemonName || '');
   const safeKey = pokemonKey != null ? escapeHtml(String(pokemonKey)) : '';
+
   const pts = Number(points);
-  const ptsText = Number.isFinite(pts) ? String(pts) : '';
+  const defaultPtsText = Number.isFinite(pts) ? `${pts}P` : '';
+  const ptsText = headerRightText != null ? String(headerRightText) : defaultPtsText;
 
-  const tierToken = tierFromPoints(pts);
-  const tierClass = tierToken === 'lm' ? 'tier-lm' : `tier-${tierToken}`;
+  const isMember = cardType === 'member';
+  const typeClass = isMember ? 'unified-card--member' : 'unified-card--pokemon';
+
+  const tierToken = (!isMember && Number.isFinite(pts)) ? tierFromPoints(pts) : null;
+  const tierClass =
+    tierToken === 'lm' ? 'tier-lm' :
+    (tierToken != null ? `tier-${tierToken}` : '');
+
   const nameLenClass = classForNameLength(pokemonName);
-
-  const normalizedVariants = normalizeVariants(variants);
-  const selectedKey =
-    (normalizedVariants.find(v => v.active && v.enabled) ||
-      normalizedVariants.find(v => v.key === 'standard'))?.key ||
-    'standard';
-
-  const selectedVariant = normalizedVariants.find(v => v.key === selectedKey) || normalizedVariants[0];
-
-  const initialInfo =
-    (selectedVariant && selectedVariant.infoText) ||
-    (infoText || '') ||
-    (isUnclaimed ? 'Unclaimed' : '—');
 
   const ownersArr = Array.isArray(owners) ? owners.filter(Boolean).map(String) : [];
   const ownersAttr = ownersArr.length ? ` data-owners="${escapeHtml(JSON.stringify(ownersArr))}"` : '';
 
-  const variantButtons = normalizedVariants
-    .map(v => {
-      const isDisabled = !v.enabled;
-      const isActive = v.key === selectedKey;
-      const cls = ['variant-btn', isDisabled ? 'is-disabled' : '', isActive ? 'is-active' : '']
-        .filter(Boolean)
-        .join(' ');
-
-      return `
-        <button
-          type="button"
-          class="${cls}"
-          data-variant="${escapeHtml(v.key)}"
-          data-info="${escapeHtml(v.infoText || '')}"
-          aria-label="${escapeHtml(v.title || v.key)}"
-        >
-          <img class="variant-icon" src="${escapeHtml(v.iconSrc)}" alt="">
-        </button>
-      `;
-    })
-    .join('');
-
   const keyAttr = safeKey ? ` data-pokemon-key="${safeKey}"` : '';
 
+  const headerLeft =
+    headerLeftIconSrc
+      ? `<div class="unified-header-left"><img src="${escapeHtml(headerLeftIconSrc)}" alt=""></div>`
+      : '';
+
+  const headerRight =
+    ptsText
+      ? `
+        <div class="unified-value" aria-label="Points">
+          <span class="unified-value-text">${escapeHtml(ptsText)}</span>
+        </div>
+      `
+      : '';
+
+  // Variants: pokemon default ON, member forced OFF
+  const variantsEnabled = isMember ? false : (showVariants !== false);
+
+  let selectedKey = 'standard';
+  let initialInfo = infoText || '';
+
+  let variantButtons = '';
+
+  if (variantsEnabled) {
+    const normalizedVariants = normalizeVariants(variants);
+
+    selectedKey =
+      (normalizedVariants.find(v => v.active && v.enabled) ||
+        normalizedVariants.find(v => v.key === 'standard'))?.key ||
+      'standard';
+
+    const selectedVariant = normalizedVariants.find(v => v.key === selectedKey) || normalizedVariants[0];
+
+    initialInfo =
+      (selectedVariant && selectedVariant.infoText) ||
+      (infoText || '') ||
+      (isUnclaimed ? 'Unclaimed' : '—');
+
+    variantButtons = normalizedVariants
+      .map(v => {
+        const isDisabled = !v.enabled;
+        const isActive = v.key === selectedKey;
+        const cls = ['variant-btn', isDisabled ? 'is-disabled' : '', isActive ? 'is-active' : '']
+          .filter(Boolean)
+          .join(' ');
+
+        return `
+          <button
+            type="button"
+            class="${cls}"
+            data-variant="${escapeHtml(v.key)}"
+            data-info="${escapeHtml(v.infoText || '')}"
+            aria-label="${escapeHtml(v.title || v.key)}"
+          >
+            <img class="variant-icon" src="${escapeHtml(v.iconSrc)}" alt="">
+          </button>
+        `;
+      })
+      .join('');
+  } else {
+    // Member cards: keep panel empty by default
+    initialInfo = infoText || '';
+  }
+
+  const variantsNode = variantsEnabled
+    ? `
+      <div class="unified-variants" aria-label="Variants">
+        ${variantButtons}
+      </div>
+    `
+    : '';
+
   return `
-    <div class="unified-card ${tierClass} ${isUnclaimed ? 'is-unclaimed' : ''}"
+    <div class="unified-card ${typeClass} ${tierClass} ${isUnclaimed ? 'is-unclaimed' : ''}"
          data-unified-card
          data-name="${safeName}"${keyAttr}
          data-selected-variant="${escapeHtml(selectedKey)}"${ownersAttr}>
       <div class="unified-header">
+        ${headerLeft}
         <div class="unified-name-wrap">
           <div class="unified-name ${nameLenClass}">${safeName}</div>
         </div>
-        <div class="unified-value" aria-label="Points">
-          <span class="unified-value-text">${escapeHtml(ptsText ? (ptsText + 'P') : '')}</span>
-        </div>
+        ${headerRight}
       </div>
 
       <div class="unified-art" aria-label="Art">
@@ -146,9 +197,7 @@ export function renderUnifiedCard({
         <div class="unified-info-text">${escapeHtml(initialInfo)}</div>
       </div>
 
-      <div class="unified-variants" aria-label="Variants">
-        ${variantButtons}
-      </div>
+      ${variantsNode}
     </div>
   `;
 }
