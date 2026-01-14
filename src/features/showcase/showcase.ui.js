@@ -9,11 +9,6 @@ function normalize(str) {
   return String(str || '').trim().toLowerCase();
 }
 
-function isSafariMethod(method) {
-  if (!method) return false;
-  return normalize(method).includes('safari');
-}
-
 function injectDataAttr(html, attrName, attrValue) {
   if (!attrName || attrValue == null) return html;
   const safe = escapeHtml(String(attrValue));
@@ -23,9 +18,11 @@ function injectDataAttr(html, attrName, attrValue) {
 function prettifyMethod(method) {
   const m = normalize(method);
   if (!m) return '';
+  if (m === 'safari') return '';
   if (m === 'single') return 'Single';
   if (m === 'horde') return 'Horde';
   if (m === 'egg') return 'Egg';
+  if (m === 'surf') return 'Surf';
   return String(method).trim();
 }
 
@@ -38,11 +35,11 @@ function buildShinyInfoText(s) {
   // Safari must be represented only via the boolean flag, not as a "method" label.
   const methodRaw = s && s.method ? String(s.method) : '';
   const method = prettifyMethod(methodRaw);
-  if (method && !isSafariMethod(methodRaw)) parts.push(method);
+  if (method) parts.push(method);
 
   if (s && s.secret) parts.push('Secret');
   if (s && s.alpha) parts.push('Alpha');
-  if (isSafariMethod(s && s.method)) parts.push('Safari');
+  if (s && s.safari === true) parts.push('Safari');
 
   if (s && s.run) parts.push('Run');
   if (s && s.favorite) parts.push('Fav');
@@ -58,12 +55,12 @@ function primaryVariantKeyForShiny(s) {
   // Display intent, not data semantics: pick a single highlight.
   if (s && s.alpha) return 'alpha';
   if (s && s.secret) return 'secret';
-  if (isSafariMethod(s && s.method)) return 'safari';
+  if (s && s.safari === true) return 'safari';
   return 'standard';
 }
 
 function buildVariantsForShiny(s, infoText) {
-  const safari = isSafariMethod(s && s.method);
+  const safari = Boolean(s && s.safari === true);
   const primary = primaryVariantKeyForShiny(s);
 
   // UnifiedCard forces standard enabled; keep all infoText identical to avoid confusing toggles.
