@@ -55,7 +55,9 @@ function renderShinyWeekly(weeks, container, membersData = []) {
     const grid = document.createElement('div');
     grid.className = 'dex-grid';
 
-    Object.values(week.members).forEach(memberGroup => {
+    const memberGroups = Object.values(week.membersByOt || week.members || {});
+
+    memberGroups.forEach(memberGroup => {
       let state = -1;
       const wrapper = document.createElement('div');
 
@@ -75,12 +77,11 @@ function renderShinyWeekly(weeks, container, membersData = []) {
           const symbols = {
             secret: !!mon.secret,
             alpha: !!mon.alpha,
+            safari: !!mon.safari,
             run: !!mon.run
           };
 
-          if (mon.method) {
-            symbols[mon.method] = true;
-          }
+          if (mon.method && mon.method !== 'safari') symbols[mon.method] = true;
 
           wrapper.innerHTML = renderUnifiedCard({
             name: prettifyPokemonName(mon.pokemon),
