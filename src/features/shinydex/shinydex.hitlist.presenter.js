@@ -1,9 +1,15 @@
-// v2.0.0-alpha.2
 // src/features/shinydex/shinydex.hitlist.presenter.js
+// v2.0.0-beta
 // Hitlist Presenter — view-specific data prep (no DOM)
 
 import { buildShinyDexModel } from '../../domains/shinydex/hitlist.model.js';
-import { POKEMON_REGION, POKEMON_SHOW } from '../../data/pokemondatabuilder.js';
+import {
+  pokemonFamilies,
+  POKEMON_DEX_ORDER,
+  POKEMON_POINTS,
+  POKEMON_REGION,
+  POKEMON_SHOW
+} from '../../data/pokemondatabuilder.js';
 
 import {
   parseSearch,
@@ -25,6 +31,101 @@ function regionMatches(regionValue, query) {
   return r.indexOf(q) === 0;
 }
 
+function normalizePokemonKey(raw) {
+  return String(raw || '').trim().toLowerCase();
+}
+
+function eventHasSafariFlag(shiny) {
+  if (!shiny) return false;
+  if (shiny.safari === true) return true;
+  var method = shiny.method;
+  if (typeof method === 'string' && method.toLowerCase().indexOf('safari') >= 0) return true;
+  return false;
+}
+
+function buildVariantOwnersByPokemon(weeklyModel) {
+  var weeks = Array.isArray(weeklyModel) ? weeklyModel : [];
+
+  // flatten to events (order preserved)
+  var events = [];
+  weeks.forEach(function (week) {
+    var members = week && week.members ? Object.values(week.members) : [];
+    members.forEach(function (member) {
+      var shinies = member && Array.isArray(member.shinies) ? member.shinies : [];
+      shinies.forEach(function (shiny) {
+        if (!shiny || shiny.lost) return;
+        events.push({
+          member: shiny.member,
+          pokemon: normalizePokemonKey(shiny.pokemon),
+          secret: !!shiny.secret,
+          alpha: !!shiny.alpha,
+          safari: eventHasSafariFlag(shiny)
+        });
+      });
+    });
+  });
+
+  // build rootByPokemon and speciesByRoot in dex order (mirror hitlist.model)
+  var order = Array.isArray(POKEMON_DEX_ORDER) && POKEMON_DEX_ORDER.length
+    ? POKEMON_DEX_ORDER
+    : Object.keys(POKEMON_POINTS || {});
+
+  var rootByPokemon = {};
+  order.forEach(function (p) {
+    var roots = (pokemonFamilies && pokemonFamilies[p]) ? pokemonFamilies[p] : [];
+    rootByPokemon[p] = roots.length ? roots[0] : p;
+  });
+
+  var speciesByRoot = {};
+  order.forEach(function (p) {
+    var root = rootByPokemon[p] || p;
+    if (!speciesByRoot[root]) speciesByRoot[root] = [];
+    speciesByRoot[root].push(p);
+  });
+
+  var claimedSlotsByRoot = {};
+  var variantOwnersByPokemon = {};
+
+  function ensureEntry(pokemon) {
+    if (!variantOwnersByPokemon[pokemon]) {
+      variantOwnersByPokemon[pokemon] = { standard: null, secret: null, alpha: null, safari: null };
+    }
+    return variantOwnersByPokemon[pokemon];
+  }
+
+  events.forEach(function (event) {
+    var mon = event.pokemon;
+    if (!mon) return;
+
+    var root = rootByPokemon[mon] || mon;
+    var stages = speciesByRoot[root] || [mon];
+
+    if (!claimedSlotsByRoot[root]) claimedSlotsByRoot[root] = {};
+
+    var nextStage = null;
+    for (var i = 0; i < stages.length; i++) {
+      var stage = stages[i];
+      if (!claimedSlotsByRoot[root][stage]) {
+        nextStage = stage;
+        break;
+      }
+    }
+    if (!nextStage) return;
+
+    claimedSlotsByRoot[root][nextStage] = event.member;
+
+    var slot = ensureEntry(nextStage);
+    if (!slot.standard) slot.standard = event.member;
+
+    // Multiple flags claim all relevant variants in the same event.
+    if (event.secret && !slot.secret) slot.secret = event.member;
+    if (event.alpha && !slot.alpha) slot.alpha = event.member;
+    if (event.safari && !slot.safari) slot.safari = event.member;
+  });
+
+  return variantOwnersByPokemon;
+}
+
 export function prepareHitlistRenderModel(opts) {
   var weeklyModel = opts && opts.weeklyModel;
   var viewState = opts && opts.viewState;
@@ -35,6 +136,20 @@ export function prepareHitlistRenderModel(opts) {
 
   var snapshot = buildShinyDexModel(weeklyModel).filter(function (e) {
     return POKEMON_SHOW[e.pokemon] !== false;
+  });
+
+  var variantOwnersByPokemon = buildVariantOwnersByPokemon(weeklyModel);
+
+  snapshot = snapshot.map(function (e) {
+    var vo = variantOwnersByPokemon[e.pokemon] || {};
+    return Object.assign({}, e, {
+      variantOwners: {
+        standard: e.claimedBy || null,
+        secret: vo.secret || null,
+        alpha: vo.alpha || null,
+        safari: vo.safari || null
+      }
+    });
   });
 
   // region filter
