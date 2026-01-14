@@ -1,66 +1,55 @@
 /* v2.0.0-beta */
 /* style/base.css */
+/* =========================================================
+   GLOBAL THEME / TOKENS
+   ========================================================= */
 
 :root {
   /* =========================================================
-     COLOR SYSTEM — DARK RPG MENU v2 (LOCKED)
+     CORE DARK UI PALETTE (retro console UI ramp)
      ========================================================= */
 
-  /* Core neutrals (steel / CRT) */
-  --bg: #0f1317;
-  --bg-panel: #131a21;
-  --bg-panel-alt: #1a232c;
-  --bg-input: #10161d;
-  --ui-plate: #24313b;
-  --ui-line: #3a4651;
-  --ui-shadow: #07090c;
-  --ui-plate-shadow: #0b0f13;
-  --ui-plate-highlight: #2d3a45;
+  --bg: #0f1317;            /* BG0 page */
+  --bg-panel: #131a21;      /* BG1 main panel */
+  --bg-panel-alt: #1a232c;  /* BG2 card body / inner panels */
+  --bg-raised: #24313b;     /* BG3 raised plate */
 
-  /* Legacy tokens (kept for compatibility) */
-  --card: #fbd44d;        /* used sparingly as highlight */
-  --card-alt: #ffe08a;    /* tooltip key labels */
-  --card-gradient: linear-gradient(180deg, var(--card), var(--card-alt));
+  --line: #3a4651;          /* frame/lines */
+  --shadow-line: #07090c;   /* hard shadow line */
 
-  /* Accents */
-  --accent: #f05b29;      /* Shroom Orange (system / clickable) */
-  --accent-rgb: 240, 91, 41;
-
-  --accent-dark: #a73d1b;
-  --accent-light: #ff8a5c;
-  --success: #7ae252;     /* Owned / success */
-  --highlight: #fbd44d;   /* Gold */
-
-  /* Text */
   --text-main: #e6e1db;
   --text-muted: #a2a29d;
   --text-disabled: #6f6a66;
-  --text-dark: #0e1217;   /* for text on bright UI chips */
 
-  /* Borders & Shadows (hard edge, no glow) */
-  --border-strong: 2px solid rgba(240, 91, 41, 0.85);
-  --border-soft: 2px solid rgba(58, 70, 81, 0.85);
+  --accent: #f05b29;
+  --accent-dark: #a73d1b;
+  --accent-light: #ff8a5c;
 
-  --shadow-depth:
-    0 8px 0 rgba(0,0,0,0.55),
-    0 0 0 1px rgba(0,0,0,0.60) inset;
+  --success: #7ae252;
+  --success-dark: #1e6d37;
 
-  --shadow-hover:
-    0 10px 0 rgba(0,0,0,0.65),
-    0 0 0 1px rgba(0,0,0,0.65) inset;
+  --warning: #fbd44d;
+  --danger: #e24a4a;
 
   /* =========================================================
-     SPACING SYSTEM — 8px GRID (NON-NEGOTIABLE)
+     SHADOW / BORDER PRESETS
      ========================================================= */
 
-  --space-1: 8px;
-  --space-2: 16px;
-  --space-3: 24px;
-  --space-4: 32px;
-  --space-5: 48px;
+  --border-soft: 2px solid rgba(58, 70, 81, 0.65);
+  --shadow-depth: 0 8px 0 rgba(0,0,0,0.55);
 
   /* =========================================================
-     TYPOGRAPHY SCALE — 8-BIT DISCIPLINE
+     SPACING SCALE
+     ========================================================= */
+
+  --space-1: 6px;
+  --space-2: 12px;
+  --space-3: 18px;
+  --space-4: 24px;
+  --space-5: 36px;
+
+  /* =========================================================
+     TYPOGRAPHY
      ========================================================= */
 
   --font-page-title: 24px;
@@ -97,16 +86,24 @@ body {
 
   color: var(--text-main);
 
-  /* Dark-mode RPG menu backdrop (subtle, pixel-friendly) */
+  /* Dark-mode RPG menu backdrop (hard/pixel-friendly) */
   background-color: var(--bg);
   background-image:
-    radial-gradient(circle at 50% 0%, rgba(36, 49, 59, 0.65) 0%, rgba(15, 19, 23, 0.96) 58%, rgba(11, 15, 19, 1) 100%),
+    /* scanlines */
     repeating-linear-gradient(
       0deg,
-      rgba(255,255,255,0.03) 0px,
-      rgba(255,255,255,0.03) 1px,
+      rgba(255,255,255,0.025) 0px,
+      rgba(255,255,255,0.025) 1px,
       rgba(0,0,0,0) 1px,
       rgba(0,0,0,0) 8px
+    ),
+    /* coarse dither */
+    repeating-linear-gradient(
+      90deg,
+      rgba(0,0,0,0.12) 0px,
+      rgba(0,0,0,0.12) 2px,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,0) 6px
     );
   background-attachment: fixed;
 }
@@ -135,14 +132,6 @@ textarea {
 }
 
 a {
-  color: var(--accent);
+  color: inherit;
   text-decoration: none;
-}
-
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-select:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
 }
