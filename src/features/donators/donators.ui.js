@@ -1,5 +1,6 @@
 // src/features/donators/donators.ui.js
-// Donators — UI renderer (DOM-only, stable)
+// v2.0.0-beta
+// Donators UI renderer (DOM-only, stable)
 
 function el(tag, className, text) {
   const node = document.createElement(tag);
@@ -194,15 +195,14 @@ function renderRankedDonatorsTable(ranked) {
     const totalTd = el('td', 'donators-number', d.totalText);
 
     const tierTd = el('td', 'donators-tier-cell');
-    tierTd.tabIndex = 0;
+
+    // Native tooltip: never clipped by overflow containers.
+    if (d.tierMeta && d.tierMeta.desc) {
+      tierTd.title = String(d.tierMeta.desc);
+    }
 
     const tierLabel = el('span', 'donators-tier-pill', d.tierMeta && d.tierMeta.label ? d.tierMeta.label : '—');
     tierTd.appendChild(tierLabel);
-
-    if (d.tierMeta && d.tierMeta.desc) {
-      const tip = el('span', 'donators-tooltip', d.tierMeta.desc);
-      tierTd.appendChild(tip);
-    }
 
     tr.appendChild(placement);
     tr.appendChild(nameTd);
