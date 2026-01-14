@@ -1,106 +1,42 @@
 /* style/showcase.css
    v2.0.0-beta
-   Showcase-only card layout (gallery member cards)
+   Showcase uses UnifiedCard (member cards as unified-card--member).
 */
 
-.showcase-root .showcase-gallery-card{
-  width: var(--card-w);
-  height: var(--card-h);
+/* Gallery theme override (gallery only lives under .showcase-root) */
+.showcase-root{
+  --u-card-fill: #f3dc93;
+  --u-card-bg: #e7ce7b;
+  --u-card-plate: #fbf0c3;
 
+  --u-text: #1a232c;
+  --u-muted: #2f3b45;
+
+  --u-tier-main: #d46a1a;
+  --u-tier-sub: rgba(0,0,0,0.25);
+  --u-tier-border: rgba(0,0,0,0.25);
+
+  --u-frame: rgba(0,0,0,0.25);
+  --u-accent: #d46a1a;
+  --u-plate-border: rgba(0,0,0,0.25);
+
+  --u-depth: rgba(0,0,0,0.45);
+}
+
+.showcase-root .showcase-search-controls{
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.showcase-root .showcase-gallery{
   display: grid;
-  grid-template-rows: 34px 152px 1fr; /* 1/2 header, 4 art, 3 empty panel */
-  gap: 10px;
-  padding: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-w), 1fr));
+  gap: 18px;
 
-  background: var(--card-gradient);
-  border: 2px solid var(--accent);
-  border-radius: 12px;
+  justify-items: center;
+  align-items: start;
 
-  box-shadow: var(--shadow-depth);
-
-  position: relative;
-  overflow: hidden;
-}
-
-.showcase-root .showcase-gallery-card *{
-  box-sizing: border-box;
-}
-
-/* (1) tier emblem + (2) name + optional points */
-.showcase-root .showcase-gallery-card-header{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  padding: 6px 10px;
-
-  background: rgba(0,0,0,0.08);
-  border: 2px solid rgba(0,0,0,0.12);
-  border-radius: 10px;
-
-  overflow: hidden;
-}
-
-.showcase-root .showcase-tier-emblem{
-  width: 18px;
-  height: 18px;
-  image-rendering: pixelated;
-  flex: 0 0 auto;
-}
-
-.showcase-root .showcase-gallery-card-name{
-  min-width: 0;
-  flex: 1;
-
-  font-size: 12px;
-  line-height: 1;
-
-  color: var(--text-dark);
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.showcase-root .showcase-gallery-card-points{
-  flex: 0 0 auto;
-
-  padding: 2px 6px;
-
-  background: rgba(0,0,0,0.10);
-  border: 2px solid rgba(0,0,0,0.14);
-  border-radius: 10px;
-
-  font-size: 10px;
-  line-height: 1;
-  color: var(--text-dark);
-
-  user-select: none;
-}
-
-/* (4) sprite window */
-.showcase-root .showcase-gallery-card-art{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: rgba(255,255,255,0.55);
-  border: 2px solid rgba(0,0,0,0.12);
-  border-radius: 12px;
-
-  overflow: hidden;
-}
-
-.showcase-root .showcase-gallery-card-art img{
-  width: 96px;
-  height: 96px;
-  object-fit: contain;
-  image-rendering: pixelated;
-}
-
-/* (3) empty big background box */
-.showcase-root .showcase-gallery-card-panel{
-  background: rgba(0,0,0,0.08);
-  border: 2px solid rgba(0,0,0,0.12);
-  border-radius: 12px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 18px 12px 24px;
 }
