@@ -1,192 +1,424 @@
-/* v2.0.0-alpha.1 */
+/* v2.0.0-beta */
 /* style/donators.css */
 
 /* =========================================================
-   DONATORS — DESIGN SYSTEM v1 (STABILIZED)
-   Tables now behave like system panels
+   DONATORS — RPG PANEL TABLES (SCOPED)
+   - No UnifiedCard dependency
+   - Hard edges, pixel depth, orange = actions
    ========================================================= */
 
-.donators-top-flex {
+.donators-root{
+  /* tier colors are local to donators only */
+  --tier-top: var(--warning);
+  --tier-diamond: #55e0ff;
+  --tier-platinum: #c7d0d8;
+  --tier-gold: #fbd44d;
+  --tier-silver: #b8b8b8;
+  --tier-bronze: #d18b5a;
+  --tier-none: var(--line);
+
+  width: 100%;
+  padding: var(--space-3);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.donators-empty{
+  text-align: center;
+  opacity: 0.7;
+  padding: var(--space-4);
+}
+
+/* ---------------------------------------------------------
+   LAYOUT
+--------------------------------------------------------- */
+
+.donators-top-flex,
+.donators-mid-flex{
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
-  margin-bottom: var(--space-4);
 }
 
-.how-to-donate-box {
-  flex: 1 1 280px;
-  max-width: 520px;
-  min-height: 220px;
+/* ---------------------------------------------------------
+   PANELS
+--------------------------------------------------------- */
+
+.donators-panel{
+  background: #131A21;
+  border: 2px solid var(--line);
+  border-radius: 0;
+
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.65) inset,
+    0 10px 0 rgba(0,0,0,0.35);
 
   padding: var(--space-3);
-
-  background: var(--bg-panel);
-  color: var(--text-main);
-
-  border: 2px solid var(--accent);
-  border-radius: 16px;
-
-  box-shadow: var(--shadow-depth);
+  min-width: 260px;
 }
 
-.how-to-donate-box h2 {
-  margin-bottom: var(--space-2);
+.donators-panel-title{
+  margin: 0 0 var(--space-2) 0;
   font-size: var(--font-section-title);
   letter-spacing: 1px;
   color: var(--accent);
 }
 
-.donate-highlight {
-  display: inline-block;
-  margin-top: var(--space-1);
+.donators-panel-body{
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
 
+.donators-panel--howto{
+  flex: 1 1 280px;
+  max-width: 480px;
+  border-color: var(--accent);
+}
+
+.donators-panel--summary{
+  flex: 1 1 240px;
+  max-width: 380px;
+}
+
+.donators-panel--recent{
+  flex: 2 1 520px;
+  border-color: rgba(122, 226, 82, 0.7);
+}
+
+.donators-panel--recent .donators-panel-title{
+  color: var(--success);
+}
+
+.donators-panel--tiers{
+  flex: 1 1 520px;
+}
+
+.donators-panel--tiers .donators-panel-title{
+  color: var(--warning);
+}
+
+.donators-panel--ranked{
+  flex: 1 1 100%;
+}
+
+/* ---------------------------------------------------------
+   HOW TO DONATE
+--------------------------------------------------------- */
+
+.donators-howto-text{
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+.donators-highlight{
+  display: inline-block;
   padding: 6px 10px;
 
   background: var(--accent);
-  color: var(--text-dark);
+  color: #0E1217;
 
-  font-size: var(--font-card-stat);
-  font-weight: bold;
+  border: 2px solid var(--accent-dark);
+  border-radius: 0;
 
-  border-radius: 10px;
-}
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06) inset,
+    0 6px 0 rgba(0,0,0,0.45);
 
-.last-donations-fixed-box {
-  flex: 1 1 520px;
-  min-height: 220px;
-
-  padding: var(--space-3);
-
-  background: var(--bg-panel);
-  color: var(--text-main);
-
-  border: 2px solid var(--success);
-  border-radius: 16px;
-
-  box-shadow: var(--shadow-depth);
-
-  display: flex;
-  flex-direction: column;
-}
-
-.last-donations-fixed-box h2 {
-  margin-bottom: var(--space-2);
-  font-size: var(--font-section-title);
+  width: fit-content;
+  font-weight: 700;
   letter-spacing: 1px;
-  color: var(--success);
 }
 
-.last-donations-table {
+/* ---------------------------------------------------------
+   SUMMARY
+--------------------------------------------------------- */
+
+.donators-summary-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+@media (max-width: 640px){
+  .donators-summary-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+.donators-summary-stat{
+  background: #1A232C;
+  border: 1px solid rgba(58, 70, 81, 0.75);
+  padding: var(--space-2);
+  border-radius: 0;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.5) inset;
+}
+
+.donators-summary-label{
+  color: var(--text-muted);
+  font-size: var(--font-small);
+}
+
+.donators-summary-value{
+  margin-top: 6px;
+  font-size: var(--font-card-title);
+}
+
+.donators-summary-value--accent{
+  color: var(--accent-light);
+}
+
+/* ---------------------------------------------------------
+   TABLES
+--------------------------------------------------------- */
+
+.donators-table-wrap{
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 var(--space-1);
+  overflow-x: auto;
+}
+
+.donators-recent-table,
+.donators-ranked-table{
+  width: 100%;
+  border-collapse: collapse;
   font-size: var(--font-card-stat);
 }
 
-.last-donations-table th,
-.last-donations-table td {
-  padding: 6px 10px;
-  background: var(--bg-panel-alt);
+.donators-recent-table th,
+.donators-recent-table td,
+.donators-ranked-table th,
+.donators-ranked-table td{
+  padding: 8px 10px;
+  border: 1px solid rgba(58, 70, 81, 0.75);
+  background: #1A232C;
   color: var(--text-main);
-  border-radius: 8px;
+  vertical-align: middle;
   white-space: nowrap;
 }
 
-.last-donations-table th {
-  font-weight: bold;
+.donators-ranked-table td.donators-name{
+  white-space: normal;
+  word-break: break-word;
+}
+
+.donators-recent-table th,
+.donators-ranked-table th{
+  background: #131A21;
   color: var(--text-muted);
-}
-
-.last-donations-table .donation-item {
-  color: var(--success);
-  font-weight: bold;
-}
-
-.donators-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 var(--space-1);
-  margin-bottom: var(--space-4);
-
-  font-size: var(--font-card-stat);
-}
-
-.donators-table th,
-.donators-table td {
-  padding: 8px 12px;
-  background: var(--bg-panel-alt);
-  color: var(--text-main);
-  border-radius: 10px;
-}
-
-.donators-table th {
   position: sticky;
   top: 0;
   z-index: 2;
-
-  background: var(--bg-panel);
-  color: var(--text-muted);
   letter-spacing: 1px;
 }
 
-.donators-table tr.top td {
-  border: 2px solid var(--highlight);
-  color: var(--highlight);
-  font-weight: bold;
+.donators-number{
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
-.donators-table tr.diamond td,
-.donators-table tr.platinum td,
-.donators-table tr.gold td,
-.donators-table tr.silver td,
-.donators-table tr.bronze td {
-  opacity: 0.9;
+.donators-placement{
+  width: 70px;
+  text-align: left;
+  color: var(--text-muted);
 }
 
-.donators-table .tier-icon {
-  width: 24px;
-  height: 24px;
+.donators-name{
+  min-width: 160px;
+}
+
+.donators-tier-icon{
+  width: 22px;
+  height: 22px;
   margin-right: var(--space-1);
+  display: inline-block;
+  vertical-align: middle;
+  image-rendering: pixelated;
+}
+
+.donators-name-text{
   vertical-align: middle;
 }
 
-.donator-tier-tooltip {
-  position: relative;
-  cursor: help;
+.donators-empty-row{
+  text-align: center;
+  opacity: 0.65;
+  background: #131A21;
 }
 
-.donator-tier-tooltip .tooltip-text {
+.donators-recent-item{
+  color: var(--success);
+  font-weight: 700;
+}
+
+.donators-recent-currency{
+  color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------
+   RANKED ROW STATES
+--------------------------------------------------------- */
+
+.donators-row td{
+  transition: border-color 0.1s ease, background 0.1s ease;
+}
+
+.donators-row:hover td{
+  border-color: var(--accent);
+  background: #202B35;
+}
+
+.donators-row--top td:first-child{ border-left: 4px solid var(--tier-top); }
+.donators-row--diamond td:first-child{ border-left: 4px solid var(--tier-diamond); }
+.donators-row--platinum td:first-child{ border-left: 4px solid var(--tier-platinum); }
+.donators-row--gold td:first-child{ border-left: 4px solid var(--tier-gold); }
+.donators-row--silver td:first-child{ border-left: 4px solid var(--tier-silver); }
+.donators-row--bronze td:first-child{ border-left: 4px solid var(--tier-bronze); }
+.donators-row--none td:first-child{ border-left: 4px solid var(--tier-none); }
+
+/* ---------------------------------------------------------
+   TIER CELL + TOOLTIP
+--------------------------------------------------------- */
+
+.donators-tier-cell{
+  position: relative;
+  cursor: help;
+  outline: none;
+}
+
+.donators-tier-cell:focus-visible{
+  border-color: var(--accent);
+}
+
+.donators-tier-pill{
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 8px;
+
+  background: #131A21;
+  border: 2px solid rgba(58, 70, 81, 0.85);
+  border-radius: 0;
+
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.55) inset;
+}
+
+.donators-row--top .donators-tier-pill{
+  border-color: var(--tier-top);
+  color: var(--tier-top);
+}
+
+.donators-tooltip{
   visibility: hidden;
   opacity: 0;
 
   position: absolute;
-  bottom: 130%;
   left: 50%;
+  bottom: 135%;
   transform: translateX(-50%);
 
-  padding: 6px 10px;
-  width: 180px;
+  width: 220px;
+  padding: 8px 10px;
 
-  background: var(--bg-panel);
+  background: #131A21;
   color: var(--text-main);
 
-  border: var(--border-soft);
-  border-radius: 8px;
+  border: 2px solid rgba(58, 70, 81, 0.85);
+  border-radius: 0;
 
-  box-shadow: var(--shadow-depth);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.65) inset,
+    0 10px 0 rgba(0,0,0,0.35);
+
   font-size: var(--font-small);
+  line-height: 1.35;
 
-  transition: opacity 0.15s ease;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
 }
 
-.donator-tier-tooltip:hover .tooltip-text,
-.donator-tier-tooltip:focus-visible .tooltip-text {
+.donators-tier-cell:hover .donators-tooltip,
+.donators-tier-cell:focus-visible .donators-tooltip{
   visibility: visible;
   opacity: 1;
 }
 
-@media (max-width: 1100px) {
-  .donators-top-flex {
-    flex-direction: column-reverse;
+/* ---------------------------------------------------------
+   TIER LEGEND
+--------------------------------------------------------- */
+
+.donators-tier-legend{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.donators-tier-row{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-2);
+
+  background: #1A232C;
+  border: 1px solid rgba(58, 70, 81, 0.75);
+  padding: 10px 10px;
+  border-radius: 0;
+
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.55) inset;
+}
+
+.donators-tier-left{
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.donators-tier-label{
+  color: var(--text-main);
+}
+
+.donators-tier-right{
+  display: flex;
+  align-items: center;
+}
+
+.donators-tier-count{
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.donators-tier-desc{
+  grid-column: 1 / -1;
+  color: var(--text-muted);
+  font-size: var(--font-small);
+  opacity: 0.85;
+  line-height: 1.35;
+  margin-top: 6px;
+}
+
+.donators-tier-row--top{ border-left: 4px solid var(--tier-top); }
+.donators-tier-row--diamond{ border-left: 4px solid var(--tier-diamond); }
+.donators-tier-row--platinum{ border-left: 4px solid var(--tier-platinum); }
+.donators-tier-row--gold{ border-left: 4px solid var(--tier-gold); }
+.donators-tier-row--silver{ border-left: 4px solid var(--tier-silver); }
+.donators-tier-row--bronze{ border-left: 4px solid var(--tier-bronze); }
+.donators-tier-row--none{ border-left: 4px solid var(--tier-none); }
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------------- */
+
+@media (max-width: 1100px){
+  .donators-top-flex{
+    flex-direction: column;
+  }
+
+  .donators-mid-flex{
+    flex-direction: column;
+  }
+
+  .donators-panel--howto,
+  .donators-panel--summary{
+    max-width: none;
   }
 }
