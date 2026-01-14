@@ -1,18 +1,11 @@
 /* style/cards/cards.base.css
    v2.0.0-beta
-
-   Goals:
-   - Fixed-size cards; layout adapts around them.
-   - No glow/blur. Hard edges. Pixel depth.
-   - Header wider than art window (collector-card framing).
-   - Long names never overflow/bend layout.
-   - Unclaimed/Unowned reads "dead" negatively.
 */
 
 :root{
   /* drives .dex-grid in style/layout.css */
-  --card-w: 190px;
-  --card-h: 262px;
+  --card-w: 210px;
+  --card-h: 282px;
 
   --u-card-bg: rgba(0,0,0,0.45);
   --u-card-fill: #0e151c;
@@ -54,14 +47,6 @@
   overflow: hidden;
 }
 
-/* Compact mode is used outside the ShinyDex surface (e.g. weekly grid).
-   Keep proportions consistent when height is reduced via external overrides. */
-.unified-card.is-compact{
-  grid-template-rows: 26px 74px 26px 1fr;
-  gap: 6px;
-  padding: 8px;
-}
-
 .unified-card *{ box-sizing: border-box; }
 
 /* --------------------------------------------------
@@ -99,6 +84,8 @@
   text-overflow: ellipsis;
 }
 
+.tier-badge:empty{ display:none; }
+
 .unified-name.is-long{ font-size: 11px; }
 .unified-name.is-very-long{ font-size: 10px; }
 
@@ -106,22 +93,19 @@
   flex: 0 0 auto;
   display: inline-flex;
   align-items: baseline;
-  gap: 6px;
-
-  padding: 5px 7px;
+  padding: 3px 6px;
   background: rgba(0,0,0,0.55);
   border: 2px solid var(--u-accent);
   border-radius: 0;
 
   font-family: "Press Start 2P", monospace;
-  font-size: 10px;
+  font-size: 9px;
   line-height: 1;
   color: var(--u-text);
   user-select: none;
 }
 
-.unified-value-number{ font-size: 10px; }
-.unified-value-suffix{ font-size: 9px; opacity: 0.75; }
+.unified-value-text{ font-size: 9px; }
 
 /* --------------------------------------------------
    ART WINDOW (narrower than header)
@@ -146,15 +130,10 @@
 }
 
 .unified-art img{
-  width: 96px;
+  width: 100px;
   height: 72px;
   object-fit: contain;
   image-rendering: pixelated;
-}
-
-.unified-card.is-compact .unified-art img{
-  width: 84px;
-  height: 62px;
 }
 
 /* --------------------------------------------------
@@ -186,9 +165,6 @@
   text-overflow: ellipsis;
   max-width: 100%;
 }
-
-/* legacy safety: some surfaces still emit empty tier markers */
-.tier-badge:empty{ display:none; }
 
 /* --------------------------------------------------
    NEGATIVE POP (UNCLAIMED / UNOWNED)
@@ -223,4 +199,41 @@
 
 .unified-card.is-unclaimed .unified-art img{
   filter: grayscale(1) contrast(0.95) brightness(0.90);
+}
+
+/* --------------------------------------------------
+   SHINYDEX LAYOUT CONTAINMENT (6-COLUMN TARGET)
+-------------------------------------------------- */
+
+.shinydex-root{
+  --shinydex-grid-max: calc((var(--card-w) * 6) + (var(--space-4) * 5));
+}
+
+.shinydex-root .region-section,
+.shinydex-root .scoreboard-member-section,
+.shinydex-root .shiny-dex-controls,
+.shinydex-root .shiny-dex-tabs{
+  max-width: var(--shinydex-grid-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.shinydex-toolbar{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: linear-gradient(180deg, rgba(16,20,28,0.98), rgba(12,16,22,0.96));
+  border-bottom: 2px solid rgba(255,122,24,0.35);
+  box-shadow: 0 6px 0 rgba(0,0,0,0.45);
+}
+
+.shinydex-toolbar-inner{
+  padding: var(--space-2) var(--space-2);
+}
+
+.tier-badge:empty{ display:none; }
+
+.shinydex-root #dex-search{
+  width: 340px;
+  max-width: 42vw;
 }
