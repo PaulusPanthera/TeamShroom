@@ -15,6 +15,41 @@ function renderEmptyState(message) {
   return wrap;
 }
 
+function renderStateShell({ title, bodyText, stateKey }) {
+  const content = document.getElementById('page-content');
+  if (!content) return;
+
+  const root = el('div', 'donators-root');
+  if (stateKey) root.dataset.donatorsState = String(stateKey);
+
+  const panel = el('section', 'donators-panel donators-panel--state');
+  panel.appendChild(el('h2', 'donators-panel-title', title || 'Donators'));
+
+  const body = el('div', 'donators-panel-body');
+  body.appendChild(el('div', 'donators-state-text', bodyText || '...'));
+  panel.appendChild(body);
+
+  root.appendChild(panel);
+  content.replaceChildren(root);
+}
+
+export function renderDonatorsLoading() {
+  renderStateShell({
+    title: 'Donators',
+    bodyText: 'Loading donators...',
+    stateKey: 'loading'
+  });
+}
+
+export function renderDonatorsError(details) {
+  const suffix = details ? `\n${String(details).trim()}` : '';
+  renderStateShell({
+    title: 'Donators',
+    bodyText: `Failed to load donators data.${suffix}`,
+    stateKey: 'error'
+  });
+}
+
 function renderHowToDonatePanel() {
   const panel = el('section', 'donators-panel donators-panel--howto');
 
@@ -165,88 +200,4 @@ function renderRankedDonatorsTable(ranked) {
   const body = el('div', 'donators-panel-body');
 
   const tableWrap = el('div', 'donators-table-wrap');
-  const table = el('table', 'donators-ranked-table');
-
-  const thead = document.createElement('thead');
-  const headerRow = document.createElement('tr');
-  ['#', 'Donator', 'Total Donated', 'Tier'].forEach(h => {
-    headerRow.appendChild(el('th', '', h));
-  });
-  thead.appendChild(headerRow);
-
-  const tbody = document.createElement('tbody');
-
-  (Array.isArray(ranked) ? ranked : []).forEach(d => {
-    const tierKey = d && d.tierKey ? String(d.tierKey) : 'none';
-    const tr = el('tr', `donators-row donators-row--${tierKey}`);
-
-    const placement = el('td', 'donators-placement', d.placementText);
-
-    const nameTd = el('td', 'donators-name');
-    if (d.tierMeta && d.tierMeta.icon) {
-      const img = document.createElement('img');
-      img.className = 'donators-tier-icon';
-      img.src = d.tierMeta.icon;
-      img.alt = '';
-      nameTd.appendChild(img);
-    }
-    nameTd.appendChild(el('span', 'donators-name-text', d.name));
-
-    const totalTd = el('td', 'donators-number', d.totalText);
-
-    const tierTd = el('td', 'donators-tier-cell');
-
-    // Native tooltip: never clipped by overflow containers.
-    if (d.tierMeta && d.tierMeta.desc) {
-      tierTd.title = String(d.tierMeta.desc);
-    }
-
-    const tierLabel = el('span', 'donators-tier-pill', d.tierMeta && d.tierMeta.label ? d.tierMeta.label : '—');
-    tierTd.appendChild(tierLabel);
-
-    tr.appendChild(placement);
-    tr.appendChild(nameTd);
-    tr.appendChild(totalTd);
-    tr.appendChild(tierTd);
-
-    tbody.appendChild(tr);
-  });
-
-  table.appendChild(thead);
-  table.appendChild(tbody);
-  tableWrap.appendChild(table);
-
-  body.appendChild(tableWrap);
-  panel.appendChild(body);
-
-  return panel;
-}
-
-export function renderDonatorsPage(viewModel) {
-  const content = document.getElementById('page-content');
-  if (!content) return;
-
-  content.replaceChildren();
-
-  if (!viewModel || !viewModel.hasData) {
-    content.appendChild(renderEmptyState('No donation data.'));
-    return;
-  }
-
-  const root = el('div', 'donators-root');
-
-  const top = el('div', 'donators-top-flex');
-  top.appendChild(renderHowToDonatePanel());
-  top.appendChild(renderSummaryPanel(viewModel.summary));
-  top.appendChild(renderLastDonationsPanel(viewModel.recent));
-
-  root.appendChild(top);
-
-  const mid = el('div', 'donators-mid-flex');
-  mid.appendChild(renderTierLegendPanel(viewModel.tiers));
-  root.appendChild(mid);
-
-  root.appendChild(renderRankedDonatorsTable(viewModel.ranked));
-
-  content.appendChild(root);
-}
+  const table = el('table', 'donators-
