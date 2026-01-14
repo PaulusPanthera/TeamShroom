@@ -101,7 +101,7 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
     const cardViews = sorted.map(m => buildMemberGalleryCardView(m, state.sortMode));
     renderShowcaseGallery(cardViews);
 
-    document.querySelectorAll('.showcase-gallery-card[data-member-key]').forEach(card => {
+    document.querySelectorAll('.unified-card[data-member-key]').forEach(card => {
       card.addEventListener('click', () => {
         const key = card.getAttribute('data-member-key');
         if (!key) return;
