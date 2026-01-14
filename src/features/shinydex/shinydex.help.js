@@ -1,6 +1,7 @@
-// v2.0.0-alpha.5
 // src/features/shinydex/shinydex.help.js
+// v2.0.0-beta
 // Shiny Dex — Help Tooltip (Search Legend)
+// Fixed-position overlay so sticky toolbars never clip it.
 
 let cleanup = null;
 
@@ -8,25 +9,8 @@ function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
 
-export function setupShinyDexHelp({ buttonEl, controlsRoot }) {
-  if (!buttonEl || !controlsRoot) return;
-
-  if (cleanup) cleanup();
-
-  if (getComputedStyle(controlsRoot).position === 'static') {
-    controlsRoot.style.position = 'relative';
-  }
-
-  let tooltip = controlsRoot.querySelector('.dex-help-tooltip');
-  if (!tooltip) {
-    tooltip = document.createElement('div');
-    tooltip.className = 'dex-help-tooltip';
-    controlsRoot.appendChild(tooltip);
-  }
-
-  tooltip.style.display = 'none';
-
-  tooltip.innerHTML = `
+function buildHelpHtml() {
+  return `
     <div class="dex-help-title">Search Help</div>
     <div class="dex-help-rows">
       <div class="help-row">
@@ -55,17 +39,47 @@ export function setupShinyDexHelp({ buttonEl, controlsRoot }) {
       </div>
     </div>
   `;
+}
 
-  function positionUnderButton() {
-    const rootRect = controlsRoot.getBoundingClientRect();
+export function setupShinyDexHelp({ buttonEl }) {
+  if (!buttonEl) return;
+
+  if (cleanup) cleanup();
+
+  // Single tooltip instance owned by ShinyDex.
+  let tooltip = document.querySelector('.dex-help-tooltip[data-shinydex-help="1"]');
+  if (!tooltip) {
+    tooltip = document.createElement('div');
+    tooltip.className = 'dex-help-tooltip';
+    tooltip.dataset.shinydexHelp = '1';
+    tooltip.setAttribute('role', 'dialog');
+    tooltip.setAttribute('aria-label', 'Search Help');
+    tooltip.style.display = 'none';
+    document.body.appendChild(tooltip);
+  }
+
+  tooltip.innerHTML = buildHelpHtml();
+
+  function positionNearButton() {
     const btnRect = buttonEl.getBoundingClientRect();
+    const pad = 10;
 
-    const pad = 8;
-    const desiredLeft = btnRect.left - rootRect.left;
-    const maxLeft = controlsRoot.clientWidth - tooltip.offsetWidth - pad;
+    // Ensure we have a measurable box.
+    tooltip.style.left = '0px';
+    tooltip.style.top = '0px';
+    tooltip.style.maxWidth = '560px';
 
-    const left = clamp(desiredLeft, pad, Math.max(pad, maxLeft));
-    const top = btnRect.bottom - rootRect.top + pad;
+    const tipRect = tooltip.getBoundingClientRect();
+
+    let left = btnRect.left;
+    left = clamp(left, pad, window.innerWidth - tipRect.width - pad);
+
+    let top = btnRect.bottom + pad;
+    // If it would go off-screen, flip above.
+    if (top + tipRect.height + pad > window.innerHeight) {
+      top = btnRect.top - tipRect.height - pad;
+    }
+    top = clamp(top, pad, window.innerHeight - tipRect.height - pad);
 
     tooltip.style.left = `${Math.round(left)}px`;
     tooltip.style.top = `${Math.round(top)}px`;
@@ -79,7 +93,7 @@ export function setupShinyDexHelp({ buttonEl, controlsRoot }) {
   function open() {
     tooltip.style.display = 'block';
     buttonEl.classList.add('active');
-    positionUnderButton();
+    positionNearButton();
   }
 
   function toggle() {
@@ -87,36 +101,39 @@ export function setupShinyDexHelp({ buttonEl, controlsRoot }) {
     else close();
   }
 
-  const onButtonClick = e => {
+  const onButtonClick = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     toggle();
   };
 
-  const onDocClick = e => {
+  const onDocClick = (e) => {
     if (tooltip.style.display === 'none') return;
     if (tooltip.contains(e.target)) return;
     if (buttonEl.contains(e.target)) return;
     close();
   };
 
-  const onKeyDown = e => {
+  const onKeyDown = (e) => {
     if (e.key === 'Escape') close();
   };
 
-  const onResize = () => {
+  const onViewportChange = () => {
     if (tooltip.style.display === 'none') return;
-    positionUnderButton();
+    positionNearButton();
   };
 
   buttonEl.addEventListener('click', onButtonClick);
-  document.addEventListener('click', onDocClick);
+  document.addEventListener('click', onDocClick, true);
   document.addEventListener('keydown', onKeyDown);
-  window.addEventListener('resize', onResize);
+  window.addEventListener('scroll', onViewportChange, { passive: true });
+  window.addEventListener('resize', onViewportChange);
 
   cleanup = () => {
     buttonEl.removeEventListener('click', onButtonClick);
-    document.removeEventListener('click', onDocClick);
+    document.removeEventListener('click', onDocClick, true);
     document.removeEventListener('keydown', onKeyDown);
-    window.removeEventListener('resize', onResize);
+    window.removeEventListener('scroll', onViewportChange);
+    window.removeEventListener('resize', onViewportChange);
   };
 }
