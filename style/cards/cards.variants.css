@@ -2,7 +2,11 @@
    v2.0.0-beta
 */
 
-.shinydex-root .unified-variants{
+.unified-card.unified-card--member .unified-variants{
+  display: none;
+}
+
+.unified-variants{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 6px;
@@ -15,7 +19,7 @@
   box-shadow: 0 0 0 2px rgba(0,0,0,0.25) inset;
 }
 
-.shinydex-root .variant-btn{
+.variant-btn{
   height: 30px;
 
   background: var(--bg-input);
@@ -36,24 +40,24 @@
     0 0 0 2px rgba(0,0,0,0.45) inset;
 }
 
-.shinydex-root .variant-btn img{
+.variant-btn img{
   width: 18px;
   height: 18px;
   image-rendering: pixelated;
 }
 
-.shinydex-root .variant-btn:hover{
+.variant-btn:hover{
   border-color: var(--u-accent);
 }
 
-.shinydex-root .variant-btn:active{
+.variant-btn:active{
   transform: translateY(1px);
   box-shadow:
     0 1px 0 rgba(0,0,0,0.55),
     0 0 0 2px rgba(0,0,0,0.55) inset;
 }
 
-.shinydex-root .variant-btn.is-active{
+.variant-btn.is-active{
   border-color: var(--u-accent);
   box-shadow:
     0 2px 0 rgba(0,0,0,0.55),
@@ -61,12 +65,12 @@
     0 0 0 2px rgba(255,255,255,0.06);
 }
 
-.shinydex-root .variant-btn.is-disabled{
+.variant-btn.is-disabled{
   cursor: default;
   opacity: 0.45;
   filter: grayscale(1);
 }
 
-.shinydex-root .variant-btn.is-disabled:hover{
+.variant-btn.is-disabled:hover{
   border-color: rgba(58,70,81,0.65);
 }
