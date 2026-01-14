@@ -5,13 +5,10 @@
 import { loadPokemon } from './src/data/pokemon.loader.js';
 import { buildPokemonData, POKEMON_POINTS } from './src/data/pokemondatabuilder.js';
 
-import { loadShinyWeekly } from './src/data/shinyweekly.loader.js';
-import { buildShinyWeeklyModel } from './src/data/shinyweekly.model.js';
-
 import { loadShinyShowcase } from './src/data/shinyshowcase.loader.js';
 import { loadMembers } from './src/data/members.loader.js';
 
-import { setupShinyDexPage } from './src/features/shinydex/shinydex.js';
+import { renderPokedexPage } from './src/features/pokedex/pokedex.page.js';
 import { setupShowcasePage } from './src/features/showcase/showcase.js';
 
 import { loadDonators } from './src/data/donators.loader.js';
@@ -22,7 +19,6 @@ import { setupDonatorsPage } from './src/features/donators/donators.js';
 // ---------------------------------------------------------
 
 let pokemonDataLoaded = false;
-let shinyWeeklyWeeks = null;
 let shinyShowcaseRows = null;
 let membersRows = null;
 let donatorsRows = null;
@@ -37,6 +33,12 @@ function getRoute() {
   if (!raw || raw === '#') return { page: 'hitlist' };
 
   const lower = raw.toLowerCase();
+
+  // Shiny Pokédex
+  if (lower.startsWith('#hitlist') || lower.startsWith('#pokedex')) {
+    // View is resolved inside the Pokédex shell.
+    return { page: 'hitlist' };
+  }
 
   if (lower.startsWith('#showcase')) return { page: 'showcase' };
   if (lower === '#donators') return { page: 'donators' };
@@ -74,12 +76,6 @@ async function ensurePokemonData() {
 async function ensureShowcaseRows() {
   if (shinyShowcaseRows) return;
   shinyShowcaseRows = await loadShinyShowcase();
-}
-
-async function ensureWeeklyModel() {
-  if (shinyWeeklyWeeks) return;
-  const rows = await loadShinyWeekly();
-  shinyWeeklyWeeks = buildShinyWeeklyModel(rows);
 }
 
 async function ensureMembersRows() {
@@ -128,11 +124,7 @@ async function renderPage() {
   }
 
   // ShinyDex (Hitlist/Living)
-  await ensurePokemonData();
-  await ensureWeeklyModel();
-  await ensureShowcaseRows();
-
-  setupShinyDexPage({ weeklyModel: shinyWeeklyWeeks, shinyShowcaseRows });
+  await renderPokedexPage();
 }
 
 // ---------------------------------------------------------
