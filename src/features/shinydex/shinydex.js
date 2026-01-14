@@ -1,5 +1,5 @@
-// v2.0.0-alpha
 // src/features/shinydex/shinydex.js
+// v2.0.0-beta
 // Shiny Dex Page Controller
 // Owns ALL DOM under #page-content
 
@@ -15,7 +15,7 @@ import { setupShinyDexHelp } from './shinydex.help.js';
 import { buildSearchContext } from './shinydex.search.js';
 import { pokemonFamilies, POKEMON_DEX_ORDER } from '../../data/pokemondatabuilder.js';
 
-// UnifiedCard v3: variant switching delegation
+// UnifiedCard v2: variant switching delegation
 import { bindUnifiedCardVariantSwitching } from '../../ui/unifiedcard.js';
 
 export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
@@ -30,32 +30,38 @@ export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
   });
 
   root.innerHTML = `
-    <div class="search-controls shiny-dex-controls">
-      <input id="dex-search" type="text" placeholder="Search" />
+    <div class="shinydex-root">
+      <div class="shinydex-toolbar" role="region" aria-label="ShinyDex controls">
+        <div class="shinydex-toolbar-inner">
+          <div class="search-controls shiny-dex-controls">
+            <input id="dex-search" type="text" placeholder="Search" />
 
-      <button id="dex-help" class="dex-help-btn" aria-label="Search Help">
-        <img class="dex-help-icon" src="img/symbols/questionmarksprite.png" alt="Help">
-      </button>
+            <button id="dex-help" class="dex-help-btn" aria-label="Search Help">
+              <img class="dex-help-icon" src="img/symbols/questionmarksprite.png" alt="Help">
+            </button>
 
-      <button id="dex-unclaimed" class="dex-tab">
-        Unclaimed
-      </button>
+            <button id="dex-unclaimed" class="dex-tab">
+              Unclaimed
+            </button>
 
-      <select id="dex-sort"></select>
+            <select id="dex-sort"></select>
 
-      <span id="dex-count"></span>
+            <span id="dex-count"></span>
+          </div>
+
+          <div class="search-controls shiny-dex-tabs">
+            <button id="tab-hitlist" class="dex-tab active">
+              Shiny Dex Hitlist
+            </button>
+            <button id="tab-living" class="dex-tab">
+              Shiny Living Dex
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="shiny-dex-container"></div>
     </div>
-
-    <div class="search-controls shiny-dex-tabs">
-      <button id="tab-hitlist" class="dex-tab active">
-        Shiny Dex Hitlist
-      </button>
-      <button id="tab-living" class="dex-tab">
-        Shiny Living Dex
-      </button>
-    </div>
-
-    <div id="shiny-dex-container"></div>
   `;
 
   const searchInput = root.querySelector('#dex-search');
@@ -89,7 +95,6 @@ export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
   root.addEventListener('card:variant', (e) => {
     const card = e && e.target && typeof e.target.closest === 'function' ? e.target.closest('.unified-card') : null;
     if (!card) return;
-
     const key = card.getAttribute('data-pokemon-key') || '';
     if (!key) return;
 
