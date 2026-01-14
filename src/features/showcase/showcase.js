@@ -13,7 +13,7 @@ import {
   groupMemberShiniesByStatus
 } from './showcase.presenter.js';
 
-import { POKEMON_DEX_ORDER } from '../../data/pokemondatabuilder.js';
+import { getPokemonDexOrder } from '../../domains/pokemon/pokemon.data.js';
 
 import { bindUnifiedCardVariantSwitching } from '../../ui/unifiedcard.js';
 import {
@@ -65,8 +65,9 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
   const route = parseHash();
 
   const dexIndex = {};
-  if (Array.isArray(POKEMON_DEX_ORDER) && POKEMON_DEX_ORDER.length) {
-    POKEMON_DEX_ORDER.forEach((k, i) => { dexIndex[String(k || '').toLowerCase()] = i; });
+  const dexOrder = getPokemonDexOrder();
+  if (Array.isArray(dexOrder) && dexOrder.length) {
+    dexOrder.forEach((k, i) => { dexIndex[String(k || '').toLowerCase()] = i; });
   }
 
   if (route.view === 'member') {
