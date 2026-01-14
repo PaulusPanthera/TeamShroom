@@ -1,0 +1,107 @@
+/* style/shinydex.css
+   v2.0.0-beta
+   ShinyDex-only layout + toolbar styling (scoped)
+*/
+
+/* --------------------------------------------------
+   SHINYDEX LAYOUT CONTAINMENT (6-COLUMN TARGET)
+-------------------------------------------------- */
+
+.shinydex-root{
+  --shinydex-grid-max: calc((var(--card-w) * 6) + (var(--space-4) * 5));
+}
+
+.shinydex-root .region-section,
+.shinydex-root .scoreboard-member-section,
+.shinydex-root .shiny-dex-controls,
+.shinydex-root .shiny-dex-tabs{
+  max-width: var(--shinydex-grid-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --------------------------------------------------
+   SHINYDEX STICKY TOOLBAR (SCOPED)
+-------------------------------------------------- */
+
+.shinydex-root .shinydex-toolbar{
+  position: sticky;
+  top: 56px; /* sits under fixed nav */
+  z-index: 900;
+  pointer-events: auto;
+
+  background: var(--bg-panel);
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.02) 0px,
+      rgba(255,255,255,0.02) 1px,
+      rgba(0,0,0,0) 1px,
+      rgba(0,0,0,0) 8px
+    );
+
+  border: 2px solid rgba(58, 70, 81, 0.85);
+  border-left: none;
+  border-right: none;
+
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.70) inset,
+    0 1px 0 rgba(45,58,69,0.85) inset,
+    0 -1px 0 rgba(7,9,12,0.90) inset,
+    0 8px 0 rgba(0,0,0,0.55);
+}
+
+.shinydex-root .shinydex-toolbar-inner{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 12px;
+}
+
+/* attach the two bars into one "hotbar" block */
+.shinydex-root .shinydex-toolbar .search-controls{
+  margin-bottom: 0;
+  border: 2px solid rgba(58, 70, 81, 0.85);
+  background: var(--bg-panel);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.70) inset,
+    0 1px 0 rgba(45,58,69,0.85) inset,
+    0 -1px 0 rgba(7,9,12,0.90) inset;
+}
+
+.shinydex-root .shinydex-toolbar .shiny-dex-tabs{
+  margin-top: 0;
+  border-top: none;
+}
+
+/* make orange actions read like menu items (hard press depth) */
+.shinydex-root .shinydex-toolbar .search-controls button,
+.shinydex-root .shinydex-toolbar .dex-help-btn,
+.shinydex-root .shinydex-toolbar .dex-tab{
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.70) inset,
+    0 1px 0 rgba(255,255,255,0.10) inset,
+    0 2px 0 rgba(0,0,0,0.75);
+}
+
+.shinydex-root .shinydex-toolbar .search-controls button:active,
+.shinydex-root .shinydex-toolbar .dex-help-btn:active,
+.shinydex-root .shinydex-toolbar .dex-tab:active{
+  transform: translateY(1px);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.75) inset,
+    0 1px 0 rgba(255,255,255,0.08) inset,
+    0 1px 0 rgba(0,0,0,0.75);
+}
+
+/* compact sizing constraints */
+.shinydex-root #dex-search{
+  width: 340px;
+  max-width: 42vw;
+}
+
+.shinydex-root #dex-count{
+  color: #7AE252;
+  font-weight: 700;
+  margin-left: auto;
+}
