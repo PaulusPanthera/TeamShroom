@@ -24,7 +24,7 @@
    CORE CARD
 -------------------------------------------------- */
 
-.unified-card{
+.shinydex-root .unified-card{
   width: var(--card-w);
   height: var(--card-h);
 
@@ -47,13 +47,13 @@
   overflow: hidden;
 }
 
-.unified-card *{ box-sizing: border-box; }
+.shinydex-root .unified-card *{ box-sizing: border-box; }
 
 /* --------------------------------------------------
    HEADER STRIP
 -------------------------------------------------- */
 
-.unified-header{
+.shinydex-root .unified-header{
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -67,12 +67,12 @@
   overflow: hidden;
 }
 
-.unified-name-wrap{
+.shinydex-root .unified-name-wrap{
   min-width: 0;
   flex: 1;
 }
 
-.unified-name{
+.shinydex-root .unified-name{
   display: block;
   font-family: "Press Start 2P", monospace;
   font-size: 12px;
@@ -84,12 +84,12 @@
   text-overflow: ellipsis;
 }
 
-.tier-badge:empty{ display:none; }
+.shinydex-root .tier-badge:empty{ display:none; }
 
-.unified-name.is-long{ font-size: 11px; }
-.unified-name.is-very-long{ font-size: 10px; }
+.shinydex-root .unified-name.is-long{ font-size: 11px; }
+.shinydex-root .unified-name.is-very-long{ font-size: 10px; }
 
-.unified-value{
+.shinydex-root .unified-value{
   flex: 0 0 auto;
   display: inline-flex;
   align-items: baseline;
@@ -105,13 +105,13 @@
   user-select: none;
 }
 
-.unified-value-text{ font-size: 9px; }
+.shinydex-root .unified-value-text{ font-size: 9px; }
 
 /* --------------------------------------------------
    ART WINDOW (narrower than header)
 -------------------------------------------------- */
 
-.unified-art{
+.shinydex-root .unified-art{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,7 +129,7 @@
   overflow: hidden;
 }
 
-.unified-art img{
+.shinydex-root .unified-art img{
   width: 100px;
   height: 72px;
   object-fit: contain;
@@ -140,7 +140,7 @@
    INFO PLATE (small box above variants)
 -------------------------------------------------- */
 
-.unified-info{
+.shinydex-root .unified-info{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -154,7 +154,7 @@
   box-shadow: 0 0 0 2px rgba(0,0,0,0.25) inset;
 }
 
-.unified-info-text{
+.shinydex-root .unified-info-text{
   font-family: "Press Start 2P", monospace;
   font-size: 11px;
   line-height: 1;
@@ -170,23 +170,23 @@
    NEGATIVE POP (UNCLAIMED / UNOWNED)
 -------------------------------------------------- */
 
-.unified-card.is-unclaimed{
+.shinydex-root .unified-card.is-unclaimed{
   border-color: #666;
   filter: saturate(0.65);
 }
 
-.unified-card.is-unclaimed .unified-header,
-.unified-card.is-unclaimed .unified-info{
+.shinydex-root .unified-card.is-unclaimed .unified-header,
+.shinydex-root .unified-card.is-unclaimed .unified-info{
   border-color: rgba(255,255,255,0.12);
   background: rgba(0,0,0,0.58);
 }
 
-.unified-card.is-unclaimed .unified-value{
+.shinydex-root .unified-card.is-unclaimed .unified-value{
   border-color: rgba(255,255,255,0.25);
   color: rgba(255,255,255,0.75);
 }
 
-.unified-card.is-unclaimed .unified-art{
+.shinydex-root .unified-card.is-unclaimed .unified-art{
   background-image:
     repeating-linear-gradient(
       135deg,
@@ -197,7 +197,7 @@
     );
 }
 
-.unified-card.is-unclaimed .unified-art img{
+.shinydex-root .unified-card.is-unclaimed .unified-art img{
   filter: grayscale(1) contrast(0.95) brightness(0.90);
 }
 
@@ -231,7 +231,7 @@
   padding: var(--space-2) var(--space-2);
 }
 
-.tier-badge:empty{ display:none; }
+.shinydex-root .tier-badge:empty{ display:none; }
 
 .shinydex-root #dex-search{
   width: 340px;
