@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-01-14T12:20:28.701Z",
+  "generatedAt": "2026-01-14T18:17:15.282Z",
   "source": "google-sheets",
   "data": [
     {
@@ -20618,10 +20618,10 @@
       "date_end": "2025-11-09",
       "ot": "MrBiscottes",
       "pokemon": "golurk",
-      "method": null,
+      "method": "raid",
       "encounter": null,
       "secret": false,
-      "alpha": false,
+      "alpha": true,
       "run": false,
       "lost": false,
       "clip": null,
