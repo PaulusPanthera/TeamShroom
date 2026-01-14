@@ -66,11 +66,6 @@ function normalizeQuery(raw) {
     .replace(/\s+/g, '');
 }
 
-function isSafariMethod(method) {
-  if (!method) return false;
-  return String(method).toLowerCase().indexOf('safari') >= 0;
-}
-
 export function isInactiveShiny(s) {
   return Boolean(s && (s.lost || s.sold));
 }
@@ -79,7 +74,7 @@ export function classifyShinyVariant(s) {
   return {
     secret: Boolean(s && s.secret),
     alpha: Boolean(s && s.alpha),
-    safari: Boolean(s && isSafariMethod(s.method))
+    safari: Boolean(s && s.safari === true)
   };
 }
 
