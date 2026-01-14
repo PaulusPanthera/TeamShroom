@@ -14,10 +14,23 @@ Array<{
   region: string
   count: number
   owners: string[]
+  variantCounts?: { standard:number, secret:number, alpha:number, safari:number }
+  variantOwners?: { secret:string[], alpha:string[], safari:string[] }
 }>
 */
 
 export function buildShinyLivingDexModel(showcaseRows) {
+  function normalizeMethod(m) {
+    return String(m || '').trim().toLowerCase();
+  }
+
+  function pushUnique(arr, value) {
+    const v = String(value || '').trim();
+    if (!v) return;
+    if (arr.indexOf(v) !== -1) return;
+    arr.push(v);
+  }
+
   // -------------------------------------------------------
   // 1. INIT ALL POKÉMON (UNOWNED BY DEFAULT)
   // -------------------------------------------------------
@@ -31,7 +44,9 @@ export function buildShinyLivingDexModel(showcaseRows) {
       pokemon,
       region: POKEMON_REGION[pokemon] || 'unknown',
       count: 0,
-      owners: []
+      owners: [],
+      variantCounts: { standard: 0, secret: 0, alpha: 0, safari: 0 },
+      variantOwners: { secret: [], alpha: [], safari: [] }
     };
   });
 
@@ -46,7 +61,25 @@ export function buildShinyLivingDexModel(showcaseRows) {
     if (!map[key]) return;
 
     map[key].count += 1;
-    map[key].owners.push(row.ot);
+    pushUnique(map[key].owners, row.ot);
+
+    // Standard: any owned shiny counts as a standard collection entry.
+    map[key].variantCounts.standard += 1;
+
+    if (row.secret) {
+      map[key].variantCounts.secret += 1;
+      pushUnique(map[key].variantOwners.secret, row.ot);
+    }
+
+    if (row.alpha) {
+      map[key].variantCounts.alpha += 1;
+      pushUnique(map[key].variantOwners.alpha, row.ot);
+    }
+
+    if (normalizeMethod(row.method) === 'safari') {
+      map[key].variantCounts.safari += 1;
+      pushUnique(map[key].variantOwners.safari, row.ot);
+    }
   });
 
   // -------------------------------------------------------
