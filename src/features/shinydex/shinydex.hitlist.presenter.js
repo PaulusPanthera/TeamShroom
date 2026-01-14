@@ -32,15 +32,8 @@ function normalizePokemonKey(raw) {
   return String(raw || '').trim().toLowerCase();
 }
 
-function isSafariMethod(method) {
-  if (!method) return false;
-  return String(method).toLowerCase().indexOf('safari') >= 0;
-}
-
 function eventHasSafariFlag(shiny) {
-  if (!shiny) return false;
-  if (shiny.safari === true) return true;
-  return isSafariMethod(shiny.method);
+  return Boolean(shiny && shiny.safari === true);
 }
 
 /**
