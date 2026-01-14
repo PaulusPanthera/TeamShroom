@@ -1,4 +1,4 @@
-// v2.0.0-alpha.3
+// v2.0.0-alpha
 // src/features/shinydex/shinydex.hitlist.js
 // Shiny Dex — HITLIST RENDERER (DOM-only)
 // UnifiedCard v3: points always shown; tier is frame-only via tier-map in unifiedcard.
@@ -31,16 +31,26 @@ function buildVariantsForEntry(entry, fallbackInfoText) {
   const safariOwner = vc && (vc.safari || vc.SAFARI) ? String(vc.safari || vc.SAFARI) : '';
 
   return [
-    { key: 'standard', title: 'Standard', enabled: true, infoText: standardInfo, active: true },
-    { key: 'secret', title: 'Secret', enabled: Boolean(secretOwner), infoText: secretOwner || '—', active: false },
-    { key: 'alpha', title: 'Alpha', enabled: Boolean(alphaOwner), infoText: alphaOwner || '—', active: false },
-    { key: 'safari', title: 'Safari', enabled: Boolean(safariOwner), infoText: safariOwner || '—', active: false }
+    { key: 'standard', title: 'Standard', enabled: true, infoText: standardInfo, active: false },
+    { key: 'secret', title: 'Secret', enabled: Boolean(secretOwner), infoText: secretOwner || 'Unclaimed', active: false },
+    { key: 'alpha', title: 'Alpha', enabled: Boolean(alphaOwner), infoText: alphaOwner || 'Unclaimed', active: false },
+    { key: 'safari', title: 'Safari', enabled: Boolean(safariOwner), infoText: safariOwner || 'Unclaimed', active: false }
   ];
 }
 
-export function renderHitlistFromModel(model) {
+function applySelectedVariant(variants, selectedKey) {
+  const key = selectedKey || 'standard';
+  return (Array.isArray(variants) ? variants : []).map(v => {
+    if (!v || !v.key) return v;
+    return Object.assign({}, v, { active: v.key === key });
+  });
+}
+
+export function renderHitlistFromModel(model, opts) {
   const container = document.getElementById('shiny-dex-container');
   container.innerHTML = '';
+
+  const selectedVariantByKey = opts && opts.selectedVariantByKey;
 
   if (!model || !Array.isArray(model.sections)) return;
 
@@ -60,11 +70,14 @@ export function renderHitlistFromModel(model) {
         const points = Number(entry.points ?? POKEMON_POINTS?.[key] ?? 0);
 
         const infoText = entry.claimedBy ? String(entry.claimedBy) : 'Claimed';
-        const variants = buildVariantsForEntry(entry, infoText);
+        const baseVariants = buildVariantsForEntry(entry, infoText);
+        const wanted = selectedVariantByKey && typeof selectedVariantByKey.get === 'function' ? selectedVariantByKey.get(key) : null;
+        const variants = applySelectedVariant(baseVariants, wanted);
 
         grid.insertAdjacentHTML(
           'beforeend',
           renderUnifiedCard({
+            pokemonKey: key,
             pokemonName: prettifyPokemonName(key),
             artSrc: getPokemonGif(key),
             points: points,
@@ -101,11 +114,14 @@ export function renderHitlistFromModel(model) {
       const claimedBy = entry.claimedBy ? String(entry.claimedBy) : '';
       const infoText = claimed ? (claimedBy || 'Claimed') : 'Unclaimed';
 
-      const variants = buildVariantsForEntry(entry, infoText);
+      const baseVariants = buildVariantsForEntry(entry, infoText);
+      const wanted = selectedVariantByKey && typeof selectedVariantByKey.get === 'function' ? selectedVariantByKey.get(key) : null;
+      const variants = applySelectedVariant(baseVariants, wanted);
 
       grid.insertAdjacentHTML(
         'beforeend',
         renderUnifiedCard({
+          pokemonKey: key,
           pokemonName: prettifyPokemonName(key),
           artSrc: getPokemonGif(key),
           points: points,
