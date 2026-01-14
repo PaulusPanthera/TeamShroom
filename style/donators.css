@@ -105,6 +105,18 @@
   flex: 1 1 100%;
 }
 
+.donators-panel--state{
+  flex: 1 1 100%;
+  border-color: var(--accent);
+}
+
+.donators-state-text{
+  color: var(--text-main);
+  opacity: 0.85;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
 /* ---------------------------------------------------------
    HOW TO DONATE
 --------------------------------------------------------- */
