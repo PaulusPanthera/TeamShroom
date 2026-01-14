@@ -1,5 +1,6 @@
 // src/data/shinyweekly.loader.js
-// Shiny Weekly data loader
+// v2.0.0-beta
+// Shiny Weekly data loader + CI row contract documentation
 //
 // INTERNAL DATA CONTRACT — SHINY WEEKLY ROW (CI-OWNED)
 //
