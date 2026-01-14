@@ -8,12 +8,7 @@
 // - Derived Pokémon maps are built at most once per runtime
 // - Returned objects are safe to reuse across renders
 
-import { loadPokemon } from '../../data/pokemon.loader.js';
-import {
-  buildPokemonData,
-  POKEMON_DEX_ORDER,
-  POKEMON_POINTS
-} from '../../data/pokemondatabuilder.js';
+import { initPokemonDerivedDataOnce } from '../pokemon/pokemon.data.js';
 
 import { loadShinyWeekly } from '../../data/shinyweekly.loader.js';
 import { buildShinyWeeklyModel } from '../../data/shinyweekly.model.js';
@@ -24,32 +19,12 @@ import { loadShinyShowcase } from '../../data/shinyshowcase.loader.js';
 // PROMISE CACHES
 // ---------------------------------------------------------
 
-let pokemonInitPromise = null;
 let weeklyModelPromise = null;
 let showcaseRowsPromise = null;
 
 // ---------------------------------------------------------
 // INTERNAL HELPERS
 // ---------------------------------------------------------
-
-function pokemonDerivedDataAlreadyBuilt() {
-  const hasDexOrder = Array.isArray(POKEMON_DEX_ORDER) && POKEMON_DEX_ORDER.length > 0;
-  const hasPoints = POKEMON_POINTS && typeof POKEMON_POINTS === 'object' && Object.keys(POKEMON_POINTS).length > 0;
-  return hasDexOrder && hasPoints;
-}
-
-async function initPokemonDerivedDataOnce() {
-  if (pokemonInitPromise) return pokemonInitPromise;
-
-  pokemonInitPromise = (async () => {
-    if (pokemonDerivedDataAlreadyBuilt()) return true;
-    const rows = await loadPokemon();
-    buildPokemonData(rows);
-    return true;
-  })();
-
-  return pokemonInitPromise;
-}
 
 async function getWeeklyModelOnce() {
   if (weeklyModelPromise) return weeklyModelPromise;
