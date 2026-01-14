@@ -1,6 +1,6 @@
-// main.js (ROOT)
-// Entrypoint — ShinyDex + Showcase + Donators
-// ShinyWeekly remains disabled until rewired to the unified card contract.
+// main.js
+// v2.0.0-beta
+// Entrypoint — ShinyDex + Showcase + Donators + Shiny Weekly
 
 import { loadPokemon } from './src/data/pokemon.loader.js';
 import { buildPokemonData, POKEMON_POINTS } from './src/data/pokemondatabuilder.js';
@@ -8,8 +8,12 @@ import { buildPokemonData, POKEMON_POINTS } from './src/data/pokemondatabuilder.
 import { loadShinyShowcase } from './src/data/shinyshowcase.loader.js';
 import { loadMembers } from './src/data/members.loader.js';
 
+import { loadShinyWeekly } from './src/data/shinyweekly.loader.js';
+import { buildShinyWeeklyModel } from './src/data/shinyweekly.model.js';
+
 import { renderPokedexPage } from './src/features/pokedex/pokedex.page.js';
 import { setupShowcasePage } from './src/features/showcase/showcase.js';
+import { setupShinyWeeklyPage } from './src/features/shinyweekly/shinyweekly.page.js';
 
 import { loadDonators } from './src/data/donators.loader.js';
 import { setupDonatorsPage } from './src/features/donators/donators.js';
@@ -22,6 +26,7 @@ let pokemonDataLoaded = false;
 let shinyShowcaseRows = null;
 let membersRows = null;
 let donatorsRows = null;
+let weeklyModel = null;
 
 // ---------------------------------------------------------
 // ROUTING
@@ -43,8 +48,7 @@ function getRoute() {
   if (lower.startsWith('#showcase')) return { page: 'showcase' };
   if (lower === '#donators') return { page: 'donators' };
 
-  // ShinyWeekly disabled for now (avoid broken UI).
-  if (lower === '#shinyweekly') return { page: 'hitlist', redirectedFrom: 'shinyweekly' };
+  if (lower === '#shinyweekly') return { page: 'shinyweekly' };
 
   // Default
   return { page: 'hitlist' };
@@ -56,6 +60,7 @@ function setActiveNav(page) {
   const map = {
     hitlist: 'nav-hitlist',
     showcase: 'nav-showcase',
+    shinyweekly: 'nav-shinyweekly',
     donators: 'nav-donators'
   };
 
@@ -88,15 +93,14 @@ async function ensureDonatorsRows() {
   donatorsRows = await loadDonators();
 }
 
+async function ensureWeeklyModel() {
+  if (weeklyModel) return;
+  const weeklyRows = await loadShinyWeekly();
+  weeklyModel = buildShinyWeeklyModel(weeklyRows);
+}
+
 async function renderPage() {
   const route = getRoute();
-
-  if (route.redirectedFrom === 'shinyweekly') {
-    if (location.hash !== '#hitlist') {
-      location.hash = '#hitlist';
-      return;
-    }
-  }
 
   setActiveNav(route.page);
 
@@ -118,6 +122,18 @@ async function renderPage() {
       membersRows,
       showcaseRows: shinyShowcaseRows,
       pokemonPoints: POKEMON_POINTS
+    });
+
+    return;
+  }
+
+  if (route.page === 'shinyweekly') {
+    await ensureWeeklyModel();
+    await ensureMembersRows();
+
+    setupShinyWeeklyPage({
+      weeklyModel,
+      membersRows
     });
 
     return;
