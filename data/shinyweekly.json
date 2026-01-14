@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-01-14T06:17:39.126Z",
+  "generatedAt": "2026-01-14T12:20:28.701Z",
   "source": "google-sheets",
   "data": [
     {
@@ -9386,7 +9386,7 @@
       "date_end": "2025-01-05",
       "ot": "PaulusTFT",
       "pokemon": "koffing",
-      "method": null,
+      "method": "5x100%",
       "encounter": null,
       "secret": false,
       "alpha": false,
