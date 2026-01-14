@@ -1,5 +1,6 @@
 // src/domains/donators/donators.model.js
-// Donators — domain model builder
+// v2.0.0-beta
+// Donators domain model builder
 
 /*
 Input: Array<{ date: string, name: string, donation: string|null, value: number }>
