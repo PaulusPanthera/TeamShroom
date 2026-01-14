@@ -1,6 +1,6 @@
 // main.js (ROOT)
-// Entrypoint — Shiny Dex only (stabilization mode)
-// All other pages disabled until Shiny Dex is locked.
+// Entrypoint — Shiny Dex + Donators
+// Other pages remain disabled until their feature rewires are complete.
 
 import { loadShinyWeekly } from './src/data/shinyweekly.loader.js';
 import { buildShinyWeeklyModel } from './src/data/shinyweekly.model.js';
@@ -11,6 +11,9 @@ import { loadPokemon } from './src/data/pokemon.loader.js';
 import { buildPokemonData } from './src/data/pokemondatabuilder.js';
 import { setupShinyDexPage } from './src/features/shinydex/shinydex.js';
 
+import { loadDonators } from './src/data/donators.loader.js';
+import { setupDonatorsPage } from './src/features/donators/donators.js';
+
 // ---------------------------------------------------------
 // DATA CACHES
 // ---------------------------------------------------------
@@ -19,11 +22,16 @@ let shinyWeeklyWeeks = null;
 let shinyShowcaseRows = null;
 let pokemonDataLoaded = false;
 
+let donatorsRows = null;
+
 // ---------------------------------------------------------
-// ROUTING (LOCKED TO HITLIST)
+// ROUTING
 // ---------------------------------------------------------
 
 function getRoute() {
+  const h = String(location.hash || '').replace('#', '').trim().toLowerCase();
+  if (h === 'donators') return { page: 'donators' };
+  // Default and fallback.
   return { page: 'hitlist' };
 }
 
@@ -31,7 +39,8 @@ function setActiveNav(page) {
   document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
 
   const map = {
-    hitlist: 'nav-hitlist'
+    hitlist: 'nav-hitlist',
+    donators: 'nav-donators'
   };
 
   document.getElementById(map[page])?.classList.add('active');
@@ -42,55 +51,47 @@ function setActiveNav(page) {
 // ---------------------------------------------------------
 
 async function renderPage() {
-  // Force URL hash to hitlist to prevent broken pages from executing.
-  if (!location.hash || !location.hash.startsWith('#hitlist')) {
-    if (location.hash !== '#hitlist') {
-      location.hash = '#hitlist';
-      return;
-    }
-  }
-
   const { page } = getRoute();
   setActiveNav(page);
 
   const content = document.getElementById('page-content');
   content.innerHTML = '';
 
+  if (page === 'donators') {
+    if (!donatorsRows) {
+      donatorsRows = await loadDonators();
+    }
+
+    setupDonatorsPage({
+      donatorsRows
+    });
+
+    return;
+  }
+
   // -------------------------------------------------------
-  // POKÉMON DATA (required by Shiny Dex)
+  // HITLIST / LIVING DEX (ShinyDex)
   // -------------------------------------------------------
 
+  // Pokémon data (required by Shiny Dex)
   if (!pokemonDataLoaded) {
     const pokemonRows = await loadPokemon();
     buildPokemonData(pokemonRows);
     pokemonDataLoaded = true;
   }
 
-  // -------------------------------------------------------
-  // SHINY WEEKLY MODEL (required by Shiny Dex filters/context)
-  // -------------------------------------------------------
-
+  // Shiny Weekly model (required by Shiny Dex filters/context)
   if (!shinyWeeklyWeeks) {
     const rows = await loadShinyWeekly();
     shinyWeeklyWeeks = buildShinyWeeklyModel(rows);
   }
 
-  // -------------------------------------------------------
-  // SHOWCASE ROWS (required to resolve owners/claims in Shiny Dex)
-  // -------------------------------------------------------
-
+  // Showcase rows (required to resolve owners/claims in Shiny Dex)
   if (!shinyShowcaseRows) {
     shinyShowcaseRows = await loadShinyShowcase();
   }
 
-  // -------------------------------------------------------
-  // HITLIST + LIVING DEX (PAGE CONTROLLER)
-  // -------------------------------------------------------
-
-  setupShinyDexPage({
-    weeklyModel: shinyWeeklyWeeks,
-    shinyShowcaseRows
-  });
+  setupShinyDexPage({ weeklyModel: shinyWeeklyWeeks, shinyShowcaseRows });
 }
 
 // ---------------------------------------------------------
