@@ -2,7 +2,7 @@
    v2.0.0-beta
 */
 
-.unified-variants{
+.shinydex-root .unified-variants{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 6px;
@@ -15,7 +15,7 @@
   box-shadow: 0 0 0 2px rgba(0,0,0,0.25) inset;
 }
 
-.variant-btn{
+.shinydex-root .variant-btn{
   height: 30px;
   background: rgba(0,0,0,0.55);
   border: 2px solid rgba(255,255,255,0.16);
@@ -34,24 +34,24 @@
     0 0 0 2px rgba(0,0,0,0.45) inset;
 }
 
-.variant-btn img{
+.shinydex-root .variant-btn img{
   width: 18px;
   height: 18px;
   image-rendering: pixelated;
 }
 
-.variant-btn:hover{
+.shinydex-root .variant-btn:hover{
   border-color: var(--u-accent);
 }
 
-.variant-btn:active{
+.shinydex-root .variant-btn:active{
   transform: translateY(1px);
   box-shadow:
     0 1px 0 rgba(0,0,0,0.55),
     0 0 0 2px rgba(0,0,0,0.55) inset;
 }
 
-.variant-btn.is-active{
+.shinydex-root .variant-btn.is-active{
   border-color: var(--u-accent);
   box-shadow:
     0 2px 0 rgba(0,0,0,0.55),
@@ -59,12 +59,12 @@
     0 0 0 2px rgba(255,255,255,0.06);
 }
 
-.variant-btn.is-disabled{
+.shinydex-root .variant-btn.is-disabled{
   cursor: default;
   opacity: 0.45;
   filter: grayscale(1);
 }
 
-.variant-btn.is-disabled:hover{
+.shinydex-root .variant-btn.is-disabled:hover{
   border-color: rgba(255,255,255,0.16);
 }
