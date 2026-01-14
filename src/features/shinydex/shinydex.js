@@ -18,11 +18,17 @@ import { pokemonFamilies, POKEMON_DEX_ORDER } from '../../data/pokemondatabuilde
 // UnifiedCard v2: variant switching delegation
 import { bindUnifiedCardVariantSwitching } from '../../ui/unifiedcard.js';
 
+import {
+  createSelectedVariantStore,
+  setSelectedVariant
+} from './shinydex.variants.state.js';
+
 export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
   const root = document.getElementById('page-content');
   root.innerHTML = '';
 
-  const selectedVariantByKey = new Map();
+  // Feature-owned state to avoid coupling to shared UI components.
+  const selectedVariantByKey = createSelectedVariantStore();
 
   const searchCtx = buildSearchContext({
     dexOrder: Array.isArray(POKEMON_DEX_ORDER) && POKEMON_DEX_ORDER.length ? POKEMON_DEX_ORDER : null,
@@ -99,7 +105,7 @@ export function setupShinyDexPage({ weeklyModel, shinyShowcaseRows }) {
     if (!key) return;
 
     const v = (e.detail && e.detail.variant) ? String(e.detail.variant) : (card.getAttribute('data-selected-variant') || 'standard');
-    selectedVariantByKey.set(key, v || 'standard');
+    setSelectedVariant(selectedVariantByKey, key, v || 'standard');
   });
 
   function configureSort() {
