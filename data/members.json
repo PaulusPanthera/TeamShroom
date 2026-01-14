@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-01-14T18:17:20.015Z",
+  "generatedAt": "2026-01-14T23:04:24.463Z",
   "source": "google-sheets",
   "data": [
     {
@@ -505,7 +505,7 @@
       "name": "PaulusTFT",
       "active": true,
       "role": "mushcap",
-      "sprite": "png"
+      "sprite": "gif"
     },
     {
       "name": "pawmu",
@@ -721,7 +721,7 @@
       "name": "TTVxSenseiNESS",
       "active": true,
       "role": "mushcap",
-      "sprite": "png"
+      "sprite": "gif"
     },
     {
       "name": "tulicreme",
