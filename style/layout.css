@@ -1,203 +1,158 @@
-/* v2.0.0-beta */
-/* style/layout.css */
-/* =========================================================
-   LAYOUT — STRUCTURE & RHYTHM ONLY
-   HARD CONTRACT: NEVER RESIZE CARDS
-   ========================================================= */
+/* style/layout.css
+   v2.0.0-beta
+*/
 
-/* ---------------------------------------------------------
-   FIXED NAVIGATION
---------------------------------------------------------- */
-
-.nav {
-  display: flex;
-  gap: var(--space-2);
-  justify-content: center;
-  align-items: center;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  z-index: 1050;
-
-  padding: var(--space-2) var(--space-3);
-
-  background: var(--bg-panel);
-  border-bottom: 2px solid rgba(240, 91, 41, 0.65);
-
-  /* 8-bit bevel (no glow/blur) */
-  box-shadow:
-    0 0 0 1px rgba(0,0,0,0.75) inset,
-    0 1px 0 rgba(45,58,69,0.85) inset,
-    0 -1px 0 rgba(7,9,12,0.90) inset,
-    0 8px 0 rgba(0,0,0,0.55);
-
-  /* hard 8-bit edges */
-  border-radius: 0;
+#page-content{
+  max-width: 100%;
+  padding: 0;
 }
 
 /* ---------------------------------------------------------
-   PAGE CONTAINER
+   GLOBAL / PAGE BACKGROUND
 --------------------------------------------------------- */
 
-#page-content {
-  margin-top: calc(var(--space-5) + var(--space-3));
-
-  max-width: 1680px;
-  margin-left: auto;
-  margin-right: auto;
-
-  padding: 0 var(--space-2) var(--space-5);
-  min-height: 70vh;
-
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+body{
+  background: #0F1317;
 }
 
 /* ---------------------------------------------------------
-   SECTION / PANEL CONTAINERS
+   TOP NAV BAR (global)
+--------------------------------------------------------- */
+
+nav{
+  background: linear-gradient(180deg, #12181f 0%, #0c1016 100%);
+  border-bottom: 2px solid #F05B29;
+}
+
+/* ---------------------------------------------------------
+   RPG MENU FRAME STYLE (GLOBAL PANELS)
 --------------------------------------------------------- */
 
 .region-section,
-.scoreboard-member-section {
-  margin-bottom: var(--space-4);
-  padding: var(--space-4) var(--space-3) var(--space-3);
-
-  background: var(--bg-panel);
-  border: 2px solid rgba(58, 70, 81, 0.85);
+.scoreboard-member-section,
+.search-controls,
+.showcase-search-controls,
+.shiny-dex-tabs{
+  background: linear-gradient(180deg, #18212a 0%, #121820 100%);
+  border: 1px solid #3A4651;
   border-radius: 0;
 
   box-shadow:
-    0 0 0 1px rgba(0,0,0,0.70) inset,
-    0 1px 0 rgba(45,58,69,0.85) inset,
-    0 -1px 0 rgba(7,9,12,0.90) inset,
+    0 0 0 1px rgba(0,0,0,0.65) inset,
     0 10px 0 rgba(0,0,0,0.35);
 }
 
-.region-section h2,
-.scoreboard-member-section h2 {
-  margin-bottom: var(--space-2);
-  padding-bottom: var(--space-1);
-
-  font-size: var(--font-section-title);
-  letter-spacing: 2px;
-  text-align: center;
-
-  color: var(--accent);
-  border-bottom: 2px solid var(--success);
-}
-
 /* ---------------------------------------------------------
-   SHOWCASE CATEGORY HEADER
+   SHINYDEX STICKY TOOLBAR (SCOPED)
+   - Single sticky block, does not break tooltips/cards
 --------------------------------------------------------- */
 
-.showcase-category-header {
-  margin: var(--space-2) 0 var(--space-1);
-  padding: var(--space-1) var(--space-2);
-
-  font-size: var(--font-card-title);
-  letter-spacing: 2px;
-  text-align: center;
-
-  color: var(--accent);
-  background: var(--bg-panel);
-
-  border-radius: 0;
-  border: 2px solid rgba(58, 70, 81, 0.85);
-  box-shadow:
-    0 0 0 1px rgba(0,0,0,0.70) inset,
-    0 1px 0 rgba(45,58,69,0.85) inset,
-    0 -1px 0 rgba(7,9,12,0.90) inset,
-    0 8px 0 rgba(0,0,0,0.35);
-}
-
-/* ---------------------------------------------------------
-   CARD GRIDS — PLACEMENT ONLY
---------------------------------------------------------- */
-
-.showcase-gallery,
-.dex-grid {
-  display: grid;
-
-  /* fixed-width cards; layout adapts around them */
-  grid-template-columns: repeat(auto-fill, minmax(var(--card-w), var(--card-w)));
-  gap: var(--space-4);
-
-  margin-top: var(--space-2);
-  margin-bottom: var(--space-4);
-
-  justify-content: center;
-  align-content: start;
-}
-
-/* ---------------------------------------------------------
-   SUPERGRID (MULTI-SECTIONS)
---------------------------------------------------------- */
-
-.showcase-supergrid {
-  display: flex;
-  flex-wrap: wrap;
-
-  gap: var(--space-4);
-  margin-bottom: var(--space-4);
-
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.showcase-supergrid > section {
-  flex: 1 1 260px;
-  min-width: 0;
-
-  display: flex;
-  flex-direction: column;
-}
-
-/* ---------------------------------------------------------
-   RESPONSIVE — NO CARD RESIZING
---------------------------------------------------------- */
-
-@media (max-width: 600px) {
-  body {
-    font-size: var(--font-small);
-  }
-
-  .nav {
-    padding: var(--space-2);
-  }
-
-  #page-content {
-    padding: 0 var(--space-2) var(--space-4);
-  }
-}
-
-/* ---------------------------------------------------------
-   STICKY HOTBAR (UNDER FIXED NAV)
---------------------------------------------------------- */
-
-/* reduce dead air between stacked panels */
-#page-content {
-  gap: var(--space-2);
-}
-
-/* nav is fixed; these stick under it */
-.search-controls{
+.shinydex-root .shinydex-toolbar{
   position: sticky;
-  top: 56px;   /* keep aligned with fixed nav height */
+  top: 56px;             /* sits under fixed nav */
   z-index: 900;
 }
 
-.shiny-dex-tabs{
-  position: sticky;
-  top: 128px;  /* 56 + hotbar height */
-  z-index: 850;
+/* prevent sticky overlay from catching clicks outside its area */
+.shinydex-root .shinydex-toolbar{
+  pointer-events: auto;
 }
 
-/* reduce dead space; more usable width for 6 cards */
-#page-content{
-  max-width: 1760px;
-  padding-left: var(--space-2);
-  padding-right: var(--space-2);
+/* tighter compact toolbar layout */
+.shinydex-root .shinydex-toolbar-inner{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 12px;
+}
+
+/* make the two rows feel like one system panel */
+.shinydex-root .shiny-dex-controls,
+.shinydex-root .shiny-dex-tabs{
+  width: 100%;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.shinydex-root #dex-count{
+  color: #7AE252;
+  font-weight: 700;
+  margin-left: auto;
+}
+
+/* ---------------------------------------------------------
+   BUTTONS / TABS (global-ish)
+--------------------------------------------------------- */
+
+.dex-tab{
+  background: #131A21;
+  border: 2px solid #3A4651;
+  color: #E6E1DB;
+  padding: 6px 10px;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.dex-tab.active{
+  background: #F05B29;
+  border-color: #A73D1B;
+  color: #0E1217;
+}
+
+.dex-tab:hover{
+  border-color: #F05B29;
+}
+
+/* help button */
+.dex-help-btn{
+  width: 34px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #131A21;
+  border: 2px solid #F05B29;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.dex-help-btn:hover{
+  filter: brightness(1.05);
+}
+
+.dex-help-icon{
+  width: 18px;
+  height: 18px;
+  image-rendering: pixelated;
+}
+
+/* inputs */
+#dex-search{
+  background: #10161D;
+  border: 2px solid #3A4651;
+  color: #E6E1DB;
+  border-radius: 0;
+  padding: 6px 10px;
+}
+
+#dex-search:focus{
+  outline: none;
+  border-color: #F05B29;
+}
+
+/* dropdown */
+#dex-sort{
+  background: #10161D;
+  border: 2px solid #3A4651;
+  color: #E6E1DB;
+  border-radius: 0;
+  padding: 6px 10px;
+}
+
+#dex-sort:focus{
+  outline: none;
+  border-color: #F05B29;
 }
