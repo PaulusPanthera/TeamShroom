@@ -1,7 +1,7 @@
-// v2.0.0-alpha
 // src/features/shinydex/shinydex.hitlist.js
+// v2.0.0-beta
 // Shiny Dex — HITLIST RENDERER (DOM-only)
-// UnifiedCard v3: points always shown; tier is frame-only via tier-map in unifiedcard.
+// UnifiedCard v2: points always shown; tier is frame-only via tier-map in unifiedcard.
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
@@ -21,29 +21,22 @@ function getPokemonGif(pokemonKey) {
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
 }
 
-function buildVariantsForEntry(entry, fallbackInfoText) {
-  // Future-proof: accept several shapes without breaking.
-  const vc = entry && (entry.variantClaims || entry.variants || entry.specialClaims) ? (entry.variantClaims || entry.variants || entry.specialClaims) : {};
+function buildVariantsForEntry(entry, fallbackInfoText, selectedKey) {
+  const vo = entry && entry.variantOwners ? entry.variantOwners : {};
   const standardInfo = fallbackInfoText || '';
 
-  const secretOwner = vc && (vc.secret || vc.SECRET) ? String(vc.secret || vc.SECRET) : '';
-  const alphaOwner = vc && (vc.alpha || vc.ALPHA) ? String(vc.alpha || vc.ALPHA) : '';
-  const safariOwner = vc && (vc.safari || vc.SAFARI) ? String(vc.safari || vc.SAFARI) : '';
+  const secretOwner = vo && vo.secret ? String(vo.secret) : '';
+  const alphaOwner = vo && vo.alpha ? String(vo.alpha) : '';
+  const safariOwner = vo && vo.safari ? String(vo.safari) : '';
+
+  const wanted = selectedKey || 'standard';
 
   return [
-    { key: 'standard', title: 'Standard', enabled: true, infoText: standardInfo, active: false },
-    { key: 'secret', title: 'Secret', enabled: Boolean(secretOwner), infoText: secretOwner || 'Unclaimed', active: false },
-    { key: 'alpha', title: 'Alpha', enabled: Boolean(alphaOwner), infoText: alphaOwner || 'Unclaimed', active: false },
-    { key: 'safari', title: 'Safari', enabled: Boolean(safariOwner), infoText: safariOwner || 'Unclaimed', active: false }
+    { key: 'standard', title: 'Standard', enabled: true, infoText: standardInfo, active: wanted === 'standard' },
+    { key: 'secret', title: 'Secret', enabled: Boolean(secretOwner), infoText: secretOwner || 'Unclaimed', active: wanted === 'secret' },
+    { key: 'alpha', title: 'Alpha', enabled: Boolean(alphaOwner), infoText: alphaOwner || 'Unclaimed', active: wanted === 'alpha' },
+    { key: 'safari', title: 'Safari', enabled: Boolean(safariOwner), infoText: safariOwner || 'Unclaimed', active: wanted === 'safari' }
   ];
-}
-
-function applySelectedVariant(variants, selectedKey) {
-  const key = selectedKey || 'standard';
-  return (Array.isArray(variants) ? variants : []).map(v => {
-    if (!v || !v.key) return v;
-    return Object.assign({}, v, { active: v.key === key });
-  });
 }
 
 export function renderHitlistFromModel(model, opts) {
@@ -70,9 +63,8 @@ export function renderHitlistFromModel(model, opts) {
         const points = Number(entry.points ?? POKEMON_POINTS?.[key] ?? 0);
 
         const infoText = entry.claimedBy ? String(entry.claimedBy) : 'Claimed';
-        const baseVariants = buildVariantsForEntry(entry, infoText);
         const wanted = selectedVariantByKey && typeof selectedVariantByKey.get === 'function' ? selectedVariantByKey.get(key) : null;
-        const variants = applySelectedVariant(baseVariants, wanted);
+        const variants = buildVariantsForEntry(entry, infoText, wanted);
 
         grid.insertAdjacentHTML(
           'beforeend',
@@ -83,7 +75,6 @@ export function renderHitlistFromModel(model, opts) {
             points: points,
             infoText: infoText,
             isUnclaimed: false,
-            owners: entry.claimedBy ? [String(entry.claimedBy)] : [],
             variants: variants
           })
         );
@@ -114,9 +105,8 @@ export function renderHitlistFromModel(model, opts) {
       const claimedBy = entry.claimedBy ? String(entry.claimedBy) : '';
       const infoText = claimed ? (claimedBy || 'Claimed') : 'Unclaimed';
 
-      const baseVariants = buildVariantsForEntry(entry, infoText);
       const wanted = selectedVariantByKey && typeof selectedVariantByKey.get === 'function' ? selectedVariantByKey.get(key) : null;
-      const variants = applySelectedVariant(baseVariants, wanted);
+      const variants = buildVariantsForEntry(entry, infoText, wanted);
 
       grid.insertAdjacentHTML(
         'beforeend',
@@ -127,7 +117,6 @@ export function renderHitlistFromModel(model, opts) {
           points: points,
           infoText: infoText,
           isUnclaimed: !claimed,
-          owners: claimedBy ? [claimedBy] : [],
           variants: variants
         })
       );
