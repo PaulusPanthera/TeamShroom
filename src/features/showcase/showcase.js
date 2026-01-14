@@ -13,7 +13,7 @@ import {
   groupMemberShiniesByStatus
 } from './showcase.presenter.js';
 
-import { getPokemonDexOrder } from '../../domains/pokemon/pokemon.data.js';
+import { POKEMON_DEX_ORDER } from '../../data/pokemondatabuilder.js';
 
 import { bindUnifiedCardVariantSwitching } from '../../ui/unifiedcard.js';
 import {
@@ -65,9 +65,8 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
   const route = parseHash();
 
   const dexIndex = {};
-  const dexOrder = getPokemonDexOrder();
-  if (Array.isArray(dexOrder) && dexOrder.length) {
-    dexOrder.forEach((k, i) => { dexIndex[String(k || '').toLowerCase()] = i; });
+  if (Array.isArray(POKEMON_DEX_ORDER) && POKEMON_DEX_ORDER.length) {
+    POKEMON_DEX_ORDER.forEach((k, i) => { dexIndex[String(k || '').toLowerCase()] = i; });
   }
 
   if (route.view === 'member') {
@@ -86,7 +85,7 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
       spriteSrc: spriteSrcForMember(member)
     });
 
-    const root = document.getElementById('page-content');
+    const root = document.querySelector('.showcase-member-root');
     bindUnifiedCardVariantSwitching(root);
 
     const state = {
@@ -192,6 +191,7 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
     });
 
     // Delegated clip-open; ignore variant button clicks.
+    // Bound only inside the member view root to avoid cross-page leakage.
     if (root && !root.__showcaseClipBound) {
       root.__showcaseClipBound = true;
       root.addEventListener('click', (e) => {
