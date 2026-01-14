@@ -3,7 +3,11 @@
 // Living Dex Presenter — view-specific data prep (no DOM)
 
 import { buildShinyLivingDexModel } from '../../domains/shinydex/livingdex.model.js';
-import { POKEMON_REGION, POKEMON_SHOW, POKEMON_DEX_ORDER } from '../../data/pokemondatabuilder.js';
+import {
+  getPokemonRegionMap,
+  getPokemonShowMap,
+  getPokemonDexOrder
+} from '../../domains/pokemon/pokemon.data.js';
 
 import {
   parseSearch,
@@ -78,8 +82,12 @@ export function prepareLivingDexRenderModel({
   var mode = viewState.sort; // 'standard' | 'total'
   var parsed = parseSearch(viewState.search);
 
+  var showMap = getPokemonShowMap();
+  var regionMap = getPokemonRegionMap();
+  var dexOrder = getPokemonDexOrder();
+
   var snapshot = buildShinyLivingDexModel(showcaseRows || []).filter(function (e) {
-    return POKEMON_SHOW[e.pokemon] !== false;
+    return showMap[e.pokemon] !== false;
   });
 
   // Override owners + variantCounts from showcase aggregation (species-wide, correct presence).
@@ -104,7 +112,7 @@ export function prepareLivingDexRenderModel({
   if (parsed.filters && parsed.filters.region) {
     var rq = parsed.filters.region;
     snapshot = snapshot.filter(function (e) {
-      var region = POKEMON_REGION[e.pokemon] || e.region || 'unknown';
+      var region = regionMap[e.pokemon] || e.region || 'unknown';
       return regionMatches(region, rq);
     });
   }
@@ -115,7 +123,7 @@ export function prepareLivingDexRenderModel({
 
   var regionStats = {};
   snapshot.forEach(function (e) {
-    var region = POKEMON_REGION[e.pokemon] || 'unknown';
+    var region = regionMap[e.pokemon] || 'unknown';
     if (!regionStats[region]) regionStats[region] = { total: 0, owned: 0 };
     regionStats[region].total += 1;
     if ((Number(e.count) || 0) > 0) regionStats[region].owned += 1;
@@ -130,8 +138,8 @@ export function prepareLivingDexRenderModel({
   if (mode === 'total') {
     // stable: count desc, dex order tiebreak if available
     var dexIndex = {};
-    if (Array.isArray(POKEMON_DEX_ORDER) && POKEMON_DEX_ORDER.length) {
-      POKEMON_DEX_ORDER.forEach(function (k, i) { dexIndex[k] = i; });
+    if (Array.isArray(dexOrder) && dexOrder.length) {
+      dexOrder.forEach(function (k, i) { dexIndex[k] = i; });
     }
 
     modeSet = modeSet.slice().sort(function (a, b) {
@@ -170,7 +178,7 @@ export function prepareLivingDexRenderModel({
 
   var byRegion = {};
   visible.forEach(function (e) {
-    var region = POKEMON_REGION[e.pokemon] || 'unknown';
+    var region = regionMap[e.pokemon] || 'unknown';
     if (!byRegion[region]) byRegion[region] = [];
     byRegion[region].push(e);
   });
