@@ -66,6 +66,7 @@ function normalizeVariants(variants) {
  * @param {Array<{key:string,title?:string,iconSrc?:string,enabled?:boolean,infoText?:string,active?:boolean}>} params.variants
  */
 export function renderUnifiedCard({
+  pokemonKey,
   pokemonName,
   artSrc,
   points,
@@ -75,6 +76,7 @@ export function renderUnifiedCard({
   variants
 }) {
   const safeName = escapeHtml(pokemonName || '');
+  const safeKey = pokemonKey != null ? escapeHtml(String(pokemonKey)) : '';
   const pts = Number(points);
   const ptsText = Number.isFinite(pts) ? String(pts) : '';
 
@@ -120,10 +122,12 @@ export function renderUnifiedCard({
     })
     .join('');
 
+  const keyAttr = safeKey ? ` data-pokemon-key="${safeKey}"` : '';
+
   return `
     <div class="unified-card ${tierClass} ${isUnclaimed ? 'is-unclaimed' : ''}"
          data-unified-card
-         data-name="${safeName}"
+         data-name="${safeName}"${keyAttr}
          data-selected-variant="${escapeHtml(selectedKey)}"${ownersAttr}>
       <div class="unified-header">
         <div class="unified-name-wrap">
