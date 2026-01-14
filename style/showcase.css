@@ -1,26 +1,11 @@
 /* style/showcase.css
    v2.0.0-beta
-   Showcase uses UnifiedCard (member cards as unified-card--member).
+   Showcase page styling only.
+   Scope: .showcase-root (gallery + member collections)
 */
 
-/* Gallery theme override (gallery only lives under .showcase-root) */
 .showcase-root{
-  --u-card-fill: #f3dc93;
-  --u-card-bg: #e7ce7b;
-  --u-card-plate: #fbf0c3;
-
-  --u-text: #1a232c;
-  --u-muted: #2f3b45;
-
-  --u-tier-main: #d46a1a;
-  --u-tier-sub: rgba(0,0,0,0.25);
-  --u-tier-border: rgba(0,0,0,0.25);
-
-  --u-frame: rgba(0,0,0,0.25);
-  --u-accent: #d46a1a;
-  --u-plate-border: rgba(0,0,0,0.25);
-
-  --u-depth: rgba(0,0,0,0.45);
+  width: 100%;
 }
 
 .showcase-root .showcase-search-controls{
@@ -39,4 +24,140 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 18px 12px 24px;
+}
+
+/* ---------------------------------------------------------
+   MEMBER VIEW
+--------------------------------------------------------- */
+
+.showcase-root.showcase-member-root{
+  padding: 10px 0 24px;
+}
+
+.showcase-root .showcase-member-topbar{
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 12px 10px;
+}
+
+.showcase-root .back-btn{
+  background: #131A21;
+  border: 2px solid #3A4651;
+  color: #E6E1DB;
+  padding: 8px 12px;
+  border-radius: 0;
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 0 rgba(0,0,0,0.55),
+    0 0 0 2px rgba(0,0,0,0.35) inset;
+}
+
+.showcase-root .back-btn:hover{
+  border-color: #F05B29;
+}
+
+.showcase-root .member-nameplate{
+  max-width: 1400px;
+  margin: 0 auto 12px;
+  padding: 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: linear-gradient(180deg, #18212a 0%, #121820 100%);
+  border: 2px solid rgba(58,70,81,0.85);
+  border-radius: 0;
+
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.70) inset,
+    0 1px 0 rgba(45,58,69,0.85) inset,
+    0 -1px 0 rgba(7,9,12,0.90) inset,
+    0 8px 0 rgba(0,0,0,0.55);
+}
+
+.showcase-root .member-sprite{
+  width: 52px;
+  height: 52px;
+  image-rendering: pixelated;
+}
+
+.showcase-root .member-meta{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.showcase-root .member-name{
+  color: #F05B29;
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+.showcase-root .member-stats{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: #A2A29D;
+  font-size: 12px;
+}
+
+.showcase-root .member-stats .point-count{
+  color: #7AE252;
+}
+
+.showcase-root .showcase-member-controls{
+  max-width: 1400px;
+  margin: 0 auto 12px;
+}
+
+.showcase-root .showcase-member-body{
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 12px 24px;
+}
+
+.showcase-root .showcase-section{
+  margin-bottom: 18px;
+}
+
+.showcase-root .showcase-section-title{
+  margin: 0 0 10px;
+  padding: 10px 12px;
+
+  background: linear-gradient(180deg, #18212a 0%, #121820 100%);
+  border: 2px solid rgba(58,70,81,0.85);
+  border-radius: 0;
+
+  color: #F05B29;
+  font-size: 13px;
+  letter-spacing: 1px;
+
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.65) inset,
+    0 8px 0 rgba(0,0,0,0.35);
+}
+
+/* Showcase-owned grid so other pages stay isolated. */
+.showcase-root .dex-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-w), 1fr));
+  gap: 18px;
+
+  justify-items: center;
+  align-items: start;
+
+  margin: 0;
+  padding: 0 0 8px;
+}
+
+.showcase-root .showcase-empty{
+  padding: 18px 12px;
+  color: #A2A29D;
+}
+
+/* Improve affordance on clip cards without adding glow. */
+.showcase-root .unified-card[data-clip]{
+  cursor: pointer;
 }
