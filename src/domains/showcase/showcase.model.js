@@ -38,6 +38,11 @@ export function buildShowcaseModel({ membersRows, showcaseRows, pokemonPoints })
     const shinies = Array.isArray(m && m.shinies) ? m.shinies : [];
     const owned = shinies.filter(isActiveShiny);
 
+    const inactive = shinies.filter(s => !isActiveShiny(s));
+    const lostCount = inactive.filter(s => Boolean(s && s.lost)).length;
+    const soldCount = inactive.filter(s => Boolean(s && s.sold)).length;
+
+    // Back-compat: shinyCount is ACTIVE count
     const shinyCount = owned.length;
     const points = owned.reduce((sum, s) => sum + getPokemonPoints(pokemonPoints, s && s.pokemon), 0);
 
@@ -46,7 +51,12 @@ export function buildShowcaseModel({ membersRows, showcaseRows, pokemonPoints })
       key,
       shinyCount,
       points,
-      ownedShinies: owned
+      totalShinyCount: shinies.length,
+      inactiveShinyCount: inactive.length,
+      lostCount,
+      soldCount,
+      ownedShinies: owned,
+      inactiveShinies: inactive
     };
   });
 
