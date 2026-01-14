@@ -1,15 +1,13 @@
-// v2.0.0-alpha.1
 // src/domains/shinydex/hitlist.model.js
-// Shiny Dex — HITLIST CLAIM MODEL
-// PURE FUNCTION — deterministic, order-dependent
-// Source of truth: Shiny Weekly model ONLY
+// v2.0.0-beta
+// Shiny Dex — hitlist claim model (pure, deterministic, order-dependent)
 
 import {
-  pokemonFamilies,
-  POKEMON_POINTS,
-  POKEMON_REGION,
-  POKEMON_DEX_ORDER
-} from '../../data/pokemondatabuilder.js';
+  getPokemonFamiliesMap,
+  getPokemonPointsMap,
+  getPokemonRegionMap,
+  getPokemonDexOrder
+} from '../pokemon/pokemon.data.js';
 
 /*
 OUTPUT:
@@ -25,6 +23,10 @@ Array<{
 
 export function buildShinyDexModel(weeklyModel) {
   const weeks = Array.isArray(weeklyModel) ? weeklyModel : [];
+
+  const familiesMap = getPokemonFamiliesMap();
+  const pointsMap = getPokemonPointsMap();
+  const regionMap = getPokemonRegionMap();
 
   // FLATTEN → EVENTS (ORDER PRESERVED)
   const events = [];
@@ -50,12 +52,13 @@ export function buildShinyDexModel(weeklyModel) {
 
   // Build rootByPokemon (first family root, else itself)
   const rootByPokemon = {};
-  const order = Array.isArray(POKEMON_DEX_ORDER) && POKEMON_DEX_ORDER.length
-    ? POKEMON_DEX_ORDER
-    : Object.keys(POKEMON_POINTS);
+  const dexOrder = getPokemonDexOrder();
+  const order = Array.isArray(dexOrder) && dexOrder.length
+    ? dexOrder
+    : Object.keys(pointsMap);
 
   order.forEach(p => {
-    const roots = pokemonFamilies[p] || [];
+    const roots = familiesMap[p] || [];
     rootByPokemon[p] = roots.length ? roots[0] : p;
   });
 
@@ -94,8 +97,8 @@ export function buildShinyDexModel(weeklyModel) {
   return order.map(pokemon => ({
     pokemon,
     family: rootByPokemon[pokemon] || pokemon,
-    region: POKEMON_REGION[pokemon] || 'unknown',
-    points: POKEMON_POINTS[pokemon] || 0,
+    region: regionMap[pokemon] || 'unknown',
+    points: pointsMap[pokemon] || 0,
     claimed: !!claimedByPokemon[pokemon],
     claimedBy: claimedByPokemon[pokemon] || null
   }));
