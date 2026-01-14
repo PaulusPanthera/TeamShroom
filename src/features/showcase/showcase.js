@@ -3,19 +3,23 @@
 // Showcase page controller
 
 import { buildShowcaseModel } from '../../domains/showcase/showcase.model.js';
-import { filterMembers, sortMembers, buildMemberGalleryCardView, buildMemberShinyCardView } from './showcase.presenter.js';
-import { renderShowcaseShell, renderShowcaseControls, renderShowcaseGallery, renderMemberShowcaseShell, renderMemberShinies } from './showcase.ui.js';
-import { getMemberSprite } from '../../utils/membersprite.js';
+import { filterMembers, sortMembers, buildMemberGalleryCardView } from './showcase.presenter.js';
+import {
+  renderShowcaseShell,
+  renderShowcaseControls,
+  renderShowcaseGallery,
+  renderMemberShowcaseShell,
+  renderMemberShinies
+} from './showcase.ui.js';
 
 function parseHash() {
   const raw = String(location.hash || '').trim();
-  // #showcase-<memberKey>
+
   if (raw.startsWith('#showcase-')) {
     const key = decodeURIComponent(raw.slice('#showcase-'.length));
     return { view: 'member', memberKey: String(key || '').trim().toLowerCase() };
   }
 
-  // #showcase?sort=...
   if (raw.startsWith('#showcase')) {
     const qIndex = raw.indexOf('?');
     if (qIndex !== -1) {
@@ -36,6 +40,13 @@ function normalizeSort(sortMode) {
   return 'alphabetical';
 }
 
+function spriteSrcForMember(member) {
+  const key = member && member.key ? String(member.key) : '';
+  const ext = member && member.sprite ? String(member.sprite) : '';
+  if (key && ext) return `img/membersprites/${key}sprite.${ext}`;
+  return 'img/membersprites/examplesprite.png';
+}
+
 export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) {
   const model = buildShowcaseModel({ membersRows, showcaseRows, pokemonPoints });
   const route = parseHash();
@@ -48,23 +59,19 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
       return;
     }
 
-    const spriteSrc = getMemberSprite(member.key, [{ key: member.key, sprite: member.sprite }]);
-
     renderMemberShowcaseShell({
       name: member.name,
       shinyCount: member.shinyCount,
       points: member.points,
-      spriteSrc
+      spriteSrc: spriteSrcForMember(member)
     });
 
-    const shinyViews = (member.shinies || []).map(s => buildMemberShinyCardView(s, pokemonPoints));
-    renderMemberShinies(shinyViews);
+    renderMemberShinies(member.ownedShinies || member.shinies || [], pokemonPoints);
 
     document.getElementById('showcase-back')?.addEventListener('click', () => {
       location.hash = '#showcase';
     });
 
-    // Clip opener: uses data-clip injected into unified card root.
     document.querySelectorAll('.unified-card[data-clip]').forEach(card => {
       card.addEventListener('click', () => {
         const url = card.getAttribute('data-clip');
@@ -75,20 +82,12 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
     return;
   }
 
-  // GALLERY VIEW
   renderShowcaseShell();
 
   const state = {
     search: '',
     sortMode: normalizeSort(route.sortMode)
   };
-
-  // Provide sprite lookup input compatible with getMemberSprite(memberKey, membersData)
-  const membersForSprites = {};
-  model.members.forEach(m => {
-    if (!m || !m.key) return;
-    membersForSprites[m.key] = m.sprite || null;
-  });
 
   function render() {
     const filtered = filterMembers(model.members, state.search);
@@ -99,11 +98,10 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
       memberCount: sorted.length
     });
 
-    const cardViews = sorted.map(m => buildMemberGalleryCardView(m, membersForSprites, state.sortMode));
+    const cardViews = sorted.map(m => buildMemberGalleryCardView(m, state.sortMode));
     renderShowcaseGallery(cardViews);
 
-    // Interactions
-    document.querySelectorAll('.unified-card[data-member-key]').forEach(card => {
+    document.querySelectorAll('.showcase-gallery-card[data-member-key]').forEach(card => {
       card.addEventListener('click', () => {
         const key = card.getAttribute('data-member-key');
         if (!key) return;
