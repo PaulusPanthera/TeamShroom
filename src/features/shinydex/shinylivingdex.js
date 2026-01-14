@@ -1,7 +1,7 @@
-// v2.0.0-alpha
 // src/features/shinydex/shinylivingdex.js
+// v2.0.0-beta
 // Shiny Living Dex — RENDERER (DOM-only)
-// UnifiedCard v3: points always shown; tier is frame-only via tier-map in unifiedcard.
+// UnifiedCard v2: points always shown; tier is frame-only via tier-map in unifiedcard.
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
@@ -22,14 +22,13 @@ function getPokemonGif(pokemonKey) {
 }
 
 function variantsForLiving(infoText, selectedKey) {
-  // Living Dex uses the same card component but keeps variants visually present.
-  // Non-standard variants are disabled until Living-specific meaning is defined.
-  const key = selectedKey || 'standard';
+  // Living Dex: variants selectable, but currently reuses the total count until per-variant counts exist.
+  const wanted = selectedKey || 'standard';
   return [
-    { key: 'standard', title: 'Standard', enabled: true, infoText: infoText, active: key === 'standard' },
-    { key: 'secret', title: 'Secret', enabled: false, infoText: infoText, active: key === 'secret' },
-    { key: 'alpha', title: 'Alpha', enabled: false, infoText: infoText, active: key === 'alpha' },
-    { key: 'safari', title: 'Safari', enabled: false, infoText: infoText, active: key === 'safari' }
+    { key: 'standard', title: 'Standard', enabled: true, infoText: infoText, active: wanted === 'standard' },
+    { key: 'secret', title: 'Secret', enabled: true, infoText: infoText, active: wanted === 'secret' },
+    { key: 'alpha', title: 'Alpha', enabled: true, infoText: infoText, active: wanted === 'alpha' },
+    { key: 'safari', title: 'Safari', enabled: true, infoText: infoText, active: wanted === 'safari' }
   ];
 }
 
