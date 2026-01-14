@@ -30,10 +30,10 @@
 }
 
 /* --------------------------------------------------
-   CORE CARD
+   CORE CARD (GLOBAL CONTRACT)
 -------------------------------------------------- */
 
-.shinydex-root .unified-card{
+.unified-card{
   width: var(--card-w);
   height: var(--card-h);
 
@@ -56,13 +56,19 @@
   overflow: hidden;
 }
 
-.shinydex-root .unified-card *{ box-sizing: border-box; }
+.unified-card *{ box-sizing: border-box; }
+
+/* Member card modifier: same vibe, different rows */
+.unified-card.unified-card--member{
+  grid-template-rows: 34px 152px 1fr; /* header, art, empty panel */
+  gap: 10px;
+}
 
 /* --------------------------------------------------
    HEADER STRIP
 -------------------------------------------------- */
 
-.shinydex-root .unified-header{
+.unified-header{
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -76,12 +82,28 @@
   overflow: hidden;
 }
 
-.shinydex-root .unified-name-wrap{
+.unified-header-left{
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.unified-header-left img{
+  width: 18px;
+  height: 18px;
+  image-rendering: pixelated;
+}
+
+.unified-name-wrap{
   min-width: 0;
   flex: 1;
 }
 
-.shinydex-root .unified-name{
+.unified-name{
   display: block;
   font-family: "Press Start 2P", monospace;
   font-size: 12px;
@@ -93,12 +115,12 @@
   text-overflow: ellipsis;
 }
 
-.shinydex-root .tier-badge:empty{ display:none; }
+.tier-badge:empty{ display:none; }
 
-.shinydex-root .unified-name.is-long{ font-size: 11px; }
-.shinydex-root .unified-name.is-very-long{ font-size: 10px; }
+.unified-name.is-long{ font-size: 11px; }
+.unified-name.is-very-long{ font-size: 10px; }
 
-.shinydex-root .unified-value{
+.unified-value{
   flex: 0 0 auto;
   display: inline-flex;
   align-items: baseline;
@@ -114,13 +136,13 @@
   user-select: none;
 }
 
-.shinydex-root .unified-value-text{ font-size: 9px; }
+.unified-value-text{ font-size: 9px; }
 
 /* --------------------------------------------------
    ART WINDOW (narrower than header)
 -------------------------------------------------- */
 
-.shinydex-root .unified-art{
+.unified-art{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,18 +160,27 @@
   overflow: hidden;
 }
 
-.shinydex-root .unified-art img{
+.unified-art img{
   width: 100px;
   height: 72px;
   object-fit: contain;
   image-rendering: pixelated;
 }
 
+.unified-card.unified-card--member .unified-art{
+  margin: 0;
+}
+
+.unified-card.unified-card--member .unified-art img{
+  width: 96px;
+  height: 96px;
+}
+
 /* --------------------------------------------------
-   INFO PLATE (small box above variants)
+   INFO PLATE
 -------------------------------------------------- */
 
-.shinydex-root .unified-info{
+.unified-info{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -163,7 +194,7 @@
   box-shadow: 0 0 0 2px rgba(0,0,0,0.25) inset;
 }
 
-.shinydex-root .unified-info-text{
+.unified-info-text{
   font-family: "Press Start 2P", monospace;
   font-size: 11px;
   line-height: 1;
@@ -175,27 +206,37 @@
   max-width: 100%;
 }
 
+/* Member card: keep the panel, hide the text */
+.unified-card.unified-card--member .unified-info{
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.unified-card.unified-card--member .unified-info-text{
+  display: none;
+}
+
 /* --------------------------------------------------
    NEGATIVE POP (UNCLAIMED / UNOWNED)
 -------------------------------------------------- */
 
-.shinydex-root .unified-card.is-unclaimed{
+.unified-card.is-unclaimed{
   border-color: #606872;
   filter: saturate(0.65);
 }
 
-.shinydex-root .unified-card.is-unclaimed .unified-header,
-.shinydex-root .unified-card.is-unclaimed .unified-info{
+.unified-card.is-unclaimed .unified-header,
+.unified-card.is-unclaimed .unified-info{
   border-color: rgba(58,70,81,0.55);
   background: rgba(14,18,23,0.85);
 }
 
-.shinydex-root .unified-card.is-unclaimed .unified-value{
+.unified-card.is-unclaimed .unified-value{
   border-color: rgba(255,255,255,0.25);
   color: rgba(255,255,255,0.75);
 }
 
-.shinydex-root .unified-card.is-unclaimed .unified-art{
+.unified-card.is-unclaimed .unified-art{
   background-image:
     repeating-linear-gradient(
       135deg,
@@ -206,12 +247,12 @@
     );
 }
 
-.shinydex-root .unified-card.is-unclaimed .unified-art img{
+.unified-card.is-unclaimed .unified-art img{
   filter: grayscale(1) contrast(0.95) brightness(0.90);
 }
 
 /* --------------------------------------------------
-   SHINYDEX LAYOUT CONTAINMENT (6-COLUMN TARGET)
+   SHINYDEX-ONLY LAYOUT CONTAINMENT (6-COLUMN TARGET)
 -------------------------------------------------- */
 
 .shinydex-root{
@@ -292,9 +333,7 @@
     0 1px 0 rgba(0,0,0,0.75);
 }
 
-.shinydex-root .tier-badge:empty{ display:none; }
-
-.shinydex-root #dex-search{
+#dex-search{
   width: 340px;
   max-width: 42vw;
 }
