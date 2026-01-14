@@ -9,6 +9,7 @@
 .dex-owner-tooltip{
   position: fixed;
   z-index: 9999;
+  display: none;
   background: #131A21;
   border: 2px solid #F05B29;
   padding: 10px 12px;
@@ -23,17 +24,48 @@
   max-width: 280px;
 }
 
-.dex-owner-tooltip .title{
+.dex-owner-tooltip.show{
+  display: block;
+}
+
+.dex-owner-tooltip .owners-title{
   color: #F05B29;
   font-weight: 700;
   margin-bottom: 6px;
 }
 
-.dex-owner-tooltip .owner{
+.dex-owner-tooltip .owner-row{
   color: #E6E1DB;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.dex-owner-tooltip .owners-footer{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.dex-owner-tooltip .owners-page{
+  color: #A2A29D;
+  font-weight: 700;
+}
+
+.dex-owner-tooltip .owners-next{
+  margin-left: auto;
+  background: #F05B29;
+  border: 2px solid #A73D1B;
+  color: #0E1217;
+  padding: 4px 8px;
+  border-radius: 0;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.dex-owner-tooltip .owners-next:active{
+  transform: translateY(1px);
 }
 
 .dex-owner-tooltip.is-frozen{
