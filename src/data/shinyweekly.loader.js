@@ -16,6 +16,7 @@
 //   encounter: number | null      // encounter count, if applicable
 //   secret: boolean               // secret shiny flag
 //   alpha: boolean                // alpha shiny flag
+//   safari?: boolean              // safari shiny flag (optional; derived from method if absent)
 //   run: boolean                  // run-away shiny flag
 //   lost: boolean                 // lost shiny flag
 //   clip: string | null           // video clip URL
