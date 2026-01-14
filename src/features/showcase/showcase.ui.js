@@ -5,14 +5,77 @@
 import { renderUnifiedCard, escapeHtml } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName } from '../../utils/utils.js';
 
+function normalize(str) {
+  return String(str || '').trim().toLowerCase();
+}
+
 function getPokemonGif(pokemonKey) {
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${pokemonKey}.gif`;
+}
+
+function isSafariMethod(method) {
+  if (!method) return false;
+  return normalize(method).includes('safari');
 }
 
 function injectDataAttr(html, attrName, attrValue) {
   if (!attrName || attrValue == null) return html;
   const safe = escapeHtml(String(attrValue));
   return html.replace('data-unified-card', `data-unified-card ${attrName}="${safe}"`);
+}
+
+function prettifyMethod(method) {
+  const m = normalize(method);
+  if (!m) return '';
+  if (m === 'single') return 'Single';
+  if (m === 'horde') return 'Horde';
+  if (m === 'egg') return 'Egg';
+  if (m === 'safari') return 'Safari';
+  return String(method).trim();
+}
+
+function buildShinyInfoText(s) {
+  const parts = [];
+
+  if (s && s.sold) parts.push('Sold');
+  else if (s && s.lost) parts.push('Lost');
+
+  const method = prettifyMethod(s && s.method);
+  if (method) parts.push(method);
+
+  if (s && s.secret) parts.push('Secret');
+  if (s && s.alpha) parts.push('Alpha');
+  if (isSafariMethod(s && s.method)) parts.push('Safari');
+
+  if (s && s.run) parts.push('Run');
+  if (s && s.favorite) parts.push('Fav');
+
+  const notes = s && s.notes ? String(s.notes).trim() : '';
+  const isAuto = notes && notes.toUpperCase().includes('AUTO-GENERATED');
+  if (notes && !isAuto) parts.push(notes.slice(0, 28));
+
+  return parts.length ? parts.join(' • ') : '—';
+}
+
+function primaryVariantKeyForShiny(s) {
+  // Display intent, not data semantics: pick a single highlight.
+  if (s && s.alpha) return 'alpha';
+  if (s && s.secret) return 'secret';
+  if (isSafariMethod(s && s.method)) return 'safari';
+  return 'standard';
+}
+
+function buildVariantsForShiny(s, infoText) {
+  const safari = isSafariMethod(s && s.method);
+  const primary = primaryVariantKeyForShiny(s);
+
+  // UnifiedCard forces standard enabled; keep all infoText identical to avoid confusing toggles.
+  return [
+    { key: 'standard', enabled: true, infoText, active: primary === 'standard' },
+    { key: 'secret', enabled: Boolean(s && s.secret), infoText, active: primary === 'secret' },
+    { key: 'alpha', enabled: Boolean(s && s.alpha), infoText, active: primary === 'alpha' },
+    { key: 'safari', enabled: safari, infoText, active: primary === 'safari' }
+  ];
 }
 
 export function renderShowcaseShell() {
@@ -26,7 +89,7 @@ export function renderShowcaseShell() {
   `;
 }
 
-export function renderShowcaseControls({ sortMode, memberCount }) {
+export function renderShowcaseControls({ sortMode, memberCount, shinyCount, points }) {
   const controls = document.querySelector('.showcase-search-controls');
   if (!controls) return;
 
@@ -55,18 +118,23 @@ export function renderShowcaseControls({ sortMode, memberCount }) {
 
   const count = document.createElement('span');
   count.id = 'showcase-count';
-  count.textContent = `${Number(memberCount) || 0} Members`;
+
+  const m = Number(memberCount) || 0;
+  const s = Number(shinyCount) || 0;
+  const p = Number(points) || 0;
+
+  count.textContent = `${m} Members • ${s} Shinies • ${p}P`;
 
   controls.append(input, select, count);
 }
 
 /**
  * Member gallery uses UnifiedCard as a member-card type.
- * Structure mapping (requested):
+ * Structure mapping:
  * 1) tier emblem -> headerLeftIconSrc
  * 2) name -> pokemonName
  * 3) empty panel -> unified-info (text hidden via CSS)
- * 4) sprite position -> art window (centered)
+ * 4) sprite position -> art window
  */
 export function renderShowcaseGallery(memberCardViews) {
   const container = document.getElementById('showcase-gallery-container');
@@ -103,61 +171,152 @@ export function renderMemberShowcaseShell(member) {
   const content = document.getElementById('page-content');
 
   content.innerHTML = `
-    <button class="back-btn" id="showcase-back">Back</button>
+    <div class="showcase-root showcase-member-root">
+      <div class="showcase-member-topbar">
+        <button class="back-btn" id="showcase-back">Back</button>
+      </div>
 
-    <div class="member-nameplate">
-      <img class="member-sprite" src="${escapeHtml(member && member.spriteSrc ? member.spriteSrc : 'img/membersprites/examplesprite.png')}">
-      <span class="member-name">${escapeHtml(member && member.name ? member.name : '')}</span>
-      <span class="shiny-count">Shinies: ${escapeHtml(String(member && member.shinyCount != null ? member.shinyCount : 0))}</span>
-      <span class="point-count">Points: ${escapeHtml(String(member && member.points != null ? member.points : 0))}</span>
+      <div class="member-nameplate" aria-label="Member summary">
+        <img class="member-sprite" src="${escapeHtml(member && member.spriteSrc ? member.spriteSrc : 'img/membersprites/examplesprite.png')}" alt="">
+        <div class="member-meta">
+          <div class="member-name">${escapeHtml(member && member.name ? member.name : '')}</div>
+          <div class="member-stats">
+            <span class="shiny-count">Active: ${escapeHtml(String(member && member.shinyCount != null ? member.shinyCount : 0))}</span>
+            <span class="inactive-count">Lost/Sold: ${escapeHtml(String(member && member.inactiveShinyCount != null ? member.inactiveShinyCount : 0))}</span>
+            <span class="point-count">Points: ${escapeHtml(String(member && member.points != null ? member.points : 0))}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase-search-controls showcase-member-controls" id="member-shiny-controls"></div>
+
+      <div class="showcase-member-body" id="member-shiny-sections"></div>
     </div>
-
-    <div class="dex-grid" id="member-shiny-grid"></div>
   `;
 }
 
-export function renderMemberShinies(shinies, pokemonPoints) {
-  const grid = document.getElementById('member-shiny-grid');
-  if (!grid) return;
+export function renderMemberShinyControls({ search, sortMode, statusMode, variantMode, countText }) {
+  const controls = document.getElementById('member-shiny-controls');
+  if (!controls) return;
 
-  grid.innerHTML = '';
+  controls.innerHTML = '';
 
-  (shinies || []).forEach(s => {
-    const pokemonKey = s && s.pokemon ? String(s.pokemon) : '';
-    const points = Number(pokemonPoints && pokemonPoints[pokemonKey]) || 0;
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.placeholder = 'Search Pokemon';
+  input.id = 'member-shiny-search';
+  input.value = String(search || '');
 
-    let info = '';
-    if (s && s.lost) info = 'Lost';
-    else if (s && s.sold) info = 'Sold';
+  const sort = document.createElement('select');
+  sort.id = 'member-shiny-sort';
 
-    const tags = [];
-    if (s && s.secret) tags.push('Secret');
-    if (s && s.alpha) tags.push('Alpha');
-    if (s && s.run) tags.push('Run');
-    if (s && s.favorite) tags.push('Fav');
+  [
+    ['Newest', 'newest'],
+    ['Dex Order', 'dex'],
+    ['A-Z', 'az'],
+    ['Points', 'points']
+  ].forEach(([label, value]) => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = label;
+    sort.appendChild(option);
+  });
 
-    if (!info && tags.length) info = tags.join(' • ');
-    else if (info && tags.length) info = `${info} • ${tags.join(' • ')}`;
+  sort.value = sortMode || 'newest';
 
-    const html = renderUnifiedCard({
-      pokemonKey,
-      pokemonName: prettifyPokemonName(pokemonKey),
-      artSrc: getPokemonGif(pokemonKey),
-      points,
-      infoText: info,
-      isUnclaimed: Boolean(s && (s.lost || s.sold)),
-      variants: [
-        { key: 'standard', enabled: true, infoText: info, active: true },
-        { key: 'secret', enabled: false, infoText: info, active: false },
-        { key: 'alpha', enabled: false, infoText: info, active: false },
-        { key: 'safari', enabled: false, infoText: info, active: false }
-      ]
+  const status = document.createElement('select');
+  status.id = 'member-shiny-status';
+
+  [
+    ['Active Only', 'active'],
+    ['All', 'all'],
+    ['Lost/Sold Only', 'inactive']
+  ].forEach(([label, value]) => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = label;
+    status.appendChild(option);
+  });
+
+  status.value = statusMode || 'active';
+
+  const variant = document.createElement('select');
+  variant.id = 'member-shiny-variant';
+
+  [
+    ['Any Variant', 'any'],
+    ['Standard', 'standard'],
+    ['Secret', 'secret'],
+    ['Alpha', 'alpha'],
+    ['Safari', 'safari']
+  ].forEach(([label, value]) => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = label;
+    variant.appendChild(option);
+  });
+
+  variant.value = variantMode || 'any';
+
+  const count = document.createElement('span');
+  count.id = 'member-shiny-count';
+  count.textContent = String(countText || '');
+
+  controls.append(input, sort, status, variant, count);
+}
+
+export function renderMemberShinySections(sections, pokemonPoints) {
+  const body = document.getElementById('member-shiny-sections');
+  if (!body) return;
+
+  body.innerHTML = '';
+
+  const secArr = Array.isArray(sections) ? sections : [];
+
+  if (!secArr.length) {
+    const empty = document.createElement('div');
+    empty.className = 'showcase-empty';
+    empty.textContent = 'No shinies found.';
+    body.appendChild(empty);
+    return;
+  }
+
+  secArr.forEach(sec => {
+    const entries = Array.isArray(sec && sec.entries) ? sec.entries : [];
+    if (!entries.length) return;
+
+    const section = document.createElement('section');
+    section.className = 'showcase-section';
+
+    const header = document.createElement('h2');
+    header.className = 'showcase-section-title';
+    header.textContent = sec.title || '';
+
+    const grid = document.createElement('div');
+    grid.className = 'dex-grid';
+
+    entries.forEach(s => {
+      const pokemonKey = s && s.pokemon ? String(s.pokemon) : '';
+      if (!pokemonKey) return;
+
+      const points = Number(pokemonPoints && pokemonPoints[pokemonKey]) || 0;
+      const info = buildShinyInfoText(s);
+
+      const html = renderUnifiedCard({
+        pokemonKey,
+        pokemonName: prettifyPokemonName(pokemonKey),
+        artSrc: getPokemonGif(pokemonKey),
+        points,
+        infoText: info,
+        isUnclaimed: Boolean(s && (s.lost || s.sold)),
+        variants: buildVariantsForShiny(s, info)
+      });
+
+      const withClip = s && s.clip ? injectDataAttr(html, 'data-clip', s.clip) : html;
+      grid.insertAdjacentHTML('beforeend', withClip);
     });
 
-    const withClip = s && s.clip
-      ? html.replace('data-unified-card', `data-unified-card data-clip="${escapeHtml(String(s.clip))}"`)
-      : html;
-
-    grid.insertAdjacentHTML('beforeend', withClip);
+    section.append(header, grid);
+    body.appendChild(section);
   });
 }
