@@ -1,15 +1,18 @@
 // main.js (ROOT)
-// Entrypoint — Shiny Dex + Donators
-// Other pages remain disabled until their feature rewires are complete.
+// Entrypoint — ShinyDex + Showcase + Donators
+// ShinyWeekly remains disabled until rewired to the unified card contract.
+
+import { loadPokemon } from './src/data/pokemon.loader.js';
+import { buildPokemonData, POKEMON_POINTS } from './src/data/pokemondatabuilder.js';
 
 import { loadShinyWeekly } from './src/data/shinyweekly.loader.js';
 import { buildShinyWeeklyModel } from './src/data/shinyweekly.model.js';
 
 import { loadShinyShowcase } from './src/data/shinyshowcase.loader.js';
-import { loadPokemon } from './src/data/pokemon.loader.js';
+import { loadMembers } from './src/data/members.loader.js';
 
-import { buildPokemonData } from './src/data/pokemondatabuilder.js';
 import { setupShinyDexPage } from './src/features/shinydex/shinydex.js';
+import { setupShowcasePage } from './src/features/showcase/showcase.js';
 
 import { loadDonators } from './src/data/donators.loader.js';
 import { setupDonatorsPage } from './src/features/donators/donators.js';
@@ -18,10 +21,10 @@ import { setupDonatorsPage } from './src/features/donators/donators.js';
 // DATA CACHES
 // ---------------------------------------------------------
 
+let pokemonDataLoaded = false;
 let shinyWeeklyWeeks = null;
 let shinyShowcaseRows = null;
-let pokemonDataLoaded = false;
-
+let membersRows = null;
 let donatorsRows = null;
 
 // ---------------------------------------------------------
@@ -29,9 +32,19 @@ let donatorsRows = null;
 // ---------------------------------------------------------
 
 function getRoute() {
-  const h = String(location.hash || '').replace('#', '').trim().toLowerCase();
-  if (h === 'donators') return { page: 'donators' };
-  // Default and fallback.
+  const raw = String(location.hash || '').trim();
+
+  if (!raw || raw === '#') return { page: 'hitlist' };
+
+  const lower = raw.toLowerCase();
+
+  if (lower.startsWith('#showcase')) return { page: 'showcase' };
+  if (lower === '#donators') return { page: 'donators' };
+
+  // ShinyWeekly disabled for now (avoid broken UI).
+  if (lower === '#shinyweekly') return { page: 'hitlist', redirectedFrom: 'shinyweekly' };
+
+  // Default
   return { page: 'hitlist' };
 }
 
@@ -40,6 +53,7 @@ function setActiveNav(page) {
 
   const map = {
     hitlist: 'nav-hitlist',
+    showcase: 'nav-showcase',
     donators: 'nav-donators'
   };
 
@@ -50,46 +64,73 @@ function setActiveNav(page) {
 // PAGE RENDER
 // ---------------------------------------------------------
 
+async function ensurePokemonData() {
+  if (pokemonDataLoaded) return;
+  const pokemonRows = await loadPokemon();
+  buildPokemonData(pokemonRows);
+  pokemonDataLoaded = true;
+}
+
+async function ensureShowcaseRows() {
+  if (shinyShowcaseRows) return;
+  shinyShowcaseRows = await loadShinyShowcase();
+}
+
+async function ensureWeeklyModel() {
+  if (shinyWeeklyWeeks) return;
+  const rows = await loadShinyWeekly();
+  shinyWeeklyWeeks = buildShinyWeeklyModel(rows);
+}
+
+async function ensureMembersRows() {
+  if (membersRows) return;
+  membersRows = await loadMembers();
+}
+
+async function ensureDonatorsRows() {
+  if (donatorsRows) return;
+  donatorsRows = await loadDonators();
+}
+
 async function renderPage() {
-  const { page } = getRoute();
-  setActiveNav(page);
+  const route = getRoute();
+
+  if (route.redirectedFrom === 'shinyweekly') {
+    if (location.hash !== '#hitlist') {
+      location.hash = '#hitlist';
+      return;
+    }
+  }
+
+  setActiveNav(route.page);
 
   const content = document.getElementById('page-content');
   content.innerHTML = '';
 
-  if (page === 'donators') {
-    if (!donatorsRows) {
-      donatorsRows = await loadDonators();
-    }
+  if (route.page === 'donators') {
+    await ensureDonatorsRows();
+    setupDonatorsPage({ donatorsRows });
+    return;
+  }
 
-    setupDonatorsPage({
-      donatorsRows
+  if (route.page === 'showcase') {
+    await ensurePokemonData();
+    await ensureShowcaseRows();
+    await ensureMembersRows();
+
+    setupShowcasePage({
+      membersRows,
+      showcaseRows: shinyShowcaseRows,
+      pokemonPoints: POKEMON_POINTS
     });
 
     return;
   }
 
-  // -------------------------------------------------------
-  // HITLIST / LIVING DEX (ShinyDex)
-  // -------------------------------------------------------
-
-  // Pokémon data (required by Shiny Dex)
-  if (!pokemonDataLoaded) {
-    const pokemonRows = await loadPokemon();
-    buildPokemonData(pokemonRows);
-    pokemonDataLoaded = true;
-  }
-
-  // Shiny Weekly model (required by Shiny Dex filters/context)
-  if (!shinyWeeklyWeeks) {
-    const rows = await loadShinyWeekly();
-    shinyWeeklyWeeks = buildShinyWeeklyModel(rows);
-  }
-
-  // Showcase rows (required to resolve owners/claims in Shiny Dex)
-  if (!shinyShowcaseRows) {
-    shinyShowcaseRows = await loadShinyShowcase();
-  }
+  // ShinyDex (Hitlist/Living)
+  await ensurePokemonData();
+  await ensureWeeklyModel();
+  await ensureShowcaseRows();
 
   setupShinyDexPage({ weeklyModel: shinyWeeklyWeeks, shinyShowcaseRows });
 }
