@@ -96,7 +96,15 @@ function normalizeMemberKeyFromName(name) {
 
 function normalizeMethod(raw) {
   const s = toNullableString(raw);
-  return s ? s.toLowerCase() : null;
+  if (!s) return null;
+
+  const m = s.toLowerCase();
+
+  // Safari is NOT a hunt method.
+  // Safari is determined exclusively by the explicit boolean flag.
+  if (m === 'safari') return null;
+
+  return m;
 }
 
 function normalizeEncounter(raw) {
@@ -109,11 +117,6 @@ function normalizeEncounter(raw) {
   const n = Number(s);
   if (!Number.isFinite(n)) return null;
   return n;
-}
-
-function isSafariMethod(method) {
-  if (!method) return false;
-  return String(method).toLowerCase().indexOf('safari') >= 0;
 }
 
 function normalizeWeeklyRow(row) {
@@ -132,8 +135,8 @@ function normalizeWeeklyRow(row) {
   const lost = parseBoolean(row && row.lost);
 
   // Canonical safari semantics:
-  // safari is true if explicit field is true OR method contains 'safari'
-  const safari = parseBoolean(row && row.safari) || isSafariMethod(method);
+  // safari is true ONLY if explicit field is true.
+  const safari = parseBoolean(row && row.safari);
 
   return {
     week,
