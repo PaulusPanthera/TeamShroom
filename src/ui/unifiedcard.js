@@ -1,5 +1,5 @@
-// v2
 // src/ui/unifiedcard.js
+// v2.0.0-beta
 // Unified collector-card renderer (Hitlist + Living Dex)
 // - Header: name (left) + points (right)
 // - Art window narrower than header
@@ -131,11 +131,10 @@ export function renderUnifiedCard({
          data-selected-variant="${escapeHtml(selectedKey)}"${ownersAttr}>
       <div class="unified-header">
         <div class="unified-name-wrap">
-          <div class="unified-name ${nameLenClass}" title="${safeName}">${safeName}</div>
+          <div class="unified-name ${nameLenClass}">${safeName}</div>
         </div>
         <div class="unified-value" aria-label="Points">
-          <span class="unified-value-number">${escapeHtml(ptsText)}</span>
-          <span class="unified-value-suffix">PTS</span>
+          <span class="unified-value-text">${escapeHtml(ptsText ? (ptsText + 'P') : '')}</span>
         </div>
       </div>
 
