@@ -1,97 +1,92 @@
-/* v2.0.0-alpha */
-/* style/tooltip.css */
-/* =========================================================
-   TOOLTIP — RPG MENU POPUPS (HARD EDGES, DENSE INFO)
-   ========================================================= */
+/* style/tooltip.css
+   v2.0.0-beta
+*/
 
 /* ---------------------------------------------------------
-   OWNERS TOOLTIP
+   OWNER TOOLTIP (LivingDex)
 --------------------------------------------------------- */
 
 .dex-owner-tooltip{
   position: fixed;
   z-index: 9999;
-
-  min-width: 260px;
-  max-width: 520px;
-
-  padding: var(--space-2) var(--space-3);
-
-  background: linear-gradient(180deg, var(--bg-panel), var(--bg));
-  color: var(--text-main);
-
-  border: 2px solid var(--accent);
+  background: #131A21;
+  border: 2px solid #F05B29;
+  padding: 10px 12px;
   border-radius: 0;
-
-  box-shadow: var(--shadow-depth);
-
-  font-family: 'Press Start 2P', monospace;
-  font-size: 12px;
-  line-height: 1.45;
-
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.65) inset,
+    0 10px 0 rgba(0,0,0,0.35);
+  color: #E6E1DB;
   pointer-events: none;
-  opacity: 0;
-  transform: translateY(4px);
-
-  transition: opacity 0.10s ease, transform 0.10s ease;
+  font-size: 12px;
+  line-height: 1.25;
+  max-width: 280px;
 }
 
-.dex-owner-tooltip.show{
-  opacity: 1;
-  transform: translateY(0);
+.dex-owner-tooltip .title{
+  color: #F05B29;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.dex-owner-tooltip .owner{
+  color: #E6E1DB;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dex-owner-tooltip.is-frozen{
   pointer-events: auto;
 }
 
-.owners-title{
-  color: var(--accent);
-  letter-spacing: 1px;
-  margin-bottom: var(--space-2);
-  text-transform: uppercase;
+/* ---------------------------------------------------------
+   SEARCH HELP TOOLTIP (ShinyDex)
+--------------------------------------------------------- */
+
+.dex-help-tooltip{
+  position: fixed;
+  z-index: 9999;
+  background: #131A21;
+  border: 2px solid #F05B29;
+  padding: 10px 12px;
+  border-radius: 0;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.65) inset,
+    0 10px 0 rgba(0,0,0,0.35);
+
+  width: 520px;
+  color: #E6E1DB;
+
+  /* keep it readable above sticky panels */
+  pointer-events: auto;
 }
 
-.owners-list{
+.dex-help-title{
+  color: #F05B29;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.dex-help-rows{
   display: grid;
   gap: 6px;
-
-  background: var(--bg-input);
-  border: 1px solid #ffffff14;
-  border-radius: 0;
-
-  padding: var(--space-2);
-  color: var(--text-muted);
 }
 
-/* old-school swap: step nudge, no opacity blink */
-.owners-list.swap{
-  animation: ownersSwap 160ms steps(2, end);
+.help-row{
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 10px;
+  align-items: baseline;
 }
 
-@keyframes ownersSwap{
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-6px); }
-  100% { transform: translateY(0); }
+.help-k{
+  color: #A2A29D;
+  font-weight: 700;
 }
 
-.owner-row{
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.help-v code{
+  background: rgba(0,0,0,0.35);
+  padding: 2px 6px;
+  border: 1px solid rgba(58,70,81,0.65);
 }
-
-.owners-footer{
-  margin-top: var(--space-2);
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
-}
-
-.owners-page{
-  color: var(--text-muted);
-}
-
-.owners
