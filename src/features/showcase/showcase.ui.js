@@ -35,6 +35,7 @@ function buildShinyInfoText(s) {
   if (s && s.sold) parts.push('Sold');
   else if (s && s.lost) parts.push('Lost');
 
+  // Safari must be represented only via the boolean flag, not as a "method" label.
   const methodRaw = s && s.method ? String(s.method) : '';
   const method = prettifyMethod(methodRaw);
   if (method && !isSafariMethod(methodRaw)) parts.push(method);
@@ -74,6 +75,18 @@ function buildVariantsForShiny(s, infoText) {
   ];
 }
 
+function ensureSelectOptions(select, items) {
+  if (!select) return;
+  if (select.options && select.options.length > 0) return;
+
+  (items || []).forEach(([label, value]) => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = label;
+    select.appendChild(option);
+  });
+}
+
 export function renderShowcaseShell() {
   const content = document.getElementById('page-content');
 
@@ -89,39 +102,44 @@ export function renderShowcaseControls({ sortMode, memberCount, shinyCount, poin
   const controls = document.querySelector('.showcase-search-controls');
   if (!controls) return;
 
-  controls.innerHTML = '';
+  // Do NOT rebuild controls per render. Preserve input focus while typing.
+  let input = controls.querySelector('#showcase-search');
+  let select = controls.querySelector('#showcase-sort');
+  let count = controls.querySelector('#showcase-count');
 
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.placeholder = 'Search Member';
-  input.id = 'showcase-search';
+  if (!input) {
+    input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = 'Search Member';
+    input.id = 'showcase-search';
+    controls.appendChild(input);
+  }
 
-  const select = document.createElement('select');
-  select.id = 'showcase-sort';
+  if (!select) {
+    select = document.createElement('select');
+    select.id = 'showcase-sort';
+    controls.appendChild(select);
+  }
 
-  [
+  ensureSelectOptions(select, [
     ['Alphabetical', 'alphabetical'],
     ['Total Shinies', 'shinies'],
     ['Total Points', 'scoreboard']
-  ].forEach(([label, value]) => {
-    const option = document.createElement('option');
-    option.value = value;
-    option.textContent = label;
-    select.appendChild(option);
-  });
+  ]);
 
   select.value = sortMode || 'alphabetical';
 
-  const count = document.createElement('span');
-  count.id = 'showcase-count';
+  if (!count) {
+    count = document.createElement('span');
+    count.id = 'showcase-count';
+    controls.appendChild(count);
+  }
 
   const m = Number(memberCount) || 0;
   const s = Number(shinyCount) || 0;
   const p = Number(points) || 0;
 
   count.textContent = `${m} Members • ${s} Shinies • ${p}P`;
-
-  controls.append(input, select, count);
 }
 
 /**
@@ -195,70 +213,67 @@ export function renderMemberShinyControls({ search, sortMode, statusMode, varian
   const controls = document.getElementById('member-shiny-controls');
   if (!controls) return;
 
-  controls.innerHTML = '';
+  // Do NOT rebuild controls per render. Preserve input focus while typing.
+  let input = controls.querySelector('#member-shiny-search');
+  let sort = controls.querySelector('#member-shiny-sort');
+  let status = controls.querySelector('#member-shiny-status');
+  let variant = controls.querySelector('#member-shiny-variant');
+  let count = controls.querySelector('#member-shiny-count');
 
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.placeholder = 'Search Pokemon';
-  input.id = 'member-shiny-search';
-  input.value = String(search || '');
+  if (!input) {
+    input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = 'Search Pokemon';
+    input.id = 'member-shiny-search';
+    controls.appendChild(input);
+  }
+  if (String(input.value) !== String(search || '')) input.value = String(search || '');
 
-  const sort = document.createElement('select');
-  sort.id = 'member-shiny-sort';
-
-  [
+  if (!sort) {
+    sort = document.createElement('select');
+    sort.id = 'member-shiny-sort';
+    controls.appendChild(sort);
+  }
+  ensureSelectOptions(sort, [
     ['Newest', 'newest'],
     ['Dex Order', 'dex'],
     ['A-Z', 'az'],
     ['Points', 'points']
-  ].forEach(([label, value]) => {
-    const option = document.createElement('option');
-    option.value = value;
-    option.textContent = label;
-    sort.appendChild(option);
-  });
-
+  ]);
   sort.value = sortMode || 'newest';
 
-  const status = document.createElement('select');
-  status.id = 'member-shiny-status';
-
-  [
+  if (!status) {
+    status = document.createElement('select');
+    status.id = 'member-shiny-status';
+    controls.appendChild(status);
+  }
+  ensureSelectOptions(status, [
     ['Active Only', 'active'],
     ['All', 'all'],
     ['Lost/Sold Only', 'inactive']
-  ].forEach(([label, value]) => {
-    const option = document.createElement('option');
-    option.value = value;
-    option.textContent = label;
-    status.appendChild(option);
-  });
-
+  ]);
   status.value = statusMode || 'active';
 
-  const variant = document.createElement('select');
-  variant.id = 'member-shiny-variant';
-
-  [
+  if (!variant) {
+    variant = document.createElement('select');
+    variant.id = 'member-shiny-variant';
+    controls.appendChild(variant);
+  }
+  ensureSelectOptions(variant, [
     ['Any Variant', 'any'],
     ['Standard', 'standard'],
     ['Secret', 'secret'],
     ['Alpha', 'alpha'],
     ['Safari', 'safari']
-  ].forEach(([label, value]) => {
-    const option = document.createElement('option');
-    option.value = value;
-    option.textContent = label;
-    variant.appendChild(option);
-  });
-
+  ]);
   variant.value = variantMode || 'any';
 
-  const count = document.createElement('span');
-  count.id = 'member-shiny-count';
+  if (!count) {
+    count = document.createElement('span');
+    count.id = 'member-shiny-count';
+    controls.appendChild(count);
+  }
   count.textContent = String(countText || '');
-
-  controls.append(input, sort, status, variant, count);
 }
 
 export function renderMemberShinySections(sections, pokemonPoints) {
