@@ -40,17 +40,25 @@ function buildLivingVariants(entry, totalInfoText, wantedVariant) {
   const wanted = normalizeVariant(wantedVariant);
   const vc = (entry && entry.variantCounts) ? entry.variantCounts : null;
 
-  const hasSecret = vc ? (Number(vc.secret) || 0) > 0 : false;
-  const hasAlpha = vc ? (Number(vc.alpha) || 0) > 0 : false;
-  const hasSafari = vc ? (Number(vc.safari) || 0) > 0 : false;
+  const secretCount = vc ? (Number(vc.secret) || 0) : 0;
+  const alphaCount = vc ? (Number(vc.alpha) || 0) : 0;
+  const safariCount = vc ? (Number(vc.safari) || 0) : 0;
 
-  // Living Dex: keep current total-count info text for all variants.
+  function countText(n) {
+    const c = Number(n) || 0;
+    if (c === 0) return 'Unowned';
+    if (c === 1) return '1 Shiny';
+    return `${c} Shinies`;
+  }
+
+  // Living Dex: variant switches change the visible infoText to that variant's count.
+  // Tooltip remains species-wide owners (entry.owners) and must NOT be variant-filtered.
   // Disabled variants are still visible (teaches the system) but non-interactive.
   return [
     { key: 'standard', title: 'Standard', enabled: true, infoText: totalInfoText, active: wanted === 'standard' },
-    { key: 'secret', title: 'Secret', enabled: hasSecret, infoText: totalInfoText, active: wanted === 'secret' },
-    { key: 'alpha', title: 'Alpha', enabled: hasAlpha, infoText: totalInfoText, active: wanted === 'alpha' },
-    { key: 'safari', title: 'Safari', enabled: hasSafari, infoText: totalInfoText, active: wanted === 'safari' }
+    { key: 'secret', title: 'Secret', enabled: secretCount > 0, infoText: countText(secretCount), active: wanted === 'secret' },
+    { key: 'alpha', title: 'Alpha', enabled: alphaCount > 0, infoText: countText(alphaCount), active: wanted === 'alpha' },
+    { key: 'safari', title: 'Safari', enabled: safariCount > 0, infoText: countText(safariCount), active: wanted === 'safari' }
   ];
 }
 
