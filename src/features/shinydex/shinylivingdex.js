@@ -1,4 +1,4 @@
-// v2.0.0-alpha.2
+// v2.0.0-alpha
 // src/features/shinydex/shinylivingdex.js
 // Shiny Living Dex — RENDERER (DOM-only)
 // UnifiedCard v3: points always shown; tier is frame-only via tier-map in unifiedcard.
@@ -21,20 +21,23 @@ function getPokemonGif(pokemonKey) {
   return `https://img.pokemondb.net/sprites/black-white/anim/shiny/${key}.gif`;
 }
 
-function variantsForLiving(infoText) {
+function variantsForLiving(infoText, selectedKey) {
   // Living Dex uses the same card component but keeps variants visually present.
   // Non-standard variants are disabled until Living-specific meaning is defined.
+  const key = selectedKey || 'standard';
   return [
-    { key: 'standard', title: 'Standard', enabled: true, infoText: infoText, active: true },
-    { key: 'secret', title: 'Secret', enabled: false, infoText: '—', active: false },
-    { key: 'alpha', title: 'Alpha', enabled: false, infoText: '—', active: false },
-    { key: 'safari', title: 'Safari', enabled: false, infoText: '—', active: false }
+    { key: 'standard', title: 'Standard', enabled: true, infoText: infoText, active: key === 'standard' },
+    { key: 'secret', title: 'Secret', enabled: false, infoText: infoText, active: key === 'secret' },
+    { key: 'alpha', title: 'Alpha', enabled: false, infoText: infoText, active: key === 'alpha' },
+    { key: 'safari', title: 'Safari', enabled: false, infoText: infoText, active: key === 'safari' }
   ];
 }
 
-export function renderLivingDexFromModel(model) {
+export function renderLivingDexFromModel(model, opts) {
   const container = document.getElementById('shiny-dex-container');
   container.innerHTML = '';
+
+  const selectedVariantByKey = opts && opts.selectedVariantByKey;
 
   if (!model || !Array.isArray(model.sections)) return;
 
@@ -59,16 +62,19 @@ export function renderLivingDexFromModel(model) {
 
       const points = Number(entry.points ?? POKEMON_POINTS?.[key] ?? 0);
 
+      const wanted = selectedVariantByKey && typeof selectedVariantByKey.get === 'function' ? selectedVariantByKey.get(key) : null;
+
       grid.insertAdjacentHTML(
         'beforeend',
         renderUnifiedCard({
+          pokemonKey: key,
           pokemonName: prettifyPokemonName(key),
           artSrc: getPokemonGif(key),
           points: points,
           infoText: infoText,
           isUnclaimed: count === 0,
           owners: Array.isArray(entry.owners) ? entry.owners : [],
-          variants: variantsForLiving(infoText)
+          variants: variantsForLiving(infoText, wanted)
         })
       );
     });
