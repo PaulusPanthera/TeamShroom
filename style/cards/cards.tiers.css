@@ -9,51 +9,44 @@
 */
 
 /* defaults (fallback) */
-.shinydex-root .unified-card{
+.unified-card{
   --u-tier-main: #9ca3a8;
   --u-tier-sub: #596066;
   --u-tier-border: #d4dee6;
 }
 
 /* 6 (most common): shy paper-gray */
-.shinydex-root .unified-card.tier-6{ --u-tier-main:#b8b2ad; --u-tier-sub:#6f6a66; --u-tier-border:#e6e1db; }
+.unified-card.tier-6{ --u-tier-main:#b8b2ad; --u-tier-sub:#6f6a66; --u-tier-border:#e6e1db; }
 
 /* 5: dusty slate */
-.shinydex-root .unified-card.tier-5{ --u-tier-main:#9ca3a8; --u-tier-sub:#596066; --u-tier-border:#d4dee6; }
+.unified-card.tier-5{ --u-tier-main:#9ca3a8; --u-tier-sub:#596066; --u-tier-border:#d4dee6; }
 
 /* 4: muted blue-gray */
-.shinydex-root .unified-card.tier-4{ --u-tier-main:#8fa1a8; --u-tier-sub:#4e5e66; --u-tier-border:#bbd6e2; }
+.unified-card.tier-4{ --u-tier-main:#8fa1a8; --u-tier-sub:#4e5e66; --u-tier-border:#bbd6e2; }
 
 /* 3: washed mint/teal */
-.shinydex-root .unified-card.tier-3{ --u-tier-main:#7fbfae; --u-tier-sub:#2f6e61; --u-tier-border:#a7e3d1; }
+.unified-card.tier-3{ --u-tier-main:#7fbfae; --u-tier-sub:#2f6e61; --u-tier-border:#a7e3d1; }
 
 /* 2: soft teal-mint */
-.shinydex-root .unified-card.tier-2{ --u-tier-main:#9ad6c6; --u-tier-sub:#3b8577; --u-tier-border:#bff2e3; }
+.unified-card.tier-2{ --u-tier-main:#9ad6c6; --u-tier-sub:#3b8577; --u-tier-border:#bff2e3; }
 
 /* 1: popping loot green (still retro) */
-.shinydex-root .unified-card.tier-1{ --u-tier-main:#5fcb6b; --u-tier-sub:#1e6d37; --u-tier-border:#a8f07e; }
+.unified-card.tier-1{ --u-tier-main:#5fcb6b; --u-tier-sub:#1e6d37; --u-tier-border:#a8f07e; }
 
 /* 0: retro gold */
-.shinydex-root .unified-card.tier-0{ --u-tier-main:#d9b15f; --u-tier-sub:#7a4f1a; --u-tier-border:#ffe08a; }
+.unified-card.tier-0{ --u-tier-main:#d9b15f; --u-tier-sub:#7a4f1a; --u-tier-border:#ffe08a; }
 
 /* --------------------------------------------------
    GLOBAL TIER MARKS (ALL TIERS)
-   Adds legible “collector trim” without recoloring the body.
 -------------------------------------------------- */
 
-.shinydex-root .unified-card::before{
+.unified-card:not(.unified-card--member)::before{
   content:"";
   position:absolute;
   inset:6px;
   pointer-events:none;
 
-  /* inner trim + corner ticks */
   background:
-    /* 1px inner trim */
-    linear-gradient(rgba(0,0,0,0.0), rgba(0,0,0,0.0)) 0 0/100% 100% no-repeat,
-    linear-gradient(rgba(0,0,0,0.0), rgba(0,0,0,0.0)) 0 0/100% 100% no-repeat,
-
-    /* corner ticks (tier border) */
     linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 0/14px 2px no-repeat,
     linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 0/2px 14px no-repeat,
 
@@ -70,16 +63,14 @@
 }
 
 /* dead cards: suppress tier marks */
-.shinydex-root .unified-card.is-unclaimed::before{
+.unified-card.is-unclaimed::before{
   opacity: 0.10;
 }
 
-/* LM: Legendary / Mythical — strong purple (corner marks + rune pixels)
-   Keep your special LM overlay, but stronger than generic marks.
-*/
-.shinydex-root .unified-card.tier-lm{ --u-tier-main:#8b5cf0; --u-tier-sub:#3a1a6a; --u-tier-border:#d7b6ff; }
+/* LM: Legendary / Mythical — strong purple (corner marks + rune pixels) */
+.unified-card.tier-lm{ --u-tier-main:#8b5cf0; --u-tier-sub:#3a1a6a; --u-tier-border:#d7b6ff; }
 
-.shinydex-root .unified-card.tier-lm::before{
+.unified-card.tier-lm::before{
   content:"";
   position:absolute;
   inset:6px;
@@ -107,7 +98,7 @@
 }
 
 /* dead cards should always read dead, regardless of tier */
-.shinydex-root .unified-card.is-unclaimed{
+.unified-card.is-unclaimed{
   --u-tier-main:#7a828b;
   --u-tier-sub:#606872;
   --u-tier-border:#606872;
