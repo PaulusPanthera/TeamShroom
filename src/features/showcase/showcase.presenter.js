@@ -2,8 +2,6 @@
 // v2.0.0-beta
 // Showcase presenter (sorting + filtering + view shapes)
 
-import { prettifyPokemonName } from '../../utils/utils.js';
-
 function normalize(str) {
   return String(str || '').trim().toLowerCase();
 }
@@ -28,67 +26,31 @@ export function sortMembers(members, sortMode) {
   return list.sort((a, b) => String(a.name || '').localeCompare(String(b.name || '')));
 }
 
-export function buildMemberGalleryCardView(member, membersForSprites, sortMode) {
+function tierEmblemForRole(role) {
+  const r = normalize(role);
+  if (r === 'spore') return 'img/symbols/sporesprite.png';
+  if (r === 'shroom') return 'img/symbols/shroomsprite.png';
+  if (r === 'shinyshroom') return 'img/symbols/shinyshroomsprite.png';
+  return 'img/symbols/shroomsprite.png';
+}
+
+function spriteSrcForMember(member) {
+  const key = member && member.key ? String(member.key) : '';
+  const ext = member && member.sprite ? String(member.sprite) : '';
+  if (key && ext) return `img/membersprites/${key}sprite.${ext}`;
+  return 'img/membersprites/examplesprite.png';
+}
+
+export function buildMemberGalleryCardView(member, sortMode) {
   const name = member && member.name ? String(member.name) : '';
   const key = member && member.key ? String(member.key) : '';
 
-  const infoText =
-    sortMode === 'scoreboard'
-      ? `Points: ${(Number(member && member.points) || 0).toLocaleString('en-US')}`
-      : `Shinies: ${(Number(member && member.shinyCount) || 0).toLocaleString('en-US')}`;
-
-  // Member cards teach the variant system but only standard is interactive.
-  const variants = [
-    { key: 'standard', title: 'Standard', enabled: true, infoText: infoText, active: true },
-    { key: 'secret', title: 'Secret', enabled: false, infoText: infoText, active: false },
-    { key: 'alpha', title: 'Alpha', enabled: false, infoText: infoText, active: false },
-    { key: 'safari', title: 'Safari', enabled: false, infoText: infoText, active: false }
-  ];
-
   return {
     memberKey: key,
-    pokemonKey: key,
-    pokemonName: name,
-    artMemberKey: key,
-    membersForSprites,
+    name,
     points: Number(member && member.points) || 0,
-    infoText,
-    isUnclaimed: false,
-    variants
-  };
-}
-
-export function buildMemberShinyCardView(shiny, pokemonPoints) {
-  const pokemonKey = shiny && shiny.pokemon ? String(shiny.pokemon) : '';
-  const points = Number(pokemonPoints && pokemonPoints[pokemonKey]) || 0;
-
-  let info = '';
-  if (shiny && shiny.lost) info = 'Lost';
-  else if (shiny && shiny.sold) info = 'Sold';
-
-  const tags = [];
-  if (shiny && shiny.secret) tags.push('Secret');
-  if (shiny && shiny.alpha) tags.push('Alpha');
-  if (shiny && shiny.run) tags.push('Run');
-  if (shiny && shiny.favorite) tags.push('Fav');
-
-  if (!info && tags.length) info = tags.join(' • ');
-  else if (info && tags.length) info = `${info} • ${tags.join(' • ')}`;
-
-  const variants = [
-    { key: 'standard', title: 'Standard', enabled: true, infoText: info, active: true },
-    { key: 'secret', title: 'Secret', enabled: false, infoText: info, active: false },
-    { key: 'alpha', title: 'Alpha', enabled: false, infoText: info, active: false },
-    { key: 'safari', title: 'Safari', enabled: false, infoText: info, active: false }
-  ];
-
-  return {
-    pokemonKey,
-    pokemonName: prettifyPokemonName(pokemonKey),
-    points,
-    infoText: info,
-    isUnclaimed: Boolean(shiny && (shiny.lost || shiny.sold)),
-    clip: shiny && shiny.clip ? String(shiny.clip) : null,
-    variants
+    tierEmblemSrc: tierEmblemForRole(member && member.role),
+    spriteSrc: spriteSrcForMember(member),
+    sortMode
   };
 }
