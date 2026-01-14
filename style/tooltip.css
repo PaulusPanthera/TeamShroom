@@ -1,4 +1,4 @@
-/* v2.0.0-alpha.3 */
+/* v2.0.0-alpha */
 /* style/tooltip.css */
 /* =========================================================
    TOOLTIP — RPG MENU POPUPS (HARD EDGES, DENSE INFO)
@@ -17,7 +17,7 @@
 
   padding: var(--space-2) var(--space-3);
 
-  background: linear-gradient(180deg, var(--bg-panel), #0f121a);
+  background: linear-gradient(180deg, var(--bg-panel), var(--bg));
   color: var(--text-main);
 
   border: 2px solid var(--accent);
@@ -56,7 +56,7 @@
   display: grid;
   gap: 6px;
 
-  background: #0f1218;
+  background: var(--bg-input);
   border: 1px solid #ffffff14;
   border-radius: 0;
 
@@ -94,96 +94,4 @@
   color: var(--text-muted);
 }
 
-.owners-next{
-  pointer-events: auto;
-
-  padding: 6px 10px;
-  border-radius: 0;
-
-  background: #0f1218;
-  border: 1px solid #ffffff1f;
-
-  color: var(--accent);
-  font-family: 'Press Start 2P', monospace;
-  font-size: 11px;
-
-  cursor: pointer;
-}
-
-.owners-next:hover{
-  border-color: var(--accent);
-}
-
-/* ---------------------------------------------------------
-   SEARCH HELP TOOLTIP (READABLE, MENU-LIKE)
---------------------------------------------------------- */
-
-.dex-help-tooltip{
-  position: absolute;
-  z-index: 2000;
-
-  width: 520px;
-  max-width: calc(100vw - 32px);
-
-  padding: var(--space-3);
-
-  background: linear-gradient(180deg, var(--bg-panel), #0f121a);
-  border: 2px solid var(--accent);
-  border-radius: 0;
-
-  box-shadow: var(--shadow-depth);
-
-  font-family: 'Press Start 2P', monospace;
-  font-size: 12px;
-  line-height: 1.55;
-
-  color: var(--text-main);
-}
-
-.dex-help-title{
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-
-  text-align: center;
-  margin-bottom: var(--space-2);
-
-  padding-bottom: var(--space-2);
-  border-bottom: 1px solid rgba(255, 106, 0, 0.35);
-}
-
-.dex-help-rows{
-  background: #0f1218;
-  border: 1px solid #ffffff14;
-  border-radius: 0;
-
-  padding: var(--space-3);
-
-  display: grid;
-  gap: 10px;
-}
-
-.help-row{
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 12px;
-  align-items: baseline;
-}
-
-.help-k{
-  color: var(--card-alt);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.help-v{
-  color: var(--text-muted);
-}
-
-.help-v code{
-  color: var(--text-main);
-  background: #00000055;
-  border: 1px solid #ffffff14;
-  padding: 2px 6px;
-  border-radius: 0;
-}
+.owners
