@@ -20,10 +20,6 @@ Array<{
 */
 
 export function buildShinyLivingDexModel(showcaseRows) {
-  function normalizeMethod(m) {
-    return String(m || '').trim().toLowerCase();
-  }
-
   function pushUnique(arr, value) {
     const v = String(value || '').trim();
     if (!v) return;
@@ -79,7 +75,8 @@ export function buildShinyLivingDexModel(showcaseRows) {
       pushUnique(map[key].variantOwners.alpha, row.ot);
     }
 
-    if (normalizeMethod(row.method) === 'safari') {
+    // Safari is determined exclusively by the explicit boolean flag.
+    if (row.safari === true) {
       map[key].variantCounts.safari += 1;
       pushUnique(map[key].variantOwners.safari, row.ot);
     }
