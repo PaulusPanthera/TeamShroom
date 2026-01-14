@@ -23,9 +23,15 @@
 
   padding: var(--space-2) var(--space-3);
 
-  background: linear-gradient(180deg, var(--bg-panel), #0f121a);
+  background: var(--bg-panel);
   border-bottom: 2px solid rgba(240, 91, 41, 0.65);
-  box-shadow: var(--shadow-depth);
+
+  /* 8-bit bevel (no glow/blur) */
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.75) inset,
+    0 1px 0 rgba(45,58,69,0.85) inset,
+    0 -1px 0 rgba(7,9,12,0.90) inset,
+    0 8px 0 rgba(0,0,0,0.55);
 
   /* hard 8-bit edges */
   border-radius: 0;
@@ -59,11 +65,15 @@
   margin-bottom: var(--space-4);
   padding: var(--space-4) var(--space-3) var(--space-3);
 
-  background: var(--bg-panel-alt);
-  border: var(--border-soft);
-  border-radius: 16px;
+  background: var(--bg-panel);
+  border: 2px solid rgba(58, 70, 81, 0.85);
+  border-radius: 0;
 
-  box-shadow: var(--shadow-depth);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.70) inset,
+    0 1px 0 rgba(45,58,69,0.85) inset,
+    0 -1px 0 rgba(7,9,12,0.90) inset,
+    0 10px 0 rgba(0,0,0,0.35);
 }
 
 .region-section h2,
@@ -94,9 +104,13 @@
   color: var(--accent);
   background: var(--bg-panel);
 
-  border-radius: 12px;
-  border: var(--border-soft);
-  box-shadow: var(--shadow-depth);
+  border-radius: 0;
+  border: 2px solid rgba(58, 70, 81, 0.85);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.70) inset,
+    0 1px 0 rgba(45,58,69,0.85) inset,
+    0 -1px 0 rgba(7,9,12,0.90) inset,
+    0 8px 0 rgba(0,0,0,0.35);
 }
 
 /* ---------------------------------------------------------
@@ -160,40 +174,24 @@
 }
 
 /* ---------------------------------------------------------
-   RPG MENU FRAME STYLE (GLOBAL PANELS)
+   STICKY HOTBAR (UNDER FIXED NAV)
 --------------------------------------------------------- */
-
-.region-section,
-.scoreboard-member-section,
-.search-controls,
-.showcase-search-controls,
-.shiny-dex-tabs {
-  background: linear-gradient(180deg, var(--bg-panel), #0f121a);
-  border: 2px solid rgba(255, 122, 24, 0.45);
-  box-shadow:
-    0 0 0 1px #000 inset,
-    0 10px 0 rgba(0,0,0,0.35);
-}
 
 /* reduce dead air between stacked panels */
 #page-content {
   gap: var(--space-2);
 }
 
-/* ---------------------------------------------------------
-   STICKY HOTBAR (TWO BARS ATTACHED UNDER NAV)
---------------------------------------------------------- */
-
 /* nav is fixed; these stick under it */
 .search-controls{
   position: sticky;
-  top: 56px;              /* match nav height; adjust once nav finalizes */
+  top: 56px;   /* keep aligned with fixed nav height */
   z-index: 900;
 }
 
 .shiny-dex-tabs{
   position: sticky;
-  top: calc(56px + 72px); /* bar 2 sits under bar 1 */
+  top: 128px;  /* 56 + hotbar height */
   z-index: 850;
 }
 
@@ -202,44 +200,4 @@
   max-width: 1760px;
   padding-left: var(--space-2);
   padding-right: var(--space-2);
-}
-
-/* sticky hotbar under nav */
-.search-controls{
-  position: sticky;
-  top: 56px;     /* adjust to real nav height later */
-  z-index: 900;
-}
-
-.shiny-dex-tabs{
-  position: sticky;
-  top: 128px;    /* 56 + hotbar height (rough) */
-  z-index: 850;
-}
-
-/* fit 6 cards */
-#page-content{
-  max-width: 1760px;
-  padding-left: var(--space-2);
-  padding-right: var(--space-2);
-}
-
-/* ---------------------------------------------------------
-   8-BIT PANEL OVERRIDE (MUST BE LAST)
---------------------------------------------------------- */
-
-.region-section,
-.scoreboard-member-section,
-.search-controls,
-.showcase-search-controls,
-.shiny-dex-tabs{
-  background: var(--bg-panel) !important;
-  border-radius: 0 !important;
-
-  border: 1px solid var(--ui-shadow) !important;
-  box-shadow:
-    0 0 0 1px rgba(var(--accent-rgb), 0.35) inset,
-    0 0 0 2px rgba(58,70,81,0.85) inset,
-    0 1px 0 rgba(45,58,69,0.85) inset,
-    0 -1px 0 rgba(7,9,12,0.85) inset !important;
 }
