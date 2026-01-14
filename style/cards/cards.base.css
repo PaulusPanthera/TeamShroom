@@ -7,17 +7,26 @@
   --card-w: 210px;
   --card-h: 282px;
 
-  --u-card-bg: rgba(0,0,0,0.45);
-  --u-card-fill: #0e151c;
-  --u-card-plate: #0b1117;
-  --u-text: #f2e6c6;
-  --u-muted: rgba(255,255,255,0.70);
+  /* Core card materials (must pop on page bg, but stay dark-mode) */
+  --u-card-fill: #1a232c;   /* main body */
+  --u-card-bg: #24313b;     /* header/info/variants plates */
+  --u-card-plate: #0e1217;  /* deep window base */
 
-  /* defaults overwritten by tier classes */
-  --u-frame: #516075;
-  --u-accent: #ff7a1a;
+  --u-text: #e6e1db;
+  --u-muted: #a2a29d;
 
-  --u-depth: rgba(0,0,0,0.55);
+  /* Tier color system (defaults overwritten by tier classes) */
+  --u-tier-main: #9ca3a8;
+  --u-tier-sub: #596066;
+  --u-tier-border: #d4dee6;
+
+  /* wiring for existing rules */
+  --u-frame: var(--u-tier-border);
+  --u-accent: var(--u-tier-main);
+  --u-plate-border: var(--u-tier-sub);
+
+  --u-line: #3a4651;
+  --u-depth: #07090c;
 }
 
 /* --------------------------------------------------
@@ -39,7 +48,7 @@
 
   /* pixel depth only (no blur) */
   box-shadow:
-    0 6px 0 var(--u-depth),
+    0 8px 0 var(--u-depth),
     0 0 0 2px rgba(0,0,0,0.35) inset,
     0 0 0 4px rgba(0,0,0,0.45) inset;
 
@@ -61,7 +70,7 @@
   padding: 6px 8px;
 
   background: var(--u-card-bg);
-  border: 2px solid rgba(255,255,255,0.18);
+  border: 2px solid var(--u-plate-border);
   border-radius: 0;
 
   overflow: hidden;
@@ -118,8 +127,8 @@
 
   margin: 0 10px; /* narrower than header */
 
-  background: rgba(0,0,0,0.60);
-  border: 2px solid rgba(255,255,255,0.25);
+  background: var(--u-card-plate);
+  border: 2px solid rgba(255,255,255,0.18);
   border-radius: 0;
 
   box-shadow:
@@ -148,7 +157,7 @@
   padding: 6px 8px;
 
   background: var(--u-card-bg);
-  border: 2px solid rgba(255,255,255,0.18);
+  border: 2px solid var(--u-plate-border);
   border-radius: 0;
 
   box-shadow: 0 0 0 2px rgba(0,0,0,0.25) inset;
@@ -171,14 +180,14 @@
 -------------------------------------------------- */
 
 .shinydex-root .unified-card.is-unclaimed{
-  border-color: #666;
+  border-color: #606872;
   filter: saturate(0.65);
 }
 
 .shinydex-root .unified-card.is-unclaimed .unified-header,
 .shinydex-root .unified-card.is-unclaimed .unified-info{
-  border-color: rgba(255,255,255,0.12);
-  background: rgba(0,0,0,0.58);
+  border-color: rgba(58,70,81,0.55);
+  background: rgba(14,18,23,0.85);
 }
 
 .shinydex-root .unified-card.is-unclaimed .unified-value{
