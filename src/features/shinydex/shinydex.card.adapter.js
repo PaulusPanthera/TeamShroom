@@ -3,7 +3,7 @@
 // ShinyDex-owned adapter translating presenter/domain entries into UnifiedCard props.
 
 import { prettifyPokemonName } from '../../utils/utils.js';
-import { POKEMON_POINTS } from '../../data/pokemondatabuilder.js';
+import { getPokemonPoints } from '../../domains/pokemon/pokemon.data.js';
 import { normalizeVariant } from './shinydex.variants.state.js';
 
 function getPokemonGif(pokemonKey) {
@@ -64,7 +64,7 @@ function buildLivingVariants(entry, totalInfoText, wantedVariant) {
 
 export function toUnifiedCardPropsForHitlist(entry, wantedVariant, options) {
   const key = entry && entry.pokemon ? String(entry.pokemon) : '';
-  const points = Number(entry?.points ?? POKEMON_POINTS?.[key] ?? 0);
+  const points = Number(entry?.points ?? getPokemonPoints(key) ?? 0);
 
   const mode = options && options.mode;
   const isScoreboard = mode === 'scoreboard';
@@ -93,7 +93,7 @@ export function toUnifiedCardPropsForLivingDex(entry, wantedVariant) {
     count === 1 ? '1 Shiny' :
     `${count} Shinies`;
 
-  const points = Number(entry?.points ?? POKEMON_POINTS?.[key] ?? 0);
+  const points = Number(entry?.points ?? getPokemonPoints(key) ?? 0);
   const ownersAll = Array.isArray(entry && entry.owners) ? entry.owners : [];
 
   return {
