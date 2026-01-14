@@ -2,6 +2,12 @@
    v2.0.0-beta
 */
 
+:root{
+  /* Card/controls shared tokens used across pages */
+  --bg-input: #10161D;
+  --bg-panel: linear-gradient(180deg, #18212a 0%, #121820 100%);
+}
+
 #page-content{
   max-width: 100%;
   padding: 0;
@@ -51,10 +57,6 @@ nav{
   position: sticky;
   top: 56px;             /* sits under fixed nav */
   z-index: 900;
-}
-
-/* prevent sticky overlay from catching clicks outside its area */
-.shinydex-root .shinydex-toolbar{
   pointer-events: auto;
 }
 
@@ -129,30 +131,30 @@ nav{
   image-rendering: pixelated;
 }
 
-/* inputs */
-#dex-search{
-  background: #10161D;
+/* inputs (ShinyDex scoped to avoid leaking into other pages) */
+.shinydex-root #dex-search{
+  background: var(--bg-input);
   border: 2px solid #3A4651;
   color: #E6E1DB;
   border-radius: 0;
   padding: 6px 10px;
 }
 
-#dex-search:focus{
+.shinydex-root #dex-search:focus{
   outline: none;
   border-color: #F05B29;
 }
 
-/* dropdown */
-#dex-sort{
-  background: #10161D;
+/* dropdown (ShinyDex scoped to avoid leaking into other pages) */
+.shinydex-root #dex-sort{
+  background: var(--bg-input);
   border: 2px solid #3A4651;
   color: #E6E1DB;
   border-radius: 0;
   padding: 6px 10px;
 }
 
-#dex-sort:focus{
+.shinydex-root #dex-sort:focus{
   outline: none;
   border-color: #F05B29;
 }
