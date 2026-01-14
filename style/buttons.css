@@ -1,4 +1,4 @@
-/* v2.0.0-alpha.1 */
+/* v2.0.0-alpha */
 /* style/buttons.css */
 
 /* ---------------------------------------------------------
@@ -20,7 +20,7 @@
   border-radius: 10px;
   border: 2px solid transparent;
 
-  background: #111;
+  background: var(--bg-input);
   cursor: pointer;
 }
 
