@@ -4,9 +4,6 @@
 
 import { buildShinyDexModel } from '../../domains/shinydex/hitlist.model.js';
 import {
-  pokemonFamilies,
-  POKEMON_DEX_ORDER,
-  POKEMON_POINTS,
   POKEMON_REGION,
   POKEMON_SHOW
 } from '../../data/pokemondatabuilder.js';
@@ -35,95 +32,54 @@ function normalizePokemonKey(raw) {
   return String(raw || '').trim().toLowerCase();
 }
 
+function isSafariMethod(method) {
+  if (!method) return false;
+  return String(method).toLowerCase().indexOf('safari') >= 0;
+}
+
 function eventHasSafariFlag(shiny) {
   if (!shiny) return false;
   if (shiny.safari === true) return true;
-  var method = shiny.method;
-  if (typeof method === 'string' && method.toLowerCase().indexOf('safari') >= 0) return true;
-  return false;
+  return isSafariMethod(shiny.method);
 }
 
-function buildVariantOwnersByPokemon(weeklyModel) {
+/**
+ * Special-variant owners are FIRST occurrence of species+flag in weekly.
+ * They are NOT tied to the family progressive slot claim.
+ * Multiple flags in one event claim all relevant variants at once.
+ */
+function buildSpecialVariantOwnersByPokemon(weeklyModel) {
   var weeks = Array.isArray(weeklyModel) ? weeklyModel : [];
+  var out = {};
 
-  // flatten to events (order preserved)
-  var events = [];
+  function ensure(pokemonKey) {
+    if (!out[pokemonKey]) out[pokemonKey] = { secret: null, alpha: null, safari: null };
+    return out[pokemonKey];
+  }
+
   weeks.forEach(function (week) {
     var members = week && week.members ? Object.values(week.members) : [];
-    members.forEach(function (member) {
-      var shinies = member && Array.isArray(member.shinies) ? member.shinies : [];
+    members.forEach(function (memberGroup) {
+      var shinies = memberGroup && Array.isArray(memberGroup.shinies) ? memberGroup.shinies : [];
       shinies.forEach(function (shiny) {
         if (!shiny || shiny.lost) return;
-        events.push({
-          member: shiny.member,
-          pokemon: normalizePokemonKey(shiny.pokemon),
-          secret: !!shiny.secret,
-          alpha: !!shiny.alpha,
-          safari: eventHasSafariFlag(shiny)
-        });
+
+        var pokemon = normalizePokemonKey(shiny.pokemon);
+        if (!pokemon) return;
+
+        var member = shiny.member ? String(shiny.member) : '';
+        if (!member) return;
+
+        var slot = ensure(pokemon);
+
+        if (shiny.secret && !slot.secret) slot.secret = member;
+        if (shiny.alpha && !slot.alpha) slot.alpha = member;
+        if (eventHasSafariFlag(shiny) && !slot.safari) slot.safari = member;
       });
     });
   });
 
-  // build rootByPokemon and speciesByRoot in dex order (mirror hitlist.model)
-  var order = Array.isArray(POKEMON_DEX_ORDER) && POKEMON_DEX_ORDER.length
-    ? POKEMON_DEX_ORDER
-    : Object.keys(POKEMON_POINTS || {});
-
-  var rootByPokemon = {};
-  order.forEach(function (p) {
-    var roots = (pokemonFamilies && pokemonFamilies[p]) ? pokemonFamilies[p] : [];
-    rootByPokemon[p] = roots.length ? roots[0] : p;
-  });
-
-  var speciesByRoot = {};
-  order.forEach(function (p) {
-    var root = rootByPokemon[p] || p;
-    if (!speciesByRoot[root]) speciesByRoot[root] = [];
-    speciesByRoot[root].push(p);
-  });
-
-  var claimedSlotsByRoot = {};
-  var variantOwnersByPokemon = {};
-
-  function ensureEntry(pokemon) {
-    if (!variantOwnersByPokemon[pokemon]) {
-      variantOwnersByPokemon[pokemon] = { standard: null, secret: null, alpha: null, safari: null };
-    }
-    return variantOwnersByPokemon[pokemon];
-  }
-
-  events.forEach(function (event) {
-    var mon = event.pokemon;
-    if (!mon) return;
-
-    var root = rootByPokemon[mon] || mon;
-    var stages = speciesByRoot[root] || [mon];
-
-    if (!claimedSlotsByRoot[root]) claimedSlotsByRoot[root] = {};
-
-    var nextStage = null;
-    for (var i = 0; i < stages.length; i++) {
-      var stage = stages[i];
-      if (!claimedSlotsByRoot[root][stage]) {
-        nextStage = stage;
-        break;
-      }
-    }
-    if (!nextStage) return;
-
-    claimedSlotsByRoot[root][nextStage] = event.member;
-
-    var slot = ensureEntry(nextStage);
-    if (!slot.standard) slot.standard = event.member;
-
-    // Multiple flags claim all relevant variants in the same event.
-    if (event.secret && !slot.secret) slot.secret = event.member;
-    if (event.alpha && !slot.alpha) slot.alpha = event.member;
-    if (event.safari && !slot.safari) slot.safari = event.member;
-  });
-
-  return variantOwnersByPokemon;
+  return out;
 }
 
 export function prepareHitlistRenderModel(opts) {
@@ -138,16 +94,16 @@ export function prepareHitlistRenderModel(opts) {
     return POKEMON_SHOW[e.pokemon] !== false;
   });
 
-  var variantOwnersByPokemon = buildVariantOwnersByPokemon(weeklyModel);
+  var specialOwnersByPokemon = buildSpecialVariantOwnersByPokemon(weeklyModel);
 
   snapshot = snapshot.map(function (e) {
-    var vo = variantOwnersByPokemon[e.pokemon] || {};
+    var s = specialOwnersByPokemon[e.pokemon] || {};
     return Object.assign({}, e, {
       variantOwners: {
         standard: e.claimedBy || null,
-        secret: vo.secret || null,
-        alpha: vo.alpha || null,
-        safari: vo.safari || null
+        secret: s.secret || null,
+        alpha: s.alpha || null,
+        safari: s.safari || null
       }
     });
   });
