@@ -1,5 +1,5 @@
-// v2.0.0-alpha.1
 // src/features/shinydex/shinydex.livingdex.presenter.js
+// v2.0.0-beta
 // Living Dex Presenter — view-specific data prep (no DOM)
 
 import { buildShinyLivingDexModel } from '../../domains/shinydex/livingdex.model.js';
@@ -23,6 +23,53 @@ function regionMatches(regionValue, query) {
   return r.indexOf(q) === 0; // prefix match
 }
 
+function normalizePokemonKey(raw) {
+  return String(raw || '').trim().toLowerCase();
+}
+
+function isSafariMethod(method) {
+  if (!method) return false;
+  return String(method).toLowerCase().indexOf('safari') >= 0;
+}
+
+/**
+ * Enforces LivingDex rules:
+ * - owners must always be species-wide owners (tooltip source-of-truth)
+ * - variantCounts must reflect showcase presence so icons gray out correctly
+ */
+function buildShowcaseVariantAgg(showcaseRows) {
+  var rows = Array.isArray(showcaseRows) ? showcaseRows : [];
+  var map = new Map();
+
+  function ensure(p) {
+    if (!map.has(p)) {
+      map.set(p, {
+        ownersSet: new Set(),
+        variantCounts: { secret: 0, alpha: 0, safari: 0 }
+      });
+    }
+    return map.get(p);
+  }
+
+  rows.forEach(function (r) {
+    if (!r || r.lost) return;
+
+    var p = normalizePokemonKey(r.pokemon);
+    if (!p) return;
+
+    var a = ensure(p);
+
+    var owner = r.member ? String(r.member) : '';
+    if (owner) a.ownersSet.add(owner);
+
+    if (r.secret) a.variantCounts.secret += 1;
+    if (r.alpha) a.variantCounts.alpha += 1;
+    if (r.safari === true || isSafariMethod(r.method)) a.variantCounts.safari += 1;
+  });
+
+  return map;
+}
+
 export function prepareLivingDexRenderModel({
   showcaseRows,
   viewState,
@@ -33,6 +80,25 @@ export function prepareLivingDexRenderModel({
 
   var snapshot = buildShinyLivingDexModel(showcaseRows || []).filter(function (e) {
     return POKEMON_SHOW[e.pokemon] !== false;
+  });
+
+  // Override owners + variantCounts from showcase aggregation (species-wide, correct presence).
+  var agg = buildShowcaseVariantAgg(showcaseRows || []);
+  snapshot = snapshot.map(function (e) {
+    var p = normalizePokemonKey(e.pokemon);
+    var a = agg.get(p);
+
+    var ownersAll = a ? Array.from(a.ownersSet) : [];
+    var vc = a ? a.variantCounts : { secret: 0, alpha: 0, safari: 0 };
+
+    return Object.assign({}, e, {
+      owners: ownersAll,
+      variantCounts: {
+        secret: Number(vc.secret) || 0,
+        alpha: Number(vc.alpha) || 0,
+        safari: Number(vc.safari) || 0
+      }
+    });
   });
 
   if (parsed.filters && parsed.filters.region) {
