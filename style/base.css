@@ -10,9 +10,12 @@
   --bg: #0f1317;
   --bg-panel: #131a21;
   --bg-panel-alt: #1a232c;
+  --bg-input: #10161d;
   --ui-plate: #24313b;
   --ui-line: #3a4651;
   --ui-shadow: #07090c;
+  --ui-plate-shadow: #0b0f13;
+  --ui-plate-highlight: #2d3a45;
 
   /* Legacy tokens (kept for compatibility) */
   --card: #fbd44d;        /* used sparingly as highlight */
@@ -21,6 +24,8 @@
 
   /* Accents */
   --accent: #f05b29;      /* Shroom Orange (system / clickable) */
+  --accent-rgb: 240, 91, 41;
+
   --accent-dark: #a73d1b;
   --accent-light: #ff8a5c;
   --success: #7ae252;     /* Owned / success */
