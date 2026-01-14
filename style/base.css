@@ -1,42 +1,48 @@
-/* v2.0.0-alpha.1 */
+/* v2.0.0-beta */
 /* style/base.css */
 
 :root {
   /* =========================================================
-     COLOR SYSTEM — DESIGN SYSTEM v1 (LOCKED)
+     COLOR SYSTEM — DARK RPG MENU v2 (LOCKED)
      ========================================================= */
 
-  /* Neutral Dark Backgrounds */
-  --bg: #0f1318;
-  --bg-panel: #15191f;
-  --bg-panel-alt: #1b2027;
+  /* Core neutrals (steel / CRT) */
+  --bg: #0f1317;
+  --bg-panel: #131a21;
+  --bg-panel-alt: #1a232c;
+  --ui-plate: #24313b;
+  --ui-line: #3a4651;
+  --ui-shadow: #07090c;
 
-  /* Card Interior (warm, collectible feel) */
-  --card: #fff6cc;
-  --card-alt: #ffe9a8;
+  /* Legacy tokens (kept for compatibility) */
+  --card: #fbd44d;        /* used sparingly as highlight */
+  --card-alt: #ffe08a;    /* tooltip key labels */
   --card-gradient: linear-gradient(180deg, var(--card), var(--card-alt));
 
   /* Accents */
-  --accent: #f25c2a;      /* Shroom Orange */
-  --success: #7fd36b;     /* Shroom Green */
-  --highlight: #ffd86b;   /* Shiny Gold */
+  --accent: #f05b29;      /* Shroom Orange (system / clickable) */
+  --accent-dark: #a73d1b;
+  --accent-light: #ff8a5c;
+  --success: #7ae252;     /* Owned / success */
+  --highlight: #fbd44d;   /* Gold */
 
   /* Text */
-  --text-main: #ffe9a8;
-  --text-muted: #a89f7a;
-  --text-dark: #1a1a1a;   /* for text on card interiors */
+  --text-main: #e6e1db;
+  --text-muted: #a2a29d;
+  --text-disabled: #6f6a66;
+  --text-dark: #0e1217;   /* for text on bright UI chips */
 
-  /* Borders & Shadows */
-  --border-strong: 2px solid var(--accent);
-  --border-soft: 1px solid #ffffff14;
+  /* Borders & Shadows (hard edge, no glow) */
+  --border-strong: 2px solid rgba(240, 91, 41, 0.85);
+  --border-soft: 2px solid rgba(58, 70, 81, 0.85);
 
   --shadow-depth:
-    0 6px 20px rgba(0, 0, 0, 0.45),
-    0 2px 8px rgba(0, 0, 0, 0.35);
+    0 8px 0 rgba(0,0,0,0.55),
+    0 0 0 1px rgba(0,0,0,0.60) inset;
 
   --shadow-hover:
-    0 10px 28px rgba(0, 0, 0, 0.6),
-    0 4px 14px rgba(0, 0, 0, 0.4);
+    0 10px 0 rgba(0,0,0,0.65),
+    0 0 0 1px rgba(0,0,0,0.65) inset;
 
   /* =========================================================
      SPACING SYSTEM — 8px GRID (NON-NEGOTIABLE)
@@ -86,9 +92,17 @@ body {
 
   color: var(--text-main);
 
+  /* Dark-mode RPG menu backdrop (subtle, pixel-friendly) */
   background-color: var(--bg);
-  background-image: url('https://www.transparenttextures.com/patterns/square-bg.png');
-  background-size: 120px 120px;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(36, 49, 59, 0.65) 0%, rgba(15, 19, 23, 0.96) 58%, rgba(11, 15, 19, 1) 100%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.03) 0px,
+      rgba(255,255,255,0.03) 1px,
+      rgba(0,0,0,0) 1px,
+      rgba(0,0,0,0) 8px
+    );
   background-attachment: fixed;
 }
 
