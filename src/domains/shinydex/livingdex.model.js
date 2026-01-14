@@ -1,11 +1,11 @@
 // src/domains/shinydex/livingdex.model.js
-// Shiny Dex — LIVING DEX MODEL
-// COMPLETE SPECIES SNAPSHOT (owned + unowned)
+// v2.0.0-beta
+// Shiny Dex — living dex model (complete species snapshot)
 
 import {
-  POKEMON_REGION,
-  POKEMON_SHOW
-} from '../../data/pokemondatabuilder.js';
+  getPokemonRegionMap,
+  getPokemonShowMap
+} from '../pokemon/pokemon.data.js';
 
 /*
 OUTPUT:
@@ -35,14 +35,17 @@ export function buildShinyLivingDexModel(showcaseRows) {
   // 1. INIT ALL POKÉMON (UNOWNED BY DEFAULT)
   // -------------------------------------------------------
 
+  const regionMap = getPokemonRegionMap();
+  const showMap = getPokemonShowMap();
+
   const map = {};
 
-  Object.keys(POKEMON_REGION).forEach(pokemon => {
-    if (POKEMON_SHOW[pokemon] === false) return;
+  Object.keys(regionMap).forEach(pokemon => {
+    if (showMap[pokemon] === false) return;
 
     map[pokemon] = {
       pokemon,
-      region: POKEMON_REGION[pokemon] || 'unknown',
+      region: regionMap[pokemon] || 'unknown',
       count: 0,
       owners: [],
       variantCounts: { standard: 0, secret: 0, alpha: 0, safari: 0 },
