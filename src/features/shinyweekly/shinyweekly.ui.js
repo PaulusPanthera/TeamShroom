@@ -62,7 +62,8 @@ function renderShinyWeekly(weeks, container, membersData = []) {
             run: !!mon.run
           };
 
-          if (mon.method && mon.method !== 'safari') symbols[mon.method] = true;
+          // Safari is NOT a hunt method. Avoid rendering 'safari' method artifacts.
+          if (mon.method && String(mon.method).toLowerCase() !== 'safari') symbols[mon.method] = true;
 
           wrapper.innerHTML = renderUnifiedCard({
             name: prettifyPokemonName(mon.pokemon),
