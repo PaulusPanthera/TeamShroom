@@ -3,11 +3,7 @@
 // Living Dex Presenter — view-specific data prep (no DOM)
 
 import { buildShinyLivingDexModel } from '../../domains/shinydex/livingdex.model.js';
-import {
-  getPokemonRegionMap,
-  getPokemonShowMap,
-  getPokemonDexOrder
-} from '../../domains/pokemon/pokemon.data.js';
+import { POKEMON_REGION, POKEMON_SHOW, POKEMON_DEX_ORDER } from '../../data/pokemondatabuilder.js';
 
 import {
   parseSearch,
@@ -56,14 +52,14 @@ function buildShowcaseVariantAgg(showcaseRows) {
   }
 
   rows.forEach(function (r) {
-    if (!r || r.lost) return;
+    if (!r || r.lost || r.sold) return;
 
     var p = normalizePokemonKey(r.pokemon);
     if (!p) return;
 
     var a = ensure(p);
 
-    var owner = r.member ? String(r.member) : '';
+    var owner = r.ot ? String(r.ot) : '';
     if (owner) a.ownersSet.add(owner);
 
     if (r.secret) a.variantCounts.secret += 1;
@@ -82,12 +78,8 @@ export function prepareLivingDexRenderModel({
   var mode = viewState.sort; // 'standard' | 'total'
   var parsed = parseSearch(viewState.search);
 
-  var showMap = getPokemonShowMap();
-  var regionMap = getPokemonRegionMap();
-  var dexOrder = getPokemonDexOrder();
-
   var snapshot = buildShinyLivingDexModel(showcaseRows || []).filter(function (e) {
-    return showMap[e.pokemon] !== false;
+    return POKEMON_SHOW[e.pokemon] !== false;
   });
 
   // Override owners + variantCounts from showcase aggregation (species-wide, correct presence).
@@ -112,7 +104,7 @@ export function prepareLivingDexRenderModel({
   if (parsed.filters && parsed.filters.region) {
     var rq = parsed.filters.region;
     snapshot = snapshot.filter(function (e) {
-      var region = regionMap[e.pokemon] || e.region || 'unknown';
+      var region = POKEMON_REGION[e.pokemon] || e.region || 'unknown';
       return regionMatches(region, rq);
     });
   }
@@ -123,7 +115,7 @@ export function prepareLivingDexRenderModel({
 
   var regionStats = {};
   snapshot.forEach(function (e) {
-    var region = regionMap[e.pokemon] || 'unknown';
+    var region = POKEMON_REGION[e.pokemon] || 'unknown';
     if (!regionStats[region]) regionStats[region] = { total: 0, owned: 0 };
     regionStats[region].total += 1;
     if ((Number(e.count) || 0) > 0) regionStats[region].owned += 1;
@@ -138,8 +130,8 @@ export function prepareLivingDexRenderModel({
   if (mode === 'total') {
     // stable: count desc, dex order tiebreak if available
     var dexIndex = {};
-    if (Array.isArray(dexOrder) && dexOrder.length) {
-      dexOrder.forEach(function (k, i) { dexIndex[k] = i; });
+    if (Array.isArray(POKEMON_DEX_ORDER) && POKEMON_DEX_ORDER.length) {
+      POKEMON_DEX_ORDER.forEach(function (k, i) { dexIndex[k] = i; });
     }
 
     modeSet = modeSet.slice().sort(function (a, b) {
@@ -178,7 +170,7 @@ export function prepareLivingDexRenderModel({
 
   var byRegion = {};
   visible.forEach(function (e) {
-    var region = regionMap[e.pokemon] || 'unknown';
+    var region = POKEMON_REGION[e.pokemon] || 'unknown';
     if (!byRegion[region]) byRegion[region] = [];
     byRegion[region].push(e);
   });
