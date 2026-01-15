@@ -45,7 +45,12 @@ function buildShowcaseVariantAgg(showcaseRows) {
     if (!map.has(p)) {
       map.set(p, {
         ownersSet: new Set(),
-        variantCounts: { secret: 0, alpha: 0, safari: 0 }
+        variantCounts: { secret: 0, alpha: 0, safari: 0 },
+        variantOwners: {
+          secret: new Set(),
+          alpha: new Set(),
+          safari: new Set()
+        }
       });
     }
     return map.get(p);
@@ -62,9 +67,20 @@ function buildShowcaseVariantAgg(showcaseRows) {
     var owner = r.ot ? String(r.ot) : '';
     if (owner) a.ownersSet.add(owner);
 
-    if (r.secret) a.variantCounts.secret += 1;
-    if (r.alpha) a.variantCounts.alpha += 1;
-    if (isSafariMethod(r.method)) a.variantCounts.safari += 1;
+    if (r.secret) {
+      a.variantCounts.secret += 1;
+      if (owner) a.variantOwners.secret.add(owner);
+    }
+
+    if (r.alpha) {
+      a.variantCounts.alpha += 1;
+      if (owner) a.variantOwners.alpha.add(owner);
+    }
+
+    if (r.safari === true || isSafariMethod(r.method)) {
+      a.variantCounts.safari += 1;
+      if (owner) a.variantOwners.safari.add(owner);
+    }
   });
 
   return map;
@@ -91,8 +107,17 @@ export function prepareLivingDexRenderModel({
     var ownersAll = a ? Array.from(a.ownersSet) : [];
     var vc = a ? a.variantCounts : { secret: 0, alpha: 0, safari: 0 };
 
+    var vo = a ? a.variantOwners : null;
+    var ownersByVariant = {
+      standard: ownersAll,
+      secret: vo ? Array.from(vo.secret) : [],
+      alpha: vo ? Array.from(vo.alpha) : [],
+      safari: vo ? Array.from(vo.safari) : []
+    };
+
     return Object.assign({}, e, {
       owners: ownersAll,
+      ownersByVariant: ownersByVariant,
       variantCounts: {
         secret: Number(vc.secret) || 0,
         alpha: Number(vc.alpha) || 0,
