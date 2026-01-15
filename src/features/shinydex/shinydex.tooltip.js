@@ -48,6 +48,27 @@ function safeJsonParse(str) {
   }
 }
 
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function normalizeVariantKey(v) {
+  const x = String(v || '').trim().toLowerCase();
+  if (x === 'secret') return 'secret';
+  if (x === 'alpha') return 'alpha';
+  if (x === 'safari') return 'safari';
+  return 'standard';
+}
+
+function memberKeyFromOwnerName(name) {
+  return String(name || '').trim().toLowerCase();
+}
+
 export function bindDexOwnerTooltip(root) {
   if (isBound) return;
   isBound = true;
@@ -123,7 +144,20 @@ export function bindDexOwnerTooltip(root) {
     const current = pages[pageIndex] || [];
     const total = pages.length;
 
-    listEl.innerHTML = current.map(o => `<div class="owner-row">${o}</div>`).join('');
+    listEl.innerHTML = current
+      .map(o => {
+        const label = String(o || '').trim();
+        const key = memberKeyFromOwnerName(label);
+        return `
+          <button
+            type="button"
+            class="owner-row owner-btn"
+            data-owner="${escapeHtml(label)}"
+            data-member-key="${escapeHtml(key)}"
+          >${escapeHtml(label)}</button>
+        `;
+      })
+      .join('');
 
     pageEl.textContent = total > 1 ? `${pageIndex + 1} / ${total}` : '';
     nextBtn.style.display = total > 1 ? 'inline-block' : 'none';
@@ -162,13 +196,46 @@ export function bindDexOwnerTooltip(root) {
     return owners;
   }
 
+  function loadOwnersByVariantFromCard(cardEl) {
+    const raw = cardEl?.getAttribute('data-owners-by-variant');
+    const parsed = safeJsonParse(raw);
+    if (!parsed || typeof parsed !== 'object') return null;
+
+    const out = {
+      standard: Array.isArray(parsed.standard) ? parsed.standard.filter(Boolean).map(String) : null,
+      secret: Array.isArray(parsed.secret) ? parsed.secret.filter(Boolean).map(String) : null,
+      alpha: Array.isArray(parsed.alpha) ? parsed.alpha.filter(Boolean).map(String) : null,
+      safari: Array.isArray(parsed.safari) ? parsed.safari.filter(Boolean).map(String) : null
+    };
+
+    return out;
+  }
+
+  function getOwnersForActiveVariant(cardEl) {
+    if (!cardEl) return [];
+
+    const variant = normalizeVariantKey(cardEl.getAttribute('data-selected-variant'));
+    const ownersAll = loadOwnersFromCard(cardEl);
+    const map = loadOwnersByVariantFromCard(cardEl);
+
+    if (!map) return ownersAll;
+
+    if (variant === 'standard') {
+      const standard = Array.isArray(map.standard) ? map.standard : null;
+      return (standard && standard.length) ? standard : ownersAll;
+    }
+
+    const scoped = map[variant];
+    return Array.isArray(scoped) ? scoped : [];
+  }
+
   function setActiveCard(cardEl) {
     if (!cardEl) return;
 
     activeCard = cardEl;
 
     const name = cardEl.getAttribute('data-name') || '';
-    const owners = loadOwnersFromCard(cardEl);
+    const owners = getOwnersForActiveVariant(cardEl);
 
     if (!owners.length) {
       hide();
@@ -246,6 +313,12 @@ export function bindDexOwnerTooltip(root) {
   doc.addEventListener(
     'click',
     e => {
+      // Variant buttons must not toggle freeze.
+      const variantBtn = e && e.target && typeof e.target.closest === 'function'
+        ? e.target.closest('.variant-btn')
+        : null;
+      if (variantBtn) return;
+
       const card = getCardFromEventTarget(e.target);
       if (!card) return;
 
@@ -259,6 +332,48 @@ export function bindDexOwnerTooltip(root) {
     },
     true
   );
+
+  // Update visible tooltip when the active card switches variant.
+  doc.addEventListener(
+    'card:variant',
+    e => {
+      const card = e && e.target ? e.target : null;
+      if (!card) return;
+      if (!activeCard) return;
+      if (card !== activeCard) return;
+
+      const owners = getOwnersForActiveVariant(activeCard);
+      if (!owners.length) {
+        hide();
+        return;
+      }
+
+      pages = chunk(owners, PAGE_SIZE);
+      pageIndex = 0;
+      renderPage(true);
+      setPositionNearCard(activeCard);
+      startAuto();
+    },
+    true
+  );
+
+  // Owner -> Showcase member profile
+  listEl.addEventListener('click', e => {
+    const btn = e && e.target && typeof e.target.closest === 'function'
+      ? e.target.closest('.owner-btn')
+      : null;
+    if (!btn) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const key = btn.getAttribute('data-member-key') || '';
+    const memberKey = String(key || '').trim().toLowerCase();
+    if (!memberKey) return;
+
+    hide();
+    location.hash = `#showcase-${encodeURIComponent(memberKey)}`;
+  });
 
   nextBtn.addEventListener('click', e => {
     e.preventDefault();
