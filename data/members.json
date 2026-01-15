@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-01-15T00:46:17.578Z",
+  "generatedAt": "2026-01-15T18:21:10.824Z",
   "source": "google-sheets",
   "data": [
     {
@@ -19,7 +19,7 @@
       "name": "Aokiza",
       "active": true,
       "role": "shroom",
-      "sprite": "gif"
+      "sprite": "png"
     },
     {
       "name": "ashash",
@@ -43,7 +43,7 @@
       "name": "BlistiK",
       "active": true,
       "role": "shroom",
-      "sprite": "jpg"
+      "sprite": "png"
     },
     {
       "name": "BojanglesisHere",
