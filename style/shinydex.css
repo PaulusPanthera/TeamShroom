@@ -144,15 +144,16 @@
 }
 
 .shinydex-root .dex-help-icon{
-  width: 26px;
-  height: 26px;
-
-  aspect-ratio: 1 / 1;
-  object-fit: contain;
-  display: block;
+  width: 16px;
+  height: 16px;
 
   image-rendering: pixelated;
+  transform: scale(1.75);
+  transform-origin: center;
+
+  display: block;
 }
+
 
 /* inputs */
 .shinydex-root #dex-search{
