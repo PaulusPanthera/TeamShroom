@@ -97,14 +97,7 @@ function normalizeMemberKeyFromName(name) {
 function normalizeMethod(raw) {
   const s = toNullableString(raw);
   if (!s) return null;
-
-  const m = s.toLowerCase();
-
-  // Safari is NOT a hunt method.
-  // Safari is determined exclusively by the explicit boolean flag.
-  if (m === 'safari') return null;
-
-  return m;
+  return s.toLowerCase();
 }
 
 function normalizeEncounter(raw) {
@@ -117,6 +110,15 @@ function normalizeEncounter(raw) {
   const n = Number(s);
   if (!Number.isFinite(n)) return null;
   return n;
+}
+
+function hasExplicitField(row, key) {
+  if (!row) return false;
+  if (!Object.prototype.hasOwnProperty.call(row, key)) return false;
+  const v = row[key];
+  if (v == null) return false;
+  if (typeof v === 'string' && v.trim() === '') return false;
+  return true;
 }
 
 function normalizeWeeklyRow(row) {
@@ -134,9 +136,12 @@ function normalizeWeeklyRow(row) {
   const run = parseBoolean(row && row.run);
   const lost = parseBoolean(row && row.lost);
 
-  // Canonical safari semantics:
-  // safari is true ONLY if explicit field is true.
-  const safari = parseBoolean(row && row.safari);
+  // Safari support:
+  // - If a sheet boolean column exists, it is authoritative.
+  // - Otherwise, derive from method === 'safari' for legacy sheets.
+  const safari = hasExplicitField(row, 'safari')
+    ? parseBoolean(row && row.safari)
+    : method === 'safari';
 
   return {
     week,
