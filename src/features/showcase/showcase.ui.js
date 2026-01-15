@@ -36,7 +36,8 @@ function buildShinyInfoText(s) {
   if (s && s.sold) parts.push('Sold');
   else if (s && s.lost) parts.push('Lost');
 
-  // Safari is a special variant derived from method==='safari'. Do not render it as a normal method label.
+  // Safari is treated as a special variant derived from method==='safari'.
+  // It must not be shown as a normal hunt-method label.
   const methodRaw = s && s.method ? String(s.method) : '';
   const method = prettifyMethod(methodRaw);
   if (method && !isSafariMethod(methodRaw)) parts.push(method);
