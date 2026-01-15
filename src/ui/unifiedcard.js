@@ -78,6 +78,7 @@ export function renderUnifiedCard({
   infoText,
   isUnclaimed,
   owners,
+  ownersByVariant,
   variants,
   showVariants,
   headerLeftIconSrc,
@@ -102,6 +103,25 @@ export function renderUnifiedCard({
 
   const ownersArr = Array.isArray(owners) ? owners.filter(Boolean).map(String) : [];
   const ownersAttr = ownersArr.length ? ` data-owners="${escapeHtml(JSON.stringify(ownersArr))}"` : '';
+
+  // Optional: owners-by-variant map (used by feature-level tooltips)
+  const ownersByVariantObj = ownersByVariant && typeof ownersByVariant === 'object' ? ownersByVariant : null;
+  const ownersByVariantPayload = ownersByVariantObj
+    ? {
+        standard: Array.isArray(ownersByVariantObj.standard) ? ownersByVariantObj.standard.filter(Boolean).map(String) : undefined,
+        secret: Array.isArray(ownersByVariantObj.secret) ? ownersByVariantObj.secret.filter(Boolean).map(String) : undefined,
+        alpha: Array.isArray(ownersByVariantObj.alpha) ? ownersByVariantObj.alpha.filter(Boolean).map(String) : undefined,
+        safari: Array.isArray(ownersByVariantObj.safari) ? ownersByVariantObj.safari.filter(Boolean).map(String) : undefined
+      }
+    : null;
+
+  const hasOwnersByVariant = ownersByVariantPayload
+    ? Object.values(ownersByVariantPayload).some(v => Array.isArray(v) && v.length)
+    : false;
+
+  const ownersByVariantAttr = hasOwnersByVariant
+    ? ` data-owners-by-variant="${escapeHtml(JSON.stringify(ownersByVariantPayload))}"`
+    : '';
 
   const keyAttr = safeKey ? ` data-pokemon-key="${safeKey}"` : '';
 
@@ -180,7 +200,7 @@ export function renderUnifiedCard({
     <div class="unified-card ${typeClass} ${tierClass} ${isUnclaimed ? 'is-unclaimed' : ''}"
          data-unified-card
          data-name="${safeName}"${keyAttr}
-         data-selected-variant="${escapeHtml(selectedKey)}"${ownersAttr}>
+         data-selected-variant="${escapeHtml(selectedKey)}"${ownersAttr}${ownersByVariantAttr}>
       <div class="unified-header">
         ${headerLeft}
         <div class="unified-name-wrap">
