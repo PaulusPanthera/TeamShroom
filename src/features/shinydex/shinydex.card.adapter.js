@@ -38,7 +38,7 @@ function buildLivingVariants(entry, totalInfoText, wantedVariant) {
   }
 
   // Living Dex: variant switches change the visible infoText to that variant's count.
-  // Tooltip remains species-wide owners (entry.owners) and must NOT be variant-filtered.
+  // Owners tooltip must follow the active variant when variant owner lists exist.
   // Disabled variants are still visible (teaches the system) but non-interactive.
   return [
     { key: 'standard', title: 'Standard', enabled: true, infoText: totalInfoText, active: wanted === 'standard' },
@@ -82,6 +82,16 @@ export function toUnifiedCardPropsForLivingDex(entry, wantedVariant) {
   const points = Number(entry?.points ?? POKEMON_POINTS?.[key] ?? 0);
   const ownersAll = Array.isArray(entry && entry.owners) ? entry.owners : [];
 
+  const vo = entry && entry.variantOwners ? entry.variantOwners : null;
+  const ownersByVariant = vo
+    ? {
+        standard: ownersAll,
+        secret: Array.isArray(vo.secret) ? vo.secret : [],
+        alpha: Array.isArray(vo.alpha) ? vo.alpha : [],
+        safari: Array.isArray(vo.safari) ? vo.safari : []
+      }
+    : null;
+
   return {
     pokemonKey: key,
     pokemonName: prettifyPokemonName(key),
@@ -90,6 +100,7 @@ export function toUnifiedCardPropsForLivingDex(entry, wantedVariant) {
     infoText: infoText,
     isUnclaimed: count === 0,
     owners: ownersAll,
+    ownersByVariant,
     variants: buildLivingVariants(entry, infoText, wantedVariant)
   };
 }
