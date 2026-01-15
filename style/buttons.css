@@ -1,0 +1,51 @@
+/* style/buttons.css */
+/* v2.0.0-beta */
+/* Button primitives and small control buttons. */
+
+.help-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 34px;
+
+  background: var(--bg-panel-alt);
+  color: var(--text-main);
+
+  border: 2px solid rgba(58, 70, 81, 0.85);
+  border-radius: 0;
+
+  box-shadow:
+    var(--ui-inset-frame),
+    0 6px 0 rgba(0,0,0,0.55);
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.help-btn .help-icon{
+  width: 18px;
+  height: 18px;
+  image-rendering: pixelated;
+}
+
+.help-btn:hover{
+  border-color: rgba(240, 91, 41, 0.75);
+}
+
+.help-btn:active{
+  transform: translateY(1px);
+  box-shadow:
+    var(--ui-inset-frame),
+    0 5px 0 rgba(0,0,0,0.55);
+}
+
+.help-btn.active{
+  border-color: rgba(240, 91, 41, 0.95);
+}
+
+.dex-tab.is-disabled{
+  opacity: 0.45;
+  cursor: not-allowed;
+}

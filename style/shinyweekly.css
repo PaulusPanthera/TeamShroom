@@ -1,0 +1,65 @@
+/* style/shinyweekly.css */
+/* v2.0.0-beta */
+/* ShinyWeekly page layout and density overrides. */
+
+.weekly-card{
+  max-width: 1600px;
+  margin: var(--space-3) auto;
+  padding: var(--space-3);
+
+  background: var(--bg-panel);
+  border: 2px solid rgba(58, 70, 81, 0.85);
+  border-radius: 0;
+
+  box-shadow:
+    var(--ui-inset-frame),
+    var(--ui-depth-shadow);
+}
+
+.weekly-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+
+  border-bottom: 2px solid rgba(58, 70, 81, 0.65);
+}
+
+.weekly-title{
+  font-size: var(--font-section-title);
+  letter-spacing: 2px;
+  color: var(--accent);
+}
+
+.weekly-meta{
+  font-size: var(--font-small);
+  color: var(--text-muted);
+}
+
+.weekly-body{
+  width: 100%;
+}
+
+.weekly-body .dex-grid{
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-2);
+}
+
+.weekly-body .unified-card.is-compact{
+  width: 160px;
+  height: 210px;
+}
+
+@media (max-width: 768px){
+  .weekly-body .dex-grid{
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: var(--space-2);
+  }
+
+  .weekly-body .unified-card.is-compact{
+    width: 130px;
+    height: 190px;
+  }
+}

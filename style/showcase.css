@@ -1,0 +1,162 @@
+/* style/showcase.css */
+/* v2.0.0-beta */
+/* Showcase page styling only (gallery + member collections). */
+
+.showcase-root{
+  width: 100%;
+}
+
+.showcase-root .showcase-search-controls{
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.showcase-root .showcase-gallery{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-w), 1fr));
+  gap: 18px;
+
+  justify-items: center;
+  align-items: start;
+
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 18px 12px 24px;
+}
+
+/* ---------------------------------------------------------
+   MEMBER VIEW
+--------------------------------------------------------- */
+
+.showcase-root.showcase-member-root{
+  padding: 10px 0 24px;
+}
+
+.showcase-root .showcase-member-topbar{
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 12px 10px;
+}
+
+.showcase-root .back-btn{
+  background: var(--bg-panel-alt);
+  border: 2px solid rgba(58, 70, 81, 0.85);
+  color: var(--text-main);
+  padding: 8px 12px;
+  border-radius: 0;
+  cursor: pointer;
+  user-select: none;
+
+  box-shadow:
+    var(--ui-inset-frame),
+    0 6px 0 rgba(0,0,0,0.55);
+}
+
+.showcase-root .back-btn:hover{
+  border-color: rgba(240, 91, 41, 0.75);
+}
+
+.showcase-root .back-btn:active{
+  transform: translateY(1px);
+  box-shadow:
+    var(--ui-inset-frame),
+    0 5px 0 rgba(0,0,0,0.55);
+}
+
+.showcase-root .member-nameplate{
+  max-width: 1400px;
+  margin: 0 auto 12px;
+  padding: 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: var(--bg-panel);
+  border: var(--ui-border);
+  border-radius: 0;
+
+  box-shadow:
+    var(--ui-inset-frame),
+    var(--ui-depth-shadow-soft);
+}
+
+.showcase-root .member-sprite{
+  width: 52px;
+  height: 52px;
+  image-rendering: pixelated;
+}
+
+.showcase-root .member-meta{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.showcase-root .member-name{
+  color: var(--accent);
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+.showcase-root .member-stats{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.showcase-root .member-stats .point-count{
+  color: var(--success);
+}
+
+.showcase-root .showcase-member-controls{
+  max-width: 1400px;
+  margin: 0 auto 12px;
+}
+
+.showcase-root .showcase-member-body{
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 12px 24px;
+}
+
+.showcase-root .showcase-section{
+  margin-bottom: 18px;
+}
+
+.showcase-root .showcase-section-title{
+  margin: 0 0 10px;
+  padding: 10px 12px;
+
+  background: var(--bg-panel);
+  border: var(--ui-border);
+  border-radius: 0;
+
+  color: var(--accent);
+  font-size: 13px;
+  letter-spacing: 1px;
+
+  box-shadow:
+    var(--ui-inset-frame),
+    var(--ui-depth-shadow-soft);
+}
+
+/* Showcase-owned grid so other pages stay isolated. */
+.showcase-root .dex-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-w), 1fr));
+  gap: 18px;
+
+  justify-items: center;
+  align-items: start;
+
+  margin: 0;
+  padding: 0 0 8px;
+}
+
+.showcase-root .showcase-empty{
+  padding: 18px 12px;
+  color: var(--text-muted);
+}

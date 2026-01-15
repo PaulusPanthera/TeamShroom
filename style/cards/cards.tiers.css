@@ -1,0 +1,115 @@
+/*
+// style/cards/cards.tiers.css
+// v2.0.0-beta
+// Tier palettes + variable wiring for UnifiedCard trim system
+*/
+
+/* Tier system (3 colors)
+   - --u-tier-main: interactive accents (hover, points chip outline)
+   - --u-tier-sub:  plate borders (header/info/variants)
+   - --u-tier-border: outer card trim
+*/
+
+/* defaults (fallback) */
+.unified-card{
+  --u-tier-main: #9ca3a8;
+  --u-tier-sub: #596066;
+  --u-tier-border: #d4dee6;
+
+  /*
+    Variable wiring must exist on the card element so tier overrides
+    always drive visible trim/plates, regardless of where defaults are set.
+  */
+  --u-frame: var(--u-tier-border);
+  --u-accent: var(--u-tier-main);
+  --u-plate-border: var(--u-tier-sub);
+}
+
+/* 6 (most common): shy paper-gray */
+.unified-card.tier-6{ --u-tier-main:#b8b2ad; --u-tier-sub:#6f6a66; --u-tier-border:#e6e1db; }
+
+/* 5: dusty slate */
+.unified-card.tier-5{ --u-tier-main:#9ca3a8; --u-tier-sub:#596066; --u-tier-border:#d4dee6; }
+
+/* 4: muted blue-gray */
+.unified-card.tier-4{ --u-tier-main:#8fa1a8; --u-tier-sub:#4e5e66; --u-tier-border:#bbd6e2; }
+
+/* 3: washed mint/teal */
+.unified-card.tier-3{ --u-tier-main:#7fbfae; --u-tier-sub:#2f6e61; --u-tier-border:#a7e3d1; }
+
+/* 2: soft teal-mint */
+.unified-card.tier-2{ --u-tier-main:#9ad6c6; --u-tier-sub:#3b8577; --u-tier-border:#bff2e3; }
+
+/* 1: popping loot green (still retro) */
+.unified-card.tier-1{ --u-tier-main:#5fcb6b; --u-tier-sub:#1e6d37; --u-tier-border:#a8f07e; }
+
+/* 0: retro gold */
+.unified-card.tier-0{ --u-tier-main:#d9b15f; --u-tier-sub:#7a4f1a; --u-tier-border:#ffe08a; }
+
+/* --------------------------------------------------
+   GLOBAL TIER MARKS (ALL TIERS)
+-------------------------------------------------- */
+
+.unified-card:not(.unified-card--member)::before{
+  content:"";
+  position:absolute;
+  inset:6px;
+  pointer-events:none;
+
+  background:
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 0/14px 2px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 0/2px 14px no-repeat,
+
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 100% 0/14px 2px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 100% 0/2px 14px no-repeat,
+
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 100%/14px 2px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 100%/2px 14px no-repeat,
+
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 100% 100%/14px 2px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 100% 100%/2px 14px no-repeat;
+
+  opacity: 0.42;
+}
+
+/* dead cards: suppress tier marks */
+.unified-card.is-unclaimed::before{
+  opacity: 0.10;
+}
+
+/* LM: Legendary / Mythical — strong purple (corner marks + rune pixels) */
+.unified-card.tier-lm{ --u-tier-main:#8b5cf0; --u-tier-sub:#3a1a6a; --u-tier-border:#d7b6ff; }
+
+.unified-card.tier-lm::before{
+  content:"";
+  position:absolute;
+  inset:6px;
+  pointer-events:none;
+
+  background:
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 0/14px 2px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 0/2px 14px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 100% 0/14px 2px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 100% 0/2px 14px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 100%/14px 2px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 100%/2px 14px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 100% 100%/14px 2px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 100% 100%/2px 14px no-repeat,
+
+    repeating-linear-gradient(
+      90deg,
+      rgba(215,182,255,0.00) 0px,
+      rgba(215,182,255,0.00) 6px,
+      rgba(215,182,255,0.10) 6px,
+      rgba(215,182,255,0.10) 7px
+    ) 0 0/100% 100% no-repeat;
+
+  opacity: 0.95;
+}
+
+/* dead cards should always read dead, regardless of tier */
+.unified-card.is-unclaimed{
+  --u-tier-main:#7a828b;
+  --u-tier-sub:#606872;
+  --u-tier-border:#606872;
+}

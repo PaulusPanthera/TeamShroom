@@ -1,0 +1,10 @@
+/*
+// style/cards.css
+// v2.0.0-beta
+// Legacy entry point for card styles. Keeps existing <link href="style/cards.css"> working.
+*/
+
+@import url("./cards/cards.base.css");
+@import url("./cards/cards.tiers.css");
+@import url("./cards/cards.variants.css");
+@import url("./cards/cards.pop.css");

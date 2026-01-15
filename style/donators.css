@@ -1,0 +1,35 @@
+/* v2.0.0-beta */
+/* style/donators.css */
+/* =========================================================
+   DONATORS PAGE
+   ========================================================= */
+
+.donators-root{
+  width: 100%;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.donators-top-flex,
+.donators-mid-flex{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+@media (max-width: 1100px){
+  .donators-top-flex{
+    flex-direction: column;
+  }
+
+  .donators-mid-flex{
+    flex-direction: column;
+  }
+
+  .donators-panel--howto,
+  .donators-panel--summary{
+    max-width: none;
+  }
+}

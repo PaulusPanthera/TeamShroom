@@ -1,0 +1,140 @@
+/* style/cards/cards.pop.css */
+/* v2.0.0-beta */
+/* UnifiedCard body fill lift + tier tints + plate contrast for stronger POP across the site */
+
+/* --------------------------------------------------
+   UNIFIED CARD FILL POP (SITE-WIDE)
+   Fix: card bodies are too gray/bland and sit too close to background.
+   Goal: brighter + warmer + slightly more saturated base body.
+   Rules:
+     - No rainbow. No flashing. No animation gradients.
+     - Pixel depth only (no heavy blur/gloss).
+     - Tier identity should read in the BODY, not only the trim.
+-------------------------------------------------- */
+
+.unified-card{
+  /* Base lift: brighter + warmer (still dark-mode) */
+  --u-card-fill: #263c49; /* main body */
+  --u-card-bg: #1f323d;   /* header/info/variants plates (darker than body) */
+  --u-card-plate: #0c1015;
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.00) 46%),
+    linear-gradient(180deg, rgba(240, 91, 41, 0.08) 0%, rgba(0,0,0,0.00) 60%),
+    var(--u-card-fill);
+
+  /* Hard cutout ring + pixel depth (no blur) */
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.08),
+    0 0 0 2px rgba(0,0,0,0.88),
+    0 8px 0 var(--u-depth),
+    0 0 0 1px rgba(255,255,255,0.06) inset,
+    0 0 0 2px rgba(0,0,0,0.42) inset,
+    0 0 0 4px rgba(0,0,0,0.55) inset;
+
+  position: relative;
+  transition: transform 90ms steps(3, end);
+  will-change: transform;
+}
+
+.unified-card:hover{
+  transform: translateY(-1px);
+  z-index: 10;
+}
+
+.unified-card:active{
+  transform: translateY(1px);
+}
+
+/* Plates: darker than body so the card reads as a real surface */
+.unified-card .unified-header,
+.unified-card .unified-info,
+.unified-card .unified-variants{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.00) 72%),
+    var(--u-card-bg);
+
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.05) inset,
+    0 0 0 2px rgba(0,0,0,0.30) inset;
+}
+
+/* Points chip: stronger fill so it never washes out */
+.unified-card .unified-value,
+.unified-card .unified-points,
+.unified-card .unified-points-badge{
+  background: rgba(0,0,0,0.62);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06) inset,
+    0 2px 0 rgba(0,0,0,0.55);
+}
+
+/* Sprite anchoring: hard pixel shadow, no glow */
+.unified-card .unified-art img{
+  image-rendering: pixelated;
+  filter: drop-shadow(1px 2px 0 rgba(0,0,0,0.82));
+}
+
+/* --------------------------------------------------
+   TIER BODY TINTS (FILL-BASED)
+   Goal: every tier has a recognizable body temperature.
+-------------------------------------------------- */
+
+/* Tier 6 - light steel */
+.unified-card.tier-6{
+  --u-card-fill: #2b3a44;
+  --u-card-bg:   #202c34;
+}
+
+/* Tier 5 - cool gray */
+.unified-card.tier-5{
+  --u-card-fill: #2a3947;
+  --u-card-bg:   #1f2d37;
+}
+
+/* Tier 4 - blue steel */
+.unified-card.tier-4{
+  --u-card-fill: #263f4b;
+  --u-card-bg:   #1c313d;
+}
+
+/* Tier 3 - teal */
+.unified-card.tier-3{
+  --u-card-fill: #214245;
+  --u-card-bg:   #173235;
+}
+
+/* Tier 2 - aqua */
+.unified-card.tier-2{
+  --u-card-fill: #1f4747;
+  --u-card-bg:   #163737;
+}
+
+/* Tier 1 - green */
+.unified-card.tier-1{
+  --u-card-fill: #224539;
+  --u-card-bg:   #173126;
+}
+
+/* Tier 0 - warm gold */
+.unified-card.tier-0{
+  --u-card-fill: #403625;
+  --u-card-bg:   #2f271a;
+}
+
+/* LM - purple */
+.unified-card.tier-lm{
+  --u-card-fill: #2f2c4a;
+  --u-card-bg:   #231f36;
+}
+
+/* --------------------------------------------------
+   UNCLAIMED MUST STAY MUTED (still readable)
+-------------------------------------------------- */
+
+.unified-card.is-unclaimed{
+  --u-card-fill: #1b242b;
+  --u-card-bg:   #161f25;
+  border-color: #606872;
+  filter: saturate(0.78) brightness(0.96);
+}

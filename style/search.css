@@ -1,0 +1,154 @@
+/* style/search.css */
+/* v2.0.0-beta */
+/* Shared search and filter control styling. */
+
+.showcase-search-controls,
+.search-controls{
+  position: relative;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-2);
+
+  padding: 12px 14px;
+
+  background: var(--bg-panel);
+  border: var(--ui-border);
+  border-radius: 0;
+
+  box-shadow:
+    var(--ui-inset-frame),
+    var(--ui-depth-shadow-soft);
+}
+
+.showcase-search-controls label,
+.search-controls label{
+  font-size: var(--font-small);
+  color: var(--text-muted);
+}
+
+.showcase-search-controls input[type="text"],
+.search-controls input[type="text"],
+.showcase-search-controls select,
+.search-controls select{
+  padding: 6px 10px;
+
+  background: var(--bg-input);
+  color: var(--text-main);
+
+  border: 2px solid rgba(58, 70, 81, 0.85);
+  border-radius: 0;
+
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.65) inset,
+    0 1px 0 rgba(255,255,255,0.04) inset;
+}
+
+.showcase-search-controls input[type="text"]:focus,
+.search-controls input[type="text"]:focus,
+.showcase-search-controls select:focus,
+.search-controls select:focus{
+  outline: none;
+  border-color: rgba(240, 91, 41, 0.85);
+}
+
+.showcase-search-controls input[type="radio"],
+.search-controls input[type="radio"]{
+  accent-color: var(--accent);
+}
+
+.showcase-search-controls button,
+.search-controls button{
+  padding: 6px 12px;
+
+  background: var(--bg-panel-alt);
+  color: var(--text-main);
+
+  border: 2px solid rgba(240, 91, 41, 0.85);
+  border-radius: 0;
+
+  box-shadow:
+    var(--ui-inset-frame),
+    0 6px 0 rgba(0,0,0,0.55);
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.showcase-search-controls button:hover,
+.search-controls button:hover{
+  filter: brightness(1.04);
+}
+
+.showcase-search-controls button:active,
+.search-controls button:active{
+  transform: translateY(1px);
+  box-shadow:
+    var(--ui-inset-frame),
+    0 5px 0 rgba(0,0,0,0.55);
+}
+
+.showcase-search-controls button:disabled,
+.search-controls button:disabled{
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  filter: none;
+}
+
+.showcase-search-controls span,
+.search-controls span{
+  font-size: var(--font-small);
+  color: var(--success);
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------
+   SHINY DEX HELP BUTTON (shared)
+--------------------------------------------------------- */
+
+.dex-help-btn{
+  width: 42px;
+  height: 34px;
+  padding: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--bg-panel-alt);
+  color: var(--text-main);
+
+  border: 2px solid rgba(240, 91, 41, 0.85);
+  border-radius: 0;
+
+  cursor: pointer;
+  user-select: none;
+
+  box-shadow:
+    var(--ui-inset-frame),
+    0 6px 0 rgba(0,0,0,0.55);
+}
+
+.dex-help-btn:hover{
+  filter: brightness(1.04);
+}
+
+.dex-help-btn:active{
+  transform: translateY(1px);
+  box-shadow:
+    var(--ui-inset-frame),
+    0 5px 0 rgba(0,0,0,0.55);
+}
+
+.dex-help-btn.active{
+  border-color: rgba(240, 91, 41, 0.95);
+}
+
+.dex-help-icon{
+  width: 20px;
+  height: 20px;
+  image-rendering: pixelated;
+}

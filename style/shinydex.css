@@ -1,0 +1,139 @@
+/* style/shinydex.css */
+/* v2.0.0-beta */
+/* ShinyDex-only layout, toolbar framing, and grid rules. */
+
+.shinydex-root{
+  --shinydex-grid-max: calc((var(--card-w) * 6) + (var(--space-4) * 5));
+}
+
+.shinydex-root .region-section,
+.shinydex-root .scoreboard-member-section,
+.shinydex-root .shiny-dex-tabs{
+  background: var(--bg-panel);
+  border: var(--ui-border);
+  border-radius: 0;
+
+  box-shadow:
+    var(--ui-inset-frame),
+    var(--ui-depth-shadow-soft);
+}
+
+.shinydex-root .region-section,
+.shinydex-root .scoreboard-member-section,
+.shinydex-root .shiny-dex-controls,
+.shinydex-root .shiny-dex-tabs{
+  max-width: var(--shinydex-grid-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ---------------------------------------------------------
+   STICKY TOOLBAR
+--------------------------------------------------------- */
+
+.shinydex-root .shinydex-toolbar{
+  position: sticky;
+  top: 56px;
+  z-index: 900;
+
+  background: var(--bg-panel);
+  border: 2px solid rgba(58, 70, 81, 0.85);
+  border-left: none;
+  border-right: none;
+
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.04) inset,
+    0 -1px 0 rgba(0,0,0,0.75) inset;
+}
+
+.shinydex-root .shinydex-toolbar-inner{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 12px;
+}
+
+.shinydex-root .shiny-dex-controls,
+.shinydex-root .shiny-dex-tabs{
+  width: 100%;
+  margin: 0;
+}
+
+/* ---------------------------------------------------------
+   GRID
+--------------------------------------------------------- */
+
+.shinydex-root .dex-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-w), 1fr));
+  gap: 18px;
+
+  justify-items: center;
+  align-items: start;
+
+  margin: 0;
+  padding: 0 0 8px;
+}
+
+/* ---------------------------------------------------------
+   CONTROLS
+--------------------------------------------------------- */
+
+.shinydex-root .dex-tab{
+  background: var(--bg-panel-alt);
+  border: 2px solid rgba(58, 70, 81, 0.85);
+  color: var(--text-main);
+  padding: 6px 10px;
+  border-radius: 0;
+  cursor: pointer;
+  user-select: none;
+
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.65) inset,
+    0 3px 0 rgba(0,0,0,0.75);
+}
+
+.shinydex-root .dex-tab:hover{
+  border-color: rgba(240, 91, 41, 0.75);
+}
+
+.shinydex-root .dex-tab.active{
+  border-color: rgba(240, 91, 41, 0.95);
+}
+
+.shinydex-root .dex-tab:active{
+  transform: translateY(1px);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.65) inset,
+    0 2px 0 rgba(0,0,0,0.75);
+}
+
+.shinydex-root #dex-search,
+.shinydex-root #dex-sort{
+  background: var(--bg-input);
+  border: 2px solid rgba(58, 70, 81, 0.85);
+  color: var(--text-main);
+  border-radius: 0;
+  padding: 6px 10px;
+
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.65) inset,
+    0 1px 0 rgba(255,255,255,0.04) inset;
+}
+
+.shinydex-root #dex-search{
+  width: 340px;
+  max-width: 42vw;
+}
+
+.shinydex-root #dex-search:focus,
+.shinydex-root #dex-sort:focus{
+  outline: none;
+  border-color: rgba(240, 91, 41, 0.85);
+}
+
+.shinydex-root #dex-count{
+  color: var(--success);
+  font-weight: 700;
+  margin-left: auto;
+}

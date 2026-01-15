@@ -1,0 +1,148 @@
+/* style/tooltip.css */
+/* v2.0.0-beta */
+/* Tooltip styling for ownership and help overlays. */
+
+.dex-owner-tooltip{
+  position: fixed;
+  z-index: 9999;
+  display: none;
+
+  background: var(--bg-panel);
+  border: 2px solid rgba(240, 91, 41, 0.85);
+  padding: 10px 12px;
+  border-radius: 0;
+
+  box-shadow:
+    var(--ui-inset-frame),
+    var(--ui-depth-shadow-soft);
+
+  color: var(--text-main);
+  pointer-events: none;
+  font-size: var(--font-small);
+  line-height: 1.25;
+  max-width: 280px;
+}
+
+.dex-owner-tooltip.show{
+  display: block;
+}
+
+.dex-owner-tooltip .owners-title{
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.dex-owner-tooltip .owner-row{
+  display: block;
+  width: 100%;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  background: transparent;
+  border: 0;
+  padding: 0;
+
+  text-align: left;
+  font: inherit;
+  line-height: inherit;
+
+  cursor: pointer;
+}
+
+.dex-owner-tooltip.is-frozen .owner-row:hover,
+.dex-owner-tooltip.is-frozen .owner-row:focus-visible{
+  background: rgba(240, 91, 41, 0.12);
+  outline: 1px solid rgba(240, 91, 41, 0.35);
+  outline-offset: 1px;
+}
+
+.dex-owner-tooltip .owners-footer{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.dex-owner-tooltip .owners-page{
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.dex-owner-tooltip .owners-next{
+  margin-left: auto;
+
+  background: var(--bg-panel-alt);
+  border: 2px solid rgba(240, 91, 41, 0.85);
+  color: var(--text-main);
+  padding: 4px 8px;
+  border-radius: 0;
+
+  cursor: pointer;
+  font-weight: 700;
+
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.55) inset,
+    0 3px 0 rgba(0,0,0,0.55);
+}
+
+.dex-owner-tooltip .owners-next:active{
+  transform: translateY(1px);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.55) inset,
+    0 2px 0 rgba(0,0,0,0.55);
+}
+
+.dex-owner-tooltip.is-frozen{
+  pointer-events: auto;
+}
+
+.dex-help-tooltip{
+  position: fixed;
+  z-index: 9999;
+
+  background: var(--bg-panel);
+  border: 2px solid rgba(240, 91, 41, 0.85);
+  padding: 10px 12px;
+  border-radius: 0;
+
+  box-shadow:
+    var(--ui-inset-frame),
+    var(--ui-depth-shadow-soft);
+
+  width: 520px;
+  color: var(--text-main);
+
+  pointer-events: auto;
+}
+
+.dex-help-title{
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.dex-help-rows{
+  display: grid;
+  gap: 6px;
+}
+
+.help-row{
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.help-k{
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.help-v code{
+  background: rgba(0,0,0,0.35);
+  padding: 2px 6px;
+  border: 1px solid rgba(58, 70, 81, 0.65);
+}
