@@ -1,5 +1,7 @@
-/* style/cards/cards.tiers.css
-   v2.0.0-beta
+/*
+// style/cards/cards.tiers.css
+// v2.0.0-beta
+// Tier palettes + variable wiring for UnifiedCard trim system
 */
 
 /* Tier system (3 colors)
@@ -13,6 +15,14 @@
   --u-tier-main: #9ca3a8;
   --u-tier-sub: #596066;
   --u-tier-border: #d4dee6;
+
+  /*
+    Variable wiring must exist on the card element so tier overrides
+    always drive visible trim/plates, regardless of where defaults are set.
+  */
+  --u-frame: var(--u-tier-border);
+  --u-accent: var(--u-tier-main);
+  --u-plate-border: var(--u-tier-sub);
 }
 
 /* 6 (most common): shy paper-gray */
