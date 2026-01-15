@@ -104,7 +104,6 @@ export function renderUnifiedCard({
   const ownersArr = Array.isArray(owners) ? owners.filter(Boolean).map(String) : [];
   const ownersAttr = ownersArr.length ? ` data-owners="${escapeHtml(JSON.stringify(ownersArr))}"` : '';
 
-  // Optional: owners-by-variant map (used by feature-level tooltips)
   const ownersByVariantObj = ownersByVariant && typeof ownersByVariant === 'object' ? ownersByVariant : null;
   const ownersByVariantPayload = ownersByVariantObj
     ? {
