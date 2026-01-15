@@ -1,5 +1,7 @@
-/* style/tooltip.css
-   v2.0.0-beta
+/*
+// style/tooltip.css
+// v2.0.0-beta
+// Tooltip styling (Owners tooltip + ShinyDex search help)
 */
 
 /* ---------------------------------------------------------
@@ -35,10 +37,26 @@
 }
 
 .dex-owner-tooltip .owner-row{
+  display: block;
+  width: 100%;
   color: #E6E1DB;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  font: inherit;
+  line-height: inherit;
+  cursor: pointer;
+}
+
+.dex-owner-tooltip.is-frozen .owner-row:hover,
+.dex-owner-tooltip.is-frozen .owner-row:focus-visible{
+  background: rgba(240,91,41,0.12);
+  outline: 1px solid rgba(240,91,41,0.35);
+  outline-offset: 1px;
 }
 
 .dex-owner-tooltip .owners-footer{
