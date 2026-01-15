@@ -1,11 +1,11 @@
 /*
 // style/tooltip.css
 // v2.0.0-beta
-// Tooltip styling (Owners tooltip + ShinyDex search help)
+// Tooltip styling (owners tooltip + ShinyDex search help)
 */
 
 /* ---------------------------------------------------------
-   OWNER TOOLTIP (LivingDex)
+   OWNER TOOLTIP (ShinyDex)
 --------------------------------------------------------- */
 
 .dex-owner-tooltip{
@@ -36,26 +36,43 @@
   margin-bottom: 6px;
 }
 
+.dex-owner-tooltip .owners-list{
+  display: grid;
+  gap: 2px;
+}
+
 .dex-owner-tooltip .owner-row{
-  display: block;
-  width: 100%;
   color: #E6E1DB;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  background: transparent;
-  border: 0;
-  padding: 0;
-  text-align: left;
-  font: inherit;
-  line-height: inherit;
-  cursor: pointer;
 }
 
-.dex-owner-tooltip.is-frozen .owner-row:hover,
-.dex-owner-tooltip.is-frozen .owner-row:focus-visible{
-  background: rgba(240,91,41,0.12);
-  outline: 1px solid rgba(240,91,41,0.35);
+.dex-owner-tooltip .owner-empty{
+  color: #A2A29D;
+  font-weight: 700;
+}
+
+.dex-owner-tooltip .owner-btn{
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 2px 4px;
+  border-radius: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.dex-owner-tooltip .owner-btn:hover{
+  border-color: rgba(240,91,41,0.65);
+}
+
+.dex-owner-tooltip .owner-btn:active{
+  transform: translateY(1px);
+}
+
+.dex-owner-tooltip .owner-btn:focus{
+  outline: 2px solid #F05B29;
   outline-offset: 1px;
 }
 
@@ -88,6 +105,11 @@
 
 .dex-owner-tooltip.is-frozen{
   pointer-events: auto;
+}
+
+.dex-owner-tooltip .owners-list.swap{
+  /* old-school step swap: small nudge to imply change without blur/glow */
+  transform: translateY(1px);
 }
 
 /* ---------------------------------------------------------
