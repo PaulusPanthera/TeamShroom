@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-01-16T12:19:52.819Z",
+  "generatedAt": "2026-01-16T18:16:11.282Z",
   "source": "google-sheets",
   "data": [
     {
@@ -3270,7 +3270,7 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "pidgeot",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -3282,7 +3282,7 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "koffing",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -3294,7 +3294,7 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "tangela",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -3306,7 +3306,7 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "ditto",
-      "method": null,
+      "method": "single",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -3318,7 +3318,7 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "swablu",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -3330,7 +3330,7 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "ekans",
-      "method": null,
+      "method": "single",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -3354,7 +3354,7 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "basculin-red-striped",
-      "method": null,
+      "method": "fishing",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -3366,7 +3366,7 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "mareep",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -3378,7 +3378,7 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "poliwhirl",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -3390,7 +3390,7 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "bouffalant",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -3402,7 +3402,7 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "nidoran-m",
-      "method": null,
+      "method": "single",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -3414,7 +3414,7 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "slowbro",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -3438,7 +3438,7 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "vanilluxe",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -3486,7 +3486,7 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "wooper",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -3498,7 +3498,7 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "zigzagoon",
-      "method": null,
+      "method": "single",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -3510,7 +3510,7 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "pikachu",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -3534,49 +3534,49 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "shelmet",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://www.youtube.com/watch?v=aeevRrkE3kI",
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
       "ot": "DaddyMolo",
       "pokemon": "geodude",
-      "method": null,
+      "method": "single",
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://www.youtube.com/watch?v=aeevRrkE3kI",
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
       "ot": "DaddyMolo",
       "pokemon": "druddigon",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://www.youtube.com/watch?v=aeevRrkE3kI",
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
       "ot": "DaddyMolo",
       "pokemon": "machoke",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://www.youtube.com/watch?v=aeevRrkE3kI",
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
@@ -3588,25 +3588,25 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://www.youtube.com/watch?v=aeevRrkE3kI",
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
       "ot": "DaddyMolo",
       "pokemon": "bibarel",
-      "method": null,
+      "method": "5x100%",
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://www.youtube.com/watch?v=aeevRrkE3kI",
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
       "ot": "DaddyMolo",
       "pokemon": "liepard",
-      "method": null,
+      "method": "single",
       "secret": false,
       "alpha": false,
       "run": false,
@@ -3618,7 +3618,7 @@
     {
       "ot": "DaddyMolo",
       "pokemon": "pawniard",
-      "method": null,
+      "method": "single",
       "secret": false,
       "alpha": false,
       "run": false,
