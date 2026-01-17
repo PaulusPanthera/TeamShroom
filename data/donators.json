@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-01-17T06:15:04.334Z",
+  "generatedAt": "2026-01-17T09:42:13.429Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1370,6 +1370,66 @@
       "name": "Pangeaa",
       "donation": null,
       "value": 3500000
+    },
+    {
+      "date": "2025-12-10",
+      "name": "Smokee",
+      "donation": "2.000 RP",
+      "value": 3600000
+    },
+    {
+      "date": "2025-12-24",
+      "name": "DaddyMolo",
+      "donation": "Snorlax 2012",
+      "value": 500000
+    },
+    {
+      "date": "2026-01-01",
+      "name": "LoDarko",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2026-01-17",
+      "name": "Kithri",
+      "donation": "Star Hairband",
+      "value": 380000
+    },
+    {
+      "date": "2026-01-18",
+      "name": "Kithri",
+      "donation": "Shiny Charm (19x)",
+      "value": 3420000
+    },
+    {
+      "date": "2026-01-19",
+      "name": "Kithri",
+      "donation": "6.000",
+      "value": 10800000
+    },
+    {
+      "date": "2026-01-12",
+      "name": "slaydounet",
+      "donation": null,
+      "value": 1
+    },
+    {
+      "date": "2026-01-16",
+      "name": "BojanglesisHere",
+      "donation": null,
+      "value": 250000
+    },
+    {
+      "date": "2026-01-16",
+      "name": "Lyptus",
+      "donation": null,
+      "value": 446969
+    },
+    {
+      "date": "2026-01-16",
+      "name": "Charizapedia",
+      "donation": null,
+      "value": 2250000
     }
   ]
 }
