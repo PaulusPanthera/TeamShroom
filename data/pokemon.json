@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-01-15T00:46:18.732Z",
+  "generatedAt": "2026-01-18T14:01:43.910Z",
   "source": "google-sheets",
   "data": [
     {
@@ -4840,7 +4840,7 @@
       ],
       "tier": "tier 1",
       "region": "sinnoh",
-      "rarity": "Baby",
+      "rarity": "baby",
       "show": true
     },
     {
@@ -4851,7 +4851,7 @@
       ],
       "tier": "tier 2",
       "region": "sinnoh",
-      "rarity": "Baby",
+      "rarity": "baby",
       "show": true
     },
     {
@@ -4862,7 +4862,7 @@
       ],
       "tier": "tier 1",
       "region": "sinnoh",
-      "rarity": "Baby",
+      "rarity": "baby",
       "show": true
     },
     {
@@ -4928,7 +4928,7 @@
       ],
       "tier": "tier 1",
       "region": "sinnoh",
-      "rarity": "Baby",
+      "rarity": "baby",
       "show": true
     },
     {
@@ -4939,7 +4939,7 @@
       ],
       "tier": "tier 0",
       "region": "sinnoh",
-      "rarity": "Baby",
+      "rarity": "baby",
       "show": true
     },
     {
