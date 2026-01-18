@@ -6,6 +6,7 @@ import { buildShowcaseModel } from '../../domains/showcase/showcase.model.js';
 import {
   filterMembers,
   sortMembers,
+  groupMembersForGallery,
   buildMemberGalleryCardView,
   filterMemberShinies,
   sortMemberShinies,
@@ -20,6 +21,7 @@ import {
   renderShowcaseShell,
   renderShowcaseControls,
   renderShowcaseGallery,
+  renderShowcaseGallerySections,
   renderMemberShowcaseShell,
   renderMemberShinyControls,
   renderMemberShinySections
@@ -74,6 +76,20 @@ function makeBackButton() {
   return btn;
 }
 
+function makeLines(lines) {
+  const wrap = document.createElement('div');
+  wrap.className = 'ts-subbar-stats';
+
+  const list = Array.isArray(lines) ? lines : [];
+  list.forEach((t) => {
+    const line = document.createElement('div');
+    line.textContent = String(t || '').trim();
+    wrap.appendChild(line);
+  });
+
+  return wrap;
+}
+
 export async function renderShowcasePage(ctx) {
   const root = ctx && ctx.root;
   const sidebar = ctx && ctx.sidebar;
@@ -124,10 +140,30 @@ export function setupShowcasePage({ root, sidebar, membersRows, showcaseRows, po
     const controlsHost = document.createElement('div');
     controlsHost.className = 'showcase-search-controls showcase-member-controls';
 
+    const statusNode = makeLines([
+      `Name: ${member.name}`,
+      `Shinies: ${member.shinyCount} Active • ${member.totalShinyCount} Total`,
+      `Points: ${member.points}P`
+    ]);
+
+    const controlsStack = document.createElement('div');
+    controlsStack.append(backBtn, controlsHost);
+
+    const notesNode = makeLines([
+      'Click a card to cycle variants.',
+      'Inactive shinies stay logged as record.'
+    ]);
+
     if (sidebar && typeof sidebar.setSections === 'function') {
+      if (typeof sidebar.setTitle === 'function') sidebar.setTitle('MEMBERS');
+      if (typeof sidebar.setHint === 'function') {
+        sidebar.setHint('Team roster. Search profiles, compare totals, track the grinders.');
+      }
+
       sidebar.setSections([
-        { label: 'Navigation', node: backBtn },
-        { label: 'Member Filters', node: controlsHost }
+        { label: 'STATUS', node: statusNode },
+        { label: 'CONTROLS', node: controlsStack },
+        { label: 'NOTES', node: notesNode }
       ]);
     } else {
       // Fallback: inject controls into the page when no shell sidebar is present.
@@ -272,8 +308,32 @@ export function setupShowcasePage({ root, sidebar, membersRows, showcaseRows, po
   const galleryControlsHost = document.createElement('div');
   galleryControlsHost.className = 'showcase-search-controls';
 
+  // Sidebar: unified blocks (Status / Controls / Notes).
+  const statusWrap = document.createElement('div');
+  statusWrap.className = 'ts-subbar-stats';
+
+  const statusMembers = document.createElement('div');
+  const statusShinies = document.createElement('div');
+  const statusPoints = document.createElement('div');
+
+  statusWrap.append(statusMembers, statusShinies, statusPoints);
+
+  const notesNode = makeLines([
+    'Switch sort modes to change roster view.',
+    'Open a card to inspect full record.'
+  ]);
+
   if (sidebar && typeof sidebar.setSections === 'function') {
-    sidebar.setSections([{ label: 'Browse', node: galleryControlsHost }]);
+    if (typeof sidebar.setTitle === 'function') sidebar.setTitle('MEMBERS');
+    if (typeof sidebar.setHint === 'function') {
+      sidebar.setHint('Hunter registry. Search profiles, ranks, and totals.');
+    }
+
+    sidebar.setSections([
+      { label: 'STATUS', node: statusWrap },
+      { label: 'CONTROLS', node: galleryControlsHost },
+      { label: 'NOTES', node: notesNode }
+    ]);
   } else {
     root.querySelector('.showcase-root')?.prepend(galleryControlsHost);
   }
@@ -290,6 +350,10 @@ export function setupShowcasePage({ root, sidebar, membersRows, showcaseRows, po
     const totalShinies = sorted.reduce((sum, m) => sum + (Number(m && m.shinyCount) || 0), 0);
     const totalPoints = sorted.reduce((sum, m) => sum + (Number(m && m.points) || 0), 0);
 
+    statusMembers.textContent = `Members: ${sorted.length}`;
+    statusShinies.textContent = `Total Shinies: ${totalShinies}`;
+    statusPoints.textContent = `Guild Points: ${totalPoints}P`;
+
     renderShowcaseControls(galleryControlsHost, {
       sortMode: state.sortMode,
       memberCount: sorted.length,
@@ -297,8 +361,13 @@ export function setupShowcasePage({ root, sidebar, membersRows, showcaseRows, po
       points: totalPoints
     });
 
-    const cardViews = sorted.map(m => buildMemberGalleryCardView(m, state.sortMode));
-    renderShowcaseGallery(cardViews);
+    const grouped = groupMembersForGallery(sorted, state.sortMode);
+    const sections = grouped.map(sec => ({
+      title: sec.title,
+      cards: (sec.entries || []).map(m => buildMemberGalleryCardView(m, state.sortMode))
+    }));
+
+    renderShowcaseGallerySections(sections, state.sortMode);
 
     root.querySelectorAll('.unified-card[data-member-key]').forEach(card => {
       card.addEventListener('click', () => {

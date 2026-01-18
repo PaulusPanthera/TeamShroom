@@ -1,6 +1,6 @@
 // scripts/shinyshowcase.mjs
+// v2.0.0-beta
 // Shiny Showcase CSV → validated, normalized JSON
-// CI HARD CONTRACT
 
 import { fetchCsv } from './lib/fetchCsv.mjs';
 import { parseCsv } from './lib/parseCsv.mjs';
@@ -28,6 +28,15 @@ function normalizePokemon(name) {
     .replace(/♀/g, '-f')
     .replace(/♂/g, '-m')
     .replace(/[\s.'’]/g, '');
+}
+
+function normalizeEncounter(value) {
+  if (value === '' || value === undefined) return null;
+
+  const num = Number(value);
+  if (!Number.isInteger(num) || num < 0) return null;
+
+  return num;
 }
 
 // -----------------------------
@@ -72,6 +81,7 @@ const data = rows.map(row => ({
   pokemon: normalizePokemon(row.pokemon),
 
   method: row.method || null,
+  encounter: normalizeEncounter(row.encounter),
 
   secret: row.secret === 'TRUE',
   alpha: row.alpha === 'TRUE',

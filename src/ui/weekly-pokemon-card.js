@@ -32,14 +32,38 @@ function getPokemonPoints(pokemonPointsMap, pokemonKey) {
   return Number.isFinite(n) ? n : 0;
 }
 
+function parseEncounter(raw) {
+  if (raw == null) return null;
+  if (typeof raw === 'number') return Number.isFinite(raw) ? raw : null;
+
+  const s = String(raw).trim();
+  if (!s) return null;
+
+  const n = Number(s);
+  return Number.isFinite(n) ? n : null;
+}
+
+function prettifyMethod(method) {
+  const m = normalize(method);
+  if (!m) return '';
+  if (m === 'single') return 'Single';
+  if (m === 'horde') return 'Horde';
+  if (m === 'egg') return 'Egg';
+  if (m === 'surf') return 'Surf';
+  if (m === 'safari') return 'Safari';
+  return String(method).trim();
+}
+
 function getPokemonInfoText(mon) {
-  if (!mon) return '-';
-  if (mon.run) return 'Run';
-  if (mon.lost) return 'Lost';
-  if (mon.safari) return 'Safari';
-  if (mon.secret) return 'Secret';
-  if (mon.alpha) return 'Alpha';
-  return '-';
+  if (!mon) return 'Enc: —';
+
+  const encounter = parseEncounter(mon.encounter);
+  if (encounter != null) return `Enc: ${encounter}`;
+
+  const method = prettifyMethod(mon.method);
+  if (method) return `Enc: ${method}`;
+
+  return 'Enc: —';
 }
 
 /**

@@ -180,8 +180,6 @@ export function renderContent(root, viewModel) {
   const vm = viewModel && typeof viewModel === 'object' ? viewModel : {};
   const page = createPageRoot(root);
 
-  renderSummary(page, vm.summary);
-
   const main = createMain(page);
 
   const leaderboardPanel = createPanel('Leaderboard', 'donators-leaderboard');

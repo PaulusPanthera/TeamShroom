@@ -23,6 +23,93 @@ function assertValidRoot(root) {
   }
 }
 
+
+function makeLines(lines) {
+  const wrap = document.createElement('div');
+  wrap.className = 'ts-subbar-stats';
+
+  const list = Array.isArray(lines) ? lines : [];
+  list.forEach((t) => {
+    const line = document.createElement('div');
+    line.textContent = String(t || '').trim();
+    wrap.appendChild(line);
+  });
+
+  return wrap;
+}
+
+function setSidebarHeader(sidebar) {
+  if (!sidebar) return;
+
+  if (typeof sidebar.setTitle === 'function') {
+    sidebar.setTitle('WEEKLY LOG');
+  }
+
+  if (typeof sidebar.setHint === 'function') {
+    sidebar.setHint('Team history. Weekly overview with hunter cards and shiny drops.');
+  }
+}
+
+function renderSidebarBlocks(sidebar, week, opts = {}) {
+  if (!sidebar || typeof sidebar.setSections !== 'function') return;
+
+  const view = opts && opts.view ? String(opts.view) : 'overview';
+  const onBack = opts && typeof opts.onBack === 'function' ? opts.onBack : null;
+  const signal = opts && opts.signal;
+
+  const wk = week && typeof week === 'object' ? week : null;
+
+  const label = wk ? String(wk.label || wk.week || '').trim() : '';
+  const labelText = label || '—';
+
+  const shinies = wk ? (Number(wk.shinyCount) || 0) : '—';
+  const hunters = wk ? (Number(wk.hunterCount) || 0) : '—';
+
+  const statusNode = makeLines([
+    `Selected Week: ${labelText}`,
+    `Shinies: ${shinies}`,
+    `Hunters: ${hunters}`
+  ]);
+
+  const controlsWrap = document.createElement('div');
+  controlsWrap.className = 'ts-side-content';
+
+  if (view === 'week' && onBack) {
+    const backBtn = document.createElement('button');
+    backBtn.type = 'button';
+    backBtn.className = 'ts-side-action';
+    backBtn.textContent = 'Back to Overview';
+
+    backBtn.addEventListener(
+      'click',
+      () => onBack(),
+      signal ? { signal } : undefined
+    );
+
+    controlsWrap.appendChild(backBtn);
+  }
+
+  const controlsNode = makeLines([
+    'Select week',
+    'Inspect hunters',
+    'Cycle shinies',
+    'HOTW view (planned)'
+  ]);
+
+  controlsWrap.appendChild(controlsNode);
+
+  const notesNode = makeLines([
+    'Weeks lock after reset.',
+    'Older weeks stay as record.'
+  ]);
+
+  sidebar.setSections([
+    { label: 'STATUS', node: statusNode },
+    { label: 'CONTROLS', node: controlsWrap },
+    { label: 'NOTES', node: notesNode }
+  ]);
+}
+
 function safeDateMs(raw) {
   const ms = Date.parse(String(raw || ''));
   return Number.isFinite(ms) ? ms : 0;
@@ -68,20 +155,8 @@ export async function renderShinyWeeklyPage(ctx) {
   const { mainBody } = renderWeeklyShell(root);
   renderLoading(mainBody);
 
-  const weeklyHint = document.createElement('div');
-  weeklyHint.className = 'ts-subbar-stats';
-  weeklyHint.textContent = "Open a week to view details.";
-
-  const info = document.createElement('div');
-  info.className = 'ts-subbar-stats';
-  info.textContent = 'Click a card to cycle shinies.';
-
-  if (sidebar && typeof sidebar.setSections === 'function') {
-    sidebar.setSections([
-      { label: 'WEEKLY LOG', node: weeklyHint },
-      { label: 'Info', node: info }
-    ]);
-  }
+  setSidebarHeader(sidebar);
+  renderSidebarBlocks(sidebar, null, { view: 'overview', signal });
 
   try {
     const rows = Array.isArray(preloadedRows) ? preloadedRows : await loadShinyWeekly();
@@ -112,6 +187,16 @@ export async function renderShinyWeeklyPage(ctx) {
     let memberMetaByKey = Object.create(null);
 
     const commitRender = () => {
+      const selectedWeek = weeks.find(w => w.week === selectedWeekKey) || null;
+      renderSidebarBlocks(sidebar, selectedWeek, {
+        view,
+        signal,
+        onBack: () => {
+          view = 'overview';
+          commitRender();
+        }
+      });
+
       if (view === 'overview') {
         renderOverview(
           mainBody,
@@ -129,7 +214,7 @@ export async function renderShinyWeeklyPage(ctx) {
         return;
       }
 
-      const week = weeks.find(w => w.week === selectedWeekKey) || null;
+      const week = selectedWeek;
 
       if (!pokemonReady || !membersReady) {
         const message = !pokemonReady

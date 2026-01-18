@@ -65,17 +65,29 @@ function renderKeyValueLines(lines) {
 }
 
 function renderNextEventPanel(vm) {
-  const panel = el('div', 'ts-panel ts-home-panel');
+  const panel = el('div', 'ts-panel ts-home-panel ts-home-panel--event');
   panel.appendChild(renderPanelTitle('NEXT EVENT'));
 
-  const body = el('div', 'ts-home-panel-body');
+  // NEXT EVENT is a single centered preview card.
+  const body = el('div', 'ts-home-panel-body ts-home-panel-body--center');
 
   const rawUrl = safeText(vm?.url);
   const href = rawUrl && !rawUrl.includes('<') ? rawUrl : DISCORD_NEXT_EVENT_URL;
 
   const title = safeText(vm?.title) || safeText(vm?.titleText) || 'Next Event';
   const time = safeText(vm?.timeText) || 'Open event link';
-  const sub = safeText(vm?.subtitle) || safeText(vm?.subtitleText) || '';
+  // Only render the human subtitle/description. Never display the raw event URL.
+  // (Some sync workflows or manual edits may accidentally provide the URL as a subtitle.)
+  let sub = safeText(vm?.subtitle) || safeText(vm?.subtitleText) || '';
+  if (
+    sub &&
+    (sub === href ||
+      sub === rawUrl ||
+      sub.includes('discord.com/events') ||
+      /^https?:\/\//i.test(sub))
+  ) {
+    sub = '';
+  }
 
   const preview = el('div', 'ts-discord-event-preview');
 

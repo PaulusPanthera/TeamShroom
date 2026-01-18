@@ -6,6 +6,13 @@
   --shinydex-grid-max: calc((var(--card-w) * 6) + (var(--space-4) * 5));
 }
 
+/* Floating section headings (match Pokedex baseline, centered). */
+.shinydex-root .region-section > h2,
+.shinydex-root .scoreboard-member-section > h2{
+  text-align: center;
+}
+
+
 .shinydex-root .region-section,
 .shinydex-root .scoreboard-member-section,
 .shinydex-root .shiny-dex-tabs{

@@ -44,28 +44,28 @@ function prettifyMethod(method) {
   return String(method).trim();
 }
 
-function buildShinyInfoText(s) {
-  const parts = [];
+function parseEncounter(raw) {
+  if (raw == null) return null;
+  if (typeof raw === 'number') return Number.isFinite(raw) ? raw : null;
 
-  if (s && s.sold) parts.push('Sold');
-  else if (s && s.lost) parts.push('Lost');
+  const s = String(raw).trim();
+  if (!s) return null;
+
+  const n = Number(s);
+  return Number.isFinite(n) ? n : null;
+}
+
+function buildShinyInfoText(s) {
+  // Default info plate for spotlight cards should be the encounter value.
+  // Fallback: prettified method label.
+  const encounter = parseEncounter(s && s.encounter);
+  if (encounter != null) return `Enc: ${encounter}`;
 
   const methodRaw = s && s.method ? String(s.method) : '';
   const method = prettifyMethod(methodRaw);
-  if (method && !isSafariMethod(methodRaw)) parts.push(method);
+  if (method) return `Enc: ${method}`;
 
-  if (s && s.secret) parts.push('Secret');
-  if (s && s.alpha) parts.push('Alpha');
-  if (isSafariMethod(s && s.method)) parts.push('Safari');
-
-  if (s && s.run) parts.push('Run');
-  if (s && s.favorite) parts.push('Fav');
-
-  const notes = s && s.notes ? String(s.notes).trim() : '';
-  const isAuto = notes && notes.toUpperCase().includes('AUTO-GENERATED');
-  if (notes && !isAuto) parts.push(notes.slice(0, 28));
-
-  return parts.length ? parts.join(' \u2022 ') : '\u2014';
+  return 'Enc: —';
 }
 
 function primaryVariantKeyForShiny(s) {
@@ -339,6 +339,18 @@ export async function fetchHomeViewModel(preloadedRows) {
       showcaseRows,
       pokemonPoints: pokemonPointsMap
     });
+
+    // Sidebar status stats (team totals).
+    try {
+      const list = (showcase && Array.isArray(showcase.members)) ? showcase.members : [];
+      const memberCount = list.length;
+      const totalShinies = list.reduce((sum, m) => sum + (Number(m && m.shinyCount) || 0), 0);
+      const totalPoints = list.reduce((sum, m) => sum + (Number(m && m.points) || 0), 0);
+
+      vm.stats = { memberCount, totalShinies, totalPoints };
+    } catch {
+      vm.stats = null;
+    }
 
     // Spotlight (member + owned shiny card) samples.
     vm.spotlight = buildSpotlightVm({

@@ -326,7 +326,7 @@ function ensureHeaderShell() {
   const aWeekly = nav.querySelector('#nav-shinyweekly');
   const aDonators = nav.querySelector('#nav-donators');
 
-  if (aShowcase) aShowcase.textContent = 'Member';
+  if (aShowcase) aShowcase.textContent = 'Members';
   if (aPokedex) aPokedex.textContent = 'Pokédex';
   if (aWeekly) aWeekly.textContent = 'Weekly';
   if (aDonators) aDonators.textContent = 'Donators';

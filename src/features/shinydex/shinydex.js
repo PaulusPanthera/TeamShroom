@@ -116,6 +116,20 @@ function wrapForSidebar(node) {
   return wrap;
 }
 
+function makeLines(lines) {
+  const wrap = document.createElement('div');
+  wrap.className = 'ts-subbar-stats';
+
+  const list = Array.isArray(lines) ? lines : [];
+  list.forEach((t) => {
+    const line = document.createElement('div');
+    line.textContent = String(t || '').trim();
+    wrap.appendChild(line);
+  });
+
+  return wrap;
+}
+
 export function setupShinyDexPage({ root, weeklyModel, shinyShowcaseRows, sidebar, signal } = {}) {
   assertValidRoot(root);
 
@@ -158,10 +172,36 @@ export function setupShinyDexPage({ root, weeklyModel, shinyShowcaseRows, sideba
   const controlsDom = createDexControlsDom();
   const tabsDom = createDexTabsDom();
 
+  // Sidebar: unified blocks (Status / Controls / Notes).
+  const statusWrap = document.createElement('div');
+  statusWrap.className = 'ts-subbar-stats';
+
+  const statusMode = document.createElement('div');
+  const statusSearch = document.createElement('div');
+  const statusProgress = document.createElement('div');
+  const statusUnclaimed = document.createElement('div');
+
+  statusWrap.append(statusMode, statusSearch, statusProgress, statusUnclaimed);
+
+  const controlsStack = document.createElement('div');
+  controlsStack.append(tabsDom.tabs, controlsDom.controls);
+
+  const notesNode = makeLines([
+    'Hitlist = first team claim per family.',
+    'Living Dex = how many the team owns.',
+    'Owner tags link back to profiles.'
+  ]);
+
   if (sidebar && typeof sidebar.setSections === 'function') {
+    if (typeof sidebar.setTitle === 'function') sidebar.setTitle('SHINYDEX');
+    if (typeof sidebar.setHint === 'function') {
+      sidebar.setHint('Team legacy and ownership. Hitlist history + Living Dex counts.');
+    }
+
     sidebar.setSections([
-      { label: 'Dex Mode', node: wrapForSidebar(tabsDom.tabs) },
-      { label: 'Filters', node: wrapForSidebar(controlsDom.controls) }
+      { label: 'STATUS', node: statusWrap },
+      { label: 'CONTROLS', node: wrapForSidebar(controlsStack) },
+      { label: 'NOTES', node: notesNode }
     ]);
   } else {
     // Fallback: render controls inside the dex root (no shell sidebar present).
@@ -177,6 +217,9 @@ export function setupShinyDexPage({ root, weeklyModel, shinyShowcaseRows, sideba
     dexRoot.prepend(toolbar);
   }
 
+  // Status updater is bound after state is defined.
+  let updateSidebarStatus = () => {};
+
   const searchInput = controlsDom.searchInput;
   const helpBtn = controlsDom.helpBtn;
   const unclaimedBtn = controlsDom.unclaimedBtn;
@@ -191,6 +234,18 @@ export function setupShinyDexPage({ root, weeklyModel, shinyShowcaseRows, sideba
     search: '',
     unclaimed: false,
     sort: 'standard'
+  };
+
+  updateSidebarStatus = () => {
+    statusMode.textContent = `Mode: ${state.view === 'hitlist' ? 'Hitlist' : 'Living Dex'}`;
+
+    const q = String(state.search || '').trim();
+    statusSearch.textContent = `Search: ${q || '—'}`;
+
+    const p = String(countLabel.textContent || '').trim();
+    statusProgress.textContent = `Progress: ${p || '—'}`;
+
+    statusUnclaimed.textContent = `Unclaimed Only: ${state.unclaimed ? 'ON' : 'OFF'}`;
   };
 
   setupShinyDexHelp({
@@ -268,6 +323,7 @@ export function setupShinyDexPage({ root, weeklyModel, shinyShowcaseRows, sideba
       });
 
       countLabel.textContent = model.countLabelText || '';
+      updateSidebarStatus();
       renderHitlistFromModel(model, { selectedVariantByKey });
       return;
     }
@@ -279,6 +335,7 @@ export function setupShinyDexPage({ root, weeklyModel, shinyShowcaseRows, sideba
     });
 
     countLabel.textContent = model.countLabelText || '';
+    updateSidebarStatus();
     renderLivingDexFromModel(model, { selectedVariantByKey });
   }
 

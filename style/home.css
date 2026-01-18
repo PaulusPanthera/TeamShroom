@@ -64,6 +64,13 @@
   overflow: visible;
 }
 
+.ts-home-panel--event .ts-home-panel-body{
+  display: flex;
+  align-items: center;     /* vertical center inside the panel */
+  justify-content: center; /* horizontal center */
+}
+
+
 .ts-home-gif{
   border: 3px solid rgba(0,0,0,0.92);
   box-shadow:
@@ -309,11 +316,12 @@
 .ts-home-panel .ts-discord-event-preview__cta,
 #ts-sidebar .ts-discord-event-preview__cta{
   display: inline-block;
-  margin-top: 6px;
-  padding: 6px 8px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  padding: 44px 120px;
 
   font-family: "Press Start 2P", monospace;
-  font-size: 10px;
+  font-size: 20px;
 
   background-color: rgba(240, 91, 41, 0.18);
   border: 2px solid rgba(0,0,0,0.90);

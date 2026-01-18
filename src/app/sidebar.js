@@ -19,7 +19,7 @@ function getSidebarSlots() {
 
 function defaultTitleForPage(page) {
   if (page === 'home') return 'HOME';
-  if (page === 'showcase') return 'MEMBER';
+  if (page === 'showcase') return 'MEMBERS';
   if (page === 'shinyweekly') return 'WEEKLY';
   if (page === 'donators') return 'DONATORS';
   return 'POKÉDEX';

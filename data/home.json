@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "generatedAt": "2026-01-16T00:00:00.000Z",
-  "source": "manual",
+  "generatedAt": "2026-01-18T09:48:20.300Z",
+  "source": "discord-bot",
   "data": [
     {
       "nextEvent": {
-        "title": "Weekly Shiny Hunt Night",
-        "timeText": "2026-01-18 20:00 CET",
-        "url": "https://discord.com/events/<serverId>/<eventId>",
-        "subtitle": "Bring your swarm routes",
+        "title": "Metronome Fundraiser",
+        "timeText": "2026-01-18 21:30 CET",
+        "url": "https://discord.com/events/1178448989566283779/1462228724794658917",
+        "subtitle": "https://forums.pokemmo.com/index.php?/topic/19550...",
         "gifSrc": "img/symbols/shinyshroomsprite.png"
       },
       "bounty": {

@@ -170,7 +170,7 @@ export async function renderPage() {
   // Header title + one-line description (quest-log strip).
   const headerMeta = (() => {
     if (route.page === 'home') return { title: 'HOME', desc: 'Guild HQ overview.' };
-    if (route.page === 'showcase') return { title: 'MEMBER', desc: 'Browse guild members.' };
+    if (route.page === 'showcase') return { title: 'MEMBERS', desc: 'Browse guild members.' };
     if (route.page === 'shinyweekly') return { title: 'WEEKLY', desc: 'Open a week to view details.' };
     if (route.page === 'donators') return { title: 'DONATORS', desc: 'Supporters of Team Shroom.' };
     return { title: 'POKÉDEX', desc: 'Hitlist & LivingDex progress.' };

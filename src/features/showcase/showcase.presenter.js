@@ -28,6 +28,82 @@ export function sortMembers(members, sortMode) {
   return list.sort((a, b) => String(a.name || '').localeCompare(String(b.name || '')));
 }
 
+
+function alphaBucketTitle(name) {
+  const raw = String(name || '').trim();
+  if (!raw) return '#';
+  const ch = raw.charAt(0).toUpperCase();
+  if (ch >= 'A' && ch <= 'Z') return ch;
+  return '#';
+}
+
+function bucketRangeTitle(value, { firstMin, firstMax, step }) {
+  const v = Math.max(0, Number(value) || 0);
+
+  // Special first bucket includes both edges (e.g. 0-5 or 0-20).
+  if (v <= firstMax) return `${firstMin}-${firstMax}`;
+
+  // Subsequent buckets are contiguous, inclusive ranges:
+  // e.g. firstMax=5, step=5 -> 6-10, 11-15, ...
+  // e.g. firstMax=20, step=20 -> 21-40, 41-60, ...
+  const start = (firstMax + 1) + (Math.floor((v - (firstMax + 1)) / step) * step);
+  const end = start + (step - 1);
+  return `${start}-${end}`;
+}
+
+export function groupMembersForGallery(members, sortMode) {
+  const list = Array.isArray(members) ? members : [];
+  const mode = String(sortMode || 'alphabetical').trim().toLowerCase();
+
+  // Numeric modes must group by a fixed amount of members so the gallery
+  // renders deterministic rows of 5 cards per header.
+  if (mode === 'shinies' || mode === 'scoreboard') {
+    const sections = [];
+    const chunkSize = 5;
+
+    for (let i = 0; i < list.length; i += chunkSize) {
+      const chunk = list.slice(i, i + chunkSize);
+      if (!chunk.length) continue;
+
+      const values = chunk.map(m => {
+        if (mode === 'shinies') return Number(m && m.shinyCount) || 0;
+        return Number(m && m.points) || 0;
+      });
+
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+
+      const title = (min === max)
+        ? String(min)
+        : `${Math.min(min, max)}-${Math.max(min, max)}`;
+
+      sections.push({ title, entries: chunk });
+    }
+
+    return sections;
+  }
+
+  const sections = [];
+  let currentTitle = null;
+  let current = null;
+
+  list.forEach(m => {
+    let title = '';
+
+    title = alphaBucketTitle(m && m.name);
+
+    if (title !== currentTitle) {
+      currentTitle = title;
+      current = { title, entries: [] };
+      sections.push(current);
+    }
+
+    current.entries.push(m);
+  });
+
+  return sections;
+}
+
 export function buildMemberGalleryCardView(member, sortMode) {
   const name = member && member.name ? String(member.name) : '';
   const key = member && member.key ? String(member.key) : '';
@@ -36,6 +112,7 @@ export function buildMemberGalleryCardView(member, sortMode) {
     memberKey: key,
     name,
     points: Number(member && member.points) || 0,
+    shinyCount: Number(member && member.shinyCount) || 0,
     tierEmblemSrc: getMemberRoleEmblemSrc(member && member.role),
     spriteSrc: getMemberSpriteSrc(key, member && member.sprite),
     sortMode

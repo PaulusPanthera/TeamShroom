@@ -35,30 +35,28 @@ function prettifyMethod(method) {
   return String(method).trim();
 }
 
+function parseEncounter(raw) {
+  if (raw == null) return null;
+  if (typeof raw === 'number') return Number.isFinite(raw) ? raw : null;
+
+  const s = String(raw).trim();
+  if (!s) return null;
+
+  const n = Number(s);
+  return Number.isFinite(n) ? n : null;
+}
+
 function buildShinyInfoText(s) {
-  const parts = [];
+  // Default info plate for showcase Pokemon cards should be the encounter value.
+  // Fallback: prettified method label.
+  const encounter = parseEncounter(s && s.encounter);
+  if (encounter != null) return `Enc: ${encounter}`;
 
-  if (s && s.sold) parts.push('Sold');
-  else if (s && s.lost) parts.push('Lost');
-
-  // Safari is treated as a special variant derived from method==='safari'.
-  // It must not be shown as a normal hunt-method label.
   const methodRaw = s && s.method ? String(s.method) : '';
   const method = prettifyMethod(methodRaw);
-  if (method && !isSafariMethod(methodRaw)) parts.push(method);
+  if (method) return `Enc: ${method}`;
 
-  if (s && s.secret) parts.push('Secret');
-  if (s && s.alpha) parts.push('Alpha');
-  if (isSafariMethod(s && s.method)) parts.push('Safari');
-
-  if (s && s.run) parts.push('Run');
-  if (s && s.favorite) parts.push('Fav');
-
-  const notes = s && s.notes ? String(s.notes).trim() : '';
-  const isAuto = notes && notes.toUpperCase().includes('AUTO-GENERATED');
-  if (notes && !isAuto) parts.push(notes.slice(0, 28));
-
-  return parts.length ? parts.join(' \u2022 ') : '\u2014';
+  return 'Enc: —';
 }
 
 function primaryVariantKeyForShiny(s) {
@@ -160,6 +158,73 @@ export function renderShowcaseControls(controls, { sortMode, memberCount, shinyC
  * 3) empty panel -> unified-info (text hidden via CSS)
  * 4) sprite position -> art window
  */
+export function renderShowcaseGallerySections(sections, sortMode) {
+  const container = document.getElementById('showcase-gallery-container');
+  if (!container) return;
+
+  container.replaceChildren();
+
+  const wrap = document.createElement('div');
+  wrap.className = 'showcase-gallery-sections';
+
+  const list = Array.isArray(sections) ? sections : [];
+
+  if (!list.length) {
+    const empty = document.createElement('div');
+    empty.className = 'showcase-empty';
+    empty.textContent = 'No members found.';
+    wrap.appendChild(empty);
+    container.appendChild(wrap);
+    return;
+  }
+
+  list.forEach(sec => {
+    const section = document.createElement('section');
+    section.className = 'showcase-gallery-section';
+
+    const title = document.createElement('h2');
+    title.className = 'showcase-gallery-header';
+    title.textContent = sec && sec.title ? String(sec.title) : '';
+
+    const grid = document.createElement('div');
+    grid.className = 'showcase-gallery-grid';
+
+    const frag = document.createDocumentFragment();
+
+    const cards = Array.isArray(sec && sec.cards) ? sec.cards : [];
+    cards.forEach(v => {
+      const pointsText = `${Number(v && v.points) || 0}P`;
+      const shinyCount = Number(v && v.shinyCount) || 0;
+      const infoText = `${shinyCount} Shinies`;
+
+      const card = renderUnifiedCard({
+        cardType: 'member',
+        pokemonKey: v && v.memberKey ? v.memberKey : '',
+        pokemonName: v && v.name ? v.name : '',
+        artSrc: v && v.spriteSrc ? v.spriteSrc : '',
+        points: v && v.points ? v.points : 0,
+        headerLeftIconSrc: v && v.tierEmblemSrc ? v.tierEmblemSrc : '',
+        headerRightText: pointsText,
+        infoText,
+        isUnclaimed: false,
+        showVariants: false
+      });
+
+      // Always show total shinies in the bottom info plate for member cards.
+      card.classList.add('member-show-shinies');
+
+      setDataAttr(card, 'data-member-key', v && v.memberKey ? v.memberKey : '');
+      frag.appendChild(card);
+    });
+
+    grid.appendChild(frag);
+    section.append(title, grid);
+    wrap.appendChild(section);
+  });
+
+  container.appendChild(wrap);
+}
+
 export function renderShowcaseGallery(memberCardViews) {
   const container = document.getElementById('showcase-gallery-container');
   if (!container) return;
@@ -171,6 +236,8 @@ export function renderShowcaseGallery(memberCardViews) {
 
   (memberCardViews || []).forEach(v => {
     const pointsText = `${Number(v.points) || 0}P`;
+    const shinyCount = Number(v && v.shinyCount) || 0;
+    const infoText = `${shinyCount} Shinies`;
 
     const card = renderUnifiedCard({
       cardType: 'member',
@@ -180,10 +247,12 @@ export function renderShowcaseGallery(memberCardViews) {
       points: v.points,
       headerLeftIconSrc: v.tierEmblemSrc,
       headerRightText: pointsText,
-      infoText: '',
+      infoText,
       isUnclaimed: false,
       showVariants: false
     });
+
+    card.classList.add('member-show-shinies');
 
     setDataAttr(card, 'data-member-key', v.memberKey);
     grid.appendChild(card);

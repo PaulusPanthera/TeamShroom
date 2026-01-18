@@ -385,39 +385,6 @@ export function renderOverview(target, { weeks, selectedWeekKey, onSelectWeek } 
   target.appendChild(root);
 }
 
-function renderWeekHeader(target, week, { onBack } = {}, { signal } = {}) {
-  const header = el('div', 'shinyweekly-week-header');
-
-  const left = el('div', 'shinyweekly-week-header-left');
-
-  const backBtn = el('button', 'shinyweekly-back-btn', 'Back to Overview');
-  backBtn.type = 'button';
-
-  backBtn.addEventListener(
-    'click',
-    () => {
-      if (typeof onBack === 'function') onBack();
-    },
-    { signal }
-  );
-
-  const title = el('div', 'shinyweekly-week-title', week.label || week.week);
-
-  left.append(backBtn, title);
-
-  const right = el('div', 'shinyweekly-week-header-right');
-
-  const shinyCount = Number((week && week.shinyCount) || 0) || 0;
-  const hunterCount = Number((week && week.hunterCount) || 0) || 0;
-
-  const meta = el('div', 'shinyweekly-week-meta', `${shinyCount} Shinies • ${hunterCount} Hunters`);
-
-  right.appendChild(meta);
-
-  header.append(left, right);
-  target.appendChild(header);
-}
-
 export function renderWeekView(
   target,
   { week, pokemonPointsMap, memberMetaByKey, onBack } = {},
@@ -433,7 +400,9 @@ export function renderWeekView(
     return;
   }
 
-  renderWeekHeader(target, week, { onBack }, { signal });
+  // NOTE:
+  // The week header (including "Back to Overview") now lives in the left sidebar
+  // as part of the CONTROLS block. The main panel stays clean and content-focused.
 
   const members = getMembersSorted(week);
 
