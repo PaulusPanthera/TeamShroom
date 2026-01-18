@@ -55,7 +55,7 @@ function buildSpecialVariantOwnersByPokemon(weeklyModel) {
     members.forEach(function (memberGroup) {
       var shinies = memberGroup && Array.isArray(memberGroup.shinies) ? memberGroup.shinies : [];
       shinies.forEach(function (shiny) {
-        if (!shiny || shiny.lost) return;
+        if (!shiny || shiny.lost || shiny.run) return;
 
         var pokemon = normalizePokemonKey(shiny.pokemon);
         if (!pokemon) return;

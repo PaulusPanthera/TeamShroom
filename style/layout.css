@@ -1,14 +1,6 @@
-/* v2.0.0-beta */
 /* style/layout.css */
-/* =========================================================
-   GLOBAL LAYOUT
-   ========================================================= */
-
-#page-content {
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 18px;
-}
+/* v2.0.0-beta */
+/* Legacy global layout constraints and shared control framing. */
 
 .search-controls,
 .showcase-search-controls {

@@ -1,65 +1,409 @@
 /* style/shinyweekly.css */
 /* v2.0.0-beta */
-/* ShinyWeekly page layout and density overrides. */
+/* ShinyWeekly styles. Reference-matched floating overview tiles, slightly higher opacity. */
 
-.weekly-card{
+.weekly-root{
   max-width: 1600px;
   margin: var(--space-3) auto;
-  padding: var(--space-3);
+  padding: 0 var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  box-sizing: border-box;
+}
 
-  background: var(--bg-panel);
+.shinyweekly-main-body{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.weekly-state{
+  display: inline-flex;
+  align-self: flex-start;
+
+  background: rgba(16, 20, 24, 0.78);
+  border: 2px solid rgba(58, 70, 81, 0.85);
+  border-radius: 0;
+
+  padding: 10px 12px;
+  color: var(--text-main);
+  font-size: 12px;
+
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.70) inset,
+    0 1px 0 rgba(255,255,255,0.06) inset,
+    0 3px 0 rgba(0,0,0,0.55);
+}
+
+/* -------------------------
+   OVERVIEW (CALENDAR)
+   Reference 1:1 classnames:
+   .weekly-overview-month
+   .weekly-week-tile  <-- "floating button"
+------------------------- */
+
+.weekly-overview-month{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.weekly-overview-month-title{
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--text-main);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.85);
+}
+
+.weekly-week-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+  align-items: stretch;
+  box-sizing: border-box;
+}
+
+/* Compact floating week tiles (REFERENCE 1:1, opacity slightly increased) */
+.weekly-week-tile{
+  width: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+
+  padding: 12px 14px;
+  min-height: 56px;
+  text-align: left;
+
+  /* reference was 0.60 -> slightly more opacity */
+  background: rgba(14, 18, 22, 0.66);
   border: 2px solid rgba(58, 70, 81, 0.85);
   border-radius: 0;
 
   box-shadow:
-    var(--ui-inset-frame),
-    var(--ui-depth-shadow);
+    0 0 0 1px rgba(0,0,0,0.70) inset,
+    0 1px 0 rgba(255,255,255,0.08) inset,
+    0 3px 0 rgba(0,0,0,0.55);
+
+  cursor: pointer;
+  user-select: none;
+
+  overflow: hidden;
+  min-width: 0;
 }
 
-.weekly-header{
+.weekly-week-tile:hover{
+  border-color: rgba(240, 91, 41, 0.80);
+
+  /* reference was 0.70 -> slightly more opacity */
+  background: rgba(14, 18, 22, 0.76);
+}
+
+.weekly-week-tile:active{
+  transform: translateY(1px);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.70) inset,
+    0 1px 0 rgba(255,255,255,0.08) inset,
+    0 2px 0 rgba(0,0,0,0.55);
+}
+
+.weekly-week-tile.is-selected{
+  border-color: rgba(240, 91, 41, 0.95);
+
+  /* reference was 0.74 -> slightly more opacity */
+  background: rgba(14, 18, 22, 0.80);
+
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.70) inset,
+    0 1px 0 rgba(255,255,255,0.10) inset,
+    0 3px 0 rgba(0,0,0,0.55);
+}
+
+.weekly-week-tile:focus-visible{
+  outline: 2px solid rgba(240, 91, 41, 0.95);
+  outline-offset: 2px;
+}
+
+.weekly-week-label{
+  color: var(--accent);
+  letter-spacing: 1px;
+  font-size: 14px;
+  line-height: 1.15;
+  white-space: nowrap;
+
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.weekly-week-stats{
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.15;
+  white-space: nowrap;
+  opacity: 0.95;
+
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------------------------
+   Week Detail
+--------------------------- */
+
+.shinyweekly-week-header{
   display: flex;
-  align-items: center;
   justify-content: space-between;
-
-  margin-bottom: var(--space-3);
-  padding-bottom: var(--space-2);
-
-  border-bottom: 2px solid rgba(58, 70, 81, 0.65);
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px;
+  border: 2px solid rgba(58, 70, 81, 0.95);
+  background: rgba(12, 16, 20, 0.78);
 }
 
-.weekly-title{
-  font-size: var(--font-section-title);
+.shinyweekly-week-header-left{
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.shinyweekly-back-btn{
+  background: rgba(12, 16, 20, 0.90);
+  border: 2px solid rgba(240, 91, 41, 0.90);
+  border-radius: 0;
+
+  padding: 8px 10px;
+  color: var(--text-main);
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.70) inset,
+    0 1px 0 rgba(255,255,255,0.06) inset,
+    0 2px 0 rgba(0,0,0,0.55);
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.shinyweekly-back-btn:hover{
+  border-color: rgba(240, 91, 41, 1);
+}
+
+.shinyweekly-back-btn:active{
+  transform: translateY(1px);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.70) inset,
+    0 1px 0 rgba(255,255,255,0.06) inset,
+    0 1px 0 rgba(0,0,0,0.55);
+}
+
+.shinyweekly-week-title{
+  font-family: "Press Start 2P", monospace;
+  font-size: 12px;
   letter-spacing: 2px;
   color: var(--accent);
+
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.weekly-meta{
-  font-size: var(--font-small);
-  color: var(--text-muted);
+.shinyweekly-week-header-right{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
-.weekly-body{
+.shinyweekly-week-meta{
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  opacity: 0.9;
+}
+
+/* Week content grid (reference: compact unified cards) */
+
+.shinyweekly-root .dex-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-w), 1fr));
+  gap: 18px;
+
+  justify-items: center;
+  align-items: start;
+
+  margin: 0;
+  padding: 0 0 8px;
+  box-sizing: border-box;
+}
+
+.shinyweekly-flip-tile{
   width: 100%;
-}
-
-.weekly-body .dex-grid{
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: var(--space-2);
-}
-
-.weekly-body .unified-card.is-compact{
-  width: 160px;
-  height: 210px;
+  min-width: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  cursor: pointer;
+  user-select: none;
 }
 
 @media (max-width: 768px){
-  .weekly-body .dex-grid{
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: var(--space-2);
+  .shinyweekly-root .dex-grid{
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
   }
+}
 
-  .weekly-body .unified-card.is-compact{
-    width: 130px;
-    height: 190px;
-  }
+.shinyweekly-member-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+  align-items: stretch;
+}
+
+.shinyweekly-member-card{
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 10px 12px;
+
+  background: rgba(12, 16, 20, 0.72);
+  border: 2px solid rgba(58, 70, 81, 0.95);
+  border-radius: 0;
+
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.70) inset,
+    0 1px 0 rgba(255,255,255,0.06) inset,
+    0 3px 0 rgba(0,0,0,0.55);
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.shinyweekly-member-card:hover{
+  border-color: rgba(240, 91, 41, 0.80);
+}
+
+.shinyweekly-member-card:active{
+  transform: translateY(1px);
+}
+
+.shinyweekly-member-card.is-selected{
+  border-color: rgba(240, 91, 41, 0.95);
+  background: rgba(12, 16, 20, 0.82);
+}
+
+.shinyweekly-member-card:focus-visible{
+  outline: 2px solid rgba(240, 91, 41, 0.95);
+  outline-offset: 2px;
+}
+
+.shinyweekly-member-name{
+  width: 100%;
+  text-align: center;
+  font-family: "Press Start 2P", monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shinyweekly-member-sprite-wrap{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.shinyweekly-member-sprite{
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
+}
+
+.shinyweekly-member-foot{
+  width: 100%;
+  text-align: center;
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+.shinyweekly-member-selected{
+  padding: 10px 12px;
+  border: 2px solid rgba(58, 70, 81, 0.95);
+  background: rgba(12, 16, 20, 0.65);
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  opacity: 0.95;
+}
+
+/* ---------------------------
+   Member shiny list
+--------------------------- */
+
+.shinyweekly-empty-state{
+  padding: 14px;
+  border: 2px solid rgba(58, 70, 81, 0.95);
+  background: rgba(12, 16, 20, 0.78);
+}
+
+.shinyweekly-empty-title{
+  font-family: "Press Start 2P", monospace;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.shinyweekly-empty-message{
+  font-size: 12px;
+  opacity: 0.85;
+  line-height: 1.35;
+}
+
+.shinyweekly-list{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.shinyweekly-list-row{
+  padding: 10px 12px;
+  border: 2px solid rgba(58, 70, 81, 0.95);
+  background: rgba(12, 16, 20, 0.65);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+
+.shinyweekly-list-name{
+  font-family: "Press Start 2P", monospace;
+  font-size: 11px;
+}
+
+.shinyweekly-list-meta{
+  font-size: 11px;
+  opacity: 0.85;
 }

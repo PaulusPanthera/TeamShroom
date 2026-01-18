@@ -1,10 +1,597 @@
-/*
-// style/cards.css
-// v2.0.0-beta
-// Legacy entry point for card styles. Keeps existing <link href="style/cards.css"> working.
+/* style/cards.css */
+/* v2.0.0-beta */
+/* Flattened card styles (no @import). Order preserved to ensure identical visuals. */
+
+/* ===== cards.base.css ===== */
+/* style/cards/cards.base.css
+   v2.0.0-beta
 */
 
-@import url("./cards/cards.base.css");
-@import url("./cards/cards.tiers.css");
-@import url("./cards/cards.variants.css");
-@import url("./cards/cards.pop.css");
+:root{
+  /* drives .dex-grid in style/layout.css */
+  --card-w: 210px;
+  --card-h: 282px;
+
+  /* Core card materials (must pop on page bg, but stay dark-mode) */
+  --u-card-fill: #1a232c;   /* main body */
+  --u-card-bg: #24313b;     /* header/info/variants plates */
+  --u-card-plate: #0e1217;  /* deep window base */
+
+  --u-text: #e6e1db;
+  --u-muted: #a2a29d;
+
+  /* Tier color system (defaults overwritten by tier classes) */
+  --u-tier-main: #9ca3a8;
+  --u-tier-sub: #596066;
+  --u-tier-border: #d4dee6;
+
+  /* wiring for existing rules */
+  --u-frame: var(--u-tier-border);
+  --u-accent: var(--u-tier-main);
+  --u-plate-border: var(--u-tier-sub);
+
+  --u-line: #3a4651;
+  --u-depth: #07090c;
+}
+
+/* --------------------------------------------------
+   CORE CARD (GLOBAL CONTRACT)
+-------------------------------------------------- */
+
+.unified-card{
+  width: var(--card-w);
+  height: var(--card-h);
+
+  display: grid;
+  grid-template-rows: 34px 92px 32px 1fr; /* header, art, info, variants */
+  gap: 8px;
+  padding: 10px;
+
+  background: var(--u-card-fill);
+  border: 2px solid var(--u-frame);
+  border-radius: 0;
+
+  /* pixel depth only (no blur) */
+  box-shadow:
+    0 8px 0 var(--u-depth),
+    0 0 0 2px rgba(0,0,0,0.35) inset,
+    0 0 0 4px rgba(0,0,0,0.45) inset;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.unified-card *{ box-sizing: border-box; }
+
+/* Member card modifier: same vibe, different rows */
+.unified-card.unified-card--member{
+  grid-template-rows: 34px 152px 1fr; /* header, art, empty panel */
+  gap: 10px;
+}
+
+/* --------------------------------------------------
+   HEADER STRIP
+-------------------------------------------------- */
+
+.unified-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px;
+
+  background: var(--u-card-bg);
+  border: 2px solid var(--u-plate-border);
+  border-radius: 0;
+
+  overflow: hidden;
+}
+
+.unified-header-left{
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.unified-header-left img{
+  width: 18px;
+  height: 18px;
+  image-rendering: pixelated;
+}
+
+.unified-name-wrap{
+  min-width: 0;
+  flex: 1;
+}
+
+.unified-name{
+  display: block;
+  font-family: "Press Start 2P", monospace;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--u-text);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tier-badge:empty{ display:none; }
+
+.unified-name.is-long{ font-size: 11px; }
+.unified-name.is-very-long{ font-size: 10px; }
+
+.unified-value{
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: baseline;
+  padding: 3px 6px;
+  background: rgba(0,0,0,0.55);
+  border: 2px solid var(--u-accent);
+  border-radius: 0;
+
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+  line-height: 1;
+  color: var(--u-text);
+  user-select: none;
+}
+
+.unified-value-text{ font-size: 9px; }
+
+/* --------------------------------------------------
+   ART WINDOW (narrower than header)
+-------------------------------------------------- */
+
+.unified-art{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 10px; /* narrower than header */
+
+  background: var(--u-card-plate);
+  border: 2px solid rgba(255,255,255,0.18);
+  border-radius: 0;
+
+  box-shadow:
+    0 0 0 2px rgba(0,0,0,0.25) inset,
+    0 0 0 1px rgba(255,255,255,0.08);
+
+  overflow: hidden;
+}
+
+.unified-art img{
+  width: 100px;
+  height: 72px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.unified-card.unified-card--member .unified-art{
+  margin: 0;
+}
+
+.unified-card.unified-card--member .unified-art img{
+  width: 96px;
+  height: 96px;
+}
+
+/* --------------------------------------------------
+   INFO PLATE
+-------------------------------------------------- */
+
+.unified-info{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 8px;
+
+  background: var(--u-card-bg);
+  border: 2px solid var(--u-plate-border);
+  border-radius: 0;
+
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.25) inset;
+}
+
+.unified-info-text{
+  font-family: "Press Start 2P", monospace;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--u-text);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Member card: keep the panel, hide the text */
+.unified-card.unified-card--member .unified-info{
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.unified-card.unified-card--member .unified-info-text{
+  display: none;
+}
+
+/* --------------------------------------------------
+   NEGATIVE POP (UNCLAIMED / UNOWNED)
+-------------------------------------------------- */
+
+.unified-card.is-unclaimed{
+  border-color: #606872;
+  filter: saturate(0.65);
+}
+
+.unified-card.is-unclaimed .unified-header,
+.unified-card.is-unclaimed .unified-info{
+  border-color: rgba(58,70,81,0.55);
+  background: rgba(14,18,23,0.85);
+}
+
+.unified-card.is-unclaimed .unified-value{
+  border-color: rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.75);
+}
+
+.unified-card.is-unclaimed .unified-art{
+  background-image:
+    repeating-linear-gradient(
+      135deg,
+      rgba(255,255,255,0.10) 0,
+      rgba(255,255,255,0.10) 6px,
+      rgba(0,0,0,0.00) 6px,
+      rgba(0,0,0,0.00) 12px
+    );
+}
+
+.unified-card.is-unclaimed .unified-art img{
+  filter: grayscale(1) contrast(0.95) brightness(0.90);
+}
+
+
+/* ===== cards.tiers.css ===== */
+/*
+// style/cards/cards.tiers.css
+// v2.0.0-beta
+// Tier palettes + variable wiring for UnifiedCard trim system
+*/
+
+/* Tier system (3 colors)
+   - --u-tier-main: interactive accents (hover, points chip outline)
+   - --u-tier-sub:  plate borders (header/info/variants)
+   - --u-tier-border: outer card trim
+*/
+
+/* defaults (fallback) */
+.unified-card{
+  --u-tier-main: #9ca3a8;
+  --u-tier-sub: #596066;
+  --u-tier-border: #d4dee6;
+
+  /*
+    Variable wiring must exist on the card element so tier overrides
+    always drive visible trim/plates, regardless of where defaults are set.
+  */
+  --u-frame: var(--u-tier-border);
+  --u-accent: var(--u-tier-main);
+  --u-plate-border: var(--u-tier-sub);
+}
+
+/* 6 (most common): shy paper-gray */
+.unified-card.tier-6{ --u-tier-main:#b8b2ad; --u-tier-sub:#6f6a66; --u-tier-border:#e6e1db; }
+
+/* 5: dusty slate */
+.unified-card.tier-5{ --u-tier-main:#9ca3a8; --u-tier-sub:#596066; --u-tier-border:#d4dee6; }
+
+/* 4: muted blue-gray */
+.unified-card.tier-4{ --u-tier-main:#8fa1a8; --u-tier-sub:#4e5e66; --u-tier-border:#bbd6e2; }
+
+/* 3: washed mint/teal */
+.unified-card.tier-3{ --u-tier-main:#7fbfae; --u-tier-sub:#2f6e61; --u-tier-border:#a7e3d1; }
+
+/* 2: soft teal-mint */
+.unified-card.tier-2{ --u-tier-main:#9ad6c6; --u-tier-sub:#3b8577; --u-tier-border:#bff2e3; }
+
+/* 1: popping loot green (still retro) */
+.unified-card.tier-1{ --u-tier-main:#5fcb6b; --u-tier-sub:#1e6d37; --u-tier-border:#a8f07e; }
+
+/* 0: retro gold */
+.unified-card.tier-0{ --u-tier-main:#d9b15f; --u-tier-sub:#7a4f1a; --u-tier-border:#ffe08a; }
+
+/* --------------------------------------------------
+   GLOBAL TIER MARKS (ALL TIERS)
+-------------------------------------------------- */
+
+.unified-card:not(.unified-card--member)::before{
+  content:"";
+  position:absolute;
+  inset:6px;
+  pointer-events:none;
+
+  background:
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 0/14px 2px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 0/2px 14px no-repeat,
+
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 100% 0/14px 2px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 100% 0/2px 14px no-repeat,
+
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 100%/14px 2px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 100%/2px 14px no-repeat,
+
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 100% 100%/14px 2px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 100% 100%/2px 14px no-repeat;
+
+  opacity: 0.42;
+}
+
+/* dead cards: suppress tier marks */
+.unified-card.is-unclaimed::before{
+  opacity: 0.10;
+}
+
+/* LM: Legendary / Mythical — strong purple (corner marks + rune pixels) */
+.unified-card.tier-lm{ --u-tier-main:#8b5cf0; --u-tier-sub:#3a1a6a; --u-tier-border:#d7b6ff; }
+
+.unified-card.tier-lm::before{
+  content:"";
+  position:absolute;
+  inset:6px;
+  pointer-events:none;
+
+  background:
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 0/14px 2px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 0/2px 14px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 100% 0/14px 2px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 100% 0/2px 14px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 100%/14px 2px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 0 100%/2px 14px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 100% 100%/14px 2px no-repeat,
+    linear-gradient(var(--u-tier-border),var(--u-tier-border)) 100% 100%/2px 14px no-repeat,
+
+    repeating-linear-gradient(
+      90deg,
+      rgba(215,182,255,0.00) 0px,
+      rgba(215,182,255,0.00) 6px,
+      rgba(215,182,255,0.10) 6px,
+      rgba(215,182,255,0.10) 7px
+    ) 0 0/100% 100% no-repeat;
+
+  opacity: 0.95;
+}
+
+/* dead cards should always read dead, regardless of tier */
+.unified-card.is-unclaimed{
+  --u-tier-main:#7a828b;
+  --u-tier-sub:#606872;
+  --u-tier-border:#606872;
+}
+
+
+/* ===== cards.variants.css ===== */
+/* style/cards/cards.variants.css
+   v2.0.0-beta
+*/
+
+.unified-card.unified-card--member .unified-variants{
+  display: none;
+}
+
+.unified-variants{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+
+  padding: 8px;
+  background: var(--u-card-bg);
+  border: 2px solid var(--u-plate-border);
+  border-radius: 0;
+
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.25) inset;
+}
+
+.variant-btn{
+  height: 30px;
+
+  background: var(--bg-input);
+  border: 2px solid rgba(58,70,81,0.65);
+
+  border-radius: 0;
+  padding: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  image-rendering: pixelated;
+
+  box-shadow:
+    0 2px 0 rgba(0,0,0,0.55),
+    0 0 0 2px rgba(0,0,0,0.45) inset;
+}
+
+.variant-btn img{
+  width: 18px;
+  height: 18px;
+  image-rendering: pixelated;
+}
+
+.variant-btn:hover{
+  border-color: var(--u-accent);
+}
+
+.variant-btn:active{
+  transform: translateY(1px);
+  box-shadow:
+    0 1px 0 rgba(0,0,0,0.55),
+    0 0 0 2px rgba(0,0,0,0.55) inset;
+}
+
+.variant-btn.is-active{
+  border-color: var(--u-accent);
+  box-shadow:
+    0 2px 0 rgba(0,0,0,0.55),
+    0 0 0 2px rgba(0,0,0,0.55) inset,
+    0 0 0 2px rgba(255,255,255,0.06);
+}
+
+.variant-btn.is-disabled{
+  cursor: default;
+  opacity: 0.45;
+  filter: grayscale(1);
+}
+
+.variant-btn.is-disabled:hover{
+  border-color: rgba(58,70,81,0.65);
+}
+
+
+/* ===== cards.pop.css ===== */
+/* style/cards/cards.pop.css */
+/* v2.0.0-beta */
+/* UnifiedCard body fill lift + tier tints + plate contrast for stronger POP across the site */
+
+/* --------------------------------------------------
+   UNIFIED CARD FILL POP (SITE-WIDE)
+   Fix: card bodies are too gray/bland and sit too close to background.
+   Goal: brighter + warmer + slightly more saturated base body.
+   Rules:
+     - No rainbow. No flashing. No animation gradients.
+     - Pixel depth only (no heavy blur/gloss).
+     - Tier identity should read in the BODY, not only the trim.
+-------------------------------------------------- */
+
+.unified-card{
+  /* Base lift: brighter + warmer (still dark-mode) */
+  --u-card-fill: #263c49; /* main body */
+  --u-card-bg: #1f323d;   /* header/info/variants plates (darker than body) */
+  --u-card-plate: #0c1015;
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.00) 46%),
+    linear-gradient(180deg, rgba(240, 91, 41, 0.08) 0%, rgba(0,0,0,0.00) 60%),
+    var(--u-card-fill);
+
+  /* Hard cutout ring + pixel depth (no blur) */
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.08),
+    0 0 0 2px rgba(0,0,0,0.88),
+    0 8px 0 var(--u-depth),
+    0 0 0 1px rgba(255,255,255,0.06) inset,
+    0 0 0 2px rgba(0,0,0,0.42) inset,
+    0 0 0 4px rgba(0,0,0,0.55) inset;
+
+  position: relative;
+  transition: transform 90ms steps(3, end);
+  will-change: transform;
+}
+
+.unified-card:hover{
+  transform: translateY(-1px);
+  z-index: 10;
+}
+
+.unified-card:active{
+  transform: translateY(1px);
+}
+
+/* Plates: darker than body so the card reads as a real surface */
+.unified-card .unified-header,
+.unified-card .unified-info,
+.unified-card .unified-variants{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.00) 72%),
+    var(--u-card-bg);
+
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.05) inset,
+    0 0 0 2px rgba(0,0,0,0.30) inset;
+}
+
+/* Points chip: stronger fill so it never washes out */
+.unified-card .unified-value,
+.unified-card .unified-points,
+.unified-card .unified-points-badge{
+  background: rgba(0,0,0,0.62);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06) inset,
+    0 2px 0 rgba(0,0,0,0.55);
+}
+
+/* Sprite anchoring: hard pixel shadow, no glow */
+.unified-card .unified-art img{
+  image-rendering: pixelated;
+  filter: drop-shadow(1px 2px 0 rgba(0,0,0,0.82));
+}
+
+/* --------------------------------------------------
+   TIER BODY TINTS (FILL-BASED)
+   Goal: every tier has a recognizable body temperature.
+-------------------------------------------------- */
+
+/* Tier 6 - light steel */
+.unified-card.tier-6{
+  --u-card-fill: #2b3a44;
+  --u-card-bg:   #202c34;
+}
+
+/* Tier 5 - cool gray */
+.unified-card.tier-5{
+  --u-card-fill: #2a3947;
+  --u-card-bg:   #1f2d37;
+}
+
+/* Tier 4 - blue steel */
+.unified-card.tier-4{
+  --u-card-fill: #263f4b;
+  --u-card-bg:   #1c313d;
+}
+
+/* Tier 3 - teal */
+.unified-card.tier-3{
+  --u-card-fill: #214245;
+  --u-card-bg:   #173235;
+}
+
+/* Tier 2 - aqua */
+.unified-card.tier-2{
+  --u-card-fill: #1f4747;
+  --u-card-bg:   #163737;
+}
+
+/* Tier 1 - green */
+.unified-card.tier-1{
+  --u-card-fill: #224539;
+  --u-card-bg:   #173126;
+}
+
+/* Tier 0 - warm gold */
+.unified-card.tier-0{
+  --u-card-fill: #403625;
+  --u-card-bg:   #2f271a;
+}
+
+/* LM - purple */
+.unified-card.tier-lm{
+  --u-card-fill: #2f2c4a;
+  --u-card-bg:   #231f36;
+}
+
+/* --------------------------------------------------
+   UNCLAIMED MUST STAY MUTED (still readable)
+-------------------------------------------------- */
+
+.unified-card.is-unclaimed{
+  --u-card-fill: #1b242b;
+  --u-card-bg:   #161f25;
+  border-color: #606872;
+  filter: saturate(0.78) brightness(0.96);
+}

@@ -9,36 +9,53 @@ function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
 
-function buildHelpHtml() {
-  return `
-    <div class="dex-help-title">Search Help</div>
-    <div class="dex-help-rows">
-      <div class="help-row">
-        <div class="help-k">Name</div>
-        <div class="help-v"><code>bulba</code></div>
-      </div>
+function makeCode(text) {
+  const c = document.createElement('code');
+  c.textContent = String(text || '');
+  return c;
+}
 
-      <div class="help-row">
-        <div class="help-k">Owner</div>
-        <div class="help-v"><code>ot:willy</code></div>
-      </div>
+function buildHelpDom() {
+  const frag = document.createDocumentFragment();
 
-      <div class="help-row">
-        <div class="help-k">Region</div>
-        <div class="help-v"><code>r:kanto</code> / <code>region:un</code></div>
-      </div>
+  const title = document.createElement('div');
+  title.className = 'dex-help-title';
+  title.textContent = 'Search Help';
 
-      <div class="help-row">
-        <div class="help-k">Tier</div>
-        <div class="help-v"><code>tier:0</code> / <code>t:0</code> … <code>tier:lm</code> / <code>t:lm</code></div>
-      </div>
+  const rows = document.createElement('div');
+  rows.className = 'dex-help-rows';
 
-      <div class="help-row">
-        <div class="help-k">Flags</div>
-        <div class="help-v"><code>unclaimed</code> / <code>unowned</code> / <code>claimed</code> / <code>owned</code></div>
-      </div>
-    </div>
-  `;
+  function addRow(keyText, valueParts) {
+    const row = document.createElement('div');
+    row.className = 'help-row';
+
+    const k = document.createElement('div');
+    k.className = 'help-k';
+    k.textContent = String(keyText || '');
+
+    const v = document.createElement('div');
+    v.className = 'help-v';
+
+    (valueParts || []).forEach(part => {
+      if (typeof part === 'string') {
+        v.appendChild(document.createTextNode(part));
+      } else if (part instanceof Node) {
+        v.appendChild(part);
+      }
+    });
+
+    row.append(k, v);
+    rows.appendChild(row);
+  }
+
+  addRow('Name', [makeCode('bulba')]);
+  addRow('Owner', [makeCode('ot:willy')]);
+  addRow('Region', [makeCode('r:kanto'), ' / ', makeCode('region:un')]);
+  addRow('Tier', [makeCode('tier:0'), ' / ', makeCode('t:0'), ' … ', makeCode('tier:lm'), ' / ', makeCode('t:lm')]);
+  addRow('Flags', [makeCode('unclaimed'), ' / ', makeCode('unowned'), ' / ', makeCode('claimed'), ' / ', makeCode('owned')]);
+
+  frag.append(title, rows);
+  return frag;
 }
 
 export function setupShinyDexHelp({ buttonEl }) {
@@ -58,7 +75,7 @@ export function setupShinyDexHelp({ buttonEl }) {
     document.body.appendChild(tooltip);
   }
 
-  tooltip.innerHTML = buildHelpHtml();
+  tooltip.replaceChildren(buildHelpDom());
 
   function positionNearButton() {
     const btnRect = buttonEl.getBoundingClientRect();

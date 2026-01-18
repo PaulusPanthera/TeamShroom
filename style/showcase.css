@@ -32,13 +32,7 @@
   padding: 10px 0 24px;
 }
 
-.showcase-root .showcase-member-topbar{
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 12px 10px;
-}
-
-.showcase-root .back-btn{
+.back-btn{
   background: var(--bg-panel-alt);
   border: 2px solid rgba(58, 70, 81, 0.85);
   color: var(--text-main);
@@ -52,11 +46,11 @@
     0 6px 0 rgba(0,0,0,0.55);
 }
 
-.showcase-root .back-btn:hover{
+.back-btn:hover{
   border-color: rgba(240, 91, 41, 0.75);
 }
 
-.showcase-root .back-btn:active{
+.back-btn:active{
   transform: translateY(1px);
   box-shadow:
     var(--ui-inset-frame),
@@ -109,11 +103,6 @@
 
 .showcase-root .member-stats .point-count{
   color: var(--success);
-}
-
-.showcase-root .showcase-member-controls{
-  max-width: 1400px;
-  margin: 0 auto 12px;
 }
 
 .showcase-root .showcase-member-body{

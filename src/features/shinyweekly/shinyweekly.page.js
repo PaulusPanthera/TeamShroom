@@ -1,48 +1,162 @@
 // src/features/shinyweekly/shinyweekly.page.js
 // v2.0.0-beta
-// Shiny Weekly page controller
+// ShinyWeekly page entry. Loads weekly model and renders overview + week detail views inside the feature mount.
 
-import { renderShinyWeekly } from './shinyweekly.ui.js';
-import { buildShinyWeeklyModel } from '../../data/shinyweekly.model.js';
+import { loadShinyWeekly } from '../../data/shinyweekly.loader.js';
+import { buildShinyWeeklyModel } from '../../domains/shinyweekly/shinyweekly.model.js';
 import { initPokemonDerivedDataOnce, getPokemonPointsMap } from '../../domains/pokemon/pokemon.data.js';
 
-export function setupShinyWeeklyPage({ weeklyModel, membersRows } = {}) {
-  const root = document.getElementById('page-content');
-  if (!root) return;
+import {
+  renderWeeklyShell,
+  renderLoading,
+  renderError,
+  renderEmptyState,
+  renderOverview,
+  renderWeekView
+} from './shinyweekly.ui.js';
 
-  const input = Array.isArray(weeklyModel) ? weeklyModel : [];
-  const weeks = (input.length && !Object.prototype.hasOwnProperty.call(input[0], 'membersByOt'))
-    ? buildShinyWeeklyModel(input)
-    : input;
-  const members = Array.isArray(membersRows) ? membersRows : [];
+function assertValidRoot(root) {
+  if (!root || !(root instanceof Element)) {
+    throw new Error('SHINYWEEKLY_INVALID_ROOT');
+  }
+}
 
-  // Weekly needs Pokémon points to resolve tier trim + header points chip.
-  // Load derived Pokémon data locally to avoid global route coupling.
-  root.replaceChildren();
+function safeDateMs(raw) {
+  const ms = Date.parse(String(raw || ''));
+  return Number.isFinite(ms) ? ms : 0;
+}
 
-  const loadingRoot = document.createElement('div');
-  loadingRoot.className = 'weekly-calendar-root';
+function getDefaultWeekKey(weeks) {
+  const list = Array.isArray(weeks) ? weeks : [];
+  if (!list.length) return '';
 
-  const loadingPanel = document.createElement('div');
-  loadingPanel.className = 'weekly-calendar-panel';
-  loadingPanel.textContent = 'Loading Pokémon data...';
+  // Deterministic: pick the week with the latest dateEnd/dateStart.
+  // Do not rely on sheet row order, which can be user-sorted.
+  let best = list[0];
+  let bestScore = 0;
 
-  loadingRoot.appendChild(loadingPanel);
-  root.appendChild(loadingRoot);
+  list.forEach((w) => {
+    const end = safeDateMs(w && w.dateEnd);
+    const start = safeDateMs(w && w.dateStart);
+    const score = end || start;
+    if (score > bestScore) {
+      best = w;
+      bestScore = score;
+      return;
+    }
 
-  initPokemonDerivedDataOnce()
-    .then(() => {
-      renderShinyWeekly(weeks, root, members, getPokemonPointsMap());
-    })
-    .catch(() => {
-      // Fall back to rendering without tiers so the page remains usable.
-      renderShinyWeekly(weeks, root, members, {});
+    // Tie-breaker: stable lexicographic week key
+    if (score === bestScore) {
+      const a = String(w && w.week || '');
+      const b = String(best && best.week || '');
+      if (a.localeCompare(b) > 0) best = w;
+    }
+  });
 
-      const warning = document.createElement('div');
-      warning.className = 'weekly-calendar-panel';
-      warning.textContent = 'Failed to load Pokémon data. Weekly tiers are unavailable.';
+  return String(best && best.week || '').trim();
+}
 
-      const weeklyRoot = root.querySelector('.weekly-calendar-root');
-      if (weeklyRoot) weeklyRoot.prepend(warning);
-    });
+export async function renderShinyWeeklyPage(ctx) {
+  const root = ctx && ctx.root;
+  const sidebar = ctx && ctx.sidebar;
+  const signal = ctx && ctx.signal;
+  const preloadedRows = ctx && ctx.params && ctx.params.rows;
+  assertValidRoot(root);
+
+  const { mainBody } = renderWeeklyShell(root);
+  renderLoading(mainBody);
+
+  const weeklyHint = document.createElement('div');
+  weeklyHint.className = 'ts-subbar-stats';
+  weeklyHint.textContent = "Open a week to view details.";
+
+  const info = document.createElement('div');
+  info.className = 'ts-subbar-stats';
+  info.textContent = 'Click a card to cycle shinies.';
+
+  if (sidebar && typeof sidebar.setSections === 'function') {
+    sidebar.setSections([
+      { label: 'WEEKLY LOG', node: weeklyHint },
+      { label: 'Info', node: info }
+    ]);
+  }
+
+  try {
+    const rows = Array.isArray(preloadedRows) ? preloadedRows : await loadShinyWeekly();
+    const weeks = buildShinyWeeklyModel(rows);
+
+    if (!weeks.length) {
+      renderEmptyState(mainBody, {
+        title: 'No weekly data yet',
+        message: 'There are no weeks available to display.'
+      });
+      return;
+    }
+
+    // Default to the latest week after load (deterministic by date).
+    // Even when we render the overview first, we keep this selection stable
+    // for highlighting and deterministic behavior.
+    let view = 'overview';
+    let selectedWeekKey = getDefaultWeekKey(weeks);
+
+    // Weekly needs Pokémon points to resolve tier trim + header points chip.
+    // Load derived Pokémon data locally to avoid global route coupling.
+    let pokemonReady = false;
+    let pokemonPointsMap = {};
+
+    const commitRender = () => {
+      if (view === 'overview') {
+        renderOverview(
+          mainBody,
+          {
+            weeks,
+            selectedWeekKey,
+            onSelectWeek: (weekKey) => {
+              selectedWeekKey = String(weekKey || '');
+              view = 'week';
+              commitRender();
+            }
+          },
+          { signal }
+        );
+        return;
+      }
+
+      const week = weeks.find(w => w.week === selectedWeekKey) || null;
+
+      if (!pokemonReady) {
+        renderLoading(mainBody, { message: 'Loading Pokémon data...' });
+        return;
+      }
+
+      renderWeekView(
+        mainBody,
+        {
+          week,
+          pokemonPointsMap,
+          onBack: () => {
+            view = 'overview';
+            commitRender();
+          }
+        },
+        { signal }
+      );
+    };
+
+    Promise.resolve(initPokemonDerivedDataOnce())
+      .then(() => {
+        pokemonReady = true;
+        pokemonPointsMap = getPokemonPointsMap();
+        if (view === 'week') commitRender();
+      })
+      .catch(() => {
+        pokemonReady = true;
+        pokemonPointsMap = {};
+        if (view === 'week') commitRender();
+      });
+
+    commitRender();
+  } catch {
+    renderError(mainBody, 'Failed to load weekly data.');
+  }
 }
