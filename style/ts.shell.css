@@ -3,6 +3,15 @@
 /* TS shell layout, header, sidebar, and collection-mode styling. */
 
 /* -----------------------------------------------------
+   GLOBAL: SCROLLBAR STABILITY
+----------------------------------------------------- */
+
+html{
+  /* Prevent layout jump on pages that don't need a scrollbar. */
+  scrollbar-gutter: stable;
+}
+
+/* -----------------------------------------------------
    FONT + BACKGROUND
 ----------------------------------------------------- */
 
@@ -56,11 +65,14 @@ body.ts-shell-active #page-content{
   max-width: 1600px;
   margin: 0 auto;
   padding: 18px;
+
   display: grid;
-  --ts-sidebar-w: 360px;
+  /* Sidebar is intentionally a bit tighter now (20px narrower). */
+  --ts-sidebar-w: 340px;
   grid-template-columns: var(--ts-sidebar-w) minmax(0, 1fr);
   gap: 16px;
   align-items: start;
+
   transition: grid-template-columns 140ms steps(4, end);
 }
 
@@ -84,34 +96,10 @@ body.ts-shell-active #page-content{
   display: none;
 }
 
-#ts-sidebar{
-  position: sticky;
-  top: calc(var(--ts-header-h, 110px) + 14px);
-  align-self: start;
-  z-index: 2000;
-  overflow: hidden;
-  max-height: 2400px;
-  transition:
-    transform 140ms steps(4, end),
-    max-height 140ms steps(4, end);
-  will-change: transform;
-}
-
-#ts-sidebar .ts-sidebar-inner{
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
 @media (max-width: 980px){
   #ts-shell{
     grid-template-columns: 1fr;
     transition: none;
-  }
-
-  #ts-sidebar{
-    position: relative;
-    top: auto;
   }
 }
 
@@ -129,11 +117,14 @@ body.ts-shell-active #page-content{
       rgba(0,0,0,0) 1px,
       rgba(0,0,0,0) 4px
     );
+
   border: 4px solid rgba(0, 0, 0, 0.95);
+
   box-shadow:
     0 0 0 2px rgba(58, 70, 81, 0.95) inset,
     0 0 0 3px rgba(240, 91, 41, 0.22) inset,
     0 10px 0 rgba(0, 0, 0, 0.70);
+
   position: relative;
 }
 
@@ -146,7 +137,7 @@ body.ts-shell-active #page-content{
 }
 
 .ts-panel-title{
-  font-size: 13px;
+  font-size: 18px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin: 0 0 10px 0;
@@ -163,12 +154,14 @@ body.ts-shell-active #page-content{
   width: 100%;
   max-width: none;
   margin: 0;
-  padding: 30px 18px 0 18px;
+  padding: 4px 18px 0 18px;
+
   position: sticky;
   top: 0;
   z-index: 3000;
 }
 
+/* Dark backing behind the sticky header layer. */
 #ts-header::before{
   content: "";
   position: absolute;
@@ -176,6 +169,22 @@ body.ts-shell-active #page-content{
   background: rgba(12, 16, 20, 0.98);
   pointer-events: none;
   z-index: -1;
+}
+
+/* Fade-out strip under the header: content darkens and vanishes under the rail. */
+#ts-header::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -34px;
+  height: 34px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(12, 16, 20, 0.78),
+    rgba(12, 16, 20, 0.00)
+  );
 }
 
 #ts-header .ts-header-inner{
@@ -198,82 +207,16 @@ body.ts-shell-active #page-content{
 }
 
 /* -----------------------------------------------------
-   HEADER: SEARCH + FILTERS
+   HEADER RAIL + NAV TABS (QUIET CONTAINER)
 ----------------------------------------------------- */
 
-#ts-header .ts-search{
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-
-#ts-header .ts-search-row{
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 12px;
-  align-items: center;
-}
-
-#ts-header .ts-search-input{
-  width: 100%;
-}
-
-@media (max-width: 980px){
-  #ts-header .ts-search-row{
-    grid-template-columns: 1fr;
-  }
-}
-
-/* -----------------------------------------------------
-   HEADER: ACTIONS
------------------------------------------------------ */
-
-#ts-header .ts-actions{
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-/* -----------------------------------------------------
-   HEADER RAIL + BIG NAV TABS (QUIET CONTAINER)
-
-   Rules:
-   - Header frame is quieter than cards.
-   - No orange accents on the header frame.
-   - Orange is reserved for interactive states only.
-   - Nav tabs fill ~85–90% of header inner height.
------------------------------------------------------ */
-
-#ts-header{
-  position: sticky;
-}
-
-/* Fade-out strip under the header: content darkens and vanishes under the rail. */
-#ts-header::after{
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -34px;
-  height: 34px;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    rgba(12, 16, 20, 0.78),
-    rgba(12, 16, 20, 0.00)
-  );
-}
-
-/* Quiet header container frame (thinner than cards). */
 #ts-header .ts-banner{
   display: flex;
   align-items: stretch;
-  justify-content: space-between;
-  gap: 14px;
+  justify-content: flex-start;
+  gap: 36px;
 
-  padding: 10px 12px;
+  padding: 16px 12px;
 
   background-color: rgba(12, 16, 20, 0.98);
   background-image:
@@ -287,16 +230,19 @@ body.ts-shell-active #page-content{
 
   border: 3px solid rgba(0, 0, 0, 0.92);
 
-  /* Remove orange inset accents from the base panel. */
+  /* Quiet base (no orange until hover/active). */
   box-shadow:
     0 0 0 2px rgba(58, 70, 81, 0.75) inset,
     0 10px 0 rgba(0, 0, 0, 0.68);
 }
 
-/* Replace the base orange inner stroke with a subtle steel inner stroke. */
+/* Replace the default panel inner stroke with a subtle steel stroke. */
 #ts-header .ts-banner::after{
+  content: "";
+  position: absolute;
   inset: 6px;
   border: 2px solid rgba(58, 70, 81, 0.55);
+  pointer-events: none;
 }
 
 /* Left merged plaque: one slab, no nested frames. */
@@ -307,7 +253,14 @@ body.ts-shell-active #page-content{
 
   min-width: 220px;
   max-width: 520px;
-  flex: 1;
+  flex: 0 0 auto;
+  width: auto;
+
+  /* This pushes the logo button slightly inward from the rail edge. */
+  margin-left: 10px;
+
+  /* Slightly lifted like the tabs. */
+  transform: translateY(-4px);
 
   padding: 10px 12px;
 
@@ -320,6 +273,7 @@ body.ts-shell-active #page-content{
   background-color: rgba(14, 18, 22, 0.98);
 
   border: 3px solid rgba(0, 0, 0, 0.92);
+
   box-shadow:
     0 0 0 2px rgba(58, 70, 81, 0.65) inset,
     0 7px 0 rgba(0,0,0,0.70);
@@ -336,7 +290,8 @@ body.ts-shell-active #page-content{
 }
 
 #ts-header .ts-header-plaque:active{
-  transform: translateY(1px);
+  /* Keep the offset while pressing (do not override the base lift). */
+  transform: translateY(-3px);
   box-shadow:
     0 0 0 2px rgba(58, 70, 81, 0.65) inset,
     0 0 0 3px rgba(240, 91, 41, 0.40) inset,
@@ -359,7 +314,7 @@ body.ts-shell-active #page-content{
 }
 
 #ts-header .ts-header-guild{
-  font-size: 13px;
+  font-size: 28px;
   text-transform: uppercase;
   color: rgba(255,255,255,0.78);
   text-shadow: 1px 1px 0 rgba(0,0,0,0.85);
@@ -372,48 +327,44 @@ body.ts-shell-active #page-content{
   display: none !important;
 }
 
-#ts-header .ts-header-page-title{
-  font-size: 13px;
-  text-transform: uppercase;
-  color: var(--text-main);
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.85);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-#ts-header .ts-header-page-desc{
-  font-size: 10px;
-  color: rgba(240, 91, 41, 0.92);
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.85);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Nav row (right side). */
+/* Nav row (left side). */
 #ts-header .nav{
   display: flex;
-  align-items: stretch;
-  justify-content: flex-end;
-  gap: 12px;
-  margin: 0;
-  padding: 0;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  /* Tabs sit slightly lower than the logo plaque. */
+  padding-top: 6px;
+
+  /* Extra breathing room after the plaque. */
+  margin-left: 8px;
+
+  gap: 24px;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+
   flex: 0 0 auto;
 }
 
-/* Big raised slabs. */
+/* Big raised slabs (slightly smaller than the logo plaque). */
 #ts-header .nav a{
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  height: 54px;
-  padding: 0 24px;
-  min-width: 130px;
+  height: 42px;
+  padding: 0 26px;
+  min-width: 124px;
 
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: 24px;
+  font-weight: 1000;
+  letter-spacing: 0.08em;
   color: var(--text-main);
   text-shadow: 1px 1px 0 rgba(0,0,0,0.90);
 
@@ -470,15 +421,226 @@ body.ts-shell-active #page-content{
   }
 
   #ts-header .ts-header-plaque{
-    max-width: none;
-    width: 100%;
+    margin-left: 0;
   }
 
   #ts-header .nav{
     width: 100%;
     flex-wrap: wrap;
     justify-content: center;
+    margin-left: 0;
+    padding-top: 8px;
   }
+}
+
+/* -----------------------------------------------------
+   SIDEBAR (REWORKED)
+----------------------------------------------------- */
+
+#ts-sidebar{
+  position: sticky;
+  top: calc(var(--ts-header-h, 110px) + 14px);
+  align-self: start;
+  z-index: 2000;
+
+  overflow: hidden;
+  max-height: 2400px;
+
+  /* Sidebar has its own panel styling now. */
+  background-color: rgba(12, 16, 20, 0.98);
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.02) 0px,
+      rgba(255,255,255,0.02) 1px,
+      rgba(0,0,0,0) 1px,
+      rgba(0,0,0,0) 7px
+    );
+
+  border: 4px solid rgba(0,0,0,0.95);
+
+  box-shadow:
+    0 0 0 2px rgba(58, 70, 81, 0.85) inset,
+    0 0 0 3px rgba(240, 91, 41, 0.10) inset,
+    0 10px 0 rgba(0,0,0,0.72);
+
+  transition:
+    transform 140ms steps(4, end),
+    max-height 140ms steps(4, end);
+
+  will-change: transform;
+}
+
+#ts-sidebar::after{
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 2px solid rgba(58, 70, 81, 0.55);
+  pointer-events: none;
+}
+
+#ts-sidebar .ts-sidebar-inner{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding: 10px;
+}
+
+/* -----------------------------------------------------
+   SIDEBAR: OVERRIDE PANEL INNER STROKE (NO ORANGE)
+   Sidebar containers still use .ts-panel, so we must
+   override the global orange inner stroke locally.
+----------------------------------------------------- */
+
+#ts-sidebar .ts-panel{
+  box-shadow:
+    0 0 0 2px rgba(58, 70, 81, 0.72) inset,
+    0 10px 0 rgba(0, 0, 0, 0.65);
+}
+
+#ts-sidebar .ts-panel::after{
+  border: 2px solid rgba(58, 70, 81, 0.55);
+}
+
+
+@media (max-width: 980px){
+  #ts-sidebar{
+    position: relative;
+    top: auto;
+  }
+}
+
+/* Each block in the sidebar has the same "rail" feel. */
+#ts-sidebar .ts-sidebar-panel{
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.06),
+      rgba(0,0,0,0.16)
+    );
+  background-color: rgba(14, 18, 22, 0.98);
+
+  border: 3px solid rgba(0,0,0,0.92);
+  box-shadow:
+    0 0 0 2px rgba(58, 70, 81, 0.65) inset,
+    0 7px 0 rgba(0,0,0,0.70);
+
+  padding: 10px 10px 12px 10px;
+}
+
+#ts-sidebar .ts-sidebar-title{
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.80);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.88);
+  margin: 0;
+}
+
+#ts-sidebar .ts-sidebar-hint{
+  margin-top: 6px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.62);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.88);
+}
+
+#ts-sidebar .ts-sidebar-controls{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Sidebar sections (controls blocks). */
+#ts-sidebar .ts-side-section{
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.05),
+      rgba(0,0,0,0.18)
+    );
+  background-color: rgba(14, 18, 22, 0.98);
+
+  border: 3px solid rgba(0,0,0,0.92);
+  box-shadow:
+    0 0 0 2px rgba(58, 70, 81, 0.60) inset,
+    0 7px 0 rgba(0,0,0,0.68);
+
+  padding: 10px;
+}
+
+#ts-sidebar .ts-side-label{
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.75);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.88);
+
+  margin-bottom: 8px;
+
+  border-bottom: 2px solid rgba(58, 70, 81, 0.55);
+  padding-bottom: 6px;
+}
+
+#ts-sidebar .ts-side-content{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Inputs & selects inside the sidebar should always match the skin. */
+#ts-sidebar input[type="text"],
+#ts-sidebar input[type="search"],
+#ts-sidebar select{
+  width: 100%;
+  height: 44px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.06),
+      rgba(0,0,0,0.22)
+    );
+  background-color: rgba(12, 16, 20, 0.98);
+
+  border: 2px solid rgba(0,0,0,0.92);
+
+  box-shadow:
+    0 0 0 2px rgba(58, 70, 81, 0.55) inset;
+
+  color: rgba(255,255,255,0.85);
+  font-size: 16px;
+
+  padding: 0 12px;
+
+  outline: none;
+}
+
+#ts-sidebar input[type="text"]::placeholder,
+#ts-sidebar input[type="search"]::placeholder{
+  color: rgba(255,255,255,0.45);
+}
+
+#ts-sidebar input[type="text"]:focus,
+#ts-sidebar input[type="search"]:focus,
+#ts-sidebar select:focus{
+  box-shadow:
+    0 0 0 2px rgba(58, 70, 81, 0.55) inset,
+    0 0 0 3px rgba(240, 91, 41, 0.40) inset;
+}
+
+/* IMPORTANT: Shinydex adds its own select styling; force it to match the sidebar skin. */
+#ts-sidebar .shinydex-root select{
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.06),
+      rgba(0,0,0,0.22)
+    ) !important;
+  background-color: rgba(12, 16, 20, 0.98) !important;
+  border: 2px solid rgba(0,0,0,0.92) !important;
+  box-shadow: 0 0 0 2px rgba(58, 70, 81, 0.55) inset !important;
+  color: rgba(255,255,255,0.85) !important;
 }
 
 /* -----------------------------------------------------
@@ -488,7 +650,7 @@ body.ts-shell-active #page-content{
 #ts-collection-toggle{
   position: fixed;
   left: 18px;
-  top: 22px;
+  top: 28px;
   z-index: 4500;
 
   appearance: none;

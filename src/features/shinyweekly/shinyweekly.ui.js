@@ -2,7 +2,8 @@
 // v2.0.0-beta
 // ShinyWeekly UI rendering helpers. Overview (month/week tiles) + week detail (flip tiles cycling member + shinies).
 
-import { prettifyPokemonName, getPokemonDbShinyGifSrc } from '../../utils/utils.js';
+import { getMemberRoleEmblemSrc, getMemberSpriteSrc } from '../../domains/members/member.assets.js';
+import { renderWeeklyPokemonCard } from '../../ui/weekly-pokemon-card.js';
 
 function clearNode(node) {
   if (!node) return;
@@ -145,10 +146,19 @@ function getMembersSorted(week) {
   return list;
 }
 
-function spriteSrcForMemberKey(memberKey) {
+function getMemberMeta(memberMetaByKey, memberKey) {
   const key = normalize(memberKey);
-  if (!key) return 'img/symbols/questionmarksprite.png';
-  return `img/membersprites/${key}sprite.png`;
+  if (!key) return null;
+  const map = memberMetaByKey && typeof memberMetaByKey === 'object' ? memberMetaByKey : null;
+  return map && Object.prototype.hasOwnProperty.call(map, key) ? map[key] : null;
+}
+
+function getWeeklyMemberPoints(memberGroup, pokemonPointsMap) {
+  const shinies = Array.isArray(memberGroup && memberGroup.shinies) ? memberGroup.shinies : [];
+  return shinies.reduce((sum, s) => {
+    if (!s || s.run || s.lost) return sum;
+    return sum + getPokemonPoints(pokemonPointsMap, s.pokemon);
+  }, 0);
 }
 
 function classForNameLength(name) {
@@ -181,119 +191,44 @@ function getPokemonPoints(pokemonPointsMap, pokemonKey) {
   return Number.isFinite(n) ? n : 0;
 }
 
-function getPokemonInfoText(mon) {
-  if (!mon) return '-';
-  if (mon.lost) return 'Lost';
-  if (mon.safari) return 'Safari';
-  if (mon.secret) return 'Secret';
-  if (mon.alpha) return 'Alpha';
-  return '-';
-}
-
 function renderPokemonCard(mon, pokemonPointsMap, { signal } = {}) {
-  const pokemonKey = String((mon && mon.pokemon) || '');
-  const pokemonName = prettifyPokemonName(pokemonKey);
-
-  const points = getPokemonPoints(pokemonPointsMap, pokemonKey);
-  const tierToken = tierFromPoints(points);
-  const tierClass = tierToken === 'lm' ? 'tier-lm' : `tier-${tierToken}`;
-
-  const card = document.createElement('div');
-  card.className = ['unified-card', 'unified-card--pokemon', tierClass, mon && mon.lost ? 'is-unclaimed' : '']
-    .filter(Boolean)
-    .join(' ');
-
-  // Header
-  const header = el('div', 'unified-header');
-
-  const nameWrap = el('div', 'unified-name-wrap');
-  const nameEl = el('div', ['unified-name', classForNameLength(pokemonName)].filter(Boolean).join(' '), pokemonName);
-  nameWrap.appendChild(nameEl);
-  header.appendChild(nameWrap);
-
-  if (Number.isFinite(points) && points > 0) {
-    const value = el('div', 'unified-value');
-    value.setAttribute('aria-label', 'Points');
-
-    const span = el('span', 'unified-value-text', `${points}P`);
-    value.appendChild(span);
-    header.appendChild(value);
-  }
-
-  // Art
-  const art = el('div', 'unified-art');
-  art.setAttribute('aria-label', 'Art');
-
-  const artImg = document.createElement('img');
-  artImg.alt = pokemonName;
-  artImg.loading = 'lazy';
-  artImg.src = getPokemonDbShinyGifSrc(pokemonKey);
-
-  artImg.addEventListener(
-    'error',
-    () => {
-      artImg.src = 'img/symbols/questionmarksprite.png';
-    },
-    { signal }
-  );
-
-  art.appendChild(artImg);
-
-  // Info
-  const info = el('div', 'unified-info');
-  info.setAttribute('aria-label', 'Card info');
-
-  const infoTextEl = el('div', 'unified-info-text', getPokemonInfoText(mon));
-  info.appendChild(infoTextEl);
-
-  card.append(header, art, info);
-
-  // Variants (static indicators)
-  const variants = el('div', 'unified-variants');
-  variants.setAttribute('aria-label', 'Variants');
-
-  const flags = {
-    standard: true,
-    secret: Boolean(mon && mon.secret),
-    alpha: Boolean(mon && mon.alpha),
-    safari: Boolean(mon && mon.safari)
-  };
-
-  const order = [
-    { key: 'standard', iconSrc: 'img/symbols/singlesprite.png' },
-    { key: 'secret', iconSrc: 'img/symbols/secretshinysprite.png' },
-    { key: 'alpha', iconSrc: 'img/symbols/alphasprite.png' },
-    { key: 'safari', iconSrc: 'img/symbols/safarisprite.png' }
-  ];
-
-  order.forEach((v) => {
-    const active = Boolean(flags[v.key]);
-    const btn = el('div', ['variant-btn', active ? 'is-active' : 'is-disabled'].join(' '));
-
-    const icon = document.createElement('img');
-    icon.src = v.iconSrc;
-    icon.alt = '';
-    btn.appendChild(icon);
-    variants.appendChild(btn);
-  });
-
-  card.appendChild(variants);
-
-  return card;
+  return renderWeeklyPokemonCard(mon, pokemonPointsMap, { signal });
 }
 
-function renderMemberCard(memberGroup, { signal } = {}) {
+function renderMemberCard(memberGroup, pokemonPointsMap, memberMetaByKey, { signal } = {}) {
   const name = String((memberGroup && memberGroup.name) || '');
   const key = String((memberGroup && memberGroup.key) || '');
+
+  const meta = memberMetaByKey && Object.prototype.hasOwnProperty.call(memberMetaByKey, normalize(key))
+    ? memberMetaByKey[normalize(key)]
+    : null;
+
+  const roleEmblemSrc = getMemberRoleEmblemSrc(meta && meta.role);
+
+  const shinies = Array.isArray(memberGroup && memberGroup.shinies) ? memberGroup.shinies : [];
+  const weekPoints = shinies.reduce((sum, s) => {
+    if (!s || s.run || s.lost) return sum;
+    return sum + getPokemonPoints(pokemonPointsMap, s.pokemon);
+  }, 0);
 
   const card = el('div', 'unified-card unified-card--member');
 
   // Header
   const header = el('div', 'unified-header');
+
+  const headerLeft = el('div', 'unified-header-left');
+  const headerLeftImg = document.createElement('img');
+  headerLeftImg.src = roleEmblemSrc;
+  headerLeftImg.alt = '';
+  headerLeft.appendChild(headerLeftImg);
+
   const nameWrap = el('div', 'unified-name-wrap');
   const nameEl = el('div', ['unified-name', classForNameLength(name)].filter(Boolean).join(' '), name);
   nameWrap.appendChild(nameEl);
-  header.appendChild(nameWrap);
+
+  const value = el('div', 'unified-value', `${Number(weekPoints) || 0}P`);
+
+  header.append(headerLeft, nameWrap, value);
 
   // Art
   const art = el('div', 'unified-art');
@@ -302,21 +237,13 @@ function renderMemberCard(memberGroup, { signal } = {}) {
   const artImg = document.createElement('img');
   artImg.alt = name;
   artImg.loading = 'lazy';
-  artImg.src = spriteSrcForMemberKey(key);
-
-  artImg.addEventListener(
-    'error',
-    () => {
-      artImg.src = 'img/symbols/questionmarksprite.png';
-    },
-    { signal }
-  );
+  artImg.src = getMemberSpriteSrc(key, meta && meta.sprite);
 
   art.appendChild(artImg);
 
   // Info plate exists for layout; member modifier hides the text.
   const info = el('div', 'unified-info');
-  const infoTextEl = el('div', 'unified-info-text', `Shinies: ${(memberGroup && memberGroup.shinies || []).length}`);
+  const infoTextEl = el('div', 'unified-info-text', '');
   info.appendChild(infoTextEl);
 
   card.append(header, art, info);
@@ -324,7 +251,7 @@ function renderMemberCard(memberGroup, { signal } = {}) {
   return card;
 }
 
-function renderFlipTile(memberGroup, pokemonPointsMap, { signal } = {}) {
+function renderFlipTile(memberGroup, pokemonPointsMap, memberMetaByKey, { signal } = {}) {
   const wrap = el('div', 'shinyweekly-flip-tile');
 
   const shinies = Array.isArray(memberGroup && memberGroup.shinies) ? memberGroup.shinies : [];
@@ -334,7 +261,7 @@ function renderFlipTile(memberGroup, pokemonPointsMap, { signal } = {}) {
     clearNode(wrap);
 
     if (state === -1) {
-      wrap.appendChild(renderMemberCard(memberGroup, { signal }));
+      wrap.appendChild(renderMemberCard(memberGroup, pokemonPointsMap, memberMetaByKey, { signal }));
       return;
     }
 
@@ -493,7 +420,7 @@ function renderWeekHeader(target, week, { onBack } = {}, { signal } = {}) {
 
 export function renderWeekView(
   target,
-  { week, pokemonPointsMap, onBack } = {},
+  { week, pokemonPointsMap, memberMetaByKey, onBack } = {},
   { signal } = {}
 ) {
   clearNode(target);
@@ -521,7 +448,7 @@ export function renderWeekView(
   const grid = el('div', 'dex-grid');
 
   members.forEach((memberGroup) => {
-    grid.appendChild(renderFlipTile(memberGroup, pokemonPointsMap, { signal }));
+    grid.appendChild(renderFlipTile(memberGroup, pokemonPointsMap, memberMetaByKey, { signal }));
   });
 
   target.appendChild(grid);

@@ -12,6 +12,7 @@ import { computeHotwFromWeeks } from '../../domains/shinyweekly/hotw.ai.js';
 
 import { initPokemonDerivedDataOnce, getPokemonPointsMap } from '../../domains/pokemon/pokemon.data.js';
 import { buildShowcaseModel } from '../../domains/showcase/showcase.model.js';
+import { getMemberRoleEmblemSrc, getMemberSpriteSrc } from '../../domains/members/member.assets.js';
 
 import { tierFromPoints } from '../../ui/tier-map.js';
 import { prettifyPokemonName, getPokemonDbShinyGifSrc } from '../../utils/utils.js';
@@ -33,40 +34,78 @@ function pickRandom(list) {
   return arr[idx] || null;
 }
 
-function spriteSrcForMember(member) {
-  const key = member && member.key ? String(member.key) : '';
-  const ext = member && member.sprite ? String(member.sprite) : '';
-  if (key && ext) return `img/membersprites/${key}sprite.${ext}`;
-  return 'img/membersprites/examplesprite.png';
+function prettifyMethod(method) {
+  const m = normalize(method);
+  if (!m) return '';
+  if (m === 'single') return 'Single';
+  if (m === 'horde') return 'Horde';
+  if (m === 'egg') return 'Egg';
+  if (m === 'surf') return 'Surf';
+  return String(method).trim();
+}
+
+function buildShinyInfoText(s) {
+  const parts = [];
+
+  if (s && s.sold) parts.push('Sold');
+  else if (s && s.lost) parts.push('Lost');
+
+  const methodRaw = s && s.method ? String(s.method) : '';
+  const method = prettifyMethod(methodRaw);
+  if (method && !isSafariMethod(methodRaw)) parts.push(method);
+
+  if (s && s.secret) parts.push('Secret');
+  if (s && s.alpha) parts.push('Alpha');
+  if (isSafariMethod(s && s.method)) parts.push('Safari');
+
+  if (s && s.run) parts.push('Run');
+  if (s && s.favorite) parts.push('Fav');
+
+  const notes = s && s.notes ? String(s.notes).trim() : '';
+  const isAuto = notes && notes.toUpperCase().includes('AUTO-GENERATED');
+  if (notes && !isAuto) parts.push(notes.slice(0, 28));
+
+  return parts.length ? parts.join(' \u2022 ') : '\u2014';
+}
+
+function primaryVariantKeyForShiny(s) {
+  if (s && s.alpha) return 'alpha';
+  if (s && s.secret) return 'secret';
+  if (isSafariMethod(s && s.method)) return 'safari';
+  return 'standard';
 }
 
 function buildVariantsForShiny(shiny, infoText) {
   const s = shiny || {};
-  const safari = Boolean(s.safari) || isSafariMethod(s.method);
-
-  // Pick a single highlight as the active tab.
-  const primary = s.alpha ? 'alpha' : s.secret ? 'secret' : safari ? 'safari' : 'standard';
+  const safari = isSafariMethod(s && s.method);
+  const primary = primaryVariantKeyForShiny(s);
 
   return [
     { key: 'standard', enabled: true, infoText, active: primary === 'standard' },
-    { key: 'secret', enabled: Boolean(s.secret), infoText, active: primary === 'secret' },
-    { key: 'alpha', enabled: Boolean(s.alpha), infoText, active: primary === 'alpha' },
+    { key: 'secret', enabled: Boolean(s && s.secret), infoText, active: primary === 'secret' },
+    { key: 'alpha', enabled: Boolean(s && s.alpha), infoText, active: primary === 'alpha' },
     { key: 'safari', enabled: safari, infoText, active: primary === 'safari' }
   ];
 }
 
-function buildRandomOwnedShinyCandidatePool({ members, pokemonPointsMap } = {}) {
+function isInactiveShiny(s) {
+  return Boolean(s && (s.run || s.lost || s.sold));
+}
+
+function buildOwnedShinyCandidatePool({ members, pokemonPointsMap } = {}) {
   const list = Array.isArray(members) ? members : [];
   const pointsMap = pokemonPointsMap && typeof pokemonPointsMap === 'object' ? pokemonPointsMap : {};
 
   const candidates = [];
 
-  list.forEach(m => {
-    const owned = Array.isArray(m && m.ownedShinies) ? m.ownedShinies : [];
+  list.forEach(member => {
+    const owned = Array.isArray(member && member.ownedShinies) ? member.ownedShinies : [];
     if (!owned.length) return;
 
-    owned.forEach(s => {
-      const pokemonKey = s && s.pokemon ? String(s.pokemon).trim().toLowerCase() : '';
+    owned.forEach(shiny => {
+      if (!shiny || isInactiveShiny(shiny)) return;
+
+      const pokemonKey = shiny && shiny.pokemon ? String(shiny.pokemon).trim().toLowerCase() : '';
       if (!pokemonKey) return;
 
       const points = Number(pointsMap[pokemonKey]) || 0;
@@ -76,10 +115,8 @@ function buildRandomOwnedShinyCandidatePool({ members, pokemonPointsMap } = {}) 
         pokemonKey,
         points,
         tierToken,
-        ownerName: String(m && m.name || ''),
-        ownerKey: String(m && m.key || ''),
-        ownerSpriteSrc: spriteSrcForMember(m),
-        shiny: s
+        memberKey: String(member && member.key || '').trim().toLowerCase(),
+        shiny
       });
     });
   });
@@ -94,8 +131,8 @@ function pickWeightedRandomOwnedShiny(candidates) {
   // 80% -> LM / 0 / 1 / 2 / 3
   // 20% -> 4 / 5 / 6
   const rareTokens = new Set(['lm', '0', '1', '2', '3']);
-  const rarePool = list.filter(c => rareTokens.has(c.tierToken));
-  const commonPool = list.filter(c => !rareTokens.has(c.tierToken));
+  const rarePool = list.filter(c => rareTokens.has(String(c.tierToken)));
+  const commonPool = list.filter(c => !rareTokens.has(String(c.tierToken)));
 
   const useRare = Math.random() < 0.80;
   let pool = useRare ? rarePool : commonPool;
@@ -104,42 +141,83 @@ function pickWeightedRandomOwnedShiny(candidates) {
   return pickRandom(pool);
 }
 
-function buildRandomOwnedShinyItemsVm({ members, pokemonPointsMap } = {}) {
-  const candidates = buildRandomOwnedShinyCandidatePool({ members, pokemonPointsMap });
-  if (!candidates.length) return null;
+function buildSpotlightSamples({ members, membersByKey, pokemonPointsMap, sampleCount } = {}) {
+  const count = Number(sampleCount) || 24;
 
-  const items = [];
+  const candidates = buildOwnedShinyCandidatePool({
+    members,
+    pokemonPointsMap
+  });
 
-  for (let i = 0; i < 2; i += 1) {
+  if (!candidates.length) return [];
+
+  const samples = [];
+  const byKey = membersByKey && typeof membersByKey === 'object' ? membersByKey : {};
+
+  for (let i = 0; i < count; i += 1) {
     if (!candidates.length) break;
 
     const pick = pickWeightedRandomOwnedShiny(candidates);
     if (!pick) break;
 
-    // Remove exact pick to avoid duplicate render in the same panel.
     const idx = candidates.indexOf(pick);
     if (idx >= 0) candidates.splice(idx, 1);
 
-    const infoText = pick.ownerName || '';
+    const member = pick.memberKey && Object.prototype.hasOwnProperty.call(byKey, pick.memberKey)
+      ? byKey[pick.memberKey]
+      : null;
 
-    items.push({
-      ownerNameText: pick.ownerName,
-      ownerSpriteSrc: pick.ownerSpriteSrc,
-      cardProps: {
-        pokemonKey: pick.pokemonKey,
-        pokemonName: prettifyPokemonName(pick.pokemonKey),
-        artSrc: getPokemonDbShinyGifSrc(pick.pokemonKey),
-        points: pick.points,
-        infoText,
-        isCompact: true,
-        isUnclaimed: false,
-        variants: buildVariantsForShiny(pick.shiny, infoText)
-      }
-    });
+    if (!member) continue;
+
+    const memberPoints = Number(member && member.points) || 0;
+    const memberName = String(member && member.name || '').trim();
+
+    const memberCardProps = {
+      cardType: 'member',
+      pokemonKey: String(member && member.key || '').trim().toLowerCase(),
+      pokemonName: memberName,
+      artSrc: getMemberSpriteSrc(member && member.key, member && member.sprite),
+      points: memberPoints,
+      headerLeftIconSrc: getMemberRoleEmblemSrc(member && member.role),
+      headerRightText: `${memberPoints}P`,
+      infoText: '',
+      isUnclaimed: false,
+      showVariants: false
+    };
+
+    const infoText = buildShinyInfoText(pick.shiny);
+
+    const pokemonCardProps = {
+      pokemonKey: pick.pokemonKey,
+      pokemonName: prettifyPokemonName(pick.pokemonKey),
+      artSrc: getPokemonDbShinyGifSrc(pick.pokemonKey),
+      points: pick.points,
+      infoText,
+      isUnclaimed: false,
+      variants: buildVariantsForShiny(pick.shiny, infoText)
+    };
+
+    samples.push({ memberCardProps, pokemonCardProps });
   }
 
-  if (!items.length) return null;
-  return { items };
+  return samples;
+}
+
+function buildSpotlightVm({ members, membersByKey, pokemonPointsMap } = {}) {
+  const samples = buildSpotlightSamples({
+    members,
+    membersByKey,
+    pokemonPointsMap,
+    sampleCount: 30
+  });
+
+  if (!samples.length) return null;
+
+  return {
+    samples,
+    memberCardProps: samples[0].memberCardProps,
+    pokemonCardProps: samples[0].pokemonCardProps
+  };
 }
 
 function pad2(n) {
@@ -148,32 +226,89 @@ function pad2(n) {
   return String(v).padStart(2, '0');
 }
 
-function buildHotwVmFromResult(result) {
+function buildHotwVmFromResult(result, { weeks, pokemonPointsMap, membersByKey } = {}) {
   if (!result) return null;
 
   const winners = Array.isArray(result.winners) ? result.winners : [];
   if (!winners.length) return null;
 
   const weekText = result.weekNumber ? `WEEK ${pad2(result.weekNumber)}` : '';
-  const nameText = (Array.isArray(result.winnerNames) ? result.winnerNames : [])
-    .filter(Boolean)
-    .join(', ');
 
-  const sprites = winners
-    .map(w => ({ key: String(w && w.memberKey || ''), sprite: String(w && w.sprite || '') }))
-    .filter(w => w.key && w.sprite)
-    .map(w => `img/membersprites/${w.key}sprite.${w.sprite}`);
+  const primary = winners[0];
+  const winnerKey = String(primary && primary.memberKey || '').trim().toLowerCase();
+  if (!winnerKey) return null;
 
-  const totalPoints = Number(result.totalPoints) || 0;
-  const shinyCount = Number(result.shinyCount) || 0;
-  const statsText = `TOTAL: ${totalPoints}P / ${shinyCount} SHINIES`;
+  const member = membersByKey && Object.prototype.hasOwnProperty.call(membersByKey, winnerKey)
+    ? membersByKey[winnerKey]
+    : null;
+
+  const winnerName = String((member && member.name) || (primary && primary.memberName) || '').trim();
+  const winnerSpriteExt = (member && member.sprite) ? String(member.sprite) : String(primary && primary.sprite || '');
+  const winnerSpriteSrc = getMemberSpriteSrc(winnerKey, winnerSpriteExt);
+  const roleEmblemSrc = getMemberRoleEmblemSrc(member && member.role);
+
+  const weekPoints = Number(primary && primary.totalPoints) || 0;
+  const shinyCount = Number(primary && primary.shinyCount) || 0;
+  const statsText = `TOTAL: ${weekPoints}P / ${shinyCount} SHINIES`;
+
+  const memberCardProps = {
+    cardType: 'member',
+    pokemonKey: winnerKey,
+    pokemonName: winnerName,
+    artSrc: winnerSpriteSrc,
+    points: weekPoints,
+    headerLeftIconSrc: roleEmblemSrc,
+    headerRightText: `${weekPoints}P`,
+    infoText: weekText,
+    isUnclaimed: false,
+    showVariants: false
+  };
+
+  const weekModel = Array.isArray(weeks)
+    ? weeks.find(w => String(w && w.week || '').trim() === String(result.weekKey || '').trim())
+    : null;
+
+  const memberGroup = weekModel && weekModel.membersByOt && weekModel.membersByOt[winnerKey]
+    ? weekModel.membersByOt[winnerKey]
+    : null;
+
+  const allShinies = Array.isArray(memberGroup && memberGroup.shinies) ? memberGroup.shinies : [];
+
+  const entries = allShinies
+    .map((s, idx) => ({ s, idx }))
+    .filter(x => x.s);
+
+  const obtained = entries.filter(x => !(x.s.run || x.s.lost));
+  const missed = entries.filter(x => (x.s.run || x.s.lost));
+
+  const pointsMap = pokemonPointsMap && typeof pokemonPointsMap === 'object' ? pokemonPointsMap : {};
+
+  obtained.sort((a, b) => {
+    const ak = String(a.s.pokemon || '').trim().toLowerCase();
+    const bk = String(b.s.pokemon || '').trim().toLowerCase();
+    const ap = Number(pointsMap[ak]) || 0;
+    const bp = Number(pointsMap[bk]) || 0;
+    if (bp != ap) return bp - ap;
+    return a.idx - b.idx;
+  });
+
+  missed.sort((a, b) => a.idx - b.idx);
+
+  const deckEntries = obtained.slice(0, 3);
+  if (deckEntries.length < 3 && missed.length) {
+    deckEntries.push(...missed.slice(0, 3 - deckEntries.length));
+  }
+
+  const deckMons = deckEntries.map(x => x.s);
 
   return {
     titleText: 'Hunter of the Week',
-    nameText,
-    weekText,
+    nameText: winnerName,
     statsText,
-    sprites
+    weekText,
+    memberCardProps,
+    deckMons,
+    pokemonPointsMap
   };
 }
 
@@ -205,9 +340,10 @@ export async function fetchHomeViewModel(preloadedRows) {
       pokemonPoints: pokemonPointsMap
     });
 
-    // Random owned shiny cards (2 entries).
-    vm.randomShiny = buildRandomOwnedShinyItemsVm({
+    // Spotlight (member + owned shiny card) samples.
+    vm.spotlight = buildSpotlightVm({
       members: showcase && showcase.members,
+      membersByKey: showcase && showcase.byKey,
       pokemonPointsMap
     });
 
@@ -219,9 +355,13 @@ export async function fetchHomeViewModel(preloadedRows) {
       membersByKey: showcase && showcase.byKey
     });
 
-    vm.hotw = buildHotwVmFromResult(hotw);
+    vm.hotw = buildHotwVmFromResult(hotw, {
+      weeks,
+      pokemonPointsMap,
+      membersByKey: showcase && showcase.byKey
+    });
   } catch {
-    vm.randomShiny = null;
+    vm.spotlight = null;
     vm.hotw = null;
   }
 

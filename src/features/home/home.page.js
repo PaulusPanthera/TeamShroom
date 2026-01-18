@@ -1,6 +1,6 @@
 // src/features/home/home.page.js
 // v2.0.0-beta
-// Router-ready Home page entry (HQ widgets: Next Event, Bounty, HotW)
+// Router-ready Home page entry (HQ widgets: Next Event, Bounty, HotW, Spotlight)
 
 import { fetchHomeViewModel } from './home.js';
 import { renderLoading, renderError, renderContent } from './home.ui.js';
@@ -11,12 +11,6 @@ function assertValidRoot(root) {
   }
 }
 
-function safeText(value, fallback = '') {
-  if (value == null) return fallback;
-  const s = String(value).trim();
-  return s.length ? s : fallback;
-}
-
 function setSidebarCopy(sidebar) {
   if (!sidebar) return;
 
@@ -25,30 +19,13 @@ function setSidebarCopy(sidebar) {
   }
 
   if (typeof sidebar.setHint === 'function') {
-    sidebar.setHint('Event link, bounty target, and hunter spotlight.');
+    sidebar.setHint('Event info, bounty target, and hunter spotlight.');
   }
-}
 
-function renderSidebarSummary(sidebar, vm) {
-  if (!sidebar || typeof sidebar.setSections !== 'function') return;
-
-  const wrap = document.createElement('div');
-
-  const e = vm?.nextEvent;
-  const b = vm?.bounty;
-  const h = vm?.hotw;
-
-  const line1 = document.createElement('div');
-  line1.textContent = `Event: ${safeText(e?.timeText, '-')}`;
-
-  const line2 = document.createElement('div');
-  line2.textContent = `Bounty: ${safeText(b?.targetText, '-')}`;
-
-  const line3 = document.createElement('div');
-  line3.textContent = `HotW: ${safeText(h?.nameText, '-')}`;
-
-  wrap.append(line1, line2, line3);
-  sidebar.setSections([{ label: '', node: wrap }]);
+  // Ensure prior feature sidebar content is cleared.
+  if (typeof sidebar.setSections === 'function') {
+    sidebar.setSections([]);
+  }
 }
 
 export async function renderHomePage(ctx) {
@@ -63,8 +40,7 @@ export async function renderHomePage(ctx) {
 
   try {
     const vm = await fetchHomeViewModel(preloadedRows);
-    renderContent(root, vm);
-    renderSidebarSummary(sidebar, vm);
+    renderContent(root, vm, { signal: ctx?.signal });
   } catch {
     renderError(root);
 

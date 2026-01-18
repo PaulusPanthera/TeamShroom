@@ -2,6 +2,8 @@
 // v2.0.0-beta
 // Showcase presenter (sorting + filtering + view shapes)
 
+import { getMemberRoleEmblemSrc, getMemberSpriteSrc } from '../../domains/members/member.assets.js';
+
 function normalize(str) {
   return String(str || '').trim().toLowerCase();
 }
@@ -26,21 +28,6 @@ export function sortMembers(members, sortMode) {
   return list.sort((a, b) => String(a.name || '').localeCompare(String(b.name || '')));
 }
 
-function tierEmblemForRole(role) {
-  const r = normalize(role);
-  if (r === 'spore') return 'img/symbols/sporesprite.png';
-  if (r === 'shroom') return 'img/symbols/shroomsprite.png';
-  if (r === 'shinyshroom') return 'img/symbols/shinyshroomsprite.png';
-  return 'img/symbols/shroomsprite.png';
-}
-
-function spriteSrcForMember(member) {
-  const key = member && member.key ? String(member.key) : '';
-  const ext = member && member.sprite ? String(member.sprite) : '';
-  if (key && ext) return `img/membersprites/${key}sprite.${ext}`;
-  return 'img/membersprites/examplesprite.png';
-}
-
 export function buildMemberGalleryCardView(member, sortMode) {
   const name = member && member.name ? String(member.name) : '';
   const key = member && member.key ? String(member.key) : '';
@@ -49,8 +36,8 @@ export function buildMemberGalleryCardView(member, sortMode) {
     memberKey: key,
     name,
     points: Number(member && member.points) || 0,
-    tierEmblemSrc: tierEmblemForRole(member && member.role),
-    spriteSrc: spriteSrcForMember(member),
+    tierEmblemSrc: getMemberRoleEmblemSrc(member && member.role),
+    spriteSrc: getMemberSpriteSrc(key, member && member.sprite),
     sortMode
   };
 }

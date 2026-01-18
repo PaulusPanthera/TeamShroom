@@ -3,8 +3,10 @@
 // ShinyWeekly page entry. Loads weekly model and renders overview + week detail views inside the feature mount.
 
 import { loadShinyWeekly } from '../../data/shinyweekly.loader.js';
+import { loadMembers } from '../../data/members.loader.js';
 import { buildShinyWeeklyModel } from '../../domains/shinyweekly/shinyweekly.model.js';
 import { initPokemonDerivedDataOnce, getPokemonPointsMap } from '../../domains/pokemon/pokemon.data.js';
+import { normalizeMemberKey } from '../../domains/members/member.assets.js';
 
 import {
   renderWeeklyShell,
@@ -104,6 +106,11 @@ export async function renderShinyWeeklyPage(ctx) {
     let pokemonReady = false;
     let pokemonPointsMap = {};
 
+    // Weekly member cards must respect members.json sprite + role wiring.
+    // Load members locally and pass a meta-map into the UI.
+    let membersReady = false;
+    let memberMetaByKey = Object.create(null);
+
     const commitRender = () => {
       if (view === 'overview') {
         renderOverview(
@@ -124,8 +131,11 @@ export async function renderShinyWeeklyPage(ctx) {
 
       const week = weeks.find(w => w.week === selectedWeekKey) || null;
 
-      if (!pokemonReady) {
-        renderLoading(mainBody, { message: 'Loading Pokémon data...' });
+      if (!pokemonReady || !membersReady) {
+        const message = !pokemonReady
+          ? 'Loading Pokémon data...'
+          : 'Loading member data...';
+        renderLoading(mainBody, { message });
         return;
       }
 
@@ -134,6 +144,7 @@ export async function renderShinyWeeklyPage(ctx) {
         {
           week,
           pokemonPointsMap,
+          memberMetaByKey,
           onBack: () => {
             view = 'overview';
             commitRender();
@@ -152,6 +163,32 @@ export async function renderShinyWeeklyPage(ctx) {
       .catch(() => {
         pokemonReady = true;
         pokemonPointsMap = {};
+        if (view === 'week') commitRender();
+      });
+
+    Promise.resolve(loadMembers())
+      .then((rows) => {
+        const map = Object.create(null);
+
+        (Array.isArray(rows) ? rows : []).forEach((r) => {
+          const key = normalizeMemberKey(r && r.name);
+          if (!key) return;
+
+          map[key] = {
+            key,
+            name: String((r && r.name) || ''),
+            role: String((r && r.role) || ''),
+            sprite: (r && r.sprite != null) ? String(r.sprite) : null
+          };
+        });
+
+        memberMetaByKey = map;
+        membersReady = true;
+        if (view === 'week') commitRender();
+      })
+      .catch(() => {
+        memberMetaByKey = Object.create(null);
+        membersReady = true;
         if (view === 'week') commitRender();
       });
 

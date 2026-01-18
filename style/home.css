@@ -4,11 +4,13 @@
 
 .ts-home-grid{
   display: grid;
-  grid-template-columns: repeat(2, 533px);
-  grid-auto-rows: 333px;
-  gap: 16px;
+  grid-template-columns: repeat(2, 540px);
+  grid-auto-rows: auto;
+  column-gap: 40px;
+  row-gap: 16px;
   align-items: start;
   justify-content: start;
+  margin-left: 30px;
 }
 
 @media (max-width: 1200px){
@@ -19,8 +21,8 @@
 }
 
 .ts-home-panel{
-  width: 533px;
-  height: 333px;
+  width: 540px;
+  height: 380px;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -36,6 +38,7 @@
 .ts-home-panel .ts-panel-title{
   margin: 0;
   padding: 14px 14px 0 14px;
+  text-align: center;
 }
 
 .ts-home-panel-body{
@@ -45,8 +48,20 @@
   overflow: hidden;
 }
 
-.ts-home-panel-body--random{
-  overflow: hidden;
+/* Vertically center single-item panels (NEXT EVENT) */
+.ts-home-panel-body--center{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.ts-home-panel--hotw .ts-home-panel-body{
+  overflow: visible;
+}
+
+.ts-home-panel--spotlight .ts-home-panel-body{
+  overflow: visible;
 }
 
 .ts-home-gif{
@@ -98,44 +113,211 @@
   image-rendering: pixelated;
 }
 
-.ts-home-random-stack{
+/* --------------------------------------------------
+   HOTW: member card + weekly pokemon deck
+-------------------------------------------------- */
+
+.ts-home-hotw-layout{
+  height: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  gap: 18px;
+  align-items: center;
+  justify-content: center;
 }
 
-.ts-home-random-row{
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-}
-
-.ts-home-random-card{
+.ts-home-hotw-member{
   flex: 0 0 auto;
 }
 
-.ts-home-random-owner{
-  flex: 1;
-  min-width: 0;
+.ts-home-hotw-membercard.unified-card--member .unified-info-text{
+  /* Home HOTW wants the week label as a centered stamp. */
+  display: block;
+  font-family: "Press Start 2P", monospace;
+  font-size: 11px;
+  line-height: 1.1;
+  text-align: center;
+}
+
+/* Center the week label inside the member card info plate */
+.ts-home-hotw-membercard.unified-card--member .unified-info{
+  position: relative;
+}
+
+.ts-home-hotw-membercard.unified-card--member .unified-info-text{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.ts-home-hotw-deck{
+  flex: 0 0 auto;
+  height: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding-top: 4px;
+  align-items: center;
+  justify-content: center;
 }
 
-.ts-home-random-owner-sprite{
-  width: 84px;
-  height: 84px;
-  image-rendering: pixelated;
+.ts-home-card-deck{
+  position: relative;
+  width: var(--card-w);
+  height: var(--card-h);
 }
 
-.ts-home-random-owner-name{
-  font-size: 13px;
-  color: var(--text-main);
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.85);
+.ts-home-deck-card{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Softer shadow for stacked deck cards so lower borders stay visible */
+.ts-home-card-deck .ts-home-deck-card.unified-card{
+  box-shadow:
+    0 4px 0 var(--u-depth),
+    0 0 0 2px rgba(0,0,0,0.35) inset,
+    0 0 0 4px rgba(0,0,0,0.45) inset;
+}
+
+.ts-home-card-deck .ts-home-deck-card:nth-child(1){
+  z-index: 3;
+  transform: translate(0px, 0px);
+}
+
+.ts-home-card-deck .ts-home-deck-card:nth-child(2){
+  z-index: 2;
+  /* Subtle overlap: only tease the border. */
+  transform: translate(8px, 6px);
+}
+
+.ts-home-card-deck .ts-home-deck-card:nth-child(3){
+  z-index: 1;
+  transform: translate(16px, 12px);
+}
+
+.ts-home-card-deck{
+  cursor: pointer;
+}
+
+/* --------------------------------------------------
+   SPOTLIGHT: member card + owned shiny card
+-------------------------------------------------- */
+
+.ts-home-spotlight-layout{
+  height: 100%;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: center;
+}
+
+.ts-home-spotlight-member,
+.ts-home-spotlight-pokemon{
+  flex: 0 0 auto;
+}
+
+.ts-home-spotlight-membercard,
+.ts-home-spotlight-pokemoncard{
+  cursor: pointer;
 }
 
 .ts-home-empty{
   font-size: 12px;
   opacity: 0.85;
+}
+
+/* --------------------------------------------------
+   DISCORD EVENT PREVIEW (Home)
+-------------------------------------------------- */
+
+/* Sidebar placement */
+#ts-sidebar .ts-discord-event-preview{
+  width: 100%;
+}
+
+#ts-sidebar .ts-discord-event-preview__link,
+.ts-home-panel .ts-discord-event-preview__link{
+  display: block;
+  position: relative;
+  padding: 10px 10px 10px 14px;
+
+  text-decoration: none;
+  color: var(--text-main);
+
+  background-color: rgba(8, 12, 16, 0.92);
+  border: 2px solid rgba(0,0,0,0.88);
+  box-shadow:
+    0 0 0 2px rgba(58, 70, 81, 0.35) inset,
+    0 6px 0 rgba(0,0,0,0.55);
+}
+
+#ts-sidebar .ts-discord-event-preview__link::before,
+.ts-home-panel .ts-discord-event-preview__link::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background-color: rgba(240, 91, 41, 0.90);
+}
+
+#ts-sidebar .ts-discord-event-preview__link:hover,
+#ts-sidebar .ts-discord-event-preview__link:focus,
+.ts-home-panel .ts-discord-event-preview__link:hover,
+.ts-home-panel .ts-discord-event-preview__link:focus{
+  box-shadow:
+    0 0 0 2px rgba(58, 70, 81, 0.35) inset,
+    0 6px 0 rgba(0,0,0,0.55),
+    0 0 0 3px rgba(240, 91, 41, 0.45);
+}
+
+#ts-sidebar .ts-discord-event-preview__badge,
+.ts-home-panel .ts-discord-event-preview__badge{
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  opacity: 0.9;
+  margin-bottom: 6px;
+}
+
+#ts-sidebar .ts-discord-event-preview__title,
+.ts-home-panel .ts-discord-event-preview__title{
+  font-size: 14px;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.85);
+  margin-bottom: 6px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#ts-sidebar .ts-discord-event-preview__time,
+.ts-home-panel .ts-discord-event-preview__time{
+  font-size: 12px;
+  opacity: 0.95;
+  margin-bottom: 6px;
+}
+
+#ts-sidebar .ts-discord-event-preview__sub,
+.ts-home-panel .ts-discord-event-preview__sub{
+  font-size: 12px;
+  opacity: 0.85;
+  margin-bottom: 6px;
+}
+
+.ts-home-panel .ts-discord-event-preview__cta,
+#ts-sidebar .ts-discord-event-preview__cta{
+  display: inline-block;
+  margin-top: 6px;
+  padding: 6px 8px;
+
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+
+  background-color: rgba(240, 91, 41, 0.18);
+  border: 2px solid rgba(0,0,0,0.90);
+  box-shadow:
+    0 0 0 2px rgba(58, 70, 81, 0.20) inset,
+    0 4px 0 rgba(0,0,0,0.55);
 }

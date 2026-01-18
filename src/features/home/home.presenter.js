@@ -2,6 +2,8 @@
 // v2.0.0-beta
 // Home presenter: normalize raw JSON row into a stable view-model
 
+const DEFAULT_DISCORD_EVENT_URL = 'https://discord.com/events/1178448989566283779/1462228724794658917';
+
 function asText(value) {
   if (value == null) return '';
   const s = String(value).trim();
@@ -14,11 +16,15 @@ function asObj(value) {
 
 function normalizeEvent(raw) {
   const e = asObj(raw);
+
+  const rawUrl = asText(e.url) || '';
+  const url = rawUrl && !rawUrl.includes('<') ? rawUrl : DEFAULT_DISCORD_EVENT_URL;
+
   return {
     titleText: asText(e.title) || 'Next Event',
     subtitleText: asText(e.subtitle) || '',
     timeText: asText(e.timeText) || '',
-    url: asText(e.url) || '',
+    url,
     gifSrc: asText(e.gifSrc) || ''
   };
 }

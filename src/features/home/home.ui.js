@@ -1,8 +1,11 @@
 // src/features/home/home.ui.js
 // v2.0.0-beta
-// Home UI renderer: HQ widgets (Next Event / Bounty / HotW / Random Shiny)
+// Home UI renderer: HQ widgets (Next Event / Bounty / HotW / Spotlight)
 
 import { renderUnifiedCard } from '../../ui/unifiedcard.js';
+import { renderWeeklyPokemonCard } from '../../ui/weekly-pokemon-card.js';
+
+const DISCORD_NEXT_EVENT_URL = 'https://discord.com/events/1178448989566283779/1462228724794658917';
 
 function el(tag, className) {
   const node = document.createElement(tag);
@@ -12,8 +15,7 @@ function el(tag, className) {
 
 function safeText(value) {
   if (value == null) return '';
-  const s = String(value).trim();
-  return s;
+  return String(value).trim();
 }
 
 function renderPanelTitle(text) {
@@ -68,32 +70,44 @@ function renderNextEventPanel(vm) {
 
   const body = el('div', 'ts-home-panel-body');
 
-  const gif = renderGifLink({
-    href: safeText(vm?.url),
-    gifSrc: safeText(vm?.gifSrc),
-    altText: safeText(vm?.titleText)
-  });
+  const rawUrl = safeText(vm?.url);
+  const href = rawUrl && !rawUrl.includes('<') ? rawUrl : DISCORD_NEXT_EVENT_URL;
 
-  if (gif) body.appendChild(gif);
+  const title = safeText(vm?.title) || safeText(vm?.titleText) || 'Next Event';
+  const time = safeText(vm?.timeText) || 'Open event link';
+  const sub = safeText(vm?.subtitle) || safeText(vm?.subtitleText) || '';
 
-  const title = safeText(vm?.titleText);
-  const time = safeText(vm?.timeText);
-  const sub = safeText(vm?.subtitleText);
+  const preview = el('div', 'ts-discord-event-preview');
 
-  const lines = renderKeyValueLines([
-    title && title !== 'Next Event' ? title : '',
-    time,
-    sub
-  ]);
+  const link = document.createElement('a');
+  link.className = 'ts-discord-event-preview__link';
+  link.href = href;
+  link.target = '_blank';
+  link.rel = 'noreferrer noopener';
 
-  if (lines.childNodes.length) body.appendChild(lines);
+  const badge = el('div', 'ts-discord-event-preview__badge');
+  badge.textContent = 'DISCORD EVENT';
 
-  // Fallback if no gif and no text
-  if (!gif && !lines.childNodes.length) {
-    const empty = el('div', 'ts-home-empty');
-    empty.textContent = 'No event scheduled.';
-    body.appendChild(empty);
+  const titleEl = el('div', 'ts-discord-event-preview__title');
+  titleEl.textContent = title;
+
+  const timeEl = el('div', 'ts-discord-event-preview__time');
+  timeEl.textContent = time;
+
+  link.append(badge, titleEl, timeEl);
+
+  if (sub) {
+    const subEl = el('div', 'ts-discord-event-preview__sub');
+    subEl.textContent = sub;
+    link.appendChild(subEl);
   }
+
+  const cta = el('div', 'ts-discord-event-preview__cta');
+  cta.textContent = 'OPEN EVENT';
+  link.appendChild(cta);
+
+  preview.appendChild(link);
+  body.appendChild(preview);
 
   panel.appendChild(body);
   return panel;
@@ -132,50 +146,75 @@ function renderBountyPanel(vm) {
   return panel;
 }
 
+function shuffleDeckInPlace(deckEl) {
+  if (!deckEl || deckEl.childElementCount < 2) return;
+
+  const nodes = Array.from(deckEl.children);
+  for (let i = nodes.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = nodes[i];
+    nodes[i] = nodes[j];
+    nodes[j] = tmp;
+  }
+
+  deckEl.replaceChildren();
+  nodes.forEach(n => deckEl.appendChild(n));
+}
+
 function renderHotwPanel(vm) {
-  const panel = el('div', 'ts-panel ts-home-panel');
+  const panel = el('div', 'ts-panel ts-home-panel ts-home-panel--hotw');
   panel.appendChild(renderPanelTitle('HUNTER OF THE WEEK'));
 
   const body = el('div', 'ts-home-panel-body');
 
-  const sprites = Array.isArray(vm?.sprites) ? vm.sprites : [];
-  const fallbackSprite = safeText(vm?.gifSrc) || safeText(vm?.spriteSrc);
+  const memberCardProps = vm && vm.memberCardProps ? vm.memberCardProps : null;
+  const deckMons = Array.isArray(vm && vm.deckMons) ? vm.deckMons : [];
+  const pointsMap = vm && vm.pokemonPointsMap ? vm.pokemonPointsMap : null;
 
-  if (sprites.length || fallbackSprite) {
-    const spriteWrap = el('div', 'ts-home-hotw-sprite');
+  if (memberCardProps) {
+    const layout = el('div', 'ts-home-hotw-layout');
 
-    const renderSpriteImg = (src, altText) => {
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = safeText(altText) || '';
-      img.loading = 'lazy';
-      spriteWrap.appendChild(img);
-    };
+    const memberWrap = el('div', 'ts-home-hotw-member');
 
-    if (sprites.length) {
-      sprites
-        .map(safeText)
-        .filter(Boolean)
-        .slice(0, 4)
-        .forEach(src => renderSpriteImg(src, safeText(vm?.nameText)));
+    const deckWrap = el('div', 'ts-home-hotw-deck');
+    const deck = el('div', 'ts-home-card-deck');
+
+    // Click-to-cycle: rotate the visible deck order (no data reload).
+    deck.addEventListener('click', (e) => {
+      if (e && e.target && e.target.closest && e.target.closest('.variant-btn')) return;
+      if (deck.childElementCount < 2) return;
+      const first = deck.firstElementChild;
+      if (first) deck.appendChild(first);
+    });
+
+    const memberCard = renderUnifiedCard(memberCardProps);
+    memberCard.classList.add('ts-home-hotw-membercard');
+
+    // Clicking the member card shuffles the HOTW deck cards.
+    memberCard.addEventListener('click', (e) => {
+      if (e && e.target && e.target.closest && e.target.closest('.variant-btn')) return;
+      shuffleDeckInPlace(deck);
+    });
+
+    memberWrap.appendChild(memberCard);
+
+    if (deckMons.length && pointsMap) {
+      deckMons.slice(0, 3).forEach(mon => {
+        const card = renderWeeklyPokemonCard(mon, pointsMap);
+        card.classList.add('ts-home-deck-card');
+        deck.appendChild(card);
+      });
     } else {
-      renderSpriteImg(fallbackSprite, safeText(vm?.nameText));
+      const emptyDeck = el('div', 'ts-home-empty');
+      emptyDeck.textContent = 'No shinies logged.';
+      deckWrap.appendChild(emptyDeck);
     }
 
-    body.appendChild(spriteWrap);
-  }
+    if (deck.childNodes.length) deckWrap.appendChild(deck);
 
-  const statsText = safeText(vm?.statsText) || safeText(vm?.reasonText);
-
-  const lines = renderKeyValueLines([
-    safeText(vm?.nameText),
-    safeText(vm?.weekText),
-    statsText
-  ]);
-
-  if (lines.childNodes.length) body.appendChild(lines);
-
-  if (!(sprites.length || fallbackSprite) && !lines.childNodes.length) {
+    layout.append(memberWrap, deckWrap);
+    body.appendChild(layout);
+  } else {
     const empty = el('div', 'ts-home-empty');
     empty.textContent = 'No selection yet.';
     body.appendChild(empty);
@@ -185,56 +224,72 @@ function renderHotwPanel(vm) {
   return panel;
 }
 
-function renderRandomShinyRow(item) {
-  const row = el('div', 'ts-home-random-row');
+function renderSpotlightPanel(spotlightVm, { signal } = {}) {
+  const panel = el('div', 'ts-panel ts-home-panel ts-home-panel--spotlight');
+  panel.appendChild(renderPanelTitle('SPOTLIGHT'));
 
-  const cardProps = item && item.cardProps ? item.cardProps : null;
-  if (!cardProps) return row;
+  const body = el('div', 'ts-home-panel-body');
 
-  const card = renderUnifiedCard(cardProps);
-  card.classList.add('ts-home-random-card');
+  const samples = Array.isArray(spotlightVm?.samples) ? spotlightVm.samples : [];
 
-  const side = el('div', 'ts-home-random-owner');
-
-  const ownerSprite = safeText(item && item.ownerSpriteSrc);
-  if (ownerSprite) {
-    const img = document.createElement('img');
-    img.className = 'ts-home-random-owner-sprite';
-    img.src = ownerSprite;
-    img.alt = safeText(item && item.ownerNameText) || '';
-    img.loading = 'lazy';
-    side.appendChild(img);
-  }
-
-  const ownerName = safeText(item && item.ownerNameText);
-  if (ownerName) {
-    const name = el('div', 'ts-home-random-owner-name');
-    name.textContent = ownerName;
-    side.appendChild(name);
-  }
-
-  row.append(card, side);
-  return row;
-}
-
-function renderRandomShinyPanel(vm) {
-  const panel = el('div', 'ts-panel ts-home-panel');
-  panel.appendChild(renderPanelTitle('RANDOM OWNED SHINIES'));
-
-  const body = el('div', 'ts-home-panel-body ts-home-panel-body--random');
-
-  const items = Array.isArray(vm?.items) ? vm.items : [];
-
-  if (items.length) {
-    const stack = el('div', 'ts-home-random-stack');
-    items.forEach(item => {
-      stack.appendChild(renderRandomShinyRow(item));
-    });
-    body.appendChild(stack);
-  } else {
+  if (!samples.length) {
     const empty = el('div', 'ts-home-empty');
     empty.textContent = 'No owned shinies available.';
     body.appendChild(empty);
+    panel.appendChild(body);
+    return panel;
+  }
+
+  const layout = el('div', 'ts-home-spotlight-layout');
+  const memberWrap = el('div', 'ts-home-spotlight-member');
+  const pokemonWrap = el('div', 'ts-home-spotlight-pokemon');
+
+  layout.append(memberWrap, pokemonWrap);
+  body.appendChild(layout);
+
+  let idx = 0;
+
+  const applySample = (sample) => {
+    if (!sample) return;
+
+    memberWrap.replaceChildren();
+    pokemonWrap.replaceChildren();
+
+    const memberCardProps = sample.memberCardProps || null;
+    const pokemonCardProps = sample.pokemonCardProps || null;
+
+    if (memberCardProps) {
+      const card = renderUnifiedCard(memberCardProps);
+      card.classList.add('ts-home-spotlight-membercard');
+      card.addEventListener('click', (e) => {
+        if (e && e.target && e.target.closest && e.target.closest('.variant-btn')) return;
+        idx = (idx + 1) % samples.length;
+        applySample(samples[idx]);
+      });
+      memberWrap.appendChild(card);
+    }
+
+    if (pokemonCardProps) {
+      const card = renderUnifiedCard(pokemonCardProps);
+      card.classList.add('ts-home-spotlight-pokemoncard');
+      card.addEventListener('click', (e) => {
+        if (e && e.target && e.target.closest && e.target.closest('.variant-btn')) return;
+        idx = (idx + 1) % samples.length;
+        applySample(samples[idx]);
+      });
+      pokemonWrap.appendChild(card);
+    }
+  };
+
+  applySample(samples[idx]);
+
+  const intervalId = window.setInterval(() => {
+    idx = (idx + 1) % samples.length;
+    applySample(samples[idx]);
+  }, 5000);
+
+  if (signal && typeof signal.addEventListener === 'function') {
+    signal.addEventListener('abort', () => window.clearInterval(intervalId), { once: true });
   }
 
   panel.appendChild(body);
@@ -259,15 +314,20 @@ export function renderError(root) {
   root.replaceChildren(panel);
 }
 
-export function renderContent(root, viewModel) {
+export function renderContent(root, viewModel, options = {}) {
   if (!root) return;
 
   const grid = el('div', 'ts-home-grid');
 
-  grid.appendChild(renderNextEventPanel(viewModel?.nextEvent));
+  // Layout order:
+  // Top-left: Spotlight
+  // Top-right: Bounty
+  // Bottom-left: HOTW
+  // Bottom-right: Next Event
+  grid.appendChild(renderSpotlightPanel(viewModel?.spotlight, { signal: options?.signal }));
   grid.appendChild(renderBountyPanel(viewModel?.bounty));
   grid.appendChild(renderHotwPanel(viewModel?.hotw));
-  grid.appendChild(renderRandomShinyPanel(viewModel?.randomShiny));
+  grid.appendChild(renderNextEventPanel(viewModel?.nextEvent));
 
   root.replaceChildren(grid);
 }
