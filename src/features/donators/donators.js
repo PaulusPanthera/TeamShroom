@@ -1,72 +1,17 @@
 // src/features/donators/donators.js
 // v2.0.0-beta
-// Donators page controller (boot + stable loading/error states)
+// Static Donators data wiring (load raw rows -> presenter view model)
 
+import { loadDonators } from '../../data/donators.loader.js';
 import { buildDonatorsViewModel } from './donators.presenter.js';
-import {
-  renderDonatorsPage,
-  renderDonatorsLoading,
-  renderDonatorsError
-} from './donators.ui.js';
 
-function isDonatorsRoute() {
-  return String(location.hash || '').toLowerCase() === '#donators';
-}
-
-function getContentEl() {
-  return document.getElementById('page-content');
-}
-
-function scheduleLoadingState() {
-  if (!isDonatorsRoute()) return;
-
-  // Schedule after the router clears content and starts async fetch.
-  setTimeout(() => {
-    if (!isDonatorsRoute()) return;
-
-    const content = getContentEl();
-    if (!content) return;
-
-    // If real page has already rendered, do nothing.
-    const existingRoot = content.querySelector('.donators-root');
-    if (existingRoot && !existingRoot.dataset?.donatorsState) return;
-
-    // Only show loading if the container is empty or still in a state view.
-    if (content.childElementCount === 0 || content.querySelector('[data-donators-state]')) {
-      renderDonatorsLoading();
-    }
-  }, 0);
-}
-
-function showErrorState(err) {
-  if (!isDonatorsRoute()) return;
-
-  const content = getContentEl();
-  if (!content) return;
-
-  // Only override if we are still loading or empty.
-  const stateEl = content.querySelector('[data-donators-state]');
-  if (content.childElementCount !== 0 && !stateEl) return;
-
-  const msg = (err && (err.message || err.toString())) ? String(err.message || err.toString()) : '';
-  renderDonatorsError(msg);
-}
-
-// Loading and error guards without touching global router.
-window.addEventListener('hashchange', scheduleLoadingState);
-window.addEventListener('DOMContentLoaded', scheduleLoadingState);
-
-// Catch async router failures (fetch/version/JSON issues) when on Donators.
-window.addEventListener('unhandledrejection', (e) => {
-  showErrorState(e && e.reason);
-});
-
-window.addEventListener('error', (e) => {
-  // Fallback for non-promise errors.
-  showErrorState(e && (e.error || e.message));
-});
-
-export function setupDonatorsPage({ donatorsRows }) {
-  const vm = buildDonatorsViewModel(donatorsRows);
-  renderDonatorsPage(vm);
+/**
+ * Loads /data/donators.json rows via src/data/donators.loader.js.
+ * Builds and returns a deterministic presenter view model.
+ *
+ * If `rowsOverride` is an array, it is used instead of fetching.
+ */
+export async function fetchDonatorsViewModel(rowsOverride) {
+  const rows = Array.isArray(rowsOverride) ? rowsOverride : await loadDonators();
+  return buildDonatorsViewModel(rows);
 }

@@ -1,8 +1,11 @@
 // src/features/donators/donators.presenter.js
 // v2.0.0-beta
-// Donators presenter (builds deterministic view model for sidebar, leaderboard, and recent list)
+// Donators presenter (builds deterministic view model for leaderboard + recent)
 
-import { buildDonatorsModel } from '../../domains/donators/donators.model.js';
+import {
+  buildDonatorsModel,
+  getRecentDonations
+} from '../../domains/donators/donators.model.js';
 
 export const DONATOR_TIERS = {
   top: {
@@ -61,22 +64,13 @@ export function formatNumber(value) {
 export function formatDonationDate(dt) {
   if (!dt) return '-';
   const raw = String(dt).trim();
+
+  // Keep already-normalized dates stable (most common)
   if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw;
+
+  // Fallback: parse + emit YYYY-MM-DD when possible
   const d = new Date(raw);
-  return isNaN(d.getTime()) ? raw : d.toISOString().slice(0, 10);
-}
-
-function safeDateMs(input) {
-  const ms = Date.parse(String(input || ''));
-  return Number.isFinite(ms) ? ms : 0;
-}
-
-function buildRecentList(donations, limit) {
-  const list = Array.isArray(donations) ? donations : [];
-  return [...list]
-    .filter(d => d && d.date)
-    .sort((a, b) => safeDateMs(b.date) - safeDateMs(a.date))
-    .slice(0, limit);
+  return Number.isNaN(d.getTime()) ? raw : d.toISOString().slice(0, 10);
 }
 
 function formatRank(index) {
@@ -87,35 +81,51 @@ function buildRecentDonationText(row) {
   return row?.donation ? String(row.donation).trim() : 'Pokéyen';
 }
 
-export function buildDonatorsViewModel(donations) {
-  const model = buildDonatorsModel(donations);
-  const donorCount = Array.isArray(model.ranked) ? model.ranked.length : 0;
-  const recent = buildRecentList(model.donations, 20);
+/**
+ * Input: Array<{ date: string, name: string, donation: string|null, value: number }>
+ * Output: Presenter view model
+ */
+export function buildDonatorsViewModel(rows) {
+  const model = buildDonatorsModel(rows);
+
+  const ranked = Array.isArray(model.ranked) ? model.ranked : [];
+  const donations = Array.isArray(model.donations) ? model.donations : [];
+
+  const donorCount = ranked.length;
+  const totalDonated = Number(model.totalDonated) || 0;
+
+  // Deterministic sorting is delegated to the domain helper
+  const recentRows = getRecentDonations(donations, 20);
 
   return {
     summary: {
       totalDonorsText: formatNumber(donorCount),
-      totalDonatedText: formatNumber(model.totalDonated || 0)
+      totalDonatedText: formatNumber(totalDonated)
     },
 
-    ranked: (Array.isArray(model.ranked) ? model.ranked : []).map((d, index) => {
+    // UI naming: leaderboard + recent
+    leaderboard: ranked.map((d, index) => {
       const tierKey = d?.tier || 'none';
+      const meta = DONATOR_TIERS[tierKey] || DONATOR_TIERS.none;
+
       return {
         placementText: formatRank(index),
-        name: d?.name || '',
+        nameText: d?.name ? String(d.name) : '',
         totalText: formatNumber(d?.total || 0),
         tierKey,
-        tierMeta: DONATOR_TIERS[tierKey] || DONATOR_TIERS.none
+        tierLabel: meta.label,
+        tierIcon: meta.icon,
+        tierDesc: meta.desc
       };
     }),
 
-    recent: recent.map(r => ({
+    recent: recentRows.map(r => ({
       dateText: formatDonationDate(r.date),
-      name: r.name || '',
-      typeLabel: r.donation ? 'Item' : 'Pokéyen',
+      nameText: r?.name ? String(r.name) : '',
+      typeLabel: r?.donation ? 'Item' : 'Pokéyen',
       donationText: buildRecentDonationText(r),
-      valueText: formatNumber(r.value || 0),
-      isItem: Boolean(r.donation)
+      valueText: formatNumber(r?.value || 0),
+      isItem: Boolean(r?.donation)
     })),
 
     tiers: ['top', 'diamond', 'platinum', 'gold', 'silver', 'bronze'].map(key => {
@@ -130,6 +140,6 @@ export function buildDonatorsViewModel(donations) {
       };
     }),
 
-    hasData: Array.isArray(model.donations) && model.donations.length > 0
+    hasData: donations.length > 0
   };
 }

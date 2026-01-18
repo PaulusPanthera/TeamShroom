@@ -35,7 +35,7 @@ export function buildShinyDexModel(weeklyModel) {
     members.forEach(member => {
       const shinies = member && Array.isArray(member.shinies) ? member.shinies : [];
       shinies.forEach(shiny => {
-        if (!shiny || shiny.lost) return;
+        if (!shiny || shiny.lost || shiny.run) return;
         events.push({
           member: shiny.member,
           pokemon: (shiny.pokemon || '').toLowerCase()
@@ -44,9 +44,10 @@ export function buildShinyDexModel(weeklyModel) {
     });
   });
 
-  // CLAIM RESOLUTION (FAMILY ROOT → NEXT UNCLAIMED STAGE, PROGRESSIVE)
-  // NOTE: pokemonFamilies here are FAMILY ROOTS from CI, not evo stages.
-  // We still lock by "root", and claim species in dex order per root.
+  // CLAIM RESOLUTION
+  // Rule:
+  // 1) Claim the exact caught species first (if unclaimed).
+  // 2) If it is already claimed, claim the FIRST unclaimed Pokemon in the same family (dex-ordered).
   const claimedByPokemon = {};
   const claimedSlotsByRoot = {};
 
@@ -79,19 +80,26 @@ export function buildShinyDexModel(weeklyModel) {
 
     if (!claimedSlotsByRoot[root]) claimedSlotsByRoot[root] = {};
 
-    // next unclaimed stage within this root (dex-ordered)
-    let nextStage = null;
+    // 1) Exact species first
+    if (!claimedSlotsByRoot[root][mon]) {
+      claimedSlotsByRoot[root][mon] = event.member;
+      claimedByPokemon[mon] = event.member;
+      return;
+    }
+
+    // 2) Fallback: first unclaimed within this family root (dex-ordered)
+    let fallback = null;
     for (let i = 0; i < stages.length; i++) {
       const stage = stages[i];
       if (!claimedSlotsByRoot[root][stage]) {
-        nextStage = stage;
+        fallback = stage;
         break;
       }
     }
-    if (!nextStage) return;
+    if (!fallback) return;
 
-    claimedSlotsByRoot[root][nextStage] = event.member;
-    claimedByPokemon[nextStage] = event.member;
+    claimedSlotsByRoot[root][fallback] = event.member;
+    claimedByPokemon[fallback] = event.member;
   });
 
   return order.map(pokemon => ({

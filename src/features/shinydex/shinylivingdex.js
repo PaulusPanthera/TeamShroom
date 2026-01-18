@@ -19,7 +19,8 @@ function applyFloatingSectionStyle(sectionEl) {
 
 export function renderLivingDexFromModel(model, opts) {
   const container = document.getElementById('shiny-dex-container');
-  container.innerHTML = '';
+  if (!container) return;
+  container.replaceChildren();
 
   const selectedVariantByKey = opts && opts.selectedVariantByKey;
 
@@ -36,14 +37,17 @@ export function renderLivingDexFromModel(model, opts) {
     const grid = document.createElement('div');
     grid.className = 'dex-grid';
 
+    const frag = document.createDocumentFragment();
+
     (sec.entries || []).forEach(entry => {
       const key = entry && entry.pokemon ? String(entry.pokemon) : '';
       const wanted = getSelectedVariant(selectedVariantByKey, key);
       const props = toUnifiedCardPropsForLivingDex(entry, wanted);
 
-      grid.insertAdjacentHTML('beforeend', renderUnifiedCard(props));
+      frag.appendChild(renderUnifiedCard(props));
     });
 
+    grid.appendChild(frag);
     section.append(header, grid);
     container.appendChild(section);
   });

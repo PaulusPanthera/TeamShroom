@@ -1,3 +1,6 @@
+<!-- index.html -->
+<!-- v2.0.0-beta -->
+<!-- HTML entrypoint that deterministically loads global styles before JS execution -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,12 +13,17 @@
   >
 
   <link rel="stylesheet" href="/style/base.css">
-  <link rel="stylesheet" href="/style/layout.css">
-  <link rel="stylesheet" href="/style/cards.css">
+
+  <!-- Global CSS (stable order to avoid FOUC) -->
+  <link rel="stylesheet" href="style/layout.css">
+  <link rel="stylesheet" href="style/ts.shell.css">
+  <link rel="stylesheet" href="style/cards.css">
+
   <link rel="stylesheet" href="/style/buttons.css">
   <link rel="stylesheet" href="/style/search.css">
   <link rel="stylesheet" href="/style/tooltip.css">
   <link rel="stylesheet" href="/style/donators.css">
+  <link rel="stylesheet" href="/style/home.css">
   <link rel="stylesheet" href="/style/shinyweekly.css">
   <link rel="stylesheet" href="/style/showcase.css">
   <link rel="stylesheet" href="/style/shinydex.css">
@@ -25,6 +33,7 @@
 
 <body>
   <nav class="nav">
+    <a href="#home" id="nav-home">Home</a>
     <a href="#showcase" id="nav-showcase">Shiny Showcase</a>
     <a href="#hitlist" id="nav-hitlist">Shiny Pokédex</a>
     <a href="#shinyweekly" id="nav-shinyweekly">Shiny Weekly</a>

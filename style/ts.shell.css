@@ -1,6 +1,6 @@
 /* style/ts.shell.css */
 /* v2.0.0-beta */
-/* Global app shell, header, sidebar, and collection-mode CSS (extracted from main.js) */
+/* TS shell layout, header, sidebar, and collection-mode styling. */
 
 /* -----------------------------------------------------
    FONT + BACKGROUND
@@ -21,11 +21,11 @@ body{
   background-attachment: fixed;
 }
 
-/* Reset default layout.css constraints (shell owns spacing). */
-#page-content{
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
+/* #page-content layout ownership (shell-active only, browser-safe). */
+body.ts-shell-active #page-content{
+  max-width: none;
+  margin: 0;
+  padding: 0;
   min-width: 0;
 }
 
@@ -62,6 +62,26 @@ body{
   gap: 16px;
   align-items: start;
   transition: grid-template-columns 140ms steps(4, end);
+}
+
+/* Main column wraps shell-owned actions (like COLLECT) + route content. */
+#ts-main{
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Shell action row sits INSIDE layout flow (no viewport floating). */
+#ts-shell-actions{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Hide the shell action row when empty (COLLECT is free-hovering). */
+#ts-shell-actions:empty{
+  display: none;
 }
 
 #ts-sidebar{
@@ -120,406 +140,379 @@ body{
 .ts-panel::after{
   content: "";
   position: absolute;
-  left: 2px;
-  right: 2px;
-  top: 2px;
-  height: 2px;
-  background: rgba(240, 91, 41, 0.40);
+  inset: 6px;
+  border: 2px solid rgba(240, 91, 41, 0.30);
   pointer-events: none;
 }
 
+.ts-panel-title{
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 10px 0;
+  color: var(--text-main);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.85);
+}
+
 /* -----------------------------------------------------
-   TOP HEADER (CENTERED BRAND + GLOBAL NAV)
+   HEADER (TOP)
 ----------------------------------------------------- */
 
 #ts-header{
+  /* Full-width sticky rail so scrolled cards never flank the header edges. */
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 30px 18px 0 18px;
   position: sticky;
   top: 0;
-  z-index: 5000;
-  padding: 12px 0 6px;
-  transition:
-    max-height 140ms steps(4, end),
-    padding 140ms steps(4, end),
-    transform 140ms steps(4, end);
-  max-height: 260px;
-  will-change: transform;
+  z-index: 3000;
+}
+
+#ts-header::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 16, 20, 0.98);
+  pointer-events: none;
+  z-index: -1;
 }
 
 #ts-header .ts-header-inner{
   max-width: 1600px;
   margin: 0 auto;
-  padding: 0 18px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: start;
 }
 
-#ts-header .ts-banner{
-  padding: 12px 12px 10px;
-}
+@media (max-width: 980px){
+  #ts-header{
+    position: relative;
+  }
 
-#ts-header .ts-banner-top{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 2px 0 10px;
-}
-
-#ts-header .ts-brand{
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  user-select: none;
-  padding: 6px 10px;
-
-  border: 3px solid rgba(0,0,0,0.88);
-  box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.85) inset,
-    0 0 0 3px rgba(240, 91, 41, 0.22) inset,
-    0 6px 0 rgba(0,0,0,0.75);
-  background-color: rgba(18, 22, 28, 0.98);
-  background-image:
-    repeating-linear-gradient(
-      90deg,
-      rgba(255,255,255,0.03) 0px,
-      rgba(255,255,255,0.03) 1px,
-      rgba(0,0,0,0) 1px,
-      rgba(0,0,0,0) 7px
-    );
-}
-
-#ts-header .ts-brand:active{
-  transform: translateY(1px);
-  box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.85) inset,
-    0 0 0 3px rgba(240, 91, 41, 0.22) inset,
-    0 5px 0 rgba(0,0,0,0.75);
-}
-
-#ts-header .ts-brand-icon{
-  width: 34px;
-  height: 34px;
-  image-rendering: pixelated;
-  filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.85));
-}
-
-#ts-header .ts-brand-title{
-  color: var(--text-main);
-  font-size: 18px;
-  letter-spacing: 0.6px;
-  white-space: nowrap;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.90);
-  line-height: 1;
-  padding-top: 1px;
-}
-
-#ts-header nav.nav{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 0;
-  padding: 0;
-  flex-wrap: wrap;
-}
-
-#ts-header nav.nav a{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  padding: 12px 22px;
-  min-height: 46px;
-
-  text-decoration: none;
-  color: var(--text-main);
-  font-size: 15px;
-  letter-spacing: 0;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.90);
-  line-height: 1;
-
-  background-color: rgba(18, 22, 28, 0.98);
-  background-image:
-    repeating-linear-gradient(
-      90deg,
-      rgba(255,255,255,0.03) 0px,
-      rgba(255,255,255,0.03) 1px,
-      rgba(0,0,0,0) 1px,
-      rgba(0,0,0,0) 7px
-    );
-
-  border: 3px solid rgba(0, 0, 0, 0.90);
-  border-radius: 0;
-
-  box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.85) inset,
-    0 0 0 3px rgba(240, 91, 41, 0.16) inset,
-    0 8px 0 rgba(0,0,0,0.75);
-}
-
-#ts-header nav.nav a::before{
-  content: "";
-  position: absolute;
-  left: 2px;
-  right: 2px;
-  top: 2px;
-  height: 2px;
-  background: rgba(255,255,255,0.06);
-  pointer-events: none;
-}
-
-#ts-header nav.nav a::after{
-  content: "";
-  position: absolute;
-  left: 2px;
-  right: 2px;
-  bottom: 2px;
-  height: 2px;
-  background: rgba(0,0,0,0.55);
-  pointer-events: none;
-}
-
-#ts-header nav.nav a:hover{
-  box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.85) inset,
-    0 0 0 3px rgba(240, 91, 41, 0.42) inset,
-    0 8px 0 rgba(0,0,0,0.75);
-}
-
-#ts-header nav.nav a:active{
-  transform: translateY(1px);
-  box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.85) inset,
-    0 0 0 3px rgba(240, 91, 41, 0.42) inset,
-    0 7px 0 rgba(0,0,0,0.75);
-}
-
-#ts-header nav.nav a.active{
-  background-color: rgba(10, 12, 16, 0.98);
-  box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.90) inset,
-    0 0 0 3px rgba(240, 91, 41, 0.70) inset,
-    0 7px 0 rgba(0,0,0,0.75);
-}
-
-#ts-header nav.nav a.active::before{
-  background: rgba(240, 91, 41, 0.45);
-}
-
-#ts-header nav.nav a:focus-visible{
-  outline: 3px solid rgba(240, 91, 41, 0.95);
-  outline-offset: 2px;
+  #ts-header .ts-header-inner{
+    grid-template-columns: 1fr;
+  }
 }
 
 /* -----------------------------------------------------
-   LEFT SIDEBAR CONTENT
+   HEADER: SEARCH + FILTERS
 ----------------------------------------------------- */
 
-#ts-sidebar .ts-sidebar-panel{
-  padding: 10px;
+#ts-header .ts-search{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
 
-#ts-sidebar .ts-sidebar-title{
-  color: rgba(240, 91, 41, 0.95);
-  font-size: 15px;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.90);
-  line-height: 1;
-  padding-top: 2px;
+#ts-header .ts-search-row{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
 }
 
-#ts-sidebar .ts-sidebar-hint{
-  margin-top: 8px;
-  color: var(--text-muted);
-  font-size: 12px;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.90);
-  line-height: 1.15;
-}
-
-#ts-sidebar .ts-sidebar-controls{
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-#ts-sidebar .ts-side-section{
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-#ts-sidebar .ts-side-label{
-  color: var(--text-main);
-  font-size: 12px;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.90);
-  opacity: 0.9;
-  padding-top: 2px;
-}
-
-/* Make relocated control blocks sidebar-safe */
-#ts-sidebar .search-controls,
-#ts-sidebar .showcase-search-controls,
-#ts-sidebar .shiny-dex-controls,
-#ts-sidebar .shiny-dex-tabs{
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  max-width: none !important;
-  width: 100% !important;
-}
-
-#ts-sidebar #dex-search,
-#ts-sidebar #dex-sort,
-#ts-sidebar #showcase-search,
-#ts-sidebar #showcase-sort,
-#ts-sidebar #member-shiny-search,
-#ts-sidebar #member-shiny-sort,
-#ts-sidebar #member-shiny-status,
-#ts-sidebar #member-shiny-variant{
+#ts-header .ts-search-input{
   width: 100%;
-  box-sizing: border-box;
-  background-color: rgba(18, 22, 28, 0.98);
+}
+
+@media (max-width: 980px){
+  #ts-header .ts-search-row{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* -----------------------------------------------------
+   HEADER: ACTIONS
+----------------------------------------------------- */
+
+#ts-header .ts-actions{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* -----------------------------------------------------
+   HEADER RAIL + BIG NAV TABS (QUIET CONTAINER)
+
+   Rules:
+   - Header frame is quieter than cards.
+   - No orange accents on the header frame.
+   - Orange is reserved for interactive states only.
+   - Nav tabs fill ~85–90% of header inner height.
+----------------------------------------------------- */
+
+#ts-header{
+  position: sticky;
+}
+
+/* Fade-out strip under the header: content darkens and vanishes under the rail. */
+#ts-header::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -34px;
+  height: 34px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(12, 16, 20, 0.78),
+    rgba(12, 16, 20, 0.00)
+  );
+}
+
+/* Quiet header container frame (thinner than cards). */
+#ts-header .ts-banner{
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 14px;
+
+  padding: 10px 12px;
+
+  background-color: rgba(12, 16, 20, 0.98);
   background-image:
     repeating-linear-gradient(
       0deg,
-      rgba(255,255,255,0.02) 0px,
-      rgba(255,255,255,0.02) 1px,
+      rgba(255,255,255,0.018) 0px,
+      rgba(255,255,255,0.018) 1px,
       rgba(0,0,0,0) 1px,
-      rgba(0,0,0,0) 4px
+      rgba(0,0,0,0) 7px
     );
-  border: 3px solid rgba(0, 0, 0, 0.90);
-  color: var(--text-main);
-  border-radius: 0;
-  padding: 8px 10px;
-  font-size: 13px;
-  min-height: 36px;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.90);
+
+  border: 3px solid rgba(0, 0, 0, 0.92);
+
+  /* Remove orange inset accents from the base panel. */
   box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.85) inset,
-    0 0 0 3px rgba(240, 91, 41, 0.10) inset,
+    0 0 0 2px rgba(58, 70, 81, 0.75) inset,
+    0 10px 0 rgba(0, 0, 0, 0.68);
+}
+
+/* Replace the base orange inner stroke with a subtle steel inner stroke. */
+#ts-header .ts-banner::after{
+  inset: 6px;
+  border: 2px solid rgba(58, 70, 81, 0.55);
+}
+
+/* Left merged plaque: one slab, no nested frames. */
+#ts-header .ts-header-plaque{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-width: 220px;
+  max-width: 520px;
+  flex: 1;
+
+  padding: 10px 12px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.06),
+      rgba(0,0,0,0.18)
+    );
+  background-color: rgba(14, 18, 22, 0.98);
+
+  border: 3px solid rgba(0, 0, 0, 0.92);
+  box-shadow:
+    0 0 0 2px rgba(58, 70, 81, 0.65) inset,
+    0 7px 0 rgba(0,0,0,0.70);
+
+  user-select: none;
+  cursor: pointer;
+}
+
+#ts-header .ts-header-plaque:hover{
+  box-shadow:
+    0 0 0 2px rgba(58, 70, 81, 0.65) inset,
+    0 0 0 3px rgba(240, 91, 41, 0.40) inset,
+    0 7px 0 rgba(0,0,0,0.70);
+}
+
+#ts-header .ts-header-plaque:active{
+  transform: translateY(1px);
+  box-shadow:
+    0 0 0 2px rgba(58, 70, 81, 0.65) inset,
+    0 0 0 3px rgba(240, 91, 41, 0.40) inset,
     0 6px 0 rgba(0,0,0,0.70);
 }
 
-#ts-sidebar #dex-search:focus-visible,
-#ts-sidebar #dex-sort:focus-visible,
-#ts-sidebar #showcase-search:focus-visible,
-#ts-sidebar #showcase-sort:focus-visible,
-#ts-sidebar #member-shiny-search:focus-visible,
-#ts-sidebar #member-shiny-sort:focus-visible,
-#ts-sidebar #member-shiny-status:focus-visible,
-#ts-sidebar #member-shiny-variant:focus-visible{
+#ts-header .ts-header-plaque:focus-visible{
   outline: 3px solid rgba(240, 91, 41, 0.95);
   outline-offset: 2px;
 }
 
-#ts-sidebar .dex-tab{
-  background-color: rgba(18, 22, 28, 0.98);
-  border: 3px solid rgba(0, 0, 0, 0.90);
-  color: var(--text-main);
-  padding: 8px 12px;
-  border-radius: 0;
-  cursor: pointer;
-  user-select: none;
+#ts-header .ts-header-plaque-icon{
+  width: 22px;
+  height: 22px;
+  image-rendering: pixelated;
+}
+
+#ts-header .ts-header-plaque-text{
+  min-width: 0;
+}
+
+#ts-header .ts-header-guild{
   font-size: 13px;
-  min-height: 36px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.78);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.85);
+  margin-bottom: 0;
+}
+
+/* Header plaque must never show per-route meta text. */
+#ts-header .ts-header-page-title,
+#ts-header .ts-header-page-desc{
+  display: none !important;
+}
+
+#ts-header .ts-header-page-title{
+  font-size: 13px;
+  text-transform: uppercase;
+  color: var(--text-main);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.85);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#ts-header .ts-header-page-desc{
+  font-size: 10px;
+  color: rgba(240, 91, 41, 0.92);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.85);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Nav row (right side). */
+#ts-header .nav{
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  flex: 0 0 auto;
+}
+
+/* Big raised slabs. */
+#ts-header .nav a{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 54px;
+  padding: 0 24px;
+  min-width: 130px;
+
+  text-transform: uppercase;
+  font-size: 14px;
+  color: var(--text-main);
   text-shadow: 1px 1px 0 rgba(0,0,0,0.90);
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.10),
+      rgba(0,0,0,0.24)
+    );
+  background-color: rgba(18, 24, 30, 0.98);
+
+  border: 3px solid rgba(0,0,0,0.92);
+
   box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.85) inset,
-    0 0 0 3px rgba(240, 91, 41, 0.16) inset,
-    0 4px 0 rgba(0,0,0,0.75);
+    0 0 0 2px rgba(58, 70, 81, 0.70) inset,
+    0 7px 0 rgba(0,0,0,0.72);
 }
 
-#ts-sidebar .dex-tab:hover{
+/* Hover: orange appears only here. */
+#ts-header .nav a:hover{
   box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.85) inset,
-    0 0 0 3px rgba(240, 91, 41, 0.42) inset,
-    0 4px 0 rgba(0,0,0,0.75);
+    0 0 0 2px rgba(58, 70, 81, 0.70) inset,
+    0 0 0 4px rgba(240, 91, 41, 0.55) inset,
+    0 7px 0 rgba(0,0,0,0.72);
 }
 
-#ts-sidebar .dex-tab.active{
-  background-color: rgba(10, 12, 16, 0.98);
-  box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.90) inset,
-    0 0 0 3px rgba(240, 91, 41, 0.70) inset,
-    0 4px 0 rgba(0,0,0,0.75);
-}
-
-#ts-sidebar .dex-tab:active{
+/* Pressed: clear inset/pressed state. */
+#ts-header .nav a:active{
   transform: translateY(1px);
   box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.90) inset,
-    0 0 0 3px rgba(240, 91, 41, 0.70) inset,
-    0 3px 0 rgba(0,0,0,0.75);
+    0 0 0 2px rgba(58, 70, 81, 0.70) inset,
+    0 0 0 4px rgba(240, 91, 41, 0.55) inset,
+    0 6px 0 rgba(0,0,0,0.72);
 }
 
-#ts-sidebar .back-btn{
-  width: 100%;
-  box-sizing: border-box;
-  background-color: rgba(18, 22, 28, 0.98);
-  border: 3px solid rgba(0, 0, 0, 0.90);
-  color: var(--text-main);
-  padding: 10px 14px;
-  border-radius: 0;
-  cursor: pointer;
-  user-select: none;
-  font-size: 13px;
-  min-height: 40px;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.90);
+/* Active: locked in. Thick orange frame, brighter face. */
+#ts-header .nav a.active{
+  background-color: rgba(14, 18, 22, 0.98);
   box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.85) inset,
-    0 0 0 3px rgba(240, 91, 41, 0.16) inset,
-    0 7px 0 rgba(0,0,0,0.75);
+    0 0 0 2px rgba(58, 70, 81, 0.70) inset,
+    0 0 0 5px rgba(240, 91, 41, 0.92) inset,
+    0 7px 0 rgba(0,0,0,0.72);
 }
 
-#ts-sidebar .back-btn:hover{
-  box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.85) inset,
-    0 0 0 3px rgba(240, 91, 41, 0.42) inset,
-    0 7px 0 rgba(0,0,0,0.75);
+#ts-header .nav a:focus-visible{
+  outline: 3px solid rgba(240, 91, 41, 0.95);
+  outline-offset: 2px;
 }
 
-#ts-sidebar .back-btn:active{
-  transform: translateY(1px);
-  box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.90) inset,
-    0 0 0 3px rgba(240, 91, 41, 0.70) inset,
-    0 6px 0 rgba(0,0,0,0.75);
+@media (max-width: 980px){
+  #ts-header .ts-banner{
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  #ts-header .ts-header-plaque{
+    max-width: none;
+    width: 100%;
+  }
+
+  #ts-header .nav{
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 /* -----------------------------------------------------
-   COLLECTION MODE (HIDE TOP HEADER + LEFT SIDEBAR)
+   COLLECTION MODE (HIDE CHROME)
 ----------------------------------------------------- */
 
 #ts-collection-toggle{
   position: fixed;
-  top: 12px;
-  left: 12px;
-  z-index: 9000;
+  left: 18px;
+  top: 22px;
+  z-index: 4500;
 
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 124px;
-  min-height: 42px;
-  padding: 10px 14px;
-
-  background-color: rgba(18, 22, 28, 0.98);
-  background-image:
-    repeating-linear-gradient(
-      90deg,
-      rgba(255,255,255,0.03) 0px,
-      rgba(255,255,255,0.03) 1px,
-      rgba(0,0,0,0) 1px,
-      rgba(0,0,0,0) 7px
-    );
-
+  appearance: none;
   border: 3px solid rgba(0, 0, 0, 0.90);
   border-radius: 0;
   color: var(--text-main);
   font-size: 14px;
   text-shadow: 1px 1px 0 rgba(0,0,0,0.90);
+
+  padding: 10px 12px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.10),
+      rgba(0,0,0,0.20)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.05) 0px,
+      rgba(255,255,255,0.05) 1px,
+      rgba(0,0,0,0) 1px,
+      rgba(0,0,0,0) 7px
+    );
 
   cursor: pointer;
   user-select: none;
@@ -569,13 +562,4 @@ body.ts-collection-mode #ts-sidebar{
   pointer-events: none;
   transform: translateX(-14px);
   max-height: 0px;
-}
-
-/* Hide empty toolbars after relocation */
-.shinydex-root .shinydex-toolbar[data-relocated="1"]{
-  display: none !important;
-}
-
-.showcase-root .showcase-member-topbar[data-relocated="1"]{
-  display: none !important;
 }

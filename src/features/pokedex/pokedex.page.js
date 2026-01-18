@@ -1,6 +1,6 @@
 // src/features/pokedex/pokedex.page.js
 // v2.0.0-beta
-// Shiny Pokédex page shell
+// Shiny Pokedex page shell
 // Owns:
 // - data load + handoff (via domain layer)
 // - view deep-linking (#hitlist/living)
@@ -19,6 +19,12 @@ import {
 
 let activeController = null;
 
+function assertValidRoot(root) {
+  if (!root || !(root instanceof Element)) {
+    throw new Error('POKEDEX_INVALID_ROOT');
+  }
+}
+
 function teardownActiveListeners() {
   if (!activeController) return;
   try {
@@ -29,11 +35,9 @@ function teardownActiveListeners() {
   activeController = null;
 }
 
-function bindViewUrlSync(root, signal) {
-  if (!root) return;
-
-  const tabHitlist = root.querySelector('#tab-hitlist');
-  const tabLiving = root.querySelector('#tab-living');
+function bindViewUrlSync(signal) {
+  const tabHitlist = document.getElementById('tab-hitlist');
+  const tabLiving = document.getElementById('tab-living');
 
   // Sync URL to match in-page view switching.
   tabHitlist?.addEventListener(
@@ -49,22 +53,35 @@ function bindViewUrlSync(root, signal) {
   );
 }
 
-function applyInitialView(root, view) {
+function applyInitialView(view) {
   const v = String(view || '').toLowerCase();
   if (v !== 'living') return;
 
   // ShinyDex boots in hitlist view.
   // Switching via click preserves feature-owned state transitions.
-  const livingTab = root.querySelector('#tab-living');
+  const livingTab = document.getElementById('tab-living');
   if (livingTab && typeof livingTab.click === 'function') livingTab.click();
 }
 
-export async function renderPokedexPage({ view } = {}) {
-  const root = document.getElementById('page-content');
-  if (!root) return;
+export async function renderPokedexPage(ctx) {
+  const root = ctx && ctx.root;
+  const sidebar = ctx && ctx.sidebar;
+  const signal = ctx && ctx.signal;
+  const view = ctx && ctx.params && ctx.params.view;
+  assertValidRoot(root);
 
   teardownActiveListeners();
   activeController = new AbortController();
+
+  // Allow router-owned signal to cancel this route safely.
+  if (signal) {
+    try {
+      if (signal.aborted) activeController.abort();
+      else signal.addEventListener('abort', () => activeController.abort(), { once: true });
+    } catch {
+      // ignore
+    }
+  }
 
   const route = parsePokedexHash(location.hash);
   const initialView = view || route.view || 'hitlist';
@@ -80,8 +97,23 @@ export async function renderPokedexPage({ view } = {}) {
 
   const deps = await getPokedexDeps();
 
-  mountShinyPokedex(deps);
+  const disposeDex = mountShinyPokedex(root, {
+    ...deps,
+    signal: activeController.signal,
+    sidebar
+  });
 
-  bindViewUrlSync(root, activeController.signal);
-  applyInitialView(root, initialView);
+  bindViewUrlSync(activeController.signal);
+  applyInitialView(initialView);
+
+  return () => {
+    teardownActiveListeners();
+    if (typeof disposeDex === 'function') {
+      try {
+        disposeDex();
+      } catch {
+        // ignore
+      }
+    }
+  };
 }

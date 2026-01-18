@@ -54,7 +54,7 @@ export function buildShinyLivingDexModel(showcaseRows) {
   // -------------------------------------------------------
 
   showcaseRows.forEach(row => {
-    if (row.lost || row.sold) return;
+    if (row.run || row.lost || row.sold) return;
 
     const key = row.pokemon;
     if (!map[key]) return;

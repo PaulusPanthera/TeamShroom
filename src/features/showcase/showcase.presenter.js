@@ -67,7 +67,7 @@ function normalizeQuery(raw) {
 }
 
 export function isInactiveShiny(s) {
-  return Boolean(s && (s.lost || s.sold));
+  return Boolean(s && (s.run || s.lost || s.sold));
 }
 
 export function classifyShinyVariant(s) {
@@ -164,6 +164,7 @@ export function buildMemberShinyCounts(shinies) {
     inactive: 0,
     lost: 0,
     sold: 0,
+    run: 0,
     secret: 0,
     alpha: 0,
     safari: 0
@@ -176,6 +177,7 @@ export function buildMemberShinyCounts(shinies) {
 
     if (s && s.lost) counts.lost += 1;
     if (s && s.sold) counts.sold += 1;
+    if (s && s.run) counts.run += 1;
 
     const v = classifyShinyVariant(s);
     if (v.secret) counts.secret += 1;
@@ -192,17 +194,20 @@ export function groupMemberShiniesByStatus(shinies) {
   const active = [];
   const lost = [];
   const sold = [];
+  const run = [];
 
   list.forEach(s => {
     if (!s) return;
     if (s.sold) sold.push(s);
     else if (s.lost) lost.push(s);
+    else if (s.run) run.push(s);
     else active.push(s);
   });
 
   return {
     active,
     lost,
-    sold
+    sold,
+    run
   };
 }

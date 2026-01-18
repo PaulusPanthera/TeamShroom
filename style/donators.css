@@ -1,35 +1,174 @@
-/* v2.0.0-beta */
 /* style/donators.css */
-/* =========================================================
-   DONATORS PAGE
-   ========================================================= */
+/* v2.0.0-beta */
+/* Donators feature styling (framed leaderboard + recent donations panels). */
 
 .donators-root{
-  width: 100%;
-  padding: 18px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 12px;
 }
 
-.donators-top-flex,
-.donators-mid-flex{
+.donators-summary{
+  font-size: 11px;
+  opacity: 0.85;
+  padding: 2px 4px;
+}
+
+/*
+  Layout goal:
+  - Make the leaderboard panel slimmer (more ellipsis on long names)
+  - Give the recent donations panel more space
+  - Global scrolling is allowed (no internal panel scroll required)
+*/
+.donators-main{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 520px;
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 980px){
+  .donators-main{
+    grid-template-columns: 1fr;
+  }
+}
+
+.donators-panel{
+  padding: 14px;
+  min-width: 0;
+}
+
+.donators-panel-title{
+  margin: 0 0 10px 0;
+}
+
+/* -----------------------------------------------------
+   STATUS
+----------------------------------------------------- */
+
+.donators-status-body{
+  font-size: 12px;
+  line-height: 1.35;
+  padding: 10px 12px;
+  border: 2px solid rgba(58, 70, 81, 0.95);
+  background: rgba(0,0,0,0.22);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.65) inset;
+}
+
+/* -----------------------------------------------------
+   LEADERBOARD TABLE
+----------------------------------------------------- */
+
+.donators-table{
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.donators-table th,
+.donators-table td{
+  padding: 8px;
+  font-size: 12px;
+  border-bottom: 1px solid rgba(58, 70, 81, 0.55);
+  color: var(--text-main);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.donators-table th{
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.donators-table tbody tr:nth-child(even) td{
+  background: rgba(0,0,0,0.12);
+}
+
+.donators-table tbody tr:hover td{
+  box-shadow: inset 0 0 0 2px rgba(240, 91, 41, 0.82);
+}
+
+.donators-cell-rank{
+  width: 72px;
+}
+
+.donators-cell-total{
+  width: 150px;
+  text-align: right;
+}
+
+/* Give tier a little more room so "Top Donator" truncates less. */
+.donators-cell-tier{
+  width: 160px;
+}
+
+.donators-empty{
+  padding: 10px 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* -----------------------------------------------------
+   RECENT DONATIONS
+----------------------------------------------------- */
+
+.donators-recent-list{
   display: flex;
-  flex-wrap: wrap;
-  gap: 18px;
+  flex-direction: column;
+  gap: 6px;
 }
 
-@media (max-width: 1100px){
-  .donators-top-flex{
-    flex-direction: column;
-  }
+.donators-recent-item{
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr) 120px;
+  gap: 8px;
+  align-items: center;
+  padding: 7px 8px;
+  border: 2px solid rgba(58, 70, 81, 0.85);
+  background: rgba(0,0,0,0.22);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.55) inset;
+}
 
-  .donators-mid-flex{
-    flex-direction: column;
-  }
+.donators-recent-date{
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-size: 11px;
+}
 
-  .donators-panel--howto,
-  .donators-panel--summary{
-    max-width: none;
-  }
+.donators-recent-name{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.donators-recent-name-text{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.donators-type-tag{
+  flex: 0 0 auto;
+  border: 2px solid rgba(58, 70, 81, 0.85);
+  padding: 1px 4px;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.donators-type-tag--item{
+  border-color: rgba(240, 91, 41, 0.92);
+}
+
+.donators-type-tag--money{
+  border-color: rgba(170, 210, 255, 0.85);
+}
+
+.donators-recent-value{
+  color: var(--success);
+  text-align: right;
+  white-space: nowrap;
+  font-size: 12px;
 }

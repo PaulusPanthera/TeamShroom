@@ -19,7 +19,8 @@ function applyFloatingSectionStyle(sectionEl) {
 
 export function renderHitlistFromModel(model, opts) {
   const container = document.getElementById('shiny-dex-container');
-  container.innerHTML = '';
+  if (!container) return;
+  container.replaceChildren();
 
   const selectedVariantByKey = opts && opts.selectedVariantByKey;
 
@@ -37,14 +38,17 @@ export function renderHitlistFromModel(model, opts) {
       const grid = document.createElement('div');
       grid.className = 'dex-grid';
 
+      const frag = document.createDocumentFragment();
+
       (sec.entries || []).forEach(entry => {
         const key = entry && entry.pokemon ? String(entry.pokemon) : '';
         const wanted = getSelectedVariant(selectedVariantByKey, key);
         const props = toUnifiedCardPropsForHitlist(entry, wanted, { mode: 'scoreboard' });
 
-        grid.insertAdjacentHTML('beforeend', renderUnifiedCard(props));
+        frag.appendChild(renderUnifiedCard(props));
       });
 
+      grid.appendChild(frag);
       section.append(header, grid);
       container.appendChild(section);
     });
@@ -63,14 +67,17 @@ export function renderHitlistFromModel(model, opts) {
     const grid = document.createElement('div');
     grid.className = 'dex-grid';
 
+    const frag = document.createDocumentFragment();
+
     (sec.entries || []).forEach(entry => {
       const key = entry && entry.pokemon ? String(entry.pokemon) : '';
       const wanted = getSelectedVariant(selectedVariantByKey, key);
       const props = toUnifiedCardPropsForHitlist(entry, wanted, { mode: 'regions' });
 
-      grid.insertAdjacentHTML('beforeend', renderUnifiedCard(props));
+      frag.appendChild(renderUnifiedCard(props));
     });
 
+    grid.appendChild(frag);
     section.append(header, grid);
     container.appendChild(section);
   });

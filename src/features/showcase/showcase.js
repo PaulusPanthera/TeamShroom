@@ -25,6 +25,12 @@ import {
   renderMemberShinySections
 } from './showcase.ui.js';
 
+function assertValidRoot(root) {
+  if (!root || !(root instanceof Element)) {
+    throw new Error('SHOWCASE_INVALID_ROOT');
+  }
+}
+
 function parseHash() {
   const raw = String(location.hash || '').trim();
 
@@ -60,13 +66,39 @@ function spriteSrcForMember(member) {
   return 'img/membersprites/examplesprite.png';
 }
 
-export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) {
+function makeBackButton() {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'back-btn';
+  btn.textContent = 'Back';
+  return btn;
+}
+
+export async function renderShowcasePage(ctx) {
+  const root = ctx && ctx.root;
+  const sidebar = ctx && ctx.sidebar;
+  const params = (ctx && ctx.params) || {};
+
+  return setupShowcasePage({
+    root,
+    sidebar,
+    membersRows: params.membersRows,
+    showcaseRows: params.showcaseRows,
+    pokemonPoints: params.pokemonPoints
+  });
+}
+
+export function setupShowcasePage({ root, sidebar, membersRows, showcaseRows, pokemonPoints }) {
+  assertValidRoot(root);
+
   const model = buildShowcaseModel({ membersRows, showcaseRows, pokemonPoints });
   const route = parseHash();
 
   const dexIndex = {};
   if (Array.isArray(POKEMON_DEX_ORDER) && POKEMON_DEX_ORDER.length) {
-    POKEMON_DEX_ORDER.forEach((k, i) => { dexIndex[String(k || '').toLowerCase()] = i; });
+    POKEMON_DEX_ORDER.forEach((k, i) => {
+      dexIndex[String(k || '').toLowerCase()] = i;
+    });
   }
 
   if (route.view === 'member') {
@@ -77,7 +109,7 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
       return;
     }
 
-    renderMemberShowcaseShell({
+    renderMemberShowcaseShell(root, {
       name: member.name,
       shinyCount: member.shinyCount,
       inactiveShinyCount: member.inactiveShinyCount,
@@ -85,8 +117,27 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
       spriteSrc: spriteSrcForMember(member)
     });
 
-    const root = document.querySelector('.showcase-member-root');
-    bindUnifiedCardVariantSwitching(root);
+    const viewRoot = root.querySelector('.showcase-member-root');
+    bindUnifiedCardVariantSwitching(viewRoot);
+
+    const backBtn = makeBackButton();
+    const controlsHost = document.createElement('div');
+    controlsHost.className = 'showcase-search-controls showcase-member-controls';
+
+    if (sidebar && typeof sidebar.setSections === 'function') {
+      sidebar.setSections([
+        { label: 'Navigation', node: backBtn },
+        { label: 'Member Filters', node: controlsHost }
+      ]);
+    } else {
+      // Fallback: inject controls into the page when no shell sidebar is present.
+      viewRoot?.prepend(controlsHost);
+      viewRoot?.prepend(backBtn);
+    }
+
+    backBtn.addEventListener('click', () => {
+      location.hash = '#showcase';
+    });
 
     const state = {
       search: '',
@@ -134,13 +185,20 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
           entries: grouped.lost
         });
       }
+      if (grouped.run && grouped.run.length) {
+        sections.push({
+          key: 'run',
+          title: `Run (${grouped.run.length})`,
+          entries: grouped.run
+        });
+      }
 
       const countsVisible = buildMemberShinyCounts(sorted);
       const countsAll = buildMemberShinyCounts(withIdx);
 
       const countText = `${countsVisible.total} / ${countsAll.total} Shinies`;
 
-      renderMemberShinyControls({
+      renderMemberShinyControls(controlsHost, {
         search: state.search,
         sortMode: state.sortMode,
         statusMode: state.statusMode,
@@ -150,10 +208,10 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
 
       renderMemberShinySections(sections, pokemonPoints);
 
-      const input = document.getElementById('member-shiny-search');
-      const sort = document.getElementById('member-shiny-sort');
-      const status = document.getElementById('member-shiny-status');
-      const variant = document.getElementById('member-shiny-variant');
+      const input = controlsHost.querySelector('#member-shiny-search');
+      const sort = controlsHost.querySelector('#member-shiny-sort');
+      const status = controlsHost.querySelector('#member-shiny-status');
+      const variant = controlsHost.querySelector('#member-shiny-variant');
 
       if (input) {
         input.oninput = (e) => {
@@ -186,15 +244,11 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
 
     renderMember();
 
-    document.getElementById('showcase-back')?.addEventListener('click', () => {
-      location.hash = '#showcase';
-    });
-
     // Delegated clip-open; ignore variant button clicks.
     // Bound only inside the member view root to avoid cross-page leakage.
-    if (root && !root.__showcaseClipBound) {
-      root.__showcaseClipBound = true;
-      root.addEventListener('click', (e) => {
+    if (viewRoot && !viewRoot.__showcaseClipBound) {
+      viewRoot.__showcaseClipBound = true;
+      viewRoot.addEventListener('click', (e) => {
         const btn = e && e.target && typeof e.target.closest === 'function'
           ? e.target.closest('.variant-btn')
           : null;
@@ -213,7 +267,16 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
     return;
   }
 
-  renderShowcaseShell();
+  renderShowcaseShell(root);
+
+  const galleryControlsHost = document.createElement('div');
+  galleryControlsHost.className = 'showcase-search-controls';
+
+  if (sidebar && typeof sidebar.setSections === 'function') {
+    sidebar.setSections([{ label: 'Browse', node: galleryControlsHost }]);
+  } else {
+    root.querySelector('.showcase-root')?.prepend(galleryControlsHost);
+  }
 
   const state = {
     search: '',
@@ -227,7 +290,7 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
     const totalShinies = sorted.reduce((sum, m) => sum + (Number(m && m.shinyCount) || 0), 0);
     const totalPoints = sorted.reduce((sum, m) => sum + (Number(m && m.points) || 0), 0);
 
-    renderShowcaseControls({
+    renderShowcaseControls(galleryControlsHost, {
       sortMode: state.sortMode,
       memberCount: sorted.length,
       shinyCount: totalShinies,
@@ -237,7 +300,7 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
     const cardViews = sorted.map(m => buildMemberGalleryCardView(m, state.sortMode));
     renderShowcaseGallery(cardViews);
 
-    document.querySelectorAll('.unified-card[data-member-key]').forEach(card => {
+    root.querySelectorAll('.unified-card[data-member-key]').forEach(card => {
       card.addEventListener('click', () => {
         const key = card.getAttribute('data-member-key');
         if (!key) return;
@@ -245,8 +308,8 @@ export function setupShowcasePage({ membersRows, showcaseRows, pokemonPoints }) 
       });
     });
 
-    const input = document.getElementById('showcase-search');
-    const select = document.getElementById('showcase-sort');
+    const input = galleryControlsHost.querySelector('#showcase-search');
+    const select = galleryControlsHost.querySelector('#showcase-sort');
 
     if (input) {
       input.value = state.search;

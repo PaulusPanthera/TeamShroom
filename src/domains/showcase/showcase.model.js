@@ -9,7 +9,7 @@ function normalizeKey(name) {
 }
 
 function isActiveShiny(s) {
-  return !(s && (s.lost || s.sold));
+  return !(s && (s.run || s.lost || s.sold));
 }
 
 function getPokemonPoints(pointsMap, pokemonKey) {

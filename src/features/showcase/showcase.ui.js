@@ -5,6 +5,12 @@
 import { renderUnifiedCard, escapeHtml } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName, getPokemonDbShinyGifSrc } from '../../utils/utils.js';
 
+function assertValidRoot(root) {
+  if (!root || !(root instanceof Element)) {
+    throw new Error('SHOWCASE_INVALID_ROOT');
+  }
+}
+
 function normalize(str) {
   return String(str || '').trim().toLowerCase();
 }
@@ -14,10 +20,9 @@ function isSafariMethod(method) {
   return normalize(method).includes('safari');
 }
 
-function injectDataAttr(html, attrName, attrValue) {
-  if (!attrName || attrValue == null) return html;
-  const safe = escapeHtml(String(attrValue));
-  return html.replace('data-unified-card', `data-unified-card ${attrName}="${safe}"`);
+function setDataAttr(el, attrName, attrValue) {
+  if (!el || !attrName || attrValue == null) return;
+  el.setAttribute(String(attrName), String(attrValue));
 }
 
 function prettifyMethod(method) {
@@ -53,7 +58,7 @@ function buildShinyInfoText(s) {
   const isAuto = notes && notes.toUpperCase().includes('AUTO-GENERATED');
   if (notes && !isAuto) parts.push(notes.slice(0, 28));
 
-  return parts.length ? parts.join(' • ') : '—';
+  return parts.length ? parts.join(' \u2022 ') : '\u2014';
 }
 
 function primaryVariantKeyForShiny(s) {
@@ -89,19 +94,22 @@ function ensureSelectOptions(select, items) {
   });
 }
 
-export function renderShowcaseShell() {
-  const content = document.getElementById('page-content');
+export function renderShowcaseShell(root) {
+  assertValidRoot(root);
 
-  content.innerHTML = `
-    <div class="showcase-root">
-      <div class="showcase-search-controls"></div>
-      <div id="showcase-gallery-container"></div>
-    </div>
-  `;
+  root.replaceChildren();
+
+  const wrap = document.createElement('div');
+  wrap.className = 'showcase-root';
+
+  const container = document.createElement('div');
+  container.id = 'showcase-gallery-container';
+
+  wrap.appendChild(container);
+  root.appendChild(wrap);
 }
 
-export function renderShowcaseControls({ sortMode, memberCount, shinyCount, points }) {
-  const controls = document.querySelector('.showcase-search-controls');
+export function renderShowcaseControls(controls, { sortMode, memberCount, shinyCount, points }) {
   if (!controls) return;
 
   // Do NOT rebuild controls per render. Preserve input focus while typing.
@@ -141,7 +149,7 @@ export function renderShowcaseControls({ sortMode, memberCount, shinyCount, poin
   const s = Number(shinyCount) || 0;
   const p = Number(points) || 0;
 
-  count.textContent = `${m} Members • ${s} Shinies • ${p}P`;
+  count.textContent = `${m} Members \u2022 ${s} Shinies \u2022 ${p}P`;
 }
 
 /**
@@ -156,7 +164,7 @@ export function renderShowcaseGallery(memberCardViews) {
   const container = document.getElementById('showcase-gallery-container');
   if (!container) return;
 
-  container.innerHTML = '';
+  container.replaceChildren();
 
   const grid = document.createElement('div');
   grid.className = 'showcase-gallery';
@@ -164,7 +172,7 @@ export function renderShowcaseGallery(memberCardViews) {
   (memberCardViews || []).forEach(v => {
     const pointsText = `${Number(v.points) || 0}P`;
 
-    const html = renderUnifiedCard({
+    const card = renderUnifiedCard({
       cardType: 'member',
       pokemonKey: v.memberKey,
       pokemonName: v.name,
@@ -177,42 +185,68 @@ export function renderShowcaseGallery(memberCardViews) {
       showVariants: false
     });
 
-    grid.insertAdjacentHTML('beforeend', injectDataAttr(html, 'data-member-key', v.memberKey));
+    setDataAttr(card, 'data-member-key', v.memberKey);
+    grid.appendChild(card);
   });
 
   container.appendChild(grid);
 }
 
-export function renderMemberShowcaseShell(member) {
-  const content = document.getElementById('page-content');
+export function renderMemberShowcaseShell(root, member) {
+  assertValidRoot(root);
 
-  content.innerHTML = `
-    <div class="showcase-root showcase-member-root">
-      <div class="showcase-member-topbar">
-        <button class="back-btn" id="showcase-back">Back</button>
-      </div>
+  root.replaceChildren();
 
-      <div class="member-nameplate" aria-label="Member summary">
-        <img class="member-sprite" src="${escapeHtml(member && member.spriteSrc ? member.spriteSrc : 'img/membersprites/examplesprite.png')}" alt="">
-        <div class="member-meta">
-          <div class="member-name">${escapeHtml(member && member.name ? member.name : '')}</div>
-          <div class="member-stats">
-            <span class="shiny-count">Active: ${escapeHtml(String(member && member.shinyCount != null ? member.shinyCount : 0))}</span>
-            <span class="inactive-count">Lost/Sold: ${escapeHtml(String(member && member.inactiveShinyCount != null ? member.inactiveShinyCount : 0))}</span>
-            <span class="point-count">Points: ${escapeHtml(String(member && member.points != null ? member.points : 0))}</span>
-          </div>
-        </div>
-      </div>
+  const wrap = document.createElement('div');
+  wrap.className = 'showcase-root showcase-member-root';
 
-      <div class="showcase-search-controls showcase-member-controls" id="member-shiny-controls"></div>
+  const nameplate = document.createElement('div');
+  nameplate.className = 'member-nameplate';
+  nameplate.setAttribute('aria-label', 'Member summary');
 
-      <div class="showcase-member-body" id="member-shiny-sections"></div>
-    </div>
-  `;
+  const sprite = document.createElement('img');
+  sprite.className = 'member-sprite';
+  sprite.alt = '';
+  sprite.src = (member && member.spriteSrc)
+    ? String(member.spriteSrc)
+    : 'img/membersprites/examplesprite.png';
+
+  const meta = document.createElement('div');
+  meta.className = 'member-meta';
+
+  const name = document.createElement('div');
+  name.className = 'member-name';
+  name.textContent = member && member.name ? String(member.name) : '';
+
+  const stats = document.createElement('div');
+  stats.className = 'member-stats';
+
+  const shinyCount = document.createElement('span');
+  shinyCount.className = 'shiny-count';
+  shinyCount.textContent = `Active: ${String(member && member.shinyCount != null ? member.shinyCount : 0)}`;
+
+  const inactiveCount = document.createElement('span');
+  inactiveCount.className = 'inactive-count';
+  inactiveCount.textContent = `Lost/Sold: ${String(member && member.inactiveShinyCount != null ? member.inactiveShinyCount : 0)}`;
+
+  const pointCount = document.createElement('span');
+  pointCount.className = 'point-count';
+  pointCount.textContent = `Points: ${String(member && member.points != null ? member.points : 0)}`;
+
+  stats.append(shinyCount, inactiveCount, pointCount);
+  meta.append(name, stats);
+
+  nameplate.append(sprite, meta);
+
+  const body = document.createElement('div');
+  body.className = 'showcase-member-body';
+  body.id = 'member-shiny-sections';
+
+  wrap.append(nameplate, body);
+  root.appendChild(wrap);
 }
 
-export function renderMemberShinyControls({ search, sortMode, statusMode, variantMode, countText }) {
-  const controls = document.getElementById('member-shiny-controls');
+export function renderMemberShinyControls(controls, { search, sortMode, statusMode, variantMode, countText }) {
   if (!controls) return;
 
   // Do NOT rebuild controls per render. Preserve input focus while typing.
@@ -282,7 +316,7 @@ export function renderMemberShinySections(sections, pokemonPoints) {
   const body = document.getElementById('member-shiny-sections');
   if (!body) return;
 
-  body.innerHTML = '';
+  body.replaceChildren();
 
   const secArr = Array.isArray(sections) ? sections : [];
 
@@ -315,18 +349,18 @@ export function renderMemberShinySections(sections, pokemonPoints) {
       const points = Number(pokemonPoints && pokemonPoints[pokemonKey]) || 0;
       const info = buildShinyInfoText(s);
 
-      const html = renderUnifiedCard({
+      const card = renderUnifiedCard({
         pokemonKey,
         pokemonName: prettifyPokemonName(pokemonKey),
         artSrc: getPokemonDbShinyGifSrc(pokemonKey),
         points,
         infoText: info,
-        isUnclaimed: Boolean(s && (s.lost || s.sold)),
+        isUnclaimed: Boolean(s && (s.run || s.lost || s.sold)),
         variants: buildVariantsForShiny(s, info)
       });
 
-      const withClip = s && s.clip ? injectDataAttr(html, 'data-clip', s.clip) : html;
-      grid.insertAdjacentHTML('beforeend', withClip);
+      if (s && s.clip) setDataAttr(card, 'data-clip', s.clip);
+      grid.appendChild(card);
     });
 
     section.append(header, grid);

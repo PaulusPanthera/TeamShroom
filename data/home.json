@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "generatedAt": "2026-01-16T00:00:00.000Z",
+  "source": "manual",
+  "data": [
+    {
+      "nextEvent": {
+        "title": "Weekly Shiny Hunt Night",
+        "timeText": "2026-01-18 20:00 CET",
+        "url": "https://discord.com/events/<serverId>/<eventId>",
+        "subtitle": "Bring your swarm routes",
+        "gifSrc": "img/symbols/shinyshroomsprite.png"
+      },
+      "bounty": {
+        "title": "Bounty Target",
+        "targetText": "#004 Charmander",
+        "rewardText": "Reward: 500k",
+        "rulesText": "First catch wins. Must be OT.",
+        "deadlineText": "Ends: 2026-01-21",
+        "url": "",
+        "gifSrc": "https://img.pokemondb.net/sprites/black-white/anim/shiny/charmander.gif"
+      },
+      "hotw": {
+        "name": "Paulus",
+        "titleText": "Hunter of the Week",
+        "reasonText": "Most Shiny Points last week",
+        "weekText": "Week 03",
+        "gifSrc": "img/membersprites/paulustftsprite.gif"
+      }
+    }
+  ]
+}

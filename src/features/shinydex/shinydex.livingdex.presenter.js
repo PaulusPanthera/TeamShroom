@@ -57,7 +57,7 @@ function buildShowcaseVariantAgg(showcaseRows) {
   }
 
   rows.forEach(function (r) {
-    if (!r || r.lost || r.sold) return;
+    if (!r || r.run || r.lost || r.sold) return;
 
     var p = normalizePokemonKey(r.pokemon);
     if (!p) return;
