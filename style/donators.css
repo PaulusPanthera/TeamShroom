@@ -7,10 +7,8 @@
   flex-direction: column;
   gap: 12px;
 
-  /* Preserve the header notch on the right (match the visual step created by the sidebar). */
-  --ts-donators-right-notch: var(--space-3);
-  width: calc(100% - var(--ts-donators-right-notch));
-  max-width: calc(100% - var(--ts-donators-right-notch));
+  /* Keep the right-side notch/indent under the header. */
+  margin-right: var(--space-3);
 }
 
 .donators-summary{
@@ -26,60 +24,27 @@
   - Global scrolling is allowed (no internal panel scroll required)
 */
 .donators-main{
-  /*
-    DONATORS is an info wall / ledger.
-    Use one connected slab behind both columns so it reads as a single terminal.
-  */
-  --ts-donators-right-col: 520px;
-  --ts-donators-gap: 16px;
-  --ts-donators-gap-half: 8px;
-  --ts-donators-pad: 16px;
-
   display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--ts-donators-right-col);
-  gap: var(--ts-donators-gap);
+  grid-template-columns: minmax(0, 1fr) 520px;
+  gap: 16px;
   align-items: start;
 
+  /* Ledger surface behind both panels (subtle plate, not a ts-panel clone). */
   position: relative;
+  padding: 12px;
   box-sizing: border-box;
-  padding: var(--ts-donators-pad);
 
-  background-color: rgba(12, 16, 20, 0.88);
+  background-color: rgba(8, 11, 14, 0.56);
   background-image:
     repeating-linear-gradient(
       0deg,
-      rgba(255,255,255,0.018) 0px,
-      rgba(255,255,255,0.018) 1px,
+      rgba(255,255,255,0.020) 0px,
+      rgba(255,255,255,0.020) 1px,
       rgba(0,0,0,0) 1px,
-      rgba(0,0,0,0) 7px
+      rgba(0,0,0,0) 9px
     );
-  /* Clear separation from sidebar/header panels.
-     Borders/insets keep the right-side notch exact (no outward shadow expansion). */
-  border: 4px solid rgba(0,0,0,0.94);
-  box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.86) inset,
-    0 0 0 3px rgba(240, 91, 41, 0.16) inset,
-    0 0 0 4px rgba(0,0,0,0.92) inset,
-    0 0 0 6px rgba(58, 70, 81, 0.65) inset,
-    0 10px 0 rgba(0,0,0,0.65);
-}
-
-/* Vertical column divider (desktop only). */
-.donators-main::before{
-  content: "";
-  position: absolute;
-  top: var(--ts-donators-pad);
-  bottom: var(--ts-donators-pad);
-  left: calc(
-    100% -
-    var(--ts-donators-right-col) -
-    var(--ts-donators-pad) -
-    var(--ts-donators-gap-half)
-  );
-  width: 2px;
-  background: rgba(0,0,0,0.75);
-  box-shadow: 0 0 0 1px rgba(58, 70, 81, 0.65);
-  pointer-events: none;
+  border: 2px solid rgba(0,0,0,0.86);
+  box-shadow: 0 0 0 1px rgba(58, 70, 81, 0.28) inset;
 }
 
 @media (max-width: 980px){
@@ -97,30 +62,9 @@
   min-width: 0;
 }
 
-/* Reduce nested panel heaviness (ledger slab is the primary frame). */
-.donators-panel.ts-panel{
-  background-color: rgba(0,0,0,0.12);
-  background-image: none;
-  border: 3px solid rgba(0,0,0,0.92);
-  box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.55) inset,
-    0 6px 0 rgba(0,0,0,0.55);
-}
-
-.donators-panel.ts-panel::after{
-  border-color: rgba(58, 70, 81, 0.55);
-}
 
 .donators-panel-title{
-  display: inline-block;
   margin: 0 0 10px 0;
-  padding: 6px 10px;
-
-  background: rgba(12, 16, 20, 0.92);
-  border: 2px solid rgba(0,0,0,0.92);
-  box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.55) inset,
-    0 4px 0 rgba(0,0,0,0.55);
 }
 
 /* -----------------------------------------------------

@@ -10,47 +10,23 @@
   - Do not stretch the board beyond the widget grid height.
 */
 
-.ts-home-board{
-  --ts-home-right-notch: var(--space-3);
-
-  /* Match the shell notch on the right and keep the existing left offset. */
-  width: calc(100% - var(--ts-home-right-notch) - 30px);
-  max-width: calc(100% - var(--ts-home-right-notch) - 30px);
-  margin-left: 30px;
-  box-sizing: border-box;
-
-  position: relative;
-
-  /* Board surface */
-  background-color: rgba(10, 13, 16, 0.88);
+.ts-home-grid{
+  /* HOME board surface (info wall). */
+  margin-right: var(--space-3);
+  padding: 12px;
+  background-color: rgba(8, 11, 14, 0.62);
   background-image:
     repeating-linear-gradient(
       0deg,
-      rgba(255,255,255,0.018) 0px,
-      rgba(255,255,255,0.018) 1px,
+      rgba(255,255,255,0.020) 0px,
+      rgba(255,255,255,0.020) 1px,
       rgba(0,0,0,0) 1px,
-      rgba(0,0,0,0) 8px
+      rgba(0,0,0,0) 9px
     );
 
-  /* Clear separation from sidebar/header panels.
-     Borders/insets keep the right-side notch exact (no outward shadow expansion). */
-  border: 4px solid rgba(0,0,0,0.94);
-  box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.86) inset,
-    0 0 0 3px rgba(240, 91, 41, 0.16) inset,
-    0 10px 0 rgba(0,0,0,0.70);
-}
+  border: 2px solid rgba(0,0,0,0.86);
+  box-shadow: 0 0 0 1px rgba(58, 70, 81, 0.32) inset;
 
-.ts-home-board::after{
-  content: "";
-  position: absolute;
-  inset: 10px;
-  border: 2px solid rgba(0,0,0,0.82);
-  box-shadow: 0 0 0 2px rgba(58, 70, 81, 0.45) inset;
-  pointer-events: none;
-}
-
-.ts-home-grid{
   display: grid;
   grid-template-columns: repeat(2, 540px);
   grid-auto-rows: auto;
@@ -59,8 +35,6 @@
   align-items: start;
   justify-content: start;
 
-  /* Keep content inset from the board frame without affecting card sizing. */
-  padding: 8px;
   box-sizing: border-box;
 }
 
@@ -77,19 +51,6 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-}
-
-/* Reduce widget fill so the board reads as a single surface. */
-.ts-home-panel.ts-panel{
-  background-color: rgba(0, 0, 0, 0.00);
-  background-image: none;
-  box-shadow:
-    0 0 0 2px rgba(0,0,0,0.55) inset,
-    0 8px 0 rgba(0,0,0,0.60);
-}
-
-.ts-home-panel.ts-panel::after{
-  border-color: rgba(58, 70, 81, 0.70);
 }
 
 @media (max-width: 1200px){

@@ -9,7 +9,6 @@ const API_BASE = process.env.DISCORD_API_BASE || 'https://discord.com/api/v10';
 const HOME_JSON_PATH = process.env.HOME_JSON_PATH || 'data/home.json';
 
 const BOT_TOKEN = process.env.DISCORD_BOT_TOKEN || '';
-const EVENT_URL = process.env.DISCORD_EVENT_URL || '';
 const GUILD_ID = process.env.DISCORD_GUILD_ID || '';
 const EVENT_ID = process.env.DISCORD_EVENT_ID || '';
 
@@ -85,6 +84,56 @@ async function discordGetScheduledEvent({ guildId, eventId }) {
   return res.json();
 }
 
+async function discordListScheduledEvents({ guildId }) {
+  const url = `${API_BASE}/guilds/${guildId}/scheduled-events?with_user_count=true`;
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bot ${BOT_TOKEN}`
+    }
+  });
+
+  if (!res.ok) {
+    const body = await res.text().catch(() => '');
+    throw new Error(`DISCORD_HTTP_${res.status}: ${body || res.statusText}`);
+  }
+
+  return res.json();
+}
+
+function pickNextUpcomingEvent(events) {
+  const list = Array.isArray(events) ? events : [];
+  const now = Date.now();
+
+  const normalized = list
+    .map((e) => {
+      const startMs = Date.parse(e?.scheduled_start_time || '');
+      return {
+        event: e,
+        startMs: Number.isNaN(startMs) ? null : startMs,
+        status: Number(e?.status)
+      };
+    })
+    .filter((x) => x.startMs !== null);
+
+  // Prefer: scheduled + in the future.
+  const futureScheduled = normalized
+    .filter((x) => x.status === 1)
+    .filter((x) => x.startMs >= now)
+    .sort((a, b) => a.startMs - b.startMs);
+
+  if (futureScheduled.length) return futureScheduled[0].event;
+
+  // Fallback: any scheduled event, earliest by start time.
+  const anyScheduled = normalized
+    .filter((x) => x.status === 1)
+    .sort((a, b) => a.startMs - b.startMs);
+
+  if (anyScheduled.length) return anyScheduled[0].event;
+
+  return null;
+}
+
 async function loadHomeJson() {
   const fullPath = path.resolve(HOME_JSON_PATH);
   const txt = await fs.readFile(fullPath, 'utf8');
@@ -111,26 +160,37 @@ if (!BOT_TOKEN) {
   fail('DISCORD_BOT_TOKEN env variable missing');
 }
 
-const parsed = parseIdsFromEventUrl(EVENT_URL);
-const guildId = parsed?.guildId || GUILD_ID;
-const eventId = parsed?.eventId || EVENT_ID;
-
-if (!guildId || !eventId) {
-  fail('Missing DISCORD_EVENT_URL or (DISCORD_GUILD_ID + DISCORD_EVENT_ID)');
+if (!GUILD_ID) {
+  fail('DISCORD_GUILD_ID env variable missing');
 }
+
+// Optional override: allow pinning a specific event id for emergencies.
+const pinnedEventId = String(EVENT_ID || '').trim();
 
 // -----------------------------
 // Fetch + write
 // -----------------------------
 
-const event = await discordGetScheduledEvent({ guildId, eventId });
+let event = null;
+
+if (pinnedEventId) {
+  event = await discordGetScheduledEvent({ guildId: GUILD_ID, eventId: pinnedEventId });
+} else {
+  const events = await discordListScheduledEvents({ guildId: GUILD_ID });
+  event = pickNextUpcomingEvent(events);
+}
+
+if (!event) {
+  console.log('No Discord scheduled event found. Keeping existing nextEvent payload.');
+}
 
 // Discord scheduled event fields: name / description / scheduled_start_time
 // https://discord.com/developers/docs/resources/guild-scheduled-event
-const title = String(event?.name || '').trim() || 'Next Event';
+const title = String(event?.name || '').trim();
 const subtitle = compactSubtitle(event?.description);
 const timeText = formatBerlinTime(event?.scheduled_start_time);
-const canonicalUrl = `https://discord.com/events/${guildId}/${eventId}`;
+const eventId = String(event?.id || pinnedEventId || '').trim();
+const canonicalUrl = eventId ? `https://discord.com/events/${GUILD_ID}/${eventId}` : '';
 
 const home = normalizeHomePayload(await loadHomeJson());
 if (!home) {
@@ -142,10 +202,10 @@ home.source = 'discord-bot';
 
 home.data[0].nextEvent = {
   ...(home.data[0].nextEvent || {}),
-  title,
-  subtitle,
+  title: title || (home.data[0].nextEvent?.title || 'Next Event'),
+  subtitle: subtitle || (home.data[0].nextEvent?.subtitle || ''),
   timeText: timeText || (home.data[0].nextEvent?.timeText || ''),
-  url: canonicalUrl
+  url: canonicalUrl || (home.data[0].nextEvent?.url || '')
 };
 
 await writeHomeJson(home);
