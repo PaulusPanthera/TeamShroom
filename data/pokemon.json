@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-01-18T14:01:43.910Z",
+  "generatedAt": "2026-01-19T22:03:23.229Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1516,7 +1516,7 @@
       "family": [
         "omanyte"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "kanto",
       "rarity": "fossil",
       "show": true
@@ -1527,7 +1527,7 @@
       "family": [
         "omanyte"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "kanto",
       "rarity": "fossil",
       "show": true
@@ -1538,7 +1538,7 @@
       "family": [
         "kabuto"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "kanto",
       "rarity": "fossil",
       "show": true
@@ -1549,7 +1549,7 @@
       "family": [
         "kabuto"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "kanto",
       "rarity": "fossil",
       "show": true
@@ -1560,7 +1560,7 @@
       "family": [
         "aerodactyl"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "kanto",
       "rarity": "fossil",
       "show": true
@@ -3793,7 +3793,7 @@
       "family": [
         "lileep"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "hoenn",
       "rarity": "fossil",
       "show": true
@@ -3804,7 +3804,7 @@
       "family": [
         "lileep"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "hoenn",
       "rarity": "fossil",
       "show": true
@@ -3815,7 +3815,7 @@
       "family": [
         "anorith"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "hoenn",
       "rarity": "fossil",
       "show": true
@@ -3826,7 +3826,7 @@
       "family": [
         "anorith"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "hoenn",
       "rarity": "fossil",
       "show": true
@@ -4486,7 +4486,7 @@
       "family": [
         "cranidos"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "sinnoh",
       "rarity": "fossil",
       "show": true
@@ -4497,7 +4497,7 @@
       "family": [
         "cranidos"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "sinnoh",
       "rarity": "fossil",
       "show": true
@@ -4508,7 +4508,7 @@
       "family": [
         "shieldon"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "sinnoh",
       "rarity": "fossil",
       "show": true
@@ -4519,7 +4519,7 @@
       "family": [
         "shieldon"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "sinnoh",
       "rarity": "fossil",
       "show": true
@@ -6224,7 +6224,7 @@
       "family": [
         "tirtouga"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "unova",
       "rarity": "fossil",
       "show": true
@@ -6235,7 +6235,7 @@
       "family": [
         "tirtouga"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "unova",
       "rarity": "fossil",
       "show": true
@@ -6246,7 +6246,7 @@
       "family": [
         "archen"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "unova",
       "rarity": "fossil",
       "show": true
@@ -6257,7 +6257,7 @@
       "family": [
         "archen"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "unova",
       "rarity": "fossil",
       "show": true
