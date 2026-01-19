@@ -1,240 +1,326 @@
-# Team Shroom Shiny System (Static Site)
+# TeamShroom
+Retro RPG-style guild dashboard for a PokéMMO shiny-hunting community.
 
-Static website for tracking Team Shroom’s PokeMMO shinies:
-- Shiny Pokédex (Hitlist + Living Dex)
-- Shiny Showcase (member gallery + per-member collections)
-- Donators
-- Shiny Weekly (data supported; page currently disabled in routing)
-
-The site is fully static (GitHub Pages + custom domain). Data is maintained in Google Sheets and compiled into JSON via GitHub Actions.
+TeamShroom is designed to feel like a real in-game guild interface:
+framed panels, hard edges, high contrast, “menu UI” navigation — powered by live community data.
 
 ---
 
-## Live Site
+## What TeamShroom is
+- **Static + client-rendered**
+- **Hash-routed** (`#home`, `#showcase`, `#hitlist`, `#shinyweekly`, `#donators`, etc.)
+- **Data-driven from JSON** generated from Google Sheets (via published CSV → scripts → `/data/*.json`)
 
-https://www.teamshroom.com
-
----
-
-## Pages
-
-### Shiny Pokédex
-Routes:
-- `#hitlist`
-- `#pokedex`
-
-Core behavior:
-- Unified collector-card UI for all Pokémon entries
-- Variant switching per card: Standard / Secret / Alpha / Safari
-- Points + tier trims derived from Pokémon tiers
-- Search and filtering logic lives in feature code, not the renderer
-
-Relevant code:
-- `src/features/pokedex/*`
-- `src/features/shinydex/*`
-- `src/ui/unifiedcard.js`
-
-### Shiny Showcase
-Route:
-- `#showcase`
-
-Gallery behavior:
-- Member cards rendered through UnifiedCard (member mode)
-- Search member name
-- Sort: alphabetical / total shinies / total points
-
-Member profile behavior:
-- Displays all shinies for the member, grouped by status:
-  - Active
-  - Sold
-  - Lost
-- Filters:
-  - Search Pokémon name
-  - Sort: newest / dex order / A–Z / points
-  - Status: Active Only / All / Lost-Sold Only
-  - Variant: Any / Standard / Secret / Alpha / Safari
-- Clips:
-  - If a shiny has a `clip` field, clicking its card opens the URL in a new tab
-
-Counting rules:
-- Active count and points ignore `lost` and `sold`
-- Lost/Sold remain visible but are treated as inactive
-
-Relevant code:
-- `src/features/showcase/*`
-- `src/domains/showcase/showcase.model.js`
-
-### Donators
-Route:
-- `#donators`
-
-Behavior:
-- Tiered supporter display driven by generated JSON
-
-Relevant code:
-- `src/features/donators/*`
-- `src/domains/donators/*`
-
-### Shiny Weekly
-Route:
-- `#shinyweekly`
-
-Status:
-- Data pipeline generates `data/shinyweekly.json`
-- UI code exists
-- Routing currently redirects `#shinyweekly` to `#hitlist` to avoid broken production UI
-
-Relevant code:
-- `src/features/shinyweekly/*`
-- `data/shinyweekly.json`
+TeamShroom is a guild command board:
+- what to hunt
+- who found what
+- weekly history
+- roster + profiles
+- donator ledger + tiers
 
 ---
 
-## Data Flow
+## Core identity (design contract)
+### Mood target
+- Cozy, chill, welcoming underdog guild energy
+- Structured + organized + content-driven
+- “This is our guild’s command board”
 
-Source of truth:
-- Google Sheets (edited collaboratively)
+### Visual baseline
+- Pixel / PokeRogue-inspired framing
+- Thick borders + inner strokes
+- Simple depth lines (not soft blur)
+- Dark textured backgrounds
+- Red/orange accent = interactive / active
+- Readable headings, minimal font weights
+- Clear hover/pressed states
+- No rounded SaaS cards, no glass, no neon
 
-Pipeline:
-1. Google Sheets are published as CSV
-2. GitHub Actions fetches CSV from repository secrets
-3. Node scripts validate, normalize, and write JSON
-4. Generated `data/*.json` is committed back to the repo
-5. GitHub Pages serves the static site
+### Structural baseline (global shell)
+Layout is always:
+- **Top banner + navigation bar**
+- **Left sidebar = page brain** (status + controls + notes)
+- **Main panel area = content grid / tables / cards**
 
-Workflow:
-- `.github/workflows/sheets-to-json.yml`
-- Runs on schedule (every 6 hours) and via manual dispatch
-
----
-
-## Generated Data (Do Not Edit)
-
-Generated files says what the site consumes at runtime:
-- `data/pokemon.json`
-- `data/members.json`
-- `data/shinyshowcase.json`
-- `data/shinyweekly.json`
-- `data/donators.json`
-
-Manual edits to these files get overwritten by CI.
+The shell is the backbone. Pages do not invent their own layout.
 
 ---
 
-## Sheets Contracts and Validation
+## Navigation + routing behavior
+### Tabs (what users see)
+- **HOME**
+- **MEMBERS**
+- **POKÉDEX**
+- **WEEKLY**
+- **DONATORS**
 
-All CSV rows are validated against contracts before JSON output:
-- `scripts/contracts/*.contract.mjs`
+### Routing rules (mental model)
+- HOME → arrival dashboard
+- MEMBERS → roster grid + member profile detail routes
+- POKÉDEX → Shinydex systems (Hitlist / Living Dex)
+- WEEKLY → weekly overview + week detail
+- DONATORS → leaderboard + recent log
 
-Contracts define required fields and types. Example highlights:
-
-### Shiny Showcase fields
-Required:
-- `ot`
-- `pokemon`
-
-Optional:
-- `method`, `encounter`
-- `secret`, `alpha`, `run`, `favorite`
-- `lost`, `sold`
-- `clip`, `notes`
-
-### Members fields
-Required:
-- `name`
-- `role` (`spore`, `shroom`, `shinyshroom`, `mushcap`)
-
-Optional:
-- `active`
-- `sprite` (`png`, `gif`, `jpg`, `none`, `""`)
-
-Member sprite path rule:
-- `img/membersprites/${memberKey}sprite.${member.sprite}`
-
-If sprite is missing or `none`, the UI uses the fallback example sprite.
-
-### Pokémon fields
-Required:
-- `dex`
-- `pokemon`
-- `tier`
-
-Optional:
-- `family`, `region`, `rarity`, `show`
+### Active tab behavior
+The nav highlights the current page and stays consistent across route aliases  
+(example: `#pokedex` may resolve internally into a Shinydex route).
 
 ---
 
-## Sprite Handling (PokéDB)
+## The global shell (game UI frame)
+Shell responsibilities:
+- Controls the top banner and navigation
+- Owns the left sidebar container
+- Owns the main content mount
+- Owns the global **COLLECT / MENU** toggle
+- Owns guild plaque/logo behavior
+- Sets page-safe spacing and anchoring
 
-Pokémon shiny sprites come from PokéDB animated BW shiny GIFs.
-
-Central mapping exists to prevent per-feature override maps:
-- `src/utils/utils.js`
-  - `toPokemonDbSpriteKey()`
-  - `getPokemonDbShinyGifSrc()`
-
-This normalizes edge keys like:
-- `mrmime` → `mr-mime`
-- `mimejr` → `mime-jr`
-- `typenull` → `type-null`
-- `porygonz` → `porygon-z`
-
----
-
-## Local Development
-
-No build step. ES Modules only.
-
-Run any static server in the repo root:
-- `python -m http.server`
-- `npx serve`
-- any equivalent
-
-Opening `index.html` via `file://` will fail due to module imports.
+Guild plaque behavior:
+- Clicking the logo/plaque:
+  - plays a sound
+  - navigates to a random member profile
 
 ---
 
-## Codebase Rules
+## Sidebar system (contract-driven)
+Sidebars are not page-specific HTML chaos. Every page sidebar follows the same contract.
 
-- ES Modules only (`import` / `export`)
-- No bundler
-- No global mutable state
-- Feature-owned semantics, shared renderer
-- UnifiedCard (`src/ui/unifiedcard.js`) stays render-only and dumb
-- Feature modules own:
-  - filtering, sorting, grouping
-  - active/inactive rules
-  - variant enablement and default selection
-- CSS must avoid global bleed; page-level styles are scoped under page roots
+### Sidebar contract
+Each page sidebar is built from:
+- **TITLE**
+- **DESC / hint line**
+- **BLOCKS** (stacked panels)
+  - **STATUS**
+  - **CONTROLS**
+  - **NOTES**
 
-File headers for touched files:
-```js
+Even when a page has minimal data, blocks can be placeholders so the sidebar stays intentional.
 
-// <file-path/name>
-// v2.0.0-beta
-// <description + comments> 
+Why this exists:
+- consistent hierarchy
+- consistent rhythm
+- authentic “game menu” feel
 
-```
+---
 
-## Project Structure
+## Card system (Unified Card)
+Most of the site visually revolves around collector cards.
 
-Top-level:
+Unified Card renderer supports:
+- Pokémon cards
+- Member cards
 
--index.html — static shell + CSS includes
--main.js — routing + data bootstrapping
--data/*.json — CI output
--scripts/*.mjs — CSV fetch + validation + JSON generation
--style/*.css — global + feature-level styles
+This enforces:
+- one visual language
+- one spacing system
+- one tier/points framing system
+- fewer “style drift” bugs
 
-Source:
+Cards communicate:
+- sprite art
+- nameplate + points chip
+- variant strip icons (standard/secret/alpha/safari)
+- claimed/unclaimed/owned states
+- tier framing
 
--src/data/ — JSON loaders + data models
--src/domains/ — derived data builders per domain
--src/features/ — page logic (presenters + UI renderers)
--src/ui/ — shared UI components
--src/utils/ — shared utilities
+---
 
+## Data pipeline (source of truth)
+TeamShroom is not hardcoded content. It is a UI for a living guild database.
 
-### Disclaimer
+### Source of truth
+- Google Sheets → published CSV links
 
-Unofficial fan project. Not affiliated with Nintendo, Game Freak, or PokeMMO.
+### Transformation layer
+Scripts:
+- fetch CSV
+- normalize rows into stable models
+- output structured JSON under `/data/`
+
+JSON files follow a strict envelope:
+- `version`
+- `generatedAt`
+- `source`
+- `data[]`
+
+### Runtime trust boundary
+The site intentionally does **not** reshape data at runtime.  
+The JSON is assumed correct once generated.
+
+---
+
+## Automation
+GitHub Actions regenerate datasets on a schedule:
+- every ~6 hours: members / weekly / donators / dex / showcase
+- hourly: next Discord scheduled event → `home.json`
+
+Goal: the guild dashboard updates itself without manual work.
+
+---
+
+## Pages (feature breakdown)
+### HOME (Guild Hall)
+Purpose:
+- arrival / command board
+
+Main content:
+- spotlight (featured shinies)
+- bounty target (wanted poster)
+- hunter of the week
+- next event panel
+
+Sidebar:
+- STATUS: members / shinies / points totals
+- CONTROLS: quick jumps (event / bounty / hotw / spotlight)
+- NOTES: update + reset behaviors
+
+---
+
+### MEMBERS
+Two experiences:
+
+**A) Roster overview**
+- grid of member cards
+- alphabetical sections
+- quick scanning
+
+Sidebar:
+- STATUS: total members / shinies / points
+- CONTROLS: search + sorting
+- NOTES: usage hints
+
+**B) Member profile detail**
+- profile header stats
+- grid of owned Pokémon cards
+- filters/sorting for collection
+
+Sidebar becomes a profile control panel:
+- personal stats
+- collection filters
+- notes explain variant toggles/inactivity behavior
+
+---
+
+### POKÉDEX (ShinyDex)
+Flagship system page.
+
+**A) Hitlist (legacy claims)**
+Meaning:
+- first-claim history per Pokémon family (guild legacy)
+
+Sidebar controls are heavy here:
+- mode toggle
+- search
+- unclaimed filter
+- sorting
+- progress indicator
+
+**B) Living Dex (team ownership counts)**
+Meaning:
+- how many of each species exist in the guild now
+
+Cards become count summaries with traceability.
+
+---
+
+### WEEKLY
+Two views:
+
+**A) Weekly overview**
+- grouped by month
+- week tiles show week range + shinies count + hunters count
+
+Sidebar:
+- STATUS: selected week summary
+- CONTROLS: select week, inspect hunters, cycle shinies
+- NOTES: reset rules
+
+Also supports a “Show Hunter of the Week” mode toggle.
+
+**B) Week detail**
+- member cards for participants
+- optional Pokémon cards for that week’s drops
+- “who participated / who found what”
+
+---
+
+### DONATORS
+Purpose:
+- guild support ledger (gratitude + transparency)
+
+Main content:
+- leaderboard (rank/name/total/tier)
+- recent donations log
+
+Sidebar:
+- STATUS: donors, total amount, latest entry
+- CONTROLS: leaderboard/recent navigation + prize pool plan hooks
+- NOTES: ranking logic
+
+---
+
+## Points / tiers (RPG layer)
+Points are treated as a stat:
+- tiers drive card framing and prestige signaling
+- gives the UI an RPG power curve feel
+
+---
+
+## Interaction patterns
+Global:
+- hash navigation = instant “menu switching”
+- persistent UI frame keeps immersion
+- sidebar behaves like a quest log / status screen
+
+Pages:
+- clicking cards = inspect / drill down
+- filters behave like menu toggles
+- tooltips behave like info popups
+- tables behave like ledger screens
+
+Special:
+- **COLLECT / MENU** switch acts like “hide UI chrome” vs “full command board”
+
+---
+
+## Project structure
+Typical layout:
+- `/index.html` → entry
+- `/main.js` → boot + routing
+- `/src/app/*` → shell + render + sidebar + routes
+- `/src/features/*` → feature pages (home/members/shinydex/weekly/donators/showcase)
+- `/src/domains/*` → shared logic + models
+- `/src/data/*` → JSON loading + cache
+- `/src/ui/*` → shared UI systems (cards, tooltips, etc.)
+- `/style/*` → global + feature CSS
+- `/data/*` → generated datasets
+- `/scripts/*` → CSV → JSON + event sync
+- `/.github/workflows/*` → automation
+
+---
+
+## Local development
+There is **no build step**. This is a static ES module site.
+
+Run it with any static server (ES modules require HTTP, not file://):
+
+Example:
+```bash
+python -m http.server 5173
+
+Then open:
+
+http://localhost:5173/#home
+
+Deployment
+
+Designed for static hosting (GitHub Pages compatible):
+
+commit generated JSON under /data/
+
+site renders client-side from those datasets
+
+One sentence
+
+TeamShroom is a retro RPG guild interface that turns community shiny hunting into a persistent, navigable, evolving history.

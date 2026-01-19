@@ -7,6 +7,7 @@ import { loadMembers } from '../../data/members.loader.js';
 import { buildShinyWeeklyModel } from '../../domains/shinyweekly/shinyweekly.model.js';
 import { initPokemonDerivedDataOnce, getPokemonPointsMap } from '../../domains/pokemon/pokemon.data.js';
 import { normalizeMemberKey } from '../../domains/members/member.assets.js';
+import { computeHotwForWeek } from '../../domains/shinyweekly/hotw.ai.js';
 
 import {
   renderWeeklyShell,
@@ -55,6 +56,10 @@ function renderSidebarBlocks(sidebar, week, opts = {}) {
 
   const view = opts && opts.view ? String(opts.view) : 'overview';
   const onBack = opts && typeof opts.onBack === 'function' ? opts.onBack : null;
+  const onToggleOverviewLabels = opts && typeof opts.onToggleOverviewLabels === 'function'
+    ? opts.onToggleOverviewLabels
+    : null;
+  const overviewLabelMode = opts && opts.overviewLabelMode ? String(opts.overviewLabelMode) : 'dates';
   const signal = opts && opts.signal;
 
   const wk = week && typeof week === 'object' ? week : null;
@@ -89,11 +94,28 @@ function renderSidebarBlocks(sidebar, week, opts = {}) {
     controlsWrap.appendChild(backBtn);
   }
 
+  if (view === 'overview' && onToggleOverviewLabels) {
+    const toggleBtn = document.createElement('button');
+    toggleBtn.type = 'button';
+    toggleBtn.className = 'ts-side-action';
+
+    const mode = String(overviewLabelMode || 'dates').toLowerCase();
+    toggleBtn.textContent = mode === 'hotw' ? 'Show Week Dates' : 'Show Hunter of the Week';
+
+    toggleBtn.addEventListener(
+      'click',
+      () => onToggleOverviewLabels(),
+      signal ? { signal } : undefined
+    );
+
+    controlsWrap.appendChild(toggleBtn);
+  }
+
   const controlsNode = makeLines([
     'Select week',
     'Inspect hunters',
     'Cycle shinies',
-    'HOTW view (planned)'
+    'Toggle week tile labels'
   ]);
 
   controlsWrap.appendChild(controlsNode);
@@ -176,6 +198,12 @@ export async function renderShinyWeeklyPage(ctx) {
     let view = 'overview';
     let selectedWeekKey = getDefaultWeekKey(weeks);
 
+    // Overview label mode:
+    // - 'dates' => show week date ranges
+    // - 'hotw'  => show Hunter of the Week names
+    let overviewLabelMode = 'dates';
+    let hotwLabelByWeekKey = Object.create(null);
+
     // Weekly needs Pokémon points to resolve tier trim + header points chip.
     // Load derived Pokémon data locally to avoid global route coupling.
     let pokemonReady = false;
@@ -186,13 +214,49 @@ export async function renderShinyWeeklyPage(ctx) {
     let membersReady = false;
     let memberMetaByKey = Object.create(null);
 
+    const formatHotwLabel = (weekObj, winnerKeys) => {
+      const keys = Array.isArray(winnerKeys) ? winnerKeys : [];
+      if (!keys.length) return '—';
+
+      const byOt = weekObj && weekObj.membersByOt ? weekObj.membersByOt : null;
+      const names = keys
+        .map(k => (byOt && byOt[k] && byOt[k].name) ? String(byOt[k].name) : '')
+        .filter(Boolean);
+
+      if (!names.length) return '—';
+      if (names.length === 1) return names[0];
+      return `${names[0]} +${names.length - 1}`;
+    };
+
+    const recomputeHotwLabels = () => {
+      if (!pokemonReady) return;
+      const map = Object.create(null);
+
+      weeks.forEach((w) => {
+        const wk = w && typeof w === 'object' ? w : null;
+        const weekKey = wk ? String(wk.week || '').trim() : '';
+        if (!weekKey) return;
+
+        const winners = computeHotwForWeek(wk, pokemonPointsMap);
+        map[weekKey] = formatHotwLabel(wk, winners);
+      });
+
+      hotwLabelByWeekKey = map;
+    };
+
     const commitRender = () => {
       const selectedWeek = weeks.find(w => w.week === selectedWeekKey) || null;
       renderSidebarBlocks(sidebar, selectedWeek, {
         view,
         signal,
+        overviewLabelMode,
         onBack: () => {
           view = 'overview';
+          commitRender();
+        },
+        onToggleOverviewLabels: () => {
+          overviewLabelMode = overviewLabelMode === 'hotw' ? 'dates' : 'hotw';
+          if (overviewLabelMode === 'hotw') recomputeHotwLabels();
           commitRender();
         }
       });
@@ -203,6 +267,8 @@ export async function renderShinyWeeklyPage(ctx) {
           {
             weeks,
             selectedWeekKey,
+            labelMode: overviewLabelMode,
+            hotwLabelByWeekKey,
             onSelectWeek: (weekKey) => {
               selectedWeekKey = String(weekKey || '');
               view = 'week';
@@ -224,12 +290,15 @@ export async function renderShinyWeeklyPage(ctx) {
         return;
       }
 
+      const hotwKeys = week ? computeHotwForWeek(week, pokemonPointsMap) : [];
+
       renderWeekView(
         mainBody,
         {
           week,
           pokemonPointsMap,
           memberMetaByKey,
+          hotwKeys,
           onBack: () => {
             view = 'overview';
             commitRender();
@@ -243,11 +312,13 @@ export async function renderShinyWeeklyPage(ctx) {
       .then(() => {
         pokemonReady = true;
         pokemonPointsMap = getPokemonPointsMap();
+        if (overviewLabelMode === 'hotw') recomputeHotwLabels();
         if (view === 'week') commitRender();
       })
       .catch(() => {
         pokemonReady = true;
         pokemonPointsMap = {};
+        if (overviewLabelMode === 'hotw') recomputeHotwLabels();
         if (view === 'week') commitRender();
       });
 
@@ -276,6 +347,24 @@ export async function renderShinyWeeklyPage(ctx) {
         membersReady = true;
         if (view === 'week') commitRender();
       });
+
+    // Clicking the WEEKLY nav while already inside Weekly should always return to overview.
+    const navWeekly = document.getElementById('nav-shinyweekly');
+    if (navWeekly) {
+      navWeekly.addEventListener(
+        'click',
+        (event) => {
+          const hash = String(location.hash || '').trim().toLowerCase();
+          if (!hash.startsWith('#shinyweekly')) return;
+
+          // Hash doesn't change, so force an internal reset.
+          event.preventDefault();
+          view = 'overview';
+          commitRender();
+        },
+        signal ? { signal } : undefined
+      );
+    }
 
     commitRender();
   } catch {

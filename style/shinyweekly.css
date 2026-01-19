@@ -256,6 +256,65 @@
   user-select: none;
 }
 
+.shinyweekly-flip-tile.is-hotw{
+  outline: 2px solid rgba(240, 91, 41, 0.95);
+  outline-offset: 4px;
+}
+
+
+/* Weekly member cards: show weekly shiny count centered in the info plate */
+.shinyweekly-root .unified-card.unified-card--member.shinyweekly-week-membercard .unified-info-text{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+}
+
+/* Stacked (HOTW-style) deck inside Weekly flip tiles.
+   Member state shows subtle frame layers. Flipped state reveals one shiny and spoilers the rest. */
+.shinyweekly-card-deck{
+  position: relative;
+  width: var(--card-w);
+  height: var(--card-h);
+}
+
+.shinyweekly-deck-card{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.shinyweekly-card-deck .shinyweekly-deck-card:nth-child(1){
+  z-index: 3;
+  transform: translate(0px, 0px);
+}
+
+.shinyweekly-card-deck .shinyweekly-deck-card:nth-child(2){
+  z-index: 2;
+  transform: translate(6px, 4px);
+}
+
+.shinyweekly-card-deck .shinyweekly-deck-card:nth-child(3){
+  z-index: 1;
+  transform: translate(12px, 8px);
+}
+
+/* Behind-layer frame cards: only a faint outline should be visible */
+.shinyweekly-frame-card{
+  background: rgba(8, 10, 12, 0.18);
+  opacity: 0.45;
+  box-shadow:
+    0 3px 0 rgba(0,0,0,0.55),
+    0 0 0 2px rgba(0,0,0,0.25) inset,
+    0 0 0 4px rgba(0,0,0,0.30) inset;
+}
+
+.shinyweekly-spoiler-card{
+  filter: grayscale(1) saturate(0.7) brightness(0.75);
+  pointer-events: none;
+}
+
 @media (max-width: 768px){
   .shinyweekly-root .dex-grid{
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));

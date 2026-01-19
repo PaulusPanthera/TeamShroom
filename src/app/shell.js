@@ -6,6 +6,9 @@
    GLOBAL HEADER + LEFT SIDEBAR SHELL
 --------------------------------------------------------- */
 
+import { loadMembers } from '../data/members.loader.js';
+import { normalizeMemberKey } from '../domains/members/member.assets.js';
+
 const TS_HEADER_ID = 'ts-header';
 const TS_SHELL_ID = 'ts-shell';
 const TS_SIDEBAR_ID = 'ts-sidebar';
@@ -55,6 +58,45 @@ function playLogoSound() {
       // Ignore autoplay errors. Playback is user-gesture triggered.
     });
   }
+}
+
+/* ---------------------------------------------------------
+   LOGO CLICK: RANDOM MEMBER PROFILE
+--------------------------------------------------------- */
+
+let tsMemberKeyCachePromise = null;
+
+async function getMemberKeysOnce() {
+  if (tsMemberKeyCachePromise) return tsMemberKeyCachePromise;
+
+  tsMemberKeyCachePromise = Promise.resolve(loadMembers())
+    .then((rows) => {
+      const list = Array.isArray(rows) ? rows : [];
+      const keys = list
+        .map((r) => normalizeMemberKey(r && r.name))
+        .filter(Boolean);
+      return keys;
+    })
+    .catch(() => []);
+
+  return tsMemberKeyCachePromise;
+}
+
+async function goToRandomMemberProfile() {
+  const keys = await getMemberKeysOnce();
+  if (!Array.isArray(keys) || !keys.length) {
+    location.hash = '#showcase';
+    return;
+  }
+
+  const idx = Math.floor(Math.random() * keys.length);
+  const key = keys[idx];
+  if (!key) {
+    location.hash = '#showcase';
+    return;
+  }
+
+  location.hash = `#showcase-${encodeURIComponent(key)}`;
 }
 
 function updateHeaderHeightVar() {
@@ -365,11 +407,12 @@ function ensureHeaderShell() {
   // Click sound on plaque.
   plaque.setAttribute('role', 'button');
   plaque.setAttribute('tabindex', '0');
-  plaque.setAttribute('aria-label', 'Play logo sound');
+  plaque.setAttribute('aria-label', 'Open random member profile');
 
   plaque.addEventListener('click', (e) => {
     e.preventDefault();
     playLogoSound();
+    goToRandomMemberProfile();
   });
 
   plaque.addEventListener('keydown', (e) => {
@@ -377,6 +420,7 @@ function ensureHeaderShell() {
     if (k === 'Enter' || k === ' ') {
       e.preventDefault();
       playLogoSound();
+      goToRandomMemberProfile();
     }
   });
 

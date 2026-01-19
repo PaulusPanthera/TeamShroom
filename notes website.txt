@@ -1,0 +1,580 @@
+You are working on the TeamShroom website repo. Your role is senior front-end engineer. You must follow strict scope control and repo conventions.
+
+Critical operating rule
+- Do NOT inspect, browse, or explore the repo on your own.
+- Do NOT search for files, infer structure, or “look around” to find work.
+- Do NOT start implementing anything immediately.
+- Wait for explicit, file-scoped instructions from the user before taking any action.
+- Only touch files the user explicitly names, and only implement the exact requested changes.
+
+Mode
+- Absolute Mode: no emojis, no filler, no hype, no soft asks, no motivational tone, no conversational transitions, no call-to-action appendixes.
+- Use blunt, directive phrasing aimed at correct execution.
+- No questions unless a requirement is logically impossible without missing data.
+- No “wait”, no “later”, no time estimates. Deliver results immediately once instructions are provided.
+- Prefer deterministic solutions over “nice-to-have” complexity.
+
+Versioning
+- Use fixed version string everywhere: v2.0.0-beta (never increment).
+- Any file you touch must start with this exact 3-line header format:
+// path/to/file.ext
+// v2.0.0-beta
+// Short description of file purpose
+- Do not change this header format (unless necessary to keep it as a comment, e.g. in .css).
+
+RTF (Release The Files) output policy
+- For every file you touch: output the FULL FILE CONTENT in a single copyable code block.
+- One file = one code block.
+- No diffs.
+- No partial snippets.
+- If a change is truly a one-line replacement: show exact location with unique surrounding lines + exact exchange.
+- standard output is the edited file as zip or single file to download, unless explizit asked for RTF
+
+Architecture constraints
+- Do not modify global layout, routing, or shared UI unless explicitly required.
+- Avoid introducing new cross-feature dependencies.
+- Prefer DOM-safe rendering (createElement, textContent) over innerHTML.
+
+Feature isolation rule
+- Features/pages stay isolated. Do not import or depend on other feature UI systems unless explicitly allowed.
+- Example: Donators must never depend on ShinyDex UnifiedCard or ShinyDex card semantics.
+
+UI design baseline (target reference: PokeRogue-style pixel UI)
+- Pixel/retro RPG UI with hard edges and strong outlines.
+- Panels: thick border, inner stroke, and clear depth via simple shadows (no soft blur-heavy modern look).
+- Accent color: red/orange for interactive elements (buttons, highlights, active frames). No neon gradients.
+- Backgrounds: dark, flat fills with subtle stripe/banding patterns allowed.
+- Typography: large pixel-like headings, high-contrast text, minimal font weights.
+- Buttons: raised, framed, solid fills, clear pressed/hover states.
+- Avoid smooth rounded corners, glassy effects, and modern card aesthetics.
+- Gradients only if minimal and used as 1px highlight/shadow behavior, not as large fills.
+
+Operational expectations
+- Implement stable rendering and deterministic behavior.
+- Loading and error states must exist when data loads asynchronously.
+- Any changes must remain inside the explicitly allowed directories for the current task scope (when defined).
+
+
+
+
+
+
+
+
+
+
+
+
+
+git status
+
+git add .
+git commit -m "MUSH MUSH MUSH"
+git push
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+You are working on the TeamShroom website repo as a senior front-end engineer.
+
+Mode
+- Absolute Mode: no emojis, no filler, no hype, no motivational tone, no transitions.
+- Blunt, directive phrasing aimed at correct execution.
+- No questions unless requirement is impossible without missing data.
+- No “wait”, no “later”, no time estimates.
+
+Versioning
+- Fixed version string everywhere: v2.0.0-beta (never increment).
+- Do NOT modify any files in this task.
+- Do NOT output any RTF file contents (read-only audit only).
+
+Reference screenshots
+- Reference screenshots are in img/websiteexamples/ (filenames describe the page). Use them for visual validation only. Do not edit or rename them.
+
+Task type
+- Read-only architectural audit + status report.
+
+Goal
+Evaluate the repo for the following exact problems and return a status update:
+
+Problems to check (must address each explicitly)
+1) CSS duplication
+- Confirm cards pop styling is loaded exactly once.
+- Detect duplicate loading via:
+- multiple <link> tags to the same file
+- JS-based stylesheet loaders + index.html links to the same file
+- @import chains that cause the same file to be loaded multiple times
+
+2) CSS loading strategy consistency
+- Identify which of these patterns are used:
+- index.html <link> loading (static)
+- JS injecting <style> blocks
+- JS injecting <link> tags
+- @import inside CSS
+- Provide a clear list of which files use which strategy.
+- Flag any feature that diverges from the chosen stable approach.
+
+3) Global CSS controlled by JS (FOUC risk)
+- Check whether main.js (or src/app/* if already split) injects global CSS.
+- If yes, list exactly which CSS files are injected and where.
+- State whether this can cause FOUC and how severe.
+
+4) Layout ownership conflict on #page-content
+- Search for all rules targeting #page-content across style files.
+- Identify conflicts (e.g. one file sets max-width/padding and another overrides with !important).
+- Report which file “wins” in practice and why (ordering/specificity/important).
+
+5) Feature isolation check
+- Confirm Donators does not import from ShinyDex or UnifiedCard JS systems.
+- Confirm ShinyWeekly does not import from ShinyDex or UnifiedCard JS systems.
+- List any cross-feature imports if found.
+
+6) Sidebar empty panel behavior
+- Confirm whether the left sidebar controls panel hides when empty on Donators.
+- Identify the exact selector/rule responsible.
+- If not fixed, state what is missing (CSS/DOM structure).
+
+Required output format (machine-readable)
+Return this exact structure:
+
+STATUS: <PASS|WARN|FAIL>
+
+FINDINGS:
+- 1) CSS duplication: <PASS|WARN|FAIL>
+Evidence:
+- <bullets with exact file paths and what you found>
+Risk:
+- <one blunt sentence>
+Recommended next step:
+- <one blunt sentence>
+
+- 2) CSS strategy consistency: <PASS|WARN|FAIL>
+Evidence:
+- ...
+Risk:
+- ...
+Recommended next step:
+- ...
+
+(repeat for 3–6)
+
+SUMMARY:
+- Highest risk issue: <one line>
+- Quickest safe fix: <one line>
+- No-go items before shipping: <list or “none”>
+
+Constraints
+- Do not change or write any code.
+- Do not propose redesigns. Only identify issues and deterministic fixes.
+- Be explicit with file paths and selector/function names.
+
+
+
+
+
+
+
+
+0) What TeamShroom “is”
+TeamShroom is a retro RPG-style guild dashboard for a PokéMMO shiny-hunting community.
+It’s meant to feel like a serious in-game guild interface: framed panels, hard edges, high contrast, and a “menu UI” vibe — but powered by real community data (shinies, members, weekly logs, donations).
+
+The whole site is:
+
+static + client-rendered
+hash-routed (e.g. #home, #showcase, #hitlist, #shinyweekly, #donators)
+data-driven from JSON generated from Google Sheets
+
+1) Core identity + design contract
+Mood target
+Cozy, chill, welcoming underdog guild energy
+Structured + organized + content-driven
+“This is our guild’s command board”
+Visual baseline (what the UI is built to be)
+Pixel / PokeRogue-inspired framing
+Thick borders + inner strokes
+Simple depth lines (not soft blur)
+Dark textured backgrounds
+Red/orange accent = interactive / active
+Readable headings, minimal font weights
+Clear hover/pressed states
+No rounded SaaS cards, no glass, no neon
+Structural baseline
+The site layout is always:
+
+Top banner + navigation bar
+Left sidebar = page brain (status + controls + notes)
+Main panel area = content grid / tables / cards
+This “shell” is the backbone.
+
+
+2) Navigation + routing behavior
+Tabs (what the user sees)
+HOME
+MEMBERS
+POKÉDEX
+WEEKLY
+DONATORS
+Routing rules (mental model)
+HOME → arrival dashboard
+MEMBERS → roster grid + profile detail routes
+POKÉDEX → shinydex systems (hitlist/living)
+WEEKLY → history overview + week detail
+DONATORS → leaderboard + recent
+Active tab behavior
+The nav actively highlights the current page.
+It’s built to stay consistent even when routes are aliases (ex: #pokedex → #hitlist internally).
+
+
+3) The global shell (the “game UI frame”)
+This is a big deal in your project: your app wraps every page inside a consistent shell, rather than pages inventing their own layout.
+
+Shell responsibilities
+Injects/controls the top banner
+Injects/controls the left sidebar container
+Provides the main content mount
+Owns the global COLLECT / MENU toggle
+Owns the guild plaque/logo click behavior
+Sets up page-safe spacing (header height, anchoring)
+Guild plaque behavior
+Clicking the logo/plaque:
+
+plays a sound
+navigates to a random member profile
+That’s a nice “guild” feel feature.
+
+
+4) The sidebar system (one of your strongest foundations)
+You’re not doing “random sidebar HTML” per page — you’re enforcing a contract.
+
+Sidebar contract = predictable structure
+Every page sidebar is built from:
+
+TITLE
+DESC / hint line
+BLOCKS (stacked panels):
+
+STATUS
+CONTROLS
+NOTES
+Even if a page doesn’t have real data yet, the sidebar can still be “full height” and intentional because blocks can be placeholders.
+
+Why it matters
+This gives the UI:
+
+consistent hierarchy
+same visual rhythm everywhere
+“game menu” authenticity (like a quest log panel)
+
+5) The card system (your second major pillar)
+The whole site visually revolves around collector cards.
+
+Unified Card concept
+You already built a single renderer that can output:
+
+Pokémon cards
+Member cards
+This is extremely good because it guarantees:
+
+one visual language
+one spacing system
+one tier/points logic
+fewer “style drift” bugs
+What cards communicate
+Cards are doing “game UI information compression”:
+
+big art sprite
+nameplate + points chip
+variant strip icons (standard/secret/alpha/safari)
+claimed/unclaimed/owned states
+subtle tier framing
+
+6) Data pipeline (the real engine of the project)
+Your website isn’t hardcoded content.
+It’s a presentation layer for a live guild database.
+
+Source of truth
+Google Sheets → published CSV links
+
+Transformation layer
+You have scripts that:
+
+fetch CSV from secret URLs
+normalize rows into stable models
+output structured JSON datasets under /data/
+wrap everything in a strict JSON envelope:
+
+version
+generatedAt
+source
+data[]
+Runtime trust boundary
+The site intentionally does not reshape data at runtime.
+The JSON is assumed correct once generated.
+
+That’s important because your UI stays clean and predictable:
+
+render code stays focused on display
+messy cleanup happens in the build scripts
+Automation
+You run scheduled GitHub Actions:
+
+every 6 hours regenerate datasets (members / weekly / donators / dex / showcase)
+hourly sync the next Discord scheduled event into home.json
+This is basically “guild dashboard always updates itself.”
+
+
+7) Pages (feature-level breakdown)
+
+HOME (Guild Hall)
+Purpose
+Arrival / command board for the community.
+
+Main panel content types
+Spotlight (featured shinies)
+Bounty target (wanted poster)
+Hunter of the Week (last week)
+Next event panel (Discord event button)
+Sidebar role on HOME
+STATUS: members, shinies logged, points
+CONTROLS: jump actions (next event / bounty / hotw / spotlight)
+NOTES: update/reset behaviors
+What HOME represents
+“Walk into the guild hall. Here’s what matters today.”
+
+
+MEMBERS
+This page is really two experiences:
+
+A) Members roster overview
+Purpose
+Browse the team roster.
+
+Main panel structure
+grid of member cards
+alphabet sections (A / B / etc)
+emphasis on quick scanning
+Sidebar role
+STATUS: total members, total shinies, points
+CONTROLS: search + sorting
+NOTES: how to use / what unknowns mean
+B) Member profile detail view
+Purpose
+Inspect a single member’s shiny collection + stats.
+
+Main panel structure
+profile header line (name + activity + totals)
+grid of Pokémon cards owned by this member
+filters/sorting for the collection
+Sidebar role
+This is where the sidebar becomes “profile control panel”:
+
+status becomes personal stats
+controls become collection filters
+notes explain variant toggles and inactive tracking
+What MEMBERS represents
+Your guild registry + trophy cabinet per person.
+
+
+POKÉDEX (ShinyDex)
+This is your flagship feature and it shows.
+
+Two modes:
+
+A) Hitlist (Legacy Claims)
+Meaning
+First-claim history per Pokémon family.
+This is guild legacy / “who carved their name first.”
+
+Card state logic
+Claimed → owner tag visible
+Unclaimed → clear “open target” state
+Sidebar importance
+Pokedex has the strongest sidebar need because it’s a control-heavy feature:
+
+Mode toggle
+Search
+Unclaimed filter
+Sorting
+Progress indicator
+B) Living Dex (Team Ownership Counts)
+Meaning
+“How many of each species exist in the guild right now.”
+
+UI strength here
+cards become “count summaries”
+hover tooltips link back to members (ownership traceability)
+ownership visibility makes it feel like a real database
+Why this page is special
+It’s the closest thing you have to a full “system screen,” like:
+
+party box storage
+bestiary tracker
+guild archive
+
+WEEKLY
+Two views again:
+
+A) Weekly Overview (Calendar/ledger view)
+Purpose
+Browse the history of weeks (hauls + attendance)
+
+Main panel structure
+grouped by month
+week tiles show:
+
+week range (or alternate labels)
+shinies count
+hunters count
+Sidebar role
+STATUS: selected week summary
+CONTROLS: select week, inspect hunters, cycle shinies
+NOTES: reset rules
+You now also have the concept of:
+
+“Show Hunter of the Week” toggle in the sidebar controls
+This is perfect as a “view mode” switch.
+B) Week detail view
+Purpose
+Inspect a single week’s participants + drops
+
+Main panel structure
+grid of member cards for the week
+(optionally) Pokémon cards for the week’s shinies
+“who participated / who found what”
+HOTW layer
+You’ve already started introducing:
+
+computed HOTW labeling (AI scoring based on points/rarity)
+This sets up a future “week highlight” view.
+
+
+DONATORS
+Purpose
+Guild support ledger.
+
+Main panel structure
+Two major framed panels:
+
+leaderboard (rank + name + total + tier)
+recent donations log
+Sidebar role
+STATUS: total donors, total amount, latest entry
+CONTROLS: “view leaderboard / view recent / prize pool planned”
+NOTES: lifetime ranking logic
+Why this page exists
+It’s not just “money flex.”
+It’s guild gratitude + transparency.
+
+
+8) Points / tier / prestige systems
+Your UI already treats “points” like a game stat.
+
+Tier mapping exists
+Points collapse into tiers like:
+
+legendary tier (100+)
+high tiers (30/25)
+mid tiers (15/10)
+low tiers (6/3/2)
+This drives:
+
+card framing class
+prestige feeling
+rarity signaling
+This is a great RPG layer because it gives the UI a “power curve.”
+
+
+9) Interaction patterns (what the site feels like to use)
+Global
+Hash navigation = instant “menu switching”
+Strong persistent frame keeps immersion
+Sidebars act like quest logs / status screens
+Page interactions
+Clicking cards = inspect / drill down
+Filters behave like “menu toggles”
+Tooltips behave like “info popups”
+Tables behave like “ledger screens”
+Unclaimed states feel like “open quests”
+Special interaction: COLLECT mode
+The COLLECT/MENU switch acts like:
+
+“hide interface chrome”
+“browse the collection cleanly”
+This is extremely game-authentic.
+
+
+10) Content types you support (current + implied)
+Already supported
+Member identity + points
+Pokémon ownership
+Variants (secret/alpha/safari/standard)
+Weekly participation
+Weekly shiny drops
+Spotlight selections
+Bounty target with poster art
+Donator totals + tiers
+Discord scheduled event sync
+Implied next systems (your structure already supports these)
+Join date sorting
+Achievements / badges
+Alternative roster views
+HOTW special weekly view
+Prize pool feature under Donators
+Seasonal events
+Guild milestones
+“unknown entry confirmation” workflow
+
+11) Engineering/structure philosophy (the hidden strength)
+Even though this is a pixel guild UI, your project is built with real discipline:
+
+Separation of concerns
+UI components render consistent visuals
+Features own page behavior
+Domains own logic + models (dex, weekly, members)
+Data loaders enforce clean inputs
+Scripts do the ugly cleanup upstream
+Strict “contract first” thinking
+sidebar payload contract
+json loader envelope contract
+deterministic default selection logic (weekly picks latest by date, not row order)
+This makes the project scalable.
+
+
+12) What TeamShroom becomes when it’s “complete”
+If you keep going with this structure, the final identity is basically:
+
+A living guild archive + hunting command board, where:
+
+new players join and immediately see:
+
+what to hunt
+who hunted what
+who’s active
+what the guild values
+veterans see:
+
+legacy claims
+history timeline
+recognition systems
+everyone gets:
+
+progress tracking
+cozy community credibility
+reasons to keep hunting
+
+13) The project in one sentence
+TeamShroom is a retro RPG guild interface that turns community shiny hunting into a persistent, navigable, evolving history.
+
+If you want, I can also do a “what’s missing / what’s next” breakdown that’s purely strategic: the next 10 features that would make this feel like a real game guild menu (without bloating it).

@@ -195,6 +195,81 @@ function renderPokemonCard(mon, pokemonPointsMap, { signal } = {}) {
   return renderWeeklyPokemonCard(mon, pokemonPointsMap, { signal });
 }
 
+
+function getWeeklyMemberShinyCount(memberGroup) {
+  const shinies = Array.isArray(memberGroup && memberGroup.shinies) ? memberGroup.shinies : [];
+  return shinies.reduce((sum, s) => {
+    if (!s || s.run || s.lost) return sum;
+    return sum + 1;
+  }, 0);
+}
+
+function renderDeckFrameCard() {
+  return el('div', 'unified-card unified-card--pokemon tier-6 shinyweekly-frame-card');
+}
+
+function renderSpoilerCard() {
+  const card = el('div', 'unified-card unified-card--pokemon tier-6 shinyweekly-spoiler-card');
+
+  const header = el('div', 'unified-header');
+  const nameWrap = el('div', 'unified-name-wrap');
+  const nameEl = el('div', 'unified-name', '???');
+  nameWrap.appendChild(nameEl);
+  header.appendChild(nameWrap);
+
+  const art = el('div', 'unified-art');
+  art.setAttribute('aria-label', 'Art');
+
+  const artImg = document.createElement('img');
+  artImg.alt = '?';
+  artImg.loading = 'lazy';
+  artImg.src = 'img/symbols/questionmarksprite.png';
+  art.appendChild(artImg);
+
+  const info = el('div', 'unified-info');
+  info.setAttribute('aria-label', 'Card info');
+  info.appendChild(el('div', 'unified-info-text', 'Enc: ?'));
+
+  const variants = el('div', 'unified-variants');
+  variants.setAttribute('aria-label', 'Variants');
+
+  const order = [
+    { iconSrc: 'img/symbols/singlesprite.png' },
+    { iconSrc: 'img/symbols/secretshinysprite.png' },
+    { iconSrc: 'img/symbols/alphasprite.png' },
+    { iconSrc: 'img/symbols/safarisprite.png' }
+  ];
+
+  order.forEach((v) => {
+    const btn = el('div', 'variant-btn is-disabled');
+    const icon = document.createElement('img');
+    icon.src = v.iconSrc;
+    icon.alt = '';
+    btn.appendChild(icon);
+    variants.appendChild(btn);
+  });
+
+  card.append(header, art, info, variants);
+  return card;
+}
+
+function renderCardDeck(topCard, backCards) {
+  const deck = el('div', 'shinyweekly-card-deck');
+
+  if (topCard) {
+    topCard.classList.add('shinyweekly-deck-card');
+    deck.appendChild(topCard);
+  }
+
+  (backCards || []).forEach((card) => {
+    if (!card) return;
+    card.classList.add('shinyweekly-deck-card');
+    deck.appendChild(card);
+  });
+
+  return deck;
+}
+
 function renderMemberCard(memberGroup, pokemonPointsMap, memberMetaByKey, { signal } = {}) {
   const name = String((memberGroup && memberGroup.name) || '');
   const key = String((memberGroup && memberGroup.key) || '');
@@ -211,7 +286,9 @@ function renderMemberCard(memberGroup, pokemonPointsMap, memberMetaByKey, { sign
     return sum + getPokemonPoints(pokemonPointsMap, s.pokemon);
   }, 0);
 
-  const card = el('div', 'unified-card unified-card--member');
+  const weekShinyCount = getWeeklyMemberShinyCount(memberGroup);
+
+  const card = el('div', 'unified-card unified-card--member shinyweekly-week-membercard');
 
   // Header
   const header = el('div', 'unified-header');
@@ -241,9 +318,9 @@ function renderMemberCard(memberGroup, pokemonPointsMap, memberMetaByKey, { sign
 
   art.appendChild(artImg);
 
-  // Info plate exists for layout; member modifier hides the text.
+  // Info (weekly shiny count)
   const info = el('div', 'unified-info');
-  const infoTextEl = el('div', 'unified-info-text', '');
+  const infoTextEl = el('div', 'unified-info-text', `SHINIES: ${weekShinyCount}`);
   info.appendChild(infoTextEl);
 
   card.append(header, art, info);
@@ -261,12 +338,20 @@ function renderFlipTile(memberGroup, pokemonPointsMap, memberMetaByKey, { signal
     clearNode(wrap);
 
     if (state === -1) {
-      wrap.appendChild(renderMemberCard(memberGroup, pokemonPointsMap, memberMetaByKey, { signal }));
+      const top = renderMemberCard(memberGroup, pokemonPointsMap, memberMetaByKey, { signal });
+      const frameCount = Math.min(2, shinies.length);
+      const frames = Array.from({ length: frameCount }, () => renderDeckFrameCard());
+      wrap.appendChild(renderCardDeck(top, frames));
       return;
     }
 
     const mon = shinies[state] || null;
-    wrap.appendChild(renderPokemonCard(mon, pokemonPointsMap, { signal }));
+    const topCard = renderPokemonCard(mon, pokemonPointsMap, { signal });
+
+    const backCount = Math.min(2, Math.max(0, shinies.length - 1));
+    const backs = Array.from({ length: backCount }, () => renderSpoilerCard());
+
+    wrap.appendChild(renderCardDeck(topCard, backs));
   };
 
   wrap.addEventListener(
@@ -326,7 +411,11 @@ export function renderEmptyState(target, { title, message }) {
   target.appendChild(state);
 }
 
-export function renderOverview(target, { weeks, selectedWeekKey, onSelectWeek } = {}, { signal } = {}) {
+export function renderOverview(
+  target,
+  { weeks, selectedWeekKey, onSelectWeek, labelMode, hotwLabelByWeekKey } = {},
+  { signal } = {}
+) {
   clearNode(target);
 
   const orderedWeeks = sortWeeksNewestFirst(weeks);
@@ -359,7 +448,16 @@ export function renderOverview(target, { weeks, selectedWeekKey, onSelectWeek } 
         btn.classList.add('is-selected');
       }
 
-      const label = el('div', 'weekly-week-label', formatWeekShortLabel(week));
+      const mode = String(labelMode || 'dates').toLowerCase();
+      const hotwMap = hotwLabelByWeekKey && typeof hotwLabelByWeekKey === 'object'
+        ? hotwLabelByWeekKey
+        : Object.create(null);
+
+      const labelText = mode === 'hotw'
+        ? (hotwMap[weekKey] || '—')
+        : formatWeekShortLabel(week);
+
+      const label = el('div', 'weekly-week-label', labelText);
 
       const shinyCount = Number((week && week.shinyCount) || 0) || 0;
       const hunterCount = Number((week && week.hunterCount) || 0) || 0;
@@ -387,7 +485,7 @@ export function renderOverview(target, { weeks, selectedWeekKey, onSelectWeek } 
 
 export function renderWeekView(
   target,
-  { week, pokemonPointsMap, memberMetaByKey, onBack } = {},
+  { week, pokemonPointsMap, memberMetaByKey, onBack, hotwKeys } = {},
   { signal } = {}
 ) {
   clearNode(target);
@@ -416,8 +514,18 @@ export function renderWeekView(
 
   const grid = el('div', 'dex-grid');
 
+  const winners = Array.isArray(hotwKeys) ? hotwKeys.map(normalize) : [];
+
   members.forEach((memberGroup) => {
-    grid.appendChild(renderFlipTile(memberGroup, pokemonPointsMap, memberMetaByKey, { signal }));
+    const tile = renderFlipTile(memberGroup, pokemonPointsMap, memberMetaByKey, { signal });
+
+    const memberKey = normalize(memberGroup && memberGroup.key);
+    if (memberKey && winners.includes(memberKey)) {
+      tile.classList.add('is-hotw');
+      tile.setAttribute('aria-label', 'Hunter of the Week');
+    }
+
+    grid.appendChild(tile);
   });
 
   target.appendChild(grid);

@@ -329,6 +329,7 @@ export function renderError(root) {
 export function renderContent(root, viewModel, options = {}) {
   if (!root) return;
 
+  const board = el('section', 'ts-home-board');
   const grid = el('div', 'ts-home-grid');
 
   // Layout order:
@@ -341,5 +342,6 @@ export function renderContent(root, viewModel, options = {}) {
   grid.appendChild(renderHotwPanel(viewModel?.hotw));
   grid.appendChild(renderNextEventPanel(viewModel?.nextEvent));
 
-  root.replaceChildren(grid);
+  board.appendChild(grid);
+  root.replaceChildren(board);
 }

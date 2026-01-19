@@ -7,7 +7,8 @@
 ----------------------------------------------------- */
 
 html{
-  /* Prevent layout jump on pages that don't need a scrollbar. */
+  /* Lock the layout width so centered HUD elements never "jump" on first scroll. */
+  overflow-y: scroll;
   scrollbar-gutter: stable;
 }
 
@@ -64,7 +65,8 @@ body.ts-shell-active #page-content{
 #ts-shell{
   max-width: 1600px;
   margin: 0 auto;
-  padding: 18px;
+  /* Top pad matches sidebar sticky gap to avoid 1st-scroll "snap". */
+  padding: 8px 14px 14px 14px;
 
   display: grid;
   /* Sidebar is intentionally a bit tighter now (20px narrower). */
@@ -439,14 +441,20 @@ body.ts-shell-active #page-content{
 
 #ts-sidebar{
   position: sticky;
-  top: calc(var(--ts-header-h, 110px) + 14px);
+  /* Tighten the dock gap so the sidebar hugs the nav rail. */
+  top: calc(var(--ts-header-h, 110px) + 8px);
   align-self: start;
   z-index: 2000;
 
+  /* Fixed sidebar slots: prevents section divider jumping across pages. */
+  --ts-side-title-h: 112px;
+  --ts-side-status-h: 136px;
+  --ts-side-notes-h: 96px;
+
   /* Fill the viewport like a classic RPG side menu (readable at 1920x1080). */
-  height: calc(100vh - var(--ts-header-h, 110px) - 14px);
-  max-height: calc(100vh - var(--ts-header-h, 110px) - 14px);
-  overflow-y: auto;
+  height: calc(100vh - var(--ts-header-h, 110px) - 8px);
+  max-height: calc(100vh - var(--ts-header-h, 110px) - 8px);
+  overflow-y: hidden;
   overflow-x: hidden;
   overscroll-behavior: contain;
 
@@ -468,11 +476,8 @@ body.ts-shell-active #page-content{
     0 0 0 3px rgba(240, 91, 41, 0.10) inset,
     0 10px 0 rgba(0,0,0,0.72);
 
-  transition:
-    transform 140ms steps(4, end),
-    max-height 140ms steps(4, end);
-
-  will-change: transform;
+  /* Avoid sub-pixel wobble on scroll: no GPU-hinting for sticky HUD elements. */
+  transition: max-height 140ms steps(4, end);
 }
 
 #ts-sidebar::after{
@@ -486,11 +491,14 @@ body.ts-shell-active #page-content{
 #ts-sidebar .ts-sidebar-inner{
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  /* Single, unified sidebar frame: avoid stacked internal "panels". */
+  gap: 0;
 
   min-height: 100%;
 
-  padding: 12px;
+  height: 100%;
+
+  padding: 10px;
 }
 
 /* -----------------------------------------------------
@@ -517,26 +525,39 @@ body.ts-shell-active #page-content{
   }
 }
 
-/* Each block in the sidebar has the same "rail" feel. */
+/* Unified sidebar frame: inner blocks are content regions, not framed panels. */
 #ts-sidebar .ts-sidebar-panel{
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.06),
-      rgba(0,0,0,0.16)
-    );
-  background-color: rgba(14, 18, 22, 0.98);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 
-  border: 3px solid rgba(0,0,0,0.92);
-  box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.65) inset,
-    0 7px 0 rgba(0,0,0,0.70);
+  padding: 14px;
+}
 
-  padding: 14px 14px 16px 14px;
+/* Disable the .ts-panel inner stroke for sidebar panels (avoid nested borders). */
+#ts-sidebar .ts-sidebar-panel::after{
+  display: none;
+}
+
+/* Title block divider. */
+#ts-sidebar .ts-sidebar-inner > .ts-sidebar-panel:first-child{
+  padding-bottom: 14px;
+  border-bottom: 2px solid rgba(58, 70, 81, 0.42);
+
+  flex: 0 0 var(--ts-side-title-h);
+  max-height: var(--ts-side-title-h);
+  overflow: hidden;
+}
+
+/* Controls stack block. */
+#ts-sidebar .ts-sidebar-inner > .ts-sidebar-panel + .ts-sidebar-panel{
+  flex: 1 1 auto;
+  min-height: 0;
+  padding-top: 14px;
 }
 
 #ts-sidebar .ts-sidebar-title{
-  font-size: 22px;
+  font-size: 24px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: rgba(255,255,255,0.80);
@@ -546,48 +567,89 @@ body.ts-shell-active #page-content{
 
 #ts-sidebar .ts-sidebar-hint{
   margin-top: 6px;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.25;
   color: rgba(255,255,255,0.62);
   text-shadow: 1px 1px 0 rgba(0,0,0,0.88);
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 42px;
+  max-height: 42px;
 }
 
 #ts-sidebar .ts-sidebar-controls{
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  /* Section separation is handled by dividers, not boxed frames. */
+  gap: 0;
+
+  /* Let the section stack fill the full sidebar height. */
+  flex: 1 1 auto;
+  min-height: 0;
+
+  overflow: hidden;
 }
 
 /* Sidebar sections (controls blocks). */
 #ts-sidebar .ts-side-section{
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.05),
-      rgba(0,0,0,0.18)
-    );
-  background-color: rgba(14, 18, 22, 0.98);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 
-  border: 3px solid rgba(0,0,0,0.92);
-  box-shadow:
-    0 0 0 2px rgba(58, 70, 81, 0.60) inset,
-    0 7px 0 rgba(0,0,0,0.68);
+  /* Vertical rhythm is controlled here; horizontal padding is owned by panel padding. */
+  padding: 14px 0;
+  min-height: auto;
 
-  padding: 14px;
-  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Thin divider between sections (instead of stacked frames). */
+#ts-sidebar .ts-side-section + .ts-side-section{
+  border-top: 2px solid rgba(58, 70, 81, 0.35);
+}
+
+/* Fixed sidebar section slots: keeps dividers aligned across pages. */
+#ts-sidebar .ts-sidebar-controls .ts-side-section{
+  min-height: 0;
+}
+
+/* Slot 1: STATUS (fixed cockpit block). */
+#ts-sidebar .ts-sidebar-controls .ts-side-section:nth-child(1){
+  flex: 0 0 var(--ts-side-status-h);
+  max-height: var(--ts-side-status-h);
+  overflow: hidden;
+}
+
+/* Slot 2: CONTROLS (flex + internal scroll). */
+#ts-sidebar .ts-sidebar-controls .ts-side-section:nth-child(2){
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Slot 3: NOTES (fixed footer). */
+#ts-sidebar .ts-sidebar-controls .ts-side-section:nth-child(3){
+  flex: 0 0 var(--ts-side-notes-h);
+  max-height: var(--ts-side-notes-h);
+  overflow: hidden;
 }
 
 #ts-sidebar .ts-side-label{
-  font-size: 18px;
+  font-size: 19px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: rgba(255,255,255,0.75);
   text-shadow: 1px 1px 0 rgba(0,0,0,0.88);
 
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 
-  border-bottom: 2px solid rgba(58, 70, 81, 0.55);
-  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(58, 70, 81, 0.40);
+  padding-bottom: 6px;
 }
 
 #ts-sidebar .ts-side-content{
@@ -598,13 +660,28 @@ body.ts-shell-active #page-content{
 
 /* Default sidebar text blocks (STATUS/CONTROLS/NOTES lists). */
 #ts-sidebar .ts-subbar-stats{
-  font-size: 17px;
-  line-height: 1.25;
+  /* Cockpit-like status text: compact, readable, high contrast. */
+  font-size: 19px;
+  line-height: 1.18;
   color: rgba(255,255,255,0.78);
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.88);
 }
 
 #ts-sidebar .ts-subbar-stats > div{
   padding: 2px 0;
+}
+
+/* If a status value is intentionally emphasized in markup, tint it like a HUD. */
+#ts-sidebar .ts-subbar-stats strong,
+#ts-sidebar .ts-subbar-stats b{
+  color: rgba(84, 220, 130, 0.92);
+  font-weight: 400;
+}
+
+/* Optional warning tint (used only when a feature assigns the class). */
+#ts-sidebar .ts-subbar-stats .ts-hud-warn,
+#ts-sidebar .ts-subbar-stats .ts-hud-alert{
+  color: rgba(240, 91, 41, 0.95);
 }
 
 /* Sidebar action buttons (used for contextual commands like WEEKLY back). */
@@ -629,12 +706,13 @@ body.ts-shell-active #page-content{
     0 6px 0 rgba(0,0,0,0.55);
 
   color: rgba(255,255,255,0.88);
-  font-size: 17px;
+  font-size: 18px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 
   cursor: pointer;
   user-select: none;
+  text-decoration: none;
 }
 
 #ts-sidebar .ts-side-action:hover{
@@ -650,6 +728,11 @@ body.ts-shell-active #page-content{
     0 0 0 2px rgba(58, 70, 81, 0.55) inset,
     0 0 0 3px rgba(240, 91, 41, 0.35) inset,
     0 5px 0 rgba(0,0,0,0.55);
+}
+
+#ts-sidebar .ts-side-action:focus-visible{
+  outline: 3px solid rgba(240, 91, 41, 0.95);
+  outline-offset: 2px;
 }
 
 /* Inputs & selects inside the sidebar should always match the skin. */
@@ -670,10 +753,11 @@ body.ts-shell-active #page-content{
   border: 2px solid rgba(0,0,0,0.92);
 
   box-shadow:
+    0 0 0 1px rgba(255,255,255,0.08) inset,
     0 0 0 2px rgba(58, 70, 81, 0.55) inset;
 
   color: rgba(255,255,255,0.85);
-  font-size: 18px;
+  font-size: 19px;
 
   padding: 0 12px;
 
@@ -689,8 +773,16 @@ body.ts-shell-active #page-content{
 #ts-sidebar input[type="search"]:focus,
 #ts-sidebar select:focus{
   box-shadow:
+    0 0 0 1px rgba(255,255,255,0.08) inset,
     0 0 0 2px rgba(58, 70, 81, 0.55) inset,
-    0 0 0 3px rgba(240, 91, 41, 0.40) inset;
+    0 0 0 3px rgba(240, 91, 41, 0.45) inset;
+}
+
+#ts-sidebar input[type="text"]:focus-visible,
+#ts-sidebar input[type="search"]:focus-visible,
+#ts-sidebar select:focus-visible{
+  outline: 3px solid rgba(240, 91, 41, 0.95);
+  outline-offset: 2px;
 }
 
 /* IMPORTANT: Shinydex adds its own select styling; force it to match the sidebar skin. */
@@ -703,7 +795,9 @@ body.ts-shell-active #page-content{
     ) !important;
   background-color: rgba(12, 16, 20, 0.98) !important;
   border: 2px solid rgba(0,0,0,0.92) !important;
-  box-shadow: 0 0 0 2px rgba(58, 70, 81, 0.55) inset !important;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.08) inset,
+    0 0 0 2px rgba(58, 70, 81, 0.55) inset !important;
   color: rgba(255,255,255,0.85) !important;
 }
 

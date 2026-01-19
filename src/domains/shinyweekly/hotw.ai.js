@@ -177,3 +177,24 @@ export function computeHotwFromWeeks({ weeks, latestWeekKey, pokemonPointsMap, m
     shinyCount
   };
 }
+
+/**
+ * Compute HOTW winners for a single week.
+ *
+ * Returns an array of normalized member keys (lowercase).
+ *
+ * NOTE:
+ * - Winner selection follows the same tie-break rules as computeHotwFromWeeks.
+ * - This is used by the Weekly UI for overview label swapping + in-week highlighting.
+ */
+export function computeHotwForWeek(week, pokemonPointsMap) {
+  if (!week) return [];
+
+  const stats = buildMemberStatsFromWeek(week, pokemonPointsMap);
+  const winners = pickHotwWinners(stats);
+  if (!winners.length) return [];
+
+  return winners
+    .map(w => normalizeKey(w && w.memberKey))
+    .filter(Boolean);
+}

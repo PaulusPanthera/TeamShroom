@@ -170,6 +170,7 @@ function buildSpotlightSamples({ members, membersByKey, pokemonPointsMap, sample
     if (!member) continue;
 
     const memberPoints = Number(member && member.points) || 0;
+    const memberShinyCount = Number(member && member.shinyCount) || 0;
     const memberName = String(member && member.name || '').trim();
 
     const memberCardProps = {
@@ -180,7 +181,7 @@ function buildSpotlightSamples({ members, membersByKey, pokemonPointsMap, sample
       points: memberPoints,
       headerLeftIconSrc: getMemberRoleEmblemSrc(member && member.role),
       headerRightText: `${memberPoints}P`,
-      infoText: '',
+      infoText: `SHINIES: ${memberShinyCount}`,
       isUnclaimed: false,
       showVariants: false
     };
