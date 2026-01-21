@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-01-21T00:51:26.376Z",
+  "generatedAt": "2026-01-21T06:07:08.127Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1454,6 +1454,18 @@
       "name": "BojanglesisHere",
       "donation": null,
       "value": 500000
+    },
+    {
+      "date": "2026-01-20",
+      "name": "pawmu",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2026-01-20",
+      "name": "pawmu",
+      "donation": "100 RP",
+      "value": 180000
     }
   ]
 }
