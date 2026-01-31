@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "generatedAt": "2026-01-30T23:16:22.426Z",
+  "generatedAt": "2026-01-31T01:04:17.769Z",
   "source": "discord-bot",
   "data": [
     {
       "nextEvent": {
-        "title": "Magikarp Bingo",
-        "timeText": "2026-01-30 19:00 CET",
-        "url": "https://discord.com/events/1178448989566283779/1465188169656959111",
-        "subtitle": "📍 Location: Resort Area, Sinnoh Region 🗓 Date: ...",
+        "title": "Valentines Day Luvdisc Catch Event",
+        "timeText": "2026-02-14 23:00 CET",
+        "url": "https://discord.com/events/1178448989566283779/1466945923761438858",
+        "subtitle": "Spread the Luv on Valentines day for the Team Shr...",
         "gifSrc": "img/symbols/shinyshroomsprite.png"
       },
       "bounty": {
