@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-02T23:16:35.162Z",
+  "generatedAt": "2026-02-03T01:02:19.212Z",
   "source": "google-sheets",
   "data": [
     {
@@ -24745,7 +24745,7 @@
       "date_start": "2026-01-26",
       "date_end": "2026-02-01",
       "ot": "tuli",
-      "pokemon": "carvannha",
+      "pokemon": "carvanha",
       "method": null,
       "encounter": null,
       "secret": false,
