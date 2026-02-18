@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-18T18:35:26.921Z",
+  "generatedAt": "2026-02-18T19:22:46.183Z",
   "source": "google-sheets",
   "data": [
     {
@@ -7041,7 +7041,7 @@
       "tier": "tier lm",
       "region": "unova",
       "rarity": "legendary",
-      "show": false
+      "show": true
     },
     {
       "dex": "639",
@@ -7052,7 +7052,7 @@
       "tier": "tier lm",
       "region": "unova",
       "rarity": "legendary",
-      "show": false
+      "show": true
     },
     {
       "dex": "640",
@@ -7063,7 +7063,7 @@
       "tier": "tier lm",
       "region": "unova",
       "rarity": "legendary",
-      "show": false
+      "show": true
     },
     {
       "dex": "641",
