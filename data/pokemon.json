@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-24T01:00:14.746Z",
+  "generatedAt": "2026-02-24T06:43:55.393Z",
   "source": "google-sheets",
   "data": [
     {
@@ -5424,7 +5424,7 @@
       "tier": "tier lm",
       "region": "sinnoh",
       "rarity": "mythical",
-      "show": false
+      "show": true
     },
     {
       "dex": "492",
@@ -7140,7 +7140,7 @@
       "tier": "tier lm",
       "region": "unova",
       "rarity": "mythical",
-      "show": false
+      "show": true
     },
     {
       "dex": "648",
