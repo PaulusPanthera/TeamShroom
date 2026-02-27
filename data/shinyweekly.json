@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-27T00:59:42.535Z",
+  "generatedAt": "2026-02-27T06:36:50.313Z",
   "source": "google-sheets",
   "data": [
     {
@@ -24570,6 +24570,22 @@
       "date_end": "2026-01-18",
       "ot": "Chatchinois",
       "pokemon": "slugma",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "clip": null,
+      "notes": null
+    },
+    {
+      "week": "2026-01-19_to_2026-01-25",
+      "week_label": "January 19th - January 25th 2026",
+      "date_start": "2026-01-19",
+      "date_end": "2026-01-25",
+      "ot": "Luna",
+      "pokemon": "lotad",
       "method": null,
       "encounter": null,
       "secret": false,

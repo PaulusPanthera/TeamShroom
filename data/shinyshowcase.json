@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-02-27T00:59:45.057Z",
+  "generatedAt": "2026-02-27T06:36:52.333Z",
   "source": "google-sheets",
   "data": [
     {
@@ -12056,7 +12056,7 @@
     },
     {
       "ot": "Luna",
-      "pokemon": "lotad",
+      "pokemon": "lombre",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -26734,6 +26734,19 @@
     {
       "ot": "Visari",
       "pokemon": "caterpie",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "Luna",
+      "pokemon": "lotad",
       "method": null,
       "encounter": null,
       "secret": false,
