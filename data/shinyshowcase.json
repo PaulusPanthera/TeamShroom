@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-02T12:29:35.845Z",
+  "generatedAt": "2026-03-02T13:56:18.526Z",
   "source": "google-sheets",
   "data": [
     {
@@ -26756,6 +26756,110 @@
       "sold": false,
       "clip": null,
       "notes": "AUTO-GENERATED ORDER DATE"
+    },
+    {
+      "ot": "CelineCeline",
+      "pokemon": "ditto",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "NotAHumanSure",
+      "pokemon": "spinda",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "Gumbasketball",
+      "pokemon": "wurmple",
+      "method": null,
+      "encounter": null,
+      "secret": true,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "Soxzzz",
+      "pokemon": "rapidash",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "Visari",
+      "pokemon": "squirtle",
+      "method": "egg",
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "TTVxSenseiNESS",
+      "pokemon": "zebstrika",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "TTVxSenseiNESS",
+      "pokemon": "gyarados",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "Smokee",
+      "pokemon": "crobat",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
     }
   ]
 }
