@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-02T13:56:17.360Z",
+  "generatedAt": "2026-03-02T14:02:28.411Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1466,6 +1466,12 @@
       "name": "pawmu",
       "donation": "100 RP",
       "value": 180000
+    },
+    {
+      "date": "2026-02-14",
+      "name": "Jutskaa",
+      "donation": null,
+      "value": 5000000
     }
   ]
 }
