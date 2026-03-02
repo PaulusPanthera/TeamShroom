@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-02T16:49:17.824Z",
+  "generatedAt": "2026-03-02T17:17:41.350Z",
   "source": "google-sheets",
   "data": [
     {
@@ -2594,7 +2594,7 @@
       "ot": "CelineCeline",
       "pokemon": "donphan",
       "method": null,
-      "encounter": null,
+      "encounter": 18061,
       "secret": false,
       "alpha": false,
       "run": false,
@@ -2607,7 +2607,7 @@
       "ot": "CelineCeline",
       "pokemon": "donphan",
       "method": null,
-      "encounter": null,
+      "encounter": 9676,
       "secret": false,
       "alpha": false,
       "run": false,
@@ -26860,6 +26860,19 @@
       "sold": false,
       "clip": null,
       "notes": "standard week date"
+    },
+    {
+      "ot": "CelineCeline",
+      "pokemon": "donphan",
+      "method": null,
+      "encounter": 21382,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "correct week date"
     }
   ]
 }
