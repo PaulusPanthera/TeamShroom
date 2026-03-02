@@ -3,6 +3,7 @@
 // Showcase page controller
 
 import { buildShowcaseModel } from '../../domains/showcase/showcase.model.js';
+import { getMemberRoleEmblemSrc } from '../../domains/members/member.assets.js';
 import {
   filterMembers,
   sortMembers,
@@ -11,6 +12,7 @@ import {
   filterMemberShinies,
   sortMemberShinies,
   buildMemberShinyCounts,
+  buildMemberIdStats,
   groupMemberShiniesByStatus
 } from './showcase.presenter.js';
 
@@ -125,13 +127,15 @@ export function setupShowcasePage({ root, sidebar, membersRows, showcaseRows, po
       return;
     }
 
-    renderMemberShowcaseShell(root, {
-      name: member.name,
-      shinyCount: member.shinyCount,
-      inactiveShinyCount: member.inactiveShinyCount,
-      points: member.points,
-      spriteSrc: spriteSrcForMember(member)
-    });
+    
+const memberIdStats = buildMemberIdStats(member && member.shinies);
+
+renderMemberShowcaseShell(root, {
+  spriteSrc: spriteSrcForMember(member),
+  memberTier: member && member.role ? String(member.role) : '',
+  tierEmblemSrc: getMemberRoleEmblemSrc(member && member.role),
+  idStats: memberIdStats
+});
 
     const viewRoot = root.querySelector('.showcase-member-root');
     bindUnifiedCardVariantSwitching(viewRoot);

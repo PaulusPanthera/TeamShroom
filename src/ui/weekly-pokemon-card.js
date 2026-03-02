@@ -4,6 +4,7 @@
 
 import { tierFromPoints } from './tier-map.js';
 import { prettifyPokemonName, getPokemonDbShinyGifSrc } from '../utils/utils.js';
+import { computeShinyWarsPoints } from '../domains/pokemon/shiny.points.js';
 
 function el(tag, className, text) {
   const node = document.createElement(tag);
@@ -74,8 +75,9 @@ export function renderWeeklyPokemonCard(mon, pokemonPointsMap, { signal } = {}) 
   const pokemonKey = String((mon && mon.pokemon) || '');
   const pokemonName = prettifyPokemonName(pokemonKey);
 
-  const points = getPokemonPoints(pokemonPointsMap, pokemonKey);
-  const tierToken = tierFromPoints(points);
+  const tierPoints = getPokemonPoints(pokemonPointsMap, pokemonKey);
+  const displayPoints = computeShinyWarsPoints(mon, pokemonPointsMap).totalPoints;
+  const tierToken = tierFromPoints(tierPoints);
   const tierClass = tierToken === 'lm' ? 'tier-lm' : `tier-${tierToken}`;
 
   const card = document.createElement('div');
@@ -91,11 +93,11 @@ export function renderWeeklyPokemonCard(mon, pokemonPointsMap, { signal } = {}) 
   nameWrap.appendChild(nameEl);
   header.appendChild(nameWrap);
 
-  if (Number.isFinite(points) && points > 0) {
+  if (Number.isFinite(displayPoints) && displayPoints > 0) {
     const value = el('div', 'unified-value');
     value.setAttribute('aria-label', 'Points');
 
-    const span = el('span', 'unified-value-text', `${points}P`);
+    const span = el('span', 'unified-value-text', `${displayPoints}P`);
     value.appendChild(span);
     header.appendChild(value);
   }

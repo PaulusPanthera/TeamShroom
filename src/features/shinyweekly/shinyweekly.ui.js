@@ -3,6 +3,7 @@
 // ShinyWeekly UI rendering helpers. Overview (month/week tiles) + week detail (flip tiles cycling member + shinies).
 
 import { getMemberRoleEmblemSrc, getMemberSpriteSrc } from '../../domains/members/member.assets.js';
+import { computeShinyWarsPoints } from '../../domains/pokemon/shiny.points.js';
 import { renderWeeklyPokemonCard } from '../../ui/weekly-pokemon-card.js';
 
 function clearNode(node) {
@@ -95,6 +96,33 @@ function formatWeekShortLabel(week) {
   return `${startMonth} ${startDay}–${endMonth} ${endDay}`;
 }
 
+function getExplicitWeekNumber(week) {
+  if (!week) return null;
+
+  const direct = Number(week.weekNumber);
+  if (Number.isFinite(direct) && direct > 0) return direct;
+
+  const raw = String(week.week || '').trim();
+  if (!raw) return null;
+
+  // Only accept pure digits (prevents "2026-01-05" becoming 2026).
+  if (!/^[0-9]+$/.test(raw)) return null;
+
+  const n = Number(raw);
+  if (!Number.isFinite(n) || n <= 0) return null;
+  return n;
+}
+
+function formatWeekTileLabelWithNumber(week, weekNumber) {
+  if (!week) return '';
+
+  const base = formatWeekShortLabel(week);
+  const n = Number(weekNumber);
+  if (!Number.isFinite(n) || n <= 0) return base;
+
+  return `${base} [Week ${n}]`;
+}
+
 function weekSortScoreMs(week) {
   const end = getWeekEndDate(week);
   const start = getWeekStartDate(week);
@@ -139,6 +167,34 @@ function groupWeeksByMonth(weeksNewestFirst) {
   return groups;
 }
 
+function buildContinuousWeekNumberByKey(weeks) {
+  const list = Array.isArray(weeks) ? weeks.slice() : [];
+
+  // Chronological order (oldest first) so numbering never resets per year.
+  list.sort((a, b) => {
+    const as = weekSortScoreMs(a);
+    const bs = weekSortScoreMs(b);
+    if (as !== bs) return as - bs;
+
+    const ak = String((a && a.week) || '');
+    const bk = String((b && b.week) || '');
+    return ak.localeCompare(bk);
+  });
+
+  const map = Object.create(null);
+  let counter = 0;
+
+  list.forEach((week) => {
+    const key = String((week && week.week) || '').trim();
+    if (!key) return;
+
+    counter += 1;
+    map[key] = counter;
+  });
+
+  return map;
+}
+
 function getMembersSorted(week) {
   if (!week || !week.membersByOt) return [];
   const list = Object.values(week.membersByOt);
@@ -157,7 +213,7 @@ function getWeeklyMemberPoints(memberGroup, pokemonPointsMap) {
   const shinies = Array.isArray(memberGroup && memberGroup.shinies) ? memberGroup.shinies : [];
   return shinies.reduce((sum, s) => {
     if (!s || s.run || s.lost) return sum;
-    return sum + getPokemonPoints(pokemonPointsMap, s.pokemon);
+    return sum + computeShinyWarsPoints(s, pokemonPointsMap).totalPoints;
   }, 0);
 }
 
@@ -194,7 +250,6 @@ function getPokemonPoints(pokemonPointsMap, pokemonKey) {
 function renderPokemonCard(mon, pokemonPointsMap, { signal } = {}) {
   return renderWeeklyPokemonCard(mon, pokemonPointsMap, { signal });
 }
-
 
 function getWeeklyMemberShinyCount(memberGroup) {
   const shinies = Array.isArray(memberGroup && memberGroup.shinies) ? memberGroup.shinies : [];
@@ -274,21 +329,24 @@ function renderMemberCard(memberGroup, pokemonPointsMap, memberMetaByKey, { sign
   const name = String((memberGroup && memberGroup.name) || '');
   const key = String((memberGroup && memberGroup.key) || '');
 
-  const meta = memberMetaByKey && Object.prototype.hasOwnProperty.call(memberMetaByKey, normalize(key))
-    ? memberMetaByKey[normalize(key)]
-    : null;
+  const meta =
+    memberMetaByKey && Object.prototype.hasOwnProperty.call(memberMetaByKey, normalize(key))
+      ? memberMetaByKey[normalize(key)]
+      : null;
 
   const roleEmblemSrc = getMemberRoleEmblemSrc(meta && meta.role);
 
   const shinies = Array.isArray(memberGroup && memberGroup.shinies) ? memberGroup.shinies : [];
-  const weekPoints = shinies.reduce((sum, s) => {
-    if (!s || s.run || s.lost) return sum;
-    return sum + getPokemonPoints(pokemonPointsMap, s.pokemon);
-  }, 0);
+  const weekPoints = getWeeklyMemberPoints(memberGroup, pokemonPointsMap);
 
   const weekShinyCount = getWeeklyMemberShinyCount(memberGroup);
 
   const card = el('div', 'unified-card unified-card--member shinyweekly-week-membercard');
+
+  const memberTierToken = normalize(meta && meta.role) || 'shroom';
+  if (['spore', 'shroom', 'mushcap', 'shinyshroom'].includes(memberTierToken)) {
+    card.classList.add(`member-tier-${memberTierToken}`);
+  }
 
   // Header
   const header = el('div', 'unified-header');
@@ -300,7 +358,11 @@ function renderMemberCard(memberGroup, pokemonPointsMap, memberMetaByKey, { sign
   headerLeft.appendChild(headerLeftImg);
 
   const nameWrap = el('div', 'unified-name-wrap');
-  const nameEl = el('div', ['unified-name', classForNameLength(name)].filter(Boolean).join(' '), name);
+  const nameEl = el(
+    'div',
+    ['unified-name', classForNameLength(name)].filter(Boolean).join(' '),
+    name
+  );
   nameWrap.appendChild(nameEl);
 
   const value = el('div', 'unified-value', `${Number(weekPoints) || 0}P`);
@@ -413,13 +475,22 @@ export function renderEmptyState(target, { title, message }) {
 
 export function renderOverview(
   target,
-  { weeks, selectedWeekKey, onSelectWeek, labelMode, hotwLabelByWeekKey } = {},
+  { weeks, selectedWeekKey, onSelectWeek, labelMode, hotwLabelByWeekKey, topHotwGroups } = {},
   { signal } = {}
 ) {
   clearNode(target);
 
+  const mode = String(labelMode || 'dates').toLowerCase();
+  const isTopHotw = mode === 'tophotw';
+
   const orderedWeeks = sortWeeksNewestFirst(weeks);
-  const groups = groupWeeksByMonth(orderedWeeks);
+  const continuousWeekNumberByKey = buildContinuousWeekNumberByKey(orderedWeeks);
+
+  const groups = isTopHotw
+    ? Array.isArray(topHotwGroups)
+      ? topHotwGroups
+      : []
+    : groupWeeksByMonth(orderedWeeks);
 
   if (!groups.length) {
     renderEmptyState(target, {
@@ -448,14 +519,18 @@ export function renderOverview(
         btn.classList.add('is-selected');
       }
 
-      const mode = String(labelMode || 'dates').toLowerCase();
-      const hotwMap = hotwLabelByWeekKey && typeof hotwLabelByWeekKey === 'object'
-        ? hotwLabelByWeekKey
-        : Object.create(null);
+      const hotwMap =
+        hotwLabelByWeekKey && typeof hotwLabelByWeekKey === 'object'
+          ? hotwLabelByWeekKey
+          : Object.create(null);
 
-      const labelText = mode === 'hotw'
-        ? (hotwMap[weekKey] || '—')
-        : formatWeekShortLabel(week);
+      const weekNumber =
+        getExplicitWeekNumber(week) != null
+          ? getExplicitWeekNumber(week)
+          : continuousWeekNumberByKey[weekKey];
+
+      const labelText =
+        mode === 'hotw' ? hotwMap[weekKey] || '—' : formatWeekTileLabelWithNumber(week, weekNumber);
 
       const label = el('div', 'weekly-week-label', labelText);
 

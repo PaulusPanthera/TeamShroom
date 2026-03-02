@@ -16,6 +16,7 @@ import {
 } from './shinydex.search.js';
 
 import { tierFromPoints } from '../../ui/tier-map.js';
+import { SHINYWARS } from '../../domains/pokemon/shiny.points.js';
 
 function normalizeRegion(raw) {
   return String(raw || '').trim().toLowerCase();
@@ -35,6 +36,7 @@ function normalizePokemonKey(raw) {
 function eventHasSafariFlag(shiny) {
   return Boolean(shiny && shiny.safari === true);
 }
+
 
 /**
  * Special-variant owners are FIRST occurrence of species+flag in weekly.
@@ -131,26 +133,66 @@ export function prepareHitlistRenderModel(opts) {
   if (mode === 'claims' || mode === 'points') {
     var claimed = snapshot.filter(function (e) { return e.claimed; });
 
+    // Base points (standard progressive claim slots)
     var byMember = {};
     claimed.forEach(function (e) {
       var n = e.claimedBy || '';
+      if (!n) return;
       if (!byMember[n]) byMember[n] = [];
       byMember[n].push(e);
     });
 
-    var fullLeaderboard = Object.entries(byMember)
-      .map(function (pair) {
-        var name = pair[0];
-        var entries = pair[1];
+    // Bonus points (special variants are independent from family progressive slot claims)
+    var bonusByMember = {};
+
+    function addBonus(memberName, delta) {
+      var name = memberName ? String(memberName) : '';
+      if (!name) return;
+      var n = Number(delta) || 0;
+      if (!Number.isFinite(n) || n === 0) return;
+      bonusByMember[name] = (bonusByMember[name] || 0) + n;
+    }
+
+    snapshot.forEach(function (e) {
+      var owners = e && e.variantOwners ? e.variantOwners : null;
+      if (!owners) return;
+
+      var tierPts = Number(e && e.points) || 0;
+
+      if (owners.secret) addBonus(owners.secret, SHINYWARS.BONUS.SECRET);
+      if (owners.safari) addBonus(owners.safari, SHINYWARS.BONUS.SAFARI);
+
+      // Hitlist base already grants tier points once; variants grant only the delta above tier.
+      if (owners.alpha) addBonus(owners.alpha, Math.max(0, SHINYWARS.BASE.ALPHA - tierPts));
+    });
+
+    var memberNameSet = new Set(Object.keys(byMember).concat(Object.keys(bonusByMember)));
+
+    var fullLeaderboard = Array.from(memberNameSet)
+      .map(function (name) {
+        var entries = byMember[name] || [];
+        var basePoints = entries.reduce(function (s, x) { return s + (x.points || 0); }, 0);
+        var bonusPoints = bonusByMember[name] || 0;
         return {
           name: name,
           entries: entries,
           claims: entries.length,
-          points: entries.reduce(function (s, x) { return s + (x.points || 0); }, 0)
+          basePoints: basePoints,
+          bonusPoints: bonusPoints,
+          points: basePoints + bonusPoints
         };
       })
       .sort(function (a, b) {
-        return mode === 'claims' ? (b.claims - a.claims) : (b.points - a.points);
+        if (mode === 'claims') {
+          var dc = b.claims - a.claims;
+          if (dc !== 0) return dc;
+          var dp = b.points - a.points;
+          if (dp !== 0) return dp;
+          return String(a.name).localeCompare(String(b.name));
+        }
+        var d = b.points - a.points;
+        if (d !== 0) return d;
+        return String(a.name).localeCompare(String(b.name));
       });
 
     var rankByName = {};
@@ -172,7 +214,7 @@ export function prepareHitlistRenderModel(opts) {
       sections: visibleLeaderboard.map(function (m) {
         return {
           key: m.name,
-          title: rankByName[m.name] + '. ' + m.name + ' — ' + m.claims + ' Claims · ' + m.points + ' Points',
+          title: rankByName[m.name] + '. ' + m.name + ' — ' + m.claims + ' Claims · ' + m.points + ' Points' + (m.bonusPoints ? (' (+' + m.bonusPoints + ' bonus)') : ''),
           entries: m.entries.map(function (e) {
             return Object.assign({}, e);
           })

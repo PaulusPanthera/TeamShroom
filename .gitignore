@@ -2,3 +2,10 @@ working_reference.zip
 ziplager/
 180120261034mush.zip
 *.zip
+
+# Node
+node_modules/
+npm-debug.log*
+
+# OS
+.DS_Store

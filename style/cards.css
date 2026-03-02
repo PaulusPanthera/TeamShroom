@@ -64,7 +64,7 @@
 .unified-card *{ box-sizing: border-box; }
 
 /* Member card modifier: same vibe, different rows */
-.unified-card.unified-card--member{
+.unified-card--member{
   grid-template-rows: 34px 152px 1fr; /* header, art, empty panel */
   gap: 10px;
 }
@@ -305,6 +305,60 @@
 
 /* 0: retro gold */
 .unified-card.tier-0{ --u-tier-main:#d9b15f; --u-tier-sub:#7a4f1a; --u-tier-border:#ffe08a; }
+
+/* --------------------------------------------------
+   MEMBER ROLE TIERS (GUILD RANK)
+   Purpose: distinct from Pokemon rarity tiers.
+   - Spore:      blackened iron
+   - Shroom:     blued steel
+   - Mushcap:    brass + admin ember
+   - ShinyShroom:champagne gold (prestige)
+-------------------------------------------------- */
+
+.unified-card--member{
+  /* Member Cards: metallic inventory style (not Pokédex tiers) */
+  --u-card-fill:#23292E;
+  --u-card-bg:#171C21;
+  --u-tier-main:#6B7782;
+  --u-tier-sub:#0F1317;
+  --u-tier-border:#99A6B1;
+}
+
+.unified-card--member.member-tier-spore{
+  /* Spore: blackened graphite (weakest) */
+  --u-card-fill:#243845;
+  --u-card-bg:#182630;
+  --u-tier-main:#5D7C8E;
+  --u-tier-sub:#13222B;
+  --u-tier-border:#B9D2E2;
+}
+
+.unified-card--member.member-tier-shroom{
+  /* Shroom: reinforced steel (strong, distinct from Pokédex tiers) */
+  --u-card-fill:#1F252A;
+  --u-card-bg:#141A1E;
+  --u-tier-main:#6B7782;
+  --u-tier-sub:#0F1317;
+  --u-tier-border:#9BA8B2;
+}
+
+.unified-card--member.member-tier-mushcap{
+  /* Mushcap: brass/copper trim with ember authority */
+  --u-card-fill:#3B2317;
+  --u-card-bg:#27160E;
+  --u-tier-main:#D46E24;
+  --u-tier-sub:#2E160B;
+  --u-tier-border:#FF7A2A;
+}
+
+.unified-card--member.member-tier-shinyshroom{
+  /* ShinyShroom: prestige champagne gold (highest tier) */
+  --u-card-fill:#403723;
+  --u-card-bg:#292111;
+  --u-tier-main:#E6CC90;
+  --u-tier-sub:#3D2F18;
+  --u-tier-border:#FFF3CD;
+}
 
 /* --------------------------------------------------
    GLOBAL TIER MARKS (ALL TIERS)

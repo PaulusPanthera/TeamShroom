@@ -56,10 +56,10 @@ function renderSidebarBlocks(sidebar, week, opts = {}) {
 
   const view = opts && opts.view ? String(opts.view) : 'overview';
   const onBack = opts && typeof opts.onBack === 'function' ? opts.onBack : null;
-  const onToggleOverviewLabels = opts && typeof opts.onToggleOverviewLabels === 'function'
-    ? opts.onToggleOverviewLabels
+  const overviewMode = opts && opts.overviewMode ? String(opts.overviewMode) : 'standard';
+  const onSetOverviewMode = opts && typeof opts.onSetOverviewMode === 'function'
+    ? opts.onSetOverviewMode
     : null;
-  const overviewLabelMode = opts && opts.overviewLabelMode ? String(opts.overviewLabelMode) : 'dates';
   const signal = opts && opts.signal;
 
   const wk = week && typeof week === 'object' ? week : null;
@@ -94,28 +94,39 @@ function renderSidebarBlocks(sidebar, week, opts = {}) {
     controlsWrap.appendChild(backBtn);
   }
 
-  if (view === 'overview' && onToggleOverviewLabels) {
-    const toggleBtn = document.createElement('button');
-    toggleBtn.type = 'button';
-    toggleBtn.className = 'ts-side-action';
+  if (view === 'overview' && onSetOverviewMode) {
+    const select = document.createElement('select');
+    select.className = 'ts-side-select';
 
-    const mode = String(overviewLabelMode || 'dates').toLowerCase();
-    toggleBtn.textContent = mode === 'hotw' ? 'Show Week Dates' : 'Show Hunter of the Week';
+    const options = [
+      { value: 'standard', label: 'Standard' },
+      { value: 'hotw', label: 'HOTW' },
+      { value: 'tophotw', label: 'Top HOTW' }
+    ];
 
-    toggleBtn.addEventListener(
-      'click',
-      () => onToggleOverviewLabels(),
+    options.forEach((o) => {
+      const opt = document.createElement('option');
+      opt.value = o.value;
+      opt.textContent = o.label;
+      select.appendChild(opt);
+    });
+
+    select.value = String(overviewMode || 'standard').toLowerCase();
+
+    select.addEventListener(
+      'change',
+      () => onSetOverviewMode(select.value),
       signal ? { signal } : undefined
     );
 
-    controlsWrap.appendChild(toggleBtn);
+    controlsWrap.appendChild(select);
   }
 
   const controlsNode = makeLines([
     'Select week',
     'Inspect hunters',
     'Cycle shinies',
-    'Toggle week tile labels'
+    'Switch view mode'
   ]);
 
   controlsWrap.appendChild(controlsNode);
@@ -198,11 +209,13 @@ export async function renderShinyWeeklyPage(ctx) {
     let view = 'overview';
     let selectedWeekKey = getDefaultWeekKey(weeks);
 
-    // Overview label mode:
-    // - 'dates' => show week date ranges
-    // - 'hotw'  => show Hunter of the Week names
-    let overviewLabelMode = 'dates';
+    // Overview view mode:
+    // - 'standard' => default week date labels
+    // - 'hotw'     => show Hunter of the Week names
+    // - 'tophotw'  => leaderboard-style overview grouped by HOTW winner
+    let overviewMode = 'standard';
     let hotwLabelByWeekKey = Object.create(null);
+    let topHotwGroups = [];
 
     // Weekly needs Pokémon points to resolve tier trim + header points chip.
     // Load derived Pokémon data locally to avoid global route coupling.
@@ -244,31 +257,103 @@ export async function renderShinyWeeklyPage(ctx) {
       hotwLabelByWeekKey = map;
     };
 
+    const recomputeTopHotwGroups = () => {
+      if (!pokemonReady) return;
+
+      const ordered = weeks.slice();
+      ordered.sort((a, b) => {
+        const aScore = safeDateMs(a && a.dateEnd) || safeDateMs(a && a.dateStart);
+        const bScore = safeDateMs(b && b.dateEnd) || safeDateMs(b && b.dateStart);
+        if (aScore !== bScore) return bScore - aScore;
+        return String((b && b.week) || '').localeCompare(String((a && a.week) || ''));
+      });
+
+      const byKey = Object.create(null);
+
+      ordered.forEach((w) => {
+        const wk = w && typeof w === 'object' ? w : null;
+        const weekKey = wk ? String(wk.week || '').trim() : '';
+        if (!weekKey) return;
+
+        const winners = computeHotwForWeek(wk, pokemonPointsMap);
+
+        (Array.isArray(winners) ? winners : []).forEach((winnerKeyRaw) => {
+          const winnerKey = normalizeMemberKey(winnerKeyRaw);
+          if (!winnerKey) return;
+
+          if (!byKey[winnerKey]) {
+            const byOt = wk.membersByOt && typeof wk.membersByOt === 'object' ? wk.membersByOt : null;
+            const fallbackName = byOt && byOt[winnerKey] && byOt[winnerKey].name
+              ? String(byOt[winnerKey].name)
+              : winnerKey;
+
+            byKey[winnerKey] = {
+              winnerKey,
+              name: fallbackName,
+              seenWeeks: new Set(),
+              weeks: []
+            };
+          }
+
+          const group = byKey[winnerKey];
+          if (group.seenWeeks.has(weekKey)) return;
+          group.seenWeeks.add(weekKey);
+          group.weeks.push(wk);
+        });
+      });
+
+      const groups = Object.values(byKey).map((g) => {
+        const count = g.weeks.length;
+        const title = `${g.name} (${count})`;
+        return { title, weeks: g.weeks };
+      });
+
+      groups.sort((a, b) => {
+        const ac = Array.isArray(a.weeks) ? a.weeks.length : 0;
+        const bc = Array.isArray(b.weeks) ? b.weeks.length : 0;
+        if (ac !== bc) return bc - ac;
+        return String(a.title).localeCompare(String(b.title));
+      });
+
+      topHotwGroups = groups;
+    };
+
+    const setOverviewMode = (nextMode) => {
+      const mode = String(nextMode || '').trim().toLowerCase();
+      if (mode !== 'standard' && mode !== 'hotw' && mode !== 'tophotw') return;
+
+      overviewMode = mode;
+      if (overviewMode === 'hotw') recomputeHotwLabels();
+      if (overviewMode === 'tophotw') recomputeTopHotwGroups();
+      commitRender();
+    };
+
     const commitRender = () => {
       const selectedWeek = weeks.find(w => w.week === selectedWeekKey) || null;
       renderSidebarBlocks(sidebar, selectedWeek, {
         view,
         signal,
-        overviewLabelMode,
+        overviewMode,
         onBack: () => {
           view = 'overview';
           commitRender();
         },
-        onToggleOverviewLabels: () => {
-          overviewLabelMode = overviewLabelMode === 'hotw' ? 'dates' : 'hotw';
-          if (overviewLabelMode === 'hotw') recomputeHotwLabels();
-          commitRender();
-        }
+        onSetOverviewMode: (mode) => setOverviewMode(mode)
       });
 
       if (view === 'overview') {
+        const labelMode = overviewMode === 'hotw'
+          ? 'hotw'
+          : (overviewMode === 'tophotw' ? 'tophotw' : 'dates');
+
         renderOverview(
           mainBody,
           {
             weeks,
             selectedWeekKey,
-            labelMode: overviewLabelMode,
+            labelMode,
             hotwLabelByWeekKey,
+            topHotwGroups,
             onSelectWeek: (weekKey) => {
               selectedWeekKey = String(weekKey || '');
               view = 'week';
@@ -312,13 +397,15 @@ export async function renderShinyWeeklyPage(ctx) {
       .then(() => {
         pokemonReady = true;
         pokemonPointsMap = getPokemonPointsMap();
-        if (overviewLabelMode === 'hotw') recomputeHotwLabels();
+        if (overviewMode === 'hotw') recomputeHotwLabels();
+        if (overviewMode === 'tophotw') recomputeTopHotwGroups();
         if (view === 'week') commitRender();
       })
       .catch(() => {
         pokemonReady = true;
         pokemonPointsMap = {};
-        if (overviewLabelMode === 'hotw') recomputeHotwLabels();
+        if (overviewMode === 'hotw') recomputeHotwLabels();
+        if (overviewMode === 'tophotw') recomputeTopHotwGroups();
         if (view === 'week') commitRender();
       });
 

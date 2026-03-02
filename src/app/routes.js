@@ -24,8 +24,6 @@ function getRoute() {
 
   if (lower.startsWith('#home')) return { page: 'home' };
 
-  if (lower.startsWith('#home')) return { page: 'home' };
-
   if (lower.startsWith('#hitlist') || lower.startsWith('#pokedex')) {
     return { page: 'hitlist' };
   }

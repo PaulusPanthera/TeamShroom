@@ -72,6 +72,7 @@ function normalizeVariants(variants) {
  * @param {boolean} [params.showVariants]
  * @param {string} [params.headerLeftIconSrc] (member emblem)
  * @param {string} [params.headerRightText] (override points chip)
+ * @param {'spore'|'shroom'|'mushcap'|'shinyshroom'|string} [params.memberTier] (member role tier)
  * @returns {HTMLDivElement}
  */
 export function renderUnifiedCard({
@@ -87,7 +88,8 @@ export function renderUnifiedCard({
   variants,
   showVariants,
   headerLeftIconSrc,
-  headerRightText
+  headerRightText,
+  memberTier
 }) {
   const isMember = cardType === 'member';
   const typeClass = isMember ? 'unified-card--member' : 'unified-card--pokemon';
@@ -100,10 +102,22 @@ export function renderUnifiedCard({
   const tierClass =
     tierToken === 'lm' ? 'tier-lm' : tierToken != null ? `tier-${tierToken}` : '';
 
+  const memberTierToken = isMember ? String(memberTier || '').trim().toLowerCase() : '';
+  const memberTierClass =
+    isMember && ['spore', 'shroom', 'mushcap', 'shinyshroom'].includes(memberTierToken)
+      ? `member-tier-${memberTierToken}`
+      : '';
+
   const nameLenClass = classForNameLength(pokemonName);
 
   const card = document.createElement('div');
-  card.className = ['unified-card', typeClass, tierClass, isUnclaimed ? 'is-unclaimed' : '']
+  card.className = [
+    'unified-card',
+    typeClass,
+    tierClass,
+    memberTierClass,
+    isUnclaimed ? 'is-unclaimed' : ''
+  ]
     .filter(Boolean)
     .join(' ');
 

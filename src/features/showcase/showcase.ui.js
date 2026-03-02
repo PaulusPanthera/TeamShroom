@@ -4,6 +4,7 @@
 
 import { renderUnifiedCard, escapeHtml } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName, getPokemonDbShinyGifSrc } from '../../utils/utils.js';
+import { computeShinyWarsPoints } from '../../domains/pokemon/shiny.points.js';
 
 function assertValidRoot(root) {
   if (!root || !(root instanceof Element)) {
@@ -45,6 +46,36 @@ function parseEncounter(raw) {
   const n = Number(s);
   return Number.isFinite(n) ? n : null;
 }
+
+function formatCompactNumber(n) {
+  const num = Number(n);
+  if (!Number.isFinite(num)) return '—';
+  const abs = Math.abs(num);
+  if (abs >= 1_000_000) {
+    const v = Math.round((num / 1_000_000) * 10) / 10;
+    return `${v}M`.replace(/\.0M$/, 'M');
+  }
+  if (abs >= 1_000) {
+    const v = Math.round((num / 1_000) * 10) / 10;
+    return `${v}K`.replace(/\.0K$/, 'K');
+  }
+  return String(Math.round(num));
+}
+
+function buildMemberIdLines(stats) {
+  const s = stats || {};
+  const avg = (s.avgEncounterPerShiny != null) ? formatCompactNumber(s.avgEncounterPerShiny) : '—';
+  const logged = Number(s.encounterLogged) || 0;
+  const eligible = Number(s.encounterEligible) || 0;
+  const unique = Number(s.uniqueSpecies) || 0;
+
+  return [
+    `AVG ENC/SHINY: ${avg}`,
+    `ENC LOGGED: ${logged} / ${eligible}`,
+    `UNIQUE SPECIES: ${unique}`
+  ];
+}
+
 
 function buildShinyInfoText(s) {
   // Default info plate for showcase Pokemon cards should be the encounter value.
@@ -203,6 +234,7 @@ export function renderShowcaseGallerySections(sections, sortMode) {
         pokemonName: v && v.name ? v.name : '',
         artSrc: v && v.spriteSrc ? v.spriteSrc : '',
         points: v && v.points ? v.points : 0,
+        memberTier: v && v.memberTier ? v.memberTier : '',
         headerLeftIconSrc: v && v.tierEmblemSrc ? v.tierEmblemSrc : '',
         headerRightText: pointsText,
         infoText,
@@ -245,6 +277,7 @@ export function renderShowcaseGallery(memberCardViews) {
       pokemonName: v.name,
       artSrc: v.spriteSrc,
       points: v.points,
+      memberTier: v.memberTier,
       headerLeftIconSrc: v.tierEmblemSrc,
       headerRightText: pointsText,
       infoText,
@@ -261,6 +294,7 @@ export function renderShowcaseGallery(memberCardViews) {
   container.appendChild(grid);
 }
 
+
 export function renderMemberShowcaseShell(root, member) {
   assertValidRoot(root);
 
@@ -269,49 +303,65 @@ export function renderMemberShowcaseShell(root, member) {
   const wrap = document.createElement('div');
   wrap.className = 'showcase-root showcase-member-root';
 
-  const nameplate = document.createElement('div');
-  nameplate.className = 'member-nameplate';
-  nameplate.setAttribute('aria-label', 'Member summary');
+  const idWrap = document.createElement('div');
+  idWrap.className = 'member-idwrap';
+  idWrap.setAttribute('aria-label', 'Member ID');
+
+  const idCard = document.createElement('div');
+  idCard.className = 'member-id-card unified-card--member';
+
+  const tier = member && member.memberTier ? String(member.memberTier).trim().toLowerCase() : '';
+  if (tier) idCard.classList.add(`member-tier-${tier}`);
+
+  const head = document.createElement('div');
+  head.className = 'member-id-head';
+
+  const emblem = document.createElement('img');
+  emblem.className = 'member-id-emblem';
+  emblem.alt = '';
+  emblem.src = (member && member.tierEmblemSrc) ? String(member.tierEmblemSrc) : 'img/symbols/sporesprite.png';
+
+  const sockets = document.createElement('div');
+  sockets.className = 'member-id-sockets';
+  for (let i = 0; i < 3; i += 1) {
+    const s = document.createElement('span');
+    s.className = 'member-id-socket';
+    sockets.appendChild(s);
+  }
+
+  head.append(emblem, sockets);
+
+  const bodyRow = document.createElement('div');
+  bodyRow.className = 'member-id-body';
 
   const sprite = document.createElement('img');
-  sprite.className = 'member-sprite';
+  sprite.className = 'member-id-sprite';
   sprite.alt = '';
   sprite.src = (member && member.spriteSrc)
     ? String(member.spriteSrc)
     : 'img/membersprites/examplesprite.png';
 
-  const meta = document.createElement('div');
-  meta.className = 'member-meta';
+  const info = document.createElement('div');
+  info.className = 'member-id-info';
 
-  const name = document.createElement('div');
-  name.className = 'member-name';
-  name.textContent = member && member.name ? String(member.name) : '';
+  const lines = buildMemberIdLines(member && member.idStats);
+  lines.forEach(t => {
+    const line = document.createElement('div');
+    line.className = 'member-id-line';
+    line.textContent = String(t || '');
+    info.appendChild(line);
+  });
 
-  const stats = document.createElement('div');
-  stats.className = 'member-stats';
+  bodyRow.append(sprite, info);
 
-  const shinyCount = document.createElement('span');
-  shinyCount.className = 'shiny-count';
-  shinyCount.textContent = `Active: ${String(member && member.shinyCount != null ? member.shinyCount : 0)}`;
-
-  const inactiveCount = document.createElement('span');
-  inactiveCount.className = 'inactive-count';
-  inactiveCount.textContent = `Lost/Sold: ${String(member && member.inactiveShinyCount != null ? member.inactiveShinyCount : 0)}`;
-
-  const pointCount = document.createElement('span');
-  pointCount.className = 'point-count';
-  pointCount.textContent = `Points: ${String(member && member.points != null ? member.points : 0)}`;
-
-  stats.append(shinyCount, inactiveCount, pointCount);
-  meta.append(name, stats);
-
-  nameplate.append(sprite, meta);
+  idCard.append(head, bodyRow);
+  idWrap.appendChild(idCard);
 
   const body = document.createElement('div');
   body.className = 'showcase-member-body';
   body.id = 'member-shiny-sections';
 
-  wrap.append(nameplate, body);
+  wrap.append(idWrap, body);
   root.appendChild(wrap);
 }
 
@@ -415,14 +465,16 @@ export function renderMemberShinySections(sections, pokemonPoints) {
       const pokemonKey = s && s.pokemon ? String(s.pokemon) : '';
       if (!pokemonKey) return;
 
-      const points = Number(pokemonPoints && pokemonPoints[pokemonKey]) || 0;
+      const tierPoints = Number(pokemonPoints && pokemonPoints[pokemonKey]) || 0;
+      const displayPoints = computeShinyWarsPoints(s, pokemonPoints).totalPoints;
       const info = buildShinyInfoText(s);
 
       const card = renderUnifiedCard({
         pokemonKey,
         pokemonName: prettifyPokemonName(pokemonKey),
         artSrc: getPokemonDbShinyGifSrc(pokemonKey),
-        points,
+        points: tierPoints,
+        headerRightText: (Number.isFinite(displayPoints) && displayPoints > 0) ? `${displayPoints}P` : undefined,
         infoText: info,
         isUnclaimed: Boolean(s && (s.run || s.lost || s.sold)),
         variants: buildVariantsForShiny(s, info)

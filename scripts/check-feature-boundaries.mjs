@@ -82,29 +82,3 @@ if (violations.length > 0) {
 }
 
 process.exit(0);
-
-{
-  "name": "TeamShroom",
-  "version": "v2.0.0-beta",
-  "private": true,
-  "scripts": {
-    "check:boundaries": "node scripts/check-feature-boundaries.mjs"
-  }
-}
-
-name: feature-boundaries
-
-on:
-  push:
-  pull_request:
-
-jobs:
-  check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm ci
-      - run: npm run check:boundaries

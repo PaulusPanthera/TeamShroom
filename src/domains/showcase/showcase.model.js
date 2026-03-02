@@ -3,6 +3,7 @@
 // Showcase domain aggregation
 
 import { buildMembersModel } from '../../data/members.model.js';
+import { computeShinyWarsPoints } from '../pokemon/shiny.points.js';
 
 function normalizeKey(name) {
   return String(name || '').trim().toLowerCase();
@@ -12,12 +13,6 @@ function isActiveShiny(s) {
   return !(s && (s.run || s.lost || s.sold));
 }
 
-function getPokemonPoints(pointsMap, pokemonKey) {
-  const has = pointsMap && Object.prototype.hasOwnProperty.call(pointsMap, pokemonKey);
-  const v = has ? pointsMap[pokemonKey] : 0;
-  const n = Number(v);
-  return Number.isFinite(n) ? n : 0;
-}
 
 /**
  * Build showcase model from members rows + showcase rows.
@@ -44,7 +39,7 @@ export function buildShowcaseModel({ membersRows, showcaseRows, pokemonPoints })
 
     // Back-compat: shinyCount is ACTIVE count
     const shinyCount = owned.length;
-    const points = owned.reduce((sum, s) => sum + getPokemonPoints(pokemonPoints, s && s.pokemon), 0);
+    const points = owned.reduce((sum, s) => sum + computeShinyWarsPoints(s, pokemonPoints).totalPoints, 0);
 
     return {
       ...m,

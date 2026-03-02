@@ -308,19 +308,21 @@ Run it with any static server (ES modules require HTTP, not file://):
 Example:
 ```bash
 python -m http.server 5173
+```
 
 Then open:
 
-http://localhost:5173/#home
+- `http://localhost:5173/#home`
 
-Deployment
+---
 
+## Deployment
 Designed for static hosting (GitHub Pages compatible):
 
-commit generated JSON under /data/
+- Commit generated JSON under `/data/`
+- The site renders client-side from those datasets
 
-site renders client-side from those datasets
+---
 
-One sentence
-
+## One sentence
 TeamShroom is a retro RPG guild interface that turns community shiny hunting into a persistent, navigable, evolving history.

@@ -113,6 +113,7 @@ export function buildMemberGalleryCardView(member, sortMode) {
     name,
     points: Number(member && member.points) || 0,
     shinyCount: Number(member && member.shinyCount) || 0,
+    memberTier: member && member.role ? String(member.role) : '',
     tierEmblemSrc: getMemberRoleEmblemSrc(member && member.role),
     spriteSrc: getMemberSpriteSrc(key, member && member.sprite),
     sortMode
@@ -250,6 +251,50 @@ export function buildMemberShinyCounts(shinies) {
   });
 
   return counts;
+}
+
+
+export function buildMemberIdStats(shinies) {
+  // Member ID stats are derived from the raw shiny list.
+  // Rules:
+  // - Avg Enc/Shiny uses only numeric encounter values.
+  // - Shinies with method "event" never count toward avg or encounter coverage.
+  // - Shinies without encounter data are ignored for avg, but still count toward eligible.
+  // - Unique Species counts unique pokemon keys across the full list (including events/inactive).
+  const list = Array.isArray(shinies) ? shinies : [];
+
+  const uniq = new Set();
+
+  let eligible = 0;
+  let logged = 0;
+  let sum = 0;
+
+  list.forEach(s => {
+    const key = normalizePokemonKey(s && s.pokemon);
+    if (key) uniq.add(key);
+
+    const method = normalize(s && s.method);
+    const isEvent = method.includes('event');
+    if (isEvent) return;
+
+    eligible += 1;
+
+    const rawEnc = s && s.encounter != null ? s.encounter : null;
+    const enc = (rawEnc == null) ? null : Number(String(rawEnc).trim());
+    if (!Number.isFinite(enc)) return;
+
+    logged += 1;
+    sum += enc;
+  });
+
+  const avg = logged > 0 ? (sum / logged) : null;
+
+  return {
+    uniqueSpecies: uniq.size,
+    encounterEligible: eligible,
+    encounterLogged: logged,
+    avgEncounterPerShiny: avg
+  };
 }
 
 export function groupMemberShiniesByStatus(shinies) {

@@ -14,6 +14,7 @@ export function getMemberRoleEmblemSrc(role) {
   const r = normalize(role);
   if (r === 'spore') return 'img/symbols/sporesprite.png';
   if (r === 'shroom') return 'img/symbols/shroomsprite.png';
+  if (r === 'mushcap') return 'img/symbols/mushcapsprite.png';
   if (r === 'shinyshroom') return 'img/symbols/shinyshroomsprite.png';
   return 'img/symbols/shroomsprite.png';
 }
