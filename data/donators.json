@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-02T14:02:28.411Z",
+  "generatedAt": "2026-03-02T16:49:16.543Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1331,13 +1331,13 @@
     },
     {
       "date": "2025-08-29",
-      "name": "SirPrivacy",
+      "name": "Privacy",
       "donation": null,
       "value": 2700000
     },
     {
       "date": "2025-08-29",
-      "name": "SirPrivacy",
+      "name": "Privacy",
       "donation": null,
       "value": 1000000
     },

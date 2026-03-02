@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-02T14:02:30.501Z",
+  "generatedAt": "2026-03-02T16:49:17.824Z",
   "source": "google-sheets",
   "data": [
     {
@@ -17632,7 +17632,7 @@
       "notes": "standard week date"
     },
     {
-      "ot": "PolarisGoon",
+      "ot": "AceTrainerPolar",
       "pokemon": "graveler",
       "method": null,
       "encounter": null,
@@ -17645,7 +17645,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "PolarisGoon",
+      "ot": "AceTrainerPolar",
       "pokemon": "donphan",
       "method": null,
       "encounter": null,
@@ -17658,7 +17658,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "PolarisGoon",
+      "ot": "AceTrainerPolar",
       "pokemon": "loudred",
       "method": null,
       "encounter": null,
@@ -17671,7 +17671,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "PolarisGoon",
+      "ot": "AceTrainerPolar",
       "pokemon": "ponyta",
       "method": null,
       "encounter": null,
@@ -18919,7 +18919,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "dragonair",
       "method": null,
       "encounter": null,
@@ -18932,7 +18932,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "lapras",
       "method": "safari",
       "encounter": null,
@@ -18945,7 +18945,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "politoed",
       "method": "safari",
       "encounter": null,
@@ -18958,7 +18958,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "poliwag",
       "method": "safari",
       "encounter": null,
@@ -18971,7 +18971,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "smeargle",
       "method": null,
       "encounter": null,
@@ -18984,7 +18984,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "pachirisu",
       "method": null,
       "encounter": null,
@@ -18997,7 +18997,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "lopunny",
       "method": null,
       "encounter": null,
@@ -19010,7 +19010,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "miltank",
       "method": "safari",
       "encounter": null,
@@ -19023,7 +19023,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "lapras",
       "method": "safari",
       "encounter": null,
@@ -19036,7 +19036,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "pidgeotto",
       "method": null,
       "encounter": null,
@@ -19049,7 +19049,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "wobbuffet",
       "method": null,
       "encounter": null,
@@ -19062,7 +19062,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "altaria",
       "method": null,
       "encounter": null,
@@ -19075,7 +19075,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "mawile",
       "method": null,
       "encounter": null,
@@ -19088,7 +19088,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "koffing",
       "method": null,
       "encounter": null,
@@ -19101,7 +19101,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "graveler",
       "method": null,
       "encounter": null,
@@ -19114,7 +19114,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "pachirisu",
       "method": null,
       "encounter": null,
@@ -19127,7 +19127,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "krookodile",
       "method": null,
       "encounter": null,
@@ -19140,7 +19140,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SirPrivacy",
+      "ot": "Privacy",
       "pokemon": "torkoal",
       "method": null,
       "encounter": null,
@@ -23742,7 +23742,7 @@
       "notes": "standard week date"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "onix",
       "method": null,
       "encounter": null,
@@ -23755,7 +23755,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "onix",
       "method": null,
       "encounter": null,
@@ -23768,7 +23768,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "tangela",
       "method": null,
       "encounter": null,
@@ -23781,7 +23781,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "tentacool",
       "method": null,
       "encounter": null,
@@ -23794,7 +23794,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "carvanha",
       "method": null,
       "encounter": null,
@@ -23807,7 +23807,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "sharpedo",
       "method": null,
       "encounter": null,
@@ -23820,7 +23820,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "axew",
       "method": null,
       "encounter": null,
@@ -23833,7 +23833,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "lanturn",
       "method": null,
       "encounter": null,
@@ -23846,7 +23846,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "boldore",
       "method": null,
       "encounter": null,
@@ -23859,7 +23859,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "chikorita",
       "method": "egg",
       "encounter": null,
@@ -23872,7 +23872,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "fearow",
       "method": null,
       "encounter": null,
@@ -23885,7 +23885,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "carvanha",
       "method": null,
       "encounter": null,
@@ -23898,7 +23898,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "jigglypuff",
       "method": "safari",
       "encounter": null,
@@ -23911,7 +23911,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "riolu",
       "method": "safari",
       "encounter": null,
@@ -23924,7 +23924,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "carvanha",
       "method": null,
       "encounter": null,
@@ -23937,7 +23937,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "dodrio",
       "method": null,
       "encounter": null,
@@ -23950,7 +23950,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "sewaddle",
       "method": null,
       "encounter": null,
@@ -23963,7 +23963,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "sharpedo",
       "method": null,
       "encounter": null,
@@ -23976,7 +23976,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "poliwhirl",
       "method": "safari",
       "encounter": null,
@@ -23989,7 +23989,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "tulicreme",
+      "ot": "tuli",
       "pokemon": "pineco",
       "method": "safari",
       "encounter": null,

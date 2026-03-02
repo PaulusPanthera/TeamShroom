@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-02T14:02:31.307Z",
+  "generatedAt": "2026-03-02T16:49:19.068Z",
   "source": "google-sheets",
   "data": [
     {
@@ -526,7 +526,7 @@
       "sprite": "png"
     },
     {
-      "name": "PolarisGoon",
+      "name": "AceTrainerPolar",
       "active": true,
       "role": "spore",
       "sprite": "png"
@@ -598,7 +598,7 @@
       "sprite": "png"
     },
     {
-      "name": "SirPrivacy",
+      "name": "Privacy",
       "active": true,
       "role": "spore",
       "sprite": "png"
@@ -724,7 +724,7 @@
       "sprite": "gif"
     },
     {
-      "name": "tulicreme",
+      "name": "tuli",
       "active": true,
       "role": "shroom",
       "sprite": "png"
