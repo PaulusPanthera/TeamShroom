@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-13T02:17:49.468Z",
+  "generatedAt": "2026-03-13T06:36:09.497Z",
   "source": "google-sheets",
   "data": [
     {
@@ -25704,7 +25704,7 @@
       "week_label": "March 2nd - March 8th 2026",
       "date_start": "2026-03-02",
       "date_end": "2026-03-08",
-      "ot": "Tuli",
+      "ot": "tuli",
       "pokemon": "sharpedo",
       "method": null,
       "encounter": null,
