@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-13T00:59:29.143Z",
+  "generatedAt": "2026-03-13T02:17:52.890Z",
   "source": "google-sheets",
   "data": [
     {
@@ -26873,6 +26873,110 @@
       "sold": false,
       "clip": null,
       "notes": "correct week date"
+    },
+    {
+      "ot": "Miltank",
+      "pokemon": "heatmor",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "NotAHumanSure",
+      "pokemon": "poliwhirl",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "Hokeymon",
+      "pokemon": "zigzagoon",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "Mattmattoux",
+      "pokemon": "bellsprout",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "Mattmattoux",
+      "pokemon": "poliwhirl",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "Tuli",
+      "pokemon": "sharpedo",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "AKatharina",
+      "pokemon": "gastly",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "Privacy",
+      "pokemon": "ralts",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": true,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
     }
   ]
 }
