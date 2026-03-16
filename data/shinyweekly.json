@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-16T16:50:16.346Z",
+  "generatedAt": "2026-03-16T16:56:07.581Z",
   "source": "google-sheets",
   "data": [
     {
@@ -4809,7 +4809,7 @@
       "date_start": "2024-07-15",
       "date_end": "2024-07-21",
       "ot": "TTVxSenseiNESS",
-      "pokemon": "gastrodon",
+      "pokemon": "gastrodon-west",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -6937,7 +6937,7 @@
       "date_start": "2024-08-26",
       "date_end": "2024-09-01",
       "ot": "Darktrench",
-      "pokemon": "gastrodon",
+      "pokemon": "gastrodon-west",
       "method": null,
       "encounter": null,
       "secret": false,
