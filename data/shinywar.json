@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "generatedAt": "2026-03-18T00:00:00.000Z",
+  "source": "manual-config",
+  "data": [
+    {
+      "title": "Team Shroom 2nd Anniversary Shiny War",
+      "startDate": "2026-03-16",
+      "endDate": "2026-03-22",
+      "timezoneGraceDays": 1,
+      "speciesBonusPoints": 5,
+      "teams": [
+        {
+          "name": "Shroomish",
+          "leader": "CelineCeline",
+          "members": [
+            "Smokee",
+            "Yugi",
+            "Pangeaa",
+            "Jutskaa",
+            "Mileage",
+            "Kynnyto",
+            "TeleltubbieBaz",
+            "Bulkanator",
+            "Luna",
+            "LoDarko",
+            "ItsMawile",
+            "pawmu",
+            "CheesasaurusRex",
+            "Clairbear",
+            "NotAHumanSure",
+            "Tazmaster"
+          ]
+        },
+        {
+          "name": "Paras",
+          "leader": "locobounty",
+          "members": [
+            "PaulusTFT",
+            "TakeOnMeh",
+            "Orllando",
+            "tuli",
+            "itsEasy",
+            "DaddyMolo",
+            "Aokiza",
+            "Dupe",
+            "Cordeiroxi",
+            "highpokeman",
+            "slaydounet",
+            "WinterIvy",
+            "Miltank",
+            "Gumbasketball",
+            "realjuckpop",
+            "RicRiley"
+          ]
+        },
+        {
+          "name": "Foongus",
+          "leader": "TTVxSenseiNESS",
+          "members": [
+            "kithri",
+            "Privacy",
+            "Hokeymon",
+            "Skullz",
+            "Chestia",
+            "casethecase",
+            "AKatharina",
+            "MrBiscottes",
+            "Visari",
+            "Biiidou",
+            "Mattmattoux",
+            "Tobias",
+            "Hjordi",
+            "Lyptus",
+            "Kaaflaa",
+            "PokeBodega"
+          ]
+        }
+      ],
+      "rules": [
+        {
+          "day": 1,
+          "title": "Singles Dex Day",
+          "description": "+37 for any single encounter Pok\u00e9mon not claimed in the Pok\u00e9dex hitlist, +12 for any other single."
+        },
+        {
+          "day": 2,
+          "title": "Dex Horde Day",
+          "description": "+10 for any horde Pok\u00e9mon not claimed in the Pok\u00e9dex hitlist."
+        },
+        {
+          "day": 3,
+          "title": "Team Vote Day",
+          "description": "Configurable. Auto-bonus is currently disabled until the exact rule is locked."
+        },
+        {
+          "day": 4,
+          "title": "Safari Day",
+          "description": "+20 for safari shinies."
+        },
+        {
+          "day": 5,
+          "title": "Starter Day",
+          "description": "+47 for wild-caught starter-family shinies, +12 for any other single."
+        },
+        {
+          "day": 6,
+          "title": "Fishing Day",
+          "description": "+15 for any fishing Pok\u00e9mon not claimed in the Pok\u00e9dex hitlist."
+        },
+        {
+          "day": 7,
+          "title": "Mushroom Day",
+          "description": "+32 for Shroomish, +3 for Parasect/Amoonguss, and +12 for any other single from the Petalburg Forest pool."
+        }
+      ]
+    }
+  ]
+}

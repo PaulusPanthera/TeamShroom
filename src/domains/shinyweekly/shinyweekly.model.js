@@ -10,6 +10,7 @@ Array<{
   label: string
   dateStart: string | null
   dateEnd: string | null
+  dateCatch?: string | null
   shinyCount: number
   hunterCount: number
 
@@ -22,6 +23,7 @@ Array<{
     shinies: Array<{
       member: string
       pokemon: string
+      dateCatch?: string | null
       method: string | null
       encounter: number | null
       secret: boolean
@@ -42,6 +44,7 @@ Array<{
       shinies: Array<{
         member: string
         pokemon: string
+        dateCatch?: string | null
         method: string | null
         encounter: number | null
         secret: boolean
@@ -151,6 +154,7 @@ function normalizeWeeklyRow(row) {
 
     date_start: toNullableString(row && row.date_start),
     date_end: toNullableString(row && row.date_end),
+    date_catch: toNullableString(row && row.date_catch),
 
     memberName,
     memberKey,
@@ -165,7 +169,8 @@ function normalizeWeeklyRow(row) {
     lost,
 
     clip: toNullableString(row && row.clip),
-    notes: toNullableString(row && row.notes)
+    notes: toNullableString(row && row.notes),
+    location: toNullableString(row && row.location)
   };
 }
 
@@ -209,6 +214,7 @@ export function buildShinyWeeklyModel(rows) {
     const shiny = {
       member: r.memberName,
       pokemon: r.pokemon,
+      dateCatch: r.date_catch,
       method: r.method,
       encounter: r.encounter,
       secret: r.secret,
@@ -217,7 +223,8 @@ export function buildShinyWeeklyModel(rows) {
       run: r.run,
       lost: r.lost,
       clip: r.clip,
-      notes: r.notes
+      notes: r.notes,
+      location: r.location
     };
 
     // Preserve raw row order for downstream claim logic

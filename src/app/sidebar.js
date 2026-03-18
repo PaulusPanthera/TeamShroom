@@ -22,12 +22,14 @@ function defaultTitleForPage(page) {
   if (page === 'showcase') return 'MEMBERS';
   if (page === 'shinyweekly') return 'WEEKLY';
   if (page === 'donators') return 'DONATORS';
+  if (page === 'shinywar') return 'SHINY WAR';
   return 'POKÉDEX';
 }
 
 function defaultHintForPage(page) {
   if (page === 'home') return 'Coming soon.';
   if (page === 'shinyweekly') return 'Open a week to view details.';
+  if (page === 'shinywar') return 'Derived live from Weekly + war config.';
   return '';
 }
 

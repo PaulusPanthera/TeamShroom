@@ -1,0 +1,204 @@
+/* style/shinywar.css */
+/* v2.0.0-beta */
+/* Shiny War page layout + panels. */
+
+.shinywar-screen{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.shinywar-hero,
+.shinywar-block,
+.shinywar-team-card,
+.shinywar-entry{
+  padding: 16px 18px 18px;
+}
+
+.shinywar-hero-sub{
+  color: rgba(255,255,255,0.82);
+  font-size: 17px;
+}
+
+.shinywar-team-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.shinywar-team-card{
+  position: relative;
+  min-height: 220px;
+}
+
+.shinywar-team-rank{
+  color: rgba(240, 91, 41, 0.98);
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.shinywar-team-name{
+  margin: 0 0 8px;
+  font-size: 22px;
+  color: rgba(255,255,255,0.96);
+}
+
+.shinywar-team-leader,
+.shinywar-team-mvp{
+  color: rgba(255,255,255,0.86);
+  font-size: 17px;
+}
+
+.shinywar-team-stats{
+  margin: 16px 0 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.shinywar-team-stats > div{
+  min-height: 78px;
+  padding: 10px 12px;
+  background: rgba(6, 10, 14, 0.85);
+  border: 2px solid rgba(58,70,81,0.55);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.shinywar-team-stats strong{
+  font-size: 28px;
+  color: rgba(255,255,255,0.96);
+  font-weight: 400;
+}
+
+.shinywar-team-stats span{
+  color: rgba(255,255,255,0.72);
+  font-size: 16px;
+}
+
+.shinywar-main-grid{
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(340px, 0.9fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.shinywar-side{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.shinywar-ledger{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.shinywar-entry-head{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.shinywar-entry h3{
+  margin: 0;
+  font-size: 18px;
+  color: rgba(255,255,255,0.96);
+}
+
+.shinywar-points{
+  color: rgba(240, 91, 41, 0.98);
+  font-size: 20px;
+}
+
+.shinywar-pills{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.shinywar-pill{
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 2px 8px;
+  background: rgba(14, 18, 22, 0.96);
+  border: 2px solid rgba(90, 58, 46, 0.9);
+  color: rgba(255,255,255,0.88);
+  font-size: 13px;
+}
+
+.shinywar-breakdown{
+  color: rgba(255,255,255,0.8);
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.shinywar-entry.is-fail .shinywar-points,
+.shinywar-entry.is-fail .shinywar-breakdown{
+  color: rgba(240, 91, 41, 0.95);
+}
+
+.shinywar-entry.is-pending .shinywar-breakdown{
+  color: rgba(255, 225, 120, 0.95);
+}
+
+.shinywar-table{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.shinywar-table th,
+.shinywar-table td{
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(58,70,81,0.55);
+  text-align: left;
+  color: rgba(255,255,255,0.86);
+}
+
+.shinywar-table th{
+  color: rgba(255,255,255,0.7);
+}
+
+.shinywar-rule-list{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shinywar-rule{
+  padding: 12px 14px;
+  background: rgba(6, 10, 14, 0.85);
+  border: 2px solid rgba(58,70,81,0.55);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shinywar-rule strong{
+  color: rgba(255,255,255,0.92);
+  font-weight: 400;
+  font-size: 17px;
+}
+
+.shinywar-rule span,
+.shinywar-empty{
+  color: rgba(255,255,255,0.8);
+  font-size: 16px;
+  line-height: 1.28;
+}
+
+@media (max-width: 1280px){
+  .shinywar-team-grid{
+    grid-template-columns: 1fr;
+  }
+
+  .shinywar-main-grid{
+    grid-template-columns: 1fr;
+  }
+}

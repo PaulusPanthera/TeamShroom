@@ -11,6 +11,7 @@
 //   week_label: string            // human-readable week label
 //   date_start: string            // ISO date string (YYYY-MM-DD)
 //   date_end: string              // ISO date string (YYYY-MM-DD)
+//   date_catch: string | null     // explicit catch date (YYYY-MM-DD), if supplied
 //   ot: string                    // original trainer / hunter name (lowercase)
 //   pokemon: string               // canonical pokemon key
 //   method: string | null         // hunt method
@@ -22,6 +23,7 @@
 //   lost: boolean                 // lost shiny flag
 //   clip: string | null           // video clip URL
 //   notes: string | null          // freeform notes
+//   location: string | null       // optional catch location
 // }
 //
 // Guarantees:

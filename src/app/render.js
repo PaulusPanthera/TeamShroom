@@ -12,6 +12,7 @@ import { renderHomePage } from '../features/home/home.page.js';
 import { renderShowcasePage } from '../features/showcase/showcase.js';
 import { renderDonatorsPage } from '../features/donators/donators.page.js';
 import { renderShinyWeeklyPage } from '../features/shinyweekly/shinyweekly.page.js';
+import { renderShinyWarPage } from '../features/shinywar/shinywar.page.js';
 
 import {
   ensureShell,
@@ -172,6 +173,7 @@ export async function renderPage() {
     if (route.page === 'home') return { title: 'HOME', desc: 'Guild HQ overview.' };
     if (route.page === 'showcase') return { title: 'MEMBERS', desc: 'Browse guild members.' };
     if (route.page === 'shinyweekly') return { title: 'WEEKLY', desc: 'Open a week to view details.' };
+    if (route.page === 'shinywar') return { title: 'SHINY WAR', desc: 'Live event board derived from Weekly.' };
     if (route.page === 'donators') return { title: 'DONATORS', desc: 'Supporters of Team Shroom.' };
     return { title: 'POKÉDEX', desc: 'Hitlist & LivingDex progress.' };
   })();
@@ -248,6 +250,28 @@ export async function renderPage() {
             }
           })
         );
+      }
+    });
+
+    if (token !== activeRouteToken) return;
+    return;
+  }
+
+  if (route.page === 'shinywar') {
+    await mountFeaturePage({
+      containerEl: content,
+      label: 'Shiny War',
+      token,
+      renderFn: async () => {
+        await ensurePokemonData();
+        const weeklyModel = await getWeeklyModel();
+        return renderShinyWarPage({
+          root: content,
+          sidebar,
+          signal,
+          collect,
+          params: { weeklyModel }
+        });
       }
     });
 

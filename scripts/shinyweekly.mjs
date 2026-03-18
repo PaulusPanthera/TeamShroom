@@ -98,6 +98,7 @@ const data = meaningfulRows.map((row, index) => {
 
     date_start: normalizeDate(row.date_start, rowNum, 'date_start'),
     date_end: normalizeDate(row.date_end, rowNum, 'date_end'),
+    date_catch: row.date_catch ? normalizeDate(row.date_catch, rowNum, 'date_catch') : null,
 
     ot: preserveMember(row.ot),
     pokemon: normalizePokemon(row.pokemon),
@@ -112,6 +113,7 @@ const data = meaningfulRows.map((row, index) => {
 
     clip: row.clip?.trim() || null,
     notes: row.notes?.trim() || null,
+    location: row.location?.trim() || null,
   };
 });
 

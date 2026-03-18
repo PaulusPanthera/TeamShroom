@@ -366,11 +366,21 @@ function ensureHeaderShell() {
   const aShowcase = nav.querySelector('#nav-showcase');
   const aPokedex = nav.querySelector('#nav-hitlist');
   const aWeekly = nav.querySelector('#nav-shinyweekly');
+  let aWar = nav.querySelector('#nav-shinywar');
+  if (!aWar) {
+    aWar = document.createElement('a');
+    aWar.href = '#shinywar';
+    aWar.id = 'nav-shinywar';
+    aWar.textContent = 'Shiny War';
+    if (aWeekly && aWeekly.nextSibling) nav.insertBefore(aWar, aWeekly.nextSibling);
+    else nav.appendChild(aWar);
+  }
   const aDonators = nav.querySelector('#nav-donators');
 
   if (aShowcase) aShowcase.textContent = 'Members';
   if (aPokedex) aPokedex.textContent = 'Pokédex';
   if (aWeekly) aWeekly.textContent = 'Weekly';
+  if (aWar) aWar.textContent = 'Shiny War';
   if (aDonators) aDonators.textContent = 'Donators';
 
   const header = document.createElement('header');

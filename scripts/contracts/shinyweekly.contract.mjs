@@ -36,6 +36,11 @@ export const shinyWeeklyContract = {
       type: 'string',
     },
 
+    date_catch: {
+      type: 'string',
+      optional: true,
+    },
+
     method: {
       type: 'string',
       optional: true,
@@ -72,6 +77,11 @@ export const shinyWeeklyContract = {
     },
 
     notes: {
+      type: 'string',
+      optional: true,
+    },
+
+    location: {
       type: 'string',
       optional: true,
     },
