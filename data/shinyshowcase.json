@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-18T12:39:30.357Z",
+  "generatedAt": "2026-03-18T13:06:21.702Z",
   "source": "google-sheets",
   "data": [
     {
@@ -27202,8 +27202,8 @@
     {
       "ot": "PaulusTFT",
       "pokemon": "nosepass",
-      "method": null,
-      "encounter": null,
+      "method": "5x20%",
+      "encounter": 18925,
       "secret": false,
       "alpha": false,
       "run": false,
@@ -27319,7 +27319,7 @@
     {
       "ot": "Lyptus",
       "pokemon": "croagunk",
-      "method": null,
+      "method": "safari",
       "encounter": null,
       "secret": false,
       "alpha": false,
