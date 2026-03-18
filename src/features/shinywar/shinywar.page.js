@@ -14,6 +14,10 @@ function assertValidRoot(root) {
   }
 }
 
+function norm(raw) {
+  return String(raw || '').trim().toLowerCase();
+}
+
 function makeLines(lines) {
   const wrap = document.createElement('div');
   wrap.className = 'ts-subbar-stats';
@@ -62,7 +66,7 @@ function formatCountdown(ms) {
 function parseRolloverTime(raw, displayLabel) {
   const value = String(raw || '').trim();
   const match = value.match(/^(\d{1,2}):(\d{2})$/);
-  if (!match) return { hours: 21, minutes: 0, label: String(displayLabel || '4 PM EST') };
+  if (!match) return { hours: 21, minutes: 0, label: String(displayLabel || '21:00') };
   const hours = Math.min(23, Math.max(0, Number(match[1]) || 0));
   const minutes = Math.min(59, Math.max(0, Number(match[2]) || 0));
   return {
@@ -143,9 +147,7 @@ function makeSidebarStatus(model) {
   return makeLines([
     `${model.summary.trackedEntries} tracked entries`,
     `${model.summary.scoredEntries} scored catches`,
-    `${model.summary.failEntries} fail entries`,
-    `${model.summary.pendingEntries} waiting for catch date`,
-    `${model.summary.totalPoints} total points`,
+    `${model.summary.activeHunters || model.mvp.length} active hunters`,
   ]);
 }
 
@@ -242,7 +244,7 @@ function makeSidebarControls(model, state, rerender) {
 
   const hint = document.createElement('div');
   hint.className = 'shinywar-side-hint';
-  hint.textContent = 'Overview is the clean live view. Ledger is the full history.';
+  hint.textContent = 'Use view mode + filters here. Weekly stays the source of truth.';
 
   wrap.append(viewSelect, teamSelect, sortSelect, failsBtn, resetBtn, hint);
   return wrap;
@@ -287,15 +289,15 @@ function makeTeamCard(team) {
       <div>
         <div class="shinywar-summary-rank">#${team.rank}</div>
         <h3 class="shinywar-summary-name">${team.name}</h3>
-        <div class="shinywar-summary-leader">Leader: ${team.leader || '—'}</div>
       </div>
       <div class="shinywar-summary-points">${team.points}P</div>
     </div>
-    <div class="shinywar-summary-stats">
+    <div class="shinywar-summary-leader">Leader: ${team.leader || '—'}</div>
+    <div class="shinywar-summary-stats is-compact">
       <div><strong>${team.shinies}</strong><span>Scored shinies</span></div>
       <div><strong>${team.species}</strong><span>Species +5s</span></div>
     </div>
-    <div class="shinywar-summary-footer">${team.mvp ? `Current MVP · ${team.mvp.member} · ${team.mvp.points}P` : 'No scored catches yet.'}</div>
+    <div class="shinywar-summary-footer">${team.mvp ? `Current MVP: ${team.mvp.member} · ${team.mvp.points}P` : 'No scored catches yet.'}</div>
   `;
   return card;
 }
@@ -335,71 +337,6 @@ function filteredEntries(model, state, live, options = {}) {
   }), state.sortMode);
 }
 
-function buildEntryCard(entry, compact = false) {
-  const item = document.createElement('article');
-  item.className = `ts-panel ${compact ? 'shinywar-catch-tile' : 'shinywar-entry'}`;
-  if (entry.failed) item.classList.add('is-fail');
-  if (entry.pendingDate) item.classList.add('is-pending');
-
-  if (compact) {
-    const top = document.createElement('div');
-    top.className = 'shinywar-catch-tile-top';
-    const team = document.createElement('div');
-    team.className = 'shinywar-catch-tile-team';
-    team.textContent = entry.team;
-    const score = document.createElement('div');
-    score.className = 'shinywar-catch-tile-score';
-    score.textContent = entry.failed ? '0P' : `${entry.totalPoints}P`;
-    top.append(team, score);
-    item.appendChild(top);
-  }
-
-  const frame = document.createElement('div');
-  frame.className = compact ? 'shinywar-catch-tile-frame' : 'shinywar-entry-frame';
-
-  const card = renderUnifiedCard({
-    cardType: 'pokemon',
-    pokemonKey: entry.pokemon,
-    pokemonName: titleCasePokemon(entry.pokemon),
-    artSrc: getPokemonDbShinyGifSrc(entry.pokemon),
-    points: null,
-    infoText: entry.member,
-    isUnclaimed: false,
-    headerRightText: entry.failed ? '0P' : `${entry.totalPoints}P`,
-    showVariants: false,
-  });
-  card.classList.add(compact ? 'shinywar-catch-tile-card' : 'shinywar-entry-card');
-
-  const details = document.createElement('div');
-  details.className = compact ? 'shinywar-catch-tile-body' : 'shinywar-entry-details';
-  details.innerHTML = `
-    <div class="${compact ? 'shinywar-catch-tile-name' : 'shinywar-entry-species'}">${titleCasePokemon(entry.pokemon)}</div>
-    <div class="${compact ? 'shinywar-catch-tile-hunter' : 'shinywar-entry-subline'}">${entry.member} · ${entry.team}</div>
-  `;
-
-  const pills = document.createElement('div');
-  pills.className = 'shinywar-pills';
-  pills.append(
-    makeEntryPill(entry.dateCatch ? formatDate(entry.dateCatch) : 'No catch date'),
-    makeEntryPill(entry.dayNumber ? `Day ${entry.dayNumber}` : 'Pending Day'),
-    makeEntryPill(methodLabel(entry.method))
-  );
-  if (entry.secret) pills.appendChild(makeEntryPill('Secret', 'is-highlight'));
-  if (entry.safari) pills.appendChild(makeEntryPill('Safari', 'is-highlight'));
-  if (entry.failed) pills.appendChild(makeEntryPill(entry.run ? 'Run Fail' : 'Lost Fail', 'is-fail'));
-  else if (entry.claimSlot && entry.claimMode === 'fallback') pills.appendChild(makeEntryPill(`Claims ${titleCasePokemon(entry.claimSlot)}`, 'is-claim'));
-  else if (entry.dexUnclaimed) pills.appendChild(makeEntryPill('Dex Hit', 'is-claim'));
-
-  const breakdown = document.createElement('div');
-  breakdown.className = compact ? 'shinywar-catch-tile-breakdown' : 'shinywar-breakdown';
-  breakdown.textContent = entry.breakdown.length ? entry.breakdown.join(' • ') : 'No bonuses applied.';
-
-  details.append(pills, breakdown);
-  frame.append(card, details);
-  item.appendChild(frame);
-  return item;
-}
-
 function makeLedger(entries, options = {}) {
   const wrap = document.createElement('div');
   wrap.className = 'shinywar-ledger';
@@ -410,68 +347,169 @@ function makeLedger(entries, options = {}) {
     wrap.appendChild(empty);
     return wrap;
   }
-  entries.forEach((entry) => wrap.appendChild(buildEntryCard(entry, false)));
+
+  entries.forEach((entry) => {
+    const item = document.createElement('article');
+    item.className = 'ts-panel shinywar-entry';
+    if (entry.failed) item.classList.add('is-fail');
+    if (entry.pendingDate) item.classList.add('is-pending');
+
+    const frame = document.createElement('div');
+    frame.className = 'shinywar-entry-frame';
+
+    const card = renderUnifiedCard({
+      cardType: 'pokemon',
+      pokemonKey: entry.pokemon,
+      pokemonName: titleCasePokemon(entry.pokemon),
+      artSrc: getPokemonDbShinyGifSrc(entry.pokemon),
+      points: null,
+      infoText: entry.member,
+      isUnclaimed: false,
+      headerRightText: entry.failed ? '0P' : `${entry.totalPoints}P`,
+      showVariants: false,
+    });
+    card.classList.add('shinywar-entry-card');
+
+    const details = document.createElement('div');
+    details.className = 'shinywar-entry-details';
+
+    const head = document.createElement('div');
+    head.className = 'shinywar-entry-head';
+    head.innerHTML = `
+      <div class="shinywar-entry-topline">
+        <div class="shinywar-entry-species">${titleCasePokemon(entry.pokemon)}</div>
+        <div class="shinywar-entry-score">${entry.failed ? '0P' : `${entry.totalPoints}P`}</div>
+      </div>
+      <div class="shinywar-entry-subline">${entry.member} · ${entry.team}</div>
+    `;
+
+    const pillsWrap = document.createElement('div');
+    pillsWrap.className = 'shinywar-pills';
+    pillsWrap.append(
+      makeEntryPill(entry.dateCatch ? formatDate(entry.dateCatch) : 'No catch date'),
+      makeEntryPill(entry.dayNumber ? `Day ${entry.dayNumber}` : 'Pending Day'),
+      makeEntryPill(methodLabel(entry.method))
+    );
+    if (entry.secret) pillsWrap.appendChild(makeEntryPill('Secret', 'is-highlight'));
+    if (entry.safari) pillsWrap.appendChild(makeEntryPill('Safari', 'is-highlight'));
+    if (entry.failed) pillsWrap.appendChild(makeEntryPill(entry.run ? 'Run Fail' : 'Lost Fail', 'is-fail'));
+    if (entry.claimSlot && entry.claimMode === 'fallback') {
+      pillsWrap.appendChild(makeEntryPill(`Claims ${titleCasePokemon(entry.claimSlot)}`, 'is-claim'));
+    } else if (entry.dexUnclaimed) {
+      pillsWrap.appendChild(makeEntryPill('Dex Hit', 'is-claim'));
+    }
+
+    const breakdown = document.createElement('div');
+    breakdown.className = 'shinywar-breakdown';
+    breakdown.textContent = entry.breakdown.length ? entry.breakdown.join(' • ') : 'No bonuses applied.';
+
+    details.append(head, pillsWrap, breakdown);
+    frame.append(card, details);
+    item.appendChild(frame);
+    wrap.appendChild(item);
+  });
+
   return wrap;
 }
 
-function makeRankList(rows, maxRows = null) {
+function makeLeaderboardList(rows, maxRows = null, emptyText = 'No scored catches yet.') {
   const wrap = document.createElement('div');
-  wrap.className = 'shinywar-ranklist';
+  wrap.className = 'shinywar-rank-list';
   const list = (Array.isArray(rows) ? rows : []).slice(0, maxRows == null ? undefined : maxRows);
   if (!list.length) {
     const empty = document.createElement('div');
     empty.className = 'shinywar-empty';
-    empty.textContent = 'No scored catches yet.';
+    empty.textContent = emptyText;
     wrap.appendChild(empty);
     return wrap;
   }
-
   list.forEach((row) => {
     const item = document.createElement('div');
-    item.className = 'shinywar-rankrow';
+    item.className = 'shinywar-rank-row';
     item.innerHTML = `
-      <div class="shinywar-rankrow-left">
-        <div class="shinywar-rankrow-rank">#${row.rank}</div>
-        <div class="shinywar-rankrow-name">${row.member}</div>
-        <div class="shinywar-rankrow-team">${row.team}</div>
+      <div class="shinywar-rank-left">
+        <div class="shinywar-rank-pos">#${row.rank}</div>
+        <div class="shinywar-rank-meta">
+          <div class="shinywar-rank-name">${row.member}</div>
+          <div class="shinywar-rank-sub">${row.team} · ${row.shinies} shiny${row.shinies === 1 ? '' : 'ies'}</div>
+        </div>
       </div>
-      <div class="shinywar-rankrow-right">
-        <span>${row.shinies} shiny</span>
-        <strong>${row.points}P</strong>
-      </div>
+      <div class="shinywar-rank-points">${row.points}P</div>
     `;
     wrap.appendChild(item);
   });
   return wrap;
 }
 
-function makeCompactDayPanel(live, entries) {
-  const panel = document.createElement('section');
-  panel.className = 'ts-panel shinywar-block shinywar-focus-panel';
+function makeTodayRaceRows(entries) {
+  const wrap = document.createElement('div');
+  wrap.className = 'shinywar-rank-list';
+  const byTeam = Object.create(null);
+  entries.forEach((entry) => {
+    if (!byTeam[entry.team]) byTeam[entry.team] = { team: entry.team, points: 0, shinies: 0, fails: 0 };
+    if (entry.failed) {
+      byTeam[entry.team].fails += 1;
+      return;
+    }
+    byTeam[entry.team].points += Number(entry.totalPoints) || 0;
+    byTeam[entry.team].shinies += 1;
+  });
+  const rows = Object.values(byTeam).sort((a, b) => (b.points - a.points) || (b.shinies - a.shinies) || a.team.localeCompare(b.team));
+  if (!rows.length) {
+    const empty = document.createElement('div');
+    empty.className = 'shinywar-empty';
+    empty.textContent = 'No catches for the active day yet.';
+    wrap.appendChild(empty);
+    return wrap;
+  }
+  rows.forEach((row, index) => {
+    const item = document.createElement('div');
+    item.className = 'shinywar-rank-row is-team';
+    item.innerHTML = `
+      <div class="shinywar-rank-left">
+        <div class="shinywar-rank-pos">#${index + 1}</div>
+        <div class="shinywar-rank-meta">
+          <div class="shinywar-rank-name">${row.team}</div>
+          <div class="shinywar-rank-sub">${row.shinies} shiny${row.shinies === 1 ? '' : 'ies'}</div>
+        </div>
+      </div>
+      <div class="shinywar-rank-points">${row.points}P</div>
+    `;
+    wrap.appendChild(item);
+  });
+  return wrap;
+}
 
-  const title = document.createElement('h2');
-  title.className = 'ts-panel-title';
-  title.textContent = live.rule ? `Day ${live.currentDay} · ${live.rule.title}` : 'Current Day';
+function makeCompactDayPanel(model, live, entries) {
+  const panel = document.createElement('section');
+  panel.className = 'ts-panel shinywar-block';
+  panel.innerHTML = '<h2 class="ts-panel-title">Current Day Focus</h2>';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'shinywar-focus';
+
+  const title = document.createElement('div');
+  title.className = 'shinywar-focus-title';
+  title.textContent = live.rule ? `Day ${live.currentDay} · ${live.rule.title}` : 'No active day';
 
   const desc = document.createElement('div');
-  desc.className = 'shinywar-block-sub';
+  desc.className = 'shinywar-focus-desc';
   desc.textContent = live.rule && live.rule.description ? live.rule.description : 'Weekly dates stay authoritative for scoring.';
 
   const meta = document.createElement('div');
   meta.className = 'shinywar-focus-meta';
   meta.textContent = `Next rollover in ${live.countdownLabel} · ${live.rolloverLabel}`;
 
-  const todayPoints = entries.reduce((sum, entry) => sum + (entry.failed ? 0 : (Number(entry.totalPoints) || 0)), 0);
-  const todayShinies = entries.filter((entry) => !entry.failed && !entry.pendingDate).length;
-
+  const todayPoints = entries.reduce((sum, entry) => sum + (Number(entry.totalPoints) || 0), 0);
   const summary = document.createElement('div');
   summary.className = 'shinywar-focus-summary';
   summary.innerHTML = `
-    <div><strong>${todayShinies}</strong><span>Today catches</span></div>
+    <div><strong>${entries.filter((entry) => !entry.failed && !entry.pendingDate).length}</strong><span>Today catches</span></div>
     <div><strong>${todayPoints}P</strong><span>Today points</span></div>
   `;
 
-  panel.append(title, desc, meta, summary);
+  wrap.append(title, desc, meta, summary);
+  panel.appendChild(wrap);
   return panel;
 }
 
@@ -486,68 +524,106 @@ function makeCompactCatchGrid(entries, options = {}) {
     wrap.appendChild(empty);
     return wrap;
   }
-  list.forEach((entry) => wrap.appendChild(buildEntryCard(entry, true)));
+
+  list.forEach((entry) => {
+    const item = document.createElement('article');
+    item.className = 'ts-panel shinywar-catch-tile';
+    if (entry.failed) item.classList.add('is-fail');
+    if (entry.pendingDate) item.classList.add('is-pending');
+
+    const top = document.createElement('div');
+    top.className = 'shinywar-catch-tile-top';
+    const team = document.createElement('div');
+    team.className = 'shinywar-catch-tile-team';
+    team.textContent = entry.team;
+    const score = document.createElement('div');
+    score.className = 'shinywar-catch-tile-score';
+    score.textContent = entry.failed ? '0P' : `${entry.totalPoints}P`;
+    top.append(team, score);
+
+    const frame = document.createElement('div');
+    frame.className = 'shinywar-catch-tile-frame';
+
+    const card = renderUnifiedCard({
+      cardType: 'pokemon',
+      pokemonKey: entry.pokemon,
+      pokemonName: titleCasePokemon(entry.pokemon),
+      artSrc: getPokemonDbShinyGifSrc(entry.pokemon),
+      points: null,
+      infoText: entry.member,
+      isUnclaimed: false,
+      headerRightText: entry.failed ? '0P' : `${entry.totalPoints}P`,
+      showVariants: false,
+    });
+    card.classList.add('shinywar-catch-tile-card');
+
+    const body = document.createElement('div');
+    body.className = 'shinywar-catch-tile-body';
+    body.innerHTML = `
+      <div class="shinywar-catch-tile-name">${titleCasePokemon(entry.pokemon)}</div>
+      <div class="shinywar-catch-tile-hunter">${entry.member}</div>
+    `;
+
+    const pills = document.createElement('div');
+    pills.className = 'shinywar-pills';
+    pills.append(
+      makeEntryPill(entry.dateCatch ? formatDate(entry.dateCatch) : 'No catch date'),
+      makeEntryPill(entry.dayNumber ? `Day ${entry.dayNumber}` : 'Pending Day'),
+      makeEntryPill(methodLabel(entry.method))
+    );
+    if (entry.failed) pills.appendChild(makeEntryPill(entry.run ? 'Run Fail' : 'Lost Fail', 'is-fail'));
+    else if (entry.claimSlot && entry.claimMode === 'fallback') pills.appendChild(makeEntryPill(`Claims ${titleCasePokemon(entry.claimSlot)}`, 'is-claim'));
+    else if (entry.dexUnclaimed) pills.appendChild(makeEntryPill('Dex Hit', 'is-claim'));
+
+    const breakdown = document.createElement('div');
+    breakdown.className = 'shinywar-catch-tile-breakdown';
+    breakdown.textContent = entry.breakdown.length ? entry.breakdown.join(' • ') : 'No bonuses applied.';
+
+    body.append(pills, breakdown);
+    frame.append(card, body);
+    item.append(top, frame);
+    wrap.appendChild(item);
+  });
+
   return wrap;
-}
-
-function makeTodayTeamTable(entries) {
-  const byTeam = Object.create(null);
-  entries.forEach((entry) => {
-    if (!byTeam[entry.team]) byTeam[entry.team] = { team: entry.team, points: 0, shinies: 0, fails: 0 };
-    if (entry.failed) {
-      byTeam[entry.team].fails += 1;
-      return;
-    }
-    byTeam[entry.team].points += Number(entry.totalPoints) || 0;
-    byTeam[entry.team].shinies += 1;
-  });
-  const rows = Object.values(byTeam).sort((a, b) => (b.points - a.points) || (b.shinies - a.shinies) || a.team.localeCompare(b.team));
-
-  const table = document.createElement('table');
-  table.className = 'shinywar-table';
-  table.innerHTML = '<thead><tr><th>Team</th><th>Shinies</th><th>Fails</th><th>Points</th></tr></thead><tbody></tbody>';
-  const body = table.querySelector('tbody');
-  if (!rows.length) {
-    const tr = document.createElement('tr');
-    tr.innerHTML = '<td colspan="4">No catches for the active day yet.</td>';
-    body.appendChild(tr);
-    return table;
-  }
-  rows.forEach((row) => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${row.team}</td><td>${row.shinies}</td><td>${row.fails}</td><td>${row.points}P</td>`;
-    body.appendChild(tr);
-  });
-  return table;
 }
 
 function makeOverviewCards(model, live, state) {
   const section = document.createElement('section');
   section.className = 'shinywar-overview-grid';
 
+  const main = document.createElement('div');
+  main.className = 'shinywar-side-stack';
+
   const recentPanel = document.createElement('section');
   recentPanel.className = 'ts-panel shinywar-block';
-  recentPanel.innerHTML = '<h2 class="ts-panel-title">Recent Catches</h2><div class="shinywar-block-sub">Latest live war entries. Use Ledger view for the full history.</div>';
-  recentPanel.appendChild(makeCompactCatchGrid(filteredEntries(model, state, live).slice(0, 5), { emptyText: 'No recent catches yet.' }));
+  recentPanel.innerHTML = '<h2 class="ts-panel-title">Recent Catches</h2><div class="shinywar-block-sub">Latest live war catches. Open Ledger for the full history.</div>';
+  recentPanel.appendChild(makeCompactCatchGrid(filteredEntries(model, state, live).slice(0, 4), { emptyText: 'No recent catches yet.' }));
+  main.appendChild(recentPanel);
 
   const side = document.createElement('div');
   side.className = 'shinywar-side-stack';
-  const dayEntries = filteredEntries(model, state, live, { onlyDay: live.currentDay });
-  side.appendChild(makeCompactDayPanel(live, dayEntries));
 
-  const racePanel = document.createElement('section');
-  racePanel.className = 'ts-panel shinywar-block';
-  racePanel.innerHTML = '<h2 class="ts-panel-title">Today’s Board</h2><div class="shinywar-block-sub">Live day race based on Weekly catch dates.</div>';
-  racePanel.appendChild(makeTodayTeamTable(dayEntries));
-  side.appendChild(racePanel);
+  const livePanel = document.createElement('section');
+  livePanel.className = 'ts-panel shinywar-block';
+  livePanel.innerHTML = `<h2 class="ts-panel-title">Today’s Board</h2><div class="shinywar-block-sub">Day ${live.currentDay || '—'} · ${live.rule && live.rule.title ? live.rule.title : 'No active rule'} · ${live.rolloverLabel}</div>`;
+  const dayEntries = filteredEntries(model, state, live, { onlyDay: live.currentDay });
+  const liveHint = document.createElement('div');
+  liveHint.className = 'shinywar-focus-desc';
+  liveHint.textContent = live.rule && live.rule.description ? live.rule.description : 'Weekly dates stay authoritative for scoring.';
+  livePanel.appendChild(makeTodayRaceRows(dayEntries));
+  livePanel.appendChild(liveHint);
+  side.appendChild(livePanel);
+
+  side.appendChild(makeCompactDayPanel(model, live, dayEntries));
 
   const mvpPanel = document.createElement('section');
   mvpPanel.className = 'ts-panel shinywar-block';
   mvpPanel.innerHTML = '<h2 class="ts-panel-title">Top Hunters</h2><div class="shinywar-block-sub">Best current scores for the active filter.</div>';
-  mvpPanel.appendChild(makeRankList(model.mvp.filter((row) => state.teamFilter === 'all' || row.team === state.teamFilter), 6));
+  mvpPanel.appendChild(makeLeaderboardList(model.mvp.filter((row) => state.teamFilter === 'all' || row.team === state.teamFilter), 8));
   side.appendChild(mvpPanel);
 
-  section.append(recentPanel, side);
+  section.append(main, side);
   return section;
 }
 
@@ -563,12 +639,12 @@ function makeTodayView(model, state, live) {
 
   const side = document.createElement('div');
   side.className = 'shinywar-side-stack';
-  side.appendChild(makeCompactDayPanel(live, todayEntries));
+  side.appendChild(makeCompactDayPanel(model, live, todayEntries));
 
   const teamPanel = document.createElement('section');
   teamPanel.className = 'ts-panel shinywar-block';
   teamPanel.innerHTML = '<h2 class="ts-panel-title">Today’s Team Race</h2>';
-  teamPanel.appendChild(makeTodayTeamTable(todayEntries));
+  teamPanel.appendChild(makeTodayRaceRows(todayEntries));
   side.appendChild(teamPanel);
 
   section.append(todayPanel, side);
@@ -590,11 +666,10 @@ function makeLedgerView(model, state, live) {
 
   const mvpPanel = document.createElement('section');
   mvpPanel.className = 'ts-panel shinywar-block';
-  mvpPanel.innerHTML = '<h2 class="ts-panel-title">Filtered MVP</h2><div class="shinywar-block-sub">Best scores for the active filter.</div>';
-  mvpPanel.appendChild(makeRankList(model.mvp.filter((row) => state.teamFilter === 'all' || row.team === state.teamFilter)));
-  side.appendChild(mvpPanel);
+  mvpPanel.innerHTML = '<h2 class="ts-panel-title">Filtered MVP</h2><div class="shinywar-block-sub">Best scores for the current filter.</div>';
+  mvpPanel.appendChild(makeLeaderboardList(model.mvp.filter((row) => state.teamFilter === 'all' || row.team === state.teamFilter)));
 
-  side.appendChild(makeCompactDayPanel(live, filteredEntries(model, state, live, { onlyDay: live.currentDay })));
+  side.appendChild(mvpPanel);
   section.append(ledgerPanel, side);
   return section;
 }
@@ -609,12 +684,27 @@ function makeTeamDetails(team, state, live, model) {
   mini.innerHTML = `
     <div><strong>${team.shinies}</strong><span>Scored</span></div>
     <div><strong>${team.species}</strong><span>Species</span></div>
-    <div><strong>${team.fails}</strong><span>Fails</span></div>
-    <div><strong>${team.pending}</strong><span>Pending</span></div>
   `;
   panel.appendChild(mini);
 
-  panel.appendChild(makeRankList(model.mvp.filter((row) => row.team === team.name), 6));
+  const leaderTable = document.createElement('table');
+  leaderTable.className = 'shinywar-table';
+  leaderTable.innerHTML = '<thead><tr><th>Hunter</th><th>Shinies</th><th>Points</th></tr></thead><tbody></tbody>';
+  const body = leaderTable.querySelector('tbody');
+
+  const memberRows = model.mvp.filter((row) => row.team === team.name).slice(0, 6);
+  if (!memberRows.length) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td colspan="3">No scored catches yet.</td>';
+    body.appendChild(tr);
+  } else {
+    memberRows.forEach((row) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${row.member}</td><td>${row.shinies}</td><td>${row.points}P</td>`;
+      body.appendChild(tr);
+    });
+  }
+  panel.appendChild(leaderTable);
 
   const recent = filteredEntries(model, { ...state, teamFilter: team.name }, live).slice(0, 3);
   const recentWrap = document.createElement('div');
@@ -689,16 +779,18 @@ function renderContent(root, model, state, live) {
   header.className = 'ts-panel shinywar-hero';
   header.innerHTML = `
     <h1 class="ts-panel-title">${model.title}</h1>
-    <div class="shinywar-hero-sub">${formatDate(model.startDate)} – ${formatDate(model.endDate)} · Current Day ${live.currentDay || '—'} · Rollover ${live.rolloverLabel} · ${model.summary.totalPoints} total points</div>
+    <div class="shinywar-hero-sub">${formatDate(model.startDate)} – ${formatDate(model.endDate)} · Current Day ${live.currentDay || '—'} · Next rollover in ${live.countdownLabel} · ${model.summary.totalPoints} total points</div>
   `;
 
-  const teams = document.createElement('section');
-  teams.className = 'shinywar-summary-grid';
-  model.teams
-    .filter((team) => state.teamFilter === 'all' || team.name === state.teamFilter)
-    .forEach((team) => teams.appendChild(makeTeamCard(team)));
-
-  screen.append(header, teams);
+  screen.append(header);
+  if (state.viewMode === 'overview' || state.viewMode === 'today') {
+    const teams = document.createElement('section');
+    teams.className = 'shinywar-summary-grid';
+    model.teams
+      .filter((team) => state.teamFilter === 'all' || team.name === state.teamFilter)
+      .forEach((team) => teams.appendChild(makeTeamCard(team)));
+    screen.appendChild(teams);
+  }
   renderMainView(screen, model, state, live);
   root.replaceChildren(screen);
 }
