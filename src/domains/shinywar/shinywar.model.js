@@ -3,7 +3,11 @@
 // Shiny War board derivation from Weekly rows + war config.
 
 import { computeShinyWarsPoints } from '../pokemon/shiny.points.js';
-import { getPokemonFamiliesMap } from '../pokemon/pokemon.data.js';
+import {
+  getPokemonFamiliesMap,
+  getPokemonDexOrder,
+  getPokemonPointsMap
+} from '../pokemon/pokemon.data.js';
 
 const DAY7_POOL = new Set([
   'zigzagoon',
@@ -25,12 +29,25 @@ const STARTER_ROOTS = new Set([
   'snivy', 'tepig', 'oshawott'
 ]);
 
+const SINGLE_DEX_BONUS_BLOCKLIST = new Set([
+  'staravia'
+]);
+
 function norm(raw) {
   return String(raw || '').trim().toLowerCase();
 }
 
 function pretty(raw) {
   return String(raw || '').trim();
+}
+
+function titleCasePokemon(raw) {
+  const key = norm(raw);
+  if (!key) return 'Unknown';
+  return key
+    .split('-')
+    .map((part) => (part ? part.charAt(0).toUpperCase() + part.slice(1) : ''))
+    .join('-');
 }
 
 function toIsoDate(value) {
@@ -146,6 +163,82 @@ function flattenWeekly(weeklyModel) {
   return out;
 }
 
+function buildHitlistClaimState() {
+  const families = getPokemonFamiliesMap() || {};
+  const points = getPokemonPointsMap() || {};
+  const rawOrder = getPokemonDexOrder();
+  const order = Array.isArray(rawOrder) && rawOrder.length
+    ? rawOrder.map(norm).filter(Boolean)
+    : Object.keys(points).map(norm).filter(Boolean);
+
+  const rootByPokemon = Object.create(null);
+  order.forEach((pokemon) => {
+    const roots = Array.isArray(families[pokemon]) ? families[pokemon].map(norm).filter(Boolean) : [];
+    rootByPokemon[pokemon] = roots[0] || pokemon;
+  });
+
+  const speciesByRoot = Object.create(null);
+  order.forEach((pokemon) => {
+    const root = rootByPokemon[pokemon] || pokemon;
+    if (!speciesByRoot[root]) speciesByRoot[root] = [];
+    speciesByRoot[root].push(pokemon);
+  });
+
+  return {
+    rootByPokemon,
+    speciesByRoot,
+    claimedSlotsByRoot: Object.create(null),
+  };
+}
+
+function resolveHitlistClaim(state, pokemonKey) {
+  const mon = norm(pokemonKey);
+  if (!mon || !state) return null;
+
+  const root = state.rootByPokemon[mon] || mon;
+  const stages = Array.isArray(state.speciesByRoot[root]) && state.speciesByRoot[root].length
+    ? state.speciesByRoot[root]
+    : [mon];
+
+  if (!state.claimedSlotsByRoot[root]) {
+    state.claimedSlotsByRoot[root] = Object.create(null);
+  }
+
+  const claimed = state.claimedSlotsByRoot[root];
+
+  if (!claimed[mon]) {
+    return {
+      root,
+      slot: mon,
+      exact: true,
+      fallback: false,
+    };
+  }
+
+  for (let i = 0; i < stages.length; i += 1) {
+    const stage = norm(stages[i]);
+    if (!stage) continue;
+    if (!claimed[stage]) {
+      return {
+        root,
+        slot: stage,
+        exact: stage === mon,
+        fallback: stage !== mon,
+      };
+    }
+  }
+
+  return null;
+}
+
+function commitHitlistClaim(state, resolution, memberName) {
+  if (!state || !resolution || !resolution.root || !resolution.slot) return;
+  if (!state.claimedSlotsByRoot[resolution.root]) {
+    state.claimedSlotsByRoot[resolution.root] = Object.create(null);
+  }
+  state.claimedSlotsByRoot[resolution.root][resolution.slot] = pretty(memberName) || true;
+}
+
 function computeEventDay(config, entryDate) {
   const start = toIsoDate(config && config.startDate);
   const end = toIsoDate(config && config.endDate);
@@ -192,7 +285,10 @@ function dailyBonusForEntry(entry, ctx) {
 
   if (day === 1) {
     if (method === 'single') {
-      if (ctx.dexUnclaimed) {
+      if (ctx.singleDexBlocked) {
+        daily.points = 12;
+        daily.label = 'Day 1 Other Single';
+      } else if (ctx.dexUnclaimed) {
         daily.points = 37;
         daily.label = 'Day 1 Dex Single';
       } else {
@@ -212,6 +308,10 @@ function dailyBonusForEntry(entry, ctx) {
   }
 
   if (day === 3) {
+    if (entry.safari || method === 'safari') {
+      daily.points = 25;
+      daily.label = 'Day 3 Sinnoh Safari';
+    }
     return daily;
   }
 
@@ -276,7 +376,7 @@ export function buildShinyWarModel({ weeklyModel, config, pointsMap }) {
   const teamLookup = buildTeamLookup(safeConfig);
   const points = pointsMap && typeof pointsMap === 'object' ? pointsMap : {};
   const stream = flattenWeekly(weeklyModel);
-  const claimedSpecies = new Set();
+  const hitlistState = buildHitlistClaimState();
   const teamSpeciesSeen = Object.create(null);
   const entries = [];
 
@@ -284,10 +384,14 @@ export function buildShinyWarModel({ weeklyModel, config, pointsMap }) {
     const memberKey = norm(row.memberName || row.memberKey);
     const teamSlot = teamLookup[memberKey] || null;
     const success = !(row.run || row.lost);
-    const dexUnclaimed = !claimedSpecies.has(row.pokemon);
+    const claimResolution = success ? resolveHitlistClaim(hitlistState, row.pokemon) : null;
+    const singleDexBlocked = norm(row.method) === 'single' && SINGLE_DEX_BONUS_BLOCKLIST.has(norm(row.pokemon));
+    const dexUnclaimed = Boolean(!singleDexBlocked && claimResolution && claimResolution.slot);
 
     const hasCatchDate = Boolean(row.dateCatch);
-    const dayInfo = hasCatchDate ? computeEventDay(safeConfig, row.dateCatch) : { included: false, dayNumber: null, spill: null, officialDate: null };
+    const dayInfo = hasCatchDate
+      ? computeEventDay(safeConfig, row.dateCatch)
+      : { included: false, dayNumber: null, spill: null, officialDate: null };
     const weekOverlap = overlapsWindow(row.dateStart, row.dateEnd, safeConfig.startDate, safeConfig.endDate);
 
     const shouldShowPending = Boolean(teamSlot) && !hasCatchDate && weekOverlap;
@@ -308,7 +412,7 @@ export function buildShinyWarModel({ weeklyModel, config, pointsMap }) {
       if (success && dayInfo.included && speciesBonus > 0) speciesSet.add(row.pokemon);
 
       const daily = success && dayInfo.included
-        ? dailyBonusForEntry({ ...row, dayNumber: dayInfo.dayNumber }, { dexUnclaimed })
+        ? dailyBonusForEntry({ ...row, dayNumber: dayInfo.dayNumber }, { dexUnclaimed, singleDexBlocked })
         : { points: 0, label: null };
 
       const totalPoints = success && dayInfo.included
@@ -323,7 +427,13 @@ export function buildShinyWarModel({ weeklyModel, config, pointsMap }) {
       if (success && score.flags.alpha && score.basePoints === 50) breakdown.push('alpha base');
       if (success && daily.points) breakdown.push(`+${daily.points} daily`);
       if (success && speciesBonus) breakdown.push('+5 species');
-      if (dexUnclaimed && success) breakdown.push('dex-open');
+      if (success && singleDexBlocked) {
+        breakdown.push('single dex blocked');
+      } else if (success && dexUnclaimed && claimResolution && claimResolution.fallback) {
+        breakdown.push(`claims ${titleCasePokemon(claimResolution.slot)}`);
+      } else if (success && dexUnclaimed) {
+        breakdown.push('dex-open');
+      }
       if (dayInfo.spill === 'pre') breakdown.push('timezone spill pre-start');
       if (dayInfo.spill === 'post') breakdown.push('timezone spill post-end');
       if (shouldShowPending) breakdown.push('waiting for catch date');
@@ -352,6 +462,9 @@ export function buildShinyWarModel({ weeklyModel, config, pointsMap }) {
         dayNumber: dayInfo.dayNumber,
         officialDate: dayInfo.officialDate,
         dexUnclaimed,
+        singleDexBlocked,
+        claimSlot: claimResolution && !singleDexBlocked && claimResolution.slot ? claimResolution.slot : null,
+        claimMode: claimResolution ? (claimResolution.fallback ? 'fallback' : 'exact') : null,
         basePoints: score.basePoints,
         variantPoints: score.bonusPoints,
         dailyPoints: daily.points,
@@ -365,12 +478,12 @@ export function buildShinyWarModel({ weeklyModel, config, pointsMap }) {
       });
     }
 
-    if (success && row.pokemon) {
-      claimedSpecies.add(row.pokemon);
+    if (success && claimResolution && !singleDexBlocked) {
+      commitHitlistClaim(hitlistState, claimResolution, row.memberName);
     }
   });
 
-  const byTeam = teams.map((team, index) => {
+  const byTeam = teams.map((team) => {
     const name = pretty(team && team.name);
     const teamEntries = entries.filter((entry) => entry.team === name);
     const scored = teamEntries.filter((entry) => !entry.failed && !entry.pendingDate && entry.dayNumber != null);
@@ -391,7 +504,7 @@ export function buildShinyWarModel({ weeklyModel, config, pointsMap }) {
       .sort((a, b) => (b.points - a.points) || (b.shinies - a.shinies) || a.member.localeCompare(b.member))[0] || null;
 
     return {
-      rank: index + 1,
+      rank: 0,
       name,
       leader: pretty(team && team.leader),
       points: pointsTotal,
@@ -423,15 +536,20 @@ export function buildShinyWarModel({ weeklyModel, config, pointsMap }) {
 
   const latestDay = entries.reduce((best, entry) => Math.max(best, Number(entry.dayNumber) || 0), 0);
   const totalPoints = byTeam.reduce((sum, team) => sum + (Number(team.points) || 0), 0);
+  const rules = buildRules(safeConfig);
+  const currentRule = rules.find((rule) => Number(rule.day) === Number(latestDay)) || null;
 
   return {
     title: pretty(safeConfig.title) || 'Shiny War',
     startDate: toIsoDate(safeConfig.startDate),
     endDate: toIsoDate(safeConfig.endDate),
+    rolloverTime: pretty(safeConfig.rolloverTime) || '20:00',
+    rolloverDisplayLabel: pretty(safeConfig.rolloverDisplayLabel) || pretty(safeConfig.rolloverTime) || '20:00',
     timezoneGraceDays: Math.max(0, Number(safeConfig.timezoneGraceDays) || 0),
     speciesBonusPoints: Math.max(0, Number(safeConfig.speciesBonusPoints) || 5),
     currentDay: latestDay || null,
-    rules: buildRules(safeConfig),
+    currentRule,
+    rules,
     teams: byTeam,
     entries,
     scoredEntries,

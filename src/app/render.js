@@ -13,6 +13,7 @@ import { renderShowcasePage } from '../features/showcase/showcase.js';
 import { renderDonatorsPage } from '../features/donators/donators.page.js';
 import { renderShinyWeeklyPage } from '../features/shinyweekly/shinyweekly.page.js';
 import { renderShinyWarPage } from '../features/shinywar/shinywar.page.js';
+import { buildShinyWeeklyModel } from '../domains/shinyweekly/shinyweekly.model.js';
 
 import {
   ensureShell,
@@ -264,13 +265,17 @@ export async function renderPage() {
       token,
       renderFn: async () => {
         await ensurePokemonData();
-        const weeklyModel = await getWeeklyModel();
+        const [weeklyRows, membersRows] = await Promise.all([
+          getWeeklyModel(),
+          getMembersRows()
+        ]);
+        const weeklyModel = buildShinyWeeklyModel(weeklyRows);
         return renderShinyWarPage({
           root: content,
           sidebar,
           signal,
           collect,
-          params: { weeklyModel }
+          params: { weeklyModel, membersRows }
         });
       }
     });

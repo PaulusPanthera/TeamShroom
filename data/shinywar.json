@@ -7,6 +7,7 @@
       "title": "Team Shroom 2nd Anniversary Shiny War",
       "startDate": "2026-03-16",
       "endDate": "2026-03-22",
+      "rolloverTime": "21:00",
       "timezoneGraceDays": 1,
       "speciesBonusPoints": 5,
       "teams": [
@@ -20,7 +21,7 @@
             "Jutskaa",
             "Mileage",
             "Kynnyto",
-            "TeleltubbieBaz",
+            "TeletubbieBaz",
             "Bulkanator",
             "Luna",
             "LoDarko",
@@ -81,17 +82,17 @@
         {
           "day": 1,
           "title": "Singles Dex Day",
-          "description": "+37 for any single encounter Pok\u00e9mon not claimed in the Pok\u00e9dex hitlist, +12 for any other single."
+          "description": "+37 for any single encounter Pokémon not claimed in the Pokédex hitlist, +12 for any other single."
         },
         {
           "day": 2,
           "title": "Dex Horde Day",
-          "description": "+10 for any horde Pok\u00e9mon not claimed in the Pok\u00e9dex hitlist."
+          "description": "+10 for any horde Pokémon not claimed in the Pokédex hitlist."
         },
         {
           "day": 3,
-          "title": "Team Vote Day",
-          "description": "Configurable. Auto-bonus is currently disabled until the exact rule is locked."
+          "title": "Sinnoh Safari Day",
+          "description": "+25 for any Sinnoh Safari shiny."
         },
         {
           "day": 4,
@@ -106,14 +107,15 @@
         {
           "day": 6,
           "title": "Fishing Day",
-          "description": "+15 for any fishing Pok\u00e9mon not claimed in the Pok\u00e9dex hitlist."
+          "description": "+15 for any fishing Pokémon not claimed in the Pokédex hitlist."
         },
         {
           "day": 7,
           "title": "Mushroom Day",
           "description": "+32 for Shroomish, +3 for Parasect/Amoonguss, and +12 for any other single from the Petalburg Forest pool."
         }
-      ]
+      ],
+      "rolloverDisplayLabel": "4 PM EST"
     }
   ]
 }
