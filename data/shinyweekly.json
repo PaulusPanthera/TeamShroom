@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-18T13:06:19.545Z",
+  "generatedAt": "2026-03-18T13:59:12.723Z",
   "source": "google-sheets",
   "data": [
     {
@@ -25962,7 +25962,7 @@
       "date_end": "2026-03-15",
       "ot": "casethecase",
       "pokemon": "tranquill",
-      "method": "horde",
+      "method": "single",
       "encounter": null,
       "secret": false,
       "alpha": false,
@@ -25978,7 +25978,7 @@
       "date_end": "2026-03-22",
       "ot": "TTVxSenseiNESS",
       "pokemon": "staravia",
-      "method": "horde",
+      "method": "single",
       "encounter": null,
       "secret": false,
       "alpha": false,
