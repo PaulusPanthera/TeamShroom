@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-19T12:33:30.623Z",
+  "generatedAt": "2026-03-19T13:38:29.288Z",
   "source": "google-sheets",
   "data": [
     {
@@ -348,7 +348,7 @@
       "dex": "32",
       "pokemon": "nidoran-m",
       "family": [
-        "nidoran-f"
+        "nidoran-m"
       ],
       "tier": "tier 6",
       "region": "kanto",
@@ -359,7 +359,7 @@
       "dex": "33",
       "pokemon": "nidorino",
       "family": [
-        "nidoran-f"
+        "nidoran-m"
       ],
       "tier": "tier 6",
       "region": "kanto",
@@ -370,7 +370,7 @@
       "dex": "34",
       "pokemon": "nidoking",
       "family": [
-        "nidoran-f"
+        "nidoran-m"
       ],
       "tier": "tier 6",
       "region": "kanto",
