@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-19T15:20:59.246Z",
+  "generatedAt": "2026-03-19T15:31:49.384Z",
   "source": "google-sheets",
   "data": [
     {
@@ -27323,7 +27323,7 @@
       "encounter": 28337,
       "secret": false,
       "alpha": false,
-      "run": true,
+      "run": false,
       "lost": false,
       "sold": false,
       "clip": "https://www.youtube.com/watch?v=RCaCSAbxjzM",
@@ -27334,6 +27334,19 @@
       "pokemon": "rhydon",
       "method": "single",
       "encounter": 55180,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": null
+    },
+    {
+      "ot": "Jutskaa",
+      "pokemon": "nidorina",
+      "method": "safari",
+      "encounter": 1665,
       "secret": false,
       "alpha": false,
       "run": false,
