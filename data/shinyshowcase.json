@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-19T13:38:26.753Z",
+  "generatedAt": "2026-03-19T15:20:59.246Z",
   "source": "google-sheets",
   "data": [
     {
@@ -8157,7 +8157,7 @@
     {
       "ot": "itsEasy",
       "pokemon": "tentacruel",
-      "method": null,
+      "method": "5x100%",
       "encounter": null,
       "secret": false,
       "alpha": false,
@@ -8165,12 +8165,12 @@
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "AUTO-GENERATED ORDER DATE"
+      "notes": null
     },
     {
       "ot": "itsEasy",
-      "pokemon": "hoppip",
-      "method": null,
+      "pokemon": "jumpluff",
+      "method": "5x100%",
       "encounter": null,
       "secret": false,
       "alpha": false,
@@ -8178,12 +8178,12 @@
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "AUTO-GENERATED ORDER DATE"
+      "notes": null
     },
     {
       "ot": "itsEasy",
       "pokemon": "banette",
-      "method": null,
+      "method": "5x100%",
       "encounter": null,
       "secret": false,
       "alpha": false,
@@ -8191,25 +8191,12 @@
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "AUTO-GENERATED ORDER DATE"
-    },
-    {
-      "ot": "itsEasy",
-      "pokemon": "woobat",
-      "method": null,
-      "encounter": null,
-      "secret": false,
-      "alpha": false,
-      "run": false,
-      "lost": false,
-      "sold": false,
-      "clip": null,
-      "notes": "AUTO-GENERATED ORDER DATE"
+      "notes": null
     },
     {
       "ot": "itsEasy",
       "pokemon": "swoobat",
-      "method": null,
+      "method": "horde",
       "encounter": null,
       "secret": false,
       "alpha": false,
@@ -8217,12 +8204,12 @@
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "AUTO-GENERATED ORDER DATE"
+      "notes": null
     },
     {
       "ot": "itsEasy",
       "pokemon": "woobat",
-      "method": null,
+      "method": "horde",
       "encounter": null,
       "secret": false,
       "alpha": false,
@@ -8230,189 +8217,202 @@
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "AUTO-GENERATED ORDER DATE"
+      "notes": null
+    },
+    {
+      "ot": "itsEasy",
+      "pokemon": "swoobat",
+      "method": "horde",
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": null
     },
     {
       "ot": "itsEasy",
       "pokemon": "igglybuff",
-      "method": null,
-      "encounter": null,
+      "method": "5x100%",
+      "encounter": 40099,
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "AUTO-GENERATED ORDER DATE"
+      "notes": null
     },
     {
       "ot": "itsEasy",
       "pokemon": "smeargle",
-      "method": null,
-      "encounter": null,
+      "method": "5x100%",
+      "encounter": 89811,
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "AUTO-GENERATED ORDER DATE"
+      "notes": null
     },
     {
       "ot": "itsEasy",
-      "pokemon": "haunter",
-      "method": null,
-      "encounter": null,
+      "pokemon": "gengar",
+      "method": "5x100%",
+      "encounter": 18366,
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "AUTO-GENERATED ORDER DATE"
+      "notes": null
     },
     {
       "ot": "itsEasy",
       "pokemon": "pichu",
-      "method": null,
-      "encounter": null,
+      "method": "5x100%",
+      "encounter": 90418,
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "AUTO-GENERATED ORDER DATE"
+      "notes": null
     },
     {
       "ot": "itsEasy",
-      "pokemon": "marill",
-      "method": null,
-      "encounter": null,
+      "pokemon": "azurill",
+      "method": "5x100%",
+      "encounter": 104537,
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "standard week date"
+      "notes": null
     },
     {
       "ot": "itsEasy",
       "pokemon": "wobbuffet",
-      "method": null,
-      "encounter": null,
+      "method": "5x100%",
+      "encounter": 8822,
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "standard week date"
+      "notes": null
     },
     {
       "ot": "itsEasy",
       "pokemon": "parasect",
-      "method": null,
-      "encounter": null,
+      "method": "5x100%",
+      "encounter": 5997,
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "standard week date"
+      "notes": null
     },
     {
       "ot": "itsEasy",
       "pokemon": "woobat",
-      "method": null,
-      "encounter": null,
+      "method": "horde",
+      "encounter": 3344,
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "standard week date"
+      "notes": null
     },
     {
       "ot": "itsEasy",
-      "pokemon": "mrmime",
-      "method": null,
-      "encounter": null,
+      "pokemon": "mimejr",
+      "method": "single",
+      "encounter": 37364,
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "standard week date"
+      "notes": null
     },
     {
       "ot": "itsEasy",
-      "pokemon": "eevee",
+      "pokemon": "umbreon",
       "method": "egg",
-      "encounter": null,
+      "encounter": 31945,
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "standard week date"
+      "notes": null
     },
     {
       "ot": "itsEasy",
-      "pokemon": "wurmple",
-      "method": null,
-      "encounter": null,
+      "pokemon": "beautifly",
+      "method": "single",
+      "encounter": 11977,
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "standard week date"
+      "notes": null
     },
     {
       "ot": "itsEasy",
-      "pokemon": "wurmple",
-      "method": null,
-      "encounter": null,
+      "pokemon": "beautifly",
+      "method": "single",
+      "encounter": 5367,
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "standard week date"
+      "notes": null
     },
     {
       "ot": "itsEasy",
-      "pokemon": "shroomish",
+      "pokemon": "breloom",
       "method": "egg",
-      "encounter": null,
+      "encounter": 5713,
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "standard week date"
+      "notes": null
     },
     {
       "ot": "itsEasy",
       "pokemon": "minccino",
-      "method": null,
-      "encounter": null,
+      "method": "horde",
+      "encounter": 11518,
       "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
       "sold": false,
       "clip": null,
-      "notes": "standard week date"
+      "notes": null
     },
     {
       "ot": "ItsKitas",
@@ -27327,6 +27327,19 @@
       "lost": false,
       "sold": false,
       "clip": "https://www.youtube.com/watch?v=RCaCSAbxjzM",
+      "notes": null
+    },
+    {
+      "ot": "itsEasy",
+      "pokemon": "rhydon",
+      "method": "single",
+      "encounter": 55180,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
       "notes": null
     }
   ]
