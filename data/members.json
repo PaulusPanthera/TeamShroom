@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-19T01:04:37.441Z",
+  "generatedAt": "2026-03-19T01:15:31.857Z",
   "source": "google-sheets",
   "data": [
     {
@@ -757,7 +757,7 @@
       "name": "WillyPS",
       "active": true,
       "role": "shinyshroom",
-      "sprite": "png"
+      "sprite": "gif"
     },
     {
       "name": "winlip",
