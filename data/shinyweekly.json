@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-19T18:38:46.880Z",
+  "generatedAt": "2026-03-19T22:21:15.632Z",
   "source": "google-sheets",
   "data": [
     {
@@ -29504,6 +29504,24 @@
       "clip": null,
       "notes": null,
       "location": null
+    },
+    {
+      "week": "2026-03-16_to_2026-03-22",
+      "week_label": "March 16th - March 22nd 2026",
+      "date_start": "2026-03-16",
+      "date_end": "2026-03-22",
+      "date_catch": "2026-03-20",
+      "ot": "Dupe",
+      "pokemon": "weedle",
+      "method": "single",
+      "encounter": 27046,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "clip": null,
+      "notes": null,
+      "location": "Viridian Forest"
     }
   ]
 }
