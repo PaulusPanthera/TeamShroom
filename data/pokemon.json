@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-20T12:30:12.848Z",
+  "generatedAt": "2026-03-20T16:21:14.738Z",
   "source": "google-sheets",
   "data": [
     {
@@ -2913,7 +2913,7 @@
       "family": [
         "wurmple"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -2924,7 +2924,7 @@
       "family": [
         "wurmple"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -2935,7 +2935,7 @@
       "family": [
         "wurmple"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -2946,7 +2946,7 @@
       "family": [
         "wurmple"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -2957,7 +2957,7 @@
       "family": [
         "wurmple"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "hoenn",
       "rarity": null,
       "show": true
