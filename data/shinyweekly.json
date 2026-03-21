@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-20T18:30:00.832Z",
+  "generatedAt": "2026-03-21T00:57:17.565Z",
   "source": "google-sheets",
   "data": [
     {
@@ -29262,7 +29262,7 @@
       "ot": "DaddyMolo",
       "pokemon": "ledyba",
       "method": "horde",
-      "encounter": null,
+      "encounter": 13630,
       "secret": false,
       "alpha": false,
       "run": false,
