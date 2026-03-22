@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-03-21T18:18:58.529Z",
+  "generatedAt": "2026-03-22T00:35:18.506Z",
   "source": "google-sheets",
   "data": [
     {
@@ -8299,7 +8299,7 @@
     },
     {
       "ot": "itsEasy",
-      "pokemon": "wobbuffet",
+      "pokemon": "wynaut",
       "method": "5x100%",
       "encounter": 8822,
       "secret": false,
