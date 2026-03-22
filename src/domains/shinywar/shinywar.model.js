@@ -324,11 +324,6 @@ function dailyBonusForEntry(entry, ctx) {
   }
 
 if (day === 5) {
-  const forceDay5Plus12 =
-    norm(entry.ot) === 'PLAYERNAME' &&
-    pokemon === 'POKEMONNAME' &&
-    (entry.dateCatch || entry.date || '') === '2026-03-20';
-
   if (method === 'single') {
     if (isStarterFamily(pokemon) && wildCaughtByMethod(method)) {
       daily.points = 47;
@@ -337,11 +332,10 @@ if (day === 5) {
       daily.points = 12;
       daily.label = 'Day 5 Other Single';
     }
-  } else if (forceDay5Plus12) {
+  } else if (method === 'egg') {
     daily.points = 12;
-    daily.label = 'Day 5 Manual +12';
+    daily.label = 'Day 5 Manual Egg +12';
   }
-
   return daily;
 }
 
