@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-04-02T01:10:01.622Z",
+  "generatedAt": "2026-04-02T06:57:27.344Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1520,6 +1520,18 @@
       "name": "CelineCeline",
       "donation": null,
       "value": 885000
+    },
+    {
+      "date": "2026-03-26",
+      "name": "Luna",
+      "donation": null,
+      "value": 937500
+    },
+    {
+      "date": "2026-03-26",
+      "name": "Kithri",
+      "donation": "Fashion Event Prizes",
+      "value": 10777000
     }
   ]
 }
