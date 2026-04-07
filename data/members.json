@@ -1,827 +1,827 @@
 {
   "version": 1,
-  "generatedAt": "2026-04-07T14:02:30.908Z",
+  "generatedAt": "2026-04-07T18:42:57.219Z",
   "source": "google-sheets",
   "data": [
     {
       "name": "AKatharina",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Alphy",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Aokiza",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "ashash",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "azili",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": null
     },
     {
       "name": "Biiidou",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "BlistiK",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "BojanglesisHere",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "bonseum",
-      "active": false,
+      "active": true,
       "role": "shinyshroom",
       "sprite": "png"
     },
     {
       "name": "Brownerthan",
-      "active": false,
+      "active": true,
       "role": "shinyshroom",
       "sprite": "png"
     },
     {
       "name": "Bulkanator",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "casethecase",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "CelineCeline",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Charizapedia",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "CheesasaurusRex",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Chestia",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "ChipHazardBB",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "CigaretteMilk",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Clairbear",
-      "active": false,
+      "active": true,
       "role": "shinyshroom",
       "sprite": "png"
     },
     {
       "name": "clairo",
-      "active": false,
+      "active": true,
       "role": "shinyshroom",
       "sprite": "png"
     },
     {
       "name": "Cordeiroxi",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "CraazyHorse",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "cuteasduckk",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "DaddyMolo",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "DamoNll",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "DComp",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "DelPieroSenpai",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Deuporus",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Difoolio",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Domingsss",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Drain",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Drizzle",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Dupe",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Eerie",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "fisplant",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Freenox",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Gaudjo",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "GeoPlays",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Geranxx",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Grrzzly",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Gumbasketball",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "HennyD",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "highpokeman",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Hjordi",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Hokeymon",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "iMonchi",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "itsEasy",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "ItsKitas",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "jaspn",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Jayyxxi",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "JGrenade",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Johnerrr",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "JokageZero",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "JulieJewel",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Jutskaa",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Kaaflaa",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "KaoZPrime",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Kithri",
-      "active": false,
+      "active": true,
       "role": "mushcap",
       "sprite": "png"
     },
     {
       "name": "kitsucupid",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Kolepls",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Kynnyto",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "locobounty",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "LoDarko",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "LordGangis",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "LuckiLeo",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Luna",
-      "active": false,
+      "active": true,
       "role": "mushcap",
       "sprite": "png"
     },
     {
       "name": "Lyptus",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Macarene",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "maknaez",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Mattmattoux",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "MechanicalHippo",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "MELVZZY",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Messpotter",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "MikeRunkZz",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Mileage",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "MrBiscottes",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "MrChooch",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Narrayah",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Navy",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "NotAHumanSure",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "NoxxPrime",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Orllando",
-      "active": false,
+      "active": true,
       "role": "shinyshroom",
       "sprite": "png"
     },
     {
       "name": "Pangeaa",
-      "active": false,
+      "active": true,
       "role": "mushcap",
       "sprite": "png"
     },
     {
       "name": "PaulusPax",
-      "active": false,
+      "active": true,
       "role": "mushcap",
       "sprite": "gif"
     },
     {
       "name": "pawmu",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "pearishx",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "PokeBodega",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "AceTrainerPolar",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "QuinJay",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Raiketsu",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "realjuckpop",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "riahC",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "RicRiley",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Rintuu",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Ripz",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "RuthlessZ",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Scooby",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Scooty",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Sirbeyy",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Privacy",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Skullz",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "slaydounet",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Smokee",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Smough",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Soxzzz",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "SparkleButt",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "spells",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Stathiskris",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "TaCesa",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "TakeOnMeh",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "tardigreat",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Tazmaster",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Teletubbiebaz",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Terminus",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Tobias",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Togadh",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "tollewolle",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "TorontoKid",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Tortuponchy",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "TTVxSenseiNESS",
-      "active": false,
+      "active": true,
       "role": "mushcap",
       "sprite": "gif"
     },
     {
       "name": "tuli",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Visari",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "WailynXD",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Whamalicious",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "WhosWill",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "WillyPS",
-      "active": false,
+      "active": true,
       "role": "shinyshroom",
       "sprite": "gif"
     },
     {
       "name": "winlip",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "WinterIvy",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "xCOPYCATx",
-      "active": false,
+      "active": true,
       "role": "shinyshroom",
       "sprite": "png"
     },
     {
       "name": "XxArtamielxX",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "XxEmperiorxX",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Yoboes",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Yoyoyoshie",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Yugi",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "zDaarkraai",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "ZekTV",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "zzxyami",
-      "active": false,
+      "active": true,
       "role": "shroom",
       "sprite": "png"
     }
