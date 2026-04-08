@@ -8,10 +8,10 @@ These folders/files are part of the static site itself.
 
 - `index.html` — app shell entry
 - `main.js` — boot entry
-- `src/app/` — shell, routing, render lifecycle
+- `src/app/` — shell, routing, render lifecycle, and shared cache helpers
 - `src/features/` — page/feature modules
 - `src/domains/` — domain models and transforms
-- `src/data/` — runtime loaders and data builders used by features
+- `src/data/` — runtime JSON loaders
 - `src/ui/` — shared UI helpers/components
 - `src/utils/` — shared utility helpers
 - `style/` — global and feature CSS loaded by the app shell

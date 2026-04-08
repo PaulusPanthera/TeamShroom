@@ -27,9 +27,9 @@ The project is intentionally plain HTML/CSS/JS:
 
 ### Navigation labels shown in the UI
 - Home
-- Shiny Showcase
-- Shiny Pokédex
-- Shiny Weekly
+- Members
+- Pokédex
+- Weekly
 - Shiny War
 - Donators
 
@@ -43,7 +43,7 @@ The project is intentionally plain HTML/CSS/JS:
 - `src/app/` — shell, routing, sidebar, cache
 - `src/features/` — page-level feature entrypoints
 - `src/domains/` — derived models / domain logic
-- `src/data/` — runtime loaders and data shaping helpers
+- `src/data/` — runtime data loaders
 - `src/ui/` — shared UI render helpers
 - `src/utils/` — general utilities
 - `style/` — statically linked global/feature CSS
@@ -62,11 +62,13 @@ The project is intentionally plain HTML/CSS/JS:
 The app owns a persistent shell layer and swaps page content inside it.
 
 Current shell responsibilities:
-- header / plaque area
+- guild/logo plaque area
 - navigation state
 - left sidebar slots
 - main content mount
 - global shell-owned `COLLECT` button
+
+Route-specific page titles and descriptions belong in the page/sidebar content, not in the header plaque.
 
 ### Sidebar
 The current sidebar system is **controller-based**, not a pure JSON payload system.
@@ -112,13 +114,13 @@ The Shiny War config is handled separately by its loader because it is treated a
 ### Home
 Guild landing page / overview.
 
-### Shiny Showcase
+### Members
 Member-focused showcase and profile-style browsing.
 
-### Shiny Pokédex
+### Pokédex
 Hitlist + Living Dex view family.
 
-### Shiny Weekly
+### Weekly
 Weekly shiny history / week detail browsing.
 
 ### Shiny War
@@ -134,5 +136,6 @@ Supporter / donations view.
 - Prefer small safe patches over rewrites.
 - Keep GitHub Pages compatibility.
 - Keep CSS statically linked through `index.html`.
+- Use relative runtime paths for statically linked CSS and JSON fetches.
 - Treat generated JSON in `data/` as runtime input, not hand-maintained source.
-- Update docs when route behavior, sidebar wiring, or CSS loading order changes.
+- Update docs when route behavior, sidebar wiring, nav labels, or CSS loading order changes.

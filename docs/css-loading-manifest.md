@@ -30,9 +30,10 @@ Stylesheets are linked statically and loaded in this order:
 - CSS is loaded statically from `index.html`.
 - Feature code does not dynamically inject stylesheets.
 - Runtime code should continue to assume global CSS is already present.
+- Runtime stylesheet paths are relative (`style/...`).
 - If stylesheet order changes in `index.html`, update this file in the same patch.
 
 ## Notes
 
-- The current entry uses relative `style/...` hrefs consistently.
-- Runtime JSON loaders should use relative `data/...` paths consistently as well.
+- Keep the entrypoint CSS policy consistent with GitHub Pages-safe relative paths.
+- This file documents the current state and should stay aligned with `index.html`.
