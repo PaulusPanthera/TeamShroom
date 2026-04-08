@@ -341,7 +341,7 @@ function ensureHeaderShell() {
   const nav = document.querySelector('nav.nav');
   if (!nav) return;
 
-  // Ensure required nav order + labels.
+  // Ensure required nav items exist. Visible labels/order live in index.html.
   let aHome = nav.querySelector('#nav-home');
   if (!aHome) {
     aHome = document.createElement('a');
@@ -351,8 +351,6 @@ function ensureHeaderShell() {
     nav.insertBefore(aHome, nav.firstChild);
   }
 
-  const aShowcase = nav.querySelector('#nav-showcase');
-  const aPokedex = nav.querySelector('#nav-hitlist');
   const aWeekly = nav.querySelector('#nav-shinyweekly');
   let aWar = nav.querySelector('#nav-shinywar');
   if (!aWar) {
@@ -363,13 +361,6 @@ function ensureHeaderShell() {
     if (aWeekly && aWeekly.nextSibling) nav.insertBefore(aWar, aWeekly.nextSibling);
     else nav.appendChild(aWar);
   }
-  const aDonators = nav.querySelector('#nav-donators');
-
-  if (aShowcase) aShowcase.textContent = 'Members';
-  if (aPokedex) aPokedex.textContent = 'Pokédex';
-  if (aWeekly) aWeekly.textContent = 'Weekly';
-  if (aWar) aWar.textContent = 'Shiny War';
-  if (aDonators) aDonators.textContent = 'Donators';
 
   const header = document.createElement('header');
   header.id = TS_HEADER_ID;
