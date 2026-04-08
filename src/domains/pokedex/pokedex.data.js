@@ -11,7 +11,7 @@
 import { initPokemonDerivedDataOnce } from '../pokemon/pokemon.data.js';
 
 import { loadShinyWeekly } from '../../data/shinyweekly.loader.js';
-import { buildShinyWeeklyModel } from '../../data/shinyweekly.model.js';
+import { buildShinyWeeklyModel } from '../shinyweekly/shinyweekly.model.js';
 
 import { loadShinyShowcase } from '../../data/shinyshowcase.loader.js';
 
