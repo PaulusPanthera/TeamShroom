@@ -112,6 +112,15 @@ export function setupShowcasePage({ root, sidebar, membersRows, showcaseRows, po
   const model = buildShowcaseModel({ membersRows, showcaseRows, pokemonPoints });
   const route = parseHash();
 
+  const visibleMembers = (Array.isArray(model.members) ? model.members : [])
+    .filter(m => Boolean(m && m.active));
+
+  const visibleByKey = {};
+  visibleMembers.forEach((m) => {
+    if (!m || !m.key) return;
+    visibleByKey[m.key] = m;
+  });
+
   const dexIndex = {};
   if (Array.isArray(POKEMON_DEX_ORDER) && POKEMON_DEX_ORDER.length) {
     POKEMON_DEX_ORDER.forEach((k, i) => {
@@ -120,7 +129,7 @@ export function setupShowcasePage({ root, sidebar, membersRows, showcaseRows, po
   }
 
   if (route.view === 'member') {
-    const member = model.byKey[route.memberKey];
+    const member = visibleByKey[route.memberKey];
 
     if (!member) {
       location.hash = '#showcase';
@@ -348,7 +357,7 @@ renderMemberShowcaseShell(root, {
   };
 
   function render() {
-    const filtered = filterMembers(model.members, state.search);
+    const filtered = filterMembers(visibleMembers, state.search);
     const sorted = sortMembers(filtered, state.sortMode);
 
     const totalShinies = sorted.reduce((sum, m) => sum + (Number(m && m.shinyCount) || 0), 0);
