@@ -5,5 +5,5 @@
 import { loadJson } from './json.loader.js';
 
 export function loadHome() {
-  return loadJson('/data/home.json', 1);
+  return loadJson('data/home.json', 1);
 }

@@ -11,19 +11,19 @@ This document describes the **current** stylesheet order loaded by `index.html`.
 Stylesheets are linked statically and loaded in this order:
 
 1. Google Font: `Press Start 2P`
-2. `/style/base.css`
+2. `style/base.css`
 3. `style/layout.css`
 4. `style/ts.shell.css`
 5. `style/cards.css`
-6. `/style/buttons.css`
-7. `/style/search.css`
-8. `/style/tooltip.css`
-9. `/style/donators.css`
-10. `/style/home.css`
-11. `/style/shinyweekly.css`
-12. `/style/shinywar.css`
-13. `/style/showcase.css`
-14. `/style/shinydex.css`
+6. `style/buttons.css`
+7. `style/search.css`
+8. `style/tooltip.css`
+9. `style/donators.css`
+10. `style/home.css`
+11. `style/shinyweekly.css`
+12. `style/shinywar.css`
+13. `style/showcase.css`
+14. `style/shinydex.css`
 
 ## Current rules
 
@@ -34,5 +34,5 @@ Stylesheets are linked statically and loaded in this order:
 
 ## Notes
 
-- The current entry uses a mix of absolute (`/style/...`) and relative (`style/...`) hrefs.
-- This file documents the current state; it does not prescribe a path-style migration by itself.
+- The current entry uses relative `style/...` hrefs consistently.
+- Runtime JSON loaders should use relative `data/...` paths consistently as well.

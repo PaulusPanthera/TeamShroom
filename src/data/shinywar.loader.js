@@ -3,15 +3,16 @@
 // Shiny War config loader. Accepts either the standard JSON envelope or a direct config object.
 
 export async function loadShinyWarConfig() {
-  const res = await fetch('/data/shinywar.json', { cache: 'no-store' });
+  const path = 'data/shinywar.json';
+  const res = await fetch(path, { cache: 'no-store' });
   if (!res.ok) {
-    throw new Error('Failed to load /data/shinywar.json');
+    throw new Error(`Failed to load ${path}`);
   }
 
   const payload = await res.json();
 
   if (!payload || typeof payload !== 'object') {
-    throw new Error('Invalid JSON payload: /data/shinywar.json');
+    throw new Error(`Invalid JSON payload: ${path}`);
   }
 
   if (Array.isArray(payload.data) && payload.data.length) {
@@ -22,5 +23,5 @@ export async function loadShinyWarConfig() {
     return payload;
   }
 
-  throw new Error('Missing usable Shiny War config in /data/shinywar.json');
+  throw new Error(`Missing usable Shiny War config in ${path}`);
 }
