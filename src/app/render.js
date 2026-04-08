@@ -19,8 +19,6 @@ import {
   ensureShell,
   ensureHeader,
   updateHeaderHeightVar,
-  setHeaderMeta,
-  resetHeaderMeta,
   configureCollectButton,
   resetCollectButton
 } from './shell.js';
@@ -150,9 +148,6 @@ export async function renderPage() {
   ensureHeader();
   updateHeaderHeightVar();
 
-  // Deterministic header meta per-route.
-  resetHeaderMeta();
-
   // Features may temporarily configure the shell-owned COLLECT button.
   // Reset per-route so behavior remains global + consistent.
   resetCollectButton();
@@ -168,18 +163,6 @@ export async function renderPage() {
 
   setActiveNav(route.page);
   const sidebar = createSidebarController(route.page);
-
-  // Header title + one-line description (quest-log strip).
-  const headerMeta = (() => {
-    if (route.page === 'home') return { title: 'HOME', desc: 'Guild HQ overview.' };
-    if (route.page === 'showcase') return { title: 'MEMBERS', desc: 'Browse guild members.' };
-    if (route.page === 'shinyweekly') return { title: 'WEEKLY', desc: 'Open a week to view details.' };
-    if (route.page === 'shinywar') return { title: 'SHINY WAR', desc: 'Live event board derived from Weekly.' };
-    if (route.page === 'donators') return { title: 'DONATORS', desc: 'Supporters of Team Shroom.' };
-    return { title: 'POKÉDEX', desc: 'Hitlist & LivingDex progress.' };
-  })();
-
-  setHeaderMeta(headerMeta);
 
   const content = document.getElementById('page-content');
   if (content) content.replaceChildren();

@@ -25,7 +25,7 @@ const TS_COLLECTION_STORAGE_KEY = 'ts:collection-mode:v2';
 const TS_LOGO_AUDIO_ID = 'ts-logo-audio';
 
 // NOTE: Header plaque is intentionally sprite + guild only.
-// Per-route page title/description is NOT rendered in the header plaque.
+// Per-route page title/description belongs in the page/sidebar, not the header plaque.
 
 /* ---------------------------------------------------------
    LOGO SOUND
@@ -105,18 +105,6 @@ function updateHeaderHeightVar() {
 
   const h = Math.max(0, Math.round(header.getBoundingClientRect().height));
   document.documentElement.style.setProperty('--ts-header-h', `${h}px`);
-}
-
-/* ---------------------------------------------------------
-   HEADER PLAQUE META (TITLE + 1-LINE DESCRIPTION)
---------------------------------------------------------- */
-
-export function setHeaderPlaque() {
-  // No-op.
-}
-
-export function resetHeaderPlaque() {
-  // No-op.
 }
 
 /* ---------------------------------------------------------
@@ -469,14 +457,6 @@ export function ensureShell() {
 
 export function ensureHeader() {
   ensureHeaderShell();
-}
-
-export function setHeaderMeta() {
-  // No-op: header plaque is sprite + guild name only.
-}
-
-export function resetHeaderMeta() {
-  // No-op.
 }
 
 /**
