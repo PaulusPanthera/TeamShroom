@@ -1,44 +1,55 @@
 <!-- docs/SMOKE_TESTS.md -->
 <!-- v2.0.0-beta -->
-<!-- Minimal manual smoke tests for route stability and core UI expectations -->
+<!-- Minimal manual smoke tests for route stability and core shell expectations -->
 
 # Smoke Tests
 
-Run this checklist after changes to routing, shell, sidebar wiring, UnifiedCard rendering, or CSS.
+Run this checklist after changes to routing, shell wiring, sidebar behavior, CSS loading, or shared card rendering.
 
 ## Global
-- Load the site with no hash: it should default to `/#hitlist`.
-- Navigate between routes quickly: `/#hitlist` -> `/#showcase` -> `/#shinyweekly` -> `/#donators`.
-  - Previous content must clear.
-  - Sidebar sections must update per route (no leftover controls).
-- COLLECT button is always visible in the header shell.
-  - No duplicate COLLECT buttons.
-  - Clicking COLLECT does not change layout positioning.
+- Load the site with no hash.
+  - It should render the Hitlist page.
+  - The URL hash may remain empty; fallback is route-level, not a forced hash rewrite.
+- Navigate quickly between:
+  - `/#home`
+  - `/#showcase`
+  - `/#hitlist`
+  - `/#hitlist/living`
+  - `/#shinyweekly`
+  - `/#shinywar`
+  - `/#donators`
+- Confirm previous content clears before the new route settles.
+- Confirm sidebar title / hint / controls update per route with no leftover sections.
+- Confirm there is only one shell-owned `COLLECT` button.
 
-## /#hitlist (Pokedex)
-- Tabs exist: **Shiny Dex Hitlist**, **Shiny Living Dex**.
-- Cards render with tier borders and variant buttons.
-- Search input filters cards.
-- Unclaimed toggle filters deterministically.
-- Sort select switches modes without breaking rendering.
-- Switching tabs preserves stable route behavior (no broken mount).
+## /#hitlist and aliases
+- `/#hitlist` renders the Shiny Pokédex page.
+- `/#pokedex` resolves to the same page family.
+- `/#hitlist/living` opens the Living Dex subview.
+- Tab switching between Hitlist and Living keeps the page mounted and updates the hash canonically.
+- Search, filters, and sort controls do not break card rendering.
 
 ## /#showcase
-- Gallery loads and shows member cards.
-- Gallery sidebar controls render (search + sort + totals).
-- Selecting a member route via click opens member view.
-  - Back button returns to gallery.
-- Member view shows cards with variant buttons (standard/secret/alpha/safari where applicable).
-- Clicking a card with a clip opens a new tab.
+- Gallery view loads.
+- Sidebar controls render.
+- Opening a member-specific route works.
+- Returning from a member-specific route restores the gallery cleanly.
+- Clip links still open normally.
 
 ## /#shinyweekly
-- Loading state appears, then latest week is selected by default.
-- If there are no weeks, empty state renders (not blank).
-- Changing week does not wipe the main panel.
-- When no member selected, main panel shows the prompt state.
-- Selecting a member renders deterministic shiny list for that week.
+- Loading state appears first.
+- Latest week is selected by default when data exists.
+- Empty state renders when no weeks exist.
+- Changing week keeps the main panel stable.
+- Selecting a member renders deterministic week detail.
+
+## /#shinywar
+- Loading state appears first.
+- War board renders without Weekly route artifacts leaking into the view.
+- Sidebar controls render and update the board.
+- Reset view returns the board to its default control state.
 
 ## /#donators
-- Loading state appears, then list renders.
+- Loading state appears first.
 - Error state renders if fetch fails.
-- Sidebar renders totals section (no empty sidebar).
+- Sidebar shows route-specific content rather than an empty shell.

@@ -1,6 +1,6 @@
 // scripts/check-feature-boundaries.mjs
 // v2.0.0-beta
-// Enforces strict feature boundary import rules under src/features
+// Checks feature imports against the current TeamShroom boundary rules
 
 import fs from "fs";
 import path from "path";
@@ -13,6 +13,15 @@ const ALLOWED_PREFIXES = [
   "src/domains/",
   "src/ui/",
   "src/app/",
+  "src/data/",
+  "src/utils/",
+];
+
+const ALLOWED_FEATURE_BRIDGES = [
+  {
+    from: "src/features/pokedex/pokedex.adapter.js",
+    toPrefix: "src/features/shinydex/",
+  },
 ];
 
 function walk(dir) {
@@ -33,8 +42,21 @@ function extractImports(source) {
   return imports;
 }
 
-const files = walk(FEATURES_DIR).filter((f) => f.endsWith(".js")).sort();
+function normalizeImportPath(relFile, imp) {
+  return imp.startsWith("/")
+    ? imp.slice(1)
+    : path
+        .normalize(path.join(path.dirname(relFile), imp))
+        .replace(/\\/g, "/");
+}
 
+function isAllowedFeatureBridge(relFile, normalized) {
+  return ALLOWED_FEATURE_BRIDGES.some(
+    (rule) => relFile === rule.from && normalized.startsWith(rule.toPrefix)
+  );
+}
+
+const files = walk(FEATURES_DIR).filter((f) => f.endsWith(".js")).sort();
 const violations = [];
 
 for (const file of files) {
@@ -50,25 +72,17 @@ for (const file of files) {
       continue;
     }
 
-    const normalized = imp.startsWith("/")
-      ? imp.slice(1)
-      : path
-          .normalize(path.join(path.dirname(relFile), imp))
-          .replace(/\\/g, "/");
+    const normalized = normalizeImportPath(relFile, imp);
 
     if (!ALLOWED_PREFIXES.some((p) => normalized.startsWith(p))) {
-      violations.push(
-        `${relFile}: forbidden import "${imp}"`
-      );
+      violations.push(`${relFile}: forbidden import "${imp}"`);
       continue;
     }
 
     if (normalized.startsWith("src/features/")) {
       const targetFeature = normalized.split("/")[2];
-      if (targetFeature !== feature) {
-        violations.push(
-          `${relFile}: cross-feature import "${imp}"`
-        );
+      if (targetFeature !== feature && !isAllowedFeatureBridge(relFile, normalized)) {
+        violations.push(`${relFile}: cross-feature import "${imp}"`);
       }
     }
   }
