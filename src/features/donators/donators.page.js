@@ -85,6 +85,7 @@ export async function renderDonatorsPage(ctx) {
   const root = ctx && ctx.root;
   const sidebar = ctx && ctx.sidebar;
   const preloadedRows = ctx && ctx.params && ctx.params.rows;
+  const isActive = typeof (ctx && ctx.isActive) === 'function' ? ctx.isActive : () => true;
 
   assertValidRoot(root);
 
@@ -96,9 +97,11 @@ export async function renderDonatorsPage(ctx) {
 
   try {
     const viewModel = await fetchDonatorsViewModel(preloadedRows);
+    if (!isActive()) return;
     renderContent(root, viewModel);
     renderSidebarBlocks(sidebar, viewModel);
   } catch {
+    if (!isActive()) return;
     renderError(root);
 
     if (sidebar && typeof sidebar.setSections === 'function') {

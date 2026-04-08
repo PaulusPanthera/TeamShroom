@@ -799,6 +799,7 @@ export async function renderShinyWarPage(ctx) {
   const root = ctx && ctx.root;
   const sidebar = ctx && ctx.sidebar;
   const weeklyModel = ctx && ctx.params && ctx.params.weeklyModel;
+  const isActive = typeof (ctx && ctx.isActive) === 'function' ? ctx.isActive : () => true;
 
   assertValidRoot(root);
   const state = {
@@ -813,6 +814,7 @@ export async function renderShinyWarPage(ctx) {
   try {
     await initPokemonDerivedDataOnce();
     const config = await loadShinyWarConfig();
+    if (!isActive()) return;
     const model = buildShinyWarModel({
       weeklyModel,
       config,
@@ -821,6 +823,7 @@ export async function renderShinyWarPage(ctx) {
 
     let timer = null;
     const rerender = () => {
+      if (!isActive()) return;
       const live = computeLiveContext(model);
       renderSidebar(sidebar, model, state, live, rerender);
       renderContent(root, model, state, live);
@@ -833,6 +836,7 @@ export async function renderShinyWarPage(ctx) {
       if (timer) window.clearInterval(timer);
     };
   } catch (err) {
+    if (!isActive()) return;
     renderError(root, err && err.message ? err.message : err);
   }
 }

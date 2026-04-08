@@ -183,6 +183,7 @@ export async function renderShinyWeeklyPage(ctx) {
   const sidebar = ctx && ctx.sidebar;
   const signal = ctx && ctx.signal;
   const preloadedRows = ctx && ctx.params && ctx.params.rows;
+  const isActive = typeof (ctx && ctx.isActive) === 'function' ? ctx.isActive : () => true;
   assertValidRoot(root);
 
   const { mainBody } = renderWeeklyShell(root);
@@ -194,6 +195,8 @@ export async function renderShinyWeeklyPage(ctx) {
   try {
     const rows = Array.isArray(preloadedRows) ? preloadedRows : await loadShinyWeekly();
     const weeks = buildShinyWeeklyModel(rows);
+
+    if (!isActive()) return;
 
     if (!weeks.length) {
       renderEmptyState(mainBody, {
@@ -319,6 +322,7 @@ export async function renderShinyWeeklyPage(ctx) {
     };
 
     const setOverviewMode = (nextMode) => {
+      if (!isActive()) return;
       const mode = String(nextMode || '').trim().toLowerCase();
       if (mode !== 'standard' && mode !== 'hotw' && mode !== 'tophotw') return;
 
@@ -329,6 +333,7 @@ export async function renderShinyWeeklyPage(ctx) {
     };
 
     const commitRender = () => {
+      if (!isActive()) return;
       const selectedWeek = weeks.find(w => w.week === selectedWeekKey) || null;
       renderSidebarBlocks(sidebar, selectedWeek, {
         view,
@@ -399,14 +404,14 @@ export async function renderShinyWeeklyPage(ctx) {
         pokemonPointsMap = getPokemonPointsMap();
         if (overviewMode === 'hotw') recomputeHotwLabels();
         if (overviewMode === 'tophotw') recomputeTopHotwGroups();
-        if (view === 'week') commitRender();
+        if (view === 'week' && isActive()) commitRender();
       })
       .catch(() => {
         pokemonReady = true;
         pokemonPointsMap = {};
         if (overviewMode === 'hotw') recomputeHotwLabels();
         if (overviewMode === 'tophotw') recomputeTopHotwGroups();
-        if (view === 'week') commitRender();
+        if (view === 'week' && isActive()) commitRender();
       });
 
     Promise.resolve(loadMembers())
@@ -427,12 +432,12 @@ export async function renderShinyWeeklyPage(ctx) {
 
         memberMetaByKey = map;
         membersReady = true;
-        if (view === 'week') commitRender();
+        if (view === 'week' && isActive()) commitRender();
       })
       .catch(() => {
         memberMetaByKey = Object.create(null);
         membersReady = true;
-        if (view === 'week') commitRender();
+        if (view === 'week' && isActive()) commitRender();
       });
 
     // Clicking the WEEKLY nav while already inside Weekly should always return to overview.
@@ -453,8 +458,9 @@ export async function renderShinyWeeklyPage(ctx) {
       );
     }
 
-    commitRender();
+    if (isActive()) commitRender();
   } catch {
+    if (!isActive()) return;
     renderError(mainBody, 'Failed to load weekly data.');
   }
 }

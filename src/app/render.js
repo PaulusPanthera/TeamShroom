@@ -123,14 +123,18 @@ function showRouteError(containerEl, label, err) {
   containerEl.replaceChildren(wrap);
 }
 
-async function mountFeaturePage({ containerEl, label, token, renderFn }) {
+function isRouteActive(token, signal) {
+  return token === activeRouteToken && !signal?.aborted;
+}
+
+async function mountFeaturePage({ containerEl, label, token, signal, renderFn }) {
   const loadingEl = showRouteLoading(containerEl, label);
 
   try {
     const maybeDispose = await Promise.resolve(renderFn());
 
     // Stale completion: do nothing.
-    if (token !== activeRouteToken) return;
+    if (!isRouteActive(token, signal)) return;
 
     if (loadingEl?.isConnected) loadingEl.remove();
 
@@ -138,7 +142,7 @@ async function mountFeaturePage({ containerEl, label, token, renderFn }) {
       activeDispose = maybeDispose;
     }
   } catch (err) {
-    if (token !== activeRouteToken) return;
+    if (!isRouteActive(token, signal)) return;
     showRouteError(containerEl, label, err);
   }
 }
@@ -172,18 +176,20 @@ export async function renderPage() {
       containerEl: content,
       label: 'Home',
       token,
+      signal,
       renderFn: async () => {
         return renderHomePage({
           root: content,
           sidebar,
           signal,
           collect,
+          isActive: () => isRouteActive(token, signal),
           params: {}
         });
       }
     });
 
-    if (token !== activeRouteToken) return;
+    if (!isRouteActive(token, signal)) return;
     return;
   }
 
@@ -192,19 +198,22 @@ export async function renderPage() {
       containerEl: content,
       label: 'Donators',
       token,
+      signal,
       renderFn: async () => {
         const rows = await getDonatorsRows();
+        if (!isRouteActive(token, signal)) return;
         return renderDonatorsPage({
           root: content,
           sidebar,
           signal,
           collect,
+          isActive: () => isRouteActive(token, signal),
           params: { rows }
         });
       }
     });
 
-    if (token !== activeRouteToken) return;
+    if (!isRouteActive(token, signal)) return;
     return;
   }
 
@@ -213,13 +222,17 @@ export async function renderPage() {
       containerEl: content,
       label: 'Showcase',
       token,
+      signal,
       renderFn: async () => {
         await ensurePokemonData();
+        if (!isRouteActive(token, signal)) return;
 
         const [showcaseRows, membersRows] = await Promise.all([
           getShowcaseRows(),
           getMembersRows()
         ]);
+
+        if (!isRouteActive(token, signal)) return;
 
         await Promise.resolve(
           renderShowcasePage({
@@ -237,7 +250,7 @@ export async function renderPage() {
       }
     });
 
-    if (token !== activeRouteToken) return;
+    if (!isRouteActive(token, signal)) return;
     return;
   }
 
@@ -246,24 +259,28 @@ export async function renderPage() {
       containerEl: content,
       label: 'Shiny War',
       token,
+      signal,
       renderFn: async () => {
         await ensurePokemonData();
+        if (!isRouteActive(token, signal)) return;
         const [weeklyRows, membersRows] = await Promise.all([
           getWeeklyRows(),
           getMembersRows()
         ]);
+        if (!isRouteActive(token, signal)) return;
         const weeklyModel = buildShinyWeeklyModel(weeklyRows);
         return renderShinyWarPage({
           root: content,
           sidebar,
           signal,
           collect,
+          isActive: () => isRouteActive(token, signal),
           params: { weeklyModel, membersRows }
         });
       }
     });
 
-    if (token !== activeRouteToken) return;
+    if (!isRouteActive(token, signal)) return;
     return;
   }
 
@@ -272,20 +289,23 @@ export async function renderPage() {
       containerEl: content,
       label: 'ShinyWeekly',
       token,
+      signal,
       // IMPORTANT: pass the page-content root so the main panel is deterministic
       renderFn: async () => {
         const rows = await getWeeklyRows();
+        if (!isRouteActive(token, signal)) return;
         return renderShinyWeeklyPage({
           root: content,
           sidebar,
           signal,
           collect,
+          isActive: () => isRouteActive(token, signal),
           params: { rows }
         });
       }
     });
 
-    if (token !== activeRouteToken) return;
+    if (!isRouteActive(token, signal)) return;
     return;
   }
 
@@ -294,7 +314,7 @@ export async function renderPage() {
     containerEl: content,
     label: 'Pokedex',
     token,
-    renderFn: () => renderPokedexPage({ root: content, sidebar, signal, collect })
+    renderFn: () => renderPokedexPage({ root: content, sidebar, signal, collect, isActive: () => isRouteActive(token, signal) })
   });
 
   if (token !== activeRouteToken) return;

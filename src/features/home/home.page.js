@@ -75,6 +75,7 @@ export async function renderHomePage(ctx) {
   const root = ctx?.root;
   const sidebar = ctx?.sidebar;
   const preloadedRows = ctx?.params?.rows;
+  const isActive = typeof ctx?.isActive === 'function' ? ctx.isActive : () => true;
 
   assertValidRoot(root);
 
@@ -86,11 +87,13 @@ export async function renderHomePage(ctx) {
 
   try {
     const vm = await fetchHomeViewModel(preloadedRows);
+    if (!isActive()) return;
     renderContent(root, vm, { signal: ctx?.signal });
 
     // Fill in status numbers if available.
     renderSidebarBlocks(sidebar, vm);
   } catch {
+    if (!isActive()) return;
     renderError(root);
 
     if (sidebar && typeof sidebar.setSections === 'function') {
