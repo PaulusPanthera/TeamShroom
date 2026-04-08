@@ -30,7 +30,7 @@ import {
   getShowcaseRows,
   getMembersRows,
   getDonatorsRows,
-  getWeeklyModel
+  getWeeklyRows
 } from './cache.js';
 
 /* ---------------------------------------------------------
@@ -249,7 +249,7 @@ export async function renderPage() {
       renderFn: async () => {
         await ensurePokemonData();
         const [weeklyRows, membersRows] = await Promise.all([
-          getWeeklyModel(),
+          getWeeklyRows(),
           getMembersRows()
         ]);
         const weeklyModel = buildShinyWeeklyModel(weeklyRows);
@@ -274,7 +274,7 @@ export async function renderPage() {
       token,
       // IMPORTANT: pass the page-content root so the main panel is deterministic
       renderFn: async () => {
-        const rows = await getWeeklyModel();
+        const rows = await getWeeklyRows();
         return renderShinyWeeklyPage({
           root: content,
           sidebar,

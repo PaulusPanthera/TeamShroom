@@ -14,12 +14,12 @@ import { loadDonators } from '../data/donators.loader.js';
 let shinyShowcaseRows = null;
 let membersRows = null;
 let donatorsRows = null;
-let shinyWeeklyModel = null;
+let shinyWeeklyRows = null;
 
 let shinyShowcaseRowsPromise = null;
 let membersRowsPromise = null;
 let donatorsRowsPromise = null;
-let shinyWeeklyModelPromise = null;
+let shinyWeeklyRowsPromise = null;
 
 /* ---------------------------------------------------------
    ENSURE (PROMISE CACHED)
@@ -70,19 +70,19 @@ async function ensureDonatorsRows() {
   await donatorsRowsPromise;
 }
 
-async function ensureWeeklyModel() {
-  if (shinyWeeklyModel) return;
-  if (shinyWeeklyModelPromise) {
-    await shinyWeeklyModelPromise;
+async function ensureWeeklyRows() {
+  if (shinyWeeklyRows) return;
+  if (shinyWeeklyRowsPromise) {
+    await shinyWeeklyRowsPromise;
     return;
   }
 
-  shinyWeeklyModelPromise = (async () => {
-    shinyWeeklyModel = await loadShinyWeekly();
-    return shinyWeeklyModel;
+  shinyWeeklyRowsPromise = (async () => {
+    shinyWeeklyRows = await loadShinyWeekly();
+    return shinyWeeklyRows;
   })();
 
-  await shinyWeeklyModelPromise;
+  await shinyWeeklyRowsPromise;
 }
 
 /* ---------------------------------------------------------
@@ -104,7 +104,7 @@ export async function getDonatorsRows() {
   return donatorsRows;
 }
 
-export async function getWeeklyModel() {
-  await ensureWeeklyModel();
-  return shinyWeeklyModel;
+export async function getWeeklyRows() {
+  await ensureWeeklyRows();
+  return shinyWeeklyRows;
 }
