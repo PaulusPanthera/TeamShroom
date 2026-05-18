@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-18T02:11:48.387Z",
+  "generatedAt": "2026-05-18T06:43:25.567Z",
   "source": "discord-bot",
   "data": [
     {
       "nextEvent": {
-        "title": "Mush Fashion Contest",
-        "timeText": "2026-05-18 07:00 CEST",
-        "url": "https://discord.com/events/1178448989566283779/1492790958834585710",
-        "subtitle": "https://forums.pokemmo.com/index.php?/topic/19750...",
+        "title": "Mush Spring Fest!",
+        "timeText": "2026-05-23 06:00 CEST",
+        "url": "https://discord.com/events/1178448989566283779/1492791120856354998",
+        "subtitle": "https://forums.pokemmo.com/index.php?/topic/19789...",
         "gifSrc": "img/symbols/shinyshroomsprite.png"
       },
       "bounty": {
