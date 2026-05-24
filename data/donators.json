@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-23T18:50:50.012Z",
+  "generatedAt": "2026-05-24T08:12:35.841Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1532,6 +1532,336 @@
       "name": "Kithri",
       "donation": "Fashion Event Prizes",
       "value": 10777000
+    },
+    {
+      "date": "2026-04-03",
+      "name": "CheesasaurusRex",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Shiny 1x31 Hardy Male Tentacruel",
+      "value": 1300000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Shiny 1x31 Modest Male Traquill*",
+      "value": 3000000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Shiny 1x31 Bashful Female Magikarp*",
+      "value": 3000000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Shiny 1x31 Naughty Male Magikarp*",
+      "value": 2500000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Shiny 2x31 Naive Female Horsea*",
+      "value": 6000000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "81x 2025 Mysterious Poke Balls",
+      "value": 1417500
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "56x Mysterious Great Balls",
+      "value": 3012800
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "20x Mysterious Ultra Balls",
+      "value": 1840000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "12x Pumpking Goodie Bags (2023)",
+      "value": 373200
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "38x Santa's Present (2025)",
+      "value": 2679000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": null,
+      "value": 10000000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Shiny 1x31 Lonely Male Cacnea",
+      "value": 3100000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Shiny 1x31 Timid Male Banette",
+      "value": 3200000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Shiny 1x31 Impish Female Abra",
+      "value": 4000000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Shiny 1x31 Adamant Female Vanillish",
+      "value": 2600000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Shiny 1x31 Relaxed Female Bellsprout",
+      "value": 3000000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "100x Red Envelope (2023)",
+      "value": 890000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "7x 100% Riches Charm",
+      "value": 980000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "2x Shiny Charm",
+      "value": 294000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Shiny 1x31 Relaxed Female Camerupt",
+      "value": 2700000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Shiny 1x31 Timid Male Meowth",
+      "value": 2350000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Shiny 1x31 Hasty Female Poliwag",
+      "value": 3200000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Shiny 1x31 Quiet Female Magcargo",
+      "value": 2700000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": null,
+      "value": 3000000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "220x Xmas Present (2025)",
+      "value": 1903000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Red Envelope (2019)",
+      "value": 692000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "25x Halloween Mystery Box",
+      "value": 772500
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "25x Xmas Mystery Box",
+      "value": 2412500
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "4x Chum Bucket",
+      "value": 244000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "431x Leppa Berries",
+      "value": 268000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "338x Jaboca Berries",
+      "value": 422500
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "521 Plain Spicy Seeds",
+      "value": 362500
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Pudgy Penguin",
+      "value": 225000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "11x Amulet Coins",
+      "value": 220000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Gym Rerun Blastoise",
+      "value": 260000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Gym Rerun Togekiss",
+      "value": 250000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Gym Rerun Weezing",
+      "value": 250000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Gym Rerun Garchomp",
+      "value": 130000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Gym Rerun Typhlosion",
+      "value": 170000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "2x Choice Scarf",
+      "value": 164000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "2x Choice Specs",
+      "value": 170000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "2x Choice Band",
+      "value": 164000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "284x Repeat Balls",
+      "value": 355000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "294x Dusk Balls",
+      "value": 396900
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "216x Net Balls",
+      "value": 291600
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "124x Timer Balls",
+      "value": 148800
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "122x Quick Balls",
+      "value": 146400
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Gym Rerun Vaniluxe",
+      "value": 300000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Catch Breloom",
+      "value": 175000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Catch Smeargle",
+      "value": 150000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Catch Breloom",
+      "value": 175000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "Catch Smeargle",
+      "value": 200000
+    },
+    {
+      "date": "2026-04-11",
+      "name": "tollewolle",
+      "donation": "2x Toxic Orbs",
+      "value": 110000
+    },
+    {
+      "date": "2026-04-21",
+      "name": "TeletubbieBaz",
+      "donation": "3x Chum Buckets",
+      "value": 184200
     }
   ]
 }
