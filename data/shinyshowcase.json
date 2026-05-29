@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-29T14:31:57.807Z",
+  "generatedAt": "2026-05-29T15:35:48.283Z",
   "source": "google-sheets",
   "data": [
     {
@@ -12303,7 +12303,7 @@
     },
     {
       "ot": "locobounty",
-      "pokemon": "koffing",
+      "pokemon": "weezing",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -12316,7 +12316,7 @@
     },
     {
       "ot": "locobounty",
-      "pokemon": "swadloon",
+      "pokemon": "leavanny",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -12342,7 +12342,7 @@
     },
     {
       "ot": "locobounty",
-      "pokemon": "marshtomp",
+      "pokemon": "swampert",
       "method": null,
       "encounter": null,
       "secret": false,
