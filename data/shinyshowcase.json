@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-01T11:02:37.266Z",
+  "generatedAt": "2026-06-01T17:09:32.086Z",
   "source": "google-sheets",
   "data": [
     {
@@ -29203,7 +29203,7 @@
     },
     {
       "ot": "Hokeymon",
-      "pokemon": "horsea",
+      "pokemon": "seadra",
       "method": null,
       "encounter": null,
       "secret": false,
