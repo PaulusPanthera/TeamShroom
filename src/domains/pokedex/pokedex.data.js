@@ -14,13 +14,15 @@ import { loadShinyWeekly } from '../../data/shinyweekly.loader.js';
 import { buildShinyWeeklyModel } from '../shinyweekly/shinyweekly.model.js';
 
 import { loadShinyShowcase } from '../../data/shinyshowcase.loader.js';
+import { loadMembers } from '../../data/members.loader.js';
+import { filterShowcaseRowsToActiveMembers } from '../members/member.visibility.js';
 
 // ---------------------------------------------------------
 // PROMISE CACHES
 // ---------------------------------------------------------
 
 let weeklyModelPromise = null;
-let showcaseRowsPromise = null;
+let showcaseVisibleRowsPromise = null;
 
 // ---------------------------------------------------------
 // INTERNAL HELPERS
@@ -37,14 +39,19 @@ async function getWeeklyModelOnce() {
   return weeklyModelPromise;
 }
 
-async function getShowcaseRowsOnce() {
-  if (showcaseRowsPromise) return showcaseRowsPromise;
+async function getShowcaseVisibleRowsOnce() {
+  if (showcaseVisibleRowsPromise) return showcaseVisibleRowsPromise;
 
-  showcaseRowsPromise = (async () => {
-    return loadShinyShowcase();
+  showcaseVisibleRowsPromise = (async () => {
+    const [membersRows, showcaseRows] = await Promise.all([
+      loadMembers(),
+      loadShinyShowcase()
+    ]);
+
+    return filterShowcaseRowsToActiveMembers(showcaseRows, membersRows);
   })();
 
-  return showcaseRowsPromise;
+  return showcaseVisibleRowsPromise;
 }
 
 // ---------------------------------------------------------
@@ -57,7 +64,7 @@ async function getShowcaseRowsOnce() {
  * Output contract:
  * {
  *   weeklyModel: WeeklyModel
- *   shinyShowcaseRows: ShowcaseRow[]
+ *   shinyShowcaseRows: ShowcaseRow[]   // active-member-only showcase rows
  * }
  */
 export async function getPokedexDeps() {
@@ -65,7 +72,7 @@ export async function getPokedexDeps() {
 
   const [weeklyModel, shinyShowcaseRows] = await Promise.all([
     getWeeklyModelOnce(),
-    getShowcaseRowsOnce()
+    getShowcaseVisibleRowsOnce()
   ]);
 
   return {

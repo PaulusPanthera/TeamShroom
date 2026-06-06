@@ -4,6 +4,7 @@
 
 import { buildShowcaseModel } from '../../domains/showcase/showcase.model.js';
 import { getMemberRoleEmblemSrc } from '../../domains/members/member.assets.js';
+import { filterShowcaseMembersToActive } from '../../domains/members/member.visibility.js';
 import {
   filterMembers,
   sortMembers,
@@ -112,8 +113,7 @@ export function setupShowcasePage({ root, sidebar, membersRows, showcaseRows, po
   const model = buildShowcaseModel({ membersRows, showcaseRows, pokemonPoints });
   const route = parseHash();
 
-  const visibleMembers = (Array.isArray(model.members) ? model.members : [])
-    .filter(m => Boolean(m && m.active));
+  const visibleMembers = filterShowcaseMembersToActive(model.members);
 
   const visibleByKey = {};
   visibleMembers.forEach((m) => {

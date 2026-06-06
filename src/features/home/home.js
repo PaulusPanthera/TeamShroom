@@ -13,6 +13,7 @@ import { computeHotwFromWeeks } from '../../domains/shinyweekly/hotw.ai.js';
 import { initPokemonDerivedDataOnce, getPokemonPointsMap } from '../../domains/pokemon/pokemon.data.js';
 import { buildShowcaseModel } from '../../domains/showcase/showcase.model.js';
 import { getMemberRoleEmblemSrc, getMemberSpriteSrc } from '../../domains/members/member.assets.js';
+import { filterShowcaseMembersToActive } from '../../domains/members/member.visibility.js';
 
 import { tierFromPoints } from '../../ui/tier-map.js';
 import { prettifyPokemonName, getPokemonDbShinyGifSrc } from '../../utils/utils.js';
@@ -343,9 +344,17 @@ export async function fetchHomeViewModel(preloadedRows) {
       pokemonPoints: pokemonPointsMap
     });
 
+    const showcaseVisibleMembers = filterShowcaseMembersToActive(showcase && showcase.members);
+    const showcaseVisibleByKey = {};
+    showcaseVisibleMembers.forEach((member) => {
+      const key = String(member && member.key || '').trim().toLowerCase();
+      if (!key) return;
+      showcaseVisibleByKey[key] = member;
+    });
+
     // Sidebar status stats (team totals).
     try {
-      const list = (showcase && Array.isArray(showcase.members)) ? showcase.members : [];
+      const list = showcaseVisibleMembers;
       const memberCount = list.length;
       const totalShinies = list.reduce((sum, m) => sum + (Number(m && m.shinyCount) || 0), 0);
       const totalPoints = list.reduce((sum, m) => sum + (Number(m && m.points) || 0), 0);
@@ -357,8 +366,8 @@ export async function fetchHomeViewModel(preloadedRows) {
 
     // Spotlight (member + owned shiny card) samples.
     vm.spotlight = buildSpotlightVm({
-      members: showcase && showcase.members,
-      membersByKey: showcase && showcase.byKey,
+      members: showcaseVisibleMembers,
+      membersByKey: showcaseVisibleByKey,
       pokemonPointsMap
     });
 
