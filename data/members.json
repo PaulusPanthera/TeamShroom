@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-14T10:05:51.475Z",
+  "generatedAt": "2026-06-14T10:54:20.368Z",
   "source": "google-sheets",
   "data": [
     {
@@ -15,7 +15,7 @@
       "name": "AceTrainerPolar",
       "active": true,
       "role": "spore",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "14.05.25",
       "nationality": ""
     },
@@ -79,7 +79,7 @@
       "name": "BojanglesisHere",
       "active": true,
       "role": "shroom",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "24.12.25",
       "nationality": ""
     },
@@ -127,7 +127,7 @@
       "name": "CelineCeline",
       "active": true,
       "role": "shroom",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "17.12.25",
       "nationality": ""
     },
@@ -143,7 +143,7 @@
       "name": "Chatchinois",
       "active": true,
       "role": "spore",
-      "sprite": null,
+      "sprite": "png",
       "member_since": "05.01.26",
       "nationality": ""
     },
@@ -167,7 +167,7 @@
       "name": "ChipHazardBB",
       "active": true,
       "role": "spore",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "12.11.25",
       "nationality": ""
     },
@@ -175,7 +175,7 @@
       "name": "CigaretteMilk",
       "active": true,
       "role": "shroom",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "18.03.24",
       "nationality": ""
     },
@@ -247,7 +247,7 @@
       "name": "DComp",
       "active": true,
       "role": "spore",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "28.11.25",
       "nationality": ""
     },
@@ -335,7 +335,7 @@
       "name": "fisplant",
       "active": true,
       "role": "shroom",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "12.07.25",
       "nationality": ""
     },
@@ -540,14 +540,6 @@
       "nationality": ""
     },
     {
-      "name": "Johnerrr",
-      "active": false,
-      "role": "shroom",
-      "sprite": "png",
-      "member_since": "",
-      "nationality": ""
-    },
-    {
       "name": "JokageZero",
       "active": true,
       "role": "shroom",
@@ -599,7 +591,7 @@
       "name": "kitsucupid",
       "active": true,
       "role": "shroom",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "23.06.24",
       "nationality": ""
     },
@@ -615,7 +607,7 @@
       "name": "Kolepls",
       "active": true,
       "role": "spore",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "05.09.25",
       "nationality": ""
     },
@@ -647,7 +639,7 @@
       "name": "LordGangis",
       "active": true,
       "role": "spore",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "11.04.24",
       "nationality": ""
     },
@@ -679,7 +671,7 @@
       "name": "Macarene",
       "active": true,
       "role": "spore",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "27.01.25",
       "nationality": ""
     },
@@ -727,7 +719,7 @@
       "name": "MechanicalHippo",
       "active": true,
       "role": "spore",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "05.02.26",
       "nationality": ""
     },
@@ -815,7 +807,7 @@
       "name": "Navy",
       "active": true,
       "role": "shroom",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "20.01.25",
       "nationality": ""
     },
@@ -919,7 +911,7 @@
       "name": "Psyql",
       "active": true,
       "role": "spore",
-      "sprite": null,
+      "sprite": "png",
       "member_since": "04.01.26",
       "nationality": ""
     },
@@ -943,7 +935,7 @@
       "name": "Raiketsu",
       "active": true,
       "role": "shroom",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "15.07.24",
       "nationality": ""
     },
@@ -1063,7 +1055,7 @@
       "name": "Sirbeyy",
       "active": true,
       "role": "shroom",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "28.05.24",
       "nationality": ""
     },
@@ -1119,7 +1111,7 @@
       "name": "Soxzzz",
       "active": true,
       "role": "shroom",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "07.12.25",
       "nationality": ""
     },
@@ -1255,7 +1247,7 @@
       "name": "TorontoKid",
       "active": true,
       "role": "shroom",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "24.06.24",
       "nationality": ""
     },
@@ -1319,7 +1311,7 @@
       "name": "WhosWill",
       "active": true,
       "role": "shroom",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "22.06.24",
       "nationality": ""
     },
@@ -1383,7 +1375,7 @@
       "name": "Yoyoyoshie",
       "active": true,
       "role": "shroom",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "20.09.24",
       "nationality": ""
     },
