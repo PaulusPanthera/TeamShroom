@@ -14,7 +14,7 @@ Array<{
   shinyCount: number
   hunterCount: number
 
-  // Event stream, stable order (sheet row order).
+  // Event stream, stable order (week_order when available; source row order fallback).
   // NOTE: This is intentionally NOT grouped by member.
   // Downstream claim resolution (ShinyDex) consumes this structure in-order.
   members: Array<{
@@ -24,6 +24,7 @@ Array<{
       member: string
       pokemon: string
       dateCatch?: string | null
+      weekOrder: string | null
       method: string | null
       encounter: number | null
       secret: boolean
@@ -117,6 +118,46 @@ function normalizeEncounter(raw) {
   return n;
 }
 
+function normalizeWeekOrder(raw) {
+  if (raw == null) return null;
+
+  const s = toTrimmedString(raw);
+  if (!s) return null;
+  if (!/^\d+$/.test(s)) return null;
+
+  const n = Number(s);
+  if (!Number.isInteger(n) || n <= 0) return null;
+
+  return String(n).padStart(3, '0');
+}
+
+function weekOrderSortValue(weekOrder) {
+  if (!weekOrder) return Number.POSITIVE_INFINITY;
+
+  const n = Number(weekOrder);
+  return Number.isFinite(n) ? n : Number.POSITIVE_INFINITY;
+}
+
+function compareNormalizedRows(a, b) {
+  const ad = String(a && a.date_start ? a.date_start : '');
+  const bd = String(b && b.date_start ? b.date_start : '');
+  if (ad !== bd) return ad.localeCompare(bd);
+
+  const ae = String(a && a.date_end ? a.date_end : '');
+  const be = String(b && b.date_end ? b.date_end : '');
+  if (ae !== be) return ae.localeCompare(be);
+
+  const aw = String(a && a.week ? a.week : '');
+  const bw = String(b && b.week ? b.week : '');
+  if (aw !== bw) return aw.localeCompare(bw);
+
+  const ao = weekOrderSortValue(a && a.weekOrder);
+  const bo = weekOrderSortValue(b && b.weekOrder);
+  if (ao !== bo) return ao - bo;
+
+  return (a && a.sourceIndex ? a.sourceIndex : 0) - (b && b.sourceIndex ? b.sourceIndex : 0);
+}
+
 function hasExplicitField(row, key) {
   if (!row) return false;
   if (!Object.prototype.hasOwnProperty.call(row, key)) return false;
@@ -155,6 +196,7 @@ function normalizeWeeklyRow(row) {
     date_start: toNullableString(row && row.date_start),
     date_end: toNullableString(row && row.date_end),
     date_catch: toNullableString(row && row.date_catch),
+    weekOrder: normalizeWeekOrder(row && row.week_order),
 
     memberName,
     memberKey,
@@ -180,12 +222,15 @@ export function buildShinyWeeklyModel(rows) {
   const weeksByKey = Object.create(null);
   const weekKeys = [];
 
-  list.forEach(rawRow => {
-    const r = normalizeWeeklyRow(rawRow);
+  const normalizedRows = list
+    .map((rawRow, sourceIndex) => ({
+      ...normalizeWeeklyRow(rawRow),
+      sourceIndex
+    }))
+    .filter(r => r.week && r.memberName && r.pokemon)
+    .sort(compareNormalizedRows);
 
-    // Hard requirements for event-stream semantics
-    if (!r.week || !r.memberName || !r.pokemon) return;
-
+  normalizedRows.forEach(r => {
     if (!weeksByKey[r.week]) {
       weeksByKey[r.week] = {
         week: r.week,
@@ -215,6 +260,7 @@ export function buildShinyWeeklyModel(rows) {
       member: r.memberName,
       pokemon: r.pokemon,
       dateCatch: r.date_catch,
+      weekOrder: r.weekOrder,
       method: r.method,
       encounter: r.encounter,
       secret: r.secret,

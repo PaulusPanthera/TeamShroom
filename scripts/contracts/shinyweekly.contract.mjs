@@ -20,6 +20,11 @@ export const shinyWeeklyContract = {
       type: 'string',
     },
 
+    week_order: {
+      type: 'string',
+      optional: true,
+    },
+
     date_start: {
       type: 'string',
     },
