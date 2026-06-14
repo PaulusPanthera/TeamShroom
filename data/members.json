@@ -1,18 +1,30 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-14T07:42:03.633Z",
+  "generatedAt": "2026-06-14T08:58:19.220Z",
   "source": "google-sheets",
   "data": [
     {
-      "name": "AKatharina",
+      "name": "AbruptAlpaca",
       "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "AceTrainerPolar",
+      "active": true,
+      "role": "spore",
+      "sprite": "png"
+    },
+    {
+      "name": "AKatharina",
+      "active": false,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Alphy",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
@@ -22,21 +34,27 @@
       "sprite": "png"
     },
     {
-      "name": "ashash",
+      "name": "aphrooturtle",
       "active": true,
       "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "ashash",
+      "active": true,
+      "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "azili",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": null
     },
     {
       "name": "Biiidou",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
@@ -76,16 +94,28 @@
       "sprite": "png"
     },
     {
+      "name": "CassosALaPlaya",
+      "active": true,
+      "role": "shroom",
+      "sprite": null
+    },
+    {
       "name": "CelineCeline",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Charizapedia",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png"
+    },
+    {
+      "name": "Chatchinois",
+      "active": true,
+      "role": "spore",
+      "sprite": null
     },
     {
       "name": "CheesasaurusRex",
@@ -96,7 +126,7 @@
     {
       "name": "Chestia",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
@@ -113,7 +143,7 @@
     },
     {
       "name": "Clairbear",
-      "active": true,
+      "active": false,
       "role": "shinyshroom",
       "sprite": "png"
     },
@@ -126,18 +156,18 @@
     {
       "name": "Cordeiroxi",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "CraazyHorse",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "cuteasduckk",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png"
     },
@@ -148,8 +178,14 @@
       "sprite": "png"
     },
     {
-      "name": "DamoNll",
+      "name": "Dajiu",
       "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "DamoNll",
+      "active": false,
       "role": "spore",
       "sprite": "png"
     },
@@ -161,7 +197,7 @@
     },
     {
       "name": "DelPieroSenpai",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png"
     },
@@ -172,9 +208,9 @@
       "sprite": "png"
     },
     {
-      "name": "Difoolio",
+      "name": "Difoolioo",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
@@ -182,6 +218,12 @@
       "active": true,
       "role": "spore",
       "sprite": "png"
+    },
+    {
+      "name": "doobs",
+      "active": true,
+      "role": "spore",
+      "sprite": null
     },
     {
       "name": "Drain",
@@ -203,9 +245,15 @@
     },
     {
       "name": "Eerie",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png"
+    },
+    {
+      "name": "Fawknerr",
+      "active": true,
+      "role": "spore",
+      "sprite": null
     },
     {
       "name": "fisplant",
@@ -215,19 +263,19 @@
     },
     {
       "name": "Freenox",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "Gaudjo",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "GeoPlays",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png"
     },
@@ -239,7 +287,7 @@
     },
     {
       "name": "Grrzzly",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png"
     },
@@ -250,8 +298,20 @@
       "sprite": "png"
     },
     {
-      "name": "HennyD",
+      "name": "haizwn",
       "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "HamudaBR",
+      "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "HennyD",
+      "active": false,
       "role": "spore",
       "sprite": "png"
     },
@@ -270,8 +330,32 @@
     {
       "name": "Hokeymon",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
+    },
+    {
+      "name": "huykiller",
+      "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "Hydrophobia",
+      "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "iamese",
+      "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "IfUmm",
+      "active": true,
+      "role": "spore",
+      "sprite": null
     },
     {
       "name": "iMonchi",
@@ -282,14 +366,20 @@
     {
       "name": "itsEasy",
       "active": true,
-      "role": "shroom",
+      "role": "shinyshroom",
       "sprite": "png"
     },
     {
       "name": "ItsKitas",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
+    },
+    {
+      "name": "ItsMawile",
+      "active": true,
+      "role": "shinyshroom",
+      "sprite": null
     },
     {
       "name": "jaspn",
@@ -299,7 +389,7 @@
     },
     {
       "name": "Jayyxxi",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png"
     },
@@ -310,27 +400,39 @@
       "sprite": "png"
     },
     {
-      "name": "Johnerrr",
+      "name": "Jimbothia",
       "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "Jiroho",
+      "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "Johnerrr",
+      "active": false,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "JokageZero",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "JulieJewel",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "Jutskaa",
       "active": true,
-      "role": "shroom",
+      "role": "shinyshroom",
       "sprite": "png"
     },
     {
@@ -358,6 +460,12 @@
       "sprite": "png"
     },
     {
+      "name": "kloheizung",
+      "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
       "name": "Kolepls",
       "active": true,
       "role": "spore",
@@ -366,13 +474,13 @@
     {
       "name": "Kynnyto",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "locobounty",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
@@ -402,7 +510,7 @@
     {
       "name": "Lyptus",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
@@ -418,15 +526,33 @@
       "sprite": "png"
     },
     {
-      "name": "Mattmattoux",
+      "name": "MandiMlem",
       "active": true,
       "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "MangoMason",
+      "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "Materusu",
+      "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "Mattmattoux",
+      "active": true,
+      "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "MechanicalHippo",
       "active": true,
-      "role": "shroom",
+      "role": "spore",
       "sprite": "png"
     },
     {
@@ -442,6 +568,12 @@
       "sprite": "png"
     },
     {
+      "name": "MikadoGR",
+      "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
       "name": "MikeRunkZz",
       "active": true,
       "role": "shroom",
@@ -454,9 +586,15 @@
       "sprite": "png"
     },
     {
-      "name": "MrBiscottes",
+      "name": "Miltank",
       "active": true,
       "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "MrBiscottes",
+      "active": true,
+      "role": "shroom",
       "sprite": "png"
     },
     {
@@ -466,8 +604,14 @@
       "sprite": "png"
     },
     {
-      "name": "Narrayah",
+      "name": "MrMushy",
       "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "Narrayah",
+      "active": false,
       "role": "spore",
       "sprite": "png"
     },
@@ -480,14 +624,32 @@
     {
       "name": "NotAHumanSure",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
+    },
+    {
+      "name": "Noufa",
+      "active": true,
+      "role": "spore",
+      "sprite": null
     },
     {
       "name": "NoxxPrime",
       "active": true,
       "role": "shroom",
       "sprite": "png"
+    },
+    {
+      "name": "Obruo",
+      "active": true,
+      "role": "shroom",
+      "sprite": null
+    },
+    {
+      "name": "Oriie",
+      "active": true,
+      "role": "shroom",
+      "sprite": null
     },
     {
       "name": "Orllando",
@@ -497,7 +659,7 @@
     },
     {
       "name": "Pangeaa",
-      "active": true,
+      "active": false,
       "role": "mushcap",
       "sprite": "png"
     },
@@ -510,12 +672,12 @@
     {
       "name": "pawmu",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "pearishx",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png"
     },
@@ -526,14 +688,26 @@
       "sprite": "png"
     },
     {
-      "name": "AceTrainerPolar",
+      "name": "Privacy",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
-      "name": "QuinJay",
+      "name": "Psyql",
       "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "Quicooo",
+      "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "QuinJay",
+      "active": false,
       "role": "shroom",
       "sprite": "png"
     },
@@ -544,6 +718,18 @@
       "sprite": "png"
     },
     {
+      "name": "RandomGuy",
+      "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "Randy",
+      "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
       "name": "realjuckpop",
       "active": true,
       "role": "shroom",
@@ -551,7 +737,7 @@
     },
     {
       "name": "riahC",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png"
     },
@@ -570,14 +756,20 @@
     {
       "name": "Ripz",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "RuthlessZ",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png"
+    },
+    {
+      "name": "SBHALLA",
+      "active": true,
+      "role": "spore",
+      "sprite": null
     },
     {
       "name": "Scooby",
@@ -592,50 +784,74 @@
       "sprite": "png"
     },
     {
+      "name": "Sheflavia",
+      "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "sherrii",
+      "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "ShinyPoliwhirl",
+      "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
       "name": "Sirbeyy",
       "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
-      "name": "Privacy",
-      "active": true,
-      "role": "spore",
-      "sprite": "png"
-    },
-    {
       "name": "Skullz",
       "active": true,
-      "role": "shroom",
+      "role": "shinyshroom",
       "sprite": "png"
     },
     {
       "name": "slaydounet",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
+    },
+    {
+      "name": "SleepyDallas",
+      "active": true,
+      "role": "spore",
+      "sprite": null
     },
     {
       "name": "Smokee",
       "active": true,
-      "role": "spore",
+      "role": "mushcap",
       "sprite": "png"
     },
     {
       "name": "Smough",
       "active": true,
-      "role": "spore",
+      "role": "shinyshroom",
       "sprite": "png"
+    },
+    {
+      "name": "SousouEsh",
+      "active": true,
+      "role": "spore",
+      "sprite": null
     },
     {
       "name": "Soxzzz",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "SparkleButt",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png"
     },
@@ -646,21 +862,33 @@
       "sprite": "png"
     },
     {
+      "name": "SpongeBong",
+      "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
       "name": "Stathiskris",
       "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
-      "name": "TaCesa",
+      "name": "Suirenkai",
       "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "TaCesa",
+      "active": false,
       "role": "spore",
       "sprite": "png"
     },
     {
-      "name": "TakeOnMeh",
+      "name": "Take",
       "active": true,
-      "role": "spore",
+      "role": "shinyshroom",
       "sprite": "png"
     },
     {
@@ -670,27 +898,39 @@
       "sprite": "png"
     },
     {
+      "name": "taywor",
+      "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
       "name": "Tazmaster",
       "active": true,
       "role": "spore",
       "sprite": "png"
     },
     {
-      "name": "Teletubbiebaz",
+      "name": "TeamShroomBank",
       "active": true,
-      "role": "spore",
-      "sprite": "png"
+      "role": "mushcap",
+      "sprite": null
     },
     {
-      "name": "Terminus",
+      "name": "TeletubbieBaz",
       "active": true,
       "role": "shroom",
       "sprite": "png"
     },
     {
+      "name": "Terminus",
+      "active": true,
+      "role": "shinyshroom",
+      "sprite": "png"
+    },
+    {
       "name": "Tobias",
       "active": true,
-      "role": "spore",
+      "role": "shinyshroom",
       "sprite": "png"
     },
     {
@@ -701,7 +941,7 @@
     },
     {
       "name": "tollewolle",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png"
     },
@@ -713,7 +953,7 @@
     },
     {
       "name": "Tortuponchy",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png"
     },
@@ -730,15 +970,21 @@
       "sprite": "png"
     },
     {
-      "name": "Visari",
+      "name": "Universe",
       "active": true,
+      "role": "spore",
+      "sprite": null
+    },
+    {
+      "name": "Visari",
+      "active": false,
       "role": "spore",
       "sprite": "png"
     },
     {
       "name": "WailynXD",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
@@ -762,7 +1008,7 @@
     {
       "name": "winlip",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
@@ -779,7 +1025,7 @@
     },
     {
       "name": "XxArtamielxX",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png"
     },
@@ -791,7 +1037,7 @@
     },
     {
       "name": "Yoboes",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png"
     },
@@ -804,7 +1050,7 @@
     {
       "name": "Yugi",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
@@ -816,12 +1062,12 @@
     {
       "name": "ZekTV",
       "active": true,
-      "role": "spore",
+      "role": "shroom",
       "sprite": "png"
     },
     {
       "name": "zzxyami",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png"
     }
