@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-14T10:54:20.368Z",
+  "generatedAt": "2026-06-14T11:00:24.061Z",
   "source": "google-sheets",
   "data": [
     {
@@ -839,7 +839,7 @@
       "name": "Obruo",
       "active": true,
       "role": "shroom",
-      "sprite": null,
+      "sprite": "png",
       "member_since": "08.03.24",
       "nationality": ""
     },
@@ -1167,7 +1167,7 @@
       "name": "Take",
       "active": true,
       "role": "shinyshroom",
-      "sprite": "png",
+      "sprite": "gif",
       "member_since": "17.08.25",
       "nationality": ""
     },
