@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-14T08:58:19.220Z",
+  "generatedAt": "2026-06-14T09:52:37.752Z",
   "source": "google-sheets",
   "data": [
     {
@@ -12,12 +12,6 @@
     {
       "name": "AceTrainerPolar",
       "active": true,
-      "role": "spore",
-      "sprite": "png"
-    },
-    {
-      "name": "AKatharina",
-      "active": false,
       "role": "spore",
       "sprite": "png"
     },
