@@ -1,8 +1,9 @@
 // scripts/contracts/members.contract.mjs
-// Members dataset contract (source of truth)
+// v2.0.0-beta
+// Members dataset contract. Source-of-truth sheet fields for roster status, rank, join date, nationality, and sprite extension.
 
 export const membersContract = {
-  required: ['name', 'role'],
+  required: ['name', 'active', 'role'],
 
   fields: {
     name: {
@@ -11,7 +12,6 @@ export const membersContract = {
 
     active: {
       type: 'boolean',
-      optional: true,
     },
 
     role: {
@@ -27,6 +27,16 @@ export const membersContract = {
     sprite: {
       type: 'enum',
       values: ['png', 'gif', 'jpg', 'none', ''],
+      optional: true,
+    },
+
+    member_since: {
+      type: 'string',
+      optional: true,
+    },
+
+    nationality: {
+      type: 'string',
       optional: true,
     },
   },

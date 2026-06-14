@@ -114,6 +114,8 @@ export function buildMemberGalleryCardView(member, sortMode) {
     points: Number(member && member.points) || 0,
     shinyCount: Number(member && member.shinyCount) || 0,
     memberTier: member && member.role ? String(member.role) : '',
+    memberSince: member && member.member_since ? String(member.member_since) : '',
+    nationality: member && member.nationality ? String(member.nationality) : '',
     tierEmblemSrc: getMemberRoleEmblemSrc(member && member.role),
     spriteSrc: getMemberSpriteSrc(key, member && member.sprite),
     sortMode

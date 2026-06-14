@@ -93,6 +93,20 @@ function makeLines(lines) {
   return wrap;
 }
 
+function prettifyRole(role) {
+  const r = String(role || '').trim().toLowerCase();
+  if (r === 'spore') return 'Spore';
+  if (r === 'shroom') return 'Shroom';
+  if (r === 'shinyshroom') return 'ShinyShroom';
+  if (r === 'mushcap') return 'MushCap';
+  return '';
+}
+
+function maybeLine(label, value) {
+  const v = String(value || '').trim();
+  return v ? `${label}: ${v}` : null;
+}
+
 export async function renderShowcasePage(ctx) {
   const root = ctx && ctx.root;
   const sidebar = ctx && ctx.sidebar;
@@ -155,9 +169,12 @@ renderMemberShowcaseShell(root, {
 
     const statusNode = makeLines([
       `Name: ${member.name}`,
+      maybeLine('Rank', prettifyRole(member && member.role)),
+      maybeLine('Joined', member && member.member_since),
+      maybeLine('Nationality', member && member.nationality),
       `Shinies: ${member.shinyCount} Active • ${member.totalShinyCount} Total`,
       `Points: ${member.points}P`
-    ]);
+    ].filter(Boolean));
 
     const controlsStack = document.createElement('div');
     controlsStack.append(backBtn, controlsHost);

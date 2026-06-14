@@ -1,6 +1,6 @@
 // src/data/members.model.js
-// Members model builder
-// CI-normalized input → runtime-stable member model
+// v2.0.0-beta
+// Members model builder. Preserves roster metadata while attaching showcase shinies.
 
 /*
 INTERNAL JSON API — MEMBERS MODEL OUTPUT
@@ -10,6 +10,8 @@ Array<{
   active: boolean
   sprite: string | null
   role: string
+  member_since: string
+  nationality: string
   shinies: Array<{
     pokemon: string
     date_catch?: string
@@ -27,6 +29,10 @@ Array<{
 }>
 */
 
+function normalizeOptionalString(value) {
+  return String(value || '').trim();
+}
+
 export function buildMembersModel(members, shinyShowcase) {
   const map = {};
 
@@ -39,6 +45,8 @@ export function buildMembersModel(members, shinyShowcase) {
       active: m.active,
       sprite: m.sprite ?? null,
       role: m.role ?? '',
+      member_since: normalizeOptionalString(m.member_since),
+      nationality: normalizeOptionalString(m.nationality),
       shinies: []
     };
   });
@@ -56,6 +64,8 @@ export function buildMembersModel(members, shinyShowcase) {
         active: false,
         sprite: null,
         role: '',
+        member_since: '',
+        nationality: '',
         shinies: []
       };
     }
