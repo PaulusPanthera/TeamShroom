@@ -1,1069 +1,1423 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-14T09:52:37.752Z",
+  "generatedAt": "2026-06-14T10:05:51.475Z",
   "source": "google-sheets",
   "data": [
     {
       "name": "AbruptAlpaca",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "31.05.26",
+      "nationality": ""
     },
     {
       "name": "AceTrainerPolar",
       "active": true,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "14.05.25",
+      "nationality": ""
     },
     {
       "name": "Alphy",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "03.11.25",
+      "nationality": ""
     },
     {
       "name": "Aokiza",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "03.07.25",
+      "nationality": ""
     },
     {
       "name": "aphrooturtle",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "17.03.26",
+      "nationality": ""
     },
     {
       "name": "ashash",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "17.12.24",
+      "nationality": ""
     },
     {
       "name": "azili",
       "active": false,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "Biiidou",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "16.08.25",
+      "nationality": ""
     },
     {
       "name": "BlistiK",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "08.03.24",
+      "nationality": ""
     },
     {
       "name": "BojanglesisHere",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "24.12.25",
+      "nationality": ""
     },
     {
       "name": "bonseum",
       "active": true,
       "role": "shinyshroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "05.10.25",
+      "nationality": ""
     },
     {
       "name": "Brownerthan",
       "active": true,
       "role": "shinyshroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "01.11.25",
+      "nationality": ""
     },
     {
       "name": "Bulkanator",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "08.03.24",
+      "nationality": ""
     },
     {
       "name": "casethecase",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "21.04.24",
+      "nationality": ""
     },
     {
       "name": "CassosALaPlaya",
       "active": true,
       "role": "shroom",
-      "sprite": null
+      "sprite": null,
+      "member_since": "30.12.25",
+      "nationality": ""
     },
     {
       "name": "CelineCeline",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "17.12.25",
+      "nationality": ""
     },
     {
       "name": "Charizapedia",
       "active": false,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "Chatchinois",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "05.01.26",
+      "nationality": ""
     },
     {
       "name": "CheesasaurusRex",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "12.04.25",
+      "nationality": ""
     },
     {
       "name": "Chestia",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "15.08.25",
+      "nationality": ""
     },
     {
       "name": "ChipHazardBB",
       "active": true,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "12.11.25",
+      "nationality": ""
     },
     {
       "name": "CigaretteMilk",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "18.03.24",
+      "nationality": ""
     },
     {
       "name": "Clairbear",
       "active": false,
       "role": "shinyshroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "clairo",
       "active": true,
       "role": "shinyshroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "12.07.24",
+      "nationality": ""
     },
     {
       "name": "Cordeiroxi",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "20.09.25",
+      "nationality": ""
     },
     {
       "name": "CraazyHorse",
       "active": false,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "cuteasduckk",
       "active": false,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "DaddyMolo",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "08.03.24",
+      "nationality": ""
     },
     {
       "name": "Dajiu",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "07.04.26",
+      "nationality": ""
     },
     {
       "name": "DamoNll",
       "active": false,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "DComp",
       "active": true,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "28.11.25",
+      "nationality": ""
     },
     {
       "name": "DelPieroSenpai",
       "active": false,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "Deuporus",
       "active": true,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "12.11.25",
+      "nationality": ""
     },
     {
       "name": "Difoolioo",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "17.10.25",
+      "nationality": ""
     },
     {
       "name": "Domingsss",
       "active": true,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "20.09.25",
+      "nationality": ""
     },
     {
       "name": "doobs",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "09.05.26",
+      "nationality": ""
     },
     {
       "name": "Drain",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "08.03.24",
+      "nationality": ""
     },
     {
       "name": "Drizzle",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "10.03.24",
+      "nationality": ""
     },
     {
       "name": "Dupe",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "17.04.24",
+      "nationality": ""
     },
     {
       "name": "Eerie",
       "active": false,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "Fawknerr",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "19.10.25",
+      "nationality": ""
     },
     {
       "name": "fisplant",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "12.07.25",
+      "nationality": ""
     },
     {
       "name": "Freenox",
       "active": false,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "Gaudjo",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "16.08.25",
+      "nationality": ""
     },
     {
       "name": "GeoPlays",
       "active": false,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "Geranxx",
       "active": true,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "14.11.24",
+      "nationality": ""
     },
     {
       "name": "Grrzzly",
       "active": false,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "Gumbasketball",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "08.03.24",
+      "nationality": ""
     },
     {
       "name": "haizwn",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "02.04.26",
+      "nationality": ""
     },
     {
       "name": "HamudaBR",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "07.04.26",
+      "nationality": ""
     },
     {
       "name": "HennyD",
       "active": false,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "highpokeman",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "09.07.25",
+      "nationality": ""
     },
     {
       "name": "Hjordi",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "16.04.24",
+      "nationality": ""
     },
     {
       "name": "Hokeymon",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "11.06.26",
+      "nationality": ""
     },
     {
       "name": "huykiller",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "03.06.26",
+      "nationality": ""
     },
     {
       "name": "Hydrophobia",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "13.05.26",
+      "nationality": ""
     },
     {
       "name": "iamese",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "03.04.26",
+      "nationality": ""
     },
     {
       "name": "IfUmm",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "05.05.26",
+      "nationality": ""
     },
     {
       "name": "iMonchi",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "31.05.24",
+      "nationality": ""
     },
     {
       "name": "itsEasy",
       "active": true,
       "role": "shinyshroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "08.03.24",
+      "nationality": ""
     },
     {
       "name": "ItsKitas",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "06.10.25",
+      "nationality": ""
     },
     {
       "name": "ItsMawile",
       "active": true,
       "role": "shinyshroom",
-      "sprite": null
+      "sprite": null,
+      "member_since": "27.01.26",
+      "nationality": ""
     },
     {
       "name": "jaspn",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "08.03.24",
+      "nationality": ""
     },
     {
       "name": "Jayyxxi",
       "active": false,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "JGrenade",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "11.08.24",
+      "nationality": ""
     },
     {
       "name": "Jimbothia",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "06.02.26",
+      "nationality": ""
     },
     {
       "name": "Jiroho",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "04.01.25",
+      "nationality": ""
     },
     {
       "name": "Johnerrr",
       "active": false,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "JokageZero",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "11.08.25",
+      "nationality": ""
     },
     {
       "name": "JulieJewel",
       "active": false,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "Jutskaa",
       "active": true,
       "role": "shinyshroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "03.11.24",
+      "nationality": ""
     },
     {
       "name": "Kaaflaa",
       "active": true,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "11.03.26",
+      "nationality": ""
     },
     {
       "name": "KaoZPrime",
       "active": true,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "25.10.25",
+      "nationality": ""
     },
     {
       "name": "Kithri",
       "active": true,
       "role": "mushcap",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "29.07.25",
+      "nationality": ""
     },
     {
       "name": "kitsucupid",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "23.06.24",
+      "nationality": ""
     },
     {
       "name": "kloheizung",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "18.05.26",
+      "nationality": ""
     },
     {
       "name": "Kolepls",
       "active": true,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "05.09.25",
+      "nationality": ""
     },
     {
       "name": "Kynnyto",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "16.08.25",
+      "nationality": ""
     },
     {
       "name": "locobounty",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "20.08.25",
+      "nationality": ""
     },
     {
       "name": "LoDarko",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "22.05.24",
+      "nationality": ""
     },
     {
       "name": "LordGangis",
       "active": true,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "11.04.24",
+      "nationality": ""
     },
     {
       "name": "LuckiLeo",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "19.06.25",
+      "nationality": ""
     },
     {
       "name": "Luna",
       "active": true,
       "role": "mushcap",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "26.06.24",
+      "nationality": ""
     },
     {
       "name": "Lyptus",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "25.08.25",
+      "nationality": ""
     },
     {
       "name": "Macarene",
       "active": true,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "27.01.25",
+      "nationality": ""
     },
     {
       "name": "maknaez",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "08.03.24",
+      "nationality": ""
     },
     {
       "name": "MandiMlem",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "11.05.26",
+      "nationality": ""
     },
     {
       "name": "MangoMason",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "03.04.26",
+      "nationality": ""
     },
     {
       "name": "Materusu",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "19.03.26",
+      "nationality": ""
     },
     {
       "name": "Mattmattoux",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "16.08.25",
+      "nationality": ""
     },
     {
       "name": "MechanicalHippo",
       "active": true,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "05.02.26",
+      "nationality": ""
     },
     {
       "name": "MELVZZY",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "08.03.24",
+      "nationality": ""
     },
     {
       "name": "Messpotter",
       "active": true,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "11.10.25",
+      "nationality": ""
     },
     {
       "name": "MikadoGR",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "10.06.26",
+      "nationality": ""
     },
     {
       "name": "MikeRunkZz",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "08.03.24",
+      "nationality": ""
     },
     {
       "name": "Mileage",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "26.02.25",
+      "nationality": ""
     },
     {
       "name": "Miltank",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "09.02.26",
+      "nationality": ""
     },
     {
       "name": "MrBiscottes",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "16.08.25",
+      "nationality": ""
     },
     {
       "name": "MrChooch",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "15.03.24",
+      "nationality": ""
     },
     {
       "name": "MrMushy",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "07.06.26",
+      "nationality": ""
     },
     {
       "name": "Narrayah",
       "active": false,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "Navy",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "20.01.25",
+      "nationality": ""
     },
     {
       "name": "NotAHumanSure",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "27.08.25",
+      "nationality": ""
     },
     {
       "name": "Noufa",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "10.06.26",
+      "nationality": ""
     },
     {
       "name": "NoxxPrime",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "13.05.25",
+      "nationality": ""
     },
     {
       "name": "Obruo",
       "active": true,
       "role": "shroom",
-      "sprite": null
+      "sprite": null,
+      "member_since": "08.03.24",
+      "nationality": ""
     },
     {
       "name": "Oriie",
       "active": true,
       "role": "shroom",
-      "sprite": null
+      "sprite": null,
+      "member_since": "16.08.25",
+      "nationality": ""
     },
     {
       "name": "Orllando",
       "active": true,
       "role": "shinyshroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "11.07.24",
+      "nationality": ""
     },
     {
       "name": "Pangeaa",
       "active": false,
       "role": "mushcap",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "PaulusPax",
       "active": true,
       "role": "mushcap",
-      "sprite": "gif"
+      "sprite": "gif",
+      "member_since": "08.03.24",
+      "nationality": ""
     },
     {
       "name": "pawmu",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "05.08.25",
+      "nationality": ""
     },
     {
       "name": "pearishx",
       "active": false,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "PokeBodega",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "08.03.24",
+      "nationality": ""
     },
     {
       "name": "Privacy",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "10.08.25",
+      "nationality": ""
     },
     {
       "name": "Psyql",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "04.01.26",
+      "nationality": ""
     },
     {
       "name": "Quicooo",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "08.06.26",
+      "nationality": ""
     },
     {
       "name": "QuinJay",
       "active": false,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "Raiketsu",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "15.07.24",
+      "nationality": ""
     },
     {
       "name": "RandomGuy",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "19.03.26",
+      "nationality": ""
     },
     {
       "name": "Randy",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "01.03.26",
+      "nationality": ""
     },
     {
       "name": "realjuckpop",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "08.08.24",
+      "nationality": ""
     },
     {
       "name": "riahC",
       "active": false,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "RicRiley",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "16.03.25",
+      "nationality": ""
     },
     {
       "name": "Rintuu",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "08.03.24",
+      "nationality": ""
     },
     {
       "name": "Ripz",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "08.11.25",
+      "nationality": ""
     },
     {
       "name": "RuthlessZ",
       "active": false,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "SBHALLA",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "17.04.26",
+      "nationality": ""
     },
     {
       "name": "Scooby",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "03.06.24",
+      "nationality": ""
     },
     {
       "name": "Scooty",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "02.07.25",
+      "nationality": ""
     },
     {
       "name": "Sheflavia",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "28.05.26",
+      "nationality": ""
     },
     {
       "name": "sherrii",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "22.05.26",
+      "nationality": ""
     },
     {
       "name": "ShinyPoliwhirl",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "20.05.26",
+      "nationality": ""
     },
     {
       "name": "Sirbeyy",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "28.05.24",
+      "nationality": ""
     },
     {
       "name": "Skullz",
       "active": true,
       "role": "shinyshroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "20.02.25",
+      "nationality": ""
     },
     {
       "name": "slaydounet",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "08.11.25",
+      "nationality": ""
     },
     {
       "name": "SleepyDallas",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "27.05.26",
+      "nationality": ""
     },
     {
       "name": "Smokee",
       "active": true,
       "role": "mushcap",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "30.09.25",
+      "nationality": ""
     },
     {
       "name": "Smough",
       "active": true,
       "role": "shinyshroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "26.08.25",
+      "nationality": ""
     },
     {
       "name": "SousouEsh",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "11.03.26",
+      "nationality": ""
     },
     {
       "name": "Soxzzz",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "07.12.25",
+      "nationality": ""
     },
     {
       "name": "SparkleButt",
       "active": false,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "spells",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "18.12.25",
+      "nationality": ""
     },
     {
       "name": "SpongeBong",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "12.04.26",
+      "nationality": ""
     },
     {
       "name": "Stathiskris",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "13.06.25",
+      "nationality": ""
     },
     {
       "name": "Suirenkai",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "23.04.26",
+      "nationality": ""
     },
     {
       "name": "TaCesa",
       "active": false,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "Take",
       "active": true,
       "role": "shinyshroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "17.08.25",
+      "nationality": ""
     },
     {
       "name": "tardigreat",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "19.09.24",
+      "nationality": ""
     },
     {
       "name": "taywor",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "11.03.26",
+      "nationality": ""
     },
     {
       "name": "Tazmaster",
       "active": true,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "29.07.25",
+      "nationality": ""
     },
     {
       "name": "TeamShroomBank",
       "active": true,
       "role": "mushcap",
-      "sprite": null
+      "sprite": null,
+      "member_since": "15.03.24",
+      "nationality": ""
     },
     {
       "name": "TeletubbieBaz",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "13.10.25",
+      "nationality": ""
     },
     {
       "name": "Terminus",
       "active": true,
       "role": "shinyshroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "10.07.24",
+      "nationality": ""
     },
     {
       "name": "Tobias",
       "active": true,
       "role": "shinyshroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "15.08.25",
+      "nationality": ""
     },
     {
       "name": "Togadh",
       "active": true,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "31.05.26",
+      "nationality": ""
     },
     {
       "name": "tollewolle",
       "active": false,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "TorontoKid",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "24.06.24",
+      "nationality": ""
     },
     {
       "name": "Tortuponchy",
       "active": false,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "TTVxSenseiNESS",
       "active": true,
       "role": "mushcap",
-      "sprite": "gif"
+      "sprite": "gif",
+      "member_since": "08.03.24",
+      "nationality": ""
     },
     {
       "name": "tuli",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "20.02.25",
+      "nationality": ""
     },
     {
       "name": "Universe",
       "active": true,
       "role": "spore",
-      "sprite": null
+      "sprite": null,
+      "member_since": "24.03.26",
+      "nationality": ""
     },
     {
       "name": "Visari",
       "active": false,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "WailynXD",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "06.09.25",
+      "nationality": ""
     },
     {
       "name": "Whamalicious",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "23.05.25",
+      "nationality": ""
     },
     {
       "name": "WhosWill",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "22.06.24",
+      "nationality": ""
     },
     {
       "name": "WillyPS",
       "active": true,
       "role": "shinyshroom",
-      "sprite": "gif"
+      "sprite": "gif",
+      "member_since": "11.04.24",
+      "nationality": ""
     },
     {
       "name": "winlip",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "25.10.25",
+      "nationality": ""
     },
     {
       "name": "WinterIvy",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "24.01.25",
+      "nationality": ""
     },
     {
       "name": "xCOPYCATx",
       "active": true,
       "role": "shinyshroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "13.04.25",
+      "nationality": ""
     },
     {
       "name": "XxArtamielxX",
       "active": false,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "XxEmperiorxX",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "16.12.24",
+      "nationality": ""
     },
     {
       "name": "Yoboes",
       "active": false,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     },
     {
       "name": "Yoyoyoshie",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "20.09.24",
+      "nationality": ""
     },
     {
       "name": "Yugi",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "01.09.25",
+      "nationality": ""
     },
     {
       "name": "zDaarkraai",
       "active": true,
       "role": "spore",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "10.06.25",
+      "nationality": ""
     },
     {
       "name": "ZekTV",
       "active": true,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "16.08.25",
+      "nationality": ""
     },
     {
       "name": "zzxyami",
       "active": false,
       "role": "shroom",
-      "sprite": "png"
+      "sprite": "png",
+      "member_since": "",
+      "nationality": ""
     }
   ]
 }
