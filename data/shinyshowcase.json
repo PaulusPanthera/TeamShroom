@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-18T18:58:39.572Z",
+  "generatedAt": "2026-06-18T19:59:49.693Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1058,7 +1058,7 @@
     },
     {
       "ot": "Biiidou",
-      "pokemon": "krokorok",
+      "pokemon": "krookodile",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -2293,7 +2293,7 @@
     },
     {
       "ot": "casethecase",
-      "pokemon": "nidorino",
+      "pokemon": "nidoking",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -2306,7 +2306,7 @@
     },
     {
       "ot": "casethecase",
-      "pokemon": "axew",
+      "pokemon": "haxorus",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -2319,7 +2319,7 @@
     },
     {
       "ot": "casethecase",
-      "pokemon": "growlithe",
+      "pokemon": "arcanine",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -2515,9 +2515,9 @@
     {
       "ot": "Charizapedia",
       "pokemon": "ledyba",
-      "method": null,
+      "method": "safari",
       "encounter": null,
-      "secret": true,
+      "secret": false,
       "alpha": false,
       "run": false,
       "lost": false,
@@ -2595,7 +2595,7 @@
       "pokemon": "arcanine",
       "method": null,
       "encounter": null,
-      "secret": false,
+      "secret": true,
       "alpha": false,
       "run": false,
       "lost": false,
@@ -4126,7 +4126,7 @@
     },
     {
       "ot": "DaddyMolo",
-      "pokemon": "tangela",
+      "pokemon": "tangrowth",
       "method": "5x100%",
       "encounter": 25421,
       "secret": false,
@@ -4724,7 +4724,7 @@
     },
     {
       "ot": "Deuporus",
-      "pokemon": "magikarp",
+      "pokemon": "gyarados",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -4737,7 +4737,7 @@
     },
     {
       "ot": "Deuporus",
-      "pokemon": "golett",
+      "pokemon": "golurk",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -8780,7 +8780,7 @@
     },
     {
       "ot": "ItsKitas",
-      "pokemon": "wooper",
+      "pokemon": "quagsire",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -8793,7 +8793,7 @@
     },
     {
       "ot": "ItsKitas",
-      "pokemon": "koffing",
+      "pokemon": "weezing",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -8819,7 +8819,7 @@
     },
     {
       "ot": "ItsKitas",
-      "pokemon": "golett",
+      "pokemon": "golurk",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -8845,7 +8845,7 @@
     },
     {
       "ot": "ItsKitas",
-      "pokemon": "krokorok",
+      "pokemon": "krookodile",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -8858,7 +8858,7 @@
     },
     {
       "ot": "ItsKitas",
-      "pokemon": "venipede",
+      "pokemon": "scolipede",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -8949,7 +8949,7 @@
     },
     {
       "ot": "ItsKitas",
-      "pokemon": "slowpoke",
+      "pokemon": "slowbro",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -8962,7 +8962,7 @@
     },
     {
       "ot": "ItsKitas",
-      "pokemon": "swadloon",
+      "pokemon": "leavanny",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -9001,7 +9001,7 @@
     },
     {
       "ot": "ItsMawile",
-      "pokemon": "shroomish",
+      "pokemon": "breloom",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -9118,7 +9118,7 @@
     },
     {
       "ot": "jaspn",
-      "pokemon": "shuppet",
+      "pokemon": "banette",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -10699,7 +10699,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://youtu.be/P_BfFh6LnV0",
       "notes": "standard week date"
     },
     {
@@ -11185,7 +11185,7 @@
     },
     {
       "ot": "Kithri",
-      "pokemon": "eevee",
+      "pokemon": "espeon",
       "method": "egg",
       "encounter": null,
       "secret": false,
@@ -11193,7 +11193,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://youtu.be/k1hr7Zl3WNw",
       "notes": "standard week date"
     },
     {
@@ -11206,7 +11206,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://www.youtube.com/watch?v=Tg6kZB0v99Y",
       "notes": "standard week date"
     },
     {
@@ -11219,7 +11219,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://youtu.be/8a3r7nEohmo",
       "notes": "standard week date"
     },
     {
@@ -11232,7 +11232,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://youtu.be/dxD128RZ8ZY",
       "notes": "standard week date"
     },
     {
@@ -12264,7 +12264,7 @@
     },
     {
       "ot": "Kynnyto",
-      "pokemon": "shellos",
+      "pokemon": "shellos-east",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -12277,7 +12277,7 @@
     },
     {
       "ot": "Kynnyto",
-      "pokemon": "shellos",
+      "pokemon": "gastrodon-east",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -12290,7 +12290,7 @@
     },
     {
       "ot": "Kynnyto",
-      "pokemon": "shellos",
+      "pokemon": "shellos-east",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -12636,7 +12636,7 @@
       "run": true,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/fr/games/minecraft/clips/lSKv5NPJtLOKILM2H?invite=cr-MSxXRFQsMjI0NTQ4NDE2&v=30",
       "notes": "standard week date"
     },
     {
@@ -12649,7 +12649,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/fr/games/pokemmo/clips/lT2ZBlNwy2Ux3gwND?invite=cr-MSx5WGQsMjI0NTQ4NDE2&v=70",
       "notes": "standard week date"
     },
     {
@@ -12662,7 +12662,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/fr/games/pokemmo/clips/lUIwNkqqtR-PzPkcF?invite=cr-MSxtRjcsMjI0NTQ4NDE2&v=29",
       "notes": "standard week date"
     },
     {
@@ -12688,7 +12688,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/fr/games/pokemmo/clips/m6eBO4zcaBM3D5svq?invite=cr-MSxnemMsMjI0NTQ4NDE2&v=58",
       "notes": "standard week date"
     },
     {
@@ -12701,7 +12701,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/fr/games/pokemmo/clips/mkbTOGM24LkmEt_GU?invite=cr-MSw5UHksMjI0NTQ4NDE2&v=24",
       "notes": "standard week date"
     },
     {
@@ -13174,7 +13174,7 @@
     },
     {
       "ot": "LuckiLeo",
-      "pokemon": "spearow",
+      "pokemon": "fearow",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -13252,7 +13252,7 @@
     },
     {
       "ot": "LuckiLeo",
-      "pokemon": "duskull",
+      "pokemon": "dusknoir",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -14760,7 +14760,7 @@
     },
     {
       "ot": "Materusu",
-      "pokemon": "koffing",
+      "pokemon": "weezing",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -16112,7 +16112,7 @@
     },
     {
       "ot": "Miltank",
-      "pokemon": "joltik",
+      "pokemon": "galvantula",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -16432,7 +16432,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/fr/games/pokemmo/clips/lO0NoS6QqBfi9a49k?invite=cr-MSxlY3csMzYxNTYyNDI3",
       "notes": "standard week date"
     },
     {
@@ -16445,7 +16445,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/fr/games/pokemmo/clips/lOnGRIP8z0aXc5Ok5?invite=cr-MSw1SjEsMzYxNTYyNDI3",
       "notes": "standard week date"
     },
     {
@@ -16458,7 +16458,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/fr/games/pokemmo/clips/lPigphxxiWq3X3r_j?invite=cr-MSxuZXQsMzYxNTYyNDI3&v=227",
       "notes": "standard week date"
     },
     {
@@ -16471,7 +16471,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/fr/games/pokemmo/clips/lPCnTudHcG6EtMTzq?invite=cr-MSxFM0osMzYxNTYyNDI3&v=173",
       "notes": "standard week date"
     },
     {
@@ -17464,7 +17464,7 @@
     },
     {
       "ot": "Oriie",
-      "pokemon": "staryu",
+      "pokemon": "starmie",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -17472,12 +17472,12 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/fr/games/pokemmo/clips/lOxfpZjDx3c3HsEvh?invite=cr-MSx1QkssMzg0MDg5NTkz&v=36",
       "notes": "standard week date"
     },
     {
       "ot": "Oriie",
-      "pokemon": "krokorok",
+      "pokemon": "krookodile",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -17485,12 +17485,12 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/fr/games/pokemmo/clips/lOYMCpWHP8vwIdO17?invite=cr-MSxvdEQsMzg0MDg5NTkz&v=41",
       "notes": "standard week date"
     },
     {
       "ot": "Oriie",
-      "pokemon": "rhydon",
+      "pokemon": "rhyperior",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -17498,7 +17498,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/fr/games/minecraft/clips/lPCFCkIKQLpWIDSUu?invite=cr-MSw5QUIsMzg0MDg5NTkz&v=43",
       "notes": "standard week date"
     },
     {
@@ -17511,7 +17511,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/games/minecraft/clips/lRd2eWkdtprz23XUu?invite=cr-MSxQVGgsMzg0MDg5NTkz",
       "notes": "standard week date"
     },
     {
@@ -17524,7 +17524,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/games/pokemmo/clips/lRR1WpR6ubInFQstg?invite=cr-MSxBSk8sMzg0MDg5NTkz",
       "notes": "standard week date"
     },
     {
@@ -17537,12 +17537,12 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/games/pokemmo/clips/lSeNl3hrvtQbBOEcf?invite=cr-MSwxa3QsMzg0MDg5NTkz",
       "notes": "standard week date"
     },
     {
       "ot": "Oriie",
-      "pokemon": "luxio",
+      "pokemon": "luxray",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -17550,12 +17550,12 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/fr/games/pokemmo/clips/lUih1J0vuROuhc4f6?invite=cr-MSxrOEUsMzg0MDg5NTkz&v=35",
       "notes": "standard week date"
     },
     {
       "ot": "Oriie",
-      "pokemon": "sneasel",
+      "pokemon": "weavile",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -17563,7 +17563,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/fr/games/pokemmo/clips/lV1VQreJOkiGZgtXf?invite=cr-MSx0TW8sMzg0MDg5NTkz&v=70",
       "notes": "standard week date"
     },
     {
@@ -17576,12 +17576,12 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/fr/games/pokemmo/clips/mg61MNvJVbZowRIyy?invite=cr-MSxMQjEsMzg0MDg5NTkz&v=48",
       "notes": "standard week date"
     },
     {
       "ot": "Oriie",
-      "pokemon": "bagon",
+      "pokemon": "salamence",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -19973,7 +19973,7 @@
     },
     {
       "ot": "Privacy",
-      "pokemon": "koffing",
+      "pokemon": "weezing",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -20046,12 +20046,12 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://www.twitch.tv/privacysir/clip/SpotlessBlazingClintDatBoi-Y6UdkQ4kZSl4Ty6x",
       "notes": "standard week date"
     },
     {
       "ot": "Privacy",
-      "pokemon": "boldore",
+      "pokemon": "gigalith",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -20558,7 +20558,7 @@
     },
     {
       "ot": "RicRiley",
-      "pokemon": "horsea",
+      "pokemon": "seadra",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -22105,7 +22105,7 @@
     },
     {
       "ot": "slaydounet",
-      "pokemon": "metapod",
+      "pokemon": "butterfree",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -22118,7 +22118,7 @@
     },
     {
       "ot": "slaydounet",
-      "pokemon": "weedle",
+      "pokemon": "beedrill",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -22438,7 +22438,7 @@
       "run": true,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://youtu.be/YGCVUsj3Y20",
       "notes": "standard week date"
     },
     {
@@ -22464,7 +22464,7 @@
       "run": true,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://youtu.be/wZD62UyNeiU",
       "notes": "standard week date"
     },
     {
@@ -22482,7 +22482,7 @@
     },
     {
       "ot": "Smokee",
-      "pokemon": "shroomish",
+      "pokemon": "breloom",
       "method": "egg",
       "encounter": null,
       "secret": false,
@@ -22490,7 +22490,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://youtu.be/gv-5m5eKq6Q",
       "notes": "standard week date"
     },
     {
@@ -22503,7 +22503,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://youtu.be/M9ZGMvwusAI",
       "notes": "standard week date"
     },
     {
@@ -22534,7 +22534,7 @@
     },
     {
       "ot": "Smokee",
-      "pokemon": "tynamo",
+      "pokemon": "eelektross",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -24237,7 +24237,7 @@
     },
     {
       "ot": "Take",
-      "pokemon": "shroomish",
+      "pokemon": "breloom",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -24245,12 +24245,12 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://medal.tv/fr/games/pokemmo/clips/lU4KFS1G5MSMpO5PG?invite=cr-MSx0OFMsMzU0NDc1OTg0",
       "notes": "standard week date"
     },
     {
       "ot": "Take",
-      "pokemon": "shellder",
+      "pokemon": "cloyster",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -24289,7 +24289,7 @@
     },
     {
       "ot": "Take",
-      "pokemon": "feebas",
+      "pokemon": "milotic",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -24484,7 +24484,7 @@
     },
     {
       "ot": "TeletubbieBaz",
-      "pokemon": "ralts",
+      "pokemon": "gallade",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -24635,12 +24635,12 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://youtu.be/WaBQHHcE1u0",
       "notes": "standard week date"
     },
     {
       "ot": "TeletubbieBaz",
-      "pokemon": "snivy",
+      "pokemon": "serperior",
       "method": "egg",
       "encounter": null,
       "secret": false,
@@ -24674,7 +24674,7 @@
       "run": true,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://youtu.be/jgXQp-hktFU",
       "notes": "standard week date"
     },
     {
@@ -24783,7 +24783,7 @@
     },
     {
       "ot": "TeletubbieBaz",
-      "pokemon": "electabuzz",
+      "pokemon": "electivire",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -24835,7 +24835,7 @@
     },
     {
       "ot": "Terminus",
-      "pokemon": "jigglypuff",
+      "pokemon": "wigglytuff",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -25017,7 +25017,7 @@
     },
     {
       "ot": "Terminus",
-      "pokemon": "shroomish",
+      "pokemon": "breloom",
       "method": null,
       "encounter": null,
       "secret": true,
@@ -25212,7 +25212,7 @@
     },
     {
       "ot": "Tobias",
-      "pokemon": "shroomish",
+      "pokemon": "breloom",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -26512,7 +26512,7 @@
     },
     {
       "ot": "TTVxSenseiNESS",
-      "pokemon": "zubat",
+      "pokemon": "crobat",
       "method": null,
       "encounter": 25066,
       "secret": false,
@@ -26780,7 +26780,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://www.twitch.tv/videos/2660067234",
       "notes": "standard week date"
     },
     {
@@ -26889,7 +26889,7 @@
     },
     {
       "ot": "TTVxSenseiNESS",
-      "pokemon": "staravia",
+      "pokemon": "staraptor",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -26954,7 +26954,7 @@
     },
     {
       "ot": "TTVxSenseiNESS",
-      "pokemon": "haunter",
+      "pokemon": "gengar",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -26967,7 +26967,7 @@
     },
     {
       "ot": "TTVxSenseiNESS",
-      "pokemon": "amoongus",
+      "pokemon": "foongus",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -27370,7 +27370,7 @@
     },
     {
       "ot": "Universe",
-      "pokemon": "starly",
+      "pokemon": "staraptor",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -28678,7 +28678,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://youtu.be/mc8P3HVPuXo",
       "notes": "standard week date"
     },
     {
@@ -28691,7 +28691,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://youtu.be/_jXf-Nn3Mds",
       "notes": "standard week date"
     },
     {
@@ -28704,7 +28704,7 @@
       "run": true,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://www.youtube.com/watch?v=sBeF66dkijI",
       "notes": "standard week date"
     },
     {
@@ -30108,7 +30108,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://youtu.be/VSlBIPfKcjE",
       "notes": "standard week date"
     },
     {
@@ -30121,7 +30121,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://youtu.be/wAmZofiSSRU",
       "notes": "standard week date"
     },
     {
@@ -30134,7 +30134,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://youtu.be/_Omb9e9l08U",
       "notes": "standard week date"
     },
     {
@@ -30147,7 +30147,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://youtu.be/xgk68mnifLg",
       "notes": "standard week date"
     },
     {
@@ -30303,12 +30303,12 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://www.youtube.com/watch?v=AImqWH27luE",
       "notes": "standard week date"
     },
     {
       "ot": "ZekTV",
-      "pokemon": "mankey",
+      "pokemon": "primeape",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -30316,7 +30316,7 @@
       "run": false,
       "lost": false,
       "sold": false,
-      "clip": null,
+      "clip": "https://www.youtube.com/watch?v=D_12nE2hyWI",
       "notes": "standard week date"
     },
     {
