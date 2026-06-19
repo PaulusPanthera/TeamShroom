@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-19T19:20:41.063Z",
+  "generatedAt": "2026-06-19T21:59:54.527Z",
   "source": "google-sheets",
   "data": [
     {
@@ -305,6 +305,19 @@
     {
       "ot": "aphrooturtle",
       "pokemon": "raticate",
+      "method": "single",
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": null
+    },
+    {
+      "ot": "aphrooturtle",
+      "pokemon": "miltank",
       "method": "single",
       "encounter": null,
       "secret": false,

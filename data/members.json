@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-19T19:20:42.659Z",
+  "generatedAt": "2026-06-19T21:59:55.766Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1409,6 +1409,14 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "",
+      "nationality": ""
+    },
+    {
+      "name": "Noxaril",
+      "active": true,
+      "role": "spore",
+      "sprite": null,
+      "member_since": "15.06.26",
       "nationality": ""
     }
   ]
