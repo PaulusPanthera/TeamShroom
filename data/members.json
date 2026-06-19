@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-19T14:35:24.739Z",
+  "generatedAt": "2026-06-19T17:30:21.881Z",
   "source": "google-sheets",
   "data": [
     {
@@ -173,7 +173,7 @@
     },
     {
       "name": "CigaretteMilk",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": null,
       "member_since": "18.03.24",
@@ -533,7 +533,7 @@
     },
     {
       "name": "Jiroho",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": null,
       "member_since": "04.01.25",
