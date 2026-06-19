@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-19T00:19:08.822Z",
+  "generatedAt": "2026-06-19T06:07:12.126Z",
   "source": "discord-bot",
   "data": [
     {
       "nextEvent": {
-        "title": "Mush Spring Fest!",
-        "timeText": "2026-05-23 06:00 CEST",
-        "url": "https://discord.com/events/1178448989566283779/1492791120856354998",
-        "subtitle": "https://forums.pokemmo.com/index.php?/topic/19789...",
+        "title": "MÜSH Safari Week",
+        "timeText": "2026-06-21 06:00 CEST",
+        "url": "https://discord.com/events/1178448989566283779/1517403372800573592",
+        "subtitle": "https://forums.pokemmo.com/index.php?/topic/19840...",
         "gifSrc": "img/symbols/shinyshroomsprite.png"
       },
       "bounty": {
