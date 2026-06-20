@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-19T21:59:54.527Z",
+  "generatedAt": "2026-06-20T02:01:58.101Z",
   "source": "google-sheets",
   "data": [
     {
@@ -2391,7 +2391,7 @@
       "alpha": false,
       "run": false,
       "lost": false,
-      "sold": false,
+      "sold": true,
       "clip": null,
       "notes": "AUTO-GENERATED ORDER DATE"
     },
