@@ -64,6 +64,45 @@ function countryCodeToFlagSrc(code) {
   return `https://flagcdn.com/w20/${clean}.png`;
 }
 
+function createCountryFlagBadge(rawCountryCode, className, label = 'Country') {
+  const countryCode = normalizeCountryCode(rawCountryCode);
+  if (!countryCode) return null;
+
+  const flag = document.createElement('span');
+  flag.className = className;
+  flag.title = countryCode;
+  flag.setAttribute('aria-label', `${label}: ${countryCode}`);
+
+  const flagSrc = countryCodeToFlagSrc(countryCode);
+  if (flagSrc) {
+    const flagImg = document.createElement('img');
+    flagImg.className = `${className}-img`;
+    flagImg.src = flagSrc;
+    flagImg.alt = countryCode;
+    flagImg.loading = 'lazy';
+    flagImg.addEventListener('error', () => {
+      flag.className = `${className} ${className}--code`;
+      flag.replaceChildren(document.createTextNode(countryCode));
+    }, { once: true });
+    flag.appendChild(flagImg);
+  } else {
+    flag.className = `${className} ${className}--code`;
+    flag.textContent = countryCode;
+  }
+
+  return flag;
+}
+
+function appendMemberCardCountryFlag(card, rawCountryCode) {
+  if (!card) return;
+  const flag = createCountryFlagBadge(rawCountryCode, 'member-card-country-flag');
+  if (!flag) return;
+
+  const art = card.querySelector('.unified-art');
+  if (!art) return;
+  art.appendChild(flag);
+}
+
 function appendTextLine(parent, className, text) {
   const value = String(text || '').trim();
   if (!parent || !value) return null;
@@ -265,6 +304,7 @@ export function renderShowcaseGallerySections(sections, sortMode) {
 
       // Always show total shinies in the bottom info plate for member cards.
       card.classList.add('member-show-shinies');
+      appendMemberCardCountryFlag(card, v && v.nationality);
 
       setDataAttr(card, 'data-member-key', v && v.memberKey ? v.memberKey : '');
       frag.appendChild(card);
@@ -307,6 +347,7 @@ export function renderShowcaseGallery(memberCardViews) {
     });
 
     card.classList.add('member-show-shinies');
+    appendMemberCardCountryFlag(card, v && v.nationality);
 
     setDataAttr(card, 'data-member-key', v.memberKey);
     grid.appendChild(card);
