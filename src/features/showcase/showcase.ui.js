@@ -54,14 +54,14 @@ function normalizeCountryCode(raw) {
   return code;
 }
 
-function countryCodeToFlag(code) {
-  const clean = normalizeCountryCode(code);
-  if (!/^[A-Z]{2}$/.test(clean)) return '';
+function countryCodeToFlagSrc(code) {
+  const clean = normalizeCountryCode(code).toLowerCase();
+  if (!/^[a-z]{2}$/.test(clean)) return '';
 
-  return clean
-    .split('')
-    .map(ch => String.fromCodePoint(0x1F1E6 + ch.charCodeAt(0) - 65))
-    .join('');
+  // Use a small image instead of emoji flags.
+  // Windows/browser emoji fonts often render regional indicators as plain “DE” text,
+  // which breaks the intended ID-card look.
+  return `https://flagcdn.com/w20/${clean}.png`;
 }
 
 function appendTextLine(parent, className, text) {
@@ -90,10 +90,10 @@ function buildMemberIdentityLines(member) {
   return {
     name: String(m.name || '').trim() || 'Unknown Member',
     countryCode: normalizeCountryCode(m.nationality),
-    countryFlag: countryCodeToFlag(m.nationality),
+    countryFlagSrc: countryCodeToFlagSrc(m.nationality),
     metaLine: meta.join(' · '),
-    shinyLine: `Shinies ${active} Active / ${total} Total`,
-    pointsLine: `Points ${points}P`
+    shinyLine: `Shinies: ${active} / ${total}`,
+    pointsLine: `Points: ${points}P`
   };
 }
 
@@ -379,12 +379,28 @@ export function renderMemberShowcaseShell(root, member) {
   nameText.textContent = id.name;
   nameRow.appendChild(nameText);
 
-  if (id.countryFlag || id.countryCode) {
+  if (id.countryCode) {
     const flag = document.createElement('span');
-    flag.className = id.countryFlag ? 'member-id-flag' : 'member-id-flag member-id-country-code';
-    flag.textContent = id.countryFlag || id.countryCode;
+    flag.className = 'member-id-flag';
     flag.title = id.countryCode;
     flag.setAttribute('aria-label', `Country: ${id.countryCode}`);
+
+    if (id.countryFlagSrc) {
+      const flagImg = document.createElement('img');
+      flagImg.className = 'member-id-flag-img';
+      flagImg.src = id.countryFlagSrc;
+      flagImg.alt = id.countryCode;
+      flagImg.loading = 'lazy';
+      flagImg.addEventListener('error', () => {
+        flag.className = 'member-id-flag member-id-country-code';
+        flag.replaceChildren(document.createTextNode(id.countryCode));
+      }, { once: true });
+      flag.appendChild(flagImg);
+    } else {
+      flag.className = 'member-id-flag member-id-country-code';
+      flag.textContent = id.countryCode;
+    }
+
     nameRow.appendChild(flag);
   }
 
