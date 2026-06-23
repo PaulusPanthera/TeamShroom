@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-22T20:28:18.772Z",
+  "generatedAt": "2026-06-23T01:31:16.495Z",
   "source": "google-sheets",
   "data": [
     {
@@ -41,7 +41,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "17.03.26",
-      "nationality": ""
+      "nationality": "DE"
     },
     {
       "name": "ashash",
@@ -193,7 +193,7 @@
       "role": "shinyshroom",
       "sprite": "png",
       "member_since": "12.07.24",
-      "nationality": ""
+      "nationality": "DE"
     },
     {
       "name": "Cordeiroxi",
@@ -873,7 +873,7 @@
       "role": "mushcap",
       "sprite": "gif",
       "member_since": "08.03.24",
-      "nationality": ""
+      "nationality": "DE"
     },
     {
       "name": "pawmu",
