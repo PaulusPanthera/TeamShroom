@@ -61,7 +61,7 @@ function countryCodeToFlagSrc(code) {
   // Use a small image instead of emoji flags.
   // Windows/browser emoji fonts often render regional indicators as plain “DE” text,
   // which breaks the intended ID-card look.
-  return `https://flagcdn.com/w20/${clean}.png`;
+  return `https://flagcdn.com/32x24/${clean}.png`;
 }
 
 function createCountryFlagBadge(rawCountryCode, className, label = 'Country') {
