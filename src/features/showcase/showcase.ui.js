@@ -47,33 +47,54 @@ function parseEncounter(raw) {
   return Number.isFinite(n) ? n : null;
 }
 
-function formatCompactNumber(n) {
-  const num = Number(n);
-  if (!Number.isFinite(num)) return '—';
-  const abs = Math.abs(num);
-  if (abs >= 1_000_000) {
-    const v = Math.round((num / 1_000_000) * 10) / 10;
-    return `${v}M`.replace(/\.0M$/, 'M');
-  }
-  if (abs >= 1_000) {
-    const v = Math.round((num / 1_000) * 10) / 10;
-    return `${v}K`.replace(/\.0K$/, 'K');
-  }
-  return String(Math.round(num));
+function normalizeCountryCode(raw) {
+  const code = String(raw || '').trim().toUpperCase();
+  if (!code) return '';
+  if (code === 'UK') return 'GB';
+  return code;
 }
 
-function buildMemberIdLines(stats) {
-  const s = stats || {};
-  const avg = (s.avgEncounterPerShiny != null) ? formatCompactNumber(s.avgEncounterPerShiny) : '—';
-  const logged = Number(s.encounterLogged) || 0;
-  const eligible = Number(s.encounterEligible) || 0;
-  const unique = Number(s.uniqueSpecies) || 0;
+function countryCodeToFlag(code) {
+  const clean = normalizeCountryCode(code);
+  if (!/^[A-Z]{2}$/.test(clean)) return '';
 
-  return [
-    `AVG ENC/SHINY: ${avg}`,
-    `ENC LOGGED: ${logged} / ${eligible}`,
-    `UNIQUE SPECIES: ${unique}`
-  ];
+  return clean
+    .split('')
+    .map(ch => String.fromCodePoint(0x1F1E6 + ch.charCodeAt(0) - 65))
+    .join('');
+}
+
+function appendTextLine(parent, className, text) {
+  const value = String(text || '').trim();
+  if (!parent || !value) return null;
+
+  const line = document.createElement('div');
+  line.className = className;
+  line.textContent = value;
+  parent.appendChild(line);
+  return line;
+}
+
+function buildMemberIdentityLines(member) {
+  const m = member || {};
+  const role = String(m.roleLabel || '').trim();
+  const joined = String(m.memberSince || '').trim();
+  const active = Number(m.shinyCount) || 0;
+  const total = Number(m.totalShinyCount) || 0;
+  const points = Number(m.points) || 0;
+
+  const meta = [];
+  if (role) meta.push(role);
+  if (joined) meta.push(`Joined ${joined}`);
+
+  return {
+    name: String(m.name || '').trim() || 'Unknown Member',
+    countryCode: normalizeCountryCode(m.nationality),
+    countryFlag: countryCodeToFlag(m.nationality),
+    metaLine: meta.join(' · '),
+    shinyLine: `Shinies ${active} Active / ${total} Total`,
+    pointsLine: `Points ${points}P`
+  };
 }
 
 
@@ -321,6 +342,10 @@ export function renderMemberShowcaseShell(root, member) {
   emblem.alt = '';
   emblem.src = (member && member.tierEmblemSrc) ? String(member.tierEmblemSrc) : 'img/symbols/sporesprite.png';
 
+  const title = document.createElement('div');
+  title.className = 'member-id-title';
+  title.textContent = 'MEMBER ID';
+
   const sockets = document.createElement('div');
   sockets.className = 'member-id-sockets';
   for (let i = 0; i < 3; i += 1) {
@@ -329,7 +354,7 @@ export function renderMemberShowcaseShell(root, member) {
     sockets.appendChild(s);
   }
 
-  head.append(emblem, sockets);
+  head.append(emblem, title, sockets);
 
   const bodyRow = document.createElement('div');
   bodyRow.className = 'member-id-body';
@@ -344,13 +369,29 @@ export function renderMemberShowcaseShell(root, member) {
   const info = document.createElement('div');
   info.className = 'member-id-info';
 
-  const lines = buildMemberIdLines(member && member.idStats);
-  lines.forEach(t => {
-    const line = document.createElement('div');
-    line.className = 'member-id-line';
-    line.textContent = String(t || '');
-    info.appendChild(line);
-  });
+  const id = buildMemberIdentityLines(member);
+
+  const nameRow = document.createElement('div');
+  nameRow.className = 'member-id-name-row';
+
+  const nameText = document.createElement('span');
+  nameText.className = 'member-id-name';
+  nameText.textContent = id.name;
+  nameRow.appendChild(nameText);
+
+  if (id.countryFlag || id.countryCode) {
+    const flag = document.createElement('span');
+    flag.className = id.countryFlag ? 'member-id-flag' : 'member-id-flag member-id-country-code';
+    flag.textContent = id.countryFlag || id.countryCode;
+    flag.title = id.countryCode;
+    flag.setAttribute('aria-label', `Country: ${id.countryCode}`);
+    nameRow.appendChild(flag);
+  }
+
+  info.appendChild(nameRow);
+  appendTextLine(info, 'member-id-detail', id.metaLine);
+  appendTextLine(info, 'member-id-detail', id.shinyLine);
+  appendTextLine(info, 'member-id-detail member-id-detail--muted', id.pointsLine);
 
   bodyRow.append(sprite, info);
 

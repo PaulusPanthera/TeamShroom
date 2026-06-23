@@ -107,6 +107,40 @@ function maybeLine(label, value) {
   return v ? `${label}: ${v}` : null;
 }
 
+function formatCompactNumber(n) {
+  const num = Number(n);
+  if (!Number.isFinite(num)) return '—';
+  const abs = Math.abs(num);
+
+  if (abs >= 1000000) {
+    const v = Math.round((num / 1000000) * 10) / 10;
+    return `${v}M`.replace(/\.0M$/, 'M');
+  }
+
+  if (abs >= 1000) {
+    const v = Math.round((num / 1000) * 10) / 10;
+    return `${v}K`.replace(/\.0K$/, 'K');
+  }
+
+  return String(Math.round(num));
+}
+
+function buildMemberStatusLines(stats) {
+  const s = stats || {};
+  const avg = (s.avgEncounterPerShiny != null)
+    ? formatCompactNumber(s.avgEncounterPerShiny)
+    : '—';
+  const logged = Number(s.encounterLogged) || 0;
+  const eligible = Number(s.encounterEligible) || 0;
+  const unique = Number(s.uniqueSpecies) || 0;
+
+  return [
+    `AVG ENC/SHINY: ${avg}`,
+    `ENC LOGGED: ${logged} / ${eligible}`,
+    `UNIQUE SPECIES: ${unique}`
+  ];
+}
+
 export async function renderShowcasePage(ctx) {
   const root = ctx && ctx.root;
   const sidebar = ctx && ctx.sidebar;
@@ -154,10 +188,16 @@ export function setupShowcasePage({ root, sidebar, membersRows, showcaseRows, po
 const memberIdStats = buildMemberIdStats(member && member.shinies);
 
 renderMemberShowcaseShell(root, {
+  name: member && member.name ? String(member.name) : '',
   spriteSrc: spriteSrcForMember(member),
   memberTier: member && member.role ? String(member.role) : '',
+  roleLabel: prettifyRole(member && member.role),
   tierEmblemSrc: getMemberRoleEmblemSrc(member && member.role),
-  idStats: memberIdStats
+  memberSince: member && member.member_since ? String(member.member_since) : '',
+  nationality: member && member.nationality ? String(member.nationality) : '',
+  shinyCount: Number(member && member.shinyCount) || 0,
+  totalShinyCount: Number(member && member.totalShinyCount) || 0,
+  points: Number(member && member.points) || 0
 });
 
     const viewRoot = root.querySelector('.showcase-member-root');
@@ -167,14 +207,7 @@ renderMemberShowcaseShell(root, {
     const controlsHost = document.createElement('div');
     controlsHost.className = 'showcase-search-controls showcase-member-controls';
 
-    const statusNode = makeLines([
-      `Name: ${member.name}`,
-      maybeLine('Rank', prettifyRole(member && member.role)),
-      maybeLine('Joined', member && member.member_since),
-      maybeLine('Nationality', member && member.nationality),
-      `Shinies: ${member.shinyCount} Active • ${member.totalShinyCount} Total`,
-      `Points: ${member.points}P`
-    ].filter(Boolean));
+    const statusNode = makeLines(buildMemberStatusLines(memberIdStats));
 
     const controlsStack = document.createElement('div');
     controlsStack.append(backBtn, controlsHost);
