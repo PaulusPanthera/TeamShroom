@@ -65,23 +65,24 @@
 
 .showcase-root .member-card-country-flag{
   position: absolute;
-  right: 7px;
-  bottom: 7px;
+  right: 8px;
+  bottom: 8px;
   z-index: 3;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  width: 25px;
-  height: 18px;
+  box-sizing: border-box;
+  width: 19px;
+  height: 13px;
   padding: 1px;
 
   background: #d8d1b8;
   border: 1px solid #111820;
   box-shadow:
-    0 0 0 1px rgba(216,209,184,0.45),
-    0 2px 0 rgba(0,0,0,0.55);
+    0 0 0 1px rgba(216,209,184,0.35),
+    0 1px 0 rgba(0,0,0,0.55);
 
   overflow: hidden;
   pointer-events: none;
