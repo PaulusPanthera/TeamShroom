@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-23T01:31:16.495Z",
+  "generatedAt": "2026-06-23T01:35:39.375Z",
   "source": "google-sheets",
   "data": [
     {
@@ -585,7 +585,7 @@
       "role": "mushcap",
       "sprite": "png",
       "member_since": "29.07.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "kitsucupid",
@@ -657,7 +657,7 @@
       "role": "mushcap",
       "sprite": "png",
       "member_since": "26.06.24",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Lyptus",
@@ -833,7 +833,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "13.05.25",
-      "nationality": ""
+      "nationality": "UK"
     },
     {
       "name": "Obruo",
@@ -865,7 +865,7 @@
       "role": "mushcap",
       "sprite": "png",
       "member_since": "",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "PaulusPax",
@@ -1265,7 +1265,7 @@
       "role": "mushcap",
       "sprite": "gif",
       "member_since": "08.03.24",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "tuli",
