@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-23T01:35:39.375Z",
+  "generatedAt": "2026-06-23T01:56:12.538Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1385,7 +1385,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "01.09.25",
-      "nationality": ""
+      "nationality": "DE"
     },
     {
       "name": "zDaarkraai",
@@ -1417,7 +1417,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "15.06.26",
-      "nationality": ""
+      "nationality": "CH"
     }
   ]
 }
