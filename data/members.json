@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-27T13:02:25.509Z",
+  "generatedAt": "2026-06-27T15:51:45.401Z",
   "source": "google-sheets",
   "data": [
     {
@@ -25,7 +25,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "03.11.25",
-      "nationality": ""
+      "nationality": "CA"
     },
     {
       "name": "Aokiza",
@@ -33,7 +33,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "03.07.25",
-      "nationality": ""
+      "nationality": "NZ"
     },
     {
       "name": "aphrooturtle",
@@ -49,7 +49,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "17.12.24",
-      "nationality": ""
+      "nationality": "TN"
     },
     {
       "name": "azili",
@@ -65,7 +65,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "16.08.25",
-      "nationality": ""
+      "nationality": "FR"
     },
     {
       "name": "BlistiK",
@@ -81,15 +81,15 @@
       "role": "shroom",
       "sprite": null,
       "member_since": "24.12.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
-      "name": "bonseum",
+      "name": "bonseun",
       "active": true,
       "role": "shinyshroom",
       "sprite": "png",
       "member_since": "05.10.25",
-      "nationality": ""
+      "nationality": "AU"
     },
     {
       "name": "Brownerthan",
@@ -97,7 +97,7 @@
       "role": "shinyshroom",
       "sprite": "png",
       "member_since": "01.11.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Bulkanator",
@@ -113,7 +113,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "21.04.24",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "CassosALaPlaya",
@@ -121,7 +121,7 @@
       "role": "shroom",
       "sprite": null,
       "member_since": "30.12.25",
-      "nationality": ""
+      "nationality": "FR"
     },
     {
       "name": "CelineCeline",
@@ -129,7 +129,7 @@
       "role": "shroom",
       "sprite": null,
       "member_since": "17.12.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Charizapedia",
@@ -145,7 +145,7 @@
       "role": "spore",
       "sprite": "png",
       "member_since": "05.01.26",
-      "nationality": ""
+      "nationality": "FR"
     },
     {
       "name": "CheesasaurusRex",
@@ -153,7 +153,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "12.04.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Chestia",
@@ -161,7 +161,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "15.08.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "ChipHazardBB",
@@ -169,7 +169,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "12.11.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "CigaretteMilk",
@@ -201,7 +201,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "20.09.25",
-      "nationality": ""
+      "nationality": "PT"
     },
     {
       "name": "CraazyHorse",
@@ -225,7 +225,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "08.03.24",
-      "nationality": ""
+      "nationality": "DE"
     },
     {
       "name": "Dajiu",
@@ -233,7 +233,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "07.04.26",
-      "nationality": ""
+      "nationality": "LU"
     },
     {
       "name": "DamoNll",
@@ -249,7 +249,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "28.11.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "DelPieroSenpai",
@@ -265,7 +265,7 @@
       "role": "spore",
       "sprite": "png",
       "member_since": "12.11.25",
-      "nationality": ""
+      "nationality": "DE"
     },
     {
       "name": "Difoolioo",
@@ -273,7 +273,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "17.10.25",
-      "nationality": ""
+      "nationality": "CA"
     },
     {
       "name": "Domingsss",
@@ -281,7 +281,7 @@
       "role": "spore",
       "sprite": "png",
       "member_since": "20.09.25",
-      "nationality": ""
+      "nationality": "BR"
     },
     {
       "name": "doobs",
@@ -289,7 +289,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "09.05.26",
-      "nationality": ""
+      "nationality": "AU"
     },
     {
       "name": "Drain",
@@ -313,7 +313,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "17.04.24",
-      "nationality": ""
+      "nationality": "ES"
     },
     {
       "name": "Eerie",
@@ -329,7 +329,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "19.10.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "fisplant",
@@ -337,7 +337,7 @@
       "role": "shroom",
       "sprite": null,
       "member_since": "12.07.25",
-      "nationality": ""
+      "nationality": "PR"
     },
     {
       "name": "Freenox",
@@ -353,7 +353,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "16.08.25",
-      "nationality": ""
+      "nationality": "BE"
     },
     {
       "name": "GeoPlays",
@@ -369,7 +369,7 @@
       "role": "spore",
       "sprite": "png",
       "member_since": "14.11.24",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Grrzzly",
@@ -385,7 +385,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "08.03.24",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "haizwn",
@@ -393,7 +393,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "02.04.26",
-      "nationality": ""
+      "nationality": "BR"
     },
     {
       "name": "HamudaBR",
@@ -401,7 +401,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "07.04.26",
-      "nationality": ""
+      "nationality": "BR"
     },
     {
       "name": "HennyD",
@@ -417,7 +417,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "09.07.25",
-      "nationality": ""
+      "nationality": "PR"
     },
     {
       "name": "Hjordi",
@@ -425,7 +425,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "16.04.24",
-      "nationality": ""
+      "nationality": "SE"
     },
     {
       "name": "Hokeymon",
@@ -433,7 +433,7 @@
       "role": "spore",
       "sprite": "png",
       "member_since": "11.06.26",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "huykiller",
@@ -441,7 +441,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "03.06.26",
-      "nationality": ""
+      "nationality": "DE"
     },
     {
       "name": "Hydrophobia",
@@ -449,7 +449,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "13.05.26",
-      "nationality": ""
+      "nationality": "DE"
     },
     {
       "name": "iamese",
@@ -457,7 +457,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "03.04.26",
-      "nationality": ""
+      "nationality": "AU"
     },
     {
       "name": "IfUmm",
@@ -465,7 +465,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "05.05.26",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "iMonchi",
@@ -481,7 +481,7 @@
       "role": "shinyshroom",
       "sprite": "png",
       "member_since": "08.03.24",
-      "nationality": ""
+      "nationality": "CH"
     },
     {
       "name": "ItsKitas",
@@ -489,7 +489,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "06.10.25",
-      "nationality": ""
+      "nationality": "PT"
     },
     {
       "name": "ItsMawile",
@@ -497,7 +497,7 @@
       "role": "shinyshroom",
       "sprite": null,
       "member_since": "27.01.26",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "jaspn",
@@ -505,7 +505,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "08.03.24",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Jayyxxi",
@@ -521,7 +521,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "11.08.24",
-      "nationality": ""
+      "nationality": "GB"
     },
     {
       "name": "Jimbothia",
@@ -529,7 +529,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "06.02.26",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Jiroho",
@@ -545,7 +545,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "11.08.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "JulieJewel",
@@ -561,7 +561,7 @@
       "role": "shinyshroom",
       "sprite": "png",
       "member_since": "03.11.24",
-      "nationality": ""
+      "nationality": "FI"
     },
     {
       "name": "Kaaflaa",
@@ -569,7 +569,7 @@
       "role": "spore",
       "sprite": "png",
       "member_since": "11.03.26",
-      "nationality": ""
+      "nationality": "FR"
     },
     {
       "name": "KaoZPrime",
@@ -577,7 +577,7 @@
       "role": "spore",
       "sprite": "png",
       "member_since": "25.10.25",
-      "nationality": ""
+      "nationality": "CH"
     },
     {
       "name": "Kithri",
@@ -593,7 +593,7 @@
       "role": "shroom",
       "sprite": null,
       "member_since": "23.06.24",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "kloheizung",
@@ -601,7 +601,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "18.05.26",
-      "nationality": ""
+      "nationality": "DE"
     },
     {
       "name": "Kolepls",
@@ -609,7 +609,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "05.09.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Kynnyto",
@@ -617,7 +617,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "16.08.25",
-      "nationality": ""
+      "nationality": "FR"
     },
     {
       "name": "locobounty",
@@ -625,7 +625,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "20.08.25",
-      "nationality": ""
+      "nationality": "FR"
     },
     {
       "name": "LoDarko",
@@ -633,7 +633,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "22.05.24",
-      "nationality": ""
+      "nationality": "PT"
     },
     {
       "name": "LordGangis",
@@ -641,7 +641,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "11.04.24",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "LuckiLeo",
@@ -649,7 +649,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "19.06.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Luna",
@@ -665,7 +665,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "25.08.25",
-      "nationality": ""
+      "nationality": "DE"
     },
     {
       "name": "Macarene",
@@ -673,7 +673,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "27.01.25",
-      "nationality": ""
+      "nationality": "BB"
     },
     {
       "name": "maknaez",
@@ -689,7 +689,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "11.05.26",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "MangoMason",
@@ -697,7 +697,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "03.04.26",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Materusu",
@@ -705,7 +705,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "19.03.26",
-      "nationality": ""
+      "nationality": "BR"
     },
     {
       "name": "Mattmattoux",
@@ -713,7 +713,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "16.08.25",
-      "nationality": ""
+      "nationality": "FR"
     },
     {
       "name": "MechanicalHippo",
@@ -721,7 +721,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "05.02.26",
-      "nationality": ""
+      "nationality": "GB"
     },
     {
       "name": "MELVZZY",
@@ -737,7 +737,7 @@
       "role": "spore",
       "sprite": "png",
       "member_since": "11.10.25",
-      "nationality": ""
+      "nationality": "PT"
     },
     {
       "name": "MikadoGR",
@@ -745,7 +745,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "10.06.26",
-      "nationality": ""
+      "nationality": "GR"
     },
     {
       "name": "MikeRunkZz",
@@ -761,7 +761,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "26.02.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Miltank",
@@ -769,7 +769,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "09.02.26",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "MrBiscottes",
@@ -777,7 +777,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "16.08.25",
-      "nationality": ""
+      "nationality": "FR"
     },
     {
       "name": "MrChooch",
@@ -793,7 +793,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "07.06.26",
-      "nationality": ""
+      "nationality": "BR"
     },
     {
       "name": "Narrayah",
@@ -817,7 +817,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "27.08.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Noufa",
@@ -825,7 +825,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "10.06.26",
-      "nationality": ""
+      "nationality": "LU"
     },
     {
       "name": "NoxxPrime",
@@ -849,7 +849,7 @@
       "role": "shroom",
       "sprite": null,
       "member_since": "16.08.25",
-      "nationality": ""
+      "nationality": "FR"
     },
     {
       "name": "Orllando",
@@ -857,7 +857,7 @@
       "role": "shinyshroom",
       "sprite": "png",
       "member_since": "11.07.24",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Pangeaa",
@@ -881,7 +881,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "05.08.25",
-      "nationality": ""
+      "nationality": "CA"
     },
     {
       "name": "pearishx",
@@ -897,7 +897,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "08.03.24",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Privacy",
@@ -905,7 +905,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "10.08.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Psyql",
@@ -913,7 +913,7 @@
       "role": "spore",
       "sprite": "png",
       "member_since": "04.01.26",
-      "nationality": ""
+      "nationality": "AU"
     },
     {
       "name": "Quicooo",
@@ -921,7 +921,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "08.06.26",
-      "nationality": ""
+      "nationality": "PT"
     },
     {
       "name": "QuinJay",
@@ -937,7 +937,7 @@
       "role": "shroom",
       "sprite": null,
       "member_since": "15.07.24",
-      "nationality": ""
+      "nationality": "UK"
     },
     {
       "name": "RandomGuy",
@@ -945,7 +945,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "19.03.26",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Randy",
@@ -953,7 +953,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "01.03.26",
-      "nationality": ""
+      "nationality": "CA"
     },
     {
       "name": "realjuckpop",
@@ -961,7 +961,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "08.08.24",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "riahC",
@@ -977,7 +977,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "16.03.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Rintuu",
@@ -993,7 +993,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "08.11.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "RuthlessZ",
@@ -1009,7 +1009,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "17.04.26",
-      "nationality": ""
+      "nationality": "IN"
     },
     {
       "name": "Scooby",
@@ -1025,7 +1025,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "02.07.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Sheflavia",
@@ -1033,7 +1033,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "28.05.26",
-      "nationality": ""
+      "nationality": "BR"
     },
     {
       "name": "sherrii",
@@ -1041,7 +1041,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "22.05.26",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "ShinyPoliwhirl",
@@ -1049,7 +1049,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "20.05.26",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Sirbeyy",
@@ -1057,7 +1057,7 @@
       "role": "shroom",
       "sprite": null,
       "member_since": "28.05.24",
-      "nationality": ""
+      "nationality": "DE"
     },
     {
       "name": "Skullz",
@@ -1065,7 +1065,7 @@
       "role": "shinyshroom",
       "sprite": "png",
       "member_since": "20.02.25",
-      "nationality": ""
+      "nationality": "PT"
     },
     {
       "name": "slaydounet",
@@ -1073,7 +1073,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "08.11.25",
-      "nationality": ""
+      "nationality": "FR"
     },
     {
       "name": "SleepyDallas",
@@ -1081,7 +1081,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "27.05.26",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Smokee",
@@ -1089,7 +1089,7 @@
       "role": "mushcap",
       "sprite": "png",
       "member_since": "30.09.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Smough",
@@ -1097,7 +1097,7 @@
       "role": "shinyshroom",
       "sprite": "png",
       "member_since": "26.08.25",
-      "nationality": ""
+      "nationality": "FR"
     },
     {
       "name": "SousouEsh",
@@ -1105,7 +1105,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "11.03.26",
-      "nationality": ""
+      "nationality": "FR"
     },
     {
       "name": "Soxzzz",
@@ -1113,7 +1113,7 @@
       "role": "shroom",
       "sprite": null,
       "member_since": "07.12.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "SparkleButt",
@@ -1129,7 +1129,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "18.12.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "SpongeBong",
@@ -1137,7 +1137,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "12.04.26",
-      "nationality": ""
+      "nationality": "PT"
     },
     {
       "name": "Stathiskris",
@@ -1145,7 +1145,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "13.06.25",
-      "nationality": ""
+      "nationality": "GR"
     },
     {
       "name": "Suirenkai",
@@ -1153,7 +1153,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "23.04.26",
-      "nationality": ""
+      "nationality": "PH"
     },
     {
       "name": "TaCesa",
@@ -1169,7 +1169,7 @@
       "role": "shinyshroom",
       "sprite": "gif",
       "member_since": "17.08.25",
-      "nationality": ""
+      "nationality": "FR"
     },
     {
       "name": "tardigreat",
@@ -1177,7 +1177,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "19.09.24",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "taywor",
@@ -1185,7 +1185,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "11.03.26",
-      "nationality": ""
+      "nationality": "CA"
     },
     {
       "name": "Tazmaster",
@@ -1193,7 +1193,7 @@
       "role": "spore",
       "sprite": "png",
       "member_since": "29.07.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "TeamShroomBank",
@@ -1209,7 +1209,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "13.10.25",
-      "nationality": ""
+      "nationality": "GB"
     },
     {
       "name": "Terminus",
@@ -1217,7 +1217,7 @@
       "role": "shinyshroom",
       "sprite": "png",
       "member_since": "10.07.24",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Tobias",
@@ -1225,7 +1225,7 @@
       "role": "shinyshroom",
       "sprite": "png",
       "member_since": "15.08.25",
-      "nationality": "US"
+      "nationality": "DK"
     },
     {
       "name": "Togadh",
@@ -1241,7 +1241,7 @@
       "role": "spore",
       "sprite": "png",
       "member_since": "",
-      "nationality": ""
+      "nationality": "DE"
     },
     {
       "name": "TorontoKid",
@@ -1425,7 +1425,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "21.06.26",
-      "nationality": ""
+      "nationality": "HR"
     }
   ]
 }

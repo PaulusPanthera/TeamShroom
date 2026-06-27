@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-27T13:02:24.859Z",
+  "generatedAt": "2026-06-27T15:51:44.530Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1694,7 +1694,7 @@
       "notes": "standard week date"
     },
     {
-      "ot": "bonseum",
+      "ot": "bonseun",
       "pokemon": "cascoon",
       "method": null,
       "encounter": null,
@@ -1707,7 +1707,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "bonseum",
+      "ot": "bonseun",
       "pokemon": "shroomish",
       "method": null,
       "encounter": null,
