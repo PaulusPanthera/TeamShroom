@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-27T08:22:07.087Z",
+  "generatedAt": "2026-06-27T13:02:25.509Z",
   "source": "google-sheets",
   "data": [
     {
@@ -430,7 +430,7 @@
     {
       "name": "Hokeymon",
       "active": true,
-      "role": "shroom",
+      "role": "spore",
       "sprite": "png",
       "member_since": "11.06.26",
       "nationality": ""
@@ -1418,6 +1418,14 @@
       "sprite": null,
       "member_since": "15.06.26",
       "nationality": "CH"
+    },
+    {
+      "name": "jebaco",
+      "active": true,
+      "role": "spore",
+      "sprite": null,
+      "member_since": "21.06.26",
+      "nationality": ""
     }
   ]
 }
