@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-27T15:51:45.401Z",
+  "generatedAt": "2026-06-27T18:58:50.777Z",
   "source": "google-sheets",
   "data": [
     {
@@ -105,7 +105,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "08.03.24",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "casethecase",
@@ -297,7 +297,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "08.03.24",
-      "nationality": ""
+      "nationality": "BE"
     },
     {
       "name": "Drizzle",
@@ -785,7 +785,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "15.03.24",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "MrMushy",
