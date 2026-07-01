@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-01T13:59:51.370Z",
+  "generatedAt": "2026-07-01T15:22:17.500Z",
   "source": "google-sheets",
   "data": [
     {
@@ -30425,7 +30425,7 @@
     },
     {
       "ot": "Hokeymon",
-      "pokemon": "fearow",
+      "pokemon": "spearow",
       "method": null,
       "encounter": null,
       "secret": false,
@@ -30633,7 +30633,7 @@
     },
     {
       "ot": "Hokeymon",
-      "pokemon": "gloom",
+      "pokemon": "oddish",
       "method": null,
       "encounter": null,
       "secret": false,
