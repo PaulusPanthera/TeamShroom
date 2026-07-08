@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-08T01:19:52.721Z",
+  "generatedAt": "2026-07-08T08:02:54.499Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1413,7 +1413,7 @@
     },
     {
       "name": "Noxaril",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": null,
       "member_since": "15.06.26",
@@ -1426,6 +1426,14 @@
       "sprite": null,
       "member_since": "21.06.26",
       "nationality": "HR"
+    },
+    {
+      "name": "Henil",
+      "active": true,
+      "role": "spore",
+      "sprite": null,
+      "member_since": "02.07.26",
+      "nationality": "US"
     }
   ]
 }
