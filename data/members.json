@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-09T08:59:01.836Z",
+  "generatedAt": "2026-07-09T14:22:56.235Z",
   "source": "google-sheets",
   "data": [
     {
@@ -773,7 +773,7 @@
     },
     {
       "name": "MrBiscottes",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "16.08.25",
@@ -1365,7 +1365,7 @@
     },
     {
       "name": "Yoboes",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png",
       "member_since": "",
