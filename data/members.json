@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-08T19:01:09.843Z",
+  "generatedAt": "2026-07-09T01:27:39.704Z",
   "source": "google-sheets",
   "data": [
     {
@@ -436,7 +436,7 @@
       "nationality": "US"
     },
     {
-      "name": "huykiller",
+      "name": "xDeeda",
       "active": true,
       "role": "spore",
       "sprite": null,
