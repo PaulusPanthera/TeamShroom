@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-13T08:40:06.752Z",
+  "generatedAt": "2026-07-13T12:27:05.823Z",
   "source": "google-sheets",
   "data": [
     {
@@ -30855,6 +30855,84 @@
     {
       "ot": "Gaudjo",
       "pokemon": "mankey",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "locobounty",
+      "pokemon": "zangoose",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "Kithri",
+      "pokemon": "pidgeotto",
+      "method": null,
+      "encounter": null,
+      "secret": true,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "aphrooturtle",
+      "pokemon": "persian",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "Luna",
+      "pokemon": "ditto",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "MikadoGR",
+      "pokemon": "swablu",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "DaddyMolo",
+      "pokemon": "swablu",
       "method": null,
       "encounter": null,
       "secret": false,
