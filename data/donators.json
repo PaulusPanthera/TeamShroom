@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-13T19:07:07.849Z",
+  "generatedAt": "2026-07-14T01:11:18.337Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1862,6 +1862,18 @@
       "name": "TeletubbieBaz",
       "donation": "3x Chum Buckets",
       "value": 184200
+    },
+    {
+      "date": "2026-07-14",
+      "name": "pawmu",
+      "donation": null,
+      "value": 1000000
+    },
+    {
+      "date": "2026-07-14",
+      "name": "pawmu",
+      "donation": "15500 Leppas",
+      "value": 10850000
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-13T19:07:37.083Z",
+  "generatedAt": "2026-07-14T01:11:21.587Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1365,7 +1365,7 @@
     },
     {
       "name": "Yoboes",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png",
       "member_since": "",
