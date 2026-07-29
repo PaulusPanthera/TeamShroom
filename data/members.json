@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-29T07:46:08.324Z",
+  "generatedAt": "2026-07-29T08:13:20.859Z",
   "source": "google-sheets",
   "data": [
     {
@@ -557,7 +557,7 @@
     },
     {
       "name": "Jutskaa",
-      "active": true,
+      "active": false,
       "role": "shinyshroom",
       "sprite": "png",
       "member_since": "03.11.24",
@@ -1381,7 +1381,7 @@
     },
     {
       "name": "Yugi",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "01.09.25",
