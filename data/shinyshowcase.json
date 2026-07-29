@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-29T01:18:20.583Z",
+  "generatedAt": "2026-07-29T07:46:06.686Z",
   "source": "google-sheets",
   "data": [
     {
@@ -31062,6 +31062,71 @@
     },
     {
       "ot": "HamudaBR",
+      "pokemon": "ralts",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "jebaco",
+      "pokemon": "golett",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "jebaco",
+      "pokemon": "rhydon",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "AceTrainerPolar",
+      "pokemon": "donphan",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": true,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "MaoZane",
+      "pokemon": "lunatone",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": false,
+      "clip": null,
+      "notes": "standard week date"
+    },
+    {
+      "ot": "MikeRunkZz",
       "pokemon": "ralts",
       "method": null,
       "encounter": null,

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-29T01:18:22.226Z",
+  "generatedAt": "2026-07-29T07:46:08.324Z",
   "source": "google-sheets",
   "data": [
     {
@@ -21,7 +21,7 @@
     },
     {
       "name": "Alphy",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "03.11.25",
@@ -37,7 +37,7 @@
     },
     {
       "name": "aphrooturtle",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": null,
       "member_since": "17.03.26",
@@ -61,7 +61,7 @@
     },
     {
       "name": "Biiidou",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "16.08.25",
@@ -125,7 +125,7 @@
     },
     {
       "name": "CelineCeline",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": null,
       "member_since": "17.12.25",
@@ -429,7 +429,7 @@
     },
     {
       "name": "Hokeymon",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png",
       "member_since": "11.06.26",
@@ -565,7 +565,7 @@
     },
     {
       "name": "Kaaflaa",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png",
       "member_since": "11.03.26",
@@ -573,7 +573,7 @@
     },
     {
       "name": "KaoZPrime",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png",
       "member_since": "25.10.25",
@@ -581,7 +581,7 @@
     },
     {
       "name": "Kithri",
-      "active": true,
+      "active": false,
       "role": "mushcap",
       "sprite": "png",
       "member_since": "29.07.25",
@@ -613,7 +613,7 @@
     },
     {
       "name": "Kynnyto",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "16.08.25",
@@ -709,7 +709,7 @@
     },
     {
       "name": "Mattmattoux",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "16.08.25",
@@ -765,7 +765,7 @@
     },
     {
       "name": "Miltank",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": null,
       "member_since": "09.02.26",
@@ -973,7 +973,7 @@
     },
     {
       "name": "RicRiley",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "16.03.25",
@@ -1021,7 +1021,7 @@
     },
     {
       "name": "Scooty",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "02.07.25",
@@ -1069,7 +1069,7 @@
     },
     {
       "name": "slaydounet",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "08.11.25",
@@ -1085,7 +1085,7 @@
     },
     {
       "name": "Smokee",
-      "active": true,
+      "active": false,
       "role": "mushcap",
       "sprite": "png",
       "member_since": "30.09.25",
@@ -1093,7 +1093,7 @@
     },
     {
       "name": "Smough",
-      "active": true,
+      "active": false,
       "role": "shinyshroom",
       "sprite": "png",
       "member_since": "26.08.25",
@@ -1197,7 +1197,7 @@
     },
     {
       "name": "TeamShroomBank",
-      "active": true,
+      "active": false,
       "role": "mushcap",
       "sprite": null,
       "member_since": "15.03.24",
@@ -1205,7 +1205,7 @@
     },
     {
       "name": "TeletubbieBaz",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "13.10.25",
@@ -1229,7 +1229,7 @@
     },
     {
       "name": "Togadh",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png",
       "member_since": "31.05.26",
@@ -1261,7 +1261,7 @@
     },
     {
       "name": "TTVxSenseiNESS",
-      "active": true,
+      "active": false,
       "role": "mushcap",
       "sprite": "gif",
       "member_since": "08.03.24",
@@ -1277,7 +1277,7 @@
     },
     {
       "name": "Universe",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": null,
       "member_since": "24.03.26",
@@ -1397,7 +1397,7 @@
     },
     {
       "name": "ZekTV",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "16.08.25",
