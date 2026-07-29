@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-29T13:30:23.413Z",
+  "generatedAt": "2026-07-29T18:37:22.390Z",
   "source": "google-sheets",
   "data": [
     {
@@ -39,7 +39,7 @@
       "name": "aphrooturtle",
       "active": false,
       "role": "spore",
-      "sprite": null,
+      "sprite": "png",
       "member_since": "17.03.26",
       "nationality": "DE"
     },
@@ -951,7 +951,7 @@
       "name": "Randy",
       "active": true,
       "role": "spore",
-      "sprite": null,
+      "sprite": "png",
       "member_since": "01.03.26",
       "nationality": "CA"
     },
