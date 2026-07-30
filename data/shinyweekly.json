@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-30T08:01:45.215Z",
+  "generatedAt": "2026-07-30T13:20:19.245Z",
   "source": "google-sheets",
   "data": [
     {
@@ -5121,6 +5121,25 @@
       "date_start": "2024-07-01",
       "date_end": "2024-07-07",
       "date_catch": null,
+      "ot": "stevenchill",
+      "pokemon": "venipede",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "clip": null,
+      "notes": null,
+      "location": null
+    },
+    {
+      "week": "2024-07-01_to_2024-07-07",
+      "week_label": "July 1st - July 7th 2024",
+      "week_order": "005",
+      "date_start": "2024-07-01",
+      "date_end": "2024-07-07",
+      "date_catch": null,
       "ot": "xRaiketsu",
       "pokemon": "magikarp",
       "method": null,
@@ -5136,7 +5155,7 @@
     {
       "week": "2024-07-01_to_2024-07-07",
       "week_label": "July 1st - July 7th 2024",
-      "week_order": "005",
+      "week_order": "006",
       "date_start": "2024-07-01",
       "date_end": "2024-07-07",
       "date_catch": null,
@@ -5155,7 +5174,7 @@
     {
       "week": "2024-07-01_to_2024-07-07",
       "week_label": "July 1st - July 7th 2024",
-      "week_order": "006",
+      "week_order": "007",
       "date_start": "2024-07-01",
       "date_end": "2024-07-07",
       "date_catch": null,
@@ -5174,7 +5193,7 @@
     {
       "week": "2024-07-01_to_2024-07-07",
       "week_label": "July 1st - July 7th 2024",
-      "week_order": "007",
+      "week_order": "008",
       "date_start": "2024-07-01",
       "date_end": "2024-07-07",
       "date_catch": null,
@@ -5193,7 +5212,7 @@
     {
       "week": "2024-07-01_to_2024-07-07",
       "week_label": "July 1st - July 7th 2024",
-      "week_order": "008",
+      "week_order": "009",
       "date_start": "2024-07-01",
       "date_end": "2024-07-07",
       "date_catch": null,
@@ -5212,7 +5231,7 @@
     {
       "week": "2024-07-01_to_2024-07-07",
       "week_label": "July 1st - July 7th 2024",
-      "week_order": "009",
+      "week_order": "010",
       "date_start": "2024-07-01",
       "date_end": "2024-07-07",
       "date_catch": null,
@@ -5231,7 +5250,7 @@
     {
       "week": "2024-07-01_to_2024-07-07",
       "week_label": "July 1st - July 7th 2024",
-      "week_order": "010",
+      "week_order": "011",
       "date_start": "2024-07-01",
       "date_end": "2024-07-07",
       "date_catch": null,
@@ -5250,7 +5269,7 @@
     {
       "week": "2024-07-01_to_2024-07-07",
       "week_label": "July 1st - July 7th 2024",
-      "week_order": "011",
+      "week_order": "012",
       "date_start": "2024-07-01",
       "date_end": "2024-07-07",
       "date_catch": null,
@@ -5269,7 +5288,7 @@
     {
       "week": "2024-07-01_to_2024-07-07",
       "week_label": "July 1st - July 7th 2024",
-      "week_order": "012",
+      "week_order": "013",
       "date_start": "2024-07-01",
       "date_end": "2024-07-07",
       "date_catch": null,
@@ -5288,7 +5307,7 @@
     {
       "week": "2024-07-01_to_2024-07-07",
       "week_label": "July 1st - July 7th 2024",
-      "week_order": "013",
+      "week_order": "014",
       "date_start": "2024-07-01",
       "date_end": "2024-07-07",
       "date_catch": null,
@@ -5307,7 +5326,7 @@
     {
       "week": "2024-07-01_to_2024-07-07",
       "week_label": "July 1st - July 7th 2024",
-      "week_order": "014",
+      "week_order": "015",
       "date_start": "2024-07-01",
       "date_end": "2024-07-07",
       "date_catch": null,
@@ -5326,7 +5345,7 @@
     {
       "week": "2024-07-01_to_2024-07-07",
       "week_label": "July 1st - July 7th 2024",
-      "week_order": "015",
+      "week_order": "016",
       "date_start": "2024-07-01",
       "date_end": "2024-07-07",
       "date_catch": null,
@@ -5345,31 +5364,12 @@
     {
       "week": "2024-07-01_to_2024-07-07",
       "week_label": "July 1st - July 7th 2024",
-      "week_order": "016",
+      "week_order": "017",
       "date_start": "2024-07-01",
       "date_end": "2024-07-07",
       "date_catch": null,
       "ot": "CraazyHorse",
       "pokemon": "zigzagoon",
-      "method": null,
-      "encounter": null,
-      "secret": false,
-      "alpha": false,
-      "run": false,
-      "lost": false,
-      "clip": null,
-      "notes": null,
-      "location": null
-    },
-    {
-      "week": "2024-07-01_to_2024-07-07",
-      "week_label": "July 1st - July 7th 2024",
-      "week_order": "017",
-      "date_start": "2024-07-01",
-      "date_end": "2024-07-07",
-      "date_catch": null,
-      "ot": "stevenchill",
-      "pokemon": "venipede",
       "method": null,
       "encounter": null,
       "secret": false,
