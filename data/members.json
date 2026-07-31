@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-31T08:26:55.047Z",
+  "generatedAt": "2026-07-31T13:24:20.379Z",
   "source": "google-sheets",
   "data": [
     {
@@ -687,7 +687,7 @@
       "name": "MandiMlem",
       "active": true,
       "role": "spore",
-      "sprite": null,
+      "sprite": "png",
       "member_since": "11.05.26",
       "nationality": "US"
     },
