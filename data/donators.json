@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-31T13:24:17.718Z",
+  "generatedAt": "2026-07-31T19:02:00.898Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1874,6 +1874,36 @@
       "name": "pawmu",
       "donation": "15500 Leppas",
       "value": 10850000
+    },
+    {
+      "date": "2026-07-18",
+      "name": "CelineCeline",
+      "donation": null,
+      "value": 2500000
+    },
+    {
+      "date": "2026-07-18",
+      "name": "CelineCeline",
+      "donation": "Shiny 1x31 Relaxed Female Camerupt",
+      "value": 2700000
+    },
+    {
+      "date": "2026-07-18",
+      "name": "CelineCeline",
+      "donation": "200RP",
+      "value": 300000
+    },
+    {
+      "date": "2026-07-18",
+      "name": "PokeBodega",
+      "donation": null,
+      "value": 4000000
+    },
+    {
+      "date": "2026-07-18",
+      "name": "PokeBodega",
+      "donation": null,
+      "value": 7000000
     }
   ]
 }

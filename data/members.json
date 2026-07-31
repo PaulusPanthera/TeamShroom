@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-31T13:24:20.379Z",
+  "generatedAt": "2026-07-31T19:02:04.518Z",
   "source": "google-sheets",
   "data": [
     {
@@ -189,7 +189,7 @@
     },
     {
       "name": "clairo",
-      "active": true,
+      "active": false,
       "role": "shinyshroom",
       "sprite": "png",
       "member_since": "12.07.24",
@@ -445,7 +445,7 @@
     },
     {
       "name": "Hydrophobia",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": null,
       "member_since": "13.05.26",
@@ -901,7 +901,7 @@
     },
     {
       "name": "Privacy",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "10.08.25",
