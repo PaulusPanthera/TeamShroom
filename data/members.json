@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-31T19:02:04.518Z",
+  "generatedAt": "2026-08-01T01:25:42.974Z",
   "source": "google-sheets",
   "data": [
     {
@@ -60,6 +60,14 @@
       "nationality": ""
     },
     {
+      "name": "BaldPikaTailGuy",
+      "active": true,
+      "role": "spore",
+      "sprite": null,
+      "member_since": "13.07.26",
+      "nationality": "US"
+    },
+    {
       "name": "Biiidou",
       "active": false,
       "role": "shroom",
@@ -68,12 +76,20 @@
       "nationality": "FR"
     },
     {
+      "name": "BinkyCat",
+      "active": true,
+      "role": "spore",
+      "sprite": null,
+      "member_since": "30.07.26",
+      "nationality": "US"
+    },
+    {
       "name": "BlistiK",
       "active": true,
       "role": "shroom",
       "sprite": "png",
       "member_since": "08.03.24",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "BojanglesisHere",
@@ -404,6 +420,14 @@
       "nationality": "BR"
     },
     {
+      "name": "Henil",
+      "active": true,
+      "role": "spore",
+      "sprite": null,
+      "member_since": "02.07.26",
+      "nationality": "US"
+    },
+    {
       "name": "HennyD",
       "active": false,
       "role": "spore",
@@ -434,14 +458,6 @@
       "sprite": "png",
       "member_since": "11.06.26",
       "nationality": "US"
-    },
-    {
-      "name": "xDeeda",
-      "active": true,
-      "role": "spore",
-      "sprite": null,
-      "member_since": "03.06.26",
-      "nationality": "DE"
     },
     {
       "name": "Hydrophobia",
@@ -516,8 +532,16 @@
       "nationality": ""
     },
     {
-      "name": "JGrenade",
+      "name": "jebaco",
       "active": true,
+      "role": "spore",
+      "sprite": null,
+      "member_since": "21.06.26",
+      "nationality": "HR"
+    },
+    {
+      "name": "JGrenade",
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "11.08.24",
@@ -700,6 +724,14 @@
       "nationality": "US"
     },
     {
+      "name": "MaoZane",
+      "active": true,
+      "role": "spore",
+      "sprite": null,
+      "member_since": "23.07.26",
+      "nationality": "CR"
+    },
+    {
       "name": "Materusu",
       "active": true,
       "role": "spore",
@@ -826,6 +858,14 @@
       "sprite": null,
       "member_since": "10.06.26",
       "nationality": "LU"
+    },
+    {
+      "name": "Noxaril",
+      "active": false,
+      "role": "spore",
+      "sprite": null,
+      "member_since": "15.06.26",
+      "nationality": "CH"
     },
     {
       "name": "NoxxPrime",
@@ -1052,6 +1092,14 @@
       "nationality": "US"
     },
     {
+      "name": "ShroomBank",
+      "active": true,
+      "role": "mushcap",
+      "sprite": null,
+      "member_since": "16.07.26",
+      "nationality": ""
+    },
+    {
       "name": "Sirbeyy",
       "active": true,
       "role": "shroom",
@@ -1154,6 +1202,14 @@
       "sprite": null,
       "member_since": "23.04.26",
       "nationality": "PH"
+    },
+    {
+      "name": "SushiWhopperK",
+      "active": true,
+      "role": "spore",
+      "sprite": null,
+      "member_since": "19.07.26",
+      "nationality": "KR"
     },
     {
       "name": "TaCesa",
@@ -1301,7 +1357,7 @@
     },
     {
       "name": "Whamalicious",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "23.05.25",
@@ -1346,6 +1402,14 @@
       "sprite": "png",
       "member_since": "13.04.25",
       "nationality": "US"
+    },
+    {
+      "name": "xDeeda",
+      "active": true,
+      "role": "spore",
+      "sprite": null,
+      "member_since": "03.06.26",
+      "nationality": "DE"
     },
     {
       "name": "XxArtamielxX",
@@ -1410,30 +1474,6 @@
       "sprite": "png",
       "member_since": "",
       "nationality": "PH"
-    },
-    {
-      "name": "Noxaril",
-      "active": false,
-      "role": "spore",
-      "sprite": null,
-      "member_since": "15.06.26",
-      "nationality": "CH"
-    },
-    {
-      "name": "jebaco",
-      "active": true,
-      "role": "spore",
-      "sprite": null,
-      "member_since": "21.06.26",
-      "nationality": "HR"
-    },
-    {
-      "name": "Henil",
-      "active": true,
-      "role": "spore",
-      "sprite": null,
-      "member_since": "02.07.26",
-      "nationality": "US"
     }
   ]
 }
