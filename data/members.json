@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-01T12:48:09.544Z",
+  "generatedAt": "2026-08-01T18:47:53.937Z",
   "source": "google-sheets",
   "data": [
     {
@@ -17,7 +17,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "14.05.25",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "Alphy",
