@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-03T06:04:17.993Z",
+  "generatedAt": "2026-08-04T08:12:17.891Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1902,8 +1902,26 @@
     {
       "date": "2026-07-18",
       "name": "PokeBodega",
-      "donation": null,
+      "donation": "Lucky Gold Dragon",
       "value": 7000000
+    },
+    {
+      "date": "2026-08-01",
+      "name": "LoDarko",
+      "donation": "5000 Leppas",
+      "value": 3650000
+    },
+    {
+      "date": "2026-08-03",
+      "name": "BinkyCat",
+      "donation": "5461 Leppas",
+      "value": 3986530
+    },
+    {
+      "date": "2026-08-03",
+      "name": "casethecase",
+      "donation": "2x 7 Day Donator",
+      "value": 1600000
     }
   ]
 }
