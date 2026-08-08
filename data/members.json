@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-08T12:19:42.401Z",
+  "generatedAt": "2026-08-08T18:17:52.461Z",
   "source": "google-sheets",
   "data": [
     {
@@ -173,7 +173,7 @@
     },
     {
       "name": "Chestia",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "15.08.25",
@@ -1165,7 +1165,7 @@
     },
     {
       "name": "SparkleButt",
-      "active": false,
+      "active": true,
       "role": "spore",
       "sprite": "png",
       "member_since": "",
@@ -1277,7 +1277,7 @@
     },
     {
       "name": "Tobias",
-      "active": true,
+      "active": false,
       "role": "shinyshroom",
       "sprite": "png",
       "member_since": "15.08.25",
