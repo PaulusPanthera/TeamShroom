@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-08T18:17:49.287Z",
+  "generatedAt": "2026-08-09T00:42:28.434Z",
   "source": "google-sheets",
   "data": [
     {
@@ -20245,7 +20245,7 @@
       "date_start": "2025-08-04",
       "date_end": "2025-08-10",
       "date_catch": null,
-      "ot": "SparkleButt",
+      "ot": "MrSparkle",
       "pokemon": "miltank",
       "method": null,
       "encounter": null,
@@ -20929,7 +20929,7 @@
       "date_start": "2025-08-25",
       "date_end": "2025-08-31",
       "date_catch": null,
-      "ot": "SparkleButt",
+      "ot": "MrSparkle",
       "pokemon": "tentacruel",
       "method": null,
       "encounter": null,

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-08T18:17:52.461Z",
+  "generatedAt": "2026-08-09T00:42:32.896Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1164,12 +1164,12 @@
       "nationality": "US"
     },
     {
-      "name": "SparkleButt",
+      "name": "MrSparkle",
       "active": true,
       "role": "spore",
       "sprite": "png",
-      "member_since": "",
-      "nationality": ""
+      "member_since": "08.08.26",
+      "nationality": "US"
     },
     {
       "name": "spells",

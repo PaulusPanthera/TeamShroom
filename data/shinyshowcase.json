@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-08T18:17:51.264Z",
+  "generatedAt": "2026-08-09T00:42:31.253Z",
   "source": "google-sheets",
   "data": [
     {
@@ -23157,7 +23157,7 @@
       "notes": "standard week date"
     },
     {
-      "ot": "SparkleButt",
+      "ot": "MrSparkle",
       "pokemon": "farfetchd",
       "method": null,
       "encounter": null,
@@ -23170,7 +23170,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SparkleButt",
+      "ot": "MrSparkle",
       "pokemon": "miltank",
       "method": null,
       "encounter": null,
@@ -23183,7 +23183,7 @@
       "notes": "AUTO-GENERATED ORDER DATE"
     },
     {
-      "ot": "SparkleButt",
+      "ot": "MrSparkle",
       "pokemon": "tentacruel",
       "method": null,
       "encounter": null,
