@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-10T12:37:44.113Z",
+  "generatedAt": "2026-08-10T16:35:58.055Z",
   "source": "google-sheets",
   "data": [
     {
@@ -957,7 +957,7 @@
     },
     {
       "name": "Quicooo",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": null,
       "member_since": "08.06.26",
@@ -1109,7 +1109,7 @@
     },
     {
       "name": "Skullz",
-      "active": true,
+      "active": false,
       "role": "shinyshroom",
       "sprite": "png",
       "member_since": "20.02.25",
