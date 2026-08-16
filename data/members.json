@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-15T18:09:45.612Z",
+  "generatedAt": "2026-08-16T03:16:54.305Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1149,7 +1149,7 @@
     },
     {
       "name": "SousouEsh",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": null,
       "member_since": "11.03.26",

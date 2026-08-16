@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-15T18:09:41.463Z",
+  "generatedAt": "2026-08-16T03:16:51.523Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1922,6 +1922,12 @@
       "name": "casethecase",
       "donation": "2x 7 Day Donator",
       "value": 1600000
+    },
+    {
+      "date": "2026-08-16",
+      "name": "Aokiza",
+      "donation": "3400 RP",
+      "value": 5100000
     }
   ]
 }
