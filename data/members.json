@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-19T06:20:45.202Z",
+  "generatedAt": "2026-08-19T12:18:06.664Z",
   "source": "google-sheets",
   "data": [
     {
@@ -709,7 +709,7 @@
     },
     {
       "name": "MandiMlem",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png",
       "member_since": "11.05.26",
@@ -917,7 +917,7 @@
     },
     {
       "name": "pawmu",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "05.08.25",
@@ -1173,7 +1173,7 @@
     },
     {
       "name": "spells",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "18.12.25",
