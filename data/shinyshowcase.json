@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-22T00:28:19.867Z",
+  "generatedAt": "2026-08-22T00:42:35.729Z",
   "source": "google-sheets",
   "data": [
     {
@@ -8748,7 +8748,7 @@
       "alpha": false,
       "run": false,
       "lost": false,
-      "sold": false,
+      "sold": true,
       "clip": null,
       "notes": "AUTO-GENERATED ORDER DATE"
     },
@@ -33334,6 +33334,45 @@
       "sold": false,
       "clip": null,
       "notes": "standard week date"
+    },
+    {
+      "ot": "ItsKitas",
+      "pokemon": "darumaka",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": true,
+      "clip": null,
+      "notes": "AUTO-GENERATED ORDER DATE"
+    },
+    {
+      "ot": "ItsKitas",
+      "pokemon": "dodrio",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": true,
+      "clip": null,
+      "notes": "AUTO-GENERATED ORDER DATE"
+    },
+    {
+      "ot": "ItsKitas",
+      "pokemon": "donphan",
+      "method": null,
+      "encounter": null,
+      "secret": false,
+      "alpha": false,
+      "run": false,
+      "lost": false,
+      "sold": true,
+      "clip": null,
+      "notes": "AUTO-GENERATED ORDER DATE"
     }
   ]
 }
