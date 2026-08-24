@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-24T06:30:38.990Z",
+  "generatedAt": "2026-08-24T18:20:37.540Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1325,7 +1325,7 @@
     },
     {
       "name": "tuli",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "20.02.25",
