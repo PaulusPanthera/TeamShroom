@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-25T00:29:37.523Z",
+  "generatedAt": "2026-08-25T02:10:32.872Z",
   "source": "google-sheets",
   "data": [
     {
@@ -9,7 +9,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "31.05.26",
-      "nationality": ""
+      "nationality": "US"
     },
     {
       "name": "AceTrainerPolar",
@@ -729,7 +729,7 @@
       "role": "spore",
       "sprite": null,
       "member_since": "23.07.26",
-      "nationality": "CR"
+      "nationality": "HR"
     },
     {
       "name": "Materusu",
