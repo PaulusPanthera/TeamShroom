@@ -48,6 +48,73 @@ function buildLivingVariants(entry, totalInfoText, wantedVariant) {
   ];
 }
 
+
+function buildClaimVariants(entry) {
+  const kind = String(entry && entry.claimKind ? entry.claimKind : 'standard').toLowerCase();
+  const claimValue = Number(entry && entry.claimValue) || 0;
+
+  const caught = entry && entry.caughtPokemon ? String(entry.caughtPokemon) : '';
+  const slot = entry && entry.pokemon ? String(entry.pokemon) : '';
+
+  const claimText = claimValue === 1 ? '+1 Claim' : `+${claimValue} Claims`;
+  const labels = {
+    standard: caught && slot && caught !== slot
+      ? `From ${prettifyPokemonName(caught)} · ${claimText}`
+      : `Base Claim · ${claimText}`,
+    secret: `Secret Claim · ${claimText}`,
+    alpha: `Alpha Claim · ${claimText}`,
+    safari: `Safari Claim · ${claimText}`
+  };
+
+  return ['standard', 'secret', 'alpha', 'safari'].map(key => ({
+    key,
+    title: key === 'standard' ? 'Standard' : key.charAt(0).toUpperCase() + key.slice(1),
+    enabled: key === kind,
+    infoText: key === kind ? (labels[kind] || 'Claim') : '',
+    active: key === kind
+  }));
+}
+
+function claimInfoText(entry) {
+  const kind = String(entry && entry.claimKind ? entry.claimKind : 'standard').toLowerCase();
+  const claimValue = Number(entry && entry.claimValue) || 0;
+  const claimText = claimValue === 1 ? '+1 Claim' : `+${claimValue} Claims`;
+
+  if (kind === 'standard') {
+    const caught = entry && entry.caughtPokemon ? String(entry.caughtPokemon) : '';
+    const slot = entry && entry.pokemon ? String(entry.pokemon) : '';
+    if (caught && slot && caught !== slot) return `From ${prettifyPokemonName(caught)} · ${claimText}`;
+    return `Base Claim · ${claimText}`;
+  }
+
+  if (kind === 'secret') return `Secret Claim · ${claimText}`;
+  if (kind === 'alpha') return `Alpha Claim · ${claimText}`;
+  if (kind === 'safari') return `Safari Claim · ${claimText}`;
+  return claimText || 'Claim';
+}
+
+
+export function toUnifiedCardPropsForHitlistClaim(entry) {
+  const key = entry && entry.pokemon ? String(entry.pokemon) : '';
+  const tierPoints = Number(entry?.points ?? POKEMON_POINTS?.[key] ?? 0);
+  const claimPoints = Number(entry && entry.claimPoints) || 0;
+  const kind = String(entry && entry.claimKind ? entry.claimKind : 'standard').toLowerCase();
+
+  return {
+    pokemonKey: key,
+    pokemonName: prettifyPokemonName(key),
+    artSrc: getPokemonDbShinyGifSrc(key),
+    // Keep species tier styling independent from how many points this individual
+    // claim award contributes.
+    points: tierPoints,
+    headerRightText: kind === 'standard' ? `${claimPoints}P` : `+${claimPoints}P`,
+    infoText: claimInfoText(entry),
+    isUnclaimed: false,
+    variants: buildClaimVariants(entry),
+    claimKind: kind
+  };
+}
+
 export function toUnifiedCardPropsForHitlist(entry, wantedVariant, options) {
   const key = entry && entry.pokemon ? String(entry.pokemon) : '';
   const points = Number(entry?.points ?? POKEMON_POINTS?.[key] ?? 0);

@@ -8,9 +8,10 @@ import {
   getPokemonRegionMap,
   getPokemonDexOrder
 } from '../pokemon/pokemon.data.js';
+import { computeHitlistVariantDeltas } from '../pokemon/shiny.points.js';
 
 /*
-OUTPUT:
+BASE SNAPSHOT OUTPUT:
 Array<{
   pokemon: string
   family: string
@@ -19,51 +20,103 @@ Array<{
   claimed: boolean
   claimedBy: string | null
 }>
+
+CLAIM LEDGER OUTPUT:
+{
+  standardClaims: Claim[]
+  bonusClaims: Claim[]
+  allClaims: Claim[]
+  specialOwnersByPokemon: {
+    [pokemon: string]: { secret: string|null, alpha: string|null, safari: string|null }
+  }
+}
+
+Each Claim is one awarded hitlist claim. Standard family-slot claims and special
+variant claims are deliberately separate records so player views never inherit
+another player's variant state from a species card.
 */
 
-export function buildShinyDexModel(weeklyModel) {
+function normalizePokemonKey(raw) {
+  return String(raw || '').trim().toLowerCase();
+}
+
+function normalizeMemberName(raw) {
+  return String(raw || '').trim();
+}
+
+function eventHasSafariFlag(shiny) {
+  return Boolean(shiny && shiny.safari === true);
+}
+
+// Weighted Total Claims scoring. A normal family-slot claim is worth 1 claim.
+// Special variant awards stack independently and contribute extra claim value.
+export const HITLIST_CLAIM_VALUES = Object.freeze({
+  standard: 1,
+  safari: 1,
+  secret: 2,
+  alpha: 3
+});
+
+export function getHitlistClaimValue(kind) {
+  const key = String(kind || 'standard').trim().toLowerCase();
+  return Number(HITLIST_CLAIM_VALUES[key]) || 0;
+}
+
+function flattenValidEvents(weeklyModel) {
   const weeks = Array.isArray(weeklyModel) ? weeklyModel : [];
-
-  const familiesMap = getPokemonFamiliesMap();
-  const pointsMap = getPokemonPointsMap();
-  const regionMap = getPokemonRegionMap();
-
-  // FLATTEN → EVENTS (ORDER PRESERVED)
   const events = [];
-  weeks.forEach(week => {
+  let sequence = 0;
+
+  weeks.forEach((week, weekIndex) => {
     const members = week && week.members ? Object.values(week.members) : [];
-    members.forEach(member => {
-      const shinies = member && Array.isArray(member.shinies) ? member.shinies : [];
+
+    members.forEach(memberGroup => {
+      const shinies = memberGroup && Array.isArray(memberGroup.shinies) ? memberGroup.shinies : [];
+
       shinies.forEach(shiny => {
         if (!shiny || shiny.lost || shiny.run) return;
+
+        const member = normalizeMemberName(shiny.member || memberGroup?.name);
+        const pokemon = normalizePokemonKey(shiny.pokemon);
+        if (!member || !pokemon) return;
+
+        sequence += 1;
         events.push({
-          member: shiny.member,
-          pokemon: (shiny.pokemon || '').toLowerCase()
+          sequence,
+          weekIndex,
+          week: String(week?.week || ''),
+          weekLabel: String(week?.label || week?.week || ''),
+          dateStart: week?.dateStart || null,
+          dateEnd: week?.dateEnd || null,
+          dateCatch: shiny.dateCatch || null,
+          weekOrder: shiny.weekOrder || null,
+          member,
+          pokemon,
+          method: shiny.method || null,
+          secret: Boolean(shiny.secret),
+          alpha: Boolean(shiny.alpha),
+          safari: eventHasSafariFlag(shiny)
         });
       });
     });
   });
 
-  // CLAIM RESOLUTION
-  // Rule:
-  // 1) Claim the exact caught species first (if unclaimed).
-  // 2) If it is already claimed, claim the FIRST unclaimed Pokemon in the same family (dex-ordered).
-  const claimedByPokemon = {};
-  const claimedSlotsByRoot = {};
+  return events;
+}
 
-  // Build rootByPokemon (first family root, else itself)
-  const rootByPokemon = {};
+function buildClaimContext() {
+  const familiesMap = getPokemonFamiliesMap();
+  const pointsMap = getPokemonPointsMap();
+  const regionMap = getPokemonRegionMap();
   const dexOrder = getPokemonDexOrder();
-  const order = Array.isArray(dexOrder) && dexOrder.length
-    ? dexOrder
-    : Object.keys(pointsMap);
+  const order = Array.isArray(dexOrder) && dexOrder.length ? dexOrder : Object.keys(pointsMap);
 
+  const rootByPokemon = {};
   order.forEach(p => {
     const roots = familiesMap[p] || [];
     rootByPokemon[p] = roots.length ? roots[0] : p;
   });
 
-  // Precompute speciesByRoot in DEX order (this is the stage list for locking)
   const speciesByRoot = {};
   order.forEach(p => {
     const root = rootByPokemon[p] || p;
@@ -71,43 +124,160 @@ export function buildShinyDexModel(weeklyModel) {
     speciesByRoot[root].push(p);
   });
 
+  return {
+    familiesMap,
+    pointsMap,
+    regionMap,
+    order,
+    rootByPokemon,
+    speciesByRoot
+  };
+}
+
+function claimEventMetadata(event) {
+  return {
+    sequence: event.sequence,
+    week: event.week,
+    weekLabel: event.weekLabel,
+    dateStart: event.dateStart,
+    dateEnd: event.dateEnd,
+    dateCatch: event.dateCatch,
+    weekOrder: event.weekOrder
+  };
+}
+
+function resolveStandardClaims(events, ctx) {
+  const claimedByPokemon = {};
+  const claimedSlotsByRoot = {};
+  const standardClaims = [];
+
   events.forEach(event => {
     const mon = event.pokemon;
-    if (!mon) return;
-
-    const root = rootByPokemon[mon] || mon;
-    const stages = speciesByRoot[root] || [mon];
+    const root = ctx.rootByPokemon[mon] || mon;
+    const stages = ctx.speciesByRoot[root] || [mon];
 
     if (!claimedSlotsByRoot[root]) claimedSlotsByRoot[root] = {};
 
-    // 1) Exact species first
-    if (!claimedSlotsByRoot[root][mon]) {
-      claimedSlotsByRoot[root][mon] = event.member;
-      claimedByPokemon[mon] = event.member;
-      return;
-    }
+    let claimSlot = null;
+    let claimMode = 'exact';
 
-    // 2) Fallback: first unclaimed within this family root (dex-ordered)
-    let fallback = null;
-    for (let i = 0; i < stages.length; i++) {
-      const stage = stages[i];
-      if (!claimedSlotsByRoot[root][stage]) {
-        fallback = stage;
-        break;
+    // 1) Claim the exact caught species first.
+    if (!claimedSlotsByRoot[root][mon]) {
+      claimSlot = mon;
+    } else {
+      // 2) Otherwise claim the first still-open stage in this family.
+      claimMode = 'fallback';
+      for (let i = 0; i < stages.length; i += 1) {
+        const stage = stages[i];
+        if (!claimedSlotsByRoot[root][stage]) {
+          claimSlot = stage;
+          break;
+        }
       }
     }
-    if (!fallback) return;
 
-    claimedSlotsByRoot[root][fallback] = event.member;
-    claimedByPokemon[fallback] = event.member;
+    if (!claimSlot) return;
+
+    claimedSlotsByRoot[root][claimSlot] = event.member;
+    claimedByPokemon[claimSlot] = event.member;
+
+    standardClaims.push({
+      id: `${event.sequence}:standard:${claimSlot}`,
+      kind: 'standard',
+      member: event.member,
+      pokemon: claimSlot,
+      caughtPokemon: mon,
+      family: root,
+      claimMode,
+      points: Number(ctx.pointsMap[claimSlot]) || 0,
+      tierPoints: Number(ctx.pointsMap[claimSlot]) || 0,
+      claimValue: getHitlistClaimValue('standard'),
+      isBonus: false,
+      ...claimEventMetadata(event)
+    });
   });
 
-  return order.map(pokemon => ({
+  return { claimedByPokemon, standardClaims };
+}
+
+function resolveBonusClaims(events, ctx) {
+  const owners = {};
+  const bonusClaims = [];
+
+  function ensureOwners(pokemon) {
+    if (!owners[pokemon]) owners[pokemon] = { secret: null, alpha: null, safari: null };
+    return owners[pokemon];
+  }
+
+  function addBonusClaim(event, kind, points) {
+    const slot = ensureOwners(event.pokemon);
+    if (slot[kind]) return;
+
+    slot[kind] = event.member;
+    bonusClaims.push({
+      id: `${event.sequence}:${kind}:${event.pokemon}`,
+      kind,
+      member: event.member,
+      pokemon: event.pokemon,
+      caughtPokemon: event.pokemon,
+      family: ctx.rootByPokemon[event.pokemon] || event.pokemon,
+      claimMode: 'variant',
+      points: Number(points) || 0,
+      tierPoints: Number(ctx.pointsMap[event.pokemon]) || 0,
+      claimValue: getHitlistClaimValue(kind),
+      isBonus: true,
+      ...claimEventMetadata(event)
+    });
+  }
+
+  events.forEach(event => {
+    const tierPoints = Number(ctx.pointsMap[event.pokemon]) || 0;
+    const deltas = computeHitlistVariantDeltas(event, tierPoints);
+
+    if (event.secret) addBonusClaim(event, 'secret', deltas.secretBonus);
+    if (event.alpha) addBonusClaim(event, 'alpha', deltas.alphaDelta);
+    if (event.safari) addBonusClaim(event, 'safari', deltas.safariBonus);
+  });
+
+  return { specialOwnersByPokemon: owners, bonusClaims };
+}
+
+export function buildShinyDexClaimLedger(weeklyModel) {
+  const events = flattenValidEvents(weeklyModel);
+  const ctx = buildClaimContext();
+
+  const standard = resolveStandardClaims(events, ctx);
+  const bonus = resolveBonusClaims(events, ctx);
+
+  const allClaims = standard.standardClaims
+    .concat(bonus.bonusClaims)
+    .sort((a, b) => {
+      const ds = (Number(a.sequence) || 0) - (Number(b.sequence) || 0);
+      if (ds !== 0) return ds;
+
+      const order = { standard: 0, secret: 1, alpha: 2, safari: 3 };
+      return (order[a.kind] ?? 9) - (order[b.kind] ?? 9);
+    });
+
+  return {
+    standardClaims: standard.standardClaims,
+    bonusClaims: bonus.bonusClaims,
+    allClaims,
+    specialOwnersByPokemon: bonus.specialOwnersByPokemon
+  };
+}
+
+export function buildShinyDexModel(weeklyModel) {
+  const events = flattenValidEvents(weeklyModel);
+  const ctx = buildClaimContext();
+  const standard = resolveStandardClaims(events, ctx);
+
+  return ctx.order.map(pokemon => ({
     pokemon,
-    family: rootByPokemon[pokemon] || pokemon,
-    region: regionMap[pokemon] || 'unknown',
-    points: pointsMap[pokemon] || 0,
-    claimed: !!claimedByPokemon[pokemon],
-    claimedBy: claimedByPokemon[pokemon] || null
+    family: ctx.rootByPokemon[pokemon] || pokemon,
+    region: ctx.regionMap[pokemon] || 'unknown',
+    points: ctx.pointsMap[pokemon] || 0,
+    claimed: !!standard.claimedByPokemon[pokemon],
+    claimedBy: standard.claimedByPokemon[pokemon] || null
   }));
 }

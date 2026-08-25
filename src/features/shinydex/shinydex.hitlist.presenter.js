@@ -2,7 +2,10 @@
 // v2.0.0-beta
 // Hitlist Presenter — view-specific data prep (no DOM)
 
-import { buildShinyDexModel } from '../../domains/shinydex/hitlist.model.js';
+import {
+  buildShinyDexModel,
+  buildShinyDexClaimLedger
+} from '../../domains/shinydex/hitlist.model.js';
 import {
   getPokemonRegionMap,
   getPokemonShowMap
@@ -16,7 +19,6 @@ import {
 } from './shinydex.search.js';
 
 import { tierFromPoints } from '../../ui/tier-map.js';
-import { SHINY_POINTS } from '../../domains/pokemon/shiny.points.js';
 
 function normalizeRegion(raw) {
   return String(raw || '').trim().toLowerCase();
@@ -29,53 +31,53 @@ function regionMatches(regionValue, query) {
   return r.indexOf(q) === 0;
 }
 
-function normalizePokemonKey(raw) {
-  return String(raw || '').trim().toLowerCase();
-}
+function buildScoreboardCardEntries(claims, dexIndexByPokemon) {
+  var kindOrder = { standard: 0, secret: 1, alpha: 2, safari: 3 };
 
-function eventHasSafariFlag(shiny) {
-  return Boolean(shiny && shiny.safari === true);
-}
-
-
-/**
- * Special-variant owners are FIRST occurrence of species+flag in weekly.
- * They are NOT tied to the family progressive slot claim.
- * Multiple flags in one event claim all relevant variants at once.
- */
-function buildSpecialVariantOwnersByPokemon(weeklyModel) {
-  var weeks = Array.isArray(weeklyModel) ? weeklyModel : [];
-  var out = {};
-
-  function ensure(pokemonKey) {
-    if (!out[pokemonKey]) out[pokemonKey] = { secret: null, alpha: null, safari: null };
-    return out[pokemonKey];
-  }
-
-  weeks.forEach(function (week) {
-    var members = week && week.members ? Object.values(week.members) : [];
-    members.forEach(function (memberGroup) {
-      var shinies = memberGroup && Array.isArray(memberGroup.shinies) ? memberGroup.shinies : [];
-      shinies.forEach(function (shiny) {
-        if (!shiny || shiny.lost || shiny.run) return;
-
-        var pokemon = normalizePokemonKey(shiny.pokemon);
-        if (!pokemon) return;
-
-        var member = shiny.member ? String(shiny.member) : '';
-        if (!member) return;
-
-        var slot = ensure(pokemon);
-
-        if (shiny.secret && !slot.secret) slot.secret = member;
-        if (shiny.alpha && !slot.alpha) slot.alpha = member;
-        if (eventHasSafariFlag(shiny) && !slot.safari) slot.safari = member;
+  return (Array.isArray(claims) ? claims : [])
+    .map(function (claim) {
+      return Object.assign({}, claim, {
+        claimed: true,
+        claimedBy: claim.member || null,
+        claimKind: claim.kind || 'standard',
+        claimPoints: Number(claim.points) || 0,
+        claimValue: Number(claim.claimValue) || 0,
+        points: Number(claim.tierPoints) || 0
       });
-    });
-  });
+    })
+    .sort(function (a, b) {
+      var ai = Object.prototype.hasOwnProperty.call(dexIndexByPokemon, a.pokemon)
+        ? dexIndexByPokemon[a.pokemon]
+        : Number.MAX_SAFE_INTEGER;
+      var bi = Object.prototype.hasOwnProperty.call(dexIndexByPokemon, b.pokemon)
+        ? dexIndexByPokemon[b.pokemon]
+        : Number.MAX_SAFE_INTEGER;
 
-  return out;
+      if (ai !== bi) return ai - bi;
+
+      var ak = kindOrder[a.claimKind] ?? 9;
+      var bk = kindOrder[b.claimKind] ?? 9;
+      if (ak !== bk) return ak - bk;
+
+      return (Number(a.sequence) || 0) - (Number(b.sequence) || 0);
+    });
 }
+
+function formatScoreboardTitle(rank, member) {
+  var totalClaims = Number(member.totalClaimValue) || 0;
+  var awardCount = Number(member.awardCount) || 0;
+  var points = Number(member.points) || 0;
+  var bonusPoints = Number(member.bonusPoints) || 0;
+
+  var awardText = awardCount !== totalClaims
+    ? (' (' + awardCount + ' awards)')
+    : '';
+
+  return rank + '. ' + member.name + ' — ' + totalClaims + ' Total Claims' + awardText +
+    ' · ' + points + ' Points' +
+    (bonusPoints ? (' (+' + bonusPoints + ' bonus)') : '');
+}
+
 
 export function prepareHitlistRenderModel(opts) {
   var weeklyModel = opts && opts.weeklyModel;
@@ -92,7 +94,8 @@ export function prepareHitlistRenderModel(opts) {
     return showMap[e.pokemon] !== false;
   });
 
-  var specialOwnersByPokemon = buildSpecialVariantOwnersByPokemon(weeklyModel);
+  var claimLedger = buildShinyDexClaimLedger(weeklyModel);
+  var specialOwnersByPokemon = claimLedger.specialOwnersByPokemon || {};
 
   snapshot = snapshot.map(function (e) {
     var s = specialOwnersByPokemon[e.pokemon] || {};
@@ -131,52 +134,81 @@ export function prepareHitlistRenderModel(opts) {
   // SCOREBOARD MODES (claims/points)
   // --------------------------------------------------
   if (mode === 'claims' || mode === 'points') {
-    var claimed = snapshot.filter(function (e) { return e.claimed; });
+    var visiblePokemonSet = new Set(snapshot.map(function (e) { return e.pokemon; }));
+    var dexIndexByPokemon = {};
+    snapshot.forEach(function (e, idx) { dexIndexByPokemon[e.pokemon] = idx; });
 
-    // Base points (standard progressive claim slots)
-    var byMember = {};
-    claimed.forEach(function (e) {
-      var n = e.claimedBy || '';
-      if (!n) return;
-      if (!byMember[n]) byMember[n] = [];
-      byMember[n].push(e);
-    });
+    // Player cards are built from the claim ledger, not from global species cards.
+    // That keeps every award independent: a Secret owned by player B can never appear
+    // as a switchable state on player A's Standard claim card.
+    var claimsByMember = {};
 
-    // Bonus points (special variants are independent from family progressive slot claims)
-    var bonusByMember = {};
-
-    function addBonus(memberName, delta) {
-      var name = memberName ? String(memberName) : '';
-      if (!name) return;
-      var n = Number(delta) || 0;
-      if (!Number.isFinite(n) || n === 0) return;
-      bonusByMember[name] = (bonusByMember[name] || 0) + n;
+    function ensureMember(name) {
+      var memberName = String(name || '').trim();
+      if (!memberName) return null;
+      if (!claimsByMember[memberName]) {
+        claimsByMember[memberName] = {
+          name: memberName,
+          standardClaims: [],
+          bonusClaims: [],
+          allClaims: []
+        };
+      }
+      return claimsByMember[memberName];
     }
 
-    snapshot.forEach(function (e) {
-      var owners = e && e.variantOwners ? e.variantOwners : null;
-      if (!owners) return;
-
-      var tierPts = Number(e && e.points) || 0;
-
-      if (owners.secret) addBonus(owners.secret, SHINY_POINTS.BONUS.SECRET);
-      if (owners.safari) addBonus(owners.safari, SHINY_POINTS.BONUS.SAFARI);
-
-      // Hitlist base already grants tier points once; variants grant only the delta above tier.
-      if (owners.alpha) addBonus(owners.alpha, Math.max(0, SHINY_POINTS.BASE.ALPHA - tierPts));
+    (claimLedger.standardClaims || []).forEach(function (claim) {
+      if (!claim || !visiblePokemonSet.has(claim.pokemon)) return;
+      var member = ensureMember(claim.member);
+      if (!member) return;
+      member.standardClaims.push(claim);
+      member.allClaims.push(claim);
     });
 
-    var memberNameSet = new Set(Object.keys(byMember).concat(Object.keys(bonusByMember)));
+    (claimLedger.bonusClaims || []).forEach(function (claim) {
+      if (!claim || !visiblePokemonSet.has(claim.pokemon)) return;
+      var member = ensureMember(claim.member);
+      if (!member) return;
+      member.bonusClaims.push(claim);
+      member.allClaims.push(claim);
+    });
 
-    var fullLeaderboard = Array.from(memberNameSet)
-      .map(function (name) {
-        var entries = byMember[name] || [];
-        var basePoints = entries.reduce(function (s, x) { return s + (x.points || 0); }, 0);
-        var bonusPoints = bonusByMember[name] || 0;
+    var fullLeaderboard = Object.values(claimsByMember)
+      .map(function (m) {
+        var basePoints = m.standardClaims.reduce(function (sum, claim) {
+          return sum + (Number(claim.points) || 0);
+        }, 0);
+        var bonusPoints = m.bonusClaims.reduce(function (sum, claim) {
+          return sum + (Number(claim.points) || 0);
+        }, 0);
+
+        var chronologicalClaims = m.allClaims.slice().sort(function (a, b) {
+          var ds = (Number(a.sequence) || 0) - (Number(b.sequence) || 0);
+          if (ds !== 0) return ds;
+          var kindOrder = { standard: 0, secret: 1, alpha: 2, safari: 3 };
+          return (kindOrder[a.kind] ?? 9) - (kindOrder[b.kind] ?? 9);
+        });
+
+        var baseClaimValue = m.standardClaims.reduce(function (sum, claim) {
+          return sum + (Number(claim.claimValue) || 1);
+        }, 0);
+        var bonusClaimValue = m.bonusClaims.reduce(function (sum, claim) {
+          return sum + (Number(claim.claimValue) || 0);
+        }, 0);
+        var totalClaimValue = baseClaimValue + bonusClaimValue;
+
         return {
-          name: name,
-          entries: entries,
-          claims: entries.length,
+          name: m.name,
+          standardClaims: m.standardClaims,
+          bonusClaims: m.bonusClaims,
+          allClaims: chronologicalClaims,
+          baseClaimCount: m.standardClaims.length,
+          bonusClaimCount: m.bonusClaims.length,
+          baseClaimValue: baseClaimValue,
+          bonusClaimValue: bonusClaimValue,
+          totalClaimValue: totalClaimValue,
+          awardCount: chronologicalClaims.length,
+          claims: totalClaimValue,
           basePoints: basePoints,
           bonusPoints: bonusPoints,
           points: basePoints + bonusPoints
@@ -184,12 +216,16 @@ export function prepareHitlistRenderModel(opts) {
       })
       .sort(function (a, b) {
         if (mode === 'claims') {
-          var dc = b.claims - a.claims;
+          // Total Claims is intentionally weighted:
+          // Base +1, Safari +1, Secret +2, Alpha +3.
+          var dc = b.totalClaimValue - a.totalClaimValue;
           if (dc !== 0) return dc;
+
           var dp = b.points - a.points;
           if (dp !== 0) return dp;
           return String(a.name).localeCompare(String(b.name));
         }
+
         var d = b.points - a.points;
         if (d !== 0) return d;
         return String(a.name).localeCompare(String(b.name));
@@ -214,10 +250,18 @@ export function prepareHitlistRenderModel(opts) {
       sections: visibleLeaderboard.map(function (m) {
         return {
           key: m.name,
-          title: rankByName[m.name] + '. ' + m.name + ' — ' + m.claims + ' Claims · ' + m.points + ' Points' + (m.bonusPoints ? (' (+' + m.bonusPoints + ' bonus)') : ''),
-          entries: m.entries.map(function (e) {
-            return Object.assign({}, e);
-          })
+          title: formatScoreboardTitle(rankByName[m.name], m),
+          entries: buildScoreboardCardEntries(m.allClaims, dexIndexByPokemon),
+          claimLog: m.allClaims.map(function (claim) { return Object.assign({}, claim); }),
+          baseClaimCount: m.baseClaimCount,
+          bonusClaimCount: m.bonusClaimCount,
+          baseClaimValue: m.baseClaimValue,
+          bonusClaimValue: m.bonusClaimValue,
+          totalClaimValue: m.totalClaimValue,
+          awardCount: m.awardCount,
+          basePoints: m.basePoints,
+          bonusPoints: m.bonusPoints,
+          points: m.points
         };
       }),
       countLabelText: fullLeaderboard.length + ' Members'

@@ -144,3 +144,106 @@
   font-weight: 700;
   margin-left: auto;
 }
+
+/* ---------------------------------------------------------
+   PLAYER SCOREBOARD CLAIM CARDS + LOG
+--------------------------------------------------------- */
+
+/* In player/scoreboard mode each card represents one immutable award.
+   Variant icons are indicators only; global Pokédex variant cycling remains
+   unchanged in the normal species view. */
+.shinydex-root .scoreboard-claim-card .unified-variants{
+  pointer-events: none;
+}
+
+.shinydex-root .scoreboard-claim-card .variant-btn{
+  cursor: default;
+}
+
+.shinydex-root .scoreboard-claim-card .variant-btn:hover{
+  border-color: rgba(58,70,81,0.65);
+}
+
+.shinydex-root .scoreboard-claim-card .variant-btn.is-active{
+  border-color: var(--u-accent);
+}
+
+.shinydex-root .scoreboard-claim-log{
+  width: 100%;
+  margin: 2px 0 18px;
+  background: rgba(14,18,23,0.88);
+  border: 2px solid rgba(58,70,81,0.85);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.65) inset,
+    0 3px 0 rgba(0,0,0,0.65);
+}
+
+.shinydex-root .scoreboard-claim-log > summary{
+  cursor: pointer;
+  user-select: none;
+  padding: 9px 12px;
+  color: var(--text-main);
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.shinydex-root .scoreboard-claim-log[open] > summary{
+  border-bottom: 2px solid rgba(58,70,81,0.65);
+}
+
+.shinydex-root .scoreboard-claim-log-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 360px;
+  overflow: auto;
+}
+
+.shinydex-root .scoreboard-claim-log-row{
+  display: grid;
+  grid-template-columns: minmax(150px, 1.3fr) minmax(180px, 1.4fr) minmax(90px, auto);
+  gap: 12px;
+  align-items: center;
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(58,70,81,0.55);
+  color: var(--text-main);
+  font-size: 12px;
+}
+
+.shinydex-root .scoreboard-claim-log-row:last-child{
+  border-bottom: 0;
+}
+
+.shinydex-root .scoreboard-claim-log-when{
+  color: var(--text-muted, #a2a29d);
+}
+
+.shinydex-root .scoreboard-claim-log-pokemon{
+  font-weight: 700;
+}
+
+.shinydex-root .scoreboard-claim-log-award{
+  justify-self: end;
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+.shinydex-root .scoreboard-claim-log-row.claim-kind-secret .scoreboard-claim-log-award,
+.shinydex-root .scoreboard-claim-log-row.claim-kind-alpha .scoreboard-claim-log-award,
+.shinydex-root .scoreboard-claim-log-row.claim-kind-safari .scoreboard-claim-log-award{
+  color: var(--success);
+}
+
+@media (max-width: 720px){
+  .shinydex-root .scoreboard-claim-log-row{
+    grid-template-columns: 1fr auto;
+    gap: 5px 10px;
+  }
+
+  .shinydex-root .scoreboard-claim-log-when{
+    grid-column: 1 / -1;
+    font-size: 11px;
+  }
+}
