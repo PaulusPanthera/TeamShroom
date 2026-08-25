@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-25T06:22:03.423Z",
+  "generatedAt": "2026-08-25T12:20:34.870Z",
   "source": "google-sheets",
   "data": [
     {
@@ -1057,7 +1057,7 @@
       "role": "shroom",
       "sprite": "png",
       "member_since": "03.06.24",
-      "nationality": ""
+      "nationality": "SG"
     },
     {
       "name": "Scooty",
@@ -1295,7 +1295,7 @@
       "name": "tollewolle",
       "active": false,
       "role": "spore",
-      "sprite": "png",
+      "sprite": null,
       "member_since": "",
       "nationality": "DE"
     },
