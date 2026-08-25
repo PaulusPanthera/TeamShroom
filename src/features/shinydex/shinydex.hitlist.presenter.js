@@ -65,15 +65,12 @@ function buildScoreboardCardEntries(claims, dexIndexByPokemon) {
 
 function formatScoreboardTitle(rank, member) {
   var totalClaims = Number(member.totalClaimValue) || 0;
-  var awardCount = Number(member.awardCount) || 0;
   var points = Number(member.points) || 0;
   var bonusPoints = Number(member.bonusPoints) || 0;
 
-  var awardText = awardCount !== totalClaims
-    ? (' (' + awardCount + ' awards)')
-    : '';
-
-  return rank + '. ' + member.name + ' — ' + totalClaims + ' Total Claims' + awardText +
+  // Keep the compact pre-card-patch heading. Weighted claim accounting is
+  // preserved, but the separate award count now belongs in the global log.
+  return rank + '. ' + member.name + ' — ' + totalClaims + ' Claims' +
     ' · ' + points + ' Points' +
     (bonusPoints ? (' (+' + bonusPoints + ' bonus)') : '');
 }
@@ -84,7 +81,7 @@ export function prepareHitlistRenderModel(opts) {
   var viewState = opts && opts.viewState;
   var searchCtx = opts && opts.searchCtx;
 
-  var mode = viewState && viewState.sort ? viewState.sort : 'standard'; // 'standard' | 'claims' | 'points'
+  var mode = viewState && viewState.sort ? viewState.sort : 'standard'; // 'standard' | 'claims' | 'points' | 'log'
   var parsed = parseSearch(viewState && viewState.search ? viewState.search : '');
 
   var showMap = getPokemonShowMap();
@@ -129,6 +126,67 @@ export function prepareHitlistRenderModel(opts) {
     regionStats[region].total += 1;
     if (e.claimed) regionStats[region].claimed += 1;
   });
+
+  // --------------------------------------------------
+  // GLOBAL CLAIM LOG MODE
+  // --------------------------------------------------
+  if (mode === 'log') {
+    var logVisiblePokemonSet = new Set(snapshot.map(function (e) { return e.pokemon; }));
+    var logClaims = (claimLedger.allClaims || []).filter(function (claim) {
+      return claim && logVisiblePokemonSet.has(claim.pokemon);
+    });
+
+    if (parsed.filters && parsed.filters.tier) {
+      var logTier = parsed.filters.tier;
+      logClaims = logClaims.filter(function (claim) {
+        return tierFromPoints(Number(claim.tierPoints) || 0) === logTier;
+      });
+    }
+
+    if (parsed.q) {
+      if (parsed.kind === 'member') {
+        logClaims = logClaims.filter(function (claim) {
+          return memberMatches(claim.member || '', parsed.q);
+        });
+      } else if (parsed.kind === 'family') {
+        var logRoots = resolveFamilyRootsByQuery(searchCtx, parsed.q);
+        logClaims = logClaims.filter(function (claim) {
+          return logRoots.has(claim.family || claim.pokemon);
+        });
+      } else {
+        logClaims = logClaims.filter(function (claim) {
+          return speciesMatches(claim.pokemon || '', parsed.q) ||
+            speciesMatches(claim.caughtPokemon || '', parsed.q);
+        });
+      }
+    }
+
+    // A log is most useful with the newest awards at the top. Claims created by
+    // the same catch remain ordered Base -> Secret -> Alpha -> Safari.
+    var logKindOrder = { standard: 0, secret: 1, alpha: 2, safari: 3 };
+    logClaims = logClaims.slice().sort(function (a, b) {
+      var ds = (Number(b.sequence) || 0) - (Number(a.sequence) || 0);
+      if (ds !== 0) return ds;
+      return (logKindOrder[a.kind] ?? 9) - (logKindOrder[b.kind] ?? 9);
+    });
+
+    var logClaimValue = logClaims.reduce(function (sum, claim) {
+      return sum + (Number(claim.claimValue) || 0);
+    }, 0);
+    var logPoints = logClaims.reduce(function (sum, claim) {
+      return sum + (Number(claim.points) || 0);
+    }, 0);
+
+    return {
+      mode: 'claimlog',
+      claims: logClaims.map(function (claim) { return Object.assign({}, claim); }),
+      awardCount: logClaims.length,
+      totalClaimValue: logClaimValue,
+      points: logPoints,
+      sections: [],
+      countLabelText: logClaims.length + ' Awards · ' + logClaimValue + ' Claims'
+    };
+  }
 
   // --------------------------------------------------
   // SCOREBOARD MODES (claims/points)
@@ -252,7 +310,6 @@ export function prepareHitlistRenderModel(opts) {
           key: m.name,
           title: formatScoreboardTitle(rankByName[m.name], m),
           entries: buildScoreboardCardEntries(m.allClaims, dexIndexByPokemon),
-          claimLog: m.allClaims.map(function (claim) { return Object.assign({}, claim); }),
           baseClaimCount: m.baseClaimCount,
           bonusClaimCount: m.bonusClaimCount,
           baseClaimValue: m.baseClaimValue,

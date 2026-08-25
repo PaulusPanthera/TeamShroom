@@ -289,8 +289,9 @@ export function setupShinyDexPage({ root, weeklyModel, shinyShowcaseRows, sideba
       addOption('standard', 'Standard');
       addOption('claims', 'Total Claims');
       addOption('points', 'Total Claim Points');
+      addOption('log', 'Claim Log');
 
-      if (state.sort !== 'claims' && state.sort !== 'points' && state.sort !== 'standard') {
+      if (state.sort !== 'claims' && state.sort !== 'points' && state.sort !== 'log' && state.sort !== 'standard') {
         state.sort = 'standard';
       }
     } else {

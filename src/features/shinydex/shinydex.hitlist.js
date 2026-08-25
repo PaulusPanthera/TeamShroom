@@ -73,47 +73,61 @@ function claimPokemonText(claim) {
   return prettifyPokemonName(slot || caught || 'unknown');
 }
 
-function renderClaimLog(sectionModel) {
-  const claims = Array.isArray(sectionModel && sectionModel.claimLog) ? sectionModel.claimLog : [];
-  if (!claims.length) return null;
+function renderGlobalClaimLog(model) {
+  const claims = Array.isArray(model && model.claims) ? model.claims : [];
 
-  const details = document.createElement('details');
-  details.className = 'scoreboard-claim-log';
+  const section = document.createElement('section');
+  section.className = 'global-claim-log-section';
+  applyFloatingSectionStyle(section);
 
-  const summary = document.createElement('summary');
-  const totalClaimValue = Number(sectionModel && sectionModel.totalClaimValue) || 0;
-  summary.textContent = `Claim log · ${claims.length} award${claims.length === 1 ? '' : 's'} · ${totalClaimValue} Total Claims`;
-  details.appendChild(summary);
+  const header = document.createElement('h2');
+  const awards = Number(model && model.awardCount) || claims.length;
+  const totalClaims = Number(model && model.totalClaimValue) || 0;
+  const points = Number(model && model.points) || 0;
+  header.textContent = `CLAIM LOG — ${awards} Awards · ${totalClaims} Claims · ${points} Points`;
+  section.appendChild(header);
 
   const list = document.createElement('ol');
-  list.className = 'scoreboard-claim-log-list';
+  list.className = 'global-claim-log-list';
 
   claims.forEach(claim => {
     const row = document.createElement('li');
-    row.className = `scoreboard-claim-log-row claim-kind-${String(claim.kind || 'standard').toLowerCase()}`;
+    row.className = `global-claim-log-row claim-kind-${String(claim.kind || 'standard').toLowerCase()}`;
 
     const when = document.createElement('span');
-    when.className = 'scoreboard-claim-log-when';
+    when.className = 'global-claim-log-when';
     when.textContent = claimWhenText(claim);
 
+    const member = document.createElement('span');
+    member.className = 'global-claim-log-member';
+    member.textContent = String(claim.member || 'Unknown');
+
     const pokemon = document.createElement('span');
-    pokemon.className = 'scoreboard-claim-log-pokemon';
+    pokemon.className = 'global-claim-log-pokemon';
     pokemon.textContent = claimPokemonText(claim);
 
     const award = document.createElement('span');
-    award.className = 'scoreboard-claim-log-award';
+    award.className = 'global-claim-log-award';
     const pts = Number(claim.points) || 0;
     const prefix = String(claim.kind || 'standard') === 'standard' ? '' : '+';
     const claimValue = Number(claim.claimValue) || 0;
     const claimWord = claimValue === 1 ? 'claim' : 'claims';
     award.textContent = `${claimKindLabel(claim.kind)} ${prefix}${pts}P · +${claimValue} ${claimWord}`;
 
-    row.append(when, pokemon, award);
+    row.append(when, member, pokemon, award);
     list.appendChild(row);
   });
 
-  details.appendChild(list);
-  return details;
+  if (!claims.length) {
+    const empty = document.createElement('div');
+    empty.className = 'global-claim-log-empty';
+    empty.textContent = 'No claims match the current search.';
+    section.appendChild(empty);
+  } else {
+    section.appendChild(list);
+  }
+
+  return section;
 }
 
 export function renderHitlistFromModel(model, opts) {
@@ -123,7 +137,14 @@ export function renderHitlistFromModel(model, opts) {
 
   const selectedVariantByKey = opts && opts.selectedVariantByKey;
 
-  if (!model || !Array.isArray(model.sections)) return;
+  if (!model) return;
+
+  if (model.mode === 'claimlog') {
+    container.appendChild(renderGlobalClaimLog(model));
+    return;
+  }
+
+  if (!Array.isArray(model.sections)) return;
 
   if (model.mode === 'scoreboard') {
     model.sections.forEach(sec => {
@@ -133,8 +154,6 @@ export function renderHitlistFromModel(model, opts) {
 
       const header = document.createElement('h2');
       header.textContent = sec.title || '';
-
-      const log = renderClaimLog(sec);
 
       const grid = document.createElement('div');
       grid.className = 'dex-grid scoreboard-claim-grid';
@@ -151,7 +170,6 @@ export function renderHitlistFromModel(model, opts) {
 
       grid.appendChild(frag);
       section.appendChild(header);
-      if (log) section.appendChild(log);
       section.appendChild(grid);
       container.appendChild(section);
     });

@@ -146,12 +146,12 @@
 }
 
 /* ---------------------------------------------------------
-   PLAYER SCOREBOARD CLAIM CARDS + LOG
+   PLAYER SCOREBOARD CLAIM CARDS + GLOBAL CLAIM LOG
 --------------------------------------------------------- */
 
 /* In player/scoreboard mode each card represents one immutable award.
-   Variant icons are indicators only; global Pokédex variant cycling remains
-   unchanged in the normal species view. */
+   It keeps the normal UnifiedCard layout, while its one awarded variant is
+   locked so another player's global variant state can never leak into it. */
 .shinydex-root .scoreboard-claim-card .unified-variants{
   pointer-events: none;
 }
@@ -168,9 +168,20 @@
   border-color: var(--u-accent);
 }
 
-.shinydex-root .scoreboard-claim-log{
-  width: 100%;
-  margin: 2px 0 18px;
+.shinydex-root .global-claim-log-section{
+  max-width: var(--shinydex-grid-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.shinydex-root .global-claim-log-section > h2{
+  text-align: center;
+}
+
+.shinydex-root .global-claim-log-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
   background: rgba(14,18,23,0.88);
   border: 2px solid rgba(58,70,81,0.85);
   box-shadow:
@@ -178,72 +189,68 @@
     0 3px 0 rgba(0,0,0,0.65);
 }
 
-.shinydex-root .scoreboard-claim-log > summary{
-  cursor: pointer;
-  user-select: none;
-  padding: 9px 12px;
-  color: var(--text-main);
-  font-family: "Press Start 2P", monospace;
-  font-size: 10px;
-  line-height: 1.5;
-}
-
-.shinydex-root .scoreboard-claim-log[open] > summary{
-  border-bottom: 2px solid rgba(58,70,81,0.65);
-}
-
-.shinydex-root .scoreboard-claim-log-list{
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  max-height: 360px;
-  overflow: auto;
-}
-
-.shinydex-root .scoreboard-claim-log-row{
+.shinydex-root .global-claim-log-row{
   display: grid;
-  grid-template-columns: minmax(150px, 1.3fr) minmax(180px, 1.4fr) minmax(90px, auto);
+  grid-template-columns: minmax(170px, 1.35fr) minmax(130px, 0.9fr) minmax(180px, 1.35fr) minmax(120px, auto);
   gap: 12px;
   align-items: center;
-  padding: 9px 12px;
+  padding: 10px 12px;
   border-bottom: 1px solid rgba(58,70,81,0.55);
   color: var(--text-main);
   font-size: 12px;
 }
 
-.shinydex-root .scoreboard-claim-log-row:last-child{
+.shinydex-root .global-claim-log-row:last-child{
   border-bottom: 0;
 }
 
-.shinydex-root .scoreboard-claim-log-when{
+.shinydex-root .global-claim-log-when{
   color: var(--text-muted, #a2a29d);
 }
 
-.shinydex-root .scoreboard-claim-log-pokemon{
+.shinydex-root .global-claim-log-member,
+.shinydex-root .global-claim-log-pokemon{
   font-weight: 700;
 }
 
-.shinydex-root .scoreboard-claim-log-award{
+.shinydex-root .global-claim-log-award{
   justify-self: end;
   font-family: "Press Start 2P", monospace;
   font-size: 9px;
   white-space: nowrap;
 }
 
-.shinydex-root .scoreboard-claim-log-row.claim-kind-secret .scoreboard-claim-log-award,
-.shinydex-root .scoreboard-claim-log-row.claim-kind-alpha .scoreboard-claim-log-award,
-.shinydex-root .scoreboard-claim-log-row.claim-kind-safari .scoreboard-claim-log-award{
+.shinydex-root .global-claim-log-row.claim-kind-secret .global-claim-log-award,
+.shinydex-root .global-claim-log-row.claim-kind-alpha .global-claim-log-award,
+.shinydex-root .global-claim-log-row.claim-kind-safari .global-claim-log-award{
   color: var(--success);
 }
 
-@media (max-width: 720px){
-  .shinydex-root .scoreboard-claim-log-row{
-    grid-template-columns: 1fr auto;
+.shinydex-root .global-claim-log-empty{
+  padding: 20px 12px;
+  text-align: center;
+  color: var(--text-muted, #a2a29d);
+  background: rgba(14,18,23,0.88);
+  border: 2px solid rgba(58,70,81,0.85);
+}
+
+@media (max-width: 820px){
+  .shinydex-root .global-claim-log-row{
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 5px 10px;
   }
 
-  .shinydex-root .scoreboard-claim-log-when{
+  .shinydex-root .global-claim-log-when,
+  .shinydex-root .global-claim-log-pokemon{
     grid-column: 1 / -1;
-    font-size: 11px;
+  }
+
+  .shinydex-root .global-claim-log-member{
+    grid-column: 1;
+  }
+
+  .shinydex-root .global-claim-log-award{
+    grid-column: 2;
   }
 }
+
