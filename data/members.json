@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-17T20:12:01.606Z",
+  "generatedAt": "2026-08-25T00:29:37.523Z",
   "source": "google-sheets",
   "data": [
     {
@@ -477,7 +477,7 @@
     },
     {
       "name": "IfUmm",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": null,
       "member_since": "05.05.26",
@@ -709,7 +709,7 @@
     },
     {
       "name": "MandiMlem",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png",
       "member_since": "11.05.26",
@@ -917,7 +917,7 @@
     },
     {
       "name": "pawmu",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "05.08.25",
@@ -1173,7 +1173,7 @@
     },
     {
       "name": "spells",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "18.12.25",
@@ -1325,7 +1325,7 @@
     },
     {
       "name": "tuli",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "20.02.25",
