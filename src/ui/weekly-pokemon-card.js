@@ -4,7 +4,7 @@
 
 import { tierFromPoints } from './tier-map.js';
 import { prettifyPokemonName, getPokemonDbShinyGifSrc } from '../utils/utils.js';
-import { computeShinyWarsPoints } from '../domains/pokemon/shiny.points.js';
+import { computeShinyPoints } from '../domains/pokemon/shiny.points.js';
 
 function el(tag, className, text) {
   const node = document.createElement(tag);
@@ -76,7 +76,7 @@ export function renderWeeklyPokemonCard(mon, pokemonPointsMap, { signal } = {}) 
   const pokemonName = prettifyPokemonName(pokemonKey);
 
   const tierPoints = getPokemonPoints(pokemonPointsMap, pokemonKey);
-  const displayPoints = computeShinyWarsPoints(mon, pokemonPointsMap).totalPoints;
+  const displayPoints = computeShinyPoints(mon, pokemonPointsMap).totalPoints;
   const tierToken = tierFromPoints(tierPoints);
   const tierClass = tierToken === 'lm' ? 'tier-lm' : `tier-${tierToken}`;
 

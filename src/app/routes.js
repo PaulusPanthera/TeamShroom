@@ -10,8 +10,7 @@ function setActiveNav(page) {
     hitlist: 'nav-hitlist',
     showcase: 'nav-showcase',
     shinyweekly: 'nav-shinyweekly',
-    donators: 'nav-donators',
-    shinywar: 'nav-shinywar'
+    donators: 'nav-donators'
   };
 
   document.getElementById(map[page])?.classList.add('active');
@@ -31,7 +30,6 @@ function getRoute() {
 
   if (lower.startsWith('#showcase')) return { page: 'showcase' };
   if (lower.startsWith('#donators')) return { page: 'donators' };
-  if (lower.startsWith('#shinywar')) return { page: 'shinywar' };
   if (lower.startsWith('#shinyweekly')) return { page: 'shinyweekly' };
 
   return { page: 'hitlist' };

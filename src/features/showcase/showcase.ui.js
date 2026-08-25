@@ -4,7 +4,7 @@
 
 import { renderUnifiedCard, escapeHtml } from '../../ui/unifiedcard.js';
 import { prettifyPokemonName, getPokemonDbShinyGifSrc } from '../../utils/utils.js';
-import { computeShinyWarsPoints } from '../../domains/pokemon/shiny.points.js';
+import { computeShinyPoints } from '../../domains/pokemon/shiny.points.js';
 
 function assertValidRoot(root) {
   if (!root || !(root instanceof Element)) {
@@ -564,7 +564,7 @@ export function renderMemberShinySections(sections, pokemonPoints) {
       if (!pokemonKey) return;
 
       const tierPoints = Number(pokemonPoints && pokemonPoints[pokemonKey]) || 0;
-      const displayPoints = computeShinyWarsPoints(s, pokemonPoints).totalPoints;
+      const displayPoints = computeShinyPoints(s, pokemonPoints).totalPoints;
       const info = buildShinyInfoText(s);
 
       const card = renderUnifiedCard({

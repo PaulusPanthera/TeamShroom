@@ -285,7 +285,10 @@
   --u-plate-border: var(--u-tier-sub);
 }
 
-/* 6 (most common): shy paper-gray */
+/* 7 (lowest): subdued graphite */
+.unified-card.tier-7{ --u-tier-main:#8d9194; --u-tier-sub:#4b5054; --u-tier-border:#b9c0c5; }
+
+/* 6: shy paper-gray */
 .unified-card.tier-6{ --u-tier-main:#b8b2ad; --u-tier-sub:#6f6a66; --u-tier-border:#e6e1db; }
 
 /* 5: dusty slate */
@@ -590,6 +593,12 @@
    TIER BODY TINTS (FILL-BASED)
    Goal: every tier has a recognizable body temperature.
 -------------------------------------------------- */
+
+/* Tier 7 - subdued graphite */
+.unified-card.tier-7{
+  --u-card-fill: #252d32;
+  --u-card-bg:   #1b2226;
+}
 
 /* Tier 6 - light steel */
 .unified-card.tier-6{

@@ -16,7 +16,7 @@ import {
 } from './shinydex.search.js';
 
 import { tierFromPoints } from '../../ui/tier-map.js';
-import { SHINYWARS } from '../../domains/pokemon/shiny.points.js';
+import { SHINY_POINTS } from '../../domains/pokemon/shiny.points.js';
 
 function normalizeRegion(raw) {
   return String(raw || '').trim().toLowerCase();
@@ -159,11 +159,11 @@ export function prepareHitlistRenderModel(opts) {
 
       var tierPts = Number(e && e.points) || 0;
 
-      if (owners.secret) addBonus(owners.secret, SHINYWARS.BONUS.SECRET);
-      if (owners.safari) addBonus(owners.safari, SHINYWARS.BONUS.SAFARI);
+      if (owners.secret) addBonus(owners.secret, SHINY_POINTS.BONUS.SECRET);
+      if (owners.safari) addBonus(owners.safari, SHINY_POINTS.BONUS.SAFARI);
 
       // Hitlist base already grants tier points once; variants grant only the delta above tier.
-      if (owners.alpha) addBonus(owners.alpha, Math.max(0, SHINYWARS.BASE.ALPHA - tierPts));
+      if (owners.alpha) addBonus(owners.alpha, Math.max(0, SHINY_POINTS.BASE.ALPHA - tierPts));
     });
 
     var memberNameSet = new Set(Object.keys(byMember).concat(Object.keys(bonusByMember)));

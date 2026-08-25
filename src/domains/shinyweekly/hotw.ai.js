@@ -2,7 +2,7 @@
 // v2.0.0-beta
 // HotW (Hunter of the Week) computation from ShinyWeekly week models.
 
-import { computeShinyWarsPoints } from '../pokemon/shiny.points.js';
+import { computeShinyPoints } from '../pokemon/shiny.points.js';
 
 function safeDateMs(raw) {
   const ms = Date.parse(String(raw || ''));
@@ -87,7 +87,7 @@ function buildMemberStatsFromWeek(week, pointsMap) {
 
     shinies.forEach(s => {
       if (!isValidWeeklyShiny(s)) return;
-      const pts = computeShinyWarsPoints(s, pointsMap).totalPoints;
+      const pts = computeShinyPoints(s, pointsMap).totalPoints;
       totalPoints += pts;
       shinyCount += 1;
       if (pts > bestSinglePoints) bestSinglePoints = pts;

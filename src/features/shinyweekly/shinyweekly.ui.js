@@ -3,8 +3,9 @@
 // ShinyWeekly UI rendering helpers. Overview (month/week tiles) + week detail (flip tiles cycling member + shinies).
 
 import { getMemberRoleEmblemSrc, getMemberSpriteSrc } from '../../domains/members/member.assets.js';
-import { computeShinyWarsPoints } from '../../domains/pokemon/shiny.points.js';
+import { computeShinyPoints } from '../../domains/pokemon/shiny.points.js';
 import { renderWeeklyPokemonCard } from '../../ui/weekly-pokemon-card.js';
+import { tierFromPoints } from '../../ui/tier-map.js';
 
 function clearNode(node) {
   if (!node) return;
@@ -213,7 +214,7 @@ function getWeeklyMemberPoints(memberGroup, pokemonPointsMap) {
   const shinies = Array.isArray(memberGroup && memberGroup.shinies) ? memberGroup.shinies : [];
   return shinies.reduce((sum, s) => {
     if (!s || s.run || s.lost) return sum;
-    return sum + computeShinyWarsPoints(s, pokemonPointsMap).totalPoints;
+    return sum + computeShinyPoints(s, pokemonPointsMap).totalPoints;
   }, 0);
 }
 
@@ -224,19 +225,6 @@ function classForNameLength(name) {
   return '';
 }
 
-function tierFromPoints(points) {
-  const p = Number(points);
-  if (!Number.isFinite(p)) return '6';
-
-  if (p >= 100) return 'lm';
-  if (p >= 30) return '0';
-  if (p >= 25) return '1';
-  if (p >= 15) return '2';
-  if (p >= 10) return '3';
-  if (p >= 6) return '4';
-  if (p >= 3) return '5';
-  return '6';
-}
 
 function getPokemonPoints(pokemonPointsMap, pokemonKey) {
   const key = normalize(pokemonKey);

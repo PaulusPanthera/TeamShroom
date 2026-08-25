@@ -1,37 +1,30 @@
 // src/ui/tier-map.js
-// Single source of truth for points -> tier classification.
+// Single source of truth for Official Shiny Wars 2026 points -> tier classification.
 
 /**
  * Returns a tier token used for CSS classes.
- * - "lm" (Legendary Mystic)
- * - "0".."6" (0 best, 6 worst)
+ * - "lm" (Legendary / Mythical)
+ * - "0".."7" (0 highest standard tier, 7 lowest)
  */
 export function tierFromPoints(points) {
   const p = Number(points);
-  if (!Number.isFinite(p)) return '6';
+  if (!Number.isFinite(p)) return '7';
 
   // Points come from src/data/pokemondatabuilder.js (TIER_POINTS)
-  // tier lm: 100
-  // tier 0: 30
-  // tier 1: 25
-  // tier 2: 15
-  // tier 3: 10
-  // tier 4: 6
-  // tier 5: 3
-  // tier 6: 2
-  if (p >= 100) return 'lm';
-  if (p >= 30) return '0';
-  if (p >= 25) return '1';
-  if (p >= 15) return '2';
-  if (p >= 10) return '3';
-  if (p >= 6) return '4';
-  if (p >= 3) return '5';
-  return '6';
+  if (p >= 200) return 'lm';
+  if (p >= 50) return '0';
+  if (p >= 45) return '1';
+  if (p >= 40) return '2';
+  if (p >= 30) return '3';
+  if (p >= 15) return '4';
+  if (p >= 10) return '5';
+  if (p >= 5) return '6';
+  return '7';
 }
 
 /**
  * Coarser grouping used for high-level visual buckets.
- * - "lm" | "hi" (0-1) | "mid" (2-3) | "low" (4-6)
+ * - "lm" | "hi" (0-1) | "mid" (2-3) | "low" (4-7)
  */
 export function tierGroupFromTier(tier) {
   if (tier === 'lm') return 'lm';

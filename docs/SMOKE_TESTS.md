@@ -16,7 +16,6 @@ Run this checklist after changes to routing, shell wiring, sidebar behavior, CSS
   - `/#hitlist`
   - `/#hitlist/living`
   - `/#shinyweekly`
-  - `/#shinywar`
   - `/#donators`
 - Confirm previous content clears before the new route settles.
 - Confirm sidebar title / hint / controls update per route with no leftover sections.
@@ -42,12 +41,6 @@ Run this checklist after changes to routing, shell wiring, sidebar behavior, CSS
 - Empty state renders when no weeks exist.
 - Changing week keeps the main panel stable.
 - Selecting a member renders deterministic week detail.
-
-## /#shinywar
-- Loading state appears first.
-- War board renders without Weekly route artifacts leaking into the view.
-- Sidebar controls render and update the board.
-- Reset view returns the board to its default control state.
 
 ## /#donators
 - Loading state appears first.

@@ -9,7 +9,7 @@
 //   dex: string                  // national dex number (string)
 //   pokemon: string              // canonical pokemon key (lowercase)
 //   family: string[]             // evolution family root identifier(s)
-//   tier: string                 // tier key (e.g. "tier 0", "tier 1", "tier lm")
+//   tier: string                 // 2026 tier key ("tier 0".."tier 7", "tier lm")
 //   region: string               // region identifier (e.g. "kanto")
 //   rarity: string | null        // rarity label or null
 //   show: boolean                // visibility flag

@@ -21,9 +21,8 @@ Stylesheets are linked statically and loaded in this order:
 9. `style/donators.css`
 10. `style/home.css`
 11. `style/shinyweekly.css`
-12. `style/shinywar.css`
-13. `style/showcase.css`
-14. `style/shinydex.css`
+12. `style/showcase.css`
+13. `style/shinydex.css`
 
 ## Current rules
 

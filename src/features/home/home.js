@@ -110,7 +110,7 @@ function buildOwnedShinyCandidatePool({ members, pokemonPointsMap } = {}) {
       if (!pokemonKey) return;
 
       const points = Number(pointsMap[pokemonKey]) || 0;
-      const tierToken = String(tierFromPoints(points) || '6');
+      const tierToken = String(tierFromPoints(points) || '7');
 
       candidates.push({
         pokemonKey,
@@ -130,7 +130,7 @@ function pickWeightedRandomOwnedShiny(candidates) {
   if (!list.length) return null;
 
   // 80% -> LM / 0 / 1 / 2 / 3
-  // 20% -> 4 / 5 / 6
+  // 20% -> 4 / 5 / 6 / 7
   const rareTokens = new Set(['lm', '0', '1', '2', '3']);
   const rarePool = list.filter(c => rareTokens.has(String(c.tierToken)));
   const commonPool = list.filter(c => !rareTokens.has(String(c.tierToken)));

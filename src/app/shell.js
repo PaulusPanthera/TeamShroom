@@ -351,17 +351,6 @@ function ensureHeaderShell() {
     nav.insertBefore(aHome, nav.firstChild);
   }
 
-  const aWeekly = nav.querySelector('#nav-shinyweekly');
-  let aWar = nav.querySelector('#nav-shinywar');
-  if (!aWar) {
-    aWar = document.createElement('a');
-    aWar.href = '#shinywar';
-    aWar.id = 'nav-shinywar';
-    aWar.textContent = 'Shiny War';
-    if (aWeekly && aWeekly.nextSibling) nav.insertBefore(aWar, aWeekly.nextSibling);
-    else nav.appendChild(aWar);
-  }
-
   const header = document.createElement('header');
   header.id = TS_HEADER_ID;
   header.setAttribute('role', 'banner');

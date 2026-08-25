@@ -1,16 +1,16 @@
 // src/domains/pokemon/shiny.points.js
 // v2.0.0-beta
-// Shiny points rules (PokeMMO Shiny Wars 2025 style) — base + bonus
+// Generic shiny value rules aligned with PokeMMO Official Shiny Wars 2026
 
-export const SHINYWARS = {
+export const SHINY_POINTS = {
   BASE: {
-    LEGENDARY_MYTHICAL: 100,
-    ALPHA: 50,
-    EGG_MIN: 20
+    LEGENDARY_MYTHICAL: 200,
+    ALPHA: 75,
+    EGG_MIN: 35
   },
   BONUS: {
-    SECRET: 10,
-    SAFARI: 5
+    SECRET: 20,
+    SAFARI: 10
   }
 };
 
@@ -50,22 +50,25 @@ export function isEggEntry(entry) {
 }
 
 /**
- * Compute Shiny Wars-style points for a single shiny entry.
+ * Compute the current generic shiny value for a single shiny entry.
  *
  * Base points:
- * - Legendary/Mythical (tier lm): 100
- * - Alpha: 50
- * - Egg: max(20, tier points)
+ * - Legendary/Mythical (tier lm): 200
+ * - Alpha: 75
+ * - Egg: max(35, tier points)
  * - Else: tier points
  *
  * Bonus points:
- * - Secret: +10
- * - Safari: +5
+ * - Secret: +20
+ * - Safari: +10
+ *
+ * The Official 2026 team-first evolution-line bonus (+8) is event-state dependent
+ * and is intentionally not applied to generic Showcase / Weekly / Pokédex totals.
  */
-export function computeShinyWarsPoints(entry, pointsMap) {
+export function computeShinyPoints(entry, pointsMap) {
   const tierPoints = getTierPoints(pointsMap, entry && entry.pokemon);
 
-  const isLegendaryMythical = tierPoints >= SHINYWARS.BASE.LEGENDARY_MYTHICAL;
+  const isLegendaryMythical = tierPoints >= SHINY_POINTS.BASE.LEGENDARY_MYTHICAL;
   const alpha = Boolean(entry && entry.alpha);
   const secret = Boolean(entry && entry.secret);
   const safari = isSafariEntry(entry);
@@ -74,18 +77,18 @@ export function computeShinyWarsPoints(entry, pointsMap) {
   let basePoints = tierPoints;
 
   if (isLegendaryMythical) {
-    basePoints = SHINYWARS.BASE.LEGENDARY_MYTHICAL;
+    basePoints = SHINY_POINTS.BASE.LEGENDARY_MYTHICAL;
   } else if (alpha) {
-    basePoints = SHINYWARS.BASE.ALPHA;
+    basePoints = SHINY_POINTS.BASE.ALPHA;
   } else if (egg) {
-    basePoints = Math.max(SHINYWARS.BASE.EGG_MIN, tierPoints);
+    basePoints = Math.max(SHINY_POINTS.BASE.EGG_MIN, tierPoints);
   } else {
     basePoints = tierPoints;
   }
 
   let bonusPoints = 0;
-  if (secret) bonusPoints += SHINYWARS.BONUS.SECRET;
-  if (safari) bonusPoints += SHINYWARS.BONUS.SAFARI;
+  if (secret) bonusPoints += SHINY_POINTS.BONUS.SECRET;
+  if (safari) bonusPoints += SHINY_POINTS.BONUS.SAFARI;
 
   const totalPoints = basePoints + bonusPoints;
 
@@ -117,13 +120,13 @@ export function computeHitlistVariantDeltas(entry, tierPoints) {
   const secret = Boolean(entry && entry.secret);
   const safari = isSafariEntry(entry);
 
-  const alphaDelta = alpha ? Math.max(0, SHINYWARS.BASE.ALPHA - safeTier) : 0;
+  const alphaDelta = alpha ? Math.max(0, SHINY_POINTS.BASE.ALPHA - safeTier) : 0;
 
   // NOTE: Hitlist currently ignores Egg ownership/points (UI doesn't expose it).
   const eggDelta = 0;
 
-  const secretBonus = secret ? SHINYWARS.BONUS.SECRET : 0;
-  const safariBonus = safari ? SHINYWARS.BONUS.SAFARI : 0;
+  const secretBonus = secret ? SHINY_POINTS.BONUS.SECRET : 0;
+  const safariBonus = safari ? SHINY_POINTS.BONUS.SAFARI : 0;
 
   return {
     alphaDelta,

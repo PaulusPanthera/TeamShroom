@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-17T20:12:03.722Z",
+  "generatedAt": "2026-08-25T01:28:00.000Z",
   "source": "google-sheets",
   "data": [
     {
@@ -207,7 +207,7 @@
       "family": [
         "rattata"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -218,7 +218,7 @@
       "family": [
         "rattata"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -251,7 +251,7 @@
       "family": [
         "ekans"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -262,7 +262,7 @@
       "family": [
         "ekans"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -273,7 +273,7 @@
       "family": [
         "pichu"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -284,7 +284,7 @@
       "family": [
         "pichu"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -295,7 +295,7 @@
       "family": [
         "sandshrew"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -306,7 +306,7 @@
       "family": [
         "sandshrew"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -350,7 +350,7 @@
       "family": [
         "nidoran-m"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -361,7 +361,7 @@
       "family": [
         "nidoran-m"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -372,7 +372,7 @@
       "family": [
         "nidoran-m"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -383,7 +383,7 @@
       "family": [
         "cleffa"
       ],
-      "tier": "tier 4",
+      "tier": "tier 2",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -394,7 +394,7 @@
       "family": [
         "cleffa"
       ],
-      "tier": "tier 4",
+      "tier": "tier 2",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -405,7 +405,7 @@
       "family": [
         "vulpix"
       ],
-      "tier": "tier 5",
+      "tier": "tier 3",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -416,7 +416,7 @@
       "family": [
         "vulpix"
       ],
-      "tier": "tier 5",
+      "tier": "tier 3",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -427,7 +427,7 @@
       "family": [
         "igglybuff"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -438,7 +438,7 @@
       "family": [
         "igglybuff"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -449,7 +449,7 @@
       "family": [
         "zubat"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -460,7 +460,7 @@
       "family": [
         "zubat"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -471,7 +471,7 @@
       "family": [
         "oddish"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -482,7 +482,7 @@
       "family": [
         "oddish"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -493,7 +493,7 @@
       "family": [
         "oddish"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -504,7 +504,7 @@
       "family": [
         "paras"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -515,7 +515,7 @@
       "family": [
         "paras"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -570,7 +570,7 @@
       "family": [
         "meowth"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -581,7 +581,7 @@
       "family": [
         "meowth"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -592,7 +592,7 @@
       "family": [
         "psyduck"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -603,7 +603,7 @@
       "family": [
         "psyduck"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -614,7 +614,7 @@
       "family": [
         "mankey"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -625,7 +625,7 @@
       "family": [
         "mankey"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -636,7 +636,7 @@
       "family": [
         "growlithe"
       ],
-      "tier": "tier 5",
+      "tier": "tier 3",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -647,7 +647,7 @@
       "family": [
         "growlithe"
       ],
-      "tier": "tier 5",
+      "tier": "tier 3",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -658,7 +658,7 @@
       "family": [
         "poliwag"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -669,7 +669,7 @@
       "family": [
         "poliwag"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -680,7 +680,7 @@
       "family": [
         "poliwag"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -724,7 +724,7 @@
       "family": [
         "machop"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -735,7 +735,7 @@
       "family": [
         "machop"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -746,7 +746,7 @@
       "family": [
         "machop"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -757,7 +757,7 @@
       "family": [
         "bellsprout"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -768,7 +768,7 @@
       "family": [
         "bellsprout"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -779,7 +779,7 @@
       "family": [
         "bellsprout"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -790,7 +790,7 @@
       "family": [
         "tentacool"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -801,7 +801,7 @@
       "family": [
         "tentacool"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -812,7 +812,7 @@
       "family": [
         "geodude"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -823,7 +823,7 @@
       "family": [
         "geodude"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -834,7 +834,7 @@
       "family": [
         "geodude"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -867,7 +867,7 @@
       "family": [
         "slowpoke"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -878,7 +878,7 @@
       "family": [
         "slowpoke"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -889,7 +889,7 @@
       "family": [
         "magnemite"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -900,7 +900,7 @@
       "family": [
         "magnemite"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -911,7 +911,7 @@
       "family": [
         "farfetchd"
       ],
-      "tier": "tier 2",
+      "tier": "tier 3",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -922,7 +922,7 @@
       "family": [
         "doduo"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -933,7 +933,7 @@
       "family": [
         "doduo"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -944,7 +944,7 @@
       "family": [
         "seel"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -955,7 +955,7 @@
       "family": [
         "seel"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -988,7 +988,7 @@
       "family": [
         "shellder"
       ],
-      "tier": "tier 3",
+      "tier": "tier 2",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -999,7 +999,7 @@
       "family": [
         "shellder"
       ],
-      "tier": "tier 3",
+      "tier": "tier 2",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -1010,7 +1010,7 @@
       "family": [
         "gastly"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1021,7 +1021,7 @@
       "family": [
         "gastly"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1032,7 +1032,7 @@
       "family": [
         "gastly"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1043,7 +1043,7 @@
       "family": [
         "onix"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1054,7 +1054,7 @@
       "family": [
         "drowzee"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1065,7 +1065,7 @@
       "family": [
         "drowzee"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1076,7 +1076,7 @@
       "family": [
         "krabby"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1087,7 +1087,7 @@
       "family": [
         "krabby"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1098,7 +1098,7 @@
       "family": [
         "voltorb"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1109,7 +1109,7 @@
       "family": [
         "voltorb"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1120,7 +1120,7 @@
       "family": [
         "exeggcute"
       ],
-      "tier": "tier 2",
+      "tier": "tier 3",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -1131,7 +1131,7 @@
       "family": [
         "exeggcute"
       ],
-      "tier": "tier 2",
+      "tier": "tier 3",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -1197,7 +1197,7 @@
       "family": [
         "koffing"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1208,7 +1208,7 @@
       "family": [
         "koffing"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1219,7 +1219,7 @@
       "family": [
         "rhyhorn"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1230,7 +1230,7 @@
       "family": [
         "rhyhorn"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1263,7 +1263,7 @@
       "family": [
         "kangaskhan"
       ],
-      "tier": "tier 2",
+      "tier": "tier 1",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -1274,7 +1274,7 @@
       "family": [
         "horsea"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1285,7 +1285,7 @@
       "family": [
         "horsea"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1296,7 +1296,7 @@
       "family": [
         "goldeen"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1307,7 +1307,7 @@
       "family": [
         "goldeen"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1362,7 +1362,7 @@
       "family": [
         "smoochum"
       ],
-      "tier": "tier 6",
+      "tier": "tier 3",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1384,7 +1384,7 @@
       "family": [
         "magby"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -1406,7 +1406,7 @@
       "family": [
         "tauros"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -1417,7 +1417,7 @@
       "family": [
         "magikarp"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1428,7 +1428,7 @@
       "family": [
         "magikarp"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "kanto",
       "rarity": "5x100%",
       "show": true
@@ -1450,7 +1450,7 @@
       "family": [
         "ditto"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -1461,7 +1461,7 @@
       "family": [
         "eevee"
       ],
-      "tier": "tier 1",
+      "tier": "tier 0",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -1472,7 +1472,7 @@
       "family": [
         "eevee"
       ],
-      "tier": "tier 1",
+      "tier": "tier 0",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -1483,7 +1483,7 @@
       "family": [
         "eevee"
       ],
-      "tier": "tier 1",
+      "tier": "tier 0",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -1494,7 +1494,7 @@
       "family": [
         "eevee"
       ],
-      "tier": "tier 1",
+      "tier": "tier 0",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -1571,7 +1571,7 @@
       "family": [
         "munchlax"
       ],
-      "tier": "tier 1",
+      "tier": "tier 0",
       "region": "kanto",
       "rarity": null,
       "show": true
@@ -1615,7 +1615,7 @@
       "family": [
         "dratini"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "kanto",
       "rarity": "5x20%",
       "show": true
@@ -1626,7 +1626,7 @@
       "family": [
         "dratini"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "kanto",
       "rarity": "5x20%",
       "show": true
@@ -1637,7 +1637,7 @@
       "family": [
         "dratini"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "kanto",
       "rarity": "5x20%",
       "show": true
@@ -1791,7 +1791,7 @@
       "family": [
         "hoothoot"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -1802,7 +1802,7 @@
       "family": [
         "hoothoot"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -1813,7 +1813,7 @@
       "family": [
         "ledyba"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -1824,7 +1824,7 @@
       "family": [
         "ledyba"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -1835,7 +1835,7 @@
       "family": [
         "spinarak"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -1846,7 +1846,7 @@
       "family": [
         "spinarak"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -1857,7 +1857,7 @@
       "family": [
         "zubat"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -1890,7 +1890,7 @@
       "family": [
         "pichu"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "johto",
       "rarity": "Baby",
       "show": true
@@ -1901,7 +1901,7 @@
       "family": [
         "cleffa"
       ],
-      "tier": "tier 4",
+      "tier": "tier 2",
       "region": "johto",
       "rarity": "Baby",
       "show": true
@@ -1912,7 +1912,7 @@
       "family": [
         "igglybuff"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "johto",
       "rarity": "Baby",
       "show": true
@@ -1967,7 +1967,7 @@
       "family": [
         "mareep"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -1978,7 +1978,7 @@
       "family": [
         "mareep"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -1989,7 +1989,7 @@
       "family": [
         "mareep"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2000,7 +2000,7 @@
       "family": [
         "oddish"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2011,7 +2011,7 @@
       "family": [
         "azurill"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2022,7 +2022,7 @@
       "family": [
         "azurill"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2044,7 +2044,7 @@
       "family": [
         "poliwag"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2055,7 +2055,7 @@
       "family": [
         "hoppip"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2066,7 +2066,7 @@
       "family": [
         "hoppip"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2077,7 +2077,7 @@
       "family": [
         "hoppip"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2099,7 +2099,7 @@
       "family": [
         "sunkern"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2110,7 +2110,7 @@
       "family": [
         "sunkern"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2121,7 +2121,7 @@
       "family": [
         "yanma"
       ],
-      "tier": "tier 2",
+      "tier": "tier 3",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2132,7 +2132,7 @@
       "family": [
         "wooper"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2143,7 +2143,7 @@
       "family": [
         "wooper"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2154,7 +2154,7 @@
       "family": [
         "eevee"
       ],
-      "tier": "tier 1",
+      "tier": "tier 0",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2165,7 +2165,7 @@
       "family": [
         "eevee"
       ],
-      "tier": "tier 1",
+      "tier": "tier 0",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2176,7 +2176,7 @@
       "family": [
         "murkrow"
       ],
-      "tier": "tier 5",
+      "tier": "tier 3",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2187,7 +2187,7 @@
       "family": [
         "slowpoke"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2198,7 +2198,7 @@
       "family": [
         "misdreavus"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2209,7 +2209,7 @@
       "family": [
         "unown"
       ],
-      "tier": "tier 3",
+      "tier": "tier 7",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2220,7 +2220,7 @@
       "family": [
         "wynaut"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2231,7 +2231,7 @@
       "family": [
         "girafarig"
       ],
-      "tier": "tier 5",
+      "tier": "tier 7",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2264,7 +2264,7 @@
       "family": [
         "dunsparce"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2275,7 +2275,7 @@
       "family": [
         "gligar"
       ],
-      "tier": "tier 5",
+      "tier": "tier 3",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2286,7 +2286,7 @@
       "family": [
         "onix"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2352,7 +2352,7 @@
       "family": [
         "heracross"
       ],
-      "tier": "tier 2",
+      "tier": "tier 3",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2363,7 +2363,7 @@
       "family": [
         "sneasel"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2418,7 +2418,7 @@
       "family": [
         "swinub"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2429,7 +2429,7 @@
       "family": [
         "swinub"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2440,7 +2440,7 @@
       "family": [
         "corsola"
       ],
-      "tier": "tier 3",
+      "tier": "tier 2",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2473,7 +2473,7 @@
       "family": [
         "delibird"
       ],
-      "tier": "tier 5",
+      "tier": "tier 3",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2484,7 +2484,7 @@
       "family": [
         "mantyke"
       ],
-      "tier": "tier 6",
+      "tier": "tier 3",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2506,7 +2506,7 @@
       "family": [
         "houndour"
       ],
-      "tier": "tier 3",
+      "tier": "tier 2",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2517,7 +2517,7 @@
       "family": [
         "houndour"
       ],
-      "tier": "tier 3",
+      "tier": "tier 2",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2528,7 +2528,7 @@
       "family": [
         "horsea"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2539,7 +2539,7 @@
       "family": [
         "phanpy"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2550,7 +2550,7 @@
       "family": [
         "phanpy"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2572,7 +2572,7 @@
       "family": [
         "stantler"
       ],
-      "tier": "tier 4",
+      "tier": "tier 6",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2583,7 +2583,7 @@
       "family": [
         "smeargle"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "johto",
       "rarity": "5x100%",
       "show": true
@@ -2616,7 +2616,7 @@
       "family": [
         "smoochum"
       ],
-      "tier": "tier 6",
+      "tier": "tier 3",
       "region": "johto",
       "rarity": "Baby",
       "show": true
@@ -2638,7 +2638,7 @@
       "family": [
         "magby"
       ],
-      "tier": "tier 6",
+      "tier": "tier 3",
       "region": "johto",
       "rarity": "Baby",
       "show": true
@@ -2649,7 +2649,7 @@
       "family": [
         "miltank"
       ],
-      "tier": "tier 4",
+      "tier": "tier 2",
       "region": "johto",
       "rarity": null,
       "show": true
@@ -2913,7 +2913,7 @@
       "family": [
         "wurmple"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -2924,7 +2924,7 @@
       "family": [
         "wurmple"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -2935,7 +2935,7 @@
       "family": [
         "wurmple"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -2946,7 +2946,7 @@
       "family": [
         "wurmple"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -2957,7 +2957,7 @@
       "family": [
         "wurmple"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -2968,7 +2968,7 @@
       "family": [
         "lotad"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -2979,7 +2979,7 @@
       "family": [
         "lotad"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -2990,7 +2990,7 @@
       "family": [
         "lotad"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3001,7 +3001,7 @@
       "family": [
         "seedot"
       ],
-      "tier": "tier 5",
+      "tier": "tier 7",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3012,7 +3012,7 @@
       "family": [
         "seedot"
       ],
-      "tier": "tier 5",
+      "tier": "tier 7",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3023,7 +3023,7 @@
       "family": [
         "seedot"
       ],
-      "tier": "tier 5",
+      "tier": "tier 7",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3034,7 +3034,7 @@
       "family": [
         "taillow"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3045,7 +3045,7 @@
       "family": [
         "taillow"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3078,7 +3078,7 @@
       "family": [
         "ralts"
       ],
-      "tier": "tier 3",
+      "tier": "tier 2",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3089,7 +3089,7 @@
       "family": [
         "ralts"
       ],
-      "tier": "tier 3",
+      "tier": "tier 2",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3100,7 +3100,7 @@
       "family": [
         "ralts"
       ],
-      "tier": "tier 3",
+      "tier": "tier 2",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3111,7 +3111,7 @@
       "family": [
         "surskit"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3122,7 +3122,7 @@
       "family": [
         "surskit"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3133,7 +3133,7 @@
       "family": [
         "shroomish"
       ],
-      "tier": "tier 2",
+      "tier": "tier 1",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3144,7 +3144,7 @@
       "family": [
         "shroomish"
       ],
-      "tier": "tier 2",
+      "tier": "tier 1",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3188,7 +3188,7 @@
       "family": [
         "nincada"
       ],
-      "tier": "tier 3",
+      "tier": "tier 2",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3199,7 +3199,7 @@
       "family": [
         "nincada"
       ],
-      "tier": "tier 3",
+      "tier": "tier 2",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3276,7 +3276,7 @@
       "family": [
         "azurill"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "hoenn",
       "rarity": "Baby",
       "show": true
@@ -3287,7 +3287,7 @@
       "family": [
         "nosepass"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3320,7 +3320,7 @@
       "family": [
         "sableye"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3331,7 +3331,7 @@
       "family": [
         "mawile"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3375,7 +3375,7 @@
       "family": [
         "meditite"
       ],
-      "tier": "tier 5",
+      "tier": "tier 7",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3386,7 +3386,7 @@
       "family": [
         "meditite"
       ],
-      "tier": "tier 5",
+      "tier": "tier 7",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3397,7 +3397,7 @@
       "family": [
         "electrike"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3408,7 +3408,7 @@
       "family": [
         "electrike"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3419,7 +3419,7 @@
       "family": [
         "plusle"
       ],
-      "tier": "tier 2",
+      "tier": "tier 1",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3430,7 +3430,7 @@
       "family": [
         "minun"
       ],
-      "tier": "tier 2",
+      "tier": "tier 1",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3474,7 +3474,7 @@
       "family": [
         "gulpin"
       ],
-      "tier": "tier 2",
+      "tier": "tier 1",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3485,7 +3485,7 @@
       "family": [
         "gulpin"
       ],
-      "tier": "tier 2",
+      "tier": "tier 1",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3540,7 +3540,7 @@
       "family": [
         "numel"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3551,7 +3551,7 @@
       "family": [
         "numel"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3562,7 +3562,7 @@
       "family": [
         "torkoal"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3573,7 +3573,7 @@
       "family": [
         "spoink"
       ],
-      "tier": "tier 4",
+      "tier": "tier 6",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3584,7 +3584,7 @@
       "family": [
         "spoink"
       ],
-      "tier": "tier 4",
+      "tier": "tier 6",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3661,7 +3661,7 @@
       "family": [
         "swablu"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3672,7 +3672,7 @@
       "family": [
         "swablu"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3705,7 +3705,7 @@
       "family": [
         "lunatone"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3749,7 +3749,7 @@
       "family": [
         "corphish"
       ],
-      "tier": "tier 3",
+      "tier": "tier 4",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3760,7 +3760,7 @@
       "family": [
         "corphish"
       ],
-      "tier": "tier 3",
+      "tier": "tier 4",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3771,7 +3771,7 @@
       "family": [
         "baltoy"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3782,7 +3782,7 @@
       "family": [
         "baltoy"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3837,7 +3837,7 @@
       "family": [
         "feebas"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "hoenn",
       "rarity": "rare",
       "show": true
@@ -3848,7 +3848,7 @@
       "family": [
         "feebas"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "hoenn",
       "rarity": "rare",
       "show": true
@@ -3870,7 +3870,7 @@
       "family": [
         "kecleon"
       ],
-      "tier": "tier 1",
+      "tier": "tier 3",
       "region": "hoenn",
       "rarity": "rare",
       "show": true
@@ -3881,7 +3881,7 @@
       "family": [
         "shuppet"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3892,7 +3892,7 @@
       "family": [
         "shuppet"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3903,7 +3903,7 @@
       "family": [
         "duskull"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3914,7 +3914,7 @@
       "family": [
         "duskull"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -3925,7 +3925,7 @@
       "family": [
         "tropius"
       ],
-      "tier": "tier 2",
+      "tier": "tier 3",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3936,7 +3936,7 @@
       "family": [
         "chingling"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -3958,7 +3958,7 @@
       "family": [
         "wynaut"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "hoenn",
       "rarity": "Baby",
       "show": true
@@ -3991,7 +3991,7 @@
       "family": [
         "spheal"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -4002,7 +4002,7 @@
       "family": [
         "spheal"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -4013,7 +4013,7 @@
       "family": [
         "spheal"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "hoenn",
       "rarity": "5x100%",
       "show": true
@@ -4079,7 +4079,7 @@
       "family": [
         "bagon"
       ],
-      "tier": "tier 3",
+      "tier": "tier 2",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -4090,7 +4090,7 @@
       "family": [
         "bagon"
       ],
-      "tier": "tier 3",
+      "tier": "tier 2",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -4101,7 +4101,7 @@
       "family": [
         "bagon"
       ],
-      "tier": "tier 3",
+      "tier": "tier 2",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -4112,7 +4112,7 @@
       "family": [
         "beldum"
       ],
-      "tier": "tier 1",
+      "tier": "tier 0",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -4123,7 +4123,7 @@
       "family": [
         "beldum"
       ],
-      "tier": "tier 1",
+      "tier": "tier 0",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -4134,7 +4134,7 @@
       "family": [
         "beldum"
       ],
-      "tier": "tier 1",
+      "tier": "tier 0",
       "region": "hoenn",
       "rarity": null,
       "show": true
@@ -4354,7 +4354,7 @@
       "family": [
         "starly"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4365,7 +4365,7 @@
       "family": [
         "starly"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4376,7 +4376,7 @@
       "family": [
         "starly"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4409,7 +4409,7 @@
       "family": [
         "kricketot"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4420,7 +4420,7 @@
       "family": [
         "kricketot"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4431,7 +4431,7 @@
       "family": [
         "shinx"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4442,7 +4442,7 @@
       "family": [
         "shinx"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4453,7 +4453,7 @@
       "family": [
         "shinx"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4563,7 +4563,7 @@
       "family": [
         "combee"
       ],
-      "tier": "tier 2",
+      "tier": "tier 1",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4574,7 +4574,7 @@
       "family": [
         "combee"
       ],
-      "tier": "tier 2",
+      "tier": "tier 1",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4596,7 +4596,7 @@
       "family": [
         "buizel"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "sinnoh",
       "rarity": "5x100%",
       "show": true
@@ -4607,7 +4607,7 @@
       "family": [
         "buizel"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "sinnoh",
       "rarity": "5x100%",
       "show": true
@@ -4640,7 +4640,7 @@
       "family": [
         "shellos-west"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "sinnoh",
       "rarity": "5x100%",
       "show": true
@@ -4651,7 +4651,7 @@
       "family": [
         "shellos-east"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "sinnoh",
       "rarity": "5x100%",
       "show": false
@@ -4662,7 +4662,7 @@
       "family": [
         "shellos-west"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "sinnoh",
       "rarity": "5x100%",
       "show": true
@@ -4673,7 +4673,7 @@
       "family": [
         "shellos-east"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "sinnoh",
       "rarity": "5x100%",
       "show": false
@@ -4695,7 +4695,7 @@
       "family": [
         "drifloon"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4706,7 +4706,7 @@
       "family": [
         "drifloon"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4739,7 +4739,7 @@
       "family": [
         "misdreavus"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4750,7 +4750,7 @@
       "family": [
         "murkrow"
       ],
-      "tier": "tier 5",
+      "tier": "tier 3",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4761,7 +4761,7 @@
       "family": [
         "glameow"
       ],
-      "tier": "tier 5",
+      "tier": "tier 7",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4772,7 +4772,7 @@
       "family": [
         "glameow"
       ],
-      "tier": "tier 5",
+      "tier": "tier 7",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4783,7 +4783,7 @@
       "family": [
         "chingling"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "sinnoh",
       "rarity": "Baby",
       "show": true
@@ -4794,7 +4794,7 @@
       "family": [
         "stunky"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "sinnoh",
       "rarity": "3x50%",
       "show": true
@@ -4805,7 +4805,7 @@
       "family": [
         "stunky"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "sinnoh",
       "rarity": "3x50%",
       "show": true
@@ -4816,7 +4816,7 @@
       "family": [
         "bronzor"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "sinnoh",
       "rarity": "5x100%",
       "show": true
@@ -4827,7 +4827,7 @@
       "family": [
         "bronzor"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "sinnoh",
       "rarity": "5x100%",
       "show": true
@@ -4882,7 +4882,7 @@
       "family": [
         "spiritomb"
       ],
-      "tier": "tier 0",
+      "tier": "tier 1",
       "region": "sinnoh",
       "rarity": "rare",
       "show": true
@@ -4893,7 +4893,7 @@
       "family": [
         "gible"
       ],
-      "tier": "tier 5",
+      "tier": "tier 3",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4904,7 +4904,7 @@
       "family": [
         "gible"
       ],
-      "tier": "tier 5",
+      "tier": "tier 3",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4915,7 +4915,7 @@
       "family": [
         "gible"
       ],
-      "tier": "tier 5",
+      "tier": "tier 3",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4926,7 +4926,7 @@
       "family": [
         "munchlax"
       ],
-      "tier": "tier 1",
+      "tier": "tier 0",
       "region": "sinnoh",
       "rarity": "baby",
       "show": true
@@ -4959,7 +4959,7 @@
       "family": [
         "hippopotas"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -4970,7 +4970,7 @@
       "family": [
         "hippopotas"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -5003,7 +5003,7 @@
       "family": [
         "croagunk"
       ],
-      "tier": "tier 2",
+      "tier": "tier 3",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -5014,7 +5014,7 @@
       "family": [
         "croagunk"
       ],
-      "tier": "tier 2",
+      "tier": "tier 3",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -5058,7 +5058,7 @@
       "family": [
         "mantyke"
       ],
-      "tier": "tier 6",
+      "tier": "tier 3",
       "region": "sinnoh",
       "rarity": "Baby",
       "show": true
@@ -5091,7 +5091,7 @@
       "family": [
         "sneasel"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "sinnoh",
       "rarity": "5x100%",
       "show": true
@@ -5102,7 +5102,7 @@
       "family": [
         "magnemite"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "sinnoh",
       "rarity": "5x100%",
       "show": true
@@ -5124,7 +5124,7 @@
       "family": [
         "rhyhorn"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "sinnoh",
       "rarity": "5x100%",
       "show": true
@@ -5157,7 +5157,7 @@
       "family": [
         "magby"
       ],
-      "tier": "tier 6",
+      "tier": "tier 3",
       "region": "sinnoh",
       "rarity": "5x100%",
       "show": true
@@ -5179,7 +5179,7 @@
       "family": [
         "yanma"
       ],
-      "tier": "tier 2",
+      "tier": "tier 3",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -5190,7 +5190,7 @@
       "family": [
         "eevee"
       ],
-      "tier": "tier 1",
+      "tier": "tier 0",
       "region": "sinnoh",
       "rarity": "rare",
       "show": true
@@ -5201,7 +5201,7 @@
       "family": [
         "eevee"
       ],
-      "tier": "tier 1",
+      "tier": "tier 0",
       "region": "sinnoh",
       "rarity": "rare",
       "show": true
@@ -5212,7 +5212,7 @@
       "family": [
         "gligar"
       ],
-      "tier": "tier 5",
+      "tier": "tier 3",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -5223,7 +5223,7 @@
       "family": [
         "swinub"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "sinnoh",
       "rarity": "5x100%",
       "show": true
@@ -5245,7 +5245,7 @@
       "family": [
         "ralts"
       ],
-      "tier": "tier 3",
+      "tier": "tier 2",
       "region": "sinnoh",
       "rarity": null,
       "show": true
@@ -5256,7 +5256,7 @@
       "family": [
         "nosepass"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "sinnoh",
       "rarity": "5x100%",
       "show": true
@@ -5267,7 +5267,7 @@
       "family": [
         "duskull"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "sinnoh",
       "rarity": "5x100%",
       "show": true
@@ -5586,7 +5586,7 @@
       "family": [
         "lillipup"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -5597,7 +5597,7 @@
       "family": [
         "lillipup"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -5608,7 +5608,7 @@
       "family": [
         "lillipup"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -5619,7 +5619,7 @@
       "family": [
         "purrloin"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -5630,7 +5630,7 @@
       "family": [
         "purrloin"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -5707,7 +5707,7 @@
       "family": [
         "munna"
       ],
-      "tier": "tier 3",
+      "tier": "tier 6",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -5718,7 +5718,7 @@
       "family": [
         "munna"
       ],
-      "tier": "tier 3",
+      "tier": "tier 6",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -5729,7 +5729,7 @@
       "family": [
         "pidove"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -5740,7 +5740,7 @@
       "family": [
         "pidove"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -5751,7 +5751,7 @@
       "family": [
         "pidove"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -5839,7 +5839,7 @@
       "family": [
         "drilbur"
       ],
-      "tier": "tier 0",
+      "tier": "tier 1",
       "region": "unova",
       "rarity": "pheno",
       "show": true
@@ -5850,7 +5850,7 @@
       "family": [
         "drilbur"
       ],
-      "tier": "tier 0",
+      "tier": "tier 1",
       "region": "unova",
       "rarity": "pheno",
       "show": true
@@ -5861,7 +5861,7 @@
       "family": [
         "audino"
       ],
-      "tier": "tier 0",
+      "tier": "tier 1",
       "region": "unova",
       "rarity": "pheno",
       "show": true
@@ -5872,7 +5872,7 @@
       "family": [
         "timburr"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -5883,7 +5883,7 @@
       "family": [
         "timburr"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -5894,7 +5894,7 @@
       "family": [
         "timburr"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -5938,7 +5938,7 @@
       "family": [
         "throh"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -5949,7 +5949,7 @@
       "family": [
         "sawk"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -5993,7 +5993,7 @@
       "family": [
         "venipede"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6004,7 +6004,7 @@
       "family": [
         "venipede"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6015,7 +6015,7 @@
       "family": [
         "venipede"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6026,7 +6026,7 @@
       "family": [
         "cottonee"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6037,7 +6037,7 @@
       "family": [
         "cottonee"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6048,7 +6048,7 @@
       "family": [
         "petilil"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6059,7 +6059,7 @@
       "family": [
         "petilil"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6070,7 +6070,7 @@
       "family": [
         "basculin"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6081,7 +6081,7 @@
       "family": [
         "sandile"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6092,7 +6092,7 @@
       "family": [
         "sandile"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6103,7 +6103,7 @@
       "family": [
         "sandile"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6114,7 +6114,7 @@
       "family": [
         "darumaka"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6125,7 +6125,7 @@
       "family": [
         "darumaka"
       ],
-      "tier": "tier 4",
+      "tier": "tier 3",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6147,7 +6147,7 @@
       "family": [
         "dwebble"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6158,7 +6158,7 @@
       "family": [
         "dwebble"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6169,7 +6169,7 @@
       "family": [
         "scraggy"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6180,7 +6180,7 @@
       "family": [
         "scraggy"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6202,7 +6202,7 @@
       "family": [
         "yamask"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6213,7 +6213,7 @@
       "family": [
         "yamask"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6268,7 +6268,7 @@
       "family": [
         "trubbish"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6279,7 +6279,7 @@
       "family": [
         "trubbish"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6290,7 +6290,7 @@
       "family": [
         "zorua"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "unova",
       "rarity": "rare",
       "show": true
@@ -6301,7 +6301,7 @@
       "family": [
         "zorua"
       ],
-      "tier": "tier 1",
+      "tier": "tier 2",
       "region": "unova",
       "rarity": "rare",
       "show": true
@@ -6312,7 +6312,7 @@
       "family": [
         "minccino"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6323,7 +6323,7 @@
       "family": [
         "minccino"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6400,7 +6400,7 @@
       "family": [
         "ducklett"
       ],
-      "tier": "tier 0",
+      "tier": "tier 1",
       "region": "unova",
       "rarity": "pheno",
       "show": true
@@ -6411,7 +6411,7 @@
       "family": [
         "ducklett"
       ],
-      "tier": "tier 0",
+      "tier": "tier 1",
       "region": "unova",
       "rarity": "pheno",
       "show": true
@@ -6422,7 +6422,7 @@
       "family": [
         "vanillite"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6433,7 +6433,7 @@
       "family": [
         "vanillite"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6444,7 +6444,7 @@
       "family": [
         "vanillite"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6455,7 +6455,7 @@
       "family": [
         "deerling"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6466,7 +6466,7 @@
       "family": [
         "deerling"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6477,7 +6477,7 @@
       "family": [
         "emolga"
       ],
-      "tier": "tier 0",
+      "tier": "tier 1",
       "region": "unova",
       "rarity": "pheno",
       "show": true
@@ -6488,7 +6488,7 @@
       "family": [
         "karrablast"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6499,7 +6499,7 @@
       "family": [
         "karrablast"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6510,7 +6510,7 @@
       "family": [
         "foongus"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6521,7 +6521,7 @@
       "family": [
         "foongus"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6532,7 +6532,7 @@
       "family": [
         "frillish"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6543,7 +6543,7 @@
       "family": [
         "frillish"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6554,7 +6554,7 @@
       "family": [
         "alomomola"
       ],
-      "tier": "tier 0",
+      "tier": "tier 1",
       "region": "unova",
       "rarity": "pheno",
       "show": true
@@ -6598,7 +6598,7 @@
       "family": [
         "ferroseed"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6609,7 +6609,7 @@
       "family": [
         "klink"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6620,7 +6620,7 @@
       "family": [
         "klink"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6631,7 +6631,7 @@
       "family": [
         "klink"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6642,7 +6642,7 @@
       "family": [
         "tynamo"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x20%",
       "show": true
@@ -6653,7 +6653,7 @@
       "family": [
         "tynamo"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x20%",
       "show": true
@@ -6664,7 +6664,7 @@
       "family": [
         "tynamo"
       ],
-      "tier": "tier 4",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x20%",
       "show": true
@@ -6697,7 +6697,7 @@
       "family": [
         "litwick"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6708,7 +6708,7 @@
       "family": [
         "litwick"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6719,7 +6719,7 @@
       "family": [
         "litwick"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6730,7 +6730,7 @@
       "family": [
         "axew"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6741,7 +6741,7 @@
       "family": [
         "axew"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6752,7 +6752,7 @@
       "family": [
         "axew"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6763,7 +6763,7 @@
       "family": [
         "cubchoo"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6774,7 +6774,7 @@
       "family": [
         "cubchoo"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6796,7 +6796,7 @@
       "family": [
         "shelmet"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6807,7 +6807,7 @@
       "family": [
         "shelmet"
       ],
-      "tier": "tier 6",
+      "tier": "tier 5",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6829,7 +6829,7 @@
       "family": [
         "mienfoo"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6840,7 +6840,7 @@
       "family": [
         "mienfoo"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6862,7 +6862,7 @@
       "family": [
         "golett"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6873,7 +6873,7 @@
       "family": [
         "golett"
       ],
-      "tier": "tier 6",
+      "tier": "tier 7",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6884,7 +6884,7 @@
       "family": [
         "pawniard"
       ],
-      "tier": "tier 3",
+      "tier": "tier 2",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6895,7 +6895,7 @@
       "family": [
         "pawniard"
       ],
-      "tier": "tier 3",
+      "tier": "tier 2",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6906,7 +6906,7 @@
       "family": [
         "bouffalant"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6917,7 +6917,7 @@
       "family": [
         "rufflet"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6928,7 +6928,7 @@
       "family": [
         "rufflet"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6939,7 +6939,7 @@
       "family": [
         "vullaby"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6950,7 +6950,7 @@
       "family": [
         "vullaby"
       ],
-      "tier": "tier 5",
+      "tier": "tier 6",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6961,7 +6961,7 @@
       "family": [
         "heatmor"
       ],
-      "tier": "tier 6",
+      "tier": "tier 4",
       "region": "unova",
       "rarity": "5x100%",
       "show": true
@@ -6983,7 +6983,7 @@
       "family": [
         "deino"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -6994,7 +6994,7 @@
       "family": [
         "deino"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -7005,7 +7005,7 @@
       "family": [
         "deino"
       ],
-      "tier": "tier 5",
+      "tier": "tier 4",
       "region": "unova",
       "rarity": null,
       "show": true
@@ -7164,5 +7164,6 @@
       "rarity": "mythical",
       "show": false
     }
-  ]
+  ],
+  "tierSystem": "official-shiny-wars-2026"
 }

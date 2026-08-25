@@ -28,6 +28,7 @@ export const pokemonContract = {
         'tier 4',
         'tier 5',
         'tier 6',
+        'tier 7',
         'tier lm',
       ],
     },

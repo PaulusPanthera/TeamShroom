@@ -12,8 +12,6 @@ import { renderHomePage } from '../features/home/home.page.js';
 import { renderShowcasePage } from '../features/showcase/showcase.js';
 import { renderDonatorsPage } from '../features/donators/donators.page.js';
 import { renderShinyWeeklyPage } from '../features/shinyweekly/shinyweekly.page.js';
-import { renderShinyWarPage } from '../features/shinywar/shinywar.page.js';
-import { buildShinyWeeklyModel } from '../domains/shinyweekly/shinyweekly.model.js';
 
 import {
   ensureShell,
@@ -247,36 +245,6 @@ export async function renderPage() {
             }
           })
         );
-      }
-    });
-
-    if (!isRouteActive(token, signal)) return;
-    return;
-  }
-
-  if (route.page === 'shinywar') {
-    await mountFeaturePage({
-      containerEl: content,
-      label: 'Shiny War',
-      token,
-      signal,
-      renderFn: async () => {
-        await ensurePokemonData();
-        if (!isRouteActive(token, signal)) return;
-        const [weeklyRows, membersRows] = await Promise.all([
-          getWeeklyRows(),
-          getMembersRows()
-        ]);
-        if (!isRouteActive(token, signal)) return;
-        const weeklyModel = buildShinyWeeklyModel(weeklyRows);
-        return renderShinyWarPage({
-          root: content,
-          sidebar,
-          signal,
-          collect,
-          isActive: () => isRouteActive(token, signal),
-          params: { weeklyModel, membersRows }
-        });
       }
     });
 

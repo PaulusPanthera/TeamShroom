@@ -19,7 +19,6 @@ The project is intentionally plain HTML/CSS/JS:
 - `#hitlist`
 - `#hitlist/living`
 - `#shinyweekly`
-- `#shinywar`
 - `#donators`
 
 ### Route alias
@@ -30,7 +29,6 @@ The project is intentionally plain HTML/CSS/JS:
 - Members
 - Pokédex
 - Weekly
-- Shiny War
 - Donators
 
 ---
@@ -105,7 +103,7 @@ Most runtime datasets use a shared JSON envelope with:
 - `source`
 - `data`
 
-The Shiny War config is handled separately by its loader because it is treated as config-shaped data rather than a standard row list.
+Pokémon rarity tiers use the pinned Official 2026 table in `scripts/data/pokemon-tiers-2026.json`. The CSV pipeline applies that table when regenerating `data/pokemon.json`, so an older tier column in the Google Sheet cannot silently revert the site.
 
 ---
 
@@ -122,9 +120,6 @@ Hitlist + Living Dex view family.
 
 ### Weekly
 Weekly shiny history / week detail browsing.
-
-### Shiny War
-War/event board derived from Weekly data plus Shiny War config.
 
 ### Donators
 Supporter / donations view.
