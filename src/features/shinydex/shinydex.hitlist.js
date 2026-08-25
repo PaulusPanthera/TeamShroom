@@ -9,7 +9,7 @@ import {
   toUnifiedCardPropsForHitlistClaim
 } from './shinydex.card.adapter.js';
 import { getSelectedVariant } from './shinydex.variants.state.js';
-import { prettifyPokemonName } from '../../utils/utils.js';
+import { prettifyPokemonName, getPokemonDbShinyGifSrc } from '../../utils/utils.js';
 
 function applyFloatingSectionStyle(sectionEl) {
   if (!sectionEl) return;
@@ -62,6 +62,50 @@ function claimWhenText(claim) {
   return 'Unknown date';
 }
 
+function claimWhenParts(claim) {
+  const raw = claimWhenText(claim).trim();
+
+  // Weekly labels are intentionally split into a compact range + year so the
+  // first column stays readable instead of wrapping at arbitrary characters.
+  const weekly = raw.match(/^([A-Za-z]+)\s+(\d+(?:st|nd|rd|th))\s*[-–]\s*([A-Za-z]+)\s+(\d+(?:st|nd|rd|th))\s+(\d{4})$/);
+  if (weekly) {
+    const [, monthA, dayA, monthB, dayB, year] = weekly;
+    return {
+      main: monthA === monthB ? `${monthA} ${dayA} – ${dayB}` : `${monthA} ${dayA} – ${monthB} ${dayB}`,
+      sub: year
+    };
+  }
+
+  const iso = raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (iso) {
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const month = monthNames[Math.max(0, Math.min(11, Number(iso[2]) - 1))];
+    return { main: `${month} ${Number(iso[3])}`, sub: iso[1] };
+  }
+
+  return { main: raw || 'Unknown date', sub: '' };
+}
+
+function renderClaimWhen(claim) {
+  const parts = claimWhenParts(claim);
+  const wrap = document.createElement('span');
+  wrap.className = 'global-claim-log-date-card';
+
+  const main = document.createElement('strong');
+  main.className = 'global-claim-log-date-main';
+  main.textContent = parts.main;
+  wrap.appendChild(main);
+
+  if (parts.sub) {
+    const sub = document.createElement('small');
+    sub.className = 'global-claim-log-date-sub';
+    sub.textContent = parts.sub;
+    wrap.appendChild(sub);
+  }
+
+  return wrap;
+}
+
 function claimPokemonText(claim) {
   const slot = claim && claim.pokemon ? String(claim.pokemon) : '';
   const caught = claim && claim.caughtPokemon ? String(claim.caughtPokemon) : slot;
@@ -71,6 +115,74 @@ function claimPokemonText(claim) {
   }
 
   return prettifyPokemonName(slot || caught || 'unknown');
+}
+
+function claimIconSrc(kind) {
+  switch (String(kind || '').toLowerCase()) {
+    case 'secret': return 'img/symbols/secretshinysprite.png';
+    case 'alpha': return 'img/symbols/alphasprite.png';
+    case 'safari': return 'img/symbols/safarisprite.png';
+    case 'standard':
+    default: return 'img/symbols/singlesprite.png';
+  }
+}
+
+function createClaimSprite(pokemonKey, label) {
+  const frame = document.createElement('span');
+  frame.className = 'global-claim-log-sprite-frame';
+
+  const img = document.createElement('img');
+  img.className = 'global-claim-log-sprite';
+  img.src = getPokemonDbShinyGifSrc(pokemonKey);
+  img.alt = label || prettifyPokemonName(pokemonKey);
+  img.loading = 'lazy';
+  img.decoding = 'async';
+
+  frame.appendChild(img);
+  return frame;
+}
+
+function renderClaimPokemonMiniCard(claim) {
+  const slot = claim && claim.pokemon ? String(claim.pokemon) : '';
+  const caught = claim && claim.caughtPokemon ? String(claim.caughtPokemon) : slot;
+  const isFamilyFallback = String(claim?.kind || '') === 'standard' && caught && slot && caught !== slot;
+
+  const wrap = document.createElement('div');
+  wrap.className = `global-claim-log-mon-card${isFamilyFallback ? ' is-family-fallback' : ''}`;
+
+  const sprites = document.createElement('div');
+  sprites.className = 'global-claim-log-sprites';
+
+  if (isFamilyFallback) {
+    sprites.appendChild(createClaimSprite(caught, prettifyPokemonName(caught)));
+
+    const arrow = document.createElement('span');
+    arrow.className = 'global-claim-log-sprite-arrow';
+    arrow.textContent = '→';
+    sprites.appendChild(arrow);
+
+    sprites.appendChild(createClaimSprite(slot, prettifyPokemonName(slot)));
+  } else {
+    sprites.appendChild(createClaimSprite(slot || caught, prettifyPokemonName(slot || caught)));
+  }
+
+  const labels = document.createElement('span');
+  labels.className = 'global-claim-log-mon-labels';
+
+  const primary = document.createElement('strong');
+  primary.className = 'global-claim-log-mon-name';
+  primary.textContent = claimPokemonText(claim);
+  labels.appendChild(primary);
+
+  if (isFamilyFallback) {
+    const secondary = document.createElement('small');
+    secondary.className = 'global-claim-log-mon-note';
+    secondary.textContent = 'Family claim';
+    labels.appendChild(secondary);
+  }
+
+  wrap.append(sprites, labels);
+  return wrap;
 }
 
 function renderGlobalClaimLog(model) {
@@ -87,16 +199,34 @@ function renderGlobalClaimLog(model) {
   header.textContent = `CLAIM LOG — ${awards} Awards · ${totalClaims} Claims · ${points} Points`;
   section.appendChild(header);
 
+  if (!claims.length) {
+    const empty = document.createElement('div');
+    empty.className = 'global-claim-log-empty';
+    empty.textContent = 'No claims match the current search.';
+    section.appendChild(empty);
+    return section;
+  }
+
+  const columns = document.createElement('div');
+  columns.className = 'global-claim-log-columns';
+  ['Date', 'Player', 'Pokémon claim', 'Award'].forEach(text => {
+    const el = document.createElement('span');
+    el.textContent = text;
+    columns.appendChild(el);
+  });
+  section.appendChild(columns);
+
   const list = document.createElement('ol');
   list.className = 'global-claim-log-list';
 
   claims.forEach(claim => {
+    const kind = String(claim.kind || 'standard').toLowerCase();
     const row = document.createElement('li');
-    row.className = `global-claim-log-row claim-kind-${String(claim.kind || 'standard').toLowerCase()}`;
+    row.className = `global-claim-log-row claim-kind-${kind}`;
 
     const when = document.createElement('span');
     when.className = 'global-claim-log-when';
-    when.textContent = claimWhenText(claim);
+    when.appendChild(renderClaimWhen(claim));
 
     const member = document.createElement('span');
     member.className = 'global-claim-log-member';
@@ -104,29 +234,39 @@ function renderGlobalClaimLog(model) {
 
     const pokemon = document.createElement('span');
     pokemon.className = 'global-claim-log-pokemon';
-    pokemon.textContent = claimPokemonText(claim);
+    pokemon.appendChild(renderClaimPokemonMiniCard(claim));
 
     const award = document.createElement('span');
     award.className = 'global-claim-log-award';
+
+    const icon = document.createElement('img');
+    icon.className = 'global-claim-log-award-icon';
+    icon.src = claimIconSrc(kind);
+    icon.alt = '';
+
+    const awardText = document.createElement('span');
+    awardText.className = 'global-claim-log-award-text';
+
     const pts = Number(claim.points) || 0;
-    const prefix = String(claim.kind || 'standard') === 'standard' ? '' : '+';
+    const prefix = kind === 'standard' ? '' : '+';
+    const main = document.createElement('strong');
+    main.className = 'global-claim-log-award-main';
+    main.textContent = `${claimKindLabel(kind)} ${prefix}${pts}P`;
+
     const claimValue = Number(claim.claimValue) || 0;
     const claimWord = claimValue === 1 ? 'claim' : 'claims';
-    award.textContent = `${claimKindLabel(claim.kind)} ${prefix}${pts}P · +${claimValue} ${claimWord}`;
+    const sub = document.createElement('small');
+    sub.className = 'global-claim-log-award-sub';
+    sub.textContent = `+${claimValue} ${claimWord}`;
+
+    awardText.append(main, sub);
+    award.append(icon, awardText);
 
     row.append(when, member, pokemon, award);
     list.appendChild(row);
   });
 
-  if (!claims.length) {
-    const empty = document.createElement('div');
-    empty.className = 'global-claim-log-empty';
-    empty.textContent = 'No claims match the current search.';
-    section.appendChild(empty);
-  } else {
-    section.appendChild(list);
-  }
-
+  section.appendChild(list);
   return section;
 }
 
