@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-31T01:52:18.073Z",
+  "generatedAt": "2026-08-31T11:57:01.013Z",
   "source": "google-sheets",
   "data": [
     {
@@ -533,7 +533,7 @@
     },
     {
       "name": "Mileage",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "26.02.25",
@@ -909,7 +909,7 @@
     },
     {
       "name": "zDaarkraai",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png",
       "member_since": "10.06.25",
