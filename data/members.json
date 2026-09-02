@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-02T10:01:56.764Z",
+  "generatedAt": "2026-09-02T15:25:55.615Z",
   "source": "google-sheets",
   "data": [
     {
@@ -269,7 +269,7 @@
     },
     {
       "name": "HamudaBR",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": null,
       "member_since": "07.04.26",
