@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-03T15:19:17.501Z",
+  "generatedAt": "2026-09-03T20:11:47.009Z",
   "source": "google-sheets",
   "data": [
     {
@@ -133,7 +133,7 @@
     },
     {
       "name": "Cordeiroxi",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "20.09.25",
@@ -261,7 +261,7 @@
     },
     {
       "name": "haizwn",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": null,
       "member_since": "02.04.26",
