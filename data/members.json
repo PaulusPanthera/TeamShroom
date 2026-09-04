@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-03T20:11:47.009Z",
+  "generatedAt": "2026-09-04T01:42:12.068Z",
   "source": "google-sheets",
   "data": [
     {
@@ -253,7 +253,7 @@
     },
     {
       "name": "Gumbasketball",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "08.03.24",
