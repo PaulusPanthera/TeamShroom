@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-04T19:57:38.071Z",
+  "generatedAt": "2026-09-05T01:36:36.344Z",
   "source": "google-sheets",
   "data": [
     {
@@ -605,7 +605,7 @@
     },
     {
       "name": "Oriie",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": null,
       "member_since": "16.08.25",
