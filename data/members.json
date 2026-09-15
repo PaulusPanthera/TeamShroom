@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-15T10:33:21.372Z",
+  "generatedAt": "2026-09-15T15:46:43.767Z",
   "source": "google-sheets",
   "data": [
     {
@@ -181,7 +181,7 @@
     },
     {
       "name": "Domingsss",
-      "active": true,
+      "active": false,
       "role": "spore",
       "sprite": "png",
       "member_since": "20.09.25",
@@ -429,7 +429,7 @@
     },
     {
       "name": "LuckiLeo",
-      "active": true,
+      "active": false,
       "role": "shroom",
       "sprite": "png",
       "member_since": "19.06.25",
